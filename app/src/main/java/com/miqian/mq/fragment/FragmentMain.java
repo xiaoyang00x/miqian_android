@@ -81,7 +81,7 @@ public class FragmentMain extends Fragment {
         mFragmentList = new ArrayList<Fragment>();
 
         mFragmentList.add(new FragmentHome());
-        mFragmentList.add(new FragmentTab());
+        mFragmentList.add(new FragmentCurrent());
         mFragmentList.add(new FragmentHome());
         mFragmentList.add(new FragmentTab());
 
