@@ -3,7 +3,6 @@
 buildscript {
     repositories {
         jcenter()
-        // test by suny
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.2.3'
