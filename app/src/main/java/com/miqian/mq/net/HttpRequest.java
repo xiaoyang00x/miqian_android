@@ -44,9 +44,16 @@ public class HttpRequest {
             @Override
             public void onResponse(Response response) {
                 if (response.isSuccessful()) {
-                    JpushInfo jpushInfo = JsonUtil.parseObject(response.body().toString(), JpushInfo.class);
+                    String result;
+                    try {
+                        result = response.body().string();
+                        Log.e("", result);
+                    } catch (IOException e) {
+                        callback.onFail("网络请求错误，code：" + response.code());
+                    }
+//                    JpushInfo jpushInfo = JsonUtil.parseObject(response.body().toString(), JpushInfo.class);
 //                    if (response.getCode() == 1000) {
-                        callback.onSucceed(jpushInfo);
+//                        callback.onSucceed(jpushInfo);
 //                    } else {
 //                        callback.onFail(response.getUserinfo());
 //                    }
