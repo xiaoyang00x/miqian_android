@@ -15,11 +15,9 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.miqian.mq.MainActivity;
 import com.miqian.mq.R;
-import com.miqian.mq.activity.SplashActivity;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.utils.JsonUtil;
 
@@ -70,7 +68,7 @@ public class MyReceiver extends BroadcastReceiver {
             int requestCode = (int) System.currentTimeMillis();
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent contentIntent = PendingIntent.getActivity(context, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            RemoteViews contentViews = new RemoteViews("com.miqian.mq", R.layout.layout_xg);
+            RemoteViews contentViews = new RemoteViews("com.miqian.mq", R.layout.layout_jpush);
 
             final Calendar mCalendar = Calendar.getInstance();
             int mHour;

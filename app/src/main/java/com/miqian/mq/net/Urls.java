@@ -15,4 +15,6 @@ public class Urls {
 //    public final static String test = base_server + "commonService/getBankList.do";
 
 //    public final static String login = base_server + "/userService/login.do";
+    //获取验证码
+    public final static String getCaptcha = base_server + "commonService/getCaptcha.do";
 }

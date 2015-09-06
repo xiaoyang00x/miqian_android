@@ -1,4 +1,4 @@
-package com.miqian.mq;
+package com.miqian.mq.activity;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseFragmentActivity;
 import com.miqian.mq.views.WFYTitle;
 
@@ -19,16 +20,14 @@ public  abstract  class BaseActivity extends BaseFragmentActivity {
     private LinearLayout mContentView;
     private WFYTitle mTitle;
     private Activity mActivity;
-    private View mView_noresult;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_base);
         initCotentView();
         mActivity = this;
-        mView_noresult = findViewById(R.id.frame_no_data);
         mTitle = (WFYTitle) findViewById(R.id.wFYTitle);
         initTitle(mTitle);
         initView();

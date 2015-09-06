@@ -19,7 +19,7 @@
     <style name="wfy_title_default">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/title_height</item>
-        <!--<item name="com.miqian.mq:leftImage">@drawable/btn_back_selector</item>-->
+        <item name="com.miqian.mq:leftImage">@drawable/btn_back_selector</item>
         <item name="com.miqian.mq:leftIsBack">true</item>
         <item name="com.miqian.mq:centerTextColor">@color/white</item>
         <item name="com.miqian.mq:rightTextColor">@color/white</item>
@@ -39,6 +39,42 @@
         <!-- 背景透明 -->
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 模糊 -->
+    </style>
+
+    <style name="text_black_item" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/miqian_black</item>
+        <item name="android:textSize">@dimen/textsize_normal</item>
+    </style>
+
+    <style name="text_gray_item" parent="WrapContent">
+        <item name="android:textColor">@color/miqian_gray</item>
+        <item name="android:textSize">@dimen/textsize_normal</item>
+    </style>
+    <style name="edittext_item" parent="FillContent">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_height">@dimen/item_height</item>
+        <item name="android:background">@drawable/trans</item>
+        <item name="android:textSize">@dimen/textsize_normal</item>
+        <item name="android:textColor">@color/miqian_black</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:textColorHint">@color/miqian_gray</item>
+        <item name="android:ems">10</item>
+    </style>
+
+    <style name="item_divider" parent="FillContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_marginLeft">@dimen/space_small</item>
+        <item name="android:background">#C7C7BB</item>
+    </style>
+
+    <style name="click_btn" parent="FillContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/textsize_middle</item>
+        <item name="android:background">@drawable/btn_redbutton_pressed</item>
+        <item name="android:layout_height">@dimen/item_height</item>
     </style>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.miqian.mq.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.RegisterActivity;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.Dialog_Login;
 
 /**
@@ -37,8 +40,9 @@ import com.miqian.mq.views.Dialog_Login;
 
 							@Override
 							public void login(String telephone, String password) {
-
+								Uihelper.showToast(getActivity(),"登录");
 							}
+
 						}.show();
 					}
 				});

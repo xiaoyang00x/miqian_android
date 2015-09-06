@@ -20,20 +20,20 @@ public class OkHttpsTest extends Activity {
         setContentView(R.layout.second);
     }
 
-    public void testHttps(View v) {
-
-        HttpRequest.testHttp(new ICallback<JpushInfo>() {
-
-            @Override
-            public void onSucceed(JpushInfo result) {
-
-            }
-
-            @Override
-            public void onFail(String error) {
-
-            }
-        }, "1232", "232");
-    }
+//    public void testHttps(View v) {
+//
+//        HttpRequest.testHttp(new ICallback<JpushInfo>() {
+//
+//            @Override
+//            public void onSucceed(JpushInfo result) {
+//
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//
+//            }
+//        }, "1232", "232");
+//    }
 
 }
