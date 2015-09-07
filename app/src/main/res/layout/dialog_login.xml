@@ -71,7 +71,6 @@
                 android:layout_marginRight="10dp"
                 android:singleLine="true"
                 android:hint="请输入密码"
-                android:digits="@string/match"
                 android:inputType="textPassword"
                 android:typeface="monospace"
                 android:textColor="@color/miqian_black"

@@ -10,6 +10,7 @@
     <color name="white">#ffffff</color>
 
     <color name="transparent">#00ffffff</color>
+    <color name="home_business_pressed">#EFEFEF</color>
 
 
 </resources>
