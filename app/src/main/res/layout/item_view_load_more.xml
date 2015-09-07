@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+  <View
+      android:layout_width="wrap_content"
+      android:layout_height="1dp"
+      android:background="#ff080808"
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true"
+      android:layout_margin="3dp"
+      android:id="@+id/divider_line"
+      />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <com.miqian.mq.test.MaterialProgressBarSupport
+            android:id="@+id/progress_view"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            app:progressColor="@color/line_color_run_speed_13"
+            app:progressBackgroundColor="@color/progress_background_light"
+            app:progressSmallSize="true"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:paddingLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:text="@string/app_loading_more" />
+    </LinearLayout>
+</RelativeLayout>
+
+
