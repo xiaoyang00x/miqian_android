@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:layout_marginTop="@dimen/space_middle"
         android:background="@color/white"
         android:minHeight="40dp"
@@ -36,7 +36,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:minHeight="40dp"
         android:paddingBottom="5dp"
@@ -80,7 +80,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:minHeight="40dp"
         android:paddingBottom="5dp"
@@ -113,7 +113,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:minHeight="40dp"
         android:paddingBottom="5dp"
@@ -145,7 +145,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:layout_marginBottom="@dimen/space_middle"
         android:layout_marginLeft="@dimen/space_small"
         android:layout_marginRight="@dimen/space_small"
