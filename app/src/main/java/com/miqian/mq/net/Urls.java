@@ -11,10 +11,10 @@ public class Urls {
 
 
 //  测试
-    public final static String test = base_server + "userService/register.do";
-//    public final static String test = base_server + "commonService/getBankList.do";
+    public final static String test = base_server + "userService/register";
+//    public final static String test = base_server + "commonService/getBankList";
 
-//    public final static String login = base_server + "/userService/login.do";
+//    public final static String login = base_server + "/userService/login";
     //获取验证码
-    public final static String getCaptcha = base_server + "commonService/getCaptcha.do";
+    public final static String getCaptcha = base_server + "commonService/getCaptcha";
 }

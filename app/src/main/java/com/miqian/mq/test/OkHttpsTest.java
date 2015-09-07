@@ -2,12 +2,8 @@ package com.miqian.mq.test;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.JpushInfo;
-import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.net.ICallback;
 
 /**
  * Created by sunyong on 8/28/15.
