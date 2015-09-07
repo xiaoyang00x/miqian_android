@@ -23,4 +23,9 @@
     <dimen name="textsize_small">13sp</dimen>
     <dimen name="textsize_smaller">10sp</dimen>
 
+  <!--keen-->
+  <dimen name="list_item_avatar_size">32dp</dimen>
+  <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+       https://developer.android.com/design/patterns/navigation-drawer.html -->
+  <dimen name="navigation_drawer_width">240dp</dimen>
 </resources>
