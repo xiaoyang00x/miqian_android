@@ -31,20 +31,6 @@ import com.miqian.mq.views.Dialog_Login;
 					parent.removeView(view);
 				}
 
-				view.findViewById(R.id.frame_tab_button).setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						new Dialog_Login(getActivity()){
-
-							@Override
-							public void login(String telephone, String password) {
-								Uihelper.showToast(getActivity(),"登录");
-							}
-
-						}.show();
-					}
-				});
-
 		return view;
 	}
 

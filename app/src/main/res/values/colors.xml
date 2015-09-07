@@ -31,6 +31,7 @@
   <color name="red">#ff4343</color>
   <color name="green">#ff4ed17e</color>
   <color name="blue">#3259ff</color>
+  <color name="home_business_pressed">#EFEFEF</color>
 
   <color name="line_color_run_speed_1">#8acb04</color>
   <color name="line_color_run_speed_3">#4aa657</color>
