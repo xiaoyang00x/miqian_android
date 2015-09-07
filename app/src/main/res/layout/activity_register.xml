@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:layout_marginTop="@dimen/space_middle"
         android:background="@color/white"
         android:minHeight="40dp"
@@ -36,7 +36,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:minHeight="40dp"
         android:paddingBottom="5dp"
@@ -74,19 +74,19 @@
             android:paddingRight="10dp"
             android:text="获取验证码"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_smaller" />
+            android:textSize="@dimen/textsize_small" />
     </RelativeLayout>
 
-    <View style="@style/item_divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:minHeight="40dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
+        android:layout_marginTop="@dimen/space_middle"
         >
 
         <ImageView
@@ -113,7 +113,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:minHeight="40dp"
         android:paddingBottom="5dp"
@@ -145,7 +145,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
+        android:layout_height="@dimen/edit_item"
         android:layout_marginBottom="@dimen/space_middle"
         android:layout_marginLeft="@dimen/space_small"
         android:layout_marginRight="@dimen/space_small"
