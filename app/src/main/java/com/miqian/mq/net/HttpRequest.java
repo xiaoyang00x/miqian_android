@@ -1,8 +1,10 @@
 package com.miqian.mq.net;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.utils.JsonUtil;
@@ -27,7 +29,7 @@ public class HttpRequest {
      * @param phone
      * @param password
      */
-    public static void testHttp(final ICallback<UserInfo> callback, String phone, String password) {
+    public static void testHttp(Context context, final ICallback<Meta> callback, String phone, String password) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -36,45 +38,36 @@ public class HttpRequest {
         mList.add(new Param("captcha", "13"));
         mList.add(new Param("password", password));
 
-        HttpUtils.httpPostRequest(Urls.test, mList, new Callback() {
+        HttpUtils.httpPostRequest(context, Urls.test, mList, new ICallbackString() {
 
             @Override
-            public void onFailure(Request request, IOException e) {
-                callback.onFail("网络请求错误，code：111");
+            public void onSuccess(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode() == 1000) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
             }
 
             @Override
-            public void onResponse(Response response) {
-                if (response.isSuccessful()) {
-                    String result;
-                    try {
-                        result = response.body().string();
-                        Log.e("", result);
-                    } catch (IOException e) {
-                        callback.onFail("网络请求错误，code：" + response.code());
-                    }
-//                    JpushInfo jpushInfo = JsonUtil.parseObject(response.body().toString(), JpushInfo.class);
-//                    if (response.getCode() == 1000) {
-//                        callback.onSucceed(jpushInfo);
-//                    } else {
-//                        callback.onFail(response.getUserinfo());
-//                    }
-                } else {
-                    callback.onFail("网络请求错误，code：" + response.code());
-                }
+            public void onFail(String error) {
+                callback.onFail(error);
             }
         });
     }
 
-    /** 注册接口
-     *   Joy
+    /**
+     * 注册接口
+     * Joy
+     *
      * @param callback
      * @param mobilePhone
      * @param captcha
      * @param password
      * @param invitationCode
      */
-    public static void register(final ICallback<RegisterResult> callback,  String mobilePhone,String captcha,String password,String invitationCode ) {
+    public static void register(Context context, final ICallback<RegisterResult> callback, String mobilePhone, String captcha, String password, String invitationCode) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -83,31 +76,23 @@ public class HttpRequest {
         mList.add(new Param("invitationCode", invitationCode));
         mList.add(new Param("mobilePhone", mobilePhone));
         mList.add(new Param("password", password));
-        HttpUtils.httpPostRequest(Urls.test, mList, new Callback() {
+        HttpUtils.httpPostRequest(context, Urls.test, mList, new ICallbackString() {
+
             @Override
-            public void onFailure(Request request, IOException e) {
-                callback.onFail("网络请求错误，code：111");
-            }
-            @Override
-            public void onResponse(Response response){
-            if (response.isSuccessful()) {
-                String result;
-                try {
-                    result = response.body().string();
-                    Log.e("", result);
-                } catch (IOException e) {
-                    callback.onFail("网络请求错误，code：" + response.code());
-                }
-                RegisterResult data = JsonUtil.parseObject(response.body().toString(), RegisterResult.class);
-                if (data.getCode() == 1000) {
-                    callback.onSucceed(data);
+            public void onSuccess(String result) {
+                RegisterResult registerResult = JsonUtil.parseObject(result, RegisterResult.class);
+                if (registerResult.getCode() == 1000) {
+                    callback.onSucceed(registerResult);
                 } else {
-                    callback.onFail(data.getMessage());
+                    callback.onFail(registerResult.getMessage());
                 }
-            } else {
-                callback.onFail("网络请求错误，code：" + response.code());
             }
-        }});
-        }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        });
+    }
 
 }
