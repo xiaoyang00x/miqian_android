@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class HttpRequest {
     private static List<Param> mList;
-
     /**
      * 测试
      *
@@ -57,16 +56,6 @@ public class HttpRequest {
         });
     }
 
-    /**
-     * 注册接口
-     * Joy
-     *
-     * @param callback
-     * @param mobilePhone
-     * @param captcha
-     * @param password
-     * @param invitationCode
-     */
     public static void register(Context context, final ICallback<RegisterResult> callback, String mobilePhone, String captcha, String password, String invitationCode) {
         if (mList == null) {
             mList = new ArrayList<Param>();
@@ -77,6 +66,32 @@ public class HttpRequest {
         mList.add(new Param("mobilePhone", mobilePhone));
         mList.add(new Param("password", password));
         HttpUtils.httpPostRequest(context, Urls.test, mList, new ICallbackString() {
+
+            @Override
+            public void onSuccess(String result) {
+                RegisterResult registerResult = JsonUtil.parseObject(result, RegisterResult.class);
+                if (registerResult.getCode() == 1000) {
+                    callback.onSucceed(registerResult);
+                } else {
+                    callback.onFail(registerResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        });
+    }
+
+    public static void login(Context context, final ICallback<RegisterResult> callback, String mobilePhone, String password) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("mobilePhone", mobilePhone));
+        mList.add(new Param("password", password));
+        HttpUtils.httpPostRequest(context, Urls.login, mList, new ICallbackString() {
 
             @Override
             public void onSuccess(String result) {

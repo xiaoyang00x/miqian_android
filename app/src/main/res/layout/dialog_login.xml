@@ -110,6 +110,8 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/comon_blue"
+                android:textSize="@dimen/textsize_normal"
                 android:text="忘记密码？" />
 
             <TextView
@@ -119,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:text="立即注册>"
                 android:textColor="@color/red_base"
+                android:textSize="@dimen/textsize_normal"
                 android:gravity="right|center" />
         </LinearLayout>
     </LinearLayout>

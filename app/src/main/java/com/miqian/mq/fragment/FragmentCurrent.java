@@ -14,33 +14,33 @@ import com.miqian.mq.test.OkHttpsTest;
 
 public class FragmentCurrent extends Fragment {
 
-	private View view;
-	private Button btHttp;
-	private Activity mContext;
+    private View view;
+    private Button btHttp;
+    private Activity mContext;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mContext = getActivity();
-		if (savedInstanceState == null || view == null) {
-			view = inflater.inflate(R.layout.frame_current, null);
-		}
-		ViewGroup parent = (ViewGroup) view.getParent();
-		if (parent != null) {
-			parent.removeView(view);
-		}
-		findViewById(view);
-		return view;
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mContext = getActivity();
+        if (savedInstanceState == null || view == null) {
+            view = inflater.inflate(R.layout.frame_current, null);
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if (parent != null) {
+            parent.removeView(view);
+        }
+        findViewById(view);
+        return view;
+    }
 
-	private void findViewById(View view) {
-		btHttp = (Button) view.findViewById(R.id.http);
-		btHttp.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(mContext, OkHttpsTest.class);
-				startActivity(intent);
-			}
-		});
-	}
+    private void findViewById(View view) {
+        btHttp = (Button) view.findViewById(R.id.http);
+        btHttp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, OkHttpsTest.class);
+                startActivity(intent);
+            }
+        });
+    }
 
 }

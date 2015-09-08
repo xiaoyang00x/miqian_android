@@ -82,8 +82,8 @@ public class FragmentMain extends Fragment {
 
         mFragmentList.add(new FragmentHome());
         mFragmentList.add(new FragmentCurrent());
-        mFragmentList.add(new FragmentTab());
-        mFragmentList.add(new FragmentTab());
+        mFragmentList.add(new FragmentUser());
+        mFragmentList.add(new FragmentUser());
 
         if (adapter == null) {
             adapter = new TabPagerAdapter(getFragmentManager(), mFragmentList);

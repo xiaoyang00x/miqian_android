@@ -3,12 +3,8 @@
     android:shape="rectangle" >
 
     <corners
-        android:radius="3dp" />
+        android:radius="@dimen/btn_radius" />
 
-    <size
-        android:height="100dp"
-        android:width="100dp" />
-
-    <solid android:color="#4EC6C6" />
+    <solid android:color="#1ac4e9" />
 
 </shape>

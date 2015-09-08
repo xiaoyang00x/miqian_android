@@ -17,4 +17,6 @@ public class Urls {
 //    public final static String login = base_server + "/userService/login";
     //获取验证码
     public final static String getCaptcha = base_server + "commonService/getCaptcha";
+    //登录
+    public final static String login = base_server + "userService/login";
 }
