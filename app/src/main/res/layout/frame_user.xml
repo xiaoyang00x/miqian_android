@@ -123,6 +123,7 @@
         android:id="@+id/frame_roll"
         android:layout_width="match_parent"
         android:layout_height="75dp"
+        android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
@@ -151,7 +152,7 @@
     <RelativeLayout
         android:id="@+id/frame_person"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/listitem_height"
         android:layout_marginTop="20dp"
         android:background="@drawable/list_click" >
 
@@ -168,25 +169,190 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="50dp"
-            android:text="个人中心" />
+            android:text="我的活期" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="@dimen/margin_left_right"
             android:src="@mipmap/arrow_right"
-            android:id="@+id/imageView2" />
+            android:id="@+id/arrow_1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView7"
+            android:text="300元"
+            android:textColor="@color/red_base"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/imageView2"
+            android:layout_toLeftOf="@+id/arrow_1"
             />
     </RelativeLayout>
+    <View style="@style/item_divider"/>
+    <RelativeLayout
+        android:id="@+id/frame_regular"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:background="@drawable/list_click" >
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:text="我的定期" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@mipmap/arrow_right"
+            android:id="@+id/arrow_2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="300元"
+            android:textColor="@color/red_base"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/arrow_2"
+            />
+    </RelativeLayout>
+    <View style="@style/item_divider"/>
+    <RelativeLayout
+        android:id="@+id/frame_record"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:background="@drawable/list_click" >
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:text="资金记录" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@mipmap/arrow_right"
+            android:id="@+id/arrow_3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="300元"
+            android:textColor="@color/red_base"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/arrow_3"
+            />
+    </RelativeLayout>
+    <View style="@style/item_divider"/>
+    <RelativeLayout
+        android:id="@+id/frame_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:background="@drawable/list_click" >
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:text="拾财券" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@mipmap/arrow_right"
+            android:id="@+id/arrow_4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="300元"
+            android:textColor="@color/red_base"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/arrow_4"
+            />
+    </RelativeLayout>
+    <View style="@style/item_divider"/>
+    <RelativeLayout
+        android:id="@+id/frame_redpackage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:background="@drawable/list_click" >
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:text="红包" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@mipmap/arrow_right"
+            android:id="@+id/arrow_5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="300元"
+            android:textColor="@color/red_base"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/arrow_5"
+            />
+    </RelativeLayout>
+
 </LinearLayout>

@@ -135,7 +135,7 @@ public class RegisterActivity extends BaseActivity {
         if (!TextUtils.isEmpty(captcha)){
 
             if(!TextUtils.isEmpty(password)){
-                HttpRequest.register(new ICallback<RegisterResult>() {
+                HttpRequest.register(RegisterActivity.this,new ICallback<RegisterResult>() {
                     @Override
                     public void onSucceed(RegisterResult result) {
                         Log.e("Register",result.getData().getBalance());
