@@ -3,16 +3,11 @@ package com.miqian.mq.net;
 import android.content.Context;
 import android.util.Log;
 
-import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.utils.JsonUtil;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +28,8 @@ public class HttpRequest {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("mobilePhone", phone));
+        mList.add(new Param("mobilePhone", RSAUtils.encryptByPublic(phone)));
+        Log.e("", "phone: " + RSAUtils.encryptByPublic(phone));
         mList.add(new Param("captcha", "13"));
         mList.add(new Param("password", password));
 
