@@ -4,6 +4,8 @@ import android.util.Base64;
 
 import com.miqian.mq.net.Urls;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -54,10 +56,17 @@ public class RSAUtils {
 //			byte plaintext[] = content.getBytes("UTF-8");
             byte[] output = cipher.doFinal(content.getBytes("GBK"));
 
-            String s = new String(Base64.encode(output, Base64.DEFAULT));
-
-            return s;
+            return new String(Base64.encode(output, Base64.DEFAULT));
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String encryptURLEncode(String content) {
+        try {
+            return URLEncoder.encode(encryptByPublic(content), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
             return null;
         }
     }

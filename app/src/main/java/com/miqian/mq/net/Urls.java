@@ -18,7 +18,7 @@ public class Urls {
 
 //    public static final String base_server = "https://api.github.com/repos/square/okhttp/contributors";
 //    public static final String base_server = "https://api.shicaidai.com/";
-    public static final String base_server = "http://172.20.8.18:8081/miqian-app/";
+    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
 
 
 //  测试
