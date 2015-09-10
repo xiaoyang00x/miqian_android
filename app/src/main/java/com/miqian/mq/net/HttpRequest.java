@@ -3,16 +3,12 @@ package com.miqian.mq.net;
 import android.content.Context;
 import android.util.Log;
 
-import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
-import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.utils.JsonUtil;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +16,7 @@ import java.util.List;
  * Created by Administrator on 2015/9/4.
  */
 public class HttpRequest {
+
     private static List<Param> mList;
     /**
      * 测试
@@ -33,20 +30,22 @@ public class HttpRequest {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("mobilePhone", phone));
-        mList.add(new Param("captcha", "13"));
-        mList.add(new Param("password", password));
+        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
+        mList.add(new Param("captcha", "1423"));
+        mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
         HttpUtils.httpPostRequest(context, Urls.test, mList, new ICallbackString() {
 
             @Override
             public void onSuccess(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode() == 1000) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
+                TestClass test = JsonUtil.parseObject(result, TestClass.class);
+                Log.e("", "L: " + RSAUtils.decryptByPrivate(test.getTestEncrypt()));
+//                Meta meta = JsonUtil.parseObject(result, Meta.class);
+//                if (meta.getCode() == 1000) {
+//                    callback.onSucceed(meta);
+//                } else {
+//                    callback.onFail(meta.getMessage());
+//                }
             }
 
             @Override

@@ -5,12 +5,15 @@ import android.util.Log;
 
 import com.miqian.mq.utils.MobileOS;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.squareup.okhttp.Callback;
@@ -21,6 +24,7 @@ import com.squareup.okhttp.Callback;
  */
 public class HttpUtils {
 
+    public static final String APP_KEY = "&key=jwoxoWHeauio";
     public static final String SERVER_ERROR = "服务端网络不通，请重试";
     private static final String NETWORK_ERROR = "您当前网络不可用";
 
@@ -31,14 +35,15 @@ public class HttpUtils {
         }
         final OkHttpClient client = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
+        sortParam(list);
         if (list != null && list.size() > 0) {
             for (Param param : list) {
                 builder.add(param.key, param.value);
             }
         }
         RequestBody requestBody = builder.build();
-
-        final Request request = new Request.Builder().url(url).post(requestBody).addHeader("phoneId", "11").addHeader("partnerId", "sss").addHeader("sign", "2332").build();
+        Headers.Builder headerBuilder = getRequestHeader(getSign(list));
+        final Request request = new Request.Builder().url(url).post(requestBody).headers(headerBuilder.build()).build();
 
         client.newCall(request).enqueue(new Callback() {
 
@@ -63,5 +68,56 @@ public class HttpUtils {
                 }
             }
         });
+    }
+
+    public static String getSign(List<Param> list) {
+        StringBuffer signBuffer = new StringBuffer();
+        if (list != null && list.size() > 0) {
+            for (Param param : list) {
+                signBuffer.append("&" + param.key);
+                signBuffer.append("=" + param.value);
+            }
+            signBuffer.append(APP_KEY);
+            signBuffer.deleteCharAt(0);
+            return MobileOS.getMd5(signBuffer.toString()).toLowerCase();
+        }
+        return "";
+    }
+
+    /**
+     * 对List<Param>按key进行升序排序
+     *
+     * @param list
+     * @return
+     */
+    public static void sortParam(List<Param> list) {
+        if (list == null) {
+            return;
+        }
+        Collections.sort(list, new Comparator<Param>() {
+            @Override
+            public int compare(Param lhs, Param rhs) {
+                return lhs.key.compareToIgnoreCase(rhs.key);
+            }
+        });
+    }
+
+    /**
+     * 获取请求头
+     *
+     * @return
+     */
+    public static Headers.Builder getRequestHeader(String sign) {
+        Headers.Builder headerBuilder = new Headers.Builder();
+        headerBuilder.add("deviceId", "11");
+        headerBuilder.add("cType", "android");
+        headerBuilder.add("appName", "miqian");
+        headerBuilder.add("appVersion", "2332");
+        headerBuilder.add("channelCode", "2332");
+        headerBuilder.add("timer", "2332");
+        headerBuilder.add("sign", sign);
+        headerBuilder.add("token", "2332");
+        headerBuilder.add("osVersion", "2332");
+        return headerBuilder;
     }
 }
