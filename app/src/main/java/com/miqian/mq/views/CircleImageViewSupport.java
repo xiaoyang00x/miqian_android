@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.miqian.mq.test;
+package com.miqian.mq.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

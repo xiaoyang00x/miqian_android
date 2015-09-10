@@ -1,4 +1,4 @@
-package com.miqian.mq.test;
+package com.miqian.mq.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;

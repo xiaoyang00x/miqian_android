@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.miqian.mq.R;
+import com.miqian.mq.views.MaterialProgressBarSupport;
 import java.util.List;
 
 /**

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.test.ActivityEntity;
 import com.miqian.mq.test.HomeAdPageAdapter;
-import com.miqian.mq.test.MaterialProgressBarSupport;
+import com.miqian.mq.views.MaterialProgressBarSupport;
 import com.miqian.mq.test.ViewPagerAdapter;
 import com.miqian.mq.views.CircleBar;
 import com.miqian.mq.views.PageIndicator;

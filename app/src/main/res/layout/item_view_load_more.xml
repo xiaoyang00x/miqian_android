@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true">
 
-        <com.miqian.mq.test.MaterialProgressBarSupport
+        <com.miqian.mq.views.MaterialProgressBarSupport
             android:id="@+id/progress_view"
             android:layout_width="56dp"
             android:layout_height="56dp"
