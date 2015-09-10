@@ -60,7 +60,7 @@
         android:layout_alignParentStart="true"
         />
 
-    <com.miqian.mq.test.CircleBar
+    <com.miqian.mq.views.CircleBar
         android:id="@+id/circlebar"
         android:layout_width="100dp"
         android:layout_height="100dp"
