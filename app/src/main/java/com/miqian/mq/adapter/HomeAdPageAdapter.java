@@ -1,4 +1,4 @@
-package com.miqian.mq.test;
+package com.miqian.mq.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import com.miqian.mq.R;
+import com.miqian.mq.test.ActivityEntity;
 import com.miqian.mq.utils.net.HttpImageUtils;
 import com.miqian.mq.utils.net.ImageLoadTask;
 import com.miqian.mq.utils.net.ImageLoaderManager;

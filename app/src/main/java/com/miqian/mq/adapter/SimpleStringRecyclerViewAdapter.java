@@ -1,4 +1,4 @@
-package com.miqian.mq.test;
+package com.miqian.mq.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

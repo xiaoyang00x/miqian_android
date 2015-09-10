@@ -1,4 +1,4 @@
-package com.miqian.mq.test;
+package com.miqian.mq.adapter;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
