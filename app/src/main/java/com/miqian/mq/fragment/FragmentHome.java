@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.miqian.mq.R;
-import com.miqian.mq.test.HomeAdapter;
+import com.miqian.mq.adapter.HomeAdapter;
 import java.util.Timer;
 import java.util.TimerTask;
 
