@@ -46,4 +46,7 @@
   <color name="line_color_run_speed_15">#e10c05</color>
   <color name="line_color_run_speed_17">#a5110a</color>
   <color name="line_color_run_speed_19">#6d0409</color>
+
+  <color name="typeface_black">#505050</color>
+
 </resources>

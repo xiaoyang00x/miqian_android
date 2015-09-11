@@ -3,6 +3,7 @@ package com.miqian.mq.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -31,5 +32,20 @@ public class Uihelper {
         initToast(context);
         mToast.setText(id);
         mToast.show();
+    }
+
+    public static void trace(String st) {
+
+        if (Constants.Debug) {
+            Log.e("miqian_trace", st);
+        }
+
+    }
+
+    public static void trace(String tag, String st) {
+        if (Constants.Debug) {
+            Log.e(tag, st);
+        }
+
     }
 }

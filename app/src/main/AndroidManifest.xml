@@ -37,6 +37,14 @@
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,13 +52,10 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
 
         <activity android:name=".activity.RegisterActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".activity.IntoActivity"
             android:launchMode="singleTask"/>
 
 
