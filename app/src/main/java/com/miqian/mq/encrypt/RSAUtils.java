@@ -52,9 +52,7 @@ public class RSAUtils {
 
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.ENCRYPT_MODE, pubkey);
-
-//			byte plaintext[] = content.getBytes("UTF-8");
-            byte[] output = cipher.doFinal(content.getBytes("GBK"));
+            byte[] output = cipher.doFinal(content.getBytes("UTF-8"));
 
             return new String(Base64.encode(output, Base64.DEFAULT));
         } catch (Exception e) {
@@ -82,7 +80,7 @@ public class RSAUtils {
             PrivateKey privateKey = loadPrivateKey(Urls.RSA_PRIVATE);
             byte[] encryptedData = Base64.decode(content, Base64.DEFAULT);
             byte[] output = decryptData(encryptedData, privateKey);
-            return new String(output, Charset.forName("GBK"));
+            return new String(output);
         } catch (Exception e) {
             e.printStackTrace();
         }
