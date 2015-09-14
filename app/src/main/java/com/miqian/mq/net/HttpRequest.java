@@ -62,7 +62,7 @@ public class HttpRequest {
         }
         mList.clear();
         mList.add(new Param("captcha", captcha));
-//      mList.add(new Param("invitationCode", invitationCode));
+        mList.add(new Param("invitationCode", invitationCode));
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
         HttpUtils.httpPostRequest(context, Urls.register, mList, new ICallbackString() {
