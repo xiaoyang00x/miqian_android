@@ -19,7 +19,7 @@ import com.miqian.mq.views.WFYTitle;
 public  abstract  class BaseActivity extends BaseFragmentActivity {
     private LinearLayout mContentView;
     private WFYTitle mTitle;
-    private Activity mActivity;
+    public Activity mActivity;
 
     @Override
     public void onCreate(Bundle arg0) {

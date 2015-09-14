@@ -10,8 +10,11 @@
   <string name="app_loading_more">加载中…</string>
 
   <string name="phone_noeffect">请输入正确的手机号码</string>
-  <string name="tip_password">密码长度为6到20位</string>
+  <string name="phone_null">手机号码不能为空</string>
+  <string name="tip_password">请输入正确格式的登录密码，6到16位的数字或字母组合</string>
   <string name="feedback_prompt">请描述您的问题，最多240个字。</string>
+  <string name="tip_captcha">请输入6位数字的验证码</string>
+
   //安卓只输入数字和字母
   <string name="match">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ</string>
 

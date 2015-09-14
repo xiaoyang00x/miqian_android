@@ -1,5 +1,6 @@
 package com.miqian.mq.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.RegisterResult;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.Dialog_Login;
 
@@ -82,7 +89,18 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 Dialog_Login dialog_login = new Dialog_Login(getActivity()) {
                     @Override
                     public void login(String telephone, String password) {
+                        HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
+                            @Override
+                            public void onSucceed(LoginResult result) {
+                      String name= RSAUtils.decryptByPrivate(result.getData().getRealName());
+                             Uihelper.trace(name);
+                            }
 
+                            @Override
+                            public void onFail(String error) {
+
+                            }
+                        }, telephone, password);
                     }
                 };
 
@@ -91,6 +109,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //取现
             case R.id.btn_rollout:
+                startActivity(new Intent(getActivity(), IntoActivity.class));
+
                 break;
             //我的活期
             case R.id.frame_account_current:
