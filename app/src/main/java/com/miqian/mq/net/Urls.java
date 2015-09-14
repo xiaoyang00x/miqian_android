@@ -23,7 +23,10 @@ public class Urls {
 
 //  测试
     public final static String test = base_server + "userService/register";
-//    public final static String test = base_server + "commonService/getBankList";
+    // 身份认证
+    public final static String idcard_check = base_server + "commonService/idCardAuth";
+    // 充值转入接口
+    public final static String roll_in = base_server + "assetService/addRecharge";
 
 //    public final static String login = base_server + "/userService/login";
     //获取验证码

@@ -21,6 +21,16 @@
                 android:layout_height="240dp"
                 android:background="#EE503E">
 
+                <RelativeLayout
+                    android:layout_width="240dp"
+                    android:layout_height="240dp"
+                    android:layout_centerInParent="true">
+
+                    <com.miqian.mq.views.WaterWaveView
+                        android:id="@+id/wave_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
             </RelativeLayout>
 
             <RelativeLayout
@@ -65,9 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textSize="12sp"
+                android:text="由融资租赁机构提供本息保障，安全透明值得认购"
                 android:textColor="@color/miqian_gray"
-                android:text="由融资租赁机构提供本息保障，安全透明值得认购" />
+                android:textSize="12sp" />
         </LinearLayout>
 
 
