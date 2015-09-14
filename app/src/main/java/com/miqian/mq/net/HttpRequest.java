@@ -173,7 +173,7 @@ public class HttpRequest {
             @Override
             public void onSuccess(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
-                if (loginResult.getCode().equals("000000") {
+                if (loginResult.getCode().equals("000000")){
                     callback.onSucceed(loginResult);
                 } else {
                     callback.onFail(loginResult.getMessage());
@@ -212,7 +212,7 @@ public class HttpRequest {
             @Override
             public void onSuccess(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode() == 1000) {
+                if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
