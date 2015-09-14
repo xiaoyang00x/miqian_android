@@ -44,6 +44,14 @@
             </intent-filter>
         </activity>
 
+        <!-- LLYT SDK START -->
+        <activity
+            android:name="com.yintong.secure.activity.BaseActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -79,6 +87,10 @@
             android:enabled="true"
             android:exported="false" >
         </service>
+
+        <service
+            android:name="com.yintong.secure.service.PayService"
+            android:exported="false" />
 
 
         <!-- Required SDK 核心功能-->
