@@ -16,25 +16,23 @@ public class Urls {
             + "XBCASOJIbvvtQBDPJmwvwJaR+RifwQJAd+WGpyy3KA9ekmY5tqmhODSPhUdnzlTJ" + "\r" + "s2skwim1moKVbv8JZt6wgpR315a7uAJonue32ndycWiSyl9yqKZ9FwJAFDNB7i0w" + "\r"
             + "7vhqwHmFAXxnffRtEVZbJk2AsEcE0qJqwoxGbij+O1+OIksDGlxjc/LgnXLlXvvY" + "\r" + "ZU0zSqeXVAcdRQ==";
 
-//    public static final String base_server = "https://api.github.com/repos/square/okhttp/contributors";
-//    public static final String base_server = "https://api.shicaidai.com/";
+    //    public static final String base_server = "https://api.shicaidai.com/";
     public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
 
-
-//  测试
+    //测试
     public final static String test = base_server + "userService/register";
-    // 身份认证
+    //身份认证
     public final static String idcard_check = base_server + "commonService/idCardAuth";
-    // 充值转入接口
+    //充值转入接口
     public final static String roll_in = base_server + "assetService/addRecharge";
+    //活期首页
+    public final static String current_home = base_server + "currentService/getCurrentMain";
 
-//    public final static String login = base_server + "/userService/login";
+
     //获取验证码
     public final static String getCaptcha = base_server + "commonService/getCaptcha";
     //登录
     public final static String login = base_server + "userService/login";
-
-    public final static String register  = base_server + "userService/register";
-
-//    /currentService/getCurrentMain
+    //注册
+    public final static String register = base_server + "userService/register";
 }
