@@ -35,4 +35,6 @@ public class Urls {
     public final static String login = base_server + "userService/login";
 
     public final static String register  = base_server + "userService/register";
+
+//    /currentService/getCurrentMain
 }
