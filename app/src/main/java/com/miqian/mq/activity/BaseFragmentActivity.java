@@ -12,8 +12,8 @@ import com.miqian.mq.receiver.NetBroadReceiver;
 public class BaseFragmentActivity extends FragmentActivity implements NetBroadReceiver.netEventHandler {
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
