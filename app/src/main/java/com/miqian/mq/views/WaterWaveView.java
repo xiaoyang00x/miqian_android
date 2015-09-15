@@ -16,8 +16,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.miqian.mq.R;
-
 /**
  * @author kince
  * @category View必须是正方形
@@ -34,6 +32,7 @@ public class WaterWaveView extends View {
     private static final int offsetWidth = 200;
 
     private Paint mRingPaint;
+    private Paint mBigCirclePaint;
     private Paint mCirclePaint;
     private Paint mWavePaint;
     private Paint mWavePaint1;
@@ -67,7 +66,6 @@ public class WaterWaveView extends View {
      */
     public WaterWaveView(Context context) {
         super(context);
-        // TODO Auto-generated constructor stub
         mContext = context;
         init(mContext);
     }
@@ -78,7 +76,6 @@ public class WaterWaveView extends View {
      */
     public WaterWaveView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // TODO Auto-generated constructor stub
         mContext = context;
         init(mContext);
     }
@@ -90,7 +87,6 @@ public class WaterWaveView extends View {
      */
     public WaterWaveView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        // TODO Auto-generated constructor stub
         mContext = context;
         init(mContext);
     }
@@ -106,6 +102,13 @@ public class WaterWaveView extends View {
         mRingPaint.setStyle(Paint.Style.STROKE);
         mRingPaint.setAntiAlias(true);
         mRingPaint.setStrokeWidth(mRingSTROKEWidth);
+
+        mBigCirclePaint = new Paint();
+        mBigCirclePaint.setColor(mRingColor);
+        mBigCirclePaint.setAlpha(255);
+        mBigCirclePaint.setStyle(Paint.Style.STROKE);
+        mBigCirclePaint.setAntiAlias(true);
+        mBigCirclePaint.setStrokeWidth(1);
 
         mCirclePaint = new Paint();
         mCirclePaint.setColor(mCircleColor);
@@ -199,7 +202,6 @@ public class WaterWaveView extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        // TODO Auto-generated method stub
         super.onSizeChanged(w, h, oldw, oldh);
         mScreenWidth = w + offsetWidth;
         centerX = w / 2;
@@ -209,12 +211,11 @@ public class WaterWaveView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // TODO Auto-generated method stub
         super.onDraw(canvas);
         // 得到控件的宽高
         int width = getWidth();
 //        int height = getHeight();
-        setBackgroundColor(mContext.getResources().getColor(R.color.holo_purple2));
+//        setBackgroundColor(mContext.getResources().getColor(R.color.holo_purple2));
 
         //计算当前油量线和水平中线的距离
         float centerOffset = Math.abs(mScreenWidth / 2 * mWaterLevel - mScreenWidth / 4);
@@ -300,8 +301,10 @@ public class WaterWaveView extends View {
             startX1++;
         }
         canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2, mRingPaint);
+        canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2 + 18, mBigCirclePaint);
 
         canvas.drawCircle(centerX, centerY, mScreenWidth / 4, mCirclePaint);
+
         canvas.restore();
     }
 
