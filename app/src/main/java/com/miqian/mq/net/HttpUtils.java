@@ -26,15 +26,12 @@ import com.squareup.okhttp.Callback;
 public class HttpUtils {
 
     public static final String APP_KEY = "&key=jwoxoWHeauio";
-    public static final String SERVER_ERROR = "服务端网络不通，请重试";
-    private static final String NETWORK_ERROR = "您当前网络不可用";
     private static final MediaType CONTENT_TYPE =
             MediaType.parse("application/x-www-form-urlencoded");
 
-    public static void httpPostRequest(Context context, String url, List<Param> list, final ICallbackString callback) {
+    public static String httpPostRequest(Context context, String url, List<Param> list) {
         if (MobileOS.getNetworkType(context) == -1) {
-            callback.onFail(NETWORK_ERROR);
-            return;
+            return MyAsyncTask.NETWORK_ERROR;
         }
         final OkHttpClient client = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
@@ -53,30 +50,16 @@ public class HttpUtils {
         }
         Headers.Builder headerBuilder = getRequestHeader(getSign(list));
         final Request request = new Request.Builder().url(url).post(requestBody).headers(headerBuilder.build()).build();
-
-        client.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onFailure(Request request, IOException e) {
-                callback.onFail("网络请求错误，code：111");
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                return response.body().string();
             }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String result;
-                    try {
-                        result = response.body().string();
-                        callback.onSuccess(result);
-                        Log.e("", result);
-                    } catch (IOException e) {
-                        callback.onFail("网络请求错误，code：" + response.code());
-                    }
-                } else {
-                    callback.onFail("网络请求错误，code：" + response.code());
-                }
-            }
-        });
+            return null;
+        } catch (IOException e) {
+            return MyAsyncTask.SERVER_ERROR + e.getMessage();
+        }
     }
 
     public static String getSign(List<Param> list) {

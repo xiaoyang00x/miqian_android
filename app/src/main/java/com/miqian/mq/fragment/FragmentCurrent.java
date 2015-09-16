@@ -133,15 +133,10 @@ public class FragmentCurrent extends Fragment {
     }
 
     private void refreshView() {
-        mContext.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (currentInfo != null) {
-                    totalCountText.setText(currentInfo.getBuyItemCount());
-                    totalMoneyText.setText(currentInfo.getBuyTotalSum());
-                }
-            }
-        });
+        if (currentInfo != null) {
+            totalCountText.setText(currentInfo.getBuyItemCount());
+            totalMoneyText.setText(currentInfo.getBuyTotalSum());
+        }
     }
 
     public void obtainData() {

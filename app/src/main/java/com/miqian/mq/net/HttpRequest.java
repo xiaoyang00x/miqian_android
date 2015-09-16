@@ -39,10 +39,10 @@ public class HttpRequest {
         mList.add(new Param("captcha", "1423"));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
-        HttpUtils.httpPostRequest(context, Urls.test, mList, new ICallbackString() {
+        new MyAsyncTask(context, Urls.test, mList, new ICallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSucceed(String result) {
                 TestClass test = JsonUtil.parseObject(result, TestClass.class);
                 Log.e("", "L: " + RSAUtils.decryptByPrivate(test.getTestEncrypt()));
             }
@@ -51,7 +51,7 @@ public class HttpRequest {
             public void onFail(String error) {
                 callback.onFail(error);
             }
-        });
+        }).executeOnExecutor();
     }
 
     /**
@@ -68,10 +68,10 @@ public class HttpRequest {
         mList.add(new Param("idNo", RSAUtils.encryptURLEncode(idNo)));
         mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
 
-        HttpUtils.httpPostRequest(context, Urls.idcard_check, mList, new ICallbackString() {
+        new MyAsyncTask(context, Urls.idcard_check, mList, new ICallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSucceed(String result) {
 //                Log.e("", result);
 //                TestClass test = JsonUtil.parseObject(result, TestClass.class);
 //                Log.e("", "L: " + RSAUtils.decryptByPrivate(test.getTestEncrypt()));
@@ -87,7 +87,7 @@ public class HttpRequest {
             public void onFail(String error) {
                 callback.onFail(error);
             }
-        });
+        }).executeOnExecutor();
     }
 
     /**
@@ -100,11 +100,10 @@ public class HttpRequest {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-
-        HttpUtils.httpPostRequest(context, Urls.current_home, mList, new ICallbackString() {
+        new MyAsyncTask(context, Urls.current_home, mList, new ICallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSucceed(String result) {
                 CurrentInfoResult currentInfoResult = JsonUtil.parseObject(result, CurrentInfoResult.class);
                 if (currentInfoResult.getCode().equals("000000")) {
                     callback.onSucceed(currentInfoResult);
@@ -117,7 +116,7 @@ public class HttpRequest {
             public void onFail(String error) {
                 callback.onFail(error);
             }
-        });
+        }).executeOnExecutor();
     }
 
     /**
@@ -135,10 +134,10 @@ public class HttpRequest {
         mList.add(new Param("bankCode", bankCode));
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
 
-        HttpUtils.httpPostRequest(context, Urls.roll_in, mList, new ICallbackString() {
+        new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSucceed(String result) {
                 Log.e("", result);
                 PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
                 if (payOrderResult.getCode().equals("000000")) {
@@ -152,7 +151,7 @@ public class HttpRequest {
             public void onFail(String error) {
                 callback.onFail(error);
             }
-        });
+        }).executeOnExecutor();
     }
 
     public static void register(Context context, final ICallback<RegisterResult> callback, String mobilePhone, String captcha, String password, String invitationCode) {
@@ -165,10 +164,10 @@ public class HttpRequest {
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
-        HttpUtils.httpPostRequest(context, Urls.register, mList, new ICallbackString() {
+        new MyAsyncTask(context, Urls.register, mList, new ICallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSucceed(String result) {
                 RegisterResult registerResult = JsonUtil.parseObject(result, RegisterResult.class);
                 if (registerResult.getCode().equals("000000")) {
                     callback.onSucceed(registerResult);
@@ -181,7 +180,7 @@ public class HttpRequest {
             public void onFail(String error) {
                 callback.onFail(error);
             }
-        });
+        }).executeOnExecutor();
     }
 
     //登录
@@ -193,10 +192,10 @@ public class HttpRequest {
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
-        HttpUtils.httpPostRequest(context, Urls.login, mList, new ICallbackString() {
+        new MyAsyncTask(context, Urls.login, mList, new ICallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSucceed(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
                 if (loginResult.getCode().equals("000000")) {
                     callback.onSucceed(loginResult);
@@ -209,7 +208,7 @@ public class HttpRequest {
             public void onFail(String error) {
                 callback.onFail(error);
             }
-        });
+        }).executeOnExecutor();
     }
 
     //获取验证码
@@ -231,10 +230,10 @@ public class HttpRequest {
         mList.add(new Param("operationType", "" + operationType));
         mList.add(new Param("custId", custId));
 
-        HttpUtils.httpPostRequest(context, Urls.getCaptcha, mList, new ICallbackString() {
+        new MyAsyncTask(context, Urls.getCaptcha, mList, new ICallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
@@ -247,6 +246,6 @@ public class HttpRequest {
             public void onFail(String error) {
                 callback.onFail(error);
             }
-        });
+        }).executeOnExecutor();
     }
 }

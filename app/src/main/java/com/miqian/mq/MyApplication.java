@@ -12,6 +12,11 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        try {
+            Class.forName("android.os.AsyncTask");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
     }
