@@ -17,8 +17,8 @@ import com.miqian.mq.views.WFYTitle;
  * Created by Joy on 2015/9/1.
  */
 public  abstract  class BaseActivity extends BaseFragmentActivity {
-    private LinearLayout mContentView;
-    private WFYTitle mTitle;
+    public LinearLayout mContentView;
+    public WFYTitle mTitle;
     public Activity mActivity;
 
     @Override
