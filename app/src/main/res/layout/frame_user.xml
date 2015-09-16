@@ -307,7 +307,7 @@ android:visibility="gone"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/account_current" />
 
         <TextView
             style="@style/text_black_item"
@@ -348,7 +348,7 @@ android:visibility="gone"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/account_regular" />
 
         <TextView
             style="@style/text_black_item"
@@ -389,7 +389,7 @@ android:visibility="gone"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/account_record" />
 
         <TextView
             style="@style/text_black_item"
@@ -430,7 +430,7 @@ android:visibility="gone"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/account_ticket" />
 
         <TextView
             style="@style/text_black_item"
@@ -471,7 +471,7 @@ android:visibility="gone"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/account_redpackage" />
 
         <TextView
             style="@style/text_black_item"

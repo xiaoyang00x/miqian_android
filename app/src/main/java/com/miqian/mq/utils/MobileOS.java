@@ -1,5 +1,6 @@
 package com.miqian.mq.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.view.Display;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -303,4 +305,24 @@ public class MobileOS {
 		}
 		return false;
 	}
+
+	/**
+	 * 获取屏幕宽度
+	 *
+	 * @return
+	 */
+	public static int getScreenWidth(Activity context) {
+		Display display = context.getWindowManager().getDefaultDisplay();
+		return display.getWidth();
+
+	}
+
+	/**
+	 * 获取屏幕高度
+	 */
+	public static int getScreenHeight(Activity context) {
+		Display display = context.getWindowManager().getDefaultDisplay();
+		return display.getHeight();
+	}
+
 }

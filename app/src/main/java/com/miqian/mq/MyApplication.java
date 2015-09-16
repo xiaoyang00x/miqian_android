@@ -8,8 +8,8 @@ import cn.jpush.android.api.JPushInterface;
  * Created by Joy on 2015/8/31.
  */
 public class MyApplication extends Application {
-    private  static MyApplication  myApplication;
-    private  static boolean   isCurrent;
+    private static MyApplication myApplication;
+    private static boolean isCurrent;
 
     public static boolean isCurrent() {
         return isCurrent;
@@ -32,11 +32,11 @@ public class MyApplication extends Application {
         JPushInterface.init(this);
     }
 
-  public static    MyApplication   getInstance(){
+    public static MyApplication getInstance() {
+        if (myApplication == null) {
+            myApplication = new MyApplication();
+        }
 
-      if (myApplication==null){
-          myApplication =new MyApplication();
-      }
-
-   return  myApplication; }
+        return myApplication;
+    }
 }

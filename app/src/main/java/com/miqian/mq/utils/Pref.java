@@ -22,12 +22,10 @@ public class Pref {
 
 	public static final String TOINDEX = "toindex";
 
-	public static final String LOCK = "lock";
-
 	// 首次开启
 	public static final String FIRST_LOAD = "FirstLoad";
 
-	public static final String VISITOR = "0000";
+	public static final String VISITOR = "visitor_0000";
 
 	public static final String NICKNAME = "nickname";
 
@@ -38,17 +36,9 @@ public class Pref {
 	public static final String SERVER_ERROR_CODE = "ServerErrorCode";
 	// 是否退出应用
 	public static final String EXIT = "exit";
-	// 手势开关
-	public static final String GESTURE_TOGGLE = "gesture_toggle";
-	// 保存手势密码
-	public static final String GESTURE = "gesture";
 	// app是否在后台
 	public static final String BACKSTAGE = "backStage";
 
-	// 手势计数
-	public static final String GESTURE_COUNT = "gestureCount";
-
-	public static String SCREEN_ENTER="screen_enter";
 
 	public static String IsPush="isPush";
 

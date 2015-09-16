@@ -7,11 +7,10 @@
         android:background="@color/red_base">
 
         <ImageButton
-            android:id="@+id/bt_account"
+            android:id="@+id/btn_message"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
-            android:visibility="gone"
             android:background="@color/transparent" />
 
 <!--         <ImageButton -->
@@ -39,7 +38,7 @@
             android:visibility="gone"/>
 
         <ImageButton
-            android:id="@+id/bt_message"
+            android:id="@+id/btn_account"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
