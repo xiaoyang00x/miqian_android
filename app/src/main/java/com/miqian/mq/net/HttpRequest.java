@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.PayOrderResult;
@@ -20,6 +21,7 @@ import java.util.List;
 public class HttpRequest {
 
     private static List<Param> mList;
+
     /**
      * 测试
      *
@@ -43,12 +45,6 @@ public class HttpRequest {
             public void onSuccess(String result) {
                 TestClass test = JsonUtil.parseObject(result, TestClass.class);
                 Log.e("", "L: " + RSAUtils.decryptByPrivate(test.getTestEncrypt()));
-//                Meta meta = JsonUtil.parseObject(result, Meta.class);
-//                if (meta.getCode() == 1000) {
-//                    callback.onSucceed(meta);
-//                } else {
-//                    callback.onFail(meta.getMessage());
-//                }
             }
 
             @Override
@@ -57,6 +53,7 @@ public class HttpRequest {
             }
         });
     }
+
     /**
      * 身份认证
      *
@@ -94,6 +91,36 @@ public class HttpRequest {
     }
 
     /**
+     * 活期首页
+     *
+     * @param callback
+     */
+    public static void getCurrentHome(Context context, final ICallback<CurrentInfoResult> callback) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+
+        HttpUtils.httpPostRequest(context, Urls.current_home, mList, new ICallbackString() {
+
+            @Override
+            public void onSuccess(String result) {
+                CurrentInfoResult currentInfoResult = JsonUtil.parseObject(result, CurrentInfoResult.class);
+                if (currentInfoResult.getCode().equals("000000")) {
+                    callback.onSucceed(currentInfoResult);
+                } else {
+                    callback.onFail(currentInfoResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        });
+    }
+
+    /**
      * 充值
      *
      * @param callback
@@ -113,17 +140,12 @@ public class HttpRequest {
             @Override
             public void onSuccess(String result) {
                 Log.e("", result);
-                PayOrderResult PayOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
-                if (PayOrderResult.getCode().equals("000000")) {
-                    callback.onSucceed(PayOrderResult);
+                PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
+                if (payOrderResult.getCode().equals("000000")) {
+                    callback.onSucceed(payOrderResult);
+                } else {
+                    callback.onFail(payOrderResult.getMessage());
                 }
-//                Log.e("", "L: " + RSAUtils.decryptByPrivate(test.getTestEncrypt()));
-//                Meta meta = JsonUtil.parseObject(result, Meta.class);
-//                if (meta.getCode() == 1000) {
-//                    callback.onSucceed(meta);
-//                } else {
-//                    callback.onFail(meta.getMessage());
-//                }
             }
 
             @Override
@@ -142,6 +164,7 @@ public class HttpRequest {
         mList.add(new Param("invitationCode", invitationCode));
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
+
         HttpUtils.httpPostRequest(context, Urls.register, mList, new ICallbackString() {
 
             @Override
@@ -160,6 +183,7 @@ public class HttpRequest {
             }
         });
     }
+
     //登录
     public static void login(Context context, final ICallback<LoginResult> callback, String mobilePhone, String password) {
         if (mList == null) {
@@ -168,12 +192,13 @@ public class HttpRequest {
         mList.clear();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
+
         HttpUtils.httpPostRequest(context, Urls.login, mList, new ICallbackString() {
 
             @Override
             public void onSuccess(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
-                if (loginResult.getCode().equals("000000")){
+                if (loginResult.getCode().equals("000000")) {
                     callback.onSucceed(loginResult);
                 } else {
                     callback.onFail(loginResult.getMessage());
@@ -190,21 +215,20 @@ public class HttpRequest {
     //获取验证码
 
     /**
-     *
      * @param context
      * @param callback
      * @param phone
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
-                            13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
-     * @param custId     用户Id   非必填  注册不用填
+     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
+     * @param custId        用户Id   非必填  注册不用填
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone,int operationType,String custId) {
+    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String custId) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
-        mList.add(new Param("operationType", ""+operationType));
+        mList.add(new Param("operationType", "" + operationType));
         mList.add(new Param("custId", custId));
 
         HttpUtils.httpPostRequest(context, Urls.getCaptcha, mList, new ICallbackString() {
@@ -218,12 +242,11 @@ public class HttpRequest {
                     callback.onFail(meta.getMessage());
                 }
             }
+
             @Override
             public void onFail(String error) {
                 callback.onFail(error);
             }
         });
     }
-
-
 }

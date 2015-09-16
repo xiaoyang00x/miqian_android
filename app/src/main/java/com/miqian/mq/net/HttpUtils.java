@@ -6,6 +6,7 @@ import android.util.Log;
 import com.miqian.mq.utils.MobileOS;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -27,6 +28,8 @@ public class HttpUtils {
     public static final String APP_KEY = "&key=jwoxoWHeauio";
     public static final String SERVER_ERROR = "服务端网络不通，请重试";
     private static final String NETWORK_ERROR = "您当前网络不可用";
+    private static final MediaType CONTENT_TYPE =
+            MediaType.parse("application/x-www-form-urlencoded");
 
     public static void httpPostRequest(Context context, String url, List<Param> list, final ICallbackString callback) {
         if (MobileOS.getNetworkType(context) == -1) {
@@ -41,7 +44,13 @@ public class HttpUtils {
                 builder.add(param.key, param.value);
             }
         }
-        RequestBody requestBody = builder.build();
+        RequestBody requestBody = null;
+        try {
+            requestBody = builder.build();
+        } catch (Exception e) {
+            requestBody = RequestBody.create(CONTENT_TYPE, "");
+
+        }
         Headers.Builder headerBuilder = getRequestHeader(getSign(list));
         final Request request = new Request.Builder().url(url).post(requestBody).headers(headerBuilder.build()).build();
 
@@ -116,7 +125,7 @@ public class HttpUtils {
         headerBuilder.add("channelCode", "2332");
         headerBuilder.add("timer", "2332");
         headerBuilder.add("sign", sign);
-        headerBuilder.add("token", "2332");
+        headerBuilder.add("token", "93e913150702493a9c9e927b5499517a");
         headerBuilder.add("osVersion", "2332");
         return headerBuilder;
     }

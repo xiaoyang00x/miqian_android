@@ -50,7 +50,7 @@ public class IntoActivity extends BaseActivity {
         bankinto7.setBankID("3");
         bankinto7.setValue("农业银行");
 
-        bankList= new ArrayList<>();
+        bankList= new ArrayList<BankInfo>();
         bankList.add(bankinto);
         bankList.add(bankinto2);
         bankList.add(bankinto3);

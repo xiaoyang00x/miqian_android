@@ -12,14 +12,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="300dp"
+            android:background="@color/red_base"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/frame_image"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:background="#EE503E">
+                android:layout_height="240dp">
 
                 <RelativeLayout
                     android:layout_width="240dp"
@@ -33,12 +33,68 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/miqian_gray">
+                android:paddingBottom="5dp">
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:text="已认购次数"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/total_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:text="累计投资数(元)"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/total_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <RelativeLayout
@@ -55,7 +111,6 @@
                 android:layout_centerInParent="true"
                 android:src="@mipmap/login_no_type" />
         </RelativeLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,7 +134,5 @@
                 android:textColor="@color/miqian_gray"
                 android:textSize="12sp" />
         </LinearLayout>
-
-
     </LinearLayout>
 </RelativeLayout>
