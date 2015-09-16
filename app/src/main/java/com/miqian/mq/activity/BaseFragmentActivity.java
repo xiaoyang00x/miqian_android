@@ -1,7 +1,6 @@
 package com.miqian.mq.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.miqian.mq.receiver.NetBroadReceiver;

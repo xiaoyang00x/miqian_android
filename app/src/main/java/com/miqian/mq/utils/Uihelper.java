@@ -30,12 +30,23 @@ public class Uihelper {
         }
     }
 
-    public static void showToast(final Context context, final String content) {
-        initToast(context);
-        if (!TextUtils.isEmpty(content)) {
-            mToast.setText(content);
-            mToast.show();
+    public static void showToast(final Activity activity, final String content) {
+        if (activity == null) {
+            return;
         }
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                initToast(activity);
+                if (!TextUtils.isEmpty(content)) {
+                    mToast.setText(content);
+                    mToast.show();
+                }
+            }
+        });
+
+
     }
 
     public static void showToast(final Activity context, int id) {
