@@ -281,7 +281,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
    * 初始化adapter
    */
   public void initAdapter(View view) {
-    listEntity = new ArrayList<>();
+    listEntity = new ArrayList<ActivityEntity>();
     ActivityEntity entity = new ActivityEntity();
     entity.activityImgUrl =
         "http://b.hiphotos.baidu.com/image/pic/item/8718367adab44aedbf4ff0f3b01c8701a18bfba0.jpg";

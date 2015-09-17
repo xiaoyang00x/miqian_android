@@ -205,7 +205,8 @@ public class MobileOS {
 
 	/** 获取系统版本号 */
 	public static String getOsVersion() {
-		return android.os.Build.VERSION.RELEASE;
+		String osVersion = android.os.Build.VERSION.RELEASE;
+		return !TextUtils.isEmpty(osVersion) ? osVersion : "";
 	}
 
 	/**
