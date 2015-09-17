@@ -82,7 +82,7 @@ public class FragmentMain extends Fragment {
 
         mFragmentList.add(new FragmentHome());
         mFragmentList.add(new FragmentCurrent());
-        mFragmentList.add(new FragmentUser());
+        mFragmentList.add(new RegularFragment());
         mFragmentList.add(new FragmentUser());
 
         if (adapter == null) {

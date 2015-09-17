@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_left_right"
+    android:paddingRight="@dimen/margin_left_right">
+
+    <include layout="@layout/fragment_regular_item_lable" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <include layout="@layout/divider_line_gray" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/divider_line"
+            android:text="永兴医院医疗设备项目－9"
+            android:textColor="#ff000000"
+            android:textSize="@dimen/textsize_middle" />
+
+        <TextView
+            android:id="@+id/tv_sub_title"
+            style="@style/WrapContent"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="4dp"
+            android:text="项目总额800,000 按月付息，到期还本"
+            android:textColor="@color/subtitle_text_color"
+            android:textSize="@dimen/textsize_smaller" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_sub_title"
+            >
+
+            <com.miqian.mq.views.CircleBar
+                android:id="@+id/circlebar"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_buy_now"
+                    style="@style/WrapContent"
+                    android:gravity="center"
+                    android:textColor="@color/regular_item_rate"
+                    android:textSize="@dimen/textsize_smaller"
+                    android:text="立即认购" />
+
+                <TextView
+                    android:id="@+id/tv_progress"
+                    style="@style/WrapContent"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/regular_item_rate"
+                    android:textSize="@dimen/textsize_smaller"
+                    android:text="100%"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/circlebar"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_annurate_interest_rate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="12%"
+                        android:textColor="@color/regular_item_rate"
+                        android:textSize="@dimen/textsize_larger" />
+
+                    <TextView
+                        android:id="@+id/tv_duration"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="220天"
+                        android:textColor="@color/regular_item_rate"
+                        android:textSize="@dimen/textsize_larger" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_annurate_interest_lable"
+                        style="@style/regular_earn_item_lable"
+                        android:text="年化收益率" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        style="@style/regular_earn_item_lable"
+                        android:text="期限" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_sale_number"
+            style="@style/WrapContent"
+            android:textColor="@color/subtitle_text_color"
+            android:textSize="@dimen/textsize_smaller"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:layout_marginRight="4dp"
+            android:text="已认购28人" />
+    </RelativeLayout>
+</LinearLayout>

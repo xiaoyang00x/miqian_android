@@ -78,5 +78,14 @@
         <item name="android:layout_height">@dimen/edit_item</item>
     </style>
 
+    <!--定期赚item view-->
+    <style name="regular_earn_item_lable">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/subtitle_text_color</item>
+        <item name="android:textSize">@dimen/textsize_smaller</item>
+    </style>
+
 </resources>
 

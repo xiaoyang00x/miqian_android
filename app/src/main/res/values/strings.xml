@@ -18,4 +18,9 @@
   //安卓只输入数字和字母
   <string name="match">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ</string>
 
+  
+  <!-- 定期相关页面-->
+  <string name="regular_plan">定期计划</string>
+  <string name="investment_security">投资安全</string>
+  <string name="principal_interest_security">本息保障</string>
 </resources>
