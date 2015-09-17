@@ -66,6 +66,13 @@
         <item name="android:ems">10</item>
     </style>
 
+    <style name="listItem" parent="FillContent">
+    <item name="android:paddingRight">@dimen/margin_left_right</item>
+    <item name="android:paddingLeft">@dimen/margin_left_right</item>
+    <item name="android:background">@drawable/list_click</item>
+    <item name="android:layout_height">@dimen/listitem_height</item>
+    </style>
+
     <style name="item_divider" parent="FillContent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
