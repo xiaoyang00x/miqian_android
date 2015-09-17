@@ -68,6 +68,14 @@
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask" />
         <activity
+            android:name=".activity.AnnounceActivity"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name=".activity.AnnounceResultActivity"
+            android:launchMode="singleTask" />
+
+        <activity
             android:name=".activity.IntoActivity"
             android:launchMode="singleTask" />
 

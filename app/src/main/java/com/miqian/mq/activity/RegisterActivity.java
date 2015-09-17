@@ -101,7 +101,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void watchEdittext(int type) {
         phone = mEt_Telephone.getText().toString();
-        if (!TextUtils.isEmpty(phone)){
+        if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
                 switch (type) {
                     case NUM_TYPE_TOAST:
@@ -118,7 +118,7 @@ public class RegisterActivity extends BaseActivity {
             } else {
                 Uihelper.showToast(this, R.string.phone_noeffect);
             }
-        }else {
+        } else {
             Uihelper.showToast(this, R.string.phone_null);
         }
 
@@ -129,14 +129,14 @@ public class RegisterActivity extends BaseActivity {
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Uihelper.trace(result.getCode()+"");
+                Uihelper.trace(result.getCode() + "");
             }
 
             @Override
             public void onFail(String error) {
 
             }
-        },phone,TypeUtil.CAPTCHA_REGISTER,"");
+        }, phone, TypeUtil.CAPTCHA_REGISTER, "");
 
 
         mBtn_sendCaptcha.setEnabled(false);
@@ -153,33 +153,32 @@ public class RegisterActivity extends BaseActivity {
         String password = mEt_Password.getText().toString();
 
 
-       if(!TextUtils.isEmpty(phone)){
-           if (!TextUtils.isEmpty(captcha)) {
+        if (!TextUtils.isEmpty(phone)) {
+            if (!TextUtils.isEmpty(captcha)) {
 
-               if (!TextUtils.isEmpty(password)) {
-                   HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
-                       @Override
-                       public void onSucceed(RegisterResult result) {
-                           Log.e("Register", result.getData().getBalance());
-                       }
+                if (!TextUtils.isEmpty(password)) {
+                    HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
+                        @Override
+                        public void onSucceed(RegisterResult result) {
+                            Log.e("Register", result.getData().getBalance());
+                        }
 
-                       @Override
-                       public void onFail(String error) {
-                       }
-                   }, phone, captcha, password, invite);
+                        @Override
+                        public void onFail(String error) {
+                        }
+                    }, phone, captcha, password, invite);
 
-               } else {
-                   Uihelper.showToast(this, R.string.tip_password);
-               }
+                } else {
+                    Uihelper.showToast(this, R.string.tip_password);
+                }
 
-           } else {
-               Uihelper.showToast(this, R.string.tip_captcha);
-           };
-       }else {
-           Uihelper.showToast(this, R.string.phone_null);
-       }
-
-
+            } else {
+                Uihelper.showToast(this, R.string.tip_captcha);
+            }
+            ;
+        } else {
+            Uihelper.showToast(this, R.string.phone_null);
+        }
 
 
     }

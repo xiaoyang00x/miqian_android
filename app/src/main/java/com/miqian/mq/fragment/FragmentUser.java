@@ -7,16 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.RegisterResult;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.Dialog_Login;
 
 /**
@@ -53,6 +56,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
 
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
         tv_Title.setText("我的");
+
+        ImageButton btn_message = (ImageButton) view.findViewById(R.id.btn_message);
+        btn_message.setImageResource(R.mipmap.account_message);
+        btn_message.setOnClickListener(this);
+
+        ImageButton btn_setting = (ImageButton) view.findViewById(R.id.btn_account);
+        btn_setting.setImageResource(R.mipmap.account_setting);
+        btn_setting.setOnClickListener(this);
 
         Button btn_RollIn = (Button) view.findViewById(R.id.btn_rollin);
         Button btn_RollOut = (Button) view.findViewById(R.id.btn_rollout);
@@ -92,8 +103,10 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                         HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
                             @Override
                             public void onSucceed(LoginResult result) {
-                      String name= RSAUtils.decryptByPrivate(result.getData().getRealName());
-                             Uihelper.trace(name);
+                                String name = RSAUtils.decryptByPrivate(result.getData().getRealName());
+                                UserInfo userInfo = result.getData();
+                                UserUtil.saveToken(getActivity(), userInfo.getToken(), userInfo.getCustId());
+                                Uihelper.trace(name);
                             }
 
                             @Override
@@ -126,6 +139,13 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //我的红包
             case R.id.frame_redpackage:
+                break;
+            //我的消息
+            case R.id.btn_message:
+                startActivity(new Intent(getActivity(), AnnounceActivity.class));
+                break;
+            //我的设置
+            case R.id.btn_account:
                 break;
         }
     }

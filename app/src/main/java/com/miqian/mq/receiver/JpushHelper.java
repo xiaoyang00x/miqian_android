@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
+import com.miqian.mq.utils.UserUtil;
+
 import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
@@ -19,8 +21,12 @@ public class JpushHelper {
     public static void setAlias(Context mContext) {
         context=mContext;
            // 调用 Handler 来异步设置别名
-        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, "miqiantest"));
 
+        if (UserUtil.hasLogin(mContext)){
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, UserUtil.getToken(mContext)));
+        }
+
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, "9c718d9123dd4377b0c8bbe65fe0f72e"));
     }
     private static final int MSG_SET_ALIAS = 1001;
     private static final Handler mHandler = new Handler() {

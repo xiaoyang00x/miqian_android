@@ -15,15 +15,7 @@
         <attr name="leftIsBack" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="ItemView">
-        <attr name="itemLeftImage" format="reference"/>
-        <attr name="itemLeftText" format="reference|string"/>
-        <attr name="itemRightText" format="reference|string"/>
-        <attr name="itemHasRightArrow" format="boolean"/>
-        <attr name="itemHasLeftImage" format="boolean"/>
-        <attr name="itemRightTextColor" format="reference|color"/>
-        <attr name="item_Height" format="reference|dimension"/>
-    </declare-styleable>
+
 
     <declare-styleable name="MaterialProgressBarSupport">
         <attr name="progressSmallSize"
