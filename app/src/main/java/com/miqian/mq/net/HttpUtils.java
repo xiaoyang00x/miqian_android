@@ -35,6 +35,7 @@ public class HttpUtils {
         }
         final OkHttpClient client = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
+        list.add(new Param("timer", "" + System.currentTimeMillis()));
         sortParam(list);
         if (list != null && list.size() > 0) {
             for (Param param : list) {
@@ -48,13 +49,16 @@ public class HttpUtils {
             requestBody = RequestBody.create(CONTENT_TYPE, "");
 
         }
-        Headers.Builder headerBuilder = getRequestHeader(getSign(list));
+        Headers.Builder headerBuilder = getRequestHeader(context, getSign(list));
         final Request request = new Request.Builder().url(url).post(requestBody).headers(headerBuilder.build()).build();
         Response response = null;
         try {
             response = client.newCall(request).execute();
             if (response.isSuccessful()) {
-                return response.body().string();
+                String httpString =  response.body().string();
+                Log.e("", httpString);
+                return httpString;
+//                return response.body().string();
             }
             return null;
         } catch (IOException e) {
@@ -99,17 +103,16 @@ public class HttpUtils {
      *
      * @return
      */
-    public static Headers.Builder getRequestHeader(String sign) {
+    public static Headers.Builder getRequestHeader(Context context, String sign) {
         Headers.Builder headerBuilder = new Headers.Builder();
-        headerBuilder.add("deviceId", "11");
+        headerBuilder.add("deviceId", MobileOS.getIMEI(context));
         headerBuilder.add("cType", "android");
         headerBuilder.add("appName", "miqian");
-        headerBuilder.add("appVersion", "2332");
+        headerBuilder.add("appVersion", MobileOS.getClientVersion(context));
         headerBuilder.add("channelCode", "2332");
-        headerBuilder.add("timer", "2332");
         headerBuilder.add("sign", sign);
         headerBuilder.add("token", "93e913150702493a9c9e927b5499517a");
-        headerBuilder.add("osVersion", "2332");
+        headerBuilder.add("osVersion", MobileOS.getOsVersion());
         return headerBuilder;
     }
 }

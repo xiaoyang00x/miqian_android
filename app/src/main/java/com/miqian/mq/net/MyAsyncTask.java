@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.miqian.mq.utils.MobileOS;
 
@@ -49,7 +48,6 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.e("", "onPostExecute : " + result);
         try {
             if (result != null) {
                 if (result.equals(NETWORK_ERROR)) {
