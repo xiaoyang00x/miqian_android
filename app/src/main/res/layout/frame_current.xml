@@ -150,6 +150,7 @@
             <Button
                 android:id="@+id/bt_investment"
                 style="@style/click_btn"
+                android:layout_height="@dimen/edit_item"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
