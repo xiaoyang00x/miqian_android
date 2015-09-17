@@ -23,4 +23,13 @@ public class UserUtil {
 		return name + Pref.getString(Pref.USERID, context, Pref.VISITOR);
 	};
 
+	public static boolean hasLogin(Context context) {
+		String token = getToken(context);
+		if (TextUtils.isEmpty(token)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }

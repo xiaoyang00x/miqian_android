@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import com.miqian.mq.MainActivity;
 import com.miqian.mq.R;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class SplashActivity extends Activity implements View.OnClickListener {
 
 	private ViewPager mViewPager;
@@ -181,4 +183,16 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 //		return id;
 //	}
 
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		JPushInterface.onResume(SplashActivity.this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		JPushInterface.onPause(SplashActivity.this);
+	}
 }
