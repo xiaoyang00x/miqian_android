@@ -41,18 +41,18 @@ public class MainActivity extends SlidingFragmentActivity {
     private void handleJpush() {
 
         //判断是否是是极光推送
-        boolean  isPush=  Pref.getBoolean(Pref.IsPush,mContext,false);
-        if (isPush){
-            String  userId=null;
+        boolean isPush = Pref.getBoolean(Pref.IsPush, mContext, false);
+        if (isPush) {
+            String userId = null;
             // 是否登录
             if (!UserUtil.hasLogin(mContext)) {
                 userId = Pref.VISITOR;
             } else {
                 userId = Pref.getString(Pref.USERID, mContext, Pref.VISITOR);
             }
-          JpushInfo jInfo= MyDataBaseHelper.getInstance().getjpushInfo(userId).get(0);
-           String  string_uritype= jInfo.getUriType();
-            int   uritype;
+            JpushInfo jInfo = MyDataBaseHelper.getInstance().getjpushInfo(userId).get(0);
+            String string_uritype = jInfo.getUriType();
+            int uritype;
             if (TextUtils.isEmpty(string_uritype)) {
                 return;
             } else {

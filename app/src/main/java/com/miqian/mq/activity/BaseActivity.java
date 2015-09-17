@@ -18,6 +18,7 @@ public  abstract  class BaseActivity extends BaseFragmentActivity {
     public LinearLayout mContentView;
     public WFYTitle mTitle;
     public Activity mActivity;
+    public View mView_noresult;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -27,6 +28,7 @@ public  abstract  class BaseActivity extends BaseFragmentActivity {
         initCotentView();
         mActivity = this;
         mTitle = (WFYTitle) findViewById(R.id.wFYTitle);
+        mView_noresult = findViewById(R.id.frame_no_data);
         initTitle(mTitle);
         initView();
         obtainData();

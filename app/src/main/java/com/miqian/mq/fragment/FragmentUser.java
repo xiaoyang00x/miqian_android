@@ -57,11 +57,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
         tv_Title.setText("我的");
 
-        ImageButton btn_message= (ImageButton) view.findViewById(R.id.btn_message);
+        ImageButton btn_message = (ImageButton) view.findViewById(R.id.btn_message);
         btn_message.setImageResource(R.mipmap.account_message);
         btn_message.setOnClickListener(this);
 
-        ImageButton btn_setting= (ImageButton) view.findViewById(R.id.btn_account);
+        ImageButton btn_setting = (ImageButton) view.findViewById(R.id.btn_account);
         btn_setting.setImageResource(R.mipmap.account_setting);
         btn_setting.setOnClickListener(this);
 
@@ -103,8 +103,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                         HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
                             @Override
                             public void onSucceed(LoginResult result) {
-                            String name= RSAUtils.decryptByPrivate(result.getData().getRealName());
-                            UserInfo userInfo= result.getData();
+                                String name = RSAUtils.decryptByPrivate(result.getData().getRealName());
+                                UserInfo userInfo = result.getData();
                                 UserUtil.saveToken(getActivity(), userInfo.getToken(), userInfo.getCustId());
                                 Uihelper.trace(name);
                             }
