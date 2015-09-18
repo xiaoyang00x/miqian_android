@@ -4,34 +4,31 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.AnnounceResultActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.fragment.FragmentMain;
-import com.miqian.mq.fragment.FragmentMenu;
 import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 
-public class MainActivity extends SlidingFragmentActivity {
+public class MainActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
 
     private Activity mContext;
-    private SlidingMenu slidingMenu;
     private Fragment mContent;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_main);
-        setMenuView(savedInstanceState);
+        setMainView(savedInstanceState);
         MyApplication.getInstance().setIsCurrent(true);
         //设置别名
         JpushHelper.setAlias(this);
@@ -82,13 +79,7 @@ public class MainActivity extends SlidingFragmentActivity {
         }
     }
 
-    public void setMenuView(Bundle savedInstanceState) {
-
-        slidingMenu = getSlidingMenu();
-        if (findViewById(R.id.frame_menu) == null) {
-            setBehindContentView(R.layout.frame_menu);
-            slidingMenu.setSlidingEnabled(false);
-        }
+    public void setMainView(Bundle savedInstanceState) {
         // 设置主页的View
         if (savedInstanceState != null) {
             mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
@@ -99,19 +90,18 @@ public class MainActivity extends SlidingFragmentActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, mContent).commitAllowingStateLoss();
 
         // 设置菜单View
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_menu, new FragmentMenu()).commitAllowingStateLoss();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.frame_menu, new FragmentMenu()).commitAllowingStateLoss();
 
         // 设置菜单样式
 //		slidingMenu.setBehindOffset(Config.WIDTH / 4); // 菜单偏移的距离
-        slidingMenu.setShadowWidth(10); // 菜单阴影的宽度
-        slidingMenu.setBehindScrollScale(0.25f);
-        slidingMenu.setFadeDegree(0.25f);
+//        slidingMenu.setShadowWidth(10); // 菜单阴影的宽度
+//        slidingMenu.setBehindScrollScale(0.25f);
+//        slidingMenu.setFadeDegree(0.25f);
 
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             MyApplication.getInstance().setIsCurrent(false);
         }
