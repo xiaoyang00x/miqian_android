@@ -1,5 +1,6 @@
 package com.miqian.mq.activity;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.miqian.mq.R;
@@ -46,7 +47,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-
+             mTitle.setTitleText("设置");
     }
 
     @Override
@@ -60,6 +61,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //安全设置
             case R.id.frame_setting_security:
+                startActivity(new Intent(mActivity,SecuritySettingActivity.class));
                 break;
             //帮助中心
             case R.id.frame_setting_helpcenter:

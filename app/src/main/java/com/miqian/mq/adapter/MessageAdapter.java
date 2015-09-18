@@ -73,8 +73,7 @@ public class MessageAdapter extends BaseAdapter {
 //		}
 
 		if (!TextUtils.isEmpty(jpushInfo.getTime())) {
-			double add_time = Double.valueOf(jpushInfo.getTime());
-			String dateToChineseStrings = Uihelper.dateToChineseStrings(context, add_time);
+			String dateToChineseStrings = Uihelper.dateToChineseStrings(context, jpushInfo.getTime());
 			if (!TextUtils.isEmpty(dateToChineseStrings)) {
 				holder.tv_time.setText(dateToChineseStrings);
 			}

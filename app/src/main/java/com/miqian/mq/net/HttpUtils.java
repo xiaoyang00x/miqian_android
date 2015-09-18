@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.UserUtil;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
@@ -111,7 +112,7 @@ public class HttpUtils {
         headerBuilder.add("appVersion", MobileOS.getClientVersion(context));
         headerBuilder.add("channelCode", "2332");
         headerBuilder.add("sign", sign);
-        headerBuilder.add("token", "93e913150702493a9c9e927b5499517a");
+        headerBuilder.add("token", UserUtil.getToken(context));
         headerBuilder.add("osVersion", MobileOS.getOsVersion());
         return headerBuilder;
     }

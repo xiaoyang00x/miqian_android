@@ -23,10 +23,8 @@ public class JpushHelper {
            // 调用 Handler 来异步设置别名
 
         if (UserUtil.hasLogin(mContext)){
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, UserUtil.getToken(mContext)));
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS,"abcde"));
         }
-
-        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, "9c718d9123dd4377b0c8bbe65fe0f72e"));
     }
     private static final int MSG_SET_ALIAS = 1001;
     private static final Handler mHandler = new Handler() {

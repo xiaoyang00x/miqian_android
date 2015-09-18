@@ -79,6 +79,15 @@
             android:name=".activity.IntoActivity"
             android:launchMode="singleTask" />
 
+        <activity
+            android:name=".activity.SettingActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.SecuritySettingActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.ChangePassWordActivity"
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".test.OkHttpsTest"

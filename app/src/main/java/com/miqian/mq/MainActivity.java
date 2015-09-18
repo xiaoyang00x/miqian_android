@@ -17,6 +17,9 @@ import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 
+import java.util.Collections;
+import java.util.List;
+
 public class MainActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
@@ -30,6 +33,8 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         setMainView(savedInstanceState);
         MyApplication.getInstance().setIsCurrent(true);
+
+
         //设置别名
         JpushHelper.setAlias(this);
         handleJpush();
@@ -47,7 +52,15 @@ public class MainActivity extends FragmentActivity {
             } else {
                 userId = Pref.getString(Pref.USERID, mContext, Pref.VISITOR);
             }
-            JpushInfo jInfo = MyDataBaseHelper.getInstance().getjpushInfo(userId).get(0);
+            List<JpushInfo> jInfolist = MyDataBaseHelper.getInstance().getjpushInfo(userId);
+            if (jInfolist == null) {
+                return;
+            }
+            Collections.reverse(jInfolist);
+            JpushInfo jInfo = jInfolist.get(0);
+            if (jInfo == null) {
+                return;
+            }
             String string_uritype = jInfo.getUriType();
             int uritype;
             if (TextUtils.isEmpty(string_uritype)) {

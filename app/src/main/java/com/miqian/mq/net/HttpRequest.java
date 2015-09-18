@@ -1,11 +1,14 @@
 package com.miqian.mq.net;
 
 import android.content.Context;
+import android.text.style.MetricAffectingSpan;
 import android.util.Log;
 
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.MessageInfo;
+import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.RegisterResult;
@@ -248,4 +251,162 @@ public class HttpRequest {
             }
         }).executeOnExecutor();
     }
+
+    //获得推送信息详情
+    public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback, int pushSource, String id, String custId) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("pushSource", "" + pushSource));
+        mList.add(new Param("id", id));
+        if (pushSource == 1) {
+            mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+
+        } else {
+            mList.add(new Param("custId", "" + custId));
+        }
+        new MyAsyncTask(context, Urls.getPushDetail, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                MessageInfoResult messageInfoResult = JsonUtil.parseObject(result, MessageInfoResult.class);
+                if (messageInfoResult.getCode().equals("000000")) {
+                    callback.onSucceed(messageInfoResult);
+                } else {
+                    callback.onFail(messageInfoResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+
+    //设置交易密码
+    public static void setPayPassword(Context context, final ICallback<Meta> callback, String custId, String payPassword, String confirmPayPassword) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("confirmPayPassword", RSAUtils.encryptURLEncode(confirmPayPassword)));
+
+        new MyAsyncTask(context, Urls.setPayPassword, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //修改交易密码
+    public static void changePayPassword(Context context, final ICallback<Meta> callback, String custId, String tradeType, String idCard, String mobilePhone, String captcha, String payPassword, String confirmPayPassword
+    ) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("tradeType", tradeType));
+        mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
+        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("captcha", captcha));
+        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("confirmPayPassword", RSAUtils.encryptURLEncode(confirmPayPassword)));
+
+        new MyAsyncTask(context, Urls.changePayPassword, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //修改登录密码
+    public static void changePassword(Context context, final ICallback<LoginResult> callback, String custId, String oldPassword, String newPassword, String confirmPassword) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("oldPassword", RSAUtils.encryptURLEncode(oldPassword)));
+        mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
+        mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
+
+        new MyAsyncTask(context, Urls.changePassword, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
+                if (loginResult.getCode().equals("000000")) {
+                    callback.onSucceed(loginResult);
+                } else {
+                    callback.onFail(loginResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //找回登录密码
+    public static void getPassword(Context context, final ICallback<Meta> callback, String mobilePhone, String newPassword, String confirmPassword, String captcha) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
+        mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
+        mList.add(new Param("captcha", captcha));
+
+        new MyAsyncTask(context, Urls.getPassword, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
 }

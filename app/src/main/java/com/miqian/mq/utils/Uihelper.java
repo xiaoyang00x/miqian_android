@@ -120,15 +120,19 @@ public class Uihelper {
      * @param time
      * @return
      */
-    public static String dateToChineseStrings(Context context, double time) {
+    public static String dateToChineseStrings(Context context, String time) {
         Resources resources = context.getResources();
+//
+//        Date datetime = parseDates(timestampToDateStr(time));
+//        if (datetime == null)
+//            return "未知时间";
+//
+//        Date today = new Date();
 
-        Date datetime = parseDates(timestampToDateStr(time));
-        if (datetime == null)
-            return "未知时间";
-
-        Date today = new Date();
-        long seconds = (today.getTime() - datetime.getTime()) / 1000;
+        long serverTime = Long.parseLong(time);
+        long currentTime = System.currentTimeMillis();
+//        long seconds = (today.getTime() - datetime.getTime()) / 1000;
+        long seconds = (currentTime - serverTime) / 1000;
 
         long year = seconds / (24 * 60 * 60 * 30 * 12);// 相差年数
 

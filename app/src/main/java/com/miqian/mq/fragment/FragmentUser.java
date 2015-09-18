@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.SettingActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
@@ -146,6 +147,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //我的设置
             case R.id.btn_account:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
         }
     }
