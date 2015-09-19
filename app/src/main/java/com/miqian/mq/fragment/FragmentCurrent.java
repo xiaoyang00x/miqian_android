@@ -12,19 +12,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
-import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.PayOrder;
-import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.pay.BaseHelper;
-import com.miqian.mq.pay.MobileSecurePayer;
+import com.miqian.mq.test.ValueFit;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WaterWaveView;
 
 import org.json.JSONObject;
@@ -77,7 +76,18 @@ public class FragmentCurrent extends Fragment {
         btInvestment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtainData();
+                UserUtil.loginPay(mContext, new ValueFit() {
+                    @Override
+                    public void onFit(String s) {
+                        UserUtil.currenPay(mContext, IntoActivity.class);
+                    }
+                });
+//                if (UserUtil.loginPay(mContext)) {
+////                    Intent intent = new Intent(mContext, cls);
+////                    context.startActivity(intent);
+//                } else {
+//
+//                }
 //                Intent intent = new Intent(mContext, OkHttpsTest.class);
 //                startActivity(intent);
 

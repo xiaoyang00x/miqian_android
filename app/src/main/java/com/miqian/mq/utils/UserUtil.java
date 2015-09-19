@@ -13,6 +13,7 @@ import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.test.ValueFit;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
 
@@ -89,7 +90,7 @@ public class UserUtil {
     }
 
     //  支付时判断是否登录、实名认证
-    public static void loginPay(final Activity context) {
+    public static void loginPay(final Activity context, final ValueFit valueFit) {
         if (!UserUtil.hasLogin(context)) {
             Dialog_Login dialog_login = new Dialog_Login(context) {
                 @Override
@@ -102,7 +103,7 @@ public class UserUtil {
                             if (userInfo.getRealNameStatus().equals("0")) {
                                 realName(context);
                             } else {
-                                showDialog(context);
+                                showDialog(context, valueFit);
                             }
                         }
 
@@ -121,11 +122,11 @@ public class UserUtil {
                     @Override
                     public void onSucceed(LoginResult result) {
                         UserInfo userInfo = result.getData();
-                        if (userInfo.getRealNameStatus().equals("1")) {
+                        if (userInfo.getRealNameStatus().equals("0")) {
                             realName(context);
                         } else {
                             Pref.saveString(getPrefKey(context, Pref.REALNAME_STATUS), userInfo.getRealNameStatus(), context);
-                            showDialog(context);
+                            showDialog(context, valueFit);
                         }
                     }
 
@@ -135,7 +136,7 @@ public class UserUtil {
                     }
                 });
             } else {
-                showDialog(context);
+                showDialog(context, valueFit);
             }
         }
     }
@@ -152,19 +153,20 @@ public class UserUtil {
     }
 
     //  显示认购额度
-    public static void showDialog(Activity activity) {
-        initDialog(activity);
+    public static void showDialog(Activity activity, ValueFit valueFit) {
+        initDialog(activity, valueFit);
         dialogPay.show();
     }
 
-    public static void initDialog(final Activity activity) {
+    public static void initDialog(final Activity activity, final ValueFit valueFit) {
         if (dialogPay != null) {
             return;
         }
         dialogPay = new DialogPay(activity) {
             @Override
-            public void positionBtnClick() {
-                currenPay(activity, IntoActivity.class);
+            public void positionBtnClick(String s) {
+//                currenPay(activity, IntoActivity.class);
+                valueFit.onFit(s);
             }
 
             @Override
