@@ -26,6 +26,7 @@ public class MainActivity extends FragmentActivity {
 
     private Activity mContext;
     private Fragment mContent;
+    private List<JpushInfo> jpushInfolist;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,16 +49,15 @@ public class MainActivity extends FragmentActivity {
             String userId = null;
             // 是否登录
             if (!UserUtil.hasLogin(mContext)) {
-                userId = Pref.VISITOR;
+                jpushInfolist = MyDataBaseHelper.getInstance(mContext).getjpushInfo(Pref.VISITOR);
             } else {
-                userId = Pref.getString(Pref.USERID, mContext, Pref.VISITOR);
+                jpushInfolist = MyDataBaseHelper.getInstance(mContext).getjpushInfo(Pref.getString(Pref.USERID, mContext, Pref.VISITOR));
             }
-            List<JpushInfo> jInfolist = MyDataBaseHelper.getInstance().getjpushInfo(userId);
-            if (jInfolist == null) {
+            if (jpushInfolist == null) {
                 return;
             }
-            Collections.reverse(jInfolist);
-            JpushInfo jInfo = jInfolist.get(0);
+            Collections.reverse(jpushInfolist);
+            JpushInfo jInfo = jpushInfolist.get(0);
             if (jInfo == null) {
                 return;
             }

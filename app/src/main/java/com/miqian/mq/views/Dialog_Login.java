@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.RegisterActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.TypeUtil;
 
 /**
  * Created by Administrator on 2015/9/1.
@@ -38,7 +40,15 @@ public  abstract class Dialog_Login extends Dialog {
             public void onClick(View v) {
                 //跳到注册页
                 dismiss();
-                mContext.startActivity(new Intent(mContext, RegisterActivity.class));
+                mContext.startActivity(new Intent(mContext,RegisterActivity.class));
+
+            }
+        });
+        findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW);
             }
         });
 

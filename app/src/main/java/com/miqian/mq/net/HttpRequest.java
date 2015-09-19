@@ -214,6 +214,45 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    //检验验证码
+
+    /**
+     * @param context
+     * @param callback
+     * @param phone
+     * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
+     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
+     * @param custId        用户Id   非必填  注册不用填
+     */
+    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String custId,String captcha) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
+        mList.add(new Param("operationType", "" + operationType));
+        mList.add(new Param("custId", custId));
+        mList.add(new Param("captcha", captcha));
+
+        new MyAsyncTask(context, Urls.checkCaptcha, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
     //获取验证码
 
     /**

@@ -27,5 +27,6 @@ public class TypeUtil {
     //区分交易密码和登录密码
     public static final int PASSWORD_LOGIN = 20003;
     public static final int PASSWORD_TRADE = 20004;
-
+    //发送验证码的类型
+    public static final int SENDCAPTCHA_FORGETPSW =30001 ;
 }
