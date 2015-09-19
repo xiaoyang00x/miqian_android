@@ -13,6 +13,7 @@ import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.entity.MessageInfoResult;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Pref;
@@ -39,6 +40,10 @@ public class AnnounceResultActivity extends BaseActivity {
         if (!UserUtil.hasLogin(mActivity)) {
             userId = "";
         }
+        else{
+            userId=  Pref.getString(Pref.USERID, mActivity, Pref.VISITOR);
+        }
+
         if (!TextUtils.isEmpty(noticeId)) {
             HttpRequest.getPushDetail(mActivity, new ICallback<MessageInfoResult>() {
 

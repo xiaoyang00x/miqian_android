@@ -107,6 +107,7 @@ public class MyReceiver extends BroadcastReceiver {
                     uritype = Integer.valueOf(string_uritype);
                 }
                 switch (uritype) {
+
                     case 1:
                         notificationIntent = new Intent(context, MainActivity.class);
                         break;
@@ -128,6 +129,7 @@ public class MyReceiver extends BroadcastReceiver {
                         break;
 
                     default:
+                        notificationIntent = new Intent(context, MainActivity.class);
                         break;
                 }
             }

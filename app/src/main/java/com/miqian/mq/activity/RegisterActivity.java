@@ -160,11 +160,14 @@ public class RegisterActivity extends BaseActivity {
                     HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
                         @Override
                         public void onSucceed(RegisterResult result) {
+                            Uihelper.showToast(mActivity,"注册成功");
+                            finish();
                             Log.e("Register", result.getData().getBalance());
                         }
 
                         @Override
                         public void onFail(String error) {
+                            Uihelper.showToast(mActivity,error);
                         }
                     }, phone, captcha, password, invite);
 

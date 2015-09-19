@@ -104,6 +104,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                         HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
                             @Override
                             public void onSucceed(LoginResult result) {
+                                Uihelper.showToast(getActivity(),"登录成功");
                                 String name = RSAUtils.decryptByPrivate(result.getData().getRealName());
                                 UserInfo userInfo = result.getData();
                                 UserUtil.saveUserInfo(getActivity(), userInfo);
@@ -112,7 +113,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
 
                             @Override
                             public void onFail(String error) {
-
+                                  Uihelper.showToast(getActivity(),error);
                             }
                         }, telephone, password);
                     }

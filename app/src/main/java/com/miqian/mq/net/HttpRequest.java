@@ -298,7 +298,7 @@ public class HttpRequest {
      * @param callback
      * @param phone
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
-     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
+     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
      * @param custId        用户Id   非必填  注册不用填
      */
     public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String custId) {

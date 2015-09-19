@@ -188,6 +188,7 @@
         <Button
             android:id="@+id/btn_next"
             style="@style/click_btn"
+            android:layout_height="@dimen/listitem_height"
             android:onClick="btn_click"
             android:text="下一步" />
     </LinearLayout>

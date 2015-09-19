@@ -78,6 +78,14 @@
             android:launchMode="singleTask" />
 
         <activity
+            android:name=".activity.SetPasswordActivity"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name=".activity.SendCaptchaActivity"
+            android:launchMode="singleTask" />
+
+        <activity
             android:name=".activity.IntoActivity"
             android:launchMode="singleTask" />
 
