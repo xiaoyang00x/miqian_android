@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.miqian.mq.MainActivity;
 import com.miqian.mq.R;
 
 import cn.jpush.android.api.JPushInterface;
