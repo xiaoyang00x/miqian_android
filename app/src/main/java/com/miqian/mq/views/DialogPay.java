@@ -32,7 +32,7 @@ public abstract class DialogPay extends Dialog {
 
     public abstract void positionBtnClick(String s);
 
-    public abstract void negativeBtnClick();
+//    public abstract void negativeBtnClick();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public abstract class DialogPay extends Dialog {
         btNegative.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                negativeBtnClick();
+//                negativeBtnClick();
                 dismiss();
             }
         });

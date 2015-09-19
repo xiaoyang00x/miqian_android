@@ -67,6 +67,9 @@
             android:name=".activity.current.ActivityRealname"
             android:launchMode="singleTask" />
         <activity
+            android:name=".activity.current.CurrentInvestment"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask" />
         <activity

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
@@ -79,17 +81,16 @@ public class FragmentCurrent extends Fragment {
                 UserUtil.loginPay(mContext, new DialogPay(mContext) {
                     @Override
                     public void positionBtnClick(String s) {
-                        float money = Float.parseFloat(s);
-                        if (money < 1) {
-                            this.setTitle("提示：输入请大于一元");
+                        if (!TextUtils.isEmpty(s)) {
+                            float money = Float.parseFloat(s);
+                            if (money < 1) {
+                                this.setTitle("提示：输入请大于一元");
+                            } else {
+                                UserUtil.currenPay(mContext, CurrentInvestment.class);
+                            }
                         } else {
-                            UserUtil.currenPay(mContext, IntoActivity.class);
+                            this.setTitle("提示：请输入金额");
                         }
-                    }
-
-                    @Override
-                    public void negativeBtnClick() {
-
                     }
                 });
 //                if (UserUtil.loginPay(mContext)) {
@@ -114,10 +115,10 @@ public class FragmentCurrent extends Fragment {
 //                    }
 //                }, "18759235288", "123456");
 
-                String custId = "000000000000000000000018597746";
-                String amt = "0.1";
-                String bankCode = "466";
-                String bankNo = "6214855920260037";
+//                String custId = "000000000000000000000018597746";
+//                String amt = "0.1";
+//                String bankCode = "466";
+//                String bankNo = "6214855920260037";
 
 //                HttpRequest.setIDCardCheck(mContext, new ICallback<Meta>() {
 //
