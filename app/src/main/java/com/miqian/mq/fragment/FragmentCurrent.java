@@ -21,9 +21,9 @@ import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.pay.BaseHelper;
-import com.miqian.mq.test.ValueFit;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WaterWaveView;
 
 import org.json.JSONObject;
@@ -76,10 +76,20 @@ public class FragmentCurrent extends Fragment {
         btInvestment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserUtil.loginPay(mContext, new ValueFit() {
+                UserUtil.loginPay(mContext, new DialogPay(mContext) {
                     @Override
-                    public void onFit(String s) {
-                        UserUtil.currenPay(mContext, IntoActivity.class);
+                    public void positionBtnClick(String s) {
+                        float money = Float.parseFloat(s);
+                        if (money < 1) {
+                            this.setTitle("提示：输入请大于一元");
+                        } else {
+                            UserUtil.currenPay(mContext, IntoActivity.class);
+                        }
+                    }
+
+                    @Override
+                    public void negativeBtnClick() {
+
                     }
                 });
 //                if (UserUtil.loginPay(mContext)) {

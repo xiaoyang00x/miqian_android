@@ -5,15 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
-import com.miqian.mq.encrypt.Encrypt;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.test.ValueFit;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
 
@@ -21,7 +18,7 @@ import com.miqian.mq.views.Dialog_Login;
 public class UserUtil {
 
 //    private static Context context;
-    private static DialogPay dialogPay;
+//    private static DialogPay dialogPay;
 
     public static void saveToken(Context context, String token, String userId) {
         Pref.saveString(Pref.TOKEN, token, context);
@@ -90,7 +87,7 @@ public class UserUtil {
     }
 
     //  支付时判断是否登录、实名认证
-    public static void loginPay(final Activity context, final ValueFit valueFit) {
+    public static void loginPay(final Activity context, final DialogPay dialogPay) {
         if (!UserUtil.hasLogin(context)) {
             Dialog_Login dialog_login = new Dialog_Login(context) {
                 @Override
@@ -103,7 +100,7 @@ public class UserUtil {
                             if (userInfo.getRealNameStatus().equals("0")) {
                                 realName(context);
                             } else {
-                                showDialog(context, valueFit);
+                                dialogPay.show();
                             }
                         }
 
@@ -122,11 +119,11 @@ public class UserUtil {
                     @Override
                     public void onSucceed(LoginResult result) {
                         UserInfo userInfo = result.getData();
-                        if (userInfo.getRealNameStatus().equals("0")) {
+                        if (userInfo.getRealNameStatus().equals("1")) {
                             realName(context);
                         } else {
                             Pref.saveString(getPrefKey(context, Pref.REALNAME_STATUS), userInfo.getRealNameStatus(), context);
-                            showDialog(context, valueFit);
+                            dialogPay.show();
                         }
                     }
 
@@ -136,7 +133,7 @@ public class UserUtil {
                     }
                 });
             } else {
-                showDialog(context, valueFit);
+                dialogPay.show();
             }
         }
     }
@@ -153,27 +150,26 @@ public class UserUtil {
     }
 
     //  显示认购额度
-    public static void showDialog(Activity activity, ValueFit valueFit) {
-        initDialog(activity, valueFit);
-        dialogPay.show();
-    }
+//    public static void showDialog(Activity activity) {
+//        initDialog(activity);
+//        dialogPay.show();
+//    }
 
-    public static void initDialog(final Activity activity, final ValueFit valueFit) {
-        if (dialogPay != null) {
-            return;
-        }
-        dialogPay = new DialogPay(activity) {
-            @Override
-            public void positionBtnClick(String s) {
-//                currenPay(activity, IntoActivity.class);
-                valueFit.onFit(s);
-            }
-
-            @Override
-            public void negativeBtnClick() {
-
-            }
-        };
-    }
+//    public static void initDialog(final Activity activity) {
+//        if (dialogPay != null) {
+//            return;
+//        }
+//        dialogPay = new DialogPay(activity) {
+//            @Override
+//            public void positionBtnClick(String s) {
+////                currenPay(activity, IntoActivity.class);
+//            }
+//
+//            @Override
+//            public void negativeBtnClick() {
+//
+//            }
+//        };
+//    }
 
 }
