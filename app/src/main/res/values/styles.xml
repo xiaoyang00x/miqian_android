@@ -63,6 +63,7 @@
         <item name="android:paddingLeft">5dp</item>
         <item name="android:textColorHint">@color/miqian_gray</item>
         <item name="android:ems">10</item>
+        <item name="android:layout_centerVertical">true</item>
     </style>
 
     <style name="listItem" parent="FillContent">
@@ -70,6 +71,12 @@
     <item name="android:paddingLeft">@dimen/margin_left_right</item>
     <item name="android:background">@drawable/list_click</item>
     <item name="android:layout_height">@dimen/listitem_height</item>
+    </style>
+
+    <style name="listItem_tv1" parent="WrapContent">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/miqian_black</item>
+        <item name="android:textSize">@dimen/textsize_normal</item>
     </style>
 
     <style name="item_divider" parent="FillContent">

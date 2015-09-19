@@ -22,6 +22,9 @@ import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 
+import java.util.Collections;
+import java.util.List;
+
 
 /**
  * Created by Administrator on 2015/5/6.
@@ -37,6 +40,7 @@ public class MainActivity extends BaseFragmentActivity {
     FragmentTabHost mTabHost;
     TabWidget tabWidget;
     LinearLayout tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
+    private List<JpushInfo> jpushInfolist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,11 +115,18 @@ public class MainActivity extends BaseFragmentActivity {
             String userId = null;
             // 是否登录
             if (!UserUtil.hasLogin(mContext)) {
-                userId = Pref.VISITOR;
+                jpushInfolist = MyDataBaseHelper.getInstance(mContext).getjpushInfo(Pref.VISITOR);
             } else {
-                userId = Pref.getString(Pref.USERID, mContext, Pref.VISITOR);
+                jpushInfolist = MyDataBaseHelper.getInstance(mContext).getjpushInfo(Pref.getString(Pref.USERID, mContext, Pref.VISITOR));
             }
-            JpushInfo jInfo = MyDataBaseHelper.getInstance().getjpushInfo(userId).get(0);
+            if (jpushInfolist == null) {
+                return;
+            }
+            Collections.reverse(jpushInfolist);
+            JpushInfo jInfo = jpushInfolist.get(0);
+            if (jInfo == null) {
+                return;
+            }
             String string_uritype = jInfo.getUriType();
             int uritype;
             if (TextUtils.isEmpty(string_uritype)) {
@@ -146,5 +157,6 @@ public class MainActivity extends BaseFragmentActivity {
             }
         }
     }
+
 
 }

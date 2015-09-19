@@ -15,6 +15,14 @@ public class UserInfo {
     public String bankCardNo;//银行卡号
     public String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
     public String balance;//可用余额
+    public String curAmt;//活期总额
+    public String bindCardStatus;//银行卡绑定状态
+    public String totalProfit;//历史收益
+    public String regTotal;//定期认购笔数
+    public String totalAsset;//总资产
+    public String wealthTicket;//拾财券
+    public String realNameStatus;//实名认证状态
+    public String redBag;//红包数
 
 
     public String getCustId() {
@@ -97,6 +105,67 @@ public class UserInfo {
         this.balance = balance;
     }
 
+    public String getCurAmt() {
+        return curAmt;
+    }
 
+    public void setCurAmt(String curAmt) {
+        this.curAmt = curAmt;
+    }
 
+    public String getBindCardStatus() {
+        return bindCardStatus;
+    }
+
+    public void setBindCardStatus(String bindCardStatus) {
+        this.bindCardStatus = bindCardStatus;
+    }
+
+    public String getTotalProfit() {
+        return totalProfit;
+    }
+
+    public void setTotalProfit(String totalProfit) {
+        this.totalProfit = totalProfit;
+    }
+
+    public String getRegTotal() {
+        return regTotal;
+    }
+
+    public void setRegTotal(String regTotal) {
+        this.regTotal = regTotal;
+    }
+
+    public String getTotalAsset() {
+        return totalAsset;
+    }
+
+    public void setTotalAsset(String totalAsset) {
+        this.totalAsset = totalAsset;
+    }
+
+    public String getWealthTicket() {
+        return wealthTicket;
+    }
+
+    public void setWealthTicket(String wealthTicket) {
+        this.wealthTicket = wealthTicket;
+    }
+
+    public String getRealNameStatus() {
+        return realNameStatus;
+    }
+
+    public void setRealNameStatus(String realNameStatus) {
+        this.realNameStatus = realNameStatus;
+    }
+
+    public String getRedBag() {
+        return redBag;
+    }
+
+    public void setRedBag(String redBag) {
+        this.redBag = redBag;
+    }
 }

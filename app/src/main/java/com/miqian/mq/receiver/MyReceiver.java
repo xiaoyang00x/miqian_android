@@ -51,7 +51,6 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
       if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-            d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
             processCustomMessage(context, bundle);
         }
 
@@ -72,7 +71,7 @@ public class MyReceiver extends BroadcastReceiver {
             if (TextUtils.isEmpty(title)||TextUtils.isEmpty(content)){
 //                return;
             }
-            response.setTime(title);
+            response.setTitle(title);
             response.setContent(content);
 
             String userId = "";
@@ -96,7 +95,6 @@ public class MyReceiver extends BroadcastReceiver {
             String contentText = response.getContent();
             String string_uritype = response.getUriType();
             String noticeId = response.getId();
-            String url = response.getUrl();
 
             if (!MyApplication.getInstance().isCurrent()) {
                 notificationIntent = new Intent(context, SplashActivity.class);

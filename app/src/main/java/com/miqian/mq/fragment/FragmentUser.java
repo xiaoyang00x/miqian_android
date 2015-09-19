@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.SettingActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
@@ -23,10 +24,10 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.Dialog_Login;
 
 /**
- * Description:��ҳ
+ * Description:
  *
  * @author Jackie
- * @created 2015-3-18 ����5:05:49
+ * @created 2015-3-18
  */
 
 public class FragmentUser extends Fragment implements View.OnClickListener {
@@ -105,7 +106,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                             public void onSucceed(LoginResult result) {
                                 String name = RSAUtils.decryptByPrivate(result.getData().getRealName());
                                 UserInfo userInfo = result.getData();
-                                UserUtil.saveToken(getActivity(), userInfo.getToken(), userInfo.getCustId());
+                                UserUtil.saveUserInfo(getActivity(), userInfo);
                                 Uihelper.trace(name);
                             }
 
@@ -146,6 +147,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //我的设置
             case R.id.btn_account:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
         }
     }

@@ -16,31 +16,36 @@ public class Pref {
 	// 消息是否读取
 	public static final String MESSAGE_READ = "MessageRead";
 
-	public static final String USERID = "useId";
+	public static final String USERID = "UseId";
 	// 银行选择的序列
 	public static final String BANK_INDEX = "BankIndex";
 
-	public static final String TOINDEX = "toindex";
+//	public static final String TOINDEX = "ToIndex";
 
 	// 首次开启
 	public static final String FIRST_LOAD = "FirstLoad";
 
-	public static final String VISITOR = "visitor_0000";
+	public static final String VISITOR = "Visitor_0000";
 
-	public static final String NICKNAME = "nickname";
+	public static final String NICKNAME = "Nickname";
 
-	public static final String USERICON = "usericon";
+	public static final String USERICON = "Usericon";
 
-	public static final String TELEPHONE = "telephone";
+	public static final String TELEPHONE = "Telephone";
 
 	public static final String SERVER_ERROR_CODE = "ServerErrorCode";
+
+	//用户信息
+	public static final String REALNAME_STATUS = "RealnameStatus";
+
+	public static final String USER_ = "ServerErrorCode";
+
 	// 是否退出应用
-	public static final String EXIT = "exit";
-	// app是否在后台
-	public static final String BACKSTAGE = "backStage";
+	public static final String EXIT = "Exit";
+//	// app是否在后台
+//	public static final String BACKSTAGE = "BackStage";
 
-
-	public static String IsPush="isPush";
+	public static String IsPush="IsPush";
 
 	private static SharedPreferences getSettings(final Context contex) {
 		SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);

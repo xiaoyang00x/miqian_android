@@ -6,17 +6,11 @@
 
     <RelativeLayout
         android:id="@+id/frame_setting_name"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
         android:layout_marginTop="@dimen/margin_top"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        style="@style/listItem">
 
         <TextView
             style="@style/text_black_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="姓名" />
 
@@ -43,16 +37,10 @@
 
     <RelativeLayout
         android:id="@+id/frame_setting_bindphone"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        style="@style/listItem">
 
         <TextView
             style="@style/text_black_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="绑定手机" />
 
@@ -79,16 +67,10 @@
 
     <RelativeLayout
         android:id="@+id/frame_setting_security"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        style="@style/listItem">
 
         <TextView
             style="@style/text_black_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="安全设置" />
 
@@ -106,17 +88,11 @@
 
     <RelativeLayout
         android:id="@+id/frame_setting_suggest"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
         android:layout_marginTop="@dimen/margin_top"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        style="@style/listItem">
 
         <TextView
             style="@style/text_black_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="意见反馈" />
 
@@ -134,16 +110,10 @@
 
     <RelativeLayout
         android:id="@+id/frame_setting_helpcenter"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        style="@style/listItem">
 
         <TextView
             style="@style/text_black_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="帮助中心" />
 
@@ -161,16 +131,10 @@
 
     <RelativeLayout
         android:id="@+id/frame_setting_about"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        style="@style/listItem">
 
         <TextView
             style="@style/text_black_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="关于咪钱" />
 
@@ -188,17 +152,10 @@
 
     <RelativeLayout
         android:id="@+id/frame_setting_telephone"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
-        android:layout_marginTop="@dimen/margin_top"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        style="@style/listItem">
 
         <TextView
             style="@style/text_black_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="拨打客服妹子电话" />
 
@@ -219,13 +176,14 @@
             android:text="400-0010-520"
             android:textColor="@color/comon_blue" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
         android:layout_marginBottom="@dimen/margin_top"
         android:layout_marginLeft="@dimen/margin_left_right"
         android:layout_marginRight="@dimen/margin_left_right"
-        android:layout_marginTop="@dimen/margin_top" >
+        android:layout_marginTop="@dimen/margin_top">
 
         <Button
             android:id="@+id/btn_next"

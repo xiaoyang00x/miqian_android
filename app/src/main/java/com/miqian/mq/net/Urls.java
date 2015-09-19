@@ -16,7 +16,7 @@ public class Urls {
             + "XBCASOJIbvvtQBDPJmwvwJaR+RifwQJAd+WGpyy3KA9ekmY5tqmhODSPhUdnzlTJ" + "\r" + "s2skwim1moKVbv8JZt6wgpR315a7uAJonue32ndycWiSyl9yqKZ9FwJAFDNB7i0w" + "\r"
             + "7vhqwHmFAXxnffRtEVZbJk2AsEcE0qJqwoxGbij+O1+OIksDGlxjc/LgnXLlXvvY" + "\r" + "ZU0zSqeXVAcdRQ==";
 
-        public static final String base_server = "https://api.shicaidai.com/";
+    public static final String base_server = "https://api.shicaidai.com/";
 //    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
 
     //测试
@@ -27,6 +27,8 @@ public class Urls {
     public final static String roll_in = base_server + "assetService/addRecharge";
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
+    //获取用户信息
+    public final static String user_info = base_server + "userService/getUserInfo";
 
 
     //获取验证码
@@ -35,4 +37,18 @@ public class Urls {
     public final static String login = base_server + "userService/login";
     //注册
     public final static String register = base_server + "userService/register";
+    //消息详情
+    public final static String getPushDetail = base_server + "pushService/getPushDetail";
+    //设置交易密码
+    public final static String changePayPassword = base_server + "userService/changePayPassword";
+    //修改交易密码
+    public final static String setPayPassword = base_server + "userService/setPayPassword";
+    //修改登录密码
+    public final static String changePassword = base_server + "userService/changePassword";
+    //找回登录密码
+    public final static String getPassword = base_server + "userService/getPassword";
+    //检验验证码
+    public final static String checkCaptcha = base_server + "commonService/checkCaptcha";
+
+
 }

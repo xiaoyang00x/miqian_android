@@ -60,6 +60,11 @@
 
         <activity
             android:name=".activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.current.ActivityRealname"
             android:launchMode="singleTask" />
         <activity
             android:name=".activity.RegisterActivity"
@@ -76,6 +81,15 @@
             android:name=".activity.IntoActivity"
             android:launchMode="singleTask" />
 
+        <activity
+            android:name=".activity.SettingActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.SecuritySettingActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.ChangePassWordActivity"
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".test.OkHttpsTest"
