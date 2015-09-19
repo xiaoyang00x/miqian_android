@@ -63,7 +63,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.current.ActivityRealname"
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask" />

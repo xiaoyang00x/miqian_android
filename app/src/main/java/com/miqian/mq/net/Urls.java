@@ -27,6 +27,8 @@ public class Urls {
     public final static String roll_in = base_server + "assetService/addRecharge";
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
+    //获取用户信息
+    public final static String user_info = base_server + "userService/getUserInfo";
 
 
     //获取验证码

@@ -14,6 +14,7 @@ import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,6 +158,43 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    /**
+     * 获取用户信息
+     *
+     * @param callback
+     */
+    public static void getUserInfo(Context context, final ICallback<LoginResult> callback) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.user_info, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Log.e("", result);
+                LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
+                if (loginResult.getCode().equals("000000")) {
+                    callback.onSucceed(loginResult);
+                } else {
+                    callback.onFail(loginResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 注册
+     *
+     * @param callback
+     */
     public static void register(Context context, final ICallback<RegisterResult> callback, String mobilePhone, String captcha, String password, String invitationCode) {
         if (mList == null) {
             mList = new ArrayList<Param>();
