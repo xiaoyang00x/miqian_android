@@ -340,6 +340,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
   public void notifyDataSetChanged(HomePageInfo info) {
     this.info = info;
+
     notifyDataSetChanged();
   }
 }

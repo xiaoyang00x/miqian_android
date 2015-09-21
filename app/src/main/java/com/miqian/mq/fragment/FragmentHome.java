@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,8 @@ public class FragmentHome extends Fragment {
   private SwipeRefreshLayout swipeRefresh;
   HomeAdapter adapter;
   public static String baseURL = "http://192.168.0.107:9000";//home
+  int someVarA;
+  String someVarB;
 
   @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
@@ -42,11 +43,13 @@ public class FragmentHome extends Fragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+
     baseURL = "http://10.0.1.193:9000";//拾财贷
     //baseURL = "27.154.228.194:30001/commonService/getHome";//拾财贷公网
     mContext = getActivity();
     if (savedInstanceState == null || view == null) {
       view = inflater.inflate(R.layout.frame_home, null);
+      adapter = null;
     }
     ViewGroup parent = (ViewGroup) view.getParent();
     if (parent != null) {
@@ -117,6 +120,11 @@ public class FragmentHome extends Fragment {
     }
   }
 
+  @Override public void onDestroy() {
+    super.onDestroy();
+    adapter = null;
+  }
+
   private void findViewById(View view) {
     //btHttp = (Button) view.findViewById(R.id.http);
     //btHttp.setOnClickListener(new View.OnClickListener() {
@@ -135,8 +143,6 @@ public class FragmentHome extends Fragment {
    */
     swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
-        Log.i("keen", "onRefresh called from SwipeRefreshLayout");
-
         // This method performs the actual data-refresh operation.
         // The method calls setRefreshing(false) when it's finished.
         myUpdateOperation();
@@ -145,8 +151,8 @@ public class FragmentHome extends Fragment {
   }
 
   private void myUpdateOperation() {
+
     try {
-      //
       //network task
       OkHttpClient client = new OkHttpClient();
       //Request request =
@@ -185,4 +191,5 @@ public class FragmentHome extends Fragment {
       ex.printStackTrace();
     }
   }
+
 }
