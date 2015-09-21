@@ -29,6 +29,8 @@
 
   //安卓只输入数字和字母
   <string name="match">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ</string>
+  <string name="title_activity_capital_record">CapitalRecordActivity</string>
+  <string name="title_activity_test">TestActivity</string>
 
   
   <!-- 定期相关页面-->

@@ -12,12 +12,14 @@
       android:visibility="gone"
       >
     <TextView
+        android:id="@+id/section_header_title_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:text="精选"
         />
     <TextView
+        android:id="@+id/section_header_title_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -45,7 +47,7 @@
         android:text="永兴医院医疗设备项目－9"
         android:textColor="#ff000000"
         android:textSize="18sp"
-        android:id="@+id/textView5"
+        android:id="@+id/title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/divider_line"
@@ -54,8 +56,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="项目总额。。。。。。。"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/textView5"
+        android:id="@+id/subtitle1"
+        android:layout_below="@+id/title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         />
@@ -88,7 +90,7 @@
           />
 
       <TextView
-          android:id="@+id/compliance_observations"
+          android:id="@+id/purchased_percent"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:gravity="center"
@@ -105,8 +107,8 @@
         android:text="220天"
         android:textColor="#ffff0000"
         android:textSize="22sp"
-        android:id="@+id/textView7"
-        android:layout_below="@+id/textView6"
+        android:id="@+id/limit"
+        android:layout_below="@+id/subtitle1"
         android:layout_toLeftOf="@+id/circlebar"
         android:layout_toStartOf="@+id/circlebar"
         android:layout_marginTop="30dp"
@@ -116,9 +118,9 @@
         android:layout_height="wrap_content"
         android:text="期限"
         android:id="@+id/textView8"
-        android:layout_below="@+id/textView7"
-        android:layout_alignLeft="@+id/textView7"
-        android:layout_alignStart="@+id/textView7"
+        android:layout_below="@+id/limit"
+        android:layout_alignLeft="@+id/limit"
+        android:layout_alignStart="@+id/limit"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -126,8 +128,8 @@
         android:text="12%"
         android:textColor="#ffff0000"
         android:textSize="22sp"
-        android:id="@+id/textView9"
-        android:layout_alignTop="@+id/textView7"
+        android:id="@+id/annualized_return"
+        android:layout_alignTop="@+id/limit"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         />
@@ -154,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="已认购28人"
-        android:id="@+id/textView12"
+        android:id="@+id/purchasers"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="5dp"

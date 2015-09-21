@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:minHeight="40dp"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            style="@style/text_black_item"
+            android:text="活期赚" />
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_alignParentRight="true"
+            android:text="年化收益：8%" />
+
+    </RelativeLayout>
+
+    <View style="@style/item_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:minHeight="40dp"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            style="@style/text_black_item"
+            android:text="认购金额" />
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_alignParentRight="true"
+            android:text="20000.00元" />
+
+    </RelativeLayout>
+
+    <View style="@style/item_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:minHeight="40dp"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            style="@style/text_black_item"
+            android:text="红包/拾财券" />
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_alignParentRight="true"
+            android:text="最多可抵" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@color/white"
+        android:minHeight="40dp"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_centerVertical="true"
+            android:text="余额支付" />
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="20000.00" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:layout_marginTop="@dimen/margin_top">
+
+        <Button
+            android:id="@+id/bt_pay"
+            style="@style/click_btn"
+            android:layout_height="@dimen/edit_item"
+            android:text="充值" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -2,7 +2,6 @@ package com.miqian.mq.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-
 import java.util.List;
 
 /**

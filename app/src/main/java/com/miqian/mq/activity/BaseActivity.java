@@ -1,6 +1,7 @@
 package com.miqian.mq.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.miqian.mq.R;
+import com.miqian.mq.views.ProgressDialogView;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -18,7 +20,8 @@ public  abstract  class BaseActivity extends BaseFragmentActivity {
     public LinearLayout mContentView;
     public WFYTitle mTitle;
     public Activity mActivity;
-    public View mView_noresult;
+    public View mViewnoresult;
+    public Dialog mWaitingDialgog;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -28,7 +31,8 @@ public  abstract  class BaseActivity extends BaseFragmentActivity {
         initCotentView();
         mActivity = this;
         mTitle = (WFYTitle) findViewById(R.id.wFYTitle);
-        mView_noresult = findViewById(R.id.frame_no_data);
+        mViewnoresult = findViewById(R.id.frame_no_data);
+        mWaitingDialgog=ProgressDialogView.create(mActivity);
         initTitle(mTitle);
         initView();
         obtainData();
