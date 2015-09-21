@@ -1,22 +1,33 @@
 package com.miqian.mq.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.AnnounceActivity;
+import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.SettingActivity;
+import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.Dialog_Login;
 
 /**
- * Description:��ҳ
+ * Description:
  *
  * @author Jackie
- * @created 2015-3-18 ����5:05:49
+ * @created 2015-3-18
  */
 
 public class FragmentUser extends Fragment implements View.OnClickListener {
@@ -46,6 +57,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
 
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
         tv_Title.setText("我的");
+
+        ImageButton btn_message = (ImageButton) view.findViewById(R.id.btn_message);
+        btn_message.setImageResource(R.mipmap.account_message);
+        btn_message.setOnClickListener(this);
+
+        ImageButton btn_setting = (ImageButton) view.findViewById(R.id.btn_account);
+        btn_setting.setImageResource(R.mipmap.account_setting);
+        btn_setting.setOnClickListener(this);
 
         Button btn_RollIn = (Button) view.findViewById(R.id.btn_rollin);
         Button btn_RollOut = (Button) view.findViewById(R.id.btn_rollout);
@@ -82,7 +101,21 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 Dialog_Login dialog_login = new Dialog_Login(getActivity()) {
                     @Override
                     public void login(String telephone, String password) {
+                        HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
+                            @Override
+                            public void onSucceed(LoginResult result) {
+                                Uihelper.showToast(getActivity(),"登录成功");
+                                String name = RSAUtils.decryptByPrivate(result.getData().getRealName());
+                                UserInfo userInfo = result.getData();
+                                UserUtil.saveUserInfo(getActivity(), userInfo);
+                                Uihelper.trace(name);
+                            }
 
+                            @Override
+                            public void onFail(String error) {
+                                  Uihelper.showToast(getActivity(),error);
+                            }
+                        }, telephone, password);
                     }
                 };
 
@@ -91,6 +124,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //取现
             case R.id.btn_rollout:
+                startActivity(new Intent(getActivity(), IntoActivity.class));
+
                 break;
             //我的活期
             case R.id.frame_account_current:
@@ -106,6 +141,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //我的红包
             case R.id.frame_redpackage:
+                break;
+            //我的消息
+            case R.id.btn_message:
+                startActivity(new Intent(getActivity(), AnnounceActivity.class));
+                break;
+            //我的设置
+            case R.id.btn_account:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
         }
     }

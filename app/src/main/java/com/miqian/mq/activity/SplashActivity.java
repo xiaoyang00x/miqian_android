@@ -8,26 +8,27 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.miqian.mq.MainActivity;
 import com.miqian.mq.R;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
 
-	private ViewPager mViewPager;
-	private LinearLayout framePages;
+    private ViewPager mViewPager;
+    private LinearLayout framePages;
 
-	private static final int pageCount = 3;
+    private static final int pageCount = 3;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 //		Config.init(this);
 
-		setContentView(R.layout.activity_splash);
-		mViewPager = (ViewPager) findViewById(R.id.viewpager);
-		framePages = (LinearLayout) findViewById(R.id.frame_pages);
+        setContentView(R.layout.activity_splash);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        framePages = (LinearLayout) findViewById(R.id.frame_pages);
 
-		Intent intent = getIntent();
+        Intent intent = getIntent();
 
 //
 //		uritype = intent.getStringExtra("uritype");
@@ -36,19 +37,19 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 //		url = intent.getStringExtra("url");
 
 //		MyApplication.getIntence().setIsCurrent(true);
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				loadFinish();
-			}
-		}, 1500);
-	}
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadFinish();
+            }
+        }, 1500);
+    }
 
-	public void loadFinish() {
+    public void loadFinish() {
 //		boolean first_use = Pref.getBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), this, true);
-		boolean first_use = false;
-		if (!first_use) {
-			Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        boolean first_use = false;
+        if (!first_use) {
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 //			if (!TextUtils.isEmpty(uritype)) {
 //
 //				intent.putExtra("uritype", uritype);
@@ -66,9 +67,9 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 //				intent.putExtra("classid", classid);
 //			}
 
-			startActivity(intent);
-			SplashActivity.this.finish();
-		} else {
+            startActivity(intent);
+            SplashActivity.this.finish();
+        } else {
 //			for (int i = 0; i < pageCount; i++) {
 //				LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 //				ImageView imagePage = new ImageView(SplashActivity.this);
@@ -84,10 +85,10 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 //			mViewPager.setAdapter(mPagerAdapter);
 //			mViewPager.setOnPageChangeListener(new MyOnPageChangeListener());
 //			mViewPager.setVisibility(View.VISIBLE);
-		}
-	}
+        }
+    }
 
-	// 填充ViewPager的数据适配器
+    // 填充ViewPager的数据适配器
 //	PagerAdapter mPagerAdapter = new PagerAdapter() {
 //
 //		@Override
@@ -152,13 +153,13 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 //		}
 //	}
 
-	@Override
-	public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
 //		Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
 //		Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 //		startActivity(intent);
 //		SplashActivity.this.finish();
-	}
+    }
 
 //	private int getScreen(int index) {
 //		int id = R.drawable.screen1;
@@ -181,4 +182,16 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 //		return id;
 //	}
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(SplashActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(SplashActivity.this);
+    }
 }

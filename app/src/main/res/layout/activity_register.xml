@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:com.miqian.mq="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +19,9 @@
       <ImageView
           android:layout_width="30dp"
           android:layout_height="30dp"
-          android:background="@mipmap/ic_launcher"
+          android:background="@drawable/trans"
+          android:layout_gravity="center_vertical"
+          android:src="@mipmap/login_phone"
           />
         <EditText
             android:id="@+id/et_account_telephone"
@@ -47,7 +51,9 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@drawable/trans"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/captcha"
             android:id="@+id/imageView" />
 
         <EditText
@@ -92,7 +98,9 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@drawable/trans"
+            android:src="@mipmap/login_password"
+            android:layout_gravity="center_vertical"
             />
         <EditText
             android:id="@+id/et_account_password"
@@ -124,7 +132,9 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@drawable/trans"
+            android:src="@mipmap/register_invite"
+            android:layout_gravity="center_vertical"
             />
         <EditText
             android:id="@+id/et_account_invite"
@@ -141,8 +151,6 @@
 
     </LinearLayout>
 
-    <View style="@style/item_divider" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
@@ -154,8 +162,10 @@
         <Button
             android:id="@+id/btn_next"
             style="@style/click_btn"
+            android:layout_height="@dimen/listitem_height"
             android:onClick="btn_click"
             android:text="下一步" />
     </LinearLayout>
+
 
 </LinearLayout>

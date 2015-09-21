@@ -20,6 +20,7 @@
 
     <dimen name="textsize_title">20sp</dimen>
     <dimen name="textsize_large">22sp</dimen>
+    <dimen name="textsize_larger">25sp</dimen>
     <dimen name="textsize_middle">18sp</dimen>
     <dimen name="textsize_normal">16sp</dimen>
     <dimen name="textsize_small">13sp</dimen>

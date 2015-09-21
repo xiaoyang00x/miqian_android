@@ -29,6 +29,7 @@ public class WFYTitle extends RelativeLayout {
 	public WFYTitle(Context context) {
 		super(context);
 		mContext = context;
+
 	}
 
 	public WFYTitle(Context context, AttributeSet attrs) {

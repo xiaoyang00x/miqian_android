@@ -16,10 +16,18 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.miqian.mq.MainActivity;
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.AnnounceActivity;
+import com.miqian.mq.activity.AnnounceResultActivity;
+import com.miqian.mq.activity.MainActivity;
+import com.miqian.mq.activity.SplashActivity;
+import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 
 import java.util.Calendar;
 
@@ -38,33 +46,97 @@ public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "JPush";
     private JpushInfo response;
     private Intent notificationIntent;
-
+    private int uritype;
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
       if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-            d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
             processCustomMessage(context, bundle);
         }
 
     }
     //send msg to MainActivity
     private void processCustomMessage(Context context, Bundle bundle) {
-        String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-        Log.e("processCustomMessage",message);
-        if (!TextUtils.isEmpty(message)){
-            response = JsonUtil.parseObject(message, JpushInfo.class);
+        String title=bundle.getString(JPushInterface.EXTRA_TITLE);
+        String content = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+        String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
+
+        if (!TextUtils.isEmpty(extra)){
+            Log.e("processCustomMessage",extra);
+            response = JsonUtil.parseObject(extra, JpushInfo.class);
             // 解析数据
             if (response==null){
                 return;
             }
+            if (TextUtils.isEmpty(title)||TextUtils.isEmpty(content)){
+//                return;
+            }
+            response.setTitle(title);
+            response.setContent(content);
+
+            String userId = "";
+
+            // 是否登录
+            if (!UserUtil.hasLogin(context)) {
+                userId = Pref.VISITOR;
+            } else {
+                userId = Pref.getString(Pref.USERID, context, Pref.VISITOR);
+            }
+            response.setUserId(userId);
+            // 设为未读状态
+            response.setState("1");
+            Uihelper.getMessageCount(1, context);
+
+            // 保存到数据库
+            MyDataBaseHelper.getInstance(context).recordJpush(response);
+
+            // 解析数据
             String contentTitle = response.getTitle();
             String contentText = response.getContent();
             String string_uritype = response.getUriType();
-            int  noticeId = response.getId();
+            String noticeId = response.getId();
 
-            notificationIntent = new Intent(context, MainActivity.class);
+            if (!MyApplication.getInstance().isCurrent()) {
+                notificationIntent = new Intent(context, SplashActivity.class);
+                Pref.saveBoolean(Pref.IsPush, true, context);
+            } else {
+
+                if (TextUtils.isEmpty(string_uritype)) {
+                    return;
+                } else {
+                    uritype = Integer.valueOf(string_uritype);
+                }
+                switch (uritype) {
+
+                    case 1:
+                        notificationIntent = new Intent(context, MainActivity.class);
+                        break;
+                    case 2:
+                        notificationIntent = new Intent(context, AnnounceActivity.class);
+                        break;
+                    case 3:
+                        notificationIntent = new Intent(context, AnnounceResultActivity.class);
+                        break;
+
+                    // 内置浏览器
+                    case 4:
+//                        notificationIntent = new Intent(context, WebViewActivity.class);
+                        break;
+                    // 外置浏览器
+                    case 5:
+//                        Uri uri = Uri.parse(url);
+//                        notificationIntent= new Intent(Intent.ACTION_VIEW, uri);
+                        break;
+
+                    default:
+                        notificationIntent = new Intent(context, MainActivity.class);
+                        break;
+                }
+            }
+            if (TextUtils.isEmpty(noticeId)){
+                return;
+            }
+
             int requestCode = (int) System.currentTimeMillis();
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent contentIntent = PendingIntent.getActivity(context, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -81,7 +153,7 @@ public class MyReceiver extends BroadcastReceiver {
             int mMinuts = mCalendar.get(Calendar.MINUTE);
 
             // 通过控件的Id设置属性
-            contentViews.setTextViewText(R.id.titleNo, contentTitle);
+//            contentViews.setTextViewText(R.id.titleNo, contentTitle);
             contentViews.setTextViewText(R.id.textNo, contentText);
             String  string_Minutes=""+mMinuts;
             if (mMinuts<10) {

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.UserUtil;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -25,49 +27,44 @@ import com.squareup.okhttp.Callback;
 public class HttpUtils {
 
     public static final String APP_KEY = "&key=jwoxoWHeauio";
-    public static final String SERVER_ERROR = "服务端网络不通，请重试";
-    private static final String NETWORK_ERROR = "您当前网络不可用";
+    private static final MediaType CONTENT_TYPE =
+            MediaType.parse("application/x-www-form-urlencoded");
 
-    public static void httpPostRequest(Context context, String url, List<Param> list, final ICallbackString callback) {
+    public static String httpPostRequest(Context context, String url, List<Param> list) {
         if (MobileOS.getNetworkType(context) == -1) {
-            callback.onFail(NETWORK_ERROR);
-            return;
+            return MyAsyncTask.NETWORK_ERROR;
         }
         final OkHttpClient client = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
+        list.add(new Param("timer", "" + System.currentTimeMillis()));
         sortParam(list);
         if (list != null && list.size() > 0) {
             for (Param param : list) {
                 builder.add(param.key, param.value);
             }
         }
-        RequestBody requestBody = builder.build();
-        Headers.Builder headerBuilder = getRequestHeader(getSign(list));
+        RequestBody requestBody = null;
+        try {
+            requestBody = builder.build();
+        } catch (Exception e) {
+            requestBody = RequestBody.create(CONTENT_TYPE, "");
+
+        }
+        Headers.Builder headerBuilder = getRequestHeader(context, getSign(list));
         final Request request = new Request.Builder().url(url).post(requestBody).headers(headerBuilder.build()).build();
-
-        client.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onFailure(Request request, IOException e) {
-                callback.onFail("网络请求错误，code：111");
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                String httpString =  response.body().string();
+                Log.e("", httpString);
+                return httpString;
+//                return response.body().string();
             }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String result;
-                    try {
-                        result = response.body().string();
-                        callback.onSuccess(result);
-                        Log.e("", result);
-                    } catch (IOException e) {
-                        callback.onFail("网络请求错误，code：" + response.code());
-                    }
-                } else {
-                    callback.onFail("网络请求错误，code：" + response.code());
-                }
-            }
-        });
+            return null;
+        } catch (IOException e) {
+            return MyAsyncTask.SERVER_ERROR + e.getMessage();
+        }
     }
 
     public static String getSign(List<Param> list) {
@@ -107,17 +104,16 @@ public class HttpUtils {
      *
      * @return
      */
-    public static Headers.Builder getRequestHeader(String sign) {
+    public static Headers.Builder getRequestHeader(Context context, String sign) {
         Headers.Builder headerBuilder = new Headers.Builder();
-        headerBuilder.add("deviceId", "11");
+        headerBuilder.add("deviceId", MobileOS.getIMEI(context));
         headerBuilder.add("cType", "android");
         headerBuilder.add("appName", "miqian");
-        headerBuilder.add("appVersion", "2332");
+        headerBuilder.add("appVersion", MobileOS.getClientVersion(context));
         headerBuilder.add("channelCode", "2332");
-        headerBuilder.add("timer", "2332");
         headerBuilder.add("sign", sign);
-        headerBuilder.add("token", "2332");
-        headerBuilder.add("osVersion", "2332");
+        headerBuilder.add("token", UserUtil.getToken(context));
+        headerBuilder.add("osVersion", MobileOS.getOsVersion());
         return headerBuilder;
     }
 }

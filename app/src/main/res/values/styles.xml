@@ -1,9 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.Sherlock.Light.NoActionBar">
+    <style name="AppTheme" parent="@android:style/Theme.NoTitleBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowActionBar">false</item>
     </style>
+
     <style name="WrapContent">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -25,6 +27,7 @@
         <item name="com.miqian.mq:rightTextColor">@color/white</item>
         <item name="android:background">@color/red_base</item>
     </style>
+
 
     <style name="Dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
@@ -60,6 +63,20 @@
         <item name="android:paddingLeft">5dp</item>
         <item name="android:textColorHint">@color/miqian_gray</item>
         <item name="android:ems">10</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="listItem" parent="FillContent">
+    <item name="android:paddingRight">@dimen/margin_left_right</item>
+    <item name="android:paddingLeft">@dimen/margin_left_right</item>
+    <item name="android:background">@drawable/list_click</item>
+    <item name="android:layout_height">@dimen/listitem_height</item>
+    </style>
+
+    <style name="listItem_tv1" parent="WrapContent">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/miqian_black</item>
+        <item name="android:textSize">@dimen/textsize_normal</item>
     </style>
 
     <style name="item_divider" parent="FillContent">
@@ -74,7 +91,15 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/textsize_middle</item>
         <item name="android:background">@drawable/btn_red</item>
-        <item name="android:layout_height">@dimen/edit_item</item>
+    </style>
+
+    <!--定期赚item view-->
+    <style name="regular_earn_item_lable">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/subtitle_text_color</item>
+        <item name="android:textSize">@dimen/textsize_smaller</item>
     </style>
 
 </resources>
