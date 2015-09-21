@@ -117,7 +117,7 @@
                     android:textSize="@dimen/textsize_normal"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
-                    android:id="@+id/textView5" />
+                    android:id="@+id/title" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_normal"
                     android:layout_gravity="center"
-                    android:id="@+id/textView6" />
+                    android:id="@+id/subtitle1" />
             </LinearLayout>
 
         </RelativeLayout>

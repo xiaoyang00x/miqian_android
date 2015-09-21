@@ -14,5 +14,7 @@
   <string name="feedback_prompt">请描述您的问题，最多240个字。</string>
   //安卓只输入数字和字母
   <string name="match">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ</string>
+  <string name="title_activity_capital_record">CapitalRecordActivity</string>
+  <string name="title_activity_test">TestActivity</string>
 
 </resources>

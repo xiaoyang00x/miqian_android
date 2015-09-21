@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
@@ -78,9 +77,9 @@ public class CircleBar extends View {
   @Override protected void onDraw(Canvas canvas) {
     canvas.drawArc(mColorWheelRectangle, -90, 360, false, mDefaultWheelPaint);
     canvas.drawArc(mColorWheelRectangle, -90, mSweepAnglePer, false, mColorWheelPaint);
-    Rect bounds = new Rect();
-    String textstr = mCount + "";
-    textPaint.getTextBounds(textstr, 0, textstr.length(), bounds);
+    //Rect bounds = new Rect();
+    //String textstr = mCount + "";
+    //textPaint.getTextBounds(textstr, 0, textstr.length(), bounds);
     //canvas.drawText(textstr + "",
     //    (mColorWheelRectangle.centerX()) - (textPaint.measureText(textstr) / 2),
     //    mColorWheelRectangle.centerY() + bounds.height() / 2, textPaint);
@@ -98,7 +97,7 @@ public class CircleBar extends View {
   }
 
   @Override public void setPressed(boolean pressed) {
-//// TODO: 9/6/15 暂不支持press 
+    //// TODO: 9/6/15 暂不支持press
     //Log.i(TAG, "call setPressed ");
     //
     //if (pressed) {
@@ -131,6 +130,7 @@ public class CircleBar extends View {
 
   public void setSweepAngle(float sweepAngle) {
     mSweepAngle = sweepAngle;
+    invalidate();
   }
 
   public class BarAnimation extends Animation {
@@ -160,5 +160,11 @@ public class CircleBar extends View {
   public static int dip2px(Context context, float dipValue) {
     final float scale = context.getResources().getDisplayMetrics().density;
     return (int) (dipValue * scale + 0.5f);
+  }
+
+  public void setMSweepAnglePer(float mSweepAnglePer) {
+    this.mSweepAnglePer = mSweepAnglePer;
+    mSweepAngle = mSweepAnglePer;
+
   }
 }
