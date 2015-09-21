@@ -364,12 +364,12 @@ public class HttpRequest {
 
 
     //设置交易密码
-    public static void setPayPassword(Context context, final ICallback<Meta> callback, String custId, String payPassword, String confirmPayPassword) {
+    public static void setPayPassword(Context context, final ICallback<Meta> callback, String payPassword, String confirmPayPassword) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
         mList.add(new Param("confirmPayPassword", RSAUtils.encryptURLEncode(confirmPayPassword)));
 
@@ -427,12 +427,12 @@ public class HttpRequest {
     }
 
     //修改登录密码
-    public static void changePassword(Context context, final ICallback<LoginResult> callback, String custId, String oldPassword, String newPassword, String confirmPassword) {
+    public static void changePassword(Context context, final ICallback<LoginResult> callback,  String oldPassword, String newPassword, String confirmPassword) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldPassword", RSAUtils.encryptURLEncode(oldPassword)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));

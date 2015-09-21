@@ -56,7 +56,7 @@ public class AnnounceResultActivity extends BaseActivity {
                 @Override
                 public void onFail(String error) {
                     linear_noresult.setVisibility(View.GONE);
-                    mView_noresult.setVisibility(View.VISIBLE);
+                    mViewnoresult.setVisibility(View.VISIBLE);
                 }
             }, Integer.valueOf(pushSource), noticeId, userId);
         }

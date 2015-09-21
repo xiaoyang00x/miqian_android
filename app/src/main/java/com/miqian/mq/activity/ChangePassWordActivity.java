@@ -8,8 +8,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 
@@ -117,7 +123,7 @@ public class ChangePassWordActivity extends BaseActivity {
                             }
 
                         } else {
-                            Uihelper.showToast(mActivity, R.string.tip_password);
+                            Uihelper.showToast(mActivity,  R.string.tip_password);
                         }
                     } else {
                         Uihelper.showToast(mActivity, "请输入新密码");
@@ -158,50 +164,50 @@ public class ChangePassWordActivity extends BaseActivity {
 
     private void summit_tradepassword(String originpassword, String newpassword) {
 
-//		HttpRequest.setTradePassword(mActivity, new ICallback<Meta>() {
-//
-//			@Override
-//			public void onSucceed(Meta result) {
-//				if (paypwd_status==1) {
-//					UIhelper.showToast(mActivity, "修改成功");
-//				}else {
-//					UIhelper.showToast(mActivity, "设置成功");
-//					Intent data=new Intent();
-//					setResult(1, data);
-//				}
-//				finish();
-//			}
-//
-//			@Override
-//			public void onFail(String error) {
-//				dialog.dismiss();
-//				UIhelper.showToast(mActivity, error);
-//			}
-//		}, originpassword, newpassword);
+		HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
+
+            @Override
+            public void onSucceed(Meta result) {
+                if (paypwd_status == 1) {
+                    Uihelper.showToast(mActivity, "修改成功");
+                } else {
+                    Uihelper.showToast(mActivity, "设置成功");
+                    Intent data = new Intent();
+                    setResult(1, data);
+                }
+                finish();
+            }
+
+            @Override
+            public void onFail(String error) {
+                dialog.dismiss();
+                Uihelper.showToast(mActivity, error);
+            }
+        }, originpassword, newpassword);
 
     }
 
     // 提交数据
     private void summit(String originpassword, String newpassword) {
 
-//		HttpRequest.setLoginPassword(mActivity, new ICallback<LoginResult>() {
-//
-//			@Override
-//			public void onSucceed(LoginResult result) {
-//				dialog.dismiss();
-//				UIhelper.showToast(mActivity, "修改成功");
-//				LoginInfo loginInfo = result.getResult();
-//				UserUtil.saveToken(mActivity, loginInfo.getToken(), loginInfo.getUser_id());
-//				finish();
-//			}
-//
-//			@Override
-//			public void onFail(String error) {
-//				dialog.dismiss();
-//				UIhelper.showToast(mActivity, error);
-//
-//			}
-//		}, originpassword, newpassword);
+		HttpRequest.changePassword(mActivity, new ICallback<LoginResult>() {
+
+            @Override
+            public void onSucceed(LoginResult result) {
+                dialog.dismiss();
+                Uihelper.showToast(mActivity, "修改成功");
+                UserInfo userInfo = result.getData();
+                UserUtil.saveToken(mActivity, userInfo.getToken(), userInfo.getCustId());
+                finish();
+            }
+
+            @Override
+            public void onFail(String error) {
+                dialog.dismiss();
+                Uihelper.showToast(mActivity, error);
+
+            }
+        }, originpassword, newpassword, newpassword);
     }
 
     @Override

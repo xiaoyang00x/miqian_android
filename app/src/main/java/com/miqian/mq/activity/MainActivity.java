@@ -119,7 +119,7 @@ public class MainActivity extends BaseFragmentActivity {
             } else {
                 jpushInfolist = MyDataBaseHelper.getInstance(mContext).getjpushInfo(Pref.getString(Pref.USERID, mContext, Pref.VISITOR));
             }
-            if (jpushInfolist == null) {
+            if (jpushInfolist.size()<1) {
                 return;
             }
             Collections.reverse(jpushInfolist);
