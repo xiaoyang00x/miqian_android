@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,8 @@ public class FragmentHome extends Fragment {
   public static String baseURL = "http://192.168.0.107:9000";//home
   int someVarA;
   String someVarB;
-  @Override public void onActivityCreated( Bundle savedInstanceState) {
+
+  @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     myUpdateOperation();
   }
@@ -143,8 +143,6 @@ public class FragmentHome extends Fragment {
    */
     swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
-        Log.i("keen", "onRefresh called from SwipeRefreshLayout");
-
         // This method performs the actual data-refresh operation.
         // The method calls setRefreshing(false) when it's finished.
         myUpdateOperation();
@@ -154,62 +152,44 @@ public class FragmentHome extends Fragment {
 
   private void myUpdateOperation() {
 
-    new Thread(new Runnable() {
-      @Override public void run() {
-        try {
-          //network task
-          OkHttpClient client = new OkHttpClient();
-          //Request request =
-          //    CommonHeaders.configRequestBuilder(new Request.Builder()).url(baseURL + "/jsonRes").build();
-          RequestBody requestBody = new MultipartBuilder().type(MultipartBuilder.FORM)
-              .addPart(Headers.of("Content-Disposition", "form-data; name=\"title\""),
-                  RequestBody.create(null, "Sqo===张三"))
-              .build();
+    try {
+      //network task
+      OkHttpClient client = new OkHttpClient();
+      //Request request =
+      //    CommonHeaders.configRequestBuilder(new Request.Builder()).url(baseURL + "/jsonRes").build();
+      RequestBody requestBody = new MultipartBuilder().type(MultipartBuilder.FORM)
+          .addPart(Headers.of("Content-Disposition", "form-data; name=\"title\""),
+              RequestBody.create(null, "Sqo===张三"))
+          .build();
 
-          Request request =
-              new Request.Builder().url(baseURL + "/jsonRes").post(requestBody).build();
-          client.newCall(request).enqueue(new Callback() {
-            @Override public void onFailure(Request request, IOException e) {
-              e.printStackTrace();
-            }
-
-            @Override public void onResponse(final Response response) throws IOException {
-              String jsonSTR = response.body().string();
-              final HomePageInfo info = JSON.parseObject(jsonSTR, HomePageInfo.class);
-
-              if (null != mContext) {
-                mContext.runOnUiThread(new Runnable() {
-                  @Override public void run() {
-                    if (null == adapter) {
-                      adapter = new HomeAdapter(mContext, info);
-                      recyclerView.setAdapter(adapter);
-                    } else {
-                      adapter.notifyDataSetChanged(info);
-                    }
-                    swipeRefresh.setRefreshing(false);
-                  }
-                });
-              }
-            }
-          });
-        } catch (Exception ex) {
-          ex.printStackTrace();
+      Request request = new Request.Builder().url(baseURL + "/jsonRes").post(requestBody).build();
+      client.newCall(request).enqueue(new Callback() {
+        @Override public void onFailure(Request request, IOException e) {
+          e.printStackTrace();
         }
-      }
-    }).start();
+
+        @Override public void onResponse(final Response response) throws IOException {
+          String jsonSTR = response.body().string();
+          final HomePageInfo info = JSON.parseObject(jsonSTR, HomePageInfo.class);
+
+          if (null != mContext) {
+            mContext.runOnUiThread(new Runnable() {
+              @Override public void run() {
+                if (null == adapter) {
+                  adapter = new HomeAdapter(mContext, info);
+                  recyclerView.setAdapter(adapter);
+                } else {
+                  adapter.notifyDataSetChanged(info);
+                }
+                swipeRefresh.setRefreshing(false);
+              }
+            });
+          }
+        }
+      });
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
   }
-
-  /**
-   * todo 这个方法切换到后台是调用的。切换到其他的fragment时，没有调用。
-   * @param outState
-   */
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putInt("A", 7);
-    outState.putString("B", "hellos");
-  }
-
-
 
 }
