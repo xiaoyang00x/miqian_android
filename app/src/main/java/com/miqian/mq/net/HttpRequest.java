@@ -1,13 +1,11 @@
 package com.miqian.mq.net;
 
 import android.content.Context;
-import android.text.style.MetricAffectingSpan;
 import android.util.Log;
-
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CurrentInfoResult;
+import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.PayOrderResult;
@@ -15,7 +13,6 @@ import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.UserUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -486,4 +483,36 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+
+  /**
+   * 获取首页信息
+   *
+   * @param callback
+   */
+  public static void getHomePageInfo(Context context, final ICallback<HomePageInfo> callback) {
+    if (mList == null) {
+      mList = new ArrayList<Param>();
+    }
+    mList.clear();
+    //27.154.228.194:30001/commonService/getHome
+    //http://10.0.1.193:9000 + "/jsonRes"
+    new MyAsyncTask(context, "http://27.154.228.194:30001/commonService/getHome", mList, new ICallback<String>() {
+
+      @Override
+      public void onSucceed(String result) {
+        Log.e("", result);
+        HomePageInfo info = JsonUtil.parseObject(result, HomePageInfo.class);
+        if (info.getCode() == 0) {
+          callback.onSucceed(info);
+        } else {
+          callback.onFail(info.getMessage());
+        }
+      }
+
+      @Override
+      public void onFail(String error) {
+        callback.onFail(error);
+      }
+    }).executeOnExecutor();
+  }
 }

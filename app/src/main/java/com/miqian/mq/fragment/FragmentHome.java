@@ -6,21 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.HomeAdapter;
 import com.miqian.mq.entity.HomePageInfo;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-import java.io.IOException;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.Uihelper;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,8 +28,6 @@ public class FragmentHome extends Fragment {
   private SwipeRefreshLayout swipeRefresh;
   HomeAdapter adapter;
   public static String baseURL = "http://192.168.0.107:9000";//home
-  int someVarA;
-  String someVarB;
 
   @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
@@ -152,44 +145,67 @@ public class FragmentHome extends Fragment {
 
   private void myUpdateOperation() {
 
-    try {
-      //network task
-      OkHttpClient client = new OkHttpClient();
-      //Request request =
-      //    CommonHeaders.configRequestBuilder(new Request.Builder()).url(baseURL + "/jsonRes").build();
-      RequestBody requestBody = new MultipartBuilder().type(MultipartBuilder.FORM)
-          .addPart(Headers.of("Content-Disposition", "form-data; name=\"title\""),
-              RequestBody.create(null, "Sqo===张三"))
-          .build();
+    //try {
+    //  //network task
+    //  OkHttpClient client = new OkHttpClient();
+    //  RequestBody requestBody = new MultipartBuilder().type(MultipartBuilder.FORM)
+    //      .addPart(Headers.of("Content-Disposition", "form-data; name=\"title\""),
+    //          RequestBody.create(null, "Sqo===张三"))
+    //      .build();
+    //
+    //  Request request = new Request.Builder().url(baseURL + "/jsonRes").post(requestBody).build();
+    //  client.newCall(request).enqueue(new Callback() {
+    //    @Override public void onFailure(Request request, IOException e) {
+    //      e.printStackTrace();
+    //    }
+    //
+    //    @Override public void onResponse(final Response response) throws IOException {
+    //      String jsonSTR = response.body().string();
+    //      final HomePageInfo info = JSON.parseObject(jsonSTR, HomePageInfo.class);
+    //
+    //      if (null != mContext) {
+    //        mContext.runOnUiThread(new Runnable() {
+    //          @Override public void run() {
+    //            if (null == adapter) {
+    //              adapter = new HomeAdapter(mContext, info);
+    //              recyclerView.setAdapter(adapter);
+    //            } else {
+    //              adapter.notifyDataSetChanged(info);
+    //            }
+    //            swipeRefresh.setRefreshing(false);
+    //          }
+    //        });
+    //      }
+    //    }
+    //  });
+    //} catch (Exception ex) {
+    //  ex.printStackTrace();
+    //}
+    Log.e("keen", "===myUpdateOperation====");
 
-      Request request = new Request.Builder().url(baseURL + "/jsonRes").post(requestBody).build();
-      client.newCall(request).enqueue(new Callback() {
-        @Override public void onFailure(Request request, IOException e) {
-          e.printStackTrace();
-        }
+    HttpRequest.getHomePageInfo(getActivity(), new ICallback<HomePageInfo>() {
 
-        @Override public void onResponse(final Response response) throws IOException {
-          String jsonSTR = response.body().string();
-          final HomePageInfo info = JSON.parseObject(jsonSTR, HomePageInfo.class);
+      @Override public void onSucceed(HomePageInfo result) {
+        //UserInfo userInfo = result.getData();
+        //UserUtil.saveToken(getActivity(), userInfo.getToken(), userInfo.getCustId());
 
-          if (null != mContext) {
-            mContext.runOnUiThread(new Runnable() {
-              @Override public void run() {
-                if (null == adapter) {
-                  adapter = new HomeAdapter(mContext, info);
-                  recyclerView.setAdapter(adapter);
-                } else {
-                  adapter.notifyDataSetChanged(info);
-                }
-                swipeRefresh.setRefreshing(false);
-              }
-            });
+        HomePageInfo info = result;
+        Uihelper.showToast(getActivity(), "success ");
+        if (null != mContext) {
+          if (null == adapter) {
+            adapter = new HomeAdapter(mContext, info);
+            recyclerView.setAdapter(adapter);
+          } else {
+            adapter.notifyDataSetChanged(info);
           }
+          swipeRefresh.setRefreshing(false);
         }
-      });
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-  }
+      }
 
+      @Override public void onFail(String error) {
+        Uihelper.showToast(getActivity(), "shenme ");
+      }
+    });
+    Log.e("keen", "===myUpdateOperation====");
+  }
 }
