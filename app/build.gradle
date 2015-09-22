@@ -34,4 +34,6 @@ dependencies {
   compile 'com.android.support:recyclerview-v7:22.0.+'
   compile files('libs/securepay_auth_2.4.2.04.jar')
   compile project(':library_pulltorefesh')
+  compile 'com.android.support:appcompat-v7:22.0.0'
+  compile 'com.marshalchen.ultimaterecyclerview:library:0.3.17'
 }
