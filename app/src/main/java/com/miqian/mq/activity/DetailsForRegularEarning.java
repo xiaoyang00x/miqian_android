@@ -7,55 +7,19 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.view.View;
 import android.widget.TextView;
 import com.miqian.mq.R;
-import com.miqian.mq.views.CircleButton;
 
 /**
  * Created by sunyong on 9/17/15.
  */
 public class DetailsForRegularEarning extends Activity {
-  CircleButton preSelected;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_regular_earn_detail);
     colorizePartOfPlainText();
 
-    final CircleButton circleButton = (CircleButton) findViewById(R.id.circleButton0);
-    final CircleButton circleButton1 = (CircleButton) findViewById(R.id.circleButton1);
-    final CircleButton circleButton2 = (CircleButton) findViewById(R.id.circleButton2);
-    preSelected = circleButton;
-    preSelected.setColor(Color.RED);
-    circleButton.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (((CircleButton) v).getColor() != Color.RED) {
-          ((CircleButton) v).setColor(Color.RED);
-          preSelected.setColor(Color.BLUE);
-          preSelected = (CircleButton) v;
-        }
-      }
-    });
-
-    circleButton1.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (((CircleButton)v).getColor() != Color.RED) {
-          ((CircleButton)v).setColor(Color.RED);
-          preSelected.setColor(Color.BLUE);
-          preSelected = (CircleButton)v;
-        }
-      }
-    });
-    circleButton2.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (((CircleButton)v).getColor() != Color.RED) {
-          ((CircleButton)v).setColor(Color.RED);
-          preSelected.setColor(Color.BLUE);
-          preSelected = (CircleButton)v;
-        }
-      }
-    });
   }
 
   private void colorizePartOfPlainText() {
