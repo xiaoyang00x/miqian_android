@@ -20,6 +20,7 @@ public class DetailsForRegularEarning extends Activity {
     setContentView(R.layout.activity_regular_earn_detail);
     colorizePartOfPlainText();
 
+
   }
 
   private void colorizePartOfPlainText() {
