@@ -1,14 +1,17 @@
 package com.miqian.mq.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -25,6 +28,10 @@ public class SetPasswordActivity extends BaseActivity {
     private String captcha;
     private EditText et_password_confirm;
     private EditText et_password;
+    private String idCard;
+    private String style;
+    private TextView tv_newpassword, tv_comfirmpassword;
+    private int mType;
 
     @Override
     public void obtainData() {
@@ -34,13 +41,28 @@ public class SetPasswordActivity extends BaseActivity {
     @Override
     public void initView() {
 
+        et_password = (EditText) findViewById(R.id.et_password);
+        et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
+        tv_comfirmpassword = (TextView) findViewById(R.id.tv_comfirmpassword);
+        tv_newpassword = (TextView) findViewById(R.id.tv_newpassword);
         // getIntent
         Intent intent = getIntent();
         captcha = intent.getStringExtra("captcha");
         phone = intent.getStringExtra("phone");
+        idCard = intent.getStringExtra("idCard");
+        style = intent.getStringExtra("type");
 
-        et_password = (EditText) findViewById(R.id.et_password);
-        et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
+        mType = Integer.parseInt(style);
+
+        if (mType == TypeUtil.PASSWORD_TRADE) {
+
+            mTitle.setTitleText("设置交易密码");
+            tv_newpassword.setText("设置交易密码");
+            tv_comfirmpassword.setText("确定交易密码");
+            et_password.setHint("请输入交易密码");
+
+        }
+
 
     }
 
@@ -76,21 +98,42 @@ public class SetPasswordActivity extends BaseActivity {
 
     private void forget_summit(String password_confirm) {
 //		mWaitingDialog.show();
-        HttpRequest.getPassword(this, new ICallback<Meta>() {
+        //设置登录密码
+        if (mType == TypeUtil.PASSWORD_LOGIN) {
+            HttpRequest.getPassword(this, new ICallback<Meta>() {
 
-            @Override
-            public void onSucceed(Meta result) {
-                Uihelper.showToast(mActivity, "设置密码成功");
-                SetPasswordActivity.this.finish();
+                @Override
+                public void onSucceed(Meta result) {
+                    Uihelper.showToast(mActivity, "设置密码成功");
+                    SetPasswordActivity.this.finish();
 
-            }
+                }
 
-            @Override
-            public void onFail(String error) {
+                @Override
+                public void onFail(String error) {
 //				mWaitingDialog.dismiss();
-                Uihelper.showToast(mActivity, error);
-            }
-        }, phone, password_confirm, password_confirm, captcha);
+                    Uihelper.showToast(mActivity, error);
+                }
+            }, phone, password_confirm, password_confirm, captcha);
+        }
+        //设置交易密码
+        else {
+            HttpRequest.changePayPassword(this, new ICallback<Meta>() {
+
+                @Override
+                public void onSucceed(Meta result) {
+                    Uihelper.showToast(mActivity, "设置密码成功");
+                    SetPasswordActivity.this.finish();
+
+                }
+
+                @Override
+                public void onFail(String error) {
+//				mWaitingDialog.dismiss();
+                    Uihelper.showToast(mActivity, error);
+                }
+            }, "SXJ1", "350425198903282412", phone, captcha, password_confirm, password_confirm);
+        }
 
 
     }

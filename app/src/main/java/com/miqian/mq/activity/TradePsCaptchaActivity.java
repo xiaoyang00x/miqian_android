@@ -1,13 +1,11 @@
 package com.miqian.mq.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Meta;
-import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.MobileOS;
@@ -27,22 +24,18 @@ import com.miqian.mq.views.WFYTitle;
 /**
  * Created by Joy on 2015/9/4.
  */
-public class SendCaptchaActivity extends BaseActivity {
+public class TradePsCaptchaActivity extends BaseActivity {
 
 
-    private EditText mEt_Telephone, mEt_Captcha;
+    private EditText mEt_Captcha;
     private Button mBtn_sendCaptcha;
-    private String phone;
     private boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;
     private Thread thread;
     private boolean isSending;
     private static Handler handler;
-    private static final int NUM_TYPE_CAPTCHA = 1;
-    private static final int NUM_TYPE_SUMMIT = 2;
-    private static final int NUM_TYPE_TOAST = 3;
+    private EditText mEtRealname;
     private TextView tv_phone;
-    private int type;   //忘记密码，修改绑定手机
 
 
     @Override
@@ -66,78 +59,47 @@ public class SendCaptchaActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        Intent intent = getIntent();
-        type = intent.getIntExtra("type", 0);
-
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
-
-        mEt_Telephone = (EditText) findViewById(R.id.et_account_telephone);
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
+        mEtRealname = (EditText) findViewById(R.id.et_realname);
+
         mBtn_sendCaptcha = (Button) findViewById(R.id.btn_send);
-
-
-        mEt_Telephone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    watchEdittext(NUM_TYPE_TOAST);
-                }
-            }
-        });
 
         mBtn_sendCaptcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                watchEdittext(NUM_TYPE_CAPTCHA);
+                sendMessage();
             }
         });
 
-    }
-
-    private void watchEdittext(int type) {
-        phone = mEt_Telephone.getText().toString();
-        if (!TextUtils.isEmpty(phone)) {
-            if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
-                switch (type) {
-                    case NUM_TYPE_TOAST:
-                        break;
-                    case NUM_TYPE_CAPTCHA:
-                        //发送验证码
-                        sendMessage();
-
-                        break;
-                    case NUM_TYPE_SUMMIT:
-                        break;
-                }
-
-            } else {
-                Uihelper.showToast(this, R.string.phone_noeffect);
+        HttpRequest.setIDCardCheck(mActivity, new ICallback<Meta>() {
+            @Override
+            public void onSucceed(Meta result) {
+             Uihelper.trace("onsuccess:实名认证");
             }
-        } else {
-            Uihelper.showToast(this, R.string.phone_null);
-        }
+
+            @Override
+            public void onFail(String error) {
+                Uihelper.trace("Fail:实名认证");
+            }
+        }, "350425198903282412", "涂良坛");
 
     }
+
 
     private void sendMessage() {
-        int summitType = 0;
-        switch (type) {
-            case TypeUtil.SENDCAPTCHA_FORGETPSW:
-                summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
-                break;
-        }
 
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Uihelper.trace("captcha:"+result.getCode());
+                Uihelper.trace("captcha:" + result.getCode());
             }
 
             @Override
             public void onFail(String error) {
 
             }
-        }, phone, summitType);
+        }, "13365047950", TypeUtil.CAPTCHA_TRADEPASSWORD);
 
 
         mBtn_sendCaptcha.setEnabled(false);
@@ -150,57 +112,43 @@ public class SendCaptchaActivity extends BaseActivity {
     public void btn_click(View v) {
 
         String captcha = mEt_Captcha.getText().toString();
-        phone = mEt_Telephone.getText().toString();
+        String idCard = mEtRealname.getText().toString();
 
-
-        if (!TextUtils.isEmpty(phone)) {
+        if (!TextUtils.isEmpty(idCard)) {
             if (!TextUtils.isEmpty(captcha)) {
 
-                summit(phone, captcha);
+                summit(idCard, captcha);
 
             } else {
                 Uihelper.showToast(this, R.string.tip_captcha);
             }
             ;
         } else {
-            Uihelper.showToast(this, R.string.phone_null);
+            Uihelper.showToast(this, "身份证号码不能为空");
         }
 
 
     }
 
-    private void summit(final String phone,final String captcha) {
-        String userId;
-        if (UserUtil.hasLogin(mActivity)){
-            userId=UserUtil.getUserId(mActivity);
-        }
-        else{
-            userId="";
-        }
+    private void summit(final String idCard, final String captcha) {
 
-        int summitType = 0;
-        switch (type) {
-            case TypeUtil.SENDCAPTCHA_FORGETPSW:
-                summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
-                break;
-        }
-        HttpRequest.checkCaptcha(mActivity,new ICallback<Meta>() {
+        HttpRequest.changePayPassword(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Intent intent=new Intent(mActivity,SetPasswordActivity.class);
-                intent.putExtra("captcha",captcha);
-                intent.putExtra("phone",phone);
-                intent.putExtra("type",TypeUtil.PASSWORD_LOGIN);
+                Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+                intent.putExtra("captcha", captcha);
+                intent.putExtra("idCard", idCard);
+                intent.putExtra("type", TypeUtil.PASSWORD_TRADE);
                 startActivity(intent);
             }
 
             @Override
             public void onFail(String error) {
 
-                Uihelper.showToast(mActivity,error);
+                Uihelper.showToast(mActivity, error);
 
             }
-        }, phone,summitType,captcha);
+        }, "SXJ0", idCard, "13365047950", captcha, "", "");
 
     }
 
@@ -231,21 +179,14 @@ public class SendCaptchaActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_sendcaptcha;
+        return R.layout.activity_sendcaptcha_tradeps;
     }
 
     @Override
     public void initTitle(WFYTitle mTitle) {
 
-        mTitle.setTitleText("注册");
+        mTitle.setTitleText("修改交易密码");
 
     }
 
-    public static void enterActivity(Context context, int type) {
-
-        Intent intent = new Intent(context, SendCaptchaActivity.class);
-        intent.putExtra("type", type);
-        context.startActivity(intent);
-
-    }
 }

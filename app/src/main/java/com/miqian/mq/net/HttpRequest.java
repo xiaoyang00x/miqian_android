@@ -1,13 +1,11 @@
 package com.miqian.mq.net;
 
 import android.content.Context;
-import android.text.style.MetricAffectingSpan;
 import android.util.Log;
-
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CurrentInfoResult;
+import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.PayOrderResult;
@@ -15,7 +13,6 @@ import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.UserUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,12 +60,12 @@ public class HttpRequest {
      *
      * @param callback
      */
-    public static void setIDCardCheck(Context context, final ICallback<Meta> callback, String custId, String idNo, final String realName) {
+    public static void setIDCardCheck(Context context, final ICallback<Meta> callback, String idNo, final String realName) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("idNo", RSAUtils.encryptURLEncode(idNo)));
         mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
 
@@ -321,16 +318,15 @@ public class HttpRequest {
      * @param phone
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
-     * @param custId        用户Id   非必填  注册不用填
      */
-    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String custId,String captcha) {
+    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType,String captcha) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
-        mList.add(new Param("custId", custId));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("captcha", captcha));
 
         new MyAsyncTask(context, Urls.checkCaptcha, mList, new ICallback<String>() {
@@ -360,16 +356,15 @@ public class HttpRequest {
      * @param phone
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
-     * @param custId        用户Id   非必填  注册不用填
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String custId) {
+    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
-        mList.add(new Param("custId", custId));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
         new MyAsyncTask(context, Urls.getCaptcha, mList, new ICallback<String>() {
 
@@ -454,13 +449,13 @@ public class HttpRequest {
     }
 
     //修改交易密码
-    public static void changePayPassword(Context context, final ICallback<Meta> callback, String custId, String tradeType, String idCard, String mobilePhone, String captcha, String payPassword, String confirmPayPassword
+    public static void changePayPassword(Context context, final ICallback<Meta> callback, String tradeType, String idCard, String mobilePhone, String captcha, String payPassword, String confirmPayPassword
     ) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("tradeType", tradeType));
         mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
@@ -547,4 +542,36 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+
+  /**
+   * 获取首页信息
+   *
+   * @param callback
+   */
+  public static void getHomePageInfo(Context context, final ICallback<HomePageInfo> callback) {
+    if (mList == null) {
+      mList = new ArrayList<Param>();
+    }
+    mList.clear();
+    //27.154.228.194:30001/commonService/getHome
+    //http://10.0.1.193:9000 + "/jsonRes"
+    new MyAsyncTask(context, "http://27.154.228.194:30001/commonService/getHome", mList, new ICallback<String>() {
+
+      @Override
+      public void onSucceed(String result) {
+        Log.e("", result);
+        HomePageInfo info = JsonUtil.parseObject(result, HomePageInfo.class);
+        if (info.getCode() == 0) {
+          callback.onSucceed(info);
+        } else {
+          callback.onFail(info.getMessage());
+        }
+      }
+
+      @Override
+      public void onFail(String error) {
+        callback.onFail(error);
+      }
+    }).executeOnExecutor();
+  }
 }
