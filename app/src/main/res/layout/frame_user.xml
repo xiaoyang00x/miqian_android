@@ -180,10 +180,10 @@ android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="9000.34"
+                android:text="0.00"
                 android:textColor="@color/white"
                 android:textSize="50sp"
-                android:id="@+id/textView2" />
+                android:id="@+id/tv_totalasset" />
         </LinearLayout>
     </RelativeLayout>
     <View
@@ -222,11 +222,11 @@ android:visibility="gone"
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="8000"
+                   android:text="0.00"
                    android:textColor="@color/white"
                    android:textSize="@dimen/textsize_normal"
                    android:layout_gravity="center"
-                   android:id="@+id/textView4" />
+                   android:id="@+id/tv_balance" />
            </LinearLayout>
 
     </RelativeLayout>
@@ -254,11 +254,11 @@ android:visibility="gone"
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="490"
+                    android:text="0.00"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textsize_normal"
                     android:layout_gravity="center"
-                    android:id="@+id/textView6" />
+                    android:id="@+id/tv_totalProfit" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -290,7 +290,7 @@ android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_margin="13dp"
             android:layout_weight="1"
-            android:background="@color/comon_blue"
+            android:background="@drawable/btn_blue"
             android:orientation="vertical"
             android:text="提现"
             android:textColor="@color/white" />
@@ -329,7 +329,7 @@ android:visibility="gone"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300元"
+            android:text="0元"
             android:textColor="@color/red_base"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
@@ -370,7 +370,7 @@ android:visibility="gone"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300元"
+            android:text="0笔"
             android:textColor="@color/red_base"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
@@ -408,15 +408,6 @@ android:visibility="gone"
             android:src="@mipmap/arrow_right"
             android:id="@+id/arrow_3" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="300元"
-            android:textColor="@color/red_base"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/arrow_3"
-            android:id="@+id/account_record" />
     </RelativeLayout>
     <View style="@style/item_divider"/>
     <RelativeLayout
@@ -452,7 +443,7 @@ android:visibility="gone"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300元"
+            android:text="0张"
             android:textColor="@color/red_base"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
@@ -493,7 +484,7 @@ android:visibility="gone"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300元"
+            android:text="0个"
             android:textColor="@color/red_base"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"

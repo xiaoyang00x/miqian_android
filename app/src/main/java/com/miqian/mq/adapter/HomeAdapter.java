@@ -5,26 +5,29 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.miqian.mq.R;
-import com.miqian.mq.test.ActivityEntity;
-import com.miqian.mq.views.MaterialProgressBarSupport;
+import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.views.CircleBar;
+import com.miqian.mq.views.MaterialProgressBarSupport;
 import com.miqian.mq.views.PageIndicator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by sunyong on 9/5/15.
- *
  */
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+  HomePageInfo info;//the underlying source data
   private int a[] = { R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher };
 
   ArrayList<String[]> list = new ArrayList<String[]>();
@@ -61,30 +64,37 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   int count;
   Activity activity;
 
-  public HomeAdapter(Activity activity, int count) {
-    this.count = count;
+  public HomeAdapter(Activity activity, HomePageInfo info) {
     this.activity = activity;
+    this.info = info;
   }
 
   @Override public int getItemViewType(int position) {
     if (position == 0) {
       return ADS;//轮播
-    } else if (position == 1) {
+    } else if (null != info && null != info.getNewCustomer() && position == 1) {
       return DEMAND_DEPOSIT;//活期
       //}else if (position == getBasicItemCount() && hasFooter) {
-    } else if (position == 4) {
+    } else if (hasFooter
+        && position == getItemCount() - 1) {//has footer and the position is the last
       return TYPE_FOOTER;
     } else {
       return REGULAR_DEPOSIT;//定期
     }
-
-
   }
 
+  /**
+   * the count dynamically determined by the server's returned response
+   * adImgs will be always be 1;
+   * newCustomer will be either 1 or 0;
+   * regularDeposit will be that depends.
+   *
+   *
+   * info.getSubjectInfo().length   5
+   */
   @Override public int getItemCount() {
-    return count + (hasFooter ? 2 : 1);// // TODO: 9/6/15  2：代表footer与广告   1:只有广告
-    //return mValues.size() + (hasFooter ? 1 : 0);
-    //return count + 1;//add the advertisements
+    return 1 + (info.getNewCustomer() != null ? 1 : 0) + 5 + (hasFooter ? 1
+        : 0);// // TODO: 9/6/15  1：代表footer的item
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -97,47 +107,66 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 parent, false);
         ViewHolder0 vhImage = new ViewHolder0(vImage);
         return vhImage;
-      case DEMAND_DEPOSIT:
-        View view =
-            mInflater.inflate(R.layout.fragment_home_recyclerview_item_demand_deposit, parent,
-                false);
-        return new ViewHolder2(view);
-      case TYPE_FOOTER: //// TODO: 9/6/15  should refine this load more function
-        //View footer = LayoutInflater.from(parent.getContext())
-        //    .inflate(R.layout.item_view_load_more, parent, false);
-        //return new FooterViewHolder(footer);
+      //case DEMAND_DEPOSIT:
+      //  View view =
+      //      mInflater.inflate(R.layout.fragment_home_recyclerview_item_demand_deposit, parent,
+      //          false);
+      //  return new ViewHolder2(view);
+      //case TYPE_FOOTER: //// TODO: 9/6/15  should refine this load more function
+      //View footer = LayoutInflater.from(parent.getContext())
+      //    .inflate(R.layout.item_view_load_more, parent, false);
+      //return new FooterViewHolder(footer);
 
       default:
         View v = mInflater.inflate(R.layout.fragment_home_recyclerview_item_regular_deposit, parent,
             false);
         final CircleBar circleBar = (CircleBar) v.findViewById(R.id.circlebar);
-        circleBar.setSweepAngle(270);//todo keen control the angle
-        //circleBar.setOnClickListener(new View.OnClickListener() {
-        //  @Override public void onClick(View view) {
-        //    circleBar.startCustomAnimation();
-        //  }
-        //});
-        new Handler().postDelayed(new Runnable() {
-          @Override public void run() {
-            circleBar.setText("270");
+        circleBar.setSweepAngle(0);//todo keen control the angle
+        circleBar.setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View view) {
+            circleBar.startCustomAnimation();
           }
-        }, 2000);
+        });
+        //new Handler().postDelayed(new Runnable() {
+        //  @Override public void run() {
+        //    circleBar.setText("270");
+        //  }
+        //}, 500);
         return new ViewHolder2(v);
     }
   }
 
-  @Override public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-    //没有更多数据
-    if (hasMoreData) {
-      ((FooterViewHolder) viewHolder).mProgressView.setVisibility(View.VISIBLE);
-      ((FooterViewHolder) viewHolder).mProgressView.startProgress();
-      //((FooterViewHolder) holder).mProgressView.setIndeterminate(true);
-      ((FooterViewHolder) viewHolder).mTextView.setText(R.string.app_loading_more);
-    } else {
-      //((FooterViewHolder) viewHolder).mProgressView.stopProgress();
-      //((FooterViewHolder) viewHolder).mProgressView.setVisibility(View.GONE);
-      ////((FooterViewHolder) holder).mProgressView.st;
-      //((FooterViewHolder) viewHolder).mTextView.setText("没有更多数据了");
+  @Override public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    Log.e("keen", "the position is " + position);
+    if (1 == position && null != info.getNewCustomer()) {//has object for new customer
+      ((ViewHolder2) viewHolder).title.setText(info.getNewCustomer().getTitle());
+      ((ViewHolder2) viewHolder).subtitle1.setText(info.getNewCustomer().getSubTitleOne());
+      ((ViewHolder2) viewHolder).purchased_percent.setText(
+          info.getNewCustomer().getPurchasePercent());
+      ((ViewHolder2) viewHolder).purchasers.setText(info.getNewCustomer().getPurchasers() + "");
+      ((ViewHolder2) viewHolder).limit.setText(info.getNewCustomer().getLimit() + "");
+      ((ViewHolder2) viewHolder).annualized_return.setText(
+          info.getNewCustomer().getAnnualizedReturn());
+      ((ViewHolder2) viewHolder).section_header.setVisibility(View.VISIBLE);
+      ((ViewHolder2) viewHolder).section_header_title_left.setText("new customer");
+      ((ViewHolder2) viewHolder).bar.setMSweepAnglePer(300);
+      //((ViewHolder2)viewHolder).bar.startCustomAnimation();
+    } else if (position != 0) {
+      int index = null == info.getNewCustomer() ? position - 1 : position - 2;
+      ((ViewHolder2) viewHolder).title.setText((info.getSubjectInfo())[index].getTitle());
+      ((ViewHolder2) viewHolder).subtitle1.setText((info.getSubjectInfo())[index].getSubTitleTwo());
+      ((ViewHolder2) viewHolder).purchased_percent.setText(
+          (info.getSubjectInfo())[index].getPurchasePercent());
+      ((ViewHolder2) viewHolder).purchasers.setText(
+          (info.getSubjectInfo())[index].getPurchasers() + "");
+      ((ViewHolder2) viewHolder).limit.setText((info.getSubjectInfo())[index].getLimit() + "");
+      ((ViewHolder2) viewHolder).annualized_return.setText(
+          (info.getSubjectInfo())[index].getAnnualizedReturn());
+      if (position != 5) ((ViewHolder2) viewHolder).bar.startCustomAnimation();
+      ((ViewHolder2) viewHolder).bar.setMSweepAnglePer(300);
+      if (0 == index) {
+        ((ViewHolder2) viewHolder).section_header.setVisibility(View.VISIBLE);
+      }
     }
   }
 
@@ -146,23 +175,34 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public ViewHolder0(View itemView) {
       super(itemView);
       mHomeViewpager = (ViewPager) itemView.findViewById(R.id.vp_home_viewpager);
-      //ViewPagerAdapter adapter = new ViewPagerAdapter(activity, a);
-      //vp.setAdapter(adapter);
-      //vp.setCurrentItem(0);
-
       //todo 这里设置的数据需要进行
       initAdapter(itemView);
-
     }
   }
 
+  //regular deposit view
   class ViewHolder2 extends RecyclerView.ViewHolder {
+    TextView title, subtitle1, annualized_return, limit, purchased_percent, purchasers,
+        section_header_title_left, section_header_title_right;
+    RelativeLayout section_header;
+    CircleBar bar;
+
     public ViewHolder2(View itemView) {
       super(itemView);
+      title = (TextView) itemView.findViewById(R.id.title);
+      subtitle1 = (TextView) itemView.findViewById(R.id.subtitle1);
+      annualized_return = (TextView) itemView.findViewById(R.id.annualized_return);
+      limit = (TextView) itemView.findViewById(R.id.limit);
+      purchased_percent = (TextView) itemView.findViewById(R.id.purchased_percent);
+      purchasers = (TextView) itemView.findViewById(R.id.purchasers);
+      section_header_title_left = (TextView) itemView.findViewById(R.id.section_header_title_left);
+      section_header_title_right =
+          (TextView) itemView.findViewById(R.id.section_header_title_right);
+      section_header = (RelativeLayout) itemView.findViewById(R.id.section_header);
+      bar = (CircleBar) itemView.findViewById(R.id.circlebar);
     }
   }
 
-  //／／／／／／／／／
   private boolean hasFooter;
 
   private boolean hasMoreData;
@@ -271,54 +311,36 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   public void initPagerIndicator(View view) {
     mHomeViewpagerIndictor = (PageIndicator) view.findViewById(R.id.pi_home_page_indictor);
     mHomeViewpagerIndictor.setPageOrginal(true);
-    mHomeViewpagerIndictor.setTotalPageSize(listEntity.size());
+    mHomeViewpagerIndictor.setTotalPageSize(info.getAdImgs().length);
   }
-
-  ArrayList<ActivityEntity> listEntity;
 
   /**
    * keen
    * 初始化adapter
    */
   public void initAdapter(View view) {
-    listEntity = new ArrayList<ActivityEntity>();
-    ActivityEntity entity = new ActivityEntity();
-    entity.activityImgUrl =
-        "http://b.hiphotos.baidu.com/image/pic/item/8718367adab44aedbf4ff0f3b01c8701a18bfba0.jpg";
-    listEntity.add(entity);
-    entity = new ActivityEntity();
-    entity.activityImgUrl =
-        "http://b.hiphotos.baidu.com/image/pic/item/8718367adab44aedbf4ff0f3b01c8701a18bfba0.jpg";
-    listEntity.add(entity);
-    entity = new ActivityEntity();
-    entity.activityImgUrl =
-        "http://b.hiphotos.baidu.com/image/pic/item/8718367adab44aedbf4ff0f3b01c8701a18bfba0.jpg";
-    listEntity.add(entity);
-    entity = new ActivityEntity();
-    entity.activityImgUrl =
-        "http://b.hiphotos.baidu.com/image/pic/item/8718367adab44aedbf4ff0f3b01c8701a18bfba0.jpg";
-    listEntity.add(entity);
-
-    entity = new ActivityEntity();
-    entity.activityImgUrl =
-        "http://d.hiphotos.baidu.com/image/pic/item/4a36acaf2edda3cce714562903e93901203f92c3.jpg";
-    listEntity.add(entity);
-
-    mAdpagerAdapter = new HomeAdPageAdapter(view.getContext(), listEntity);
+    mAdpagerAdapter = new HomeAdPageAdapter(view.getContext(), Arrays.asList(info.getAdImgs()));
     mHomeViewpager = (ViewPager) view.findViewById(R.id.vp_home_viewpager);
     mHomeViewpager.setAdapter(mAdpagerAdapter);
     initPagerIndicator(view);//pagerindicator  todo
-    if (listEntity.size() != 0) {
+    if (info.getAdImgs().length != 0) {
       int maxSize = 65535;
-      int pos = (maxSize / 2) - (maxSize / 2) % listEntity.size(); // 计算初始位置
+      int pos = (maxSize / 2) - (maxSize / 2) % info.getAdImgs().length; // 计算初始位置
       mHomeViewpager.setOnPageChangeListener(new MyOnPageChangeListener());
       mHomeViewpager.setCurrentItem(pos, true);
       mAdpagerAdapter.setOnPageItemClickListener(new HomeAdPageAdapter.OnPageItemClickListener() {
         @Override public void onPageItemClick(ViewGroup parent, View item, int position) {
+          Toast.makeText(item.getContext(), "postion is " + position + ";;; tag is " + item.getTag(), Toast.LENGTH_SHORT).show();
+          //todo open the webview
 
-          //do nothing
         }
       });
     }
+  }
+
+  public void notifyDataSetChanged(HomePageInfo info) {
+    this.info = info;
+
+    notifyDataSetChanged();
   }
 }

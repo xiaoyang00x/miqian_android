@@ -6,7 +6,10 @@ import java.util.List;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.miqian.mq.entity.Meta;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.UserUtil;
 
 
 /**
@@ -38,10 +41,10 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
             return NETWORK_ERROR;
         }
 
-		String httpString = HttpUtils.httpPostRequest(mContext, mUrl, mList);
-		if (!TextUtils.isEmpty(httpString)) {
-			return httpString;
-		}
+        String httpString = HttpUtils.httpPostRequest(mContext, mUrl, mList);
+        if (!TextUtils.isEmpty(httpString)) {
+            return httpString;
+        }
 
         return null;
     }
@@ -58,10 +61,10 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                     callback.onFail(SERVER_ERROR);
                 } else {
                     callback.onSucceed(result);
-//                    Meta response = JsonUtil.parseObject(result, Meta.class);
-//                    if (response.getCode() == 2006 || response.getCode() == 2007) {
-//                        UserUtil.clearUserInfo(mContext);
-//                    }
+                    Meta response = JsonUtil.parseObject(result, Meta.class);
+                    if (response.getCode().equals("500001") || response.getCode().equals("500002")) {
+                        UserUtil.clearUserInfo(mContext);
+                    }
                 }
             } else {
                 callback.onFail("请求失败");

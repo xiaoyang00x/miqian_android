@@ -21,6 +21,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -49,6 +50,7 @@ public class SendCaptchaActivity extends BaseActivity {
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
+                mBtn_sendCaptcha.setEnabled(false);
                 String timeInfo = msg.getData().getString("time");
                 mBtn_sendCaptcha.setText(timeInfo + "秒后重新获取");
                 if ("0".equals(timeInfo)) {
@@ -64,9 +66,8 @@ public class SendCaptchaActivity extends BaseActivity {
     @Override
     public void initView() {
 
-
         Intent intent = getIntent();
-        type = intent.getIntExtra("tpye", 0);
+        type = intent.getIntExtra("type", 0);
 
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
 
@@ -80,16 +81,6 @@ public class SendCaptchaActivity extends BaseActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     watchEdittext(NUM_TYPE_TOAST);
-                }
-            }
-        });
-        mEt_Captcha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    //验证验证码的有效性
-
-
                 }
             }
         });
@@ -132,21 +123,21 @@ public class SendCaptchaActivity extends BaseActivity {
         int summitType = 0;
         switch (type) {
             case TypeUtil.SENDCAPTCHA_FORGETPSW:
-                summitType = TypeUtil.CAPTCHA_REGISTER;
+                summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
                 break;
         }
 
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Uihelper.trace(result.getCode() + "");
+                Uihelper.trace("captcha:"+result.getCode());
             }
 
             @Override
             public void onFail(String error) {
 
             }
-        }, phone, summitType, "");
+        }, phone, summitType);
 
 
         mBtn_sendCaptcha.setEnabled(false);
@@ -178,24 +169,38 @@ public class SendCaptchaActivity extends BaseActivity {
 
     }
 
-    private void summit(String phone, String captcha) {
+    private void summit(final String phone,final String captcha) {
+        String userId;
+        if (UserUtil.hasLogin(mActivity)){
+            userId=UserUtil.getUserId(mActivity);
+        }
+        else{
+            userId="";
+        }
+
         int summitType = 0;
         switch (type) {
             case TypeUtil.SENDCAPTCHA_FORGETPSW:
-                summitType = TypeUtil.CAPTCHA_REGISTER;
+                summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
                 break;
         }
         HttpRequest.checkCaptcha(mActivity,new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-
+                Intent intent=new Intent(mActivity,SetPasswordActivity.class);
+                intent.putExtra("captcha",captcha);
+                intent.putExtra("phone",phone);
+                intent.putExtra("type",TypeUtil.PASSWORD_LOGIN);
+                startActivity(intent);
             }
 
             @Override
             public void onFail(String error) {
 
+                Uihelper.showToast(mActivity,error);
+
             }
-        }, phone,summitType,"",captcha);
+        }, phone,summitType,captcha);
 
     }
 

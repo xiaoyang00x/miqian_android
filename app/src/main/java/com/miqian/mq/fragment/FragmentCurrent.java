@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,19 +13,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
-import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.PayOrder;
-import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.pay.BaseHelper;
-import com.miqian.mq.pay.MobileSecurePayer;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WaterWaveView;
 
 import org.json.JSONObject;
@@ -77,7 +78,27 @@ public class FragmentCurrent extends Fragment {
         btInvestment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtainData();
+                UserUtil.loginPay(mContext, new DialogPay(mContext) {
+                    @Override
+                    public void positionBtnClick(String s) {
+                        if (!TextUtils.isEmpty(s)) {
+                            float money = Float.parseFloat(s);
+                            if (money < 1) {
+                                this.setTitle("提示：输入请大于一元");
+                            } else {
+                                UserUtil.currenPay(mContext, CurrentInvestment.class);
+                            }
+                        } else {
+                            this.setTitle("提示：请输入金额");
+                        }
+                    }
+                });
+//                if (UserUtil.loginPay(mContext)) {
+////                    Intent intent = new Intent(mContext, cls);
+////                    context.startActivity(intent);
+//                } else {
+//
+//                }
 //                Intent intent = new Intent(mContext, OkHttpsTest.class);
 //                startActivity(intent);
 
@@ -94,10 +115,10 @@ public class FragmentCurrent extends Fragment {
 //                    }
 //                }, "18759235288", "123456");
 
-                String custId = "000000000000000000000018597746";
-                String amt = "0.1";
-                String bankCode = "466";
-                String bankNo = "6214855920260037";
+//                String custId = "000000000000000000000018597746";
+//                String amt = "0.1";
+//                String bankCode = "466";
+//                String bankNo = "6214855920260037";
 
 //                HttpRequest.setIDCardCheck(mContext, new ICallback<Meta>() {
 //

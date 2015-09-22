@@ -12,6 +12,7 @@ public class TypeUtil {
 //    13005——银行卡信息补全
 //    13006——修改银行卡
 //    13007——非首次提现
+//    13008——找回交易密码
     public static final int CAPTCHA_REGISTER = 13001;
     public static final int CAPTCHA_FINDPASSWORD = 13002;
     public static final int CAPTCHA_BINDTEL_FIRST = 13003;
@@ -19,6 +20,7 @@ public class TypeUtil {
     public static final int CAPTCHA_BANDINFO = 13005;
     public static final int CAPTCHA_MODIFYBNADCARD = 13006;
     public static final int CAPTCHA_WITHDRAW = 13007;
+    public static final int CAPTCHA_TRADEPASSWORD = 13007;
 
     //是否设置交易密码
     public static final int TRADEPASS_NOSET = 20001;

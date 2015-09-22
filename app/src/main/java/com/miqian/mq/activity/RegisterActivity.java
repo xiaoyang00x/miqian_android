@@ -136,7 +136,7 @@ public class RegisterActivity extends BaseActivity {
             public void onFail(String error) {
 
             }
-        }, phone, TypeUtil.CAPTCHA_REGISTER, "");
+        }, phone, TypeUtil.CAPTCHA_REGISTER);
 
 
         mBtn_sendCaptcha.setEnabled(false);
@@ -157,14 +157,20 @@ public class RegisterActivity extends BaseActivity {
             if (!TextUtils.isEmpty(captcha)) {
 
                 if (!TextUtils.isEmpty(password)) {
+                    mWaitingDialgog.show();
                     HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
                         @Override
                         public void onSucceed(RegisterResult result) {
+                            mWaitingDialgog.dismiss();
+                            Uihelper.showToast(mActivity,"注册成功");
+                            finish();
                             Log.e("Register", result.getData().getBalance());
                         }
 
                         @Override
                         public void onFail(String error) {
+                            mWaitingDialgog.dismiss();
+                            Uihelper.showToast(mActivity,error);
                         }
                     }, phone, captcha, password, invite);
 

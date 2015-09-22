@@ -1,8 +1,10 @@
 package com.miqian.mq.fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,9 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.Dialog_Login;
+import com.miqian.mq.views.ProgressDialogView;
+
+import org.w3c.dom.Text;
 
 /**
  * Description:
@@ -33,7 +38,10 @@ import com.miqian.mq.views.Dialog_Login;
 public class FragmentUser extends Fragment implements View.OnClickListener {
 
     private View view;
-    private TextView tv_Current, tv_Regular, tv_Record, tv_Ticket, tv_Redpackage;
+    private TextView tv_Current, tv_Regular, tv_Ticket, tv_Redpackage;
+    private Dialog mWaitingDialog;
+    private UserInfo userInfo;
+    private TextView tv_TotalProfit, tv_balance, tv_totalasset;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +58,76 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     }
 
     private void obtainData() {
+        mWaitingDialog.show();
+        HttpRequest.getUserInfo(getActivity(), new ICallback<LoginResult>() {
+            @Override
+            public void onSucceed(LoginResult result) {
+                mWaitingDialog.dismiss();
+                userInfo = result.getData();
+                if (userInfo != null) {
+                    setData();
+                }
+            }
 
+            @Override
+            public void onFail(String error) {
+                mWaitingDialog.dismiss();
+
+            }
+        });
+
+    }
+
+    private void setData() {
+
+        //历史收益
+        if (!TextUtils.isEmpty(userInfo.getTotalProfit())) {
+            tv_TotalProfit.setText(userInfo.getTotalProfit());
+        } else {
+            tv_TotalProfit.setText("0.00");
+        }
+        //账户余额
+        if (!TextUtils.isEmpty(userInfo.getBalance())) {
+            tv_balance.setText(userInfo.getBalance());
+        } else {
+            tv_balance.setText("0.00");
+        }
+        //我的活期
+        if (!TextUtils.isEmpty(userInfo.getCurAmt())) {
+            tv_Current.setText(userInfo.getCurAmt() + "元");
+        } else {
+            tv_Current.setText("0元");
+        }
+        //我的定期
+        if (!TextUtils.isEmpty(userInfo.getRegTotal())) {
+            tv_Regular.setText(userInfo.getRegTotal() + "笔");
+        } else {
+            tv_Regular.setText("0笔");
+        }
+        //拾财券
+        if (!TextUtils.isEmpty(userInfo.getWealthTicket())) {
+            tv_Ticket.setText(userInfo.getWealthTicket() + "张");
+        } else {
+            tv_Ticket.setText("0张");
+        }
+        //红包
+        if (!TextUtils.isEmpty(userInfo.getRedBag())) {
+            tv_Redpackage.setText(userInfo.getRedBag() + "个");
+        } else {
+            tv_Redpackage.setText("0个");
+        }
+        //总资产
+        if (!TextUtils.isEmpty(userInfo.getTotalAsset())) {
+            tv_totalasset.setText(userInfo.getTotalAsset());
+        } else {
+            tv_totalasset.setText("0.00");
+        }
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
     }
 
     private void findViewById(View view) {
@@ -74,9 +151,12 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
 
         tv_Current = (TextView) view.findViewById(R.id.account_current);
         tv_Regular = (TextView) view.findViewById(R.id.account_regular);
-        tv_Record = (TextView) view.findViewById(R.id.account_record);
         tv_Ticket = (TextView) view.findViewById(R.id.account_ticket);
         tv_Redpackage = (TextView) view.findViewById(R.id.account_redpackage);
+
+        tv_balance = (TextView) view.findViewById(R.id.tv_balance);
+        tv_TotalProfit = (TextView) view.findViewById(R.id.tv_totalProfit);
+        tv_totalasset = (TextView) view.findViewById(R.id.tv_totalasset);
 
         View frame_current = view.findViewById(R.id.frame_account_current);
         View frame_regular = view.findViewById(R.id.frame_regular);
@@ -89,6 +169,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         frame_record.setOnClickListener(this);
         frame_ticket.setOnClickListener(this);
         frame_redpackage.setOnClickListener(this);
+
+        mWaitingDialog = ProgressDialogView.create(getActivity());
 
     }
 
@@ -104,6 +186,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                         HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
                             @Override
                             public void onSucceed(LoginResult result) {
+                                Uihelper.showToast(getActivity(), "登录成功");
                                 String name = RSAUtils.decryptByPrivate(result.getData().getRealName());
                                 UserInfo userInfo = result.getData();
                                 UserUtil.saveUserInfo(getActivity(), userInfo);
@@ -112,7 +195,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
 
                             @Override
                             public void onFail(String error) {
-
+                                Uihelper.showToast(getActivity(), error);
                             }
                         }, telephone, password);
                     }

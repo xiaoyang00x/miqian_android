@@ -9,17 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import com.miqian.mq.R;
-import com.miqian.mq.test.ActivityEntity;
+import com.miqian.mq.entity.AdvertisementImg;
 import com.miqian.mq.utils.net.HttpImageUtils;
 import com.miqian.mq.utils.net.ImageLoadTask;
 import com.miqian.mq.utils.net.ImageLoaderManager;
 import com.miqian.mq.utils.net.NetUtility;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class HomeAdPageAdapter extends PagerAdapter {
 
-  private ArrayList<ActivityEntity> list = new ArrayList<ActivityEntity>();
+  //private ArrayList<ActivityEntity> list = new ArrayList<ActivityEntity>();
+  private ArrayList<AdvertisementImg> list = new ArrayList<AdvertisementImg>();
+
   private Recylcer recylcer;
   private LayoutParams lp =
       new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -53,8 +56,8 @@ public class HomeAdPageAdapter extends PagerAdapter {
     }
   }
 
-  public HomeAdPageAdapter(Context context, ArrayList<ActivityEntity> recommends) {
-    for (ActivityEntity recommend : recommends) {
+  public HomeAdPageAdapter(Context context, List<AdvertisementImg> recommends) {
+    for (AdvertisementImg recommend : recommends) {
       list.add(recommend);
     }
     ctx = context;
@@ -66,9 +69,9 @@ public class HomeAdPageAdapter extends PagerAdapter {
     this.onPageItemClickListener = onPageItemClickListener;
   }
 
-  public void reload(ArrayList<ActivityEntity> recommends) {
+  public void reload(ArrayList<AdvertisementImg> recommends) {
     list.clear();
-    for (ActivityEntity recommend : recommends) {
+    for (AdvertisementImg recommend : recommends) {
       list.add(recommend);
     }
     notifyDataSetChanged();
@@ -87,7 +90,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     return list.size();
   }
 
-  public ActivityEntity getItem(int position) {
+  public AdvertisementImg getItem(int position) {
     // 对position取余数
     return list.get(position % list.size());
   }
@@ -98,7 +101,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
 
   @Override public Object instantiateItem(final ViewGroup container, final int position) {
     final ImageView imageView = (ImageView) recylcer.requestView();
-    String url = list.get(position % list.size()).activityImgUrl;
+    String url = list.get(position % list.size()).getImgUrl();
     // TODO if 中用来判断是否是最后一个image，如果是的话，当用户在该图片上进行右滑时，将事件传递给父viewpager
     //if (url.equals(
     //    "http://d.hiphotos.baidu.com/image/pic/item/4a36acaf2edda3cce714562903e93901203f92c3.jpg")) {
@@ -121,7 +124,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     Bitmap bitmap = loaderManager.getCacheBitmap(url);
     imageView.setImageBitmap(bitmap);
     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-    imageView.setTag(url);// 绑定imageview 视图
+    imageView.setTag(list.get(position % list.size()).getJumpUrl());// 绑定imageview 视图
     if (bitmap == null) {
       loaderManager.addDelayTask(new ImageLoadTask(url) {
 
@@ -163,7 +166,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     public void onPageItemClick(ViewGroup parent, View item, int position);
   }
 
-  public ArrayList<ActivityEntity> getList() {
+  public ArrayList<AdvertisementImg> getList() {
     return list;
   }
 }
