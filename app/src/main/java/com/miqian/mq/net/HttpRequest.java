@@ -121,21 +121,82 @@ public class HttpRequest {
     }
 
     /**
-     * 充值
+     * 活期认购展示页面
      *
      * @param callback
      */
-    public static void rollIn(Context context, final ICallback<PayOrderResult> callback, String custId, String amt, String bankCode, String bankNo) {
+    public static void getCurrentOrder(Context context, final ICallback<CurrentInfoResult> callback) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        new MyAsyncTask(context, Urls.current_home, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                CurrentInfoResult currentInfoResult = JsonUtil.parseObject(result, CurrentInfoResult.class);
+                if (currentInfoResult.getCode().equals("000000")) {
+                    callback.onSucceed(currentInfoResult);
+                } else {
+                    callback.onFail(currentInfoResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 充值
+     *
+     * @param callback
+     */
+    public static void rollIn(Context context, final ICallback<PayOrderResult> callback, String amt, String bankNo) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("bankCode", bankCode));
+//        mList.add(new Param("bankCode", bankCode));
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
 
         new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Log.e("", result);
+                PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
+                if (payOrderResult.getCode().equals("000000")) {
+                    callback.onSucceed(payOrderResult);
+                } else {
+                    callback.onFail(payOrderResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 充值结果查询
+     *
+     * @param callback
+     */
+    public static void rollInResult(Context context, final ICallback<PayOrderResult> callback, String orderNo) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("orderNo", orderNo));
+
+        new MyAsyncTask(context, Urls.rollin_result, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {

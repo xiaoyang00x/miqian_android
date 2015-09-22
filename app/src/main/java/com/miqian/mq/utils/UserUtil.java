@@ -95,6 +95,7 @@ public class UserUtil {
                     HttpRequest.login(context, new ICallback<LoginResult>() {
                         @Override
                         public void onSucceed(LoginResult result) {
+                            dismiss();
                             UserInfo userInfo = result.getData();
                             saveUserInfo(context, userInfo);
                             if (userInfo.getRealNameStatus().equals("0")) {

@@ -62,38 +62,67 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.current.ActivityRealname"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activity.DetailsForRegularEarning"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.current.CurrentInvestment"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.DetailsForRegularEarning"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activity.AnnounceActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.AnnounceResultActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.SetPasswordActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.SendCaptchaActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.IntoActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SecuritySettingActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ChangePassWordActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.TradePsCaptchaActivity"
             android:launchMode="singleTask" />
@@ -201,20 +230,17 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="8e7e3b5b32b4603e8aa757c6" />
-        <!-- </>值来自开发者平台取得的AppKey -->
+        <!--  </>值来自开发者平台取得的AppKey-->
         <activity
             android:name=".activity.CapitalRecordActivity"
-            android:label="@string/title_activity_capital_record" >
-        </activity>
-        <activity
-            android:name=".activity.TestActivity"
-            android:label="@string/title_activity_test" >
-        </activity>
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_capital_record"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MyRegualrDepositActivity"
             android:label="@string/title_activity_my_regualr_deposit"
-            >
-        </activity>
+            />
+
     </application>
 
 </manifest>
