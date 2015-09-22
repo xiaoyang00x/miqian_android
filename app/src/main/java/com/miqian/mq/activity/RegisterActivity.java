@@ -136,7 +136,7 @@ public class RegisterActivity extends BaseActivity {
             public void onFail(String error) {
 
             }
-        }, phone, TypeUtil.CAPTCHA_REGISTER, "");
+        }, phone, TypeUtil.CAPTCHA_REGISTER);
 
 
         mBtn_sendCaptcha.setEnabled(false);

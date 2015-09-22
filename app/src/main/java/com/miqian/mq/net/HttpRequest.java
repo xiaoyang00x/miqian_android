@@ -60,12 +60,12 @@ public class HttpRequest {
      *
      * @param callback
      */
-    public static void setIDCardCheck(Context context, final ICallback<Meta> callback, String custId, String idNo, final String realName) {
+    public static void setIDCardCheck(Context context, final ICallback<Meta> callback, String idNo, final String realName) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("idNo", RSAUtils.encryptURLEncode(idNo)));
         mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
 
@@ -257,16 +257,15 @@ public class HttpRequest {
      * @param phone
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
-     * @param custId        用户Id   非必填  注册不用填
      */
-    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String custId,String captcha) {
+    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType,String captcha) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
-        mList.add(new Param("custId", custId));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("captcha", captcha));
 
         new MyAsyncTask(context, Urls.checkCaptcha, mList, new ICallback<String>() {
@@ -296,16 +295,15 @@ public class HttpRequest {
      * @param phone
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
-     * @param custId        用户Id   非必填  注册不用填
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String custId) {
+    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
-        mList.add(new Param("custId", custId));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
         new MyAsyncTask(context, Urls.getCaptcha, mList, new ICallback<String>() {
 
@@ -390,13 +388,13 @@ public class HttpRequest {
     }
 
     //修改交易密码
-    public static void changePayPassword(Context context, final ICallback<Meta> callback, String custId, String tradeType, String idCard, String mobilePhone, String captcha, String payPassword, String confirmPayPassword
+    public static void changePayPassword(Context context, final ICallback<Meta> callback, String tradeType, String idCard, String mobilePhone, String captcha, String payPassword, String confirmPayPassword
     ) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("tradeType", tradeType));
         mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));

@@ -103,6 +103,9 @@
         <activity
             android:name=".activity.ChangePassWordActivity"
             android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.TradePsCaptchaActivity"
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".test.OkHttpsTest"

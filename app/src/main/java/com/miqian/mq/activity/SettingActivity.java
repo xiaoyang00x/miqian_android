@@ -1,9 +1,11 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -47,7 +49,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-             mTitle.setTitleText("设置");
+        mTitle.setTitleText("设置");
     }
 
     @Override
@@ -55,13 +57,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             //姓名
             case R.id.frame_setting_name:
+                Intent intent=new Intent(mActivity, ActivityRealname.class);
+                startActivity(intent);
                 break;
             //绑定手机
             case R.id.frame_setting_bindphone:
+
                 break;
             //安全设置
             case R.id.frame_setting_security:
-                startActivity(new Intent(mActivity,SecuritySettingActivity.class));
+                startActivity(new Intent(mActivity, SecuritySettingActivity.class));
                 break;
             //帮助中心
             case R.id.frame_setting_helpcenter:
@@ -74,6 +79,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //联系客服
             case R.id.frame_setting_telephone:
+
+
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4000010520")));
+
                 break;
         }
 
