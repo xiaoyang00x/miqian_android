@@ -44,7 +44,7 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
         switch (v.getId()) {
             case R.id.password_login:
 
-                SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW);
+                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW);
 
                 break;
             case R.id.password_transaction:

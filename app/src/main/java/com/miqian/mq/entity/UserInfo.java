@@ -1,9 +1,11 @@
 package com.miqian.mq.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/9/6.
  */
-public class UserInfo {
+public class UserInfo  implements Serializable{
 
     public String custId;//客户id
     public String mobilePhone;//手机号
@@ -16,7 +18,7 @@ public class UserInfo {
     public String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
     public String balance;//可用余额
     public String curAmt;//活期总额
-    public String bindCardStatus;//银行卡绑定状态
+    public String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
     public String totalProfit;//历史收益
     public String regTotal;//定期认购笔数
     public String totalAsset;//总资产

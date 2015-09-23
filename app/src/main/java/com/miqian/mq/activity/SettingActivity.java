@@ -30,7 +30,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         View frame_setting_suggest = findViewById(R.id.frame_setting_suggest);
         View frame_setting_about = findViewById(R.id.frame_setting_about);
         View frame_setting_telephone = findViewById(R.id.frame_setting_telephone);
-
+        View frame_setting_bankcard = findViewById(R.id.frame_setting_bankcard);
 
         frame_setting_name.setOnClickListener(this);
         frame_setting_bindphone.setOnClickListener(this);
@@ -39,6 +39,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_suggest.setOnClickListener(this);
         frame_setting_about.setOnClickListener(this);
         frame_setting_telephone.setOnClickListener(this);
+        frame_setting_bankcard.setOnClickListener(this);
 
     }
 
@@ -57,7 +58,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             //姓名
             case R.id.frame_setting_name:
-                Intent intent=new Intent(mActivity, ActivityRealname.class);
+                Intent intent = new Intent(mActivity, ActivityRealname.class);
                 startActivity(intent);
                 break;
             //绑定手机
@@ -70,6 +71,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //帮助中心
             case R.id.frame_setting_helpcenter:
+                break;
+            //银行卡号
+            case R.id.frame_setting_bankcard:
+                startActivity(new Intent(mActivity, BindCardActivity.class));
                 break;
             //意见反馈
             case R.id.frame_setting_suggest:
