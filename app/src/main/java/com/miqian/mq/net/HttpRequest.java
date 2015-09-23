@@ -3,6 +3,7 @@ package com.miqian.mq.net;
 import android.content.Context;
 import android.util.Log;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
