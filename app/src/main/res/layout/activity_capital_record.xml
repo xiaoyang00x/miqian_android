@@ -29,13 +29,10 @@
         android:visibility="gone"
         >
 
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/recyclerView"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:padding="3dp"
-          android:scrollbars="vertical"
-          android:overScrollMode="never"
+      <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:id="@+id/ultimate_recycler_view"
           />
     </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout
@@ -58,7 +55,7 @@
             android:layout_weight="1"
             >
           <com.miqian.mq.views.CircleButton
-              android:id="@+id/cn2"
+              android:id="@+id/all"
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_centerHorizontal="true"
@@ -80,7 +77,7 @@
             android:layout_weight="1"
             >
           <com.miqian.mq.views.CircleButton
-              android:id="@+id/cirButt"
+              android:id="@+id/saving"
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_centerHorizontal="true"
@@ -88,6 +85,7 @@
               android:layout_alignParentBottom="true"
               android:layout_marginBottom="8dip"
               app:cb_color="#99CC00"
+              android:onClick="searchBtn"
               />
           <TextView
               android:layout_width="wrap_content"
@@ -102,7 +100,7 @@
             android:layout_weight="1"
             >
           <com.miqian.mq.views.CircleButton
-              android:id="@+id/ci"
+              android:id="@+id/withdraw"
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_centerHorizontal="true"
@@ -110,6 +108,7 @@
               android:layout_alignParentBottom="true"
               android:layout_marginBottom="8dip"
               app:cb_color="#99CC00"
+              android:onClick="searchBtn"
               />
           <TextView
               android:layout_width="wrap_content"
@@ -124,7 +123,7 @@
             android:layout_weight="1"
             >
           <com.miqian.mq.views.CircleButton
-              android:id="@+id/cutton2"
+              android:id="@+id/buy"
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_centerHorizontal="true"
@@ -132,6 +131,7 @@
               android:layout_alignParentBottom="true"
               android:layout_marginBottom="8dip"
               app:cb_color="#99CC00"
+              android:onClick="searchBtn"
               />
           <TextView
               android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
             android:layout_weight="1"
             >
           <com.miqian.mq.views.CircleButton
-              android:id="@+id/citton2"
+              android:id="@+id/redeem"
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_centerHorizontal="true"
@@ -160,6 +160,7 @@
               android:layout_alignParentBottom="true"
               android:layout_marginBottom="8dip"
               app:cb_color="#99CC00"
+              android:onClick="searchBtn"
               />
           <TextView
               android:layout_width="wrap_content"
@@ -174,7 +175,7 @@
             android:layout_weight="1"
             >
           <com.miqian.mq.views.CircleButton
-              android:id="@+id/circleButt"
+              android:id="@+id/transfer"
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_centerHorizontal="true"
@@ -182,6 +183,7 @@
               android:layout_alignParentBottom="true"
               android:layout_marginBottom="8dip"
               app:cb_color="#99CC00"
+              android:onClick="searchBtn"
               />
           <TextView
               android:layout_width="wrap_content"
@@ -196,7 +198,7 @@
             android:layout_weight="1"
             >
           <com.miqian.mq.views.CircleButton
-              android:id="@+id/cin2"
+              android:id="@+id/maturity"
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_centerHorizontal="true"
@@ -204,6 +206,7 @@
               android:layout_alignParentBottom="true"
               android:layout_marginBottom="8dip"
               app:cb_color="#99CC00"
+              android:onClick="searchBtn"
               />
           <TextView
               android:layout_width="wrap_content"
@@ -218,7 +221,7 @@
             android:layout_weight="1"
             >
           <com.miqian.mq.views.CircleButton
-              android:id="@+id/circleButton2"
+              android:id="@+id/other"
               android:layout_width="80dp"
               android:layout_height="80dp"
               android:layout_centerHorizontal="true"
@@ -226,6 +229,7 @@
               android:layout_alignParentBottom="true"
               android:layout_marginBottom="8dip"
               app:cb_color="#99CC00"
+              android:onClick="searchBtn"
               />
           <TextView
               android:layout_width="wrap_content"

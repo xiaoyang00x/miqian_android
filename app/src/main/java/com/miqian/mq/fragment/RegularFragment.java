@@ -47,7 +47,8 @@ public class RegularFragment extends BasicFragment {
             datas.add(i, earn);
         }
 
-        RegularListAdapter adapter = new RegularListAdapter(datas);
+
+        RegularListAdapter adapter = new RegularListAdapter(datas, getChildFragmentManager(), swipeRefreshLayout);
         recyclerView.setAdapter(adapter);
     }
 }

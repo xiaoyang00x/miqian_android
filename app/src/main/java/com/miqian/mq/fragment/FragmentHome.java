@@ -31,7 +31,7 @@ public class FragmentHome extends Fragment {
 
   @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    myUpdateOperation();
+    //myUpdateOperation();
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -138,7 +138,7 @@ public class FragmentHome extends Fragment {
       @Override public void onRefresh() {
         // This method performs the actual data-refresh operation.
         // The method calls setRefreshing(false) when it's finished.
-        myUpdateOperation();
+        //myUpdateOperation();
       }
     });
   }

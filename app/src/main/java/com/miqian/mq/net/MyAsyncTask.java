@@ -62,7 +62,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                 } else {
                     callback.onSucceed(result);
                     Meta response = JsonUtil.parseObject(result, Meta.class);
-                    if (response.getCode().equals("500001") || response.getCode().equals("500002")) {
+                    if (response.getCode().equals("999995")) {
                         UserUtil.clearUserInfo(mContext);
                     }
                 }

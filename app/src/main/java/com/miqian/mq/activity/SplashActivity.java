@@ -7,10 +7,8 @@ import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import com.miqian.mq.R;
-
 import cn.jpush.android.api.JPushInterface;
+import com.miqian.mq.R;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
 
@@ -50,6 +48,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         boolean first_use = false;
         if (!first_use) {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            //Intent intent = new Intent(SplashActivity.this, CapitalRecordActivity.class);
 //			if (!TextUtils.isEmpty(uritype)) {
 //
 //				intent.putExtra("uritype", uritype);

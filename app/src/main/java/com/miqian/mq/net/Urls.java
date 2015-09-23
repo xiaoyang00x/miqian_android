@@ -25,6 +25,8 @@ public class Urls {
     public final static String idcard_check = base_server + "commonService/idCardAuth";
     //充值转入接口
     public final static String roll_in = base_server + "assetService/addRecharge";
+    //充值转入结果查询接口
+    public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
     //获取用户信息
