@@ -80,10 +80,12 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
             @Override
             public void onSucceed(Meta result) {
                 mWaitingDialgog.dismiss();
+                ActivityRealname.this.finish();
             }
 
             @Override
             public void onFail(String error) {
+                Uihelper.showToast(mActivity, error);
                 mWaitingDialgog.dismiss();
             }
         }, idCard, name);

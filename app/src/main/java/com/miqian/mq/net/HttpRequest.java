@@ -74,15 +74,12 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-//                Log.e("", result);
-//                TestClass test = JsonUtil.parseObject(result, TestClass.class);
-//                Log.e("", "L: " + RSAUtils.decryptByPrivate(test.getTestEncrypt()));
-//                Meta meta = JsonUtil.parseObject(result, Meta.class);
-//                if (meta.getCode() == 1000) {
-//                    callback.onSucceed(meta);
-//                } else {
-//                    callback.onFail(meta.getMessage());
-//                }
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
             }
 
             @Override
