@@ -106,6 +106,15 @@
         <activity
             android:name=".activity.TradePsCaptchaActivity"
             android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.RolloutActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindCardActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".test.OkHttpsTest"

@@ -49,6 +49,12 @@ public class Urls {
     public final static String getPassword = base_server + "userService/getPassword";
     //检验验证码
     public final static String checkCaptcha = base_server + "commonService/checkCaptcha";
+    //获取用户的银行卡
+    public final static String getUserBankCard = base_server + "userService/getUserBankCard";
+    //自动识别银行卡
+    public final static String autoIdentifyBankCard = base_server + "assetService/autoIdentifyBankCard";
+    //自动识别银行卡
+    public final static String bindBank = base_server + "commonService/bindBank";
 
 
 }
