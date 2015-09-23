@@ -45,7 +45,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout frameTip;
     private EditText editMoney;
     private EditText editBankNumber;
-
     private TextView bindBankName;
     private TextView bindBankNumber;
 
@@ -55,7 +54,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private String money;
     private String bankNumber;
     private int rollType;
-    private boolean isSupport = true;
+    private String bindStatus;
 
     @Override
     public void obtainData() {
@@ -112,15 +111,14 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void refreshView() {
-        String bindStatus = userInfo.bindCardStatus;
+        bindStatus = userInfo.bindCardStatus;
         if (bindStatus.equals("0")) {
             frameBank.setVisibility(View.GONE);
             frameBankInput.setVisibility(View.VISIBLE);
             editBankNumber.requestFocus();
             frameTip.setVisibility(View.GONE);
         } else if (bindStatus.equals("1")) {
-            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
-            if (isSupport) {
+            if (userInfo.getSupportStatus().equals("1")) {
                 frameBankInput.setVisibility(View.GONE);
                 frameTip.setVisibility(View.GONE);
             } else {
@@ -128,8 +126,12 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 frameBankInput.setVisibility(View.VISIBLE);
                 frameTip.setVisibility(View.VISIBLE);
             }
-//            bindBankName.setText(userInfo.get);
+            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+            if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
+                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
+            }
             bindBankNumber.setText(bankNumber);
+            bindBankName.setText(userInfo.getBankName());
         }
     }
 
@@ -140,12 +142,18 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
         if (TextUtils.isEmpty(money)) {
             Uihelper.showToast(mActivity, "转入金额不能为空");
+            return;
         }
 
-        if (TextUtils.isEmpty(bankNumber)) {
+        if (bindStatus.equals("0")) {
             bankNumber = editBankNumber.getText().toString();
+            if (TextUtils.isEmpty(bankNumber)) {
+                Uihelper.showToast(mActivity, "卡号不能为空");
+                return;
+            }
+        } else {
+            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
         }
-        String bankNumber = editMoney.getText().toString();
 
         HttpRequest.rollIn(mActivity, new ICallback<PayOrderResult>() {
             @Override
@@ -213,6 +221,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
                         String resulPay = objContent.optString("result_pay");
                         if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
+                            Log.e("", "rollInResult ------- " + resulPay);
                             // 支付成功后续处理
 //                            Intent intent = new Intent(mActivity, IntoResult.class);
 //                            intent.putExtra("orderNo", objContent.optString("no_order"));
@@ -226,6 +235,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //                            mActivity.finish();
 
                             String orderNo = objContent.optString("no_order");
+
+                            Log.e("", "orderNo ------- " + orderNo);
                             HttpRequest.rollInResult(mActivity, new ICallback<PayOrderResult>() {
                                 @Override
                                 public void onSucceed(PayOrderResult result) {
@@ -235,7 +246,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //                        setResult(1, intent);
 //                        BankListAcivity.this.finish();
 //                        mActivity.setResult(555, intent);
-                                    setResult(1);
+//                                    setResult(1);
                                     IntoActivity.this.finish();
                                 }
 
@@ -244,8 +255,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                                     Uihelper.showToast(mActivity, error);
                                 }
                             }, orderNo);
-
-
                         } else {
                             Uihelper.showToast(mActivity, retMsg);
                         }

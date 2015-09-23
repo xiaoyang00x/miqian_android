@@ -27,7 +27,7 @@ import com.miqian.mq.views.WaterWaveView;
 
 import org.json.JSONObject;
 
-public class FragmentCurrent extends Fragment {
+public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
     private View view;
     private WaterWaveView waterWaveView;
@@ -37,6 +37,7 @@ public class FragmentCurrent extends Fragment {
     private TextView totalCountText;
 
     private Activity mContext;
+    private DialogPay dialogPay;
 //    private MyHandler mHandler;
 
     private CurrentInfo currentInfo;
@@ -69,40 +70,24 @@ public class FragmentCurrent extends Fragment {
         totalMoneyText = (TextView) view.findViewById(R.id.total_money);
 
         btInvestment = (Button) view.findViewById(R.id.bt_investment);
-        btInvestment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserUtil.loginPay(mContext, new DialogPay(mContext) {
-                    @Override
-                    public void positionBtnClick(String s) {
-                        if (!TextUtils.isEmpty(s)) {
-                            float money = Float.parseFloat(s);
-                            if (money < 1) {
-                                this.setTitle("提示：输入请大于一元");
-                            } else {
-                                UserUtil.currenPay(mContext, CurrentInvestment.class);
-                                this.dismiss();
-                            }
-                        } else {
-                            this.setTitle("提示：请输入金额");
-                        }
-                    }
-                });
+        btInvestment.setOnClickListener(this);
 
-//                HttpRequest.setIDCardCheck(mContext, new ICallback<Meta>() {
-//
-//                    @Override
-//                    public void onSucceed(Meta result) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFail(String error) {
-//
-//                    }
-//                }, custId, "350421198707071014", "张先鹏");
+        dialogPay = new DialogPay(mContext) {
+            @Override
+            public void positionBtnClick(String s) {
+                if (!TextUtils.isEmpty(s)) {
+                    float money = Float.parseFloat(s);
+                    if (money < 1) {
+                        this.setTitle("提示：输入请大于一元");
+                    } else {
+                        UserUtil.currenPay(mContext, CurrentInvestment.class);
+                        this.dismiss();
+                    }
+                } else {
+                    this.setTitle("提示：请输入金额");
+                }
             }
-        });
+        };
     }
 
     private void refreshView() {
@@ -133,5 +118,16 @@ public class FragmentCurrent extends Fragment {
         waterWaveView.stopWave();
         waterWaveView = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_investment:
+                UserUtil.loginPay(mContext, dialogPay);
+                break;
+            default:
+                break;
+        }
     }
 }

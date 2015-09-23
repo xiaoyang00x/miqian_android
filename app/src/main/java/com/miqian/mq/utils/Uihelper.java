@@ -34,19 +34,11 @@ public class Uihelper {
         if (activity == null) {
             return;
         }
-
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                initToast(activity);
-                if (!TextUtils.isEmpty(content)) {
-                    mToast.setText(content);
-                    mToast.show();
-                }
-            }
-        });
-
-
+        initToast(activity);
+        if (!TextUtils.isEmpty(content)) {
+            mToast.setText(content);
+            mToast.show();
+        }
     }
 
     public static void showToast(final Activity context, int id) {

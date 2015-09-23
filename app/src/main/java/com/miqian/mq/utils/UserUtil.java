@@ -120,7 +120,7 @@ public class UserUtil {
                     @Override
                     public void onSucceed(LoginResult result) {
                         UserInfo userInfo = result.getData();
-                        if (userInfo.getRealNameStatus().equals("1")) {
+                        if (userInfo.getRealNameStatus().equals("0")) {
                             realName(context);
                         } else {
                             Pref.saveString(getPrefKey(context, Pref.REALNAME_STATUS), userInfo.getRealNameStatus(), context);
