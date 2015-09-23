@@ -1,4 +1,4 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.user;
 
 import android.graphics.Color;
 import android.text.SpannableString;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;

@@ -14,9 +14,8 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
-import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.RolloutActivity;
-import com.miqian.mq.activity.SettingActivity;
+import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
@@ -26,8 +25,6 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.Dialog_Login;
 import com.miqian.mq.views.ProgressDialogView;
-
-import org.w3c.dom.Text;
 
 /**
  * Description:

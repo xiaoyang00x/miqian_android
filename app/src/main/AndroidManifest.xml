@@ -69,7 +69,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activity.user.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -93,7 +93,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.SetPasswordActivity"
+            android:name=".activity.user.SetPasswordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -109,17 +109,17 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SettingActivity"
+            android:name=".activity.setting.SettingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SecuritySettingActivity"
+            android:name=".activity.setting.SecuritySettingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ChangePassWordActivity"
+            android:name=".activity.user.ChangePassWordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -131,7 +131,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.BindCardActivity"
+            android:name=".activity.user.BindCardActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
@@ -247,7 +247,7 @@
             android:label="@string/title_activity_capital_record"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.MyRegualrDepositActivity"
+            android:name=".activity.user.MyRegualrDepositActivity"
             android:label="@string/title_activity_my_regualr_deposit"
             />
 

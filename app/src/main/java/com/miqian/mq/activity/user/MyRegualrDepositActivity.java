@@ -1,4 +1,4 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.user;
 
 import android.app.Activity;
 import android.os.Bundle;

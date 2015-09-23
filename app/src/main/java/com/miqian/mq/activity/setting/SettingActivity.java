@@ -1,11 +1,13 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
+import com.miqian.mq.activity.user.BindCardActivity;
 import com.miqian.mq.views.WFYTitle;
 
 /**
