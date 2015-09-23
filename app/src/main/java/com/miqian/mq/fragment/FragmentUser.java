@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.RolloutActivity;
 import com.miqian.mq.activity.SettingActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
@@ -206,7 +207,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //取现
             case R.id.btn_rollout:
-                startActivity(new Intent(getActivity(), IntoActivity.class));
+           Intent intent=new Intent(getActivity(), RolloutActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("userInfo", userInfo);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
                 break;
             //我的活期
