@@ -34,4 +34,16 @@
 
     <!--定期页面相关-->
     <dimen name="view_pager_margin">20dp</dimen>
+
+    <!--UI标准字号-->
+    <dimen name="mq_font1">18sp</dimen>
+    <dimen name="mq_font2">16sp</dimen>
+    <dimen name="mq_font3">14sp</dimen>
+    <dimen name="mq_font4">12sp</dimen>
+    <dimen name="mq_font5">10sp</dimen>
+    <dimen name="mq_font6">22sp</dimen>
+    <dimen name="mq_font7">32sp</dimen>
+    <dimen name="mq_font8">36sp</dimen>
+    <dimen name="mq_font9">70sp</dimen>
+    <dimen name="mq_font10">9sp</dimen>
 </resources>
