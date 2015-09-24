@@ -1,10 +1,13 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.views.WFYTitle;
 
@@ -44,7 +47,7 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
         switch (v.getId()) {
             case R.id.password_login:
 
-                SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW);
+                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW);
 
                 break;
             case R.id.password_transaction:

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_centerVertical="true"
+            android:text="卡号" />
+
+        <EditText
+            android:id="@+id/edit_bank_number"
+            style="@style/edittext_item"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="54dp"
+            android:hint="请输入银行卡号"
+            android:maxLength="20"
+            android:numeric="integer" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/FillContent"
+        android:padding="@dimen/margin_left_right"
+        >
+
+        <TextView
+            android:id="@+id/text_agreement"
+            style="@style/WrapContent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_small" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        >
+
+        <Button
+            android:id="@+id/bt_rollin"
+            style="@style/click_btn"
+            android:onClick="btn_click"
+            android:layout_height="@dimen/edit_item"
+            android:text="确认" />
+    </LinearLayout>
+
+</LinearLayout>

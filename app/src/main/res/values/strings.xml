@@ -38,4 +38,5 @@
   <string name="regular_earn">定期赚</string>
   <string name="investment_security">投资安全</string>
   <string name="principal_interest_security">本息保障</string>
+  <string name="title_activity_my_regualr_deposit">MyRegualrDepositActivity</string>
 </resources>

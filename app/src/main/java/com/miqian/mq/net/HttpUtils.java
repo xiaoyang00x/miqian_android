@@ -57,7 +57,8 @@ public class HttpUtils {
             response = client.newCall(request).execute();
             if (response.isSuccessful()) {
                 String httpString =  response.body().string();
-                Log.e("", httpString);
+                Log.e("url:", url);
+                Log.e("json:", httpString);
                 return httpString;
 //                return response.body().string();
             }

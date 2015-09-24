@@ -20,10 +20,9 @@
             android:text="姓名        " />
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/edit_name"
             style="@style/edittext_item"
-            android:hint="请输入您的姓名"
-            android:inputType="textPassword" />
+            android:hint="请输入您的姓名" />
     </LinearLayout>
 
     <View style="@style/item_divider" />
@@ -44,13 +43,12 @@
             android:text="身份证号" />
 
         <EditText
-            android:id="@+id/et_password_confirm"
+            android:id="@+id/edit_card_id"
             style="@style/edittext_item"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/tv_register"
-            android:hint="请输入您的身份证号"
-            android:inputType="textPassword" />
+            android:hint="请输入您的身份证号"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -61,6 +59,7 @@
         android:layout_marginTop="@dimen/margin_top">
 
         <Button
+            android:id="@+id/bt_realname"
             style="@style/click_btn"
             android:layout_height="@dimen/edit_item"
             android:text="认证" />

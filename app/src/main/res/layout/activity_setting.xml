@@ -36,6 +36,35 @@
     <View style="@style/item_divider" />
 
     <RelativeLayout
+        android:id="@+id/frame_setting_bankcard"
+        style="@style/listItem">
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_centerVertical="true"
+            android:text="银行卡号：*****3335" />
+
+        <ImageView
+            android:id="@+id/arrow_11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arrow_right" />
+
+        <TextView
+            android:id="@+id/tv_settting_bankcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/arrow_11"
+            android:text="待完善"
+            android:textColor="@color/red_base" />
+    </RelativeLayout>
+
+    <View style="@style/item_divider" />
+    <RelativeLayout
         android:id="@+id/frame_setting_bindphone"
         style="@style/listItem">
 

@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.RegisterActivity;
+import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;

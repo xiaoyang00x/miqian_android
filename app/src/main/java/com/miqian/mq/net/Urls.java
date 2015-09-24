@@ -25,6 +25,8 @@ public class Urls {
     public final static String idcard_check = base_server + "commonService/idCardAuth";
     //充值转入接口
     public final static String roll_in = base_server + "assetService/addRecharge";
+    //充值转入结果查询接口
+    public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
     //获取用户信息
@@ -49,6 +51,12 @@ public class Urls {
     public final static String getPassword = base_server + "userService/getPassword";
     //检验验证码
     public final static String checkCaptcha = base_server + "commonService/checkCaptcha";
+    //获取用户的银行卡
+    public final static String getUserBankCard = base_server + "userService/getUserBankCard";
+    //自动识别银行卡
+    public final static String autoIdentifyBankCard = base_server + "assetService/autoIdentifyBankCard";
+    //自动识别银行卡
+    public final static String bindBank = base_server + "commonService/bindBank";
 
 
 }

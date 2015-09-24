@@ -20,7 +20,7 @@ public class TypeUtil {
     public static final int CAPTCHA_BANDINFO = 13005;
     public static final int CAPTCHA_MODIFYBNADCARD = 13006;
     public static final int CAPTCHA_WITHDRAW = 13007;
-    public static final int CAPTCHA_TRADEPASSWORD = 13007;
+    public static final int CAPTCHA_TRADEPASSWORD = 13008;
 
     //是否设置交易密码
     public static final int TRADEPASS_NOSET = 20001;

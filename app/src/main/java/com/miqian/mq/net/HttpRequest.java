@@ -3,6 +3,7 @@ package com.miqian.mq.net;
 import android.content.Context;
 import android.util.Log;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
@@ -73,15 +74,12 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-//                Log.e("", result);
-//                TestClass test = JsonUtil.parseObject(result, TestClass.class);
-//                Log.e("", "L: " + RSAUtils.decryptByPrivate(test.getTestEncrypt()));
-//                Meta meta = JsonUtil.parseObject(result, Meta.class);
-//                if (meta.getCode() == 1000) {
-//                    callback.onSucceed(meta);
-//                } else {
-//                    callback.onFail(meta.getMessage());
-//                }
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
             }
 
             @Override
@@ -121,21 +119,82 @@ public class HttpRequest {
     }
 
     /**
-     * 充值
+     * 活期认购展示页面
      *
      * @param callback
      */
-    public static void rollIn(Context context, final ICallback<PayOrderResult> callback, String custId, String amt, String bankCode, String bankNo) {
+    public static void getCurrentOrder(Context context, final ICallback<CurrentInfoResult> callback) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        new MyAsyncTask(context, Urls.current_home, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                CurrentInfoResult currentInfoResult = JsonUtil.parseObject(result, CurrentInfoResult.class);
+                if (currentInfoResult.getCode().equals("000000")) {
+                    callback.onSucceed(currentInfoResult);
+                } else {
+                    callback.onFail(currentInfoResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 充值
+     *
+     * @param callback
+     */
+    public static void rollIn(Context context, final ICallback<PayOrderResult> callback, String amt, String bankNo) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("bankCode", bankCode));
+//        mList.add(new Param("bankCode", bankCode));
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
 
         new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Log.e("", result);
+                PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
+                if (payOrderResult.getCode().equals("000000")) {
+                    callback.onSucceed(payOrderResult);
+                } else {
+                    callback.onFail(payOrderResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 充值结果查询
+     *
+     * @param callback
+     */
+    public static void rollInResult(Context context, final ICallback<PayOrderResult> callback, String orderNo) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("orderNo", orderNo));
+
+        new MyAsyncTask(context, Urls.rollin_result, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -513,4 +572,95 @@ public class HttpRequest {
       }
     }).executeOnExecutor();
   }
+
+
+    //获取用户的银行卡
+    public static void getUserBankCard(Context context, final ICallback<BankCardResult> callback) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.getUserBankCard, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                BankCardResult bankCardResult = JsonUtil.parseObject(result, BankCardResult.class);
+                if (bankCardResult.getCode().equals("000000")) {
+                    callback.onSucceed(bankCardResult);
+                } else {
+                    callback.onFail(bankCardResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //识别银行卡
+    public static void autoIdentifyBankCard(Context context, final ICallback<BankCardResult> callback,String bankNo) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
+
+        new MyAsyncTask(context, Urls.autoIdentifyBankCard, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                BankCardResult bankCardResult = JsonUtil.parseObject(result, BankCardResult.class);
+                if (bankCardResult.getCode().equals("000000")) {
+                    callback.onSucceed(bankCardResult);
+                } else {
+                    callback.onFail(bankCardResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //绑定银行卡
+    public static void bindBank(Context context, final ICallback<Meta> callback,String bankNo,String tradeType, String bankCode,String bankName,String branchName,String prov,String city) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
+        mList.add(new Param("tradeType", tradeType));
+        mList.add(new Param("bankCode", bankCode));
+        mList.add(new Param("bankName", bankName));
+        mList.add(new Param("branchName", branchName));
+        mList.add(new Param("prov", prov));
+        mList.add(new Param("city", city));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        new MyAsyncTask(context, Urls.bindBank, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+
+
 }

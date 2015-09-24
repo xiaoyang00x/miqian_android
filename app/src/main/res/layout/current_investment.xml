@@ -41,9 +41,10 @@
             android:text="认购金额" />
 
         <TextView
+            android:id="@+id/order_money"
             style="@style/text_black_item"
             android:layout_alignParentRight="true"
-            android:text="20000.00元" />
+            android:text="--.--元" />
 
     </RelativeLayout>
 

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.miqian.mq">
+    package="com.miqian.mq" >
 
-
-    <!--极光权限-->
+    <!-- 极光权限 -->
     <permission
         android:name="com.miqian.mq.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
-    <!-- Required  一些系统要求的权限，如访问网络等-->
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.miqian.mq.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -35,14 +34,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +55,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -65,47 +62,79 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.current.ActivityRealname"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:launchMode="singleTask" />
-	      <activity
-            android:name=".activity.DetailsForRegularEarning"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-	    
+        <activity
+            android:name=".activity.current.CurrentInvestment"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.user.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.DetailsForRegularEarning"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.AnnounceActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.AnnounceResultActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.SetPasswordActivity"
-            android:launchMode="singleTask" />
+            android:name=".activity.user.SetPasswordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.SendCaptchaActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.IntoActivity"
-            android:launchMode="singleTask" />
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SettingActivity"
-            android:launchMode="singleTask" />
+            android:name=".activity.setting.SettingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SecuritySettingActivity"
-            android:launchMode="singleTask" />
+            android:name=".activity.setting.SecuritySettingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ChangePassWordActivity"
-            android:launchMode="singleTask" />
+            android:name=".activity.user.ChangePassWordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.TradePsCaptchaActivity"
             android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.RolloutActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.user.BindCardActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".test.OkHttpsTest"
@@ -113,12 +142,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
@@ -126,51 +154,48 @@
                 <category android:name="com.miqian.mq" />
             </intent-filter>
         </activity>
-        <!-- Required  SDK核心功能-->
+        <!-- Required  SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false"></service>
-
+            android:exported="false" />
         <service
             android:name="com.yintong.secure.service.PayService"
             android:exported="false" />
 
-
-        <!-- Required SDK 核心功能-->
+        <!-- Required SDK 核心功能 -->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
                 <action android:name="cn.jpush.android.intent.PushService" />
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-
             </intent-filter>
         </service>
 
-        <!-- Required SDK 核心功能-->
+        <!-- Required SDK 核心功能 -->
         <service
             android:name="cn.jpush.android.service.DaemonService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
+
                 <category android:name="com.miqian.mq" />
             </intent-filter>
         </service>
 
-
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
-            android:exported="false">
-            <intent-filter android:priority="1000">
+            android:exported="false" >
+            <intent-filter android:priority="1000" >
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <!--Required  显示通知栏 -->
+                <!-- Required  显示通知栏 -->
                 <category android:name="com.miqian.mq" />
             </intent-filter>
             <intent-filter>
@@ -184,32 +209,29 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-
         </receiver>
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
-
         User defined. For test only 用户自定义的广播接收器
-        <receiver android:name=".receiver.MyReceiver">
+        <receiver android:name=".receiver.MyReceiver" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!--Required  用户注册SDK的intent-->
+                <!-- Required  用户注册SDK的intent -->
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!--Required  用户接收SDK消息的intent-->
+                <!-- Required  用户接收SDK消息的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!--Required  用户接收SDK通知栏信息的intent-->
+                <!-- Required  用户接收SDK通知栏信息的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!--Required  用户打开自定义通知栏的intent-->
+                <!-- Required  用户打开自定义通知栏的intent -->
                 <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
-                <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
+                <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.miqian.mq" />
             </intent-filter>
         </receiver>
-
 
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
@@ -219,14 +241,16 @@
             android:name="JPUSH_APPKEY"
             android:value="8e7e3b5b32b4603e8aa757c6" />
         <!--  </>值来自开发者平台取得的AppKey-->
- <activity
-            android:name=".activity.CapitalRecordActivity"
-            android:label="@string/title_activity_capital_record" >
-        </activity>
         <activity
-            android:name=".activity.TestActivity"
-            android:label="@string/title_activity_test" >
-        </activity>
+            android:name=".activity.CapitalRecordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_capital_record"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.user.MyRegualrDepositActivity"
+            android:label="@string/title_activity_my_regualr_deposit"
+            />
+
     </application>
 
 </manifest>

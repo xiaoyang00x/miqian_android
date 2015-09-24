@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/frame_bind"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/icon_bank"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/bind_bank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/icon_bank"
+                android:textColor="@color/typeface_black" />
+
+            <TextView
+                android:id="@+id/bind_bank_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bind_bank_name"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/icon_bank"
+                android:maxLength="30" />
+
+            <View style="@style/item_divider" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/frame_bank"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@drawable/ic_launcher"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="开户行 :" />
+
+            <TextView
+                android:id="@+id/branch_bank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="74dp"
+                android:text="请选择开户行"
+                android:textColor="@color/miqian_gray"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/arrow_right" />
+
+            <View style="@style/item_divider" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="资产:" />
+
+            <TextView
+                android:id="@+id/total_money"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:textColor="@color/miqian_gray"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View style="@style/item_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="金额:" />
+
+            <EditText
+                android:id="@+id/edit_money"
+                style="@style/edittext_item"
+                android:layout_height="match_parent"
+                android:numeric="decimal"></EditText>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/frame_bindbranch"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                android:id="@+id/frame_bank_province"
+                style="@style/listItem">
+
+                <TextView
+                    style="@style/text_black_item"
+                    android:layout_centerVertical="true"
+                    android:text="所在省市" />
+
+                <ImageView
+                    android:id="@+id/arrow_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/arrow_right" />
+
+                <TextView
+                    android:id="@+id/tv_bank_province"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/arrow_1"
+                    android:text="300元"
+                    android:textColor="@color/miqian_gray" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                android:id="@+id/frame_bank_branch"
+                style="@style/listItem">
+
+                <TextView
+                    style="@style/text_black_item"
+                    android:layout_centerVertical="true"
+                    android:text="支行名称" />
+
+                <ImageView
+                    android:id="@+id/arrow_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/arrow_right" />
+
+                <TextView
+                    android:id="@+id/tv_bank_branch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/arrow_2"
+                    android:text="300元"
+                    android:textColor="@color/miqian_gray" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_left_right">
+
+            <TextView
+                android:id="@+id/tv_arrivetime"
+                style="@style/text_black_item"
+                android:layout_centerVertical="true"
+                android:text="预计到账时间" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_top"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right"
+            android:paddingTop="@dimen/margin_top">
+
+            <Button
+                android:id="@+id/bt_rollout"
+                style="@style/click_btn"
+                android:layout_height="@dimen/listitem_height"
+                android:onClick="btn_click"
+                android:text="确认转出" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
