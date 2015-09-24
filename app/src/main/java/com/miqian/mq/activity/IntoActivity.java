@@ -161,11 +161,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
         }
 
-        mWaitingDialgog.show();
+        mWaitingDialog.show();
         HttpRequest.rollIn(mActivity, new ICallback<PayOrderResult>() {
             @Override
             public void onSucceed(PayOrderResult payOrderResult) {
-                mWaitingDialgog.dismiss();
+                mWaitingDialog.dismiss();
                 PayOrder newPayOrder = constructPreCardPayOrder(payOrderResult.getData());
                 String content4Pay = JSON.toJSONString(newPayOrder);
                 Log.e("", "content4Pay---------- : " + content4Pay);
@@ -175,7 +175,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialgog.dismiss();
+                mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
         }, money, bankNumber);
@@ -257,11 +257,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void checkOrder(String orderNo) {
-        mWaitingDialgog.show();
+        mWaitingDialog.show();
         HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
             @Override
             public void onSucceed(OrderLianResult orderLianResult) {
-                mWaitingDialgog.dismiss();
+                mWaitingDialog.dismiss();
                 OrderLian orderLian = orderLianResult.getData();
                 if (orderLianResult.getCode().equals("000000")) {
                     if (rollType == 1) {
@@ -299,7 +299,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialgog.dismiss();
+                mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
         }, orderNo);
