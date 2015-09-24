@@ -2,6 +2,7 @@ package com.miqian.mq.adapter;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -12,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
+import com.ToxicBakery.viewpager.transforms.ScaleInOutTransformer;
 import com.miqian.mq.R;
 import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.views.CircleBar;
 import com.miqian.mq.views.DecoratorViewPager;
+import com.miqian.mq.views.indicator.CirclePageIndicator;
 
 import java.util.List;
 
@@ -27,11 +31,11 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final int ITEM_TYPE_NORMAL = 1;
 
     private List<RegularEarn> items;
-    private FragmentManager childFragmentManager;
+    private Context mContext;
     private SwipeRefreshLayout swipeRefreshLayout;
-    public RegularListAdapter(List<RegularEarn> items, FragmentManager childFragmentManager, SwipeRefreshLayout swipeRefreshLayout) {
+    public RegularListAdapter(List<RegularEarn> items, Context mContext, SwipeRefreshLayout swipeRefreshLayout) {
         this.items = items;
-        this.childFragmentManager = childFragmentManager;
+        this.mContext = mContext;
         this.swipeRefreshLayout = swipeRefreshLayout;
     }
 
@@ -40,7 +44,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         if (viewType == ITEM_TYPE_HEADER) {
-            return new HeaderViewHolder(inflater.inflate(R.layout.fragment_regular_header, parent, false), childFragmentManager, swipeRefreshLayout);
+            return new HeaderViewHolder(inflater.inflate(R.layout.fragment_regular_header, parent, false), mContext, swipeRefreshLayout);
         }else {
             return new ViewHolder(inflater.inflate(R.layout.regular_earn_item, parent, false));
         }
@@ -55,7 +59,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             viewHolder.tv_title.setText(regularEarn.getBdNm());
             viewHolder.tv_sub_title.setText(regularEarn.getBdDesp());
             viewHolder.tv_annurate_interest_rate.setText(regularEarn.getYrt());
-            if(position > 0) {
+            if(position > 1) {
                 viewHolder.layout_regular_earn_head.setVisibility(View.GONE);
             }else {
                 viewHolder.layout_regular_earn_head.setVisibility(View.VISIBLE);
@@ -81,8 +85,8 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        return ITEM_TYPE_NORMAL;
-//        return position == 0? ITEM_TYPE_HEADER : ITEM_TYPE_NORMAL;
+//        return ITEM_TYPE_NORMAL;
+        return position == 0? ITEM_TYPE_HEADER : ITEM_TYPE_NORMAL;
     }
 
 
@@ -118,17 +122,22 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
-
+        Context mContext;
         private DecoratorViewPager view_pager;
-        public HeaderViewHolder(View itemView, FragmentManager fm, final SwipeRefreshLayout swipeRefreshLayout) {
+        public HeaderViewHolder(View itemView, Context mContext, final SwipeRefreshLayout swipeRefreshLayout) {
             super(itemView);
+            this.mContext = mContext;
 
             view_pager = (DecoratorViewPager)itemView.findViewById(R.id.view_pager);
-            Log.d("HeaderViewHolder", "FragmentManager fm = " + fm.hashCode());
-            view_pager.setAdapter(new RegularViewPagerAdapter(fm));
+            view_pager.setAdapter(new MyPagerAdapter(mContext));
+//            view_pager.setAdapter(new RegularViewPagerAdapter(fm));
             // to cache all page, or we will see the right item delayed
             view_pager.setOffscreenPageLimit(3);
-            view_pager.setPageMargin(itemView.getResources().getDimensionPixelSize(R.dimen.view_pager_margin));
+
+            CirclePageIndicator circle_indicator = (CirclePageIndicator)itemView.findViewById(R.id.circle_indicator);
+            circle_indicator.setViewPager(view_pager);
+//            view_pager.setPageTransformer(true, new ScaleInOutTransformer());
+//            view_pager.setPageMargin(itemView.getResources().getDimensionPixelSize(R.dimen.view_pager_margin));
             view_pager.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -148,6 +157,44 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
 
+    }
+
+    static class MyPagerAdapter extends PagerAdapter {
+Context mContext;
+
+        public MyPagerAdapter(Context mContext) {
+            this.mContext = mContext;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+//            TextView view = new TextView(PagerActivity.this);
+//            view.setText("Item " + position);
+//            view.setGravity(Gravity.CENTER);
+//            view.setBackgroundColor(Color.argb(255, position * 50, position * 10, position * 50));
+//
+//            container.addView(view);
+
+            LayoutInflater inflater = LayoutInflater.from(mContext);
+            View view = inflater.inflate(R.layout.fragment_regular_plan, null);
+            container.addView(view);
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View)object);
+        }
+
+        @Override
+        public int getCount() {
+            return 5;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return (view == object);
+        }
     }
 
 }
