@@ -58,18 +58,18 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void obtainData() {
-        mWaitingDialgog.show();
+        mWaitingDialog.show();
         HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
-                mWaitingDialgog.dismiss();
+                mWaitingDialog.dismiss();
                 userInfo = result.getData();
                 refreshView();
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialgog.dismiss();
+                mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
         });

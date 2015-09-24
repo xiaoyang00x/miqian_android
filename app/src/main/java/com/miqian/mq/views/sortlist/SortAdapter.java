@@ -65,7 +65,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 		// 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
 		if (position == getPositionForSection(section)) {
 			viewHolder.tvLetter.setVisibility(View.VISIBLE);
-			viewHolder.tvLetter.setText(mContent.getBegin_letter());
+			viewHolder.tvLetter.setText(mContent.getLetter());
 		} else {
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
@@ -85,7 +85,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 	 * 根据ListView的当前位置获取分类的首字母的Char ascii值
 	 */
 	public int getSectionForPosition(int position) {
-		return list.get(position).getBegin_letter().charAt(0);
+		return list.get(position).getLetter().charAt(0);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 	 */
 	public int getPositionForSection(int section) {
 		for (int i = 0; i < getCount(); i++) {
-			String sortStr = list.get(i).getBegin_letter();
+			String sortStr = list.get(i).getLetter();
 			char firstChar = sortStr.toUpperCase().charAt(0);
 			if (firstChar == section) {
 				return i;

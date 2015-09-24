@@ -9,6 +9,7 @@
 
     <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.miqian.mq.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -132,6 +133,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.user.BindCardActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CityListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BankBranchActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 

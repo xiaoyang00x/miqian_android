@@ -1,14 +1,16 @@
 package com.miqian.mq.entity;
 
+import java.util.List;
+
 public class CityInfoResult extends Meta {
 
-	private CityList result;
+	private List<CityInfo> data;
 
-	public CityList getResult() {
-		return result;
+	public List<CityInfo> getData() {
+		return data;
 	}
 
-	public void setResult(CityList result) {
-		this.result = result;
+	public void setData(List<CityInfo> data) {
+		this.data = data;
 	}
 }
