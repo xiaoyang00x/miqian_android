@@ -13,7 +13,7 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_gravity="center_vertical"
-            android:layout_margin="8dp"
+            android:layout_margin="6dp"
             android:background="@mipmap/ic_launcher" />
 
         <LinearLayout
@@ -35,8 +35,8 @@
                     android:layout_toLeftOf="@+id/timeNo"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="dfdfdfdfdfdfdfdfdffdfdfdfdfdfdfdfdfdfdfd"
-                    android:textSize="20sp" />
+                    android:text="标题"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/timeNo"
@@ -47,7 +47,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:text="ddfdfdfd"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </RelativeLayout>
 
             <TextView
@@ -56,10 +56,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:maxLines="2"
                 android:ellipsize="end"
-                android:text="ddfefeffffffffffffffffffffffffffffffffffffffffffddddddddddddddddddddddddddddddddddddffefefefe"
-                android:textSize="16sp" />
+                android:singleLine="true"
+                android:text="今晚博大奖"
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 

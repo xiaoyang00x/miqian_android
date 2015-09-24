@@ -55,8 +55,14 @@ public class Urls {
     public final static String getUserBankCard = base_server + "userService/getUserBankCard";
     //自动识别银行卡
     public final static String autoIdentifyBankCard = base_server + "assetService/autoIdentifyBankCard";
-    //自动识别银行卡
+    //绑定银行卡
     public final static String bindBank = base_server + "commonService/bindBank";
+    //获取城市接口
+    public final static String getAllCity = base_server + "commonService/getAllCity";
+    //获取支行
+    public final static String getSubBranch = base_server + "commonService/getSubBranch";
+    //登出
+    public final static String loginOut  = base_server + "userService/logout";
 
 
 }

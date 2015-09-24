@@ -69,7 +69,7 @@ public class MyReceiver extends BroadcastReceiver {
                 return;
             }
             if (TextUtils.isEmpty(title)||TextUtils.isEmpty(content)){
-//                return;
+                return;
             }
             response.setTitle(title);
             response.setContent(content);
@@ -153,7 +153,7 @@ public class MyReceiver extends BroadcastReceiver {
             int mMinuts = mCalendar.get(Calendar.MINUTE);
 
             // 通过控件的Id设置属性
-//            contentViews.setTextViewText(R.id.titleNo, contentTitle);
+            contentViews.setTextViewText(R.id.titleNo, contentTitle);
             contentViews.setTextViewText(R.id.textNo, contentText);
             String  string_Minutes=""+mMinuts;
             if (mMinuts<10) {

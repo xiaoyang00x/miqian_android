@@ -28,12 +28,12 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
  */
 public class RolloutActivity extends BaseActivity {
     private UserInfo userInfo;
-    private TextView bindBankId, bindBankName, textBranch, textTotalMoney, tv_arrivetime;
+    private TextView bindBankId, bindBankName, textBranch, textTotalMoney, tv_arrivetime, tv_bank_province;
     private ImageView iconBank;
-    private View frame_bindbranch,frame_bank_branch,frame_bank_province;
+    private View frame_bindbranch, frame_bank_branch, frame_bank_province;
     private EditText editMoney;
     private CustomDialog dialogTips;
-    private String  bankOpenName;
+    private String bankOpenName, city,province,branch;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
 
@@ -60,35 +60,32 @@ public class RolloutActivity extends BaseActivity {
     }
 
     private void initBindBranchView() {
-        bankOpenName="";
-        if (TextUtils.isEmpty(bankOpenName)){
+        bankOpenName = "";
+        if (TextUtils.isEmpty(bankOpenName)) {
             frame_bindbranch.setVisibility(View.VISIBLE);
-            frame_bank_branch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-//                    Intent intent=new Intent(mActivity,RolloutActivity.class);
-//                    startActivityForResult(0,intent);
-                }
-            });
-
             frame_bank_province.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
 
-//                    Intent intent=new Intent(mActivity,RolloutActivity.class);
-//                    startActivityForResult(0,intent);
+                    Intent intent_city = new Intent(mActivity, CityListActivity.class);
+                    startActivityForResult(intent_city, 0);
+                }
+            });
+
+            frame_bank_branch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
+                    startActivityForResult(intent_branch, 0);
+
                 }
             });
 
 
-        }
-        else {
+        } else {
             frame_bindbranch.setVisibility(View.GONE);
         }
-
 
 
 //        HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
@@ -106,6 +103,28 @@ public class RolloutActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data==null){
+            return;
+        }
+        if (resultCode==1){
+            branch = data.getStringExtra("branch");
+            if (!TextUtils.isEmpty(branch)) {
+                textBranch.setText(branch);
+            }
+
+        }else if(resultCode==0){
+            city = data.getStringExtra("city");
+            province = data.getStringExtra("province");
+            if (!TextUtils.isEmpty(city)) {
+                tv_bank_province.setText(city);
+            }
+        }
+
+    }
+
     private void initBindView() {
         String bindCardStatus = userInfo.bindCardStatus;
         //未绑定
@@ -116,7 +135,7 @@ public class RolloutActivity extends BaseActivity {
                 public void positionBtnClick() {
                     //跳到绑定支行的页面
                     dismiss();
-                    Uihelper.showToast(mActivity,"跳到绑定支行的页面");
+                    Uihelper.showToast(mActivity, "跳到绑定支行的页面");
                 }
 
                 @Override
@@ -138,6 +157,7 @@ public class RolloutActivity extends BaseActivity {
         bindBankId = (TextView) findViewById(R.id.bind_bank_id);
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         textBranch = (TextView) findViewById(R.id.tv_bank_branch);
+        tv_bank_province = (TextView) findViewById(R.id.tv_bank_province);
         tv_arrivetime = (TextView) findViewById(R.id.tv_arrivetime);
         iconBank = (ImageView) findViewById(R.id.icon_bank);
 
@@ -166,8 +186,6 @@ public class RolloutActivity extends BaseActivity {
 
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).displayer(new RoundedBitmapDisplayer(0)).build();
-
-
     }
 
     @Override

@@ -3,7 +3,9 @@ package com.miqian.mq.net;
 import android.content.Context;
 import android.util.Log;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardResult;
+import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
@@ -662,6 +664,89 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    //获取银行列表
+    public static void getAllCity(Context context, final ICallback<CityInfoResult> callback) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
 
+        new MyAsyncTask(context, Urls.getAllCity, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                CityInfoResult cityInfoResult = JsonUtil.parseObject(result, CityInfoResult.class);
+                if (cityInfoResult.getCode().equals("000000")) {
+                    callback.onSucceed(cityInfoResult);
+                } else {
+                    callback.onFail(cityInfoResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //获取支行接口
+    public static void getSubBranch(Context context, final ICallback<BankBranchResult> callback,String provinceName,String city,String bankCode) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("provinceName", provinceName));
+        mList.add(new Param("city", city));
+        mList.add(new Param("bankCode", bankCode));
+        new MyAsyncTask(context, Urls.getSubBranch, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                BankBranchResult bankBranchResult = JsonUtil.parseObject(result, BankBranchResult.class);
+                if (bankBranchResult.getCode().equals("000000")) {
+                    callback.onSucceed(bankBranchResult);
+                } else {
+                    callback.onFail(bankBranchResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 登出
+     *
+     * @param callback
+     */
+    public static void loginOut(Context context, final ICallback<Meta> callback) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.loginOut, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
 
 }

@@ -78,18 +78,18 @@ public class BindCardActivity extends BaseActivity {
 
        final String cardNum = etCardNum.getText().toString();
         if (!TextUtils.isEmpty(cardNum)) {
-            mWaitingDialgog.show();
+            mWaitingDialog.show();
             HttpRequest.autoIdentifyBankCard(mActivity, new ICallback<BankCardResult>() {
                 @Override
                 public void onSucceed(BankCardResult result) {
-                    mWaitingDialgog.dismiss();
+                    mWaitingDialog.dismiss();
                     //绑定银行卡
                     bindCard(result,cardNum);
                 }
 
                 @Override
                 public void onFail(String error) {
-                    mWaitingDialgog.dismiss();
+                    mWaitingDialog.dismiss();
                     Uihelper.showToast(mActivity,error);
                 }
             }, cardNum);
