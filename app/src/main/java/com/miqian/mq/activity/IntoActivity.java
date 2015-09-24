@@ -16,6 +16,8 @@ import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.OrderLian;
+import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.UserInfo;
@@ -55,6 +57,10 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private String bankNumber;
     private int rollType;
     private String bindStatus;
+
+    public static final int FAIL = 0;
+    public static final int SUCCESS = 1;
+    public static final int PROCESSING = 2;
 
     @Override
     public void obtainData() {
@@ -155,9 +161,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
         }
 
+        mWaitingDialgog.show();
         HttpRequest.rollIn(mActivity, new ICallback<PayOrderResult>() {
             @Override
             public void onSucceed(PayOrderResult payOrderResult) {
+                mWaitingDialgog.dismiss();
                 PayOrder newPayOrder = constructPreCardPayOrder(payOrderResult.getData());
                 String content4Pay = JSON.toJSONString(newPayOrder);
                 Log.e("", "content4Pay---------- : " + content4Pay);
@@ -167,6 +175,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
+                mWaitingDialgog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
         }, money, bankNumber);
@@ -217,51 +226,22 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     JSONObject objContent = BaseHelper.string2JSON(strRet);
                     String retCode = objContent.optString("ret_code");
                     String retMsg = objContent.optString("ret_msg");
+//                    String money = objContent.optString("money_order");
+                    String orderNo = objContent.optString("no_order");
                     // //先判断状态码，状态码为 成功或处理中 的需要 验签
                     if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
                         String resulPay = objContent.optString("result_pay");
                         if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
                             Log.e("", "rollInResult ------- " + resulPay);
                             // 支付成功后续处理
-//                            Intent intent = new Intent(mActivity, IntoResult.class);
-//                            intent.putExtra("orderNo", objContent.optString("no_order"));
-//                            startActivity(intent);
-//                            mActivity.finish();
-
-
-//                            Intent intent = new Intent(mActivity, IntoResult.class);
-//                            intent.putExtra("orderNo", objContent.optString("no_order"));
-//                            startActivity(intent);
-//                            mActivity.finish();
-
-                            String orderNo = objContent.optString("no_order");
-
-                            Log.e("", "orderNo ------- " + orderNo);
-                            HttpRequest.rollInResult(mActivity, new ICallback<PayOrderResult>() {
-                                @Override
-                                public void onSucceed(PayOrderResult result) {
-//                                    Intent intent = new Intent();
-//                        intent.putExtra("city", city);
-//                        intent.putExtra("branch", branch);
-//                        setResult(1, intent);
-//                        BankListAcivity.this.finish();
-//                        mActivity.setResult(555, intent);
-//                                    setResult(1);
-                                    IntoActivity.this.finish();
-                                }
-
-                                @Override
-                                public void onFail(String error) {
-                                    Uihelper.showToast(mActivity, error);
-                                }
-                            }, orderNo);
+                            checkOrder(orderNo);
                         } else {
                             Uihelper.showToast(mActivity, retMsg);
                         }
                     } else if (Constants.RET_CODE_PROCESS.equals(retCode)) {
                         String resulPay = objContent.optString("result_pay");
                         if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
-                            Uihelper.showToast(mActivity, retMsg);
+                            checkOrder(orderNo);
                         }
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
@@ -274,5 +254,54 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
             super.handleMessage(msg);
         }
+    }
+
+    private void checkOrder(String orderNo) {
+        mWaitingDialgog.show();
+        HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
+            @Override
+            public void onSucceed(OrderLianResult orderLianResult) {
+                mWaitingDialgog.dismiss();
+                OrderLian orderLian = orderLianResult.getData();
+                if (orderLianResult.getCode().equals("000000")) {
+                    if (rollType == 1) {
+                        setResult(SUCCESS);
+                    } else {
+                        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
+                        intent.putExtra("status", SUCCESS);
+                        intent.putExtra("money", orderLian.getAmt());
+                        intent.putExtra("orderNo", orderLian.getOrderNo());
+                        startActivity(intent);
+                    }
+                } else if (orderLianResult.getCode().equals("100096")) {
+                    if (rollType == 1) {
+                        setResult(FAIL);
+                    } else {
+                        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
+                        intent.putExtra("status", FAIL);
+                        intent.putExtra("money", orderLian.getAmt());
+                        intent.putExtra("orderNo", orderLian.getOrderNo());
+                        startActivity(intent);
+                    }
+                } else if (orderLianResult.getCode().equals("100097")) {
+                    if (rollType == 1) {
+                        setResult(PROCESSING);
+                    } else {
+                        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
+                        intent.putExtra("status", PROCESSING);
+                        intent.putExtra("money", orderLian.getAmt());
+                        intent.putExtra("orderNo", orderLian.getOrderNo());
+                        startActivity(intent);
+                    }
+                }
+                IntoActivity.this.finish();
+            }
+
+            @Override
+            public void onFail(String error) {
+                mWaitingDialgog.dismiss();
+                Uihelper.showToast(mActivity, error);
+            }
+        }, orderNo);
     }
 }

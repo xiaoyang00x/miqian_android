@@ -9,6 +9,7 @@ import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.TestClass;
@@ -187,7 +188,7 @@ public class HttpRequest {
      *
      * @param callback
      */
-    public static void rollInResult(Context context, final ICallback<PayOrderResult> callback, String orderNo) {
+    public static void rollInResult(Context context, final ICallback<OrderLianResult> callback, String orderNo) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -199,12 +200,12 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Log.e("", result);
-                PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
-                if (payOrderResult.getCode().equals("000000")) {
-                    callback.onSucceed(payOrderResult);
-                } else {
-                    callback.onFail(payOrderResult.getMessage());
-                }
+                OrderLianResult orderLianResult = JsonUtil.parseObject(result, OrderLianResult.class);
+                callback.onSucceed(orderLianResult);
+//                if (payOrderResult.getCode().equals("000000")) {
+//                } else {
+//                    callback.onFail(payOrderResult.getMessage());
+//                }
             }
 
             @Override
