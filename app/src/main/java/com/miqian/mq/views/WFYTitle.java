@@ -272,4 +272,11 @@ public class WFYTitle extends RelativeLayout {
 	public TextView getTitle(){
 		return tvTitle;
 	}
+
+	public void setIvLeftVisiable(int visiable) {
+		if (ivLeft != null) {
+			ivLeft.setVisibility(visiable);
+		}
+	}
+
 }

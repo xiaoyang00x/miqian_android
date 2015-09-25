@@ -156,11 +156,11 @@ public class RegisterActivity extends BaseActivity {
             if (!TextUtils.isEmpty(captcha)) {
 
                 if (!TextUtils.isEmpty(password)) {
-                    mWaitingDialgog.show();
+                    mWaitingDialog.show();
                     HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
                         @Override
                         public void onSucceed(RegisterResult result) {
-                            mWaitingDialgog.dismiss();
+                            mWaitingDialog.dismiss();
                             Uihelper.showToast(mActivity,"注册成功");
                             finish();
                             Log.e("Register", result.getData().getBalance());
@@ -168,7 +168,7 @@ public class RegisterActivity extends BaseActivity {
 
                         @Override
                         public void onFail(String error) {
-                            mWaitingDialgog.dismiss();
+                            mWaitingDialog.dismiss();
                             Uihelper.showToast(mActivity,error);
                         }
                     }, phone, captcha, password, invite);

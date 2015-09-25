@@ -145,8 +145,9 @@ public class UserUtil {
         activity.startActivity(intent);
     }
     //  跳转活期认购页
-    public static void currenPay(Activity activity,  final Class<?> cls) {
+    public static void currenPay(Activity activity,  final Class<?> cls, String money) {
         Intent intent = new Intent(activity, cls);
+        intent.putExtra("money", money);
         activity.startActivity(intent);
     }
 

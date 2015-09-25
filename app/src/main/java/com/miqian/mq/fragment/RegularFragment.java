@@ -16,6 +16,7 @@ import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.RegularEarn;
+import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
@@ -28,8 +29,10 @@ import java.util.List;
  */
 public class RegularFragment extends BasicFragment {
 
-    List<RegularEarn> mDatas = null;
+    private final String TAG = "RegularFragment";
     RegularListAdapter mAdapter;
+    private ArrayList<RegularPlan> planList;
+    private ArrayList<RegularEarn> regList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,8 +40,14 @@ public class RegularFragment extends BasicFragment {
         View view = inflater.inflate(R.layout.fragment_regular, container, false);
         findView(view);
         setView();
-        getMainRegular();
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate()");
+        super.onCreate(savedInstanceState);
+        getMainRegular();
     }
 
     private RecyclerView recyclerView;
@@ -52,10 +61,11 @@ public class RegularFragment extends BasicFragment {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-//        mDatas = new ArrayList<>();
-//
-//        mAdapter = new RegularListAdapter(mDatas, mApplicationContext, swipeRefreshLayout);
-//        recyclerView.setAdapter(mAdapter);
+
+        if(regList != null) {
+            mAdapter = new RegularListAdapter(regList, planList, mApplicationContext, swipeRefreshLayout);
+            recyclerView.setAdapter(mAdapter);
+        }
     }
 
     private void getMainRegular() {
@@ -66,17 +76,15 @@ public class RegularFragment extends BasicFragment {
                 if(result == null) return;
                 GetRegularInfo info = result.getData();
                 if(info == null) return;
-//                HomePageInfo info = result;
-//                Uihelper.showToast(getActivity(), "success ");
-//                if (null != mContext) {
-                    if (null == mAdapter) {
+                regList = info.getRegList();
+                planList = info.getPlanList();
+//                    if (null == mAdapter) {
                         mAdapter = new RegularListAdapter(info.getRegList(), info.getPlanList(), mApplicationContext, swipeRefreshLayout);
                         recyclerView.setAdapter(mAdapter);
-                    } else {
-                        mAdapter.addAll(info.getRegList());
-                    }
-//                    swipeRefresh.setRefreshing(false);
-//                }
+//                    } else {
+//                        mAdapter.clear();
+//                        mAdapter.addAll(info.getRegList());
+//                    }
             }
 
             @Override

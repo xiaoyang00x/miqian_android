@@ -2,24 +2,24 @@ package com.miqian.mq.entity;
 
 public class CityInfo {
 
-	private String begin_letter;
-	private String province;
+	private String letter;
+	private String prov;
 	private String city;
 
-	public String getBegin_letter() {
-		return begin_letter;
+	public String getLetter() {
+		return letter;
 	}
 
-	public void setBegin_letter(String begin_letter) {
-		this.begin_letter = begin_letter;
+	public void setLetter(String letter) {
+		this.letter = letter;
 	}
 
-	public String getProvince() {
-		return province;
+	public String getProv() {
+		return prov;
 	}
 
-	public void setProvince(String province) {
-		this.province = province;
+	public void setProv(String prov) {
+		this.prov = prov;
 	}
 
 	public String getCity() {

@@ -8,6 +8,10 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.activity.user.BindCardActivity;
+import com.miqian.mq.entity.Meta;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -92,6 +96,28 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
         }
+
+    }
+
+    //退出账号
+    public void btn_click(View view) {
+        mWaitingDialog.show();
+        HttpRequest.loginOut(mActivity, new ICallback<Meta>() {
+            @Override
+            public void onSucceed(Meta result) {
+                mWaitingDialog.dismiss();
+                UserUtil.clearUserInfo(mActivity);
+                finish();
+            }
+
+            @Override
+            public void onFail(String error) {
+                mWaitingDialog.dismiss();
+                UserUtil.clearUserInfo(mActivity);
+                finish();
+
+            }
+        });
 
     }
 }

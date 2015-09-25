@@ -112,9 +112,7 @@
                 style="@style/item_divider" />
 
         </RelativeLayout>
-
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"

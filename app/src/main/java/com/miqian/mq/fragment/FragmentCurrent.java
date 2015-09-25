@@ -80,7 +80,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
                     if (money < 1) {
                         this.setTitle("提示：输入请大于一元");
                     } else {
-                        UserUtil.currenPay(mContext, CurrentInvestment.class);
+                        UserUtil.currenPay(mContext, CurrentInvestment.class, s);
                         this.dismiss();
                     }
                 } else {
