@@ -1,22 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
+    <RelativeLayout
+        android:layout_width="@dimen/regular_plan_circle_width"
+        android:layout_height="@dimen/regular_plan_circle_width"
+        android:background="@drawable/bg_circle_buy"
+        >
+
+        <TextView
+            android:id="@+id/tv_annurate_interest_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="18%"
+            android:textColor="@color/mq_r1"
+            android:textSize="@dimen/mq_font8" />
+        <TextView
+        android:id="@+id/tv_add_interest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/bg_regular_plan_circle" />
+        android:layout_above="@id/tv_annurate_interest_rate"
+        android:layout_toRightOf="@id/tv_annurate_interest_rate"
+        android:padding="3dp"
+        android:layout_marginBottom="-5dp"
+        android:layout_marginLeft="-5dp"
+        android:background="@drawable/bg_add_interest"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font4"
+        android:text="+1.5%"
+        />
+        <TextView
+            android:id="@+id/lable_annurate_interest_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_annurate_interest_rate"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="22dp"
+            android:text="年化利率"
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tv_annurate_interest_rate"
+            android:layout_marginTop="30dp"
+            android:text="马上认购"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mq_font1" />
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_annurate_interest_rate"
+        android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="12%"
-        android:textColor="@color/regular_item_rate"
-        android:textSize="@dimen/textsize_larger" />
-</FrameLayout>
+        android:layout_marginTop="10dp"
+        android:textColor="@color/mq_b2"
+        android:textSize="@dimen/mq_font4"
+        />
+</LinearLayout>

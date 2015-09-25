@@ -58,5 +58,9 @@ public class Urls {
     //自动识别银行卡
     public final static String bindBank = base_server + "commonService/bindBank";
 
+    //定期首页
+    public final static String getRegMain = "http://27.154.228.194:30001/subjectService/getRegMain";
+//    public final static String getRegMain = base_server + "subjectService/getRegMain";
+
 
 }

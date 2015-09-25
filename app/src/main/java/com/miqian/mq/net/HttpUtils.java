@@ -14,6 +14,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -36,6 +37,9 @@ public class HttpUtils {
         }
         final OkHttpClient client = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
+        if(list == null) {
+            list = new ArrayList<>();
+        }
         list.add(new Param("timer", "" + System.currentTimeMillis()));
         sortParam(list);
         if (list != null && list.size() > 0) {

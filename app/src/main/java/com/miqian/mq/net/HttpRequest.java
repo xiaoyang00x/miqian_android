@@ -5,6 +5,7 @@ import android.util.Log;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CurrentInfoResult;
+import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
@@ -661,6 +662,24 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    public static void getMainRegular(Context context, final ICallback<GetRegularResult> callback) {
+        new MyAsyncTask(context, Urls.getRegMain,  null, new ICallback<String>() {
 
+            @Override
+            public void onSucceed(String result) {
+                GetRegularResult meta = JsonUtil.parseObject(result, GetRegularResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
 
 }

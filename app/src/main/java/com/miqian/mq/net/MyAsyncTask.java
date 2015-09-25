@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.utils.JsonUtil;
@@ -19,7 +20,7 @@ import com.miqian.mq.utils.UserUtil;
  */
 
 public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
-
+    private final String TAG = MyAsyncTask.class.getSimpleName();
     private Context mContext;
     private List<Param> mList;
     protected ICallback<String> callback;
@@ -41,6 +42,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
             return NETWORK_ERROR;
         }
 
+        Log.d(TAG, "----请求服务器----" + mUrl);
         String httpString = HttpUtils.httpPostRequest(mContext, mUrl, mList);
         if (!TextUtils.isEmpty(httpString)) {
             return httpString;
@@ -53,6 +55,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         try {
             if (result != null) {
+                Log.d(TAG, "----服务器返回数据----" + result);
                 if (result.equals(NETWORK_ERROR)) {
                     callback.onFail(result);
                 } else if (result.startsWith(SERVER_ERROR)) {
@@ -60,6 +63,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
 //                    TCAgent.onEvent(mContext, Pref.SERVER_ERROR_CODE, Pref.getString(Pref.USERID, mContext, Pref.VISITOR) + result);
                     callback.onFail(SERVER_ERROR);
                 } else {
+
                     callback.onSucceed(result);
                     Meta response = JsonUtil.parseObject(result, Meta.class);
                     if (response.getCode().equals("999995")) {
