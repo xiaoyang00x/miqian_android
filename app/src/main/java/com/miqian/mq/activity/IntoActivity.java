@@ -142,7 +142,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void rollIn() {
-        if (TextUtils.isEmpty(money) || rollType == 1) {
+        if (rollType == 0) {
             money = editMoney.getText().toString();
         }
 

@@ -148,6 +148,7 @@ public class UserUtil {
     public static void currenPay(Activity activity,  final Class<?> cls, String money) {
         Intent intent = new Intent(activity, cls);
         intent.putExtra("money", money);
+        intent.putExtra("prodId", "1");
         activity.startActivity(intent);
     }
 
