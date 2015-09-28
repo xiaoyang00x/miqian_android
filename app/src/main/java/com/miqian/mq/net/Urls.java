@@ -29,6 +29,8 @@ public class Urls {
     public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
+    //认购预处理
+    public final static String order_produced = base_server + "userService/subscribePreprocess";
     //获取用户信息
     public final static String user_info = base_server + "userService/getUserInfo";
 
