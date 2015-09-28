@@ -64,5 +64,9 @@ public class Urls {
     //登出
     public final static String loginOut  = base_server + "userService/logout";
 
+    //定期首页
+    public final static String getRegMain = "http://27.154.228.194:30001/subjectService/getRegMain";
+//    public final static String getRegMain = base_server + "subjectService/getRegMain";
+
 
 }
