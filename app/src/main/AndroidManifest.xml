@@ -94,7 +94,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.user.SetPasswordActivity"
+            android:name=".activity.setting.SetPasswordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -124,7 +124,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.user.ChangePassWordActivity"
+            android:name=".activity.setting.ChangePassWordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -136,15 +136,15 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.user.BindCardActivity"
+            android:name=".activity.setting.BindCardActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.CityListActivity"
+            android:name=".activity.setting.CityListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.BankBranchActivity"
+            android:name=".activity.setting.BankBranchActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 

@@ -18,6 +18,7 @@ public class Urls {
 
     public static final String base_server = "https://api.shicaidai.com/";
 //    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
+//    public static final String base_server = "http://172.20.8.11:8082/miqian-app/";
 
     //测试
     public final static String test = base_server + "userService/register";
@@ -56,13 +57,15 @@ public class Urls {
     //自动识别银行卡
     public final static String autoIdentifyBankCard = base_server + "assetService/autoIdentifyBankCard";
     //绑定银行卡
-    public final static String bindBank = base_server + "commonService/bindBank";
+    public final static String bindBank = "http://172.20.8.11:8082/miqian-app/" + "commonService/bindBank";
     //获取城市接口
     public final static String getAllCity = base_server + "commonService/getAllCity";
     //获取支行
     public final static String getSubBranch = base_server + "commonService/getSubBranch";
     //登出
     public final static String loginOut  = base_server + "userService/logout";
+    //提现
+    public final static String withdrawCash  = base_server + "assetService/withdrawCash";
 
     //定期首页
     public final static String getRegMain = "http://27.154.228.194:30001/subjectService/getRegMain";
