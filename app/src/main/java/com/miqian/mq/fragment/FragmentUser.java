@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
+import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.RolloutActivity;
+import com.miqian.mq.activity.setting.SetBankActivity;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
@@ -178,28 +180,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
             //充值
             case R.id.btn_rollin:
 
-                Dialog_Login dialog_login = new Dialog_Login(getActivity()) {
-                    @Override
-                    public void login(String telephone, String password) {
-                        HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
-                            @Override
-                            public void onSucceed(LoginResult result) {
-                                Uihelper.showToast(getActivity(), "登录成功");
-                                String name = RSAUtils.decryptByPrivate(result.getData().getRealName());
-                                UserInfo userInfo = result.getData();
-                                UserUtil.saveUserInfo(getActivity(), userInfo);
-                                Uihelper.trace(name);
-                            }
-
-                            @Override
-                            public void onFail(String error) {
-                                Uihelper.showToast(getActivity(), error);
-                            }
-                        }, telephone, password);
-                    }
-                };
-
-                dialog_login.show();
+              UserUtil.isLogin(getActivity(),IntoActivity.class);
 
                 break;
             //取现
@@ -232,7 +213,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //我的设置
             case R.id.btn_account:
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+                Intent intent_setting=new Intent(getActivity(),SettingActivity.class);
+                Bundle extra=new Bundle();
+                extra.putSerializable("userInfo",userInfo);
+                intent_setting.putExtras(extra);
+                startActivity(intent_setting);
                 break;
         }
     }

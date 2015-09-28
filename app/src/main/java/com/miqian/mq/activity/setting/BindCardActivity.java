@@ -1,6 +1,8 @@
-package com.miqian.mq.activity.user;
+package com.miqian.mq.activity.setting;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -102,12 +104,18 @@ public class BindCardActivity extends BaseActivity {
 
     }
 
-    private void bindCard(BankCardResult result,String cardNum) {
-           BankCard bankCard= result.getData();
-        if (bankCard!=null){
+    private void bindCard(final BankCardResult bankCardResult,String cardNum) {
+           BankCard bankCard= bankCardResult.getData();
+        if (bankCardResult!=null){
             HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
                 @Override
                 public void onSucceed(Meta result) {
+
+                    Intent intent=new Intent(mActivity,SetBankActivity.class);
+                    Bundle extra=new Bundle();
+                    extra.putSerializable("bankresult",bankCardResult.getData());
+                    intent.putExtras(extra);
+                    startActivity(intent);
 
                 }
 

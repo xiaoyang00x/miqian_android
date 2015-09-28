@@ -1,4 +1,4 @@
-package com.miqian.mq.activity.user;
+package com.miqian.mq.activity.setting;
 
 import android.app.Dialog;
 import android.content.Intent;

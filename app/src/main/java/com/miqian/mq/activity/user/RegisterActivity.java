@@ -128,21 +128,20 @@ public class RegisterActivity extends BaseActivity {
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Uihelper.trace(result.getCode() + "");
+                mBtn_sendCaptcha.setEnabled(false);
+                myRunnable = new MyRunnable();
+                thread = new Thread(myRunnable);
+                thread.start(); // 启动线程，进行倒计时
+                isTimer = true;
             }
 
             @Override
             public void onFail(String error) {
+                Uihelper.showToast(mActivity,error);
 
             }
         }, phone, TypeUtil.CAPTCHA_REGISTER);
 
-
-        mBtn_sendCaptcha.setEnabled(false);
-        myRunnable = new MyRunnable();
-        thread = new Thread(myRunnable);
-        thread.start(); // 启动线程，进行倒计时
-        isTimer = true;
     }
 
     public void btn_click(View v) {

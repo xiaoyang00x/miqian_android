@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.user.SetPasswordActivity;
+import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;

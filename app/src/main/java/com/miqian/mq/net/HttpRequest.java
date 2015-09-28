@@ -805,4 +805,39 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    /**
+     * 提现
+     *
+     * @param callback
+     */
+    public static void withdrawCash(Context context, final ICallback<Meta> callback,String amt,String bankCode,String bankNo,String payPassword) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
+        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("amt", amt));
+        mList.add(new Param("bankCode", bankCode));
+
+        new MyAsyncTask(context, Urls.withdrawCash, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
 }

@@ -23,13 +23,12 @@
             android:src="@mipmap/arrow_right" />
 
         <TextView
-            android:id="@+id/account_current"
+            android:id="@+id/tv_setting_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/arrow_1"
-            android:text="哈哈"
             android:textColor="@color/red_base" />
     </RelativeLayout>
 
@@ -40,9 +39,11 @@
         style="@style/listItem">
 
         <TextView
+            android:id="@+id/tv_setting_bankcard"
             style="@style/text_black_item"
             android:layout_centerVertical="true"
-            android:text="银行卡号：*****3335" />
+            android:text="银行卡"
+            />
 
         <ImageView
             android:id="@+id/arrow_11"
@@ -53,13 +54,12 @@
             android:src="@mipmap/arrow_right" />
 
         <TextView
-            android:id="@+id/tv_settting_bankcard"
+            android:id="@+id/tv_setting_bankcardstate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/arrow_11"
-            android:text="待完善"
             android:textColor="@color/red_base" />
     </RelativeLayout>
 
@@ -88,7 +88,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/arrow_2"
-            android:text="300元"
             android:textColor="@color/miqian_gray" />
     </RelativeLayout>
 
