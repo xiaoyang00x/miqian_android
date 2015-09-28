@@ -11,6 +11,7 @@
 
     // 页面上下左右边距14dp
     <dimen name="margin_left_right">14dp</dimen>
+    <dimen name="padding_left_right">14dp</dimen>
 
     //输入框,确认按钮的高度
     <dimen name="edit_item">45dp</dimen>

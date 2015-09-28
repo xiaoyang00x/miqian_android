@@ -670,7 +670,12 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-public static void getMainRegular(Context context, final ICallback<GetRegularResult> callback) {
+    /**
+     * 获取定期首页数据
+     * @param context
+     * @param callback
+     */
+    public static void getMainRegular(Context context, final ICallback<GetRegularResult> callback) {
         new MyAsyncTask(context, Urls.getRegMain,  null, new ICallback<String>() {
 
             @Override
@@ -689,7 +694,32 @@ public static void getMainRegular(Context context, final ICallback<GetRegularRes
             }
         }).executeOnExecutor();
     }
-    
+
+    /**
+     * 获取定期计划详情
+     * @param context
+     * @param callback
+     */
+    public static void getRegularPlanDetails(Context context, final ICallback<GetRegularResult> callback) {
+        new MyAsyncTask(context, Urls.getRegMain,  null, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                GetRegularResult meta = JsonUtil.parseObject(result, GetRegularResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
     //获取银行列表
     public static void getAllCity(Context context, final ICallback<CityInfoResult> callback) {
         if (mList == null) {

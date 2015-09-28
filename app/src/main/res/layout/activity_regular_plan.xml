@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/frame_title" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/layout_des"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_regular_activity_des"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/padding_left_right"
+                android:paddingRight="@dimen/padding_left_right">
+
+                <Button
+                    android:id="@+id/btn_des_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/bg_close" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/btn_des_close"
+                    android:text="认购满50000，即送拾财券>>"
+                    android:textColor="@color/mq_r1"
+                    android:textSize="@dimen/mq_font1" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_left_right"
+                android:paddingRight="@dimen/padding_left_right">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="年化收益"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font3" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:background="@color/mq_b3" />
+
+                    <TextView
+                        android:id="@+id/tv_limit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="项目期限 110天"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font3" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="70dp"
+                    android:layout_marginTop="50dp">
+
+                    <TextView
+                        android:id="@+id/tv_annurate_interest_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="18.44"
+                        android:textColor="@color/mq_r1"
+                        android:textSize="@dimen/mq_font9" />
+
+                    <TextView
+                        android:id="@+id/tv_add_interest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/tv_annurate_interest_rate"
+                        android:background="@drawable/bg_add_interest"
+                        android:padding="3dp"
+                        android:text="+1.5%"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/mq_font4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignBaseline="@id/tv_annurate_interest_rate"
+                        android:layout_toRightOf="@id/tv_annurate_interest_rate"
+                        android:text="%"
+                        android:textColor="@color/mq_r1"
+                        android:textSize="@dimen/mq_font1" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_lable1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="可认购金额 40000元"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font5" />
+
+
+                    <TextView
+                        android:id="@+id/tv_lable2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="75%已经认购"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font5" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:progress="80" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_lable3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="可认购金额 40000元"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font5" />
+
+
+                    <TextView
+                        android:id="@+id/tv_lable4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="75%已经认购"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font5" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_left_right"
+                android:paddingRight="@dimen/padding_left_right">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="项目名称"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font3" />
+
+
+                    <TextView
+                        android:id="@+id/tv_project_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="XX项目"
+                        android:textColor="@color/mq_b2"
+                        android:textSize="@dimen/mq_font3" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_line_color_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="风险审核"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font3" />
+
+
+                    <TextView
+                        android:id="@+id/tv_fx"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="本息盾"
+                        android:textColor="@color/mq_b2"
+                        android:textSize="@dimen/mq_font3" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_line_color_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="本息保障"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font3" />
+
+
+                    <TextView
+                        android:id="@+id/tv_bxbz"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="xxx"
+                        android:textColor="@color/mq_b2"
+                        android:textSize="@dimen/mq_font3" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_line_color_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="还款方式"
+                        android:textColor="@color/mq_b1"
+                        android:textSize="@dimen/mq_font3" />
+
+
+                    <TextView
+                        android:id="@+id/tv_hkfs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="xxxxxx"
+                        android:textColor="@color/mq_b2"
+                        android:textSize="@dimen/mq_font3" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_line_color_gray" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_buy"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_red"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font1" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
