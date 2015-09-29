@@ -71,6 +71,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.current.SubscribeResult"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.current.ActivityRedPacket"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />

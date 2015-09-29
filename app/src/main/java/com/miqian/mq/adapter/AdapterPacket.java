@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Promote;
+import com.miqian.mq.utils.Uihelper;
 
 import java.util.List;
 
@@ -52,18 +53,23 @@ public class AdapterPacket extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Promote promote = promList.get(position);
         if (promote.getPromType().equals("HB")) {
-            ((ViewHolder) holder).textMoney.setText("￥" + promote.getPromTotalAmt());
+            ((ViewHolder) holder).textMoney.setText("￥" + promote.getCanUseAmt());
+            ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
+            ((ViewHolder) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
             if (mPosition == position) {
                 ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
             } else {
                 ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
             }
         } else if (promote.getPromType().equals("SC")) {
-            ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getPromTotalAmt());
+            ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
+            ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getToUseRate() + "%】");
+            ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
+            ((ViewHolderTicket) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
             if (mPosition == position) {
-                ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
+                ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
             } else {
-                ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
+                ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
             }
         }
     }
@@ -90,7 +96,8 @@ public class AdapterPacket extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textType;
+        public TextView limitType;
+        public TextView limitDate;
         public TextView textMoney;
         public ImageView promoteChoosed;
 
@@ -108,7 +115,8 @@ public class AdapterPacket extends RecyclerView.Adapter {
                     notifyDataSetChanged();
                 }
             });
-            textType = (TextView) itemView.findViewById(R.id.text_type);
+            limitType = (TextView) itemView.findViewById(R.id.limit_type);
+            limitDate = (TextView) itemView.findViewById(R.id.limit_date);
             textMoney = (TextView) itemView.findViewById(R.id.text_money);
             promoteChoosed = (ImageView) itemView.findViewById(R.id.promote_choosed);
         }
@@ -117,6 +125,8 @@ public class AdapterPacket extends RecyclerView.Adapter {
     class ViewHolderTicket extends RecyclerView.ViewHolder {
 
         public TextView textType;
+        public TextView limitType;
+        public TextView limitDate;
         public TextView textMoney;
         public ImageView promoteChoosed;
 
@@ -135,6 +145,8 @@ public class AdapterPacket extends RecyclerView.Adapter {
                 }
             });
             textType = (TextView) itemView.findViewById(R.id.text_type);
+            limitType = (TextView) itemView.findViewById(R.id.limit_type);
+            limitDate = (TextView) itemView.findViewById(R.id.limit_date);
             textMoney = (TextView) itemView.findViewById(R.id.text_money);
             promoteChoosed = (ImageView) itemView.findViewById(R.id.promote_choosed);
         }

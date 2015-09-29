@@ -17,6 +17,8 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.Promote;
+import com.miqian.mq.entity.SubscribeOrder;
+import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.FormatUtil;
@@ -47,7 +49,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     private ProducedOrder producedOrder;
     private List<Promote> promList;
-    private String promListString;
+    private String promListString = "";
 
     private String money;
     private String prodId; //0:充值产品 1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
@@ -295,11 +297,24 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                             if (payPassword.length() >= 6 && payPassword.length() <= 20) {
                                 //支付
                                 mWaitingDialog.show();
-                                HttpRequest.payOrder(mActivity, new ICallback<ProducedOrderResult>() {
+                                HttpRequest.subjectIdOrder(mActivity, new ICallback<SubscribeOrderResult>() {
                                     @Override
-                                    public void onSucceed(ProducedOrderResult result) {
+                                    public void onSucceed(SubscribeOrderResult result) {
                                         mWaitingDialog.dismiss();
-                                        Uihelper.showToast(mActivity, result.getMessage());
+                                        Intent intent = new Intent(CurrentInvestment.this, SubscribeResult.class);
+                                        SubscribeOrder subscribeOrder = result.getData();
+                                        if (result.getCode().equals("000000")) {
+                                            intent.putExtra("status", 1);
+                                            intent.putExtra("orderNo", subscribeOrder.getOrderNo());
+                                            intent.putExtra("addTime", subscribeOrder.getAddTime());
+                                        } else {
+                                            intent.putExtra("status", 0);
+                                        }
+                                        intent.putExtra("money", orderMoney.toString());
+                                        intent.putExtra("balance", balancePay.toString());
+                                        intent.putExtra("promoteMoney", promoteMoney.toString());
+                                        startActivity(intent);
+                                        CurrentInvestment.this.finish();
                                     }
 
                                     @Override

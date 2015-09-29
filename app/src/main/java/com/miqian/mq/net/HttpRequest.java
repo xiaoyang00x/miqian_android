@@ -16,6 +16,7 @@ import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.RegisterResult;
+import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.UserUtil;
@@ -164,7 +165,7 @@ public class HttpRequest {
      * @param prodId 0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      * @param subjectId 0:活期
      */
-    public static void payOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList) {
+    public static void subjectIdOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -175,16 +176,12 @@ public class HttpRequest {
         mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
         mList.add(new Param("subjectId", subjectId));
         mList.add(new Param("promList", promList));
-        new MyAsyncTask(context, Urls.order_pay, mList, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                ProducedOrderResult producedOrderResult = JsonUtil.parseObject(result, ProducedOrderResult.class);
-                if (producedOrderResult.getCode().equals("000000")) {
-                    callback.onSucceed(producedOrderResult);
-                } else {
-                    callback.onFail(producedOrderResult.getMessage());
-                }
+                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
+                callback.onSucceed(subscribeOrderResult);
             }
 
             @Override

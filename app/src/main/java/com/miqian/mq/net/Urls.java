@@ -33,7 +33,7 @@ public class Urls {
     //认购预处理
     public final static String order_produced = base_server + "userService/subscribePreprocess";
     //认购
-    public final static String order_pay = base_server + "assetService/subscribe";
+    public final static String subscribe_order = base_server + "assetService/subscribe";
     //获取用户信息
     public final static String user_info = base_server + "userService/getUserInfo";
 
