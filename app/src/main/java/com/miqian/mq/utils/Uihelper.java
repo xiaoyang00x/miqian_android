@@ -26,7 +26,7 @@ public class Uihelper {
 
     private static void initToast(Context context) {
         if (mToast == null) {
-            mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
         }
     }
 
