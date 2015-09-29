@@ -98,4 +98,8 @@
     <declare-styleable name="ViewPagerIndicator">
         <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
     </declare-styleable>
+
+    <!-- 预定义定义主题背景 -->
+    <attr name="theme_background" format="reference" />
+    <attr name="title_bar_bg" format="reference" />
 </resources>

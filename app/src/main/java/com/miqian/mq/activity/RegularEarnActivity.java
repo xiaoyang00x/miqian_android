@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.RegularEarn;
+import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.net.HttpRequest;
@@ -19,12 +21,12 @@ import com.miqian.mq.utils.Uihelper;
 /**
  * Created by guolei_wang on 15/9/25.
  */
-public class RegularPlanActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class RegularEarnActivity extends BaseFragmentActivity implements View.OnClickListener {
     public static final String KEY_SUBJECT_ID = "KEY_SUBJECT_ID";
     private String subjectId; //标的 ID
 
     public static void startActivity(Context context, String subjectId) {
-        Intent intent = new Intent(context, RegularPlanActivity.class);
+        Intent intent = new Intent(context, RegularEarnActivity.class);
         intent.putExtra(KEY_SUBJECT_ID, subjectId);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -74,10 +76,10 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     private void initView() {
         btn_buy.setOnClickListener(this);
         btn_des_close.setOnClickListener(this);
-        tv_title.setText("定期计划");
+        tv_title.setText("定期赚");
     }
 
-    private void updateUI(RegularPlan data) {
+    private void updateUI(RegularEarn data) {
         if(data == null) return;
         if(TextUtils.isEmpty(data.getPromotionDesc())) {
             layout_des.setVisibility(View.GONE);
@@ -114,18 +116,18 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     }
 
     private void getRegularDetails(String subjectId) {
-        HttpRequest.getRegularDetails(this, "2", subjectId, new ICallback<RegularPlanResult>() {
+        HttpRequest.getRegularEarnDetails(this, "1", subjectId, new ICallback<RegularEarnResult>() {
 
             @Override
-            public void onSucceed(RegularPlanResult result) {
-                if(result != null) {
+            public void onSucceed(RegularEarnResult result) {
+                if (result != null) {
                     updateUI(result.getData());
                 }
             }
 
             @Override
             public void onFail(String error) {
-                Uihelper.showToast(RegularPlanActivity.this, error);
+                Uihelper.showToast(RegularEarnActivity.this, error);
             }
         });
     }
