@@ -4,7 +4,7 @@
         android:id="@+id/frame_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        android:background="@color/red_base">
+        android:background="@color/mq_r1">
 
         <ImageButton
             android:id="@+id/btn_message"

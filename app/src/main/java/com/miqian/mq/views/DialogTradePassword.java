@@ -1,36 +1,46 @@
 package com.miqian.mq.views;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.CityInfo;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.Uihelper;
 
 
-public abstract class DialogPay extends Dialog {
+public abstract class DialogTradePassword extends Dialog {
 
     private TextView titleText;
-    private EditText editMoney;
+    private EditText et_password;
+    public  final  static int TYPE_SETPASSWORD=0;
+    public  final  static int TYPE_INPUTPASSWORD=1;
+    private  int mType;
+    private Context mContext;
 
     /**
      * @param context 内容 * @param position_Text 取消按钮的内容 如：取消，或是其他操作等
      *                确定按钮的内容 如：去认证，确定等
      * @author Tuliangtan
      */
-    public DialogPay(Context context) {
+    public DialogTradePassword(Activity context,int type) {
         super(context, R.style.Dialog);
-        this.setContentView(R.layout.dialog_pay);
+        this.setContentView(R.layout.dialog_tradepassword);
+        this.mType=type;
+        this.mContext=context;
         initViewCode();
     }
 
-    public abstract void positionBtnClick(String s);
+    public abstract void positionBtnClick(String password);
 
 //    public abstract void negativeBtnClick();
 
@@ -41,22 +51,13 @@ public abstract class DialogPay extends Dialog {
 
     private void initViewCode() {
         titleText = (TextView) findViewById(R.id.dialog_title);
-        editMoney = (EditText) findViewById(R.id.edit_money);
-        editMoney.addTextChangedListener(new MyTextWatcher() {
+        et_password = (EditText) findViewById(R.id.et_password);
 
-            @Override
-            public void myAfterTextChanged(Editable s) {
-//				setRollEnabled();
-                try {
-                    String temp = s.toString();
-                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-                        return;
-                    }
-                    s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
-                }
-            }
-        });
+        if (mType==TYPE_INPUTPASSWORD) {
+            titleText.setText("交易密码");
+            et_password.setHint("请输入密码");
+        }
+
 
         Button btNegative = (Button) findViewById(R.id.btn_cancel);
         btNegative.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +72,8 @@ public abstract class DialogPay extends Dialog {
         btn_sure.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                positionBtnClick(editMoney.getText().toString());
-                editMoney.setText("");
+                positionBtnClick(et_password.getText().toString());
+                et_password.setText("");
             }
         });
     }

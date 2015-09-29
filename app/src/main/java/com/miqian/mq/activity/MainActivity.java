@@ -137,23 +137,30 @@ public class MainActivity extends BaseFragmentActivity {
             switch (uritype) {
                 case 1:
                     break;
-                case 2:   //列表页
-                    startActivity(new Intent(mContext, AnnounceActivity.class));
-                    break;
-                case 3:  //详情页
-                    Intent intent = new Intent(mContext, AnnounceResultActivity.class);
-//							intent.putExtra("classid", jpushInfo.getClassid());
-                    intent.putExtra("noticeId", jInfo.getId());
-                    startActivity(intent);
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    //具体页面
+                    startActivity(new Intent(mContext, AnnounceResultActivity.class));
                     break;
 
                 // 内置浏览器
-                case 4:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                    startActivity(new Intent(mContext, AnnounceResultActivity.class));
 //                        notificationIntent = new Intent(context, WebViewActivity.class);
                     break;
-
                 default:
                     break;
+
             }
         }
     }

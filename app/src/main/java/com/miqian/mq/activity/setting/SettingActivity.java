@@ -2,13 +2,18 @@ package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
-import com.miqian.mq.activity.user.BindCardActivity;
+import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.BankCard;
+import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.UserUtil;
@@ -19,14 +24,54 @@ import com.miqian.mq.views.WFYTitle;
  */
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
+    private UserInfo userInfo;
+    private TextView tv_name, tv_card, tv_bindPhone, tv_cardState;
 
     @Override
     public void obtainData() {
+        //获取银行信息
+        mWaitingDialog.show();
+        HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
+            @Override
+            public void onSucceed(BankCardResult result) {
+                mWaitingDialog.dismiss();
+                BankCard bankCard = result.getData();
+                String bankOpenName = bankCard.getBankOpenName();
+                //未绑定银行卡
+                if ("0".equals(userInfo.getBindCardStatus())) {
+                    tv_card.setText("银行卡未绑定");
+                    tv_cardState.setText("");
+                } else {
+
+                    String bankNo = RSAUtils.decryptByPrivate(bankCard.getBankNo());
+                    if (TextUtils.isEmpty(bankNo)) {
+                        return;
+                    }
+                    tv_card.setText("银行卡号"+" ***** " + bankNo.substring(bankNo.length() - 3, bankNo.length()));
+                    //已绑定支行
+                    if (!TextUtils.isEmpty(bankOpenName)) {
+                        tv_cardState.setText("已完善");
+                    }
+                    //未绑定支行
+                    else {
+                        tv_cardState.setText("未完善");
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                mWaitingDialog.dismiss();
+            }
+        });
 
     }
 
     @Override
     public void initView() {
+
+        Intent intent = getIntent();
+        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
 
         View frame_setting_name = findViewById(R.id.frame_setting_name);
         View frame_setting_bindphone = findViewById(R.id.frame_setting_bindphone);
@@ -37,6 +82,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         View frame_setting_about = findViewById(R.id.frame_setting_about);
         View frame_setting_telephone = findViewById(R.id.frame_setting_telephone);
         View frame_setting_bankcard = findViewById(R.id.frame_setting_bankcard);
+
+        tv_name = (TextView) findViewById(R.id.tv_setting_name);
+        tv_card = (TextView) findViewById(R.id.tv_setting_bankcard);
+        tv_cardState = (TextView) findViewById(R.id.tv_setting_bankcardstate);
+        tv_bindPhone = (TextView) findViewById(R.id.tv_settting_bindphone);
 
         frame_setting_name.setOnClickListener(this);
         frame_setting_bindphone.setOnClickListener(this);
@@ -80,7 +130,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //银行卡号
             case R.id.frame_setting_bankcard:
-                startActivity(new Intent(mActivity, BindCardActivity.class));
+
+             Intent intent_bind=new Intent(mActivity, BindCardActivity.class);
+
+
+                startActivity(intent_bind);
                 break;
             //意见反馈
             case R.id.frame_setting_suggest:

@@ -35,7 +35,7 @@
         <item name="com.miqian.mq:leftIsBack">true</item>
         <item name="com.miqian.mq:centerTextColor">@color/white</item>
         <item name="com.miqian.mq:rightTextColor">@color/white</item>
-        <item name="android:background">@color/red_base</item>
+        <item name="android:background">@color/mq_r1</item>
     </style>
 
 

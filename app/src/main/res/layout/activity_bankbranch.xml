@@ -18,7 +18,10 @@
             style="@style/edittext_item"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
-            android:hint="请输入或选择银行"></EditText>
+            android:hint="请输入或选择银行"
+            >
+
+        </EditText>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

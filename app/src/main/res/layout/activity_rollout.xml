@@ -155,7 +155,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/arrow_1"
-                    android:text="300元"
+                    android:text="请选择"
                     android:textColor="@color/miqian_gray" />
             </RelativeLayout>
 
@@ -185,7 +185,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/arrow_2"
-                    android:text="300元"
+                    android:text="请选择"
                     android:textColor="@color/miqian_gray" />
             </RelativeLayout>
         </LinearLayout>

@@ -8,43 +8,7 @@
     android:orientation="vertical"
     >
 
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="25dp"
-      android:background="#fff23e3e"
-      >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="《－－"
-        android:id="@+id/total_amnt"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:textColor="#ff515151"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
-        android:text="定期赚详情"
-        android:textColor="#ffffffff"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="。。。"
-        android:id="@+id/textV"
-        android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
-        android:textColor="#ff515151"
-        />
-  </RelativeLayout>
-  <ScrollView
+    <ScrollView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:paddingBottom="15dp"

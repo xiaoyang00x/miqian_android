@@ -1,4 +1,4 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.adapter.BankBranchAdapter;
 import com.miqian.mq.entity.BankBranch;
 import com.miqian.mq.entity.BankBranchResult;
@@ -52,6 +53,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
     public void initView() {
 
         et_bankbranch = (EditText) findViewById(R.id.et_bankbranch);
+        et_bankbranch.setFocusable(false);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         items = new ArrayList<>();
         setView();
@@ -86,7 +88,8 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
                 if (!TextUtils.isEmpty(branch)){
                     Intent data=new Intent();
                     data.putExtra("branch",branch);
-                    setResult(1,data);
+                    setResult(1, data);
+                    finish();
                 }else{
                     Uihelper.showToast(mActivity,"请选择或输入支行");
                 }

@@ -1,8 +1,6 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.setting;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.CityInfo;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.net.HttpRequest;
@@ -134,7 +133,8 @@ public class CityListActivity extends BaseActivity {
                 Intent data =new Intent();
                 data.putExtra("city",cityInfo.getCity());
                 data.putExtra("province",cityInfo.getProv());
-                setResult(0,data);
+                setResult(0, data);
+                finish();
 
 
 

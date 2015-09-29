@@ -160,6 +160,43 @@ public class HttpRequest {
     }
 
     /**
+     * 活期、定期赚、定期计划
+     * 认购订单生成页面
+     * @param amt  金额
+     * @param prodId 0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param subjectId 0:活期
+     */
+    public static void payOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("amt", amt));
+        mList.add(new Param("prodId", prodId));
+        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("subjectId", subjectId));
+        mList.add(new Param("promList", promList));
+        new MyAsyncTask(context, Urls.order_pay, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                ProducedOrderResult producedOrderResult = JsonUtil.parseObject(result, ProducedOrderResult.class);
+                if (producedOrderResult.getCode().equals("000000")) {
+                    callback.onSucceed(producedOrderResult);
+                } else {
+                    callback.onFail(producedOrderResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
      * 充值
      *
      * @param callback
@@ -853,6 +890,41 @@ public class HttpRequest {
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
         new MyAsyncTask(context, Urls.loginOut, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 提现
+     *
+     * @param callback
+     */
+    public static void withdrawCash(Context context, final ICallback<Meta> callback,String amt,String bankCode,String bankNo,String payPassword) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
+        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("amt", amt));
+        mList.add(new Param("bankCode", bankCode));
+
+        new MyAsyncTask(context, Urls.withdrawCash, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {

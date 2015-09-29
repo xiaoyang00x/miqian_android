@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.OrderLian;
@@ -57,10 +58,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private String bankNumber;
     private int rollType;
     private String bindStatus;
-
-    public static final int FAIL = 0;
-    public static final int SUCCESS = 1;
-    public static final int PROCESSING = 2;
 
     @Override
     public void obtainData() {
@@ -265,30 +262,30 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 OrderLian orderLian = orderLianResult.getData();
                 if (orderLianResult.getCode().equals("000000")) {
                     if (rollType == 1) {
-                        setResult(SUCCESS);
+                        setResult(CurrentInvestment.SUCCESS);
                     } else {
                         Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-                        intent.putExtra("status", SUCCESS);
+                        intent.putExtra("status", CurrentInvestment.SUCCESS);
                         intent.putExtra("money", orderLian.getAmt());
                         intent.putExtra("orderNo", orderLian.getOrderNo());
                         startActivity(intent);
                     }
                 } else if (orderLianResult.getCode().equals("100096")) {
                     if (rollType == 1) {
-                        setResult(FAIL);
+                        setResult(CurrentInvestment.FAIL);
                     } else {
                         Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-                        intent.putExtra("status", FAIL);
+                        intent.putExtra("status", CurrentInvestment.FAIL);
                         intent.putExtra("money", orderLian.getAmt());
                         intent.putExtra("orderNo", orderLian.getOrderNo());
                         startActivity(intent);
                     }
                 } else if (orderLianResult.getCode().equals("100097")) {
                     if (rollType == 1) {
-                        setResult(PROCESSING);
+                        setResult(CurrentInvestment.PROCESSING);
                     } else {
                         Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-                        intent.putExtra("status", PROCESSING);
+                        intent.putExtra("status", CurrentInvestment.PROCESSING);
                         intent.putExtra("money", orderLian.getAmt());
                         intent.putExtra("orderNo", orderLian.getOrderNo());
                         startActivity(intent);
