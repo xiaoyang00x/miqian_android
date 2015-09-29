@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/margin_left_right"
-    android:paddingRight="@dimen/margin_left_right">
+    android:orientation="vertical">
 
     <include layout="@layout/fragment_regular_item_lable" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="140dp">
+    <include layout="@layout/divider_line_gray" />
 
-        <include layout="@layout/divider_line_gray" />
+    <RelativeLayout
+        android:id="@+id/layout_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
 
         <TextView
             android:id="@+id/tv_title"
@@ -20,11 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
             android:layout_below="@+id/divider_line"
+            android:layout_marginTop="10dp"
             android:text="永兴医院医疗设备项目－9"
-            android:textColor="#ff000000"
-            android:textSize="@dimen/textsize_middle" />
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
 
         <TextView
             android:id="@+id/tv_sub_title"
@@ -33,21 +36,29 @@
             android:layout_below="@+id/tv_title"
             android:layout_marginTop="4dp"
             android:text="项目总额800,000 按月付息，到期还本"
-            android:textColor="@color/subtitle_text_color"
-            android:textSize="@dimen/textsize_smaller" />
+            android:textColor="@color/mq_b2"
+            android:textSize="@dimen/mq_font4" />
 
         <RelativeLayout
+            android:id="@+id/layout_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_sub_title"
-            >
+            android:layout_marginBottom="10dp">
 
-            <com.miqian.mq.views.CircleBar
+            <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/circlebar"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                app:donut_finished_color="@color/mq_r1"
+                app:donut_finished_stroke_width="2dp"
+                app:donut_progress="30"
+                app:donut_text_color="@color/transparent"
+                app:donut_unfinished_color="@color/mq_b5"
+                app:donut_unfinished_stroke_width="2dp" />
 
             <LinearLayout
                 android:layout_width="70dp"
@@ -62,19 +73,18 @@
                     android:id="@+id/tv_buy_now"
                     style="@style/WrapContent"
                     android:gravity="center"
-                    android:textColor="@color/regular_item_rate"
-                    android:textSize="@dimen/textsize_smaller"
-                    android:text="立即认购" />
+                    android:text="立即认购"
+                    android:textColor="@color/mq_r1"
+                    android:textSize="@dimen/mq_font4" />
 
                 <TextView
                     android:id="@+id/tv_progress"
                     style="@style/WrapContent"
                     android:gravity="center"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/regular_item_rate"
-                    android:textSize="@dimen/textsize_smaller"
                     android:text="100%"
-                    />
+                    android:textColor="@color/mq_r1"
+                    android:textSize="@dimen/mq_font4" />
 
             </LinearLayout>
 
@@ -91,14 +101,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/tv_annurate_interest_rate"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="12%"
-                        android:textColor="@color/regular_item_rate"
-                        android:textSize="@dimen/textsize_larger" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_annurate_interest_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12%"
+                            android:textColor="@color/mq_r1"
+                            android:textSize="@dimen/mq_font6" />
+
+                        <TextView
+                            android:id="@+id/tv_add_interest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/bg_add_interest"
+                            android:padding="3dp"
+                            android:text="+1.5%"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mq_font5" />
+                    </LinearLayout>
+
 
                     <TextView
                         android:id="@+id/tv_duration"
@@ -106,8 +135,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="220天"
-                        android:textColor="@color/regular_item_rate"
-                        android:textSize="@dimen/textsize_larger" />
+                        android:textColor="@color/mq_r1"
+                        android:textSize="@dimen/mq_font6" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -127,15 +156,35 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_sale_number"
-            style="@style/WrapContent"
-            android:textColor="@color/subtitle_text_color"
-            android:textSize="@dimen/textsize_smaller"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="8dp"
-            android:layout_marginRight="4dp"
-            android:text="已认购28人" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/tv_sale_number"
+                style="@style/WrapContent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="4dp"
+                android:text="已认购28人"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font5" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:layout_toLeftOf="@id/tv_sale_number"
+                android:drawableLeft="@drawable/icon_jiangjin"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="已认购28人"
+                android:textColor="@color/mq_r1"
+                android:textSize="@dimen/mq_font5" />
+
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

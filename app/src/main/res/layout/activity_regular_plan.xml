@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_background"
+    android:background="?attr/theme_background"
     android:orientation="vertical">
 
     <include layout="@layout/frame_title" />
@@ -22,7 +22,6 @@
                 android:id="@+id/layout_des"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_regular_activity_des"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/padding_left_right"
@@ -48,6 +47,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/padding_left_right"
@@ -330,10 +330,8 @@
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:layout_marginRight="@dimen/margin_left_right"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/btn_red"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/mq_font1" />
+                android:text="认购"
+                />
         </LinearLayout>
 
     </ScrollView>

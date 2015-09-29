@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/layout_circle"
         android:layout_width="@dimen/regular_plan_circle_width"
         android:layout_height="@dimen/regular_plan_circle_width"
         android:background="@drawable/bg_circle_buy"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         >
 
         <TextView
@@ -47,22 +47,39 @@
 
         <TextView
             android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="205dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tv_annurate_interest_rate"
-            android:layout_marginTop="30dp"
             android:text="马上认购"
             android:textColor="@color/white"
             android:textSize="@dimen/mq_font1" />
+
     </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_begin_time"
+        android:layout_width="205dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/layout_circle"
+        android:background="@drawable/bg_wait_buy"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font1"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_below="@id/layout_circle"
+        android:layout_centerHorizontal="true"
         android:textColor="@color/mq_b2"
         android:textSize="@dimen/mq_font4"
         />
-</LinearLayout>
+</RelativeLayout>

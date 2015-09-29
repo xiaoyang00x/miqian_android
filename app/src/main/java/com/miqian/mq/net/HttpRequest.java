@@ -16,7 +16,6 @@ import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.RegisterResult;
-import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.UserUtil;
@@ -710,11 +709,75 @@ public class HttpRequest {
      * @param callback
      */
     public static void getMainRegular(Context context, final ICallback<GetRegularResult> callback) {
-        new MyAsyncTask(context, Urls.getRegMain,  null, new ICallback<String>() {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("operationType", "0"));
+        params.add(new Param("pageNo", "1"));
+        params.add(new Param("pageSize", "50"));
+        new MyAsyncTask(context, Urls.getRegMain,  params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
                 GetRegularResult meta = JsonUtil.parseObject(result, GetRegularResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 获取定期详情
+     * @param context
+     * @param operationType 0为获取定期赚和定期计划，1为获取定期赚，2为获取定期计划。
+     * @param subjectId     标的编号，如传入则返回改标的相关信息
+     * @param callback
+     */
+    public static void getRegularDetails(Context context, String operationType, String subjectId, final ICallback<RegularPlanResult> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("operationType", operationType));
+        params.add(new Param("subjectId", subjectId));
+        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                RegularPlanResult meta = JsonUtil.parseObject(result, RegularPlanResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 获取定期赚详情
+     * @param context
+     * @param operationType 0为获取定期赚和定期计划，1为获取定期赚，2为获取定期计划。
+     * @param subjectId     标的编号，如传入则返回改标的相关信息
+     * @param callback
+     */
+    public static void getRegularEarnDetails(Context context, String operationType, String subjectId, final ICallback<RegularEarnResult> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("operationType", operationType));
+        params.add(new Param("subjectId", subjectId));
+        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                RegularEarnResult meta = JsonUtil.parseObject(result, RegularEarnResult.class);
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {

@@ -16,7 +16,7 @@ public class RegularEarn implements Serializable {
     private float purchasePercent; //认购进度
     private String personTime; //认购人次
     private String subjectType; //标的类型
-    private String subjectStatus; //标的状态
+    private String subjectStatus; //标的状态  投标状态编码: 99待开标不显示   00待开标   01已开标   02已满标（已售罄）  03已到期  04已撤销  05已流标   06审批中    07还款中    08正常还完
     private String subjectTotalPrice; //标的总额
     private String purchasePrice; //已认购金额
     private String bxbzf; //本息保障方
@@ -27,6 +27,24 @@ public class RegularEarn implements Serializable {
     private String promotionDesc; //"满1万元送100元红包"//促销描述
     private ArrayList<RegularEarnSubInfo> schemeList;
 
+    //以下字段只有再取详情的时候才有
+    private String yearInterest; //年化收益
+    private String limit; //期限
+
+    public void setPayMode(String payMode) {
+        this.payMode = payMode;
+    }
+
+    public void setYearInterest(String yearInterest) {
+        this.yearInterest = yearInterest;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
+    }
+
+    private String payMode; //还款方式
+
 
     /**
      * 获取第一个子标的年化收益
@@ -36,7 +54,7 @@ public class RegularEarn implements Serializable {
         if(schemeList != null && schemeList.size() > 0) {
             return schemeList.get(0).getYearInterest();
         }
-        return "";
+        return yearInterest;
     }
 
 
@@ -48,7 +66,7 @@ public class RegularEarn implements Serializable {
         if(schemeList != null && schemeList.size() > 0) {
             return schemeList.get(0).getLimit();
         }
-        return "";
+        return limit;
     }
 
     /**
@@ -59,7 +77,7 @@ public class RegularEarn implements Serializable {
         if(schemeList != null && schemeList.size() > 0) {
             return schemeList.get(0).getPayMode();
         }
-        return "";
+        return payMode;
     }
 
 
@@ -199,4 +217,5 @@ public class RegularEarn implements Serializable {
     public void setSchemeList(ArrayList<RegularEarnSubInfo> schemeList) {
         this.schemeList = schemeList;
     }
+
 }

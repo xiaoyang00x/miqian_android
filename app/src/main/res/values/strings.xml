@@ -39,4 +39,5 @@
   <string name="investment_security">投资安全</string>
   <string name="principal_interest_security">本息保障</string>
   <string name="title_activity_my_regualr_deposit">MyRegualrDepositActivity</string>
+  <string name="buy_now">立即认购</string>
 </resources>

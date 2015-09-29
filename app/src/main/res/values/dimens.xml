@@ -48,4 +48,6 @@
     <dimen name="mq_font8">36sp</dimen>
     <dimen name="mq_font9">70sp</dimen>
     <dimen name="mq_font10">9sp</dimen>
+
+    <dimen name="divider_height">4dp</dimen>
 </resources>
