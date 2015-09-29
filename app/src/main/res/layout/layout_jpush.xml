@@ -59,7 +59,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="今晚博大奖"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 

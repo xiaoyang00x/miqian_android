@@ -9,23 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.IntoActivity;
-import com.miqian.mq.activity.RolloutActivity;
-import com.miqian.mq.activity.setting.SetBankActivity;
+import com.miqian.mq.activity.user.RolloutActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.setting.SettingActivity;
-import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
-import com.miqian.mq.views.Dialog_Login;
 import com.miqian.mq.views.ProgressDialogView;
 
 /**
@@ -52,9 +55,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         if (parent != null) {
             parent.removeView(view);
         }
-        findViewById(view);
-        obtainData();
+
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        findViewById(view);
     }
 
     private void obtainData() {
@@ -132,6 +140,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
 
     private void findViewById(View view) {
 
+        mWaitingDialog = ProgressDialogView.create(getActivity());
+
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
         tv_Title.setText("我的");
 
@@ -143,6 +153,26 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         btn_setting.setImageResource(R.mipmap.account_setting);
         btn_setting.setOnClickListener(this);
 
+         //已登录，显示我的界面
+        if (UserUtil.hasLogin(getActivity())){
+
+            initUserView();
+            obtainData();
+
+        }
+           //未登录，显示登录界面
+        else{
+
+            initLoginView();
+
+        }
+
+    }
+
+    private void initUserView() {
+
+        view.findViewById(R.id.layout_logined).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.layout_nologin).setVisibility(View.GONE);
         Button btn_RollIn = (Button) view.findViewById(R.id.btn_rollin);
         Button btn_RollOut = (Button) view.findViewById(R.id.btn_rollout);
 
@@ -169,10 +199,78 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         frame_record.setOnClickListener(this);
         frame_ticket.setOnClickListener(this);
         frame_redpackage.setOnClickListener(this);
-
-        mWaitingDialog = ProgressDialogView.create(getActivity());
-
     }
+
+    private void initLoginView() {
+
+        view.findViewById(R.id.layout_logined).setVisibility(View.GONE);
+        view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
+        final View relaTelephone = view.findViewById(R.id.rela_telephone);
+        final View relaPassword = view.findViewById(R.id.rela_password);
+        final EditText editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
+        final EditText editPassword = (EditText) view.findViewById(R.id.edit_password);
+        Button btnLogin = (Button) view.findViewById(R.id.btn_login);
+        view.findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳到注册页
+                getActivity().startActivity(new Intent(getActivity(), RegisterActivity.class));
+
+            }
+        });
+        view.findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendCaptchaActivity.enterActivity(getActivity(), TypeUtil.SENDCAPTCHA_FORGETPSW);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String telephone = editTelephone.getText().toString();
+                String password = editPassword.getText().toString();
+                if (!TextUtils.isEmpty(telephone)) {
+                    if (MobileOS.isMobileNO(telephone) && telephone.length() == 11) {
+                        if (!TextUtils.isEmpty(password)) {
+                            login(telephone, password);
+                        } else {
+                            Toast.makeText(getActivity(), "密码不能为空", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), R.string.phone_noeffect, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "电话号码不能为空", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+    private void login(String telephone, String password) {
+        mWaitingDialog.show();
+        HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
+            @Override
+            public void onSucceed(LoginResult result) {
+                mWaitingDialog.dismiss();
+                UserInfo userInfo = result.getData();
+                UserUtil.saveUserInfo(getActivity(), userInfo);
+                initUserView();
+                obtainData();
+
+            }
+
+            @Override
+            public void onFail(String error) {
+                mWaitingDialog.dismiss();
+                Uihelper.showToast(getActivity(), error);
+            }
+        }, telephone, password);
+    }
+
+
+
 
     @Override
     public void onClick(View v) {

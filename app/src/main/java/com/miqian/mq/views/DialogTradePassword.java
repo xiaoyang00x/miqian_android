@@ -40,7 +40,7 @@ public abstract class DialogTradePassword extends Dialog {
         initViewCode();
     }
 
-    public abstract void positionBtnClick(String s);
+    public abstract void positionBtnClick(String password);
 
 //    public abstract void negativeBtnClick();
 
@@ -73,6 +73,7 @@ public abstract class DialogTradePassword extends Dialog {
 
             public void onClick(View arg0) {
                 positionBtnClick(et_password.getText().toString());
+                et_password.setText("");
             }
         });
     }

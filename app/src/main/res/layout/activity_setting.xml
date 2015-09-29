@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/arrow_1"
-            android:textColor="@color/red_base" />
+            android:textColor="@color/mq_r1" />
     </RelativeLayout>
 
     <View style="@style/item_divider" />
@@ -60,7 +60,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/arrow_11"
-            android:textColor="@color/red_base" />
+            android:textColor="@color/mq_r1" />
     </RelativeLayout>
 
     <View style="@style/item_divider" />

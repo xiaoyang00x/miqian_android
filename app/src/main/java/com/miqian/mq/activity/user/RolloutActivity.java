@@ -1,4 +1,4 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.user;
 
 import android.content.Intent;
 import android.text.Editable;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.setting.BankBranchActivity;
 import com.miqian.mq.activity.setting.CityListActivity;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -320,10 +321,10 @@ public class RolloutActivity extends BaseActivity {
             dialogTradePassword_set = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_SETPASSWORD) {
 
                 @Override
-                public void positionBtnClick(String s) {
+                public void positionBtnClick(String password) {
 
-                    if (!TextUtils.isEmpty(s)) {
-                        if (s.length() >= 6 && s.length() <= 20) {
+                    if (!TextUtils.isEmpty(password)) {
+                        if (password.length() >= 6 && password.length() <= 20) {
                             //设置交易密码
                             mWaitingDialog.show();
                             HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
@@ -340,7 +341,7 @@ public class RolloutActivity extends BaseActivity {
                                     mWaitingDialog.show();
                                     Uihelper.showToast(mActivity, error);
                                 }
-                            }, s, s);
+                            }, password, password);
 
                         } else {
                             Uihelper.showToast(mActivity, R.string.tip_password);
