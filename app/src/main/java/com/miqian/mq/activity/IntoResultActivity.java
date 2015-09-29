@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -31,7 +32,7 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onCreate(Bundle bundle) {
         Intent intent = getIntent();
-        status = intent.getIntExtra("status", IntoActivity.SUCCESS);
+        status = intent.getIntExtra("status", CurrentInvestment.SUCCESS);
         money = intent.getStringExtra("money");
         orderNo = intent.getStringExtra("orderNo");
         super.onCreate(bundle);
@@ -58,13 +59,13 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
     private void refreshView() {
         textOrderMoney.setText(money + "元");
         textOrderNo.setText(orderNo);
-        if (status == IntoActivity.SUCCESS) {
+        if (status == CurrentInvestment.SUCCESS) {
             imageStatus.setImageResource(R.drawable.rollin_status_success);
-        } else if (status == IntoActivity.PROCESSING) {
+        } else if (status == CurrentInvestment.PROCESSING) {
             textStatus.setText("充值处理中");
             textProcessing.setVisibility(View.VISIBLE);
             imageStatus.setImageResource(R.drawable.rollin_status_processing);
-        } else if (status == IntoActivity.FAIL) {
+        } else if (status == CurrentInvestment.FAIL) {
             textStatus.setText("充值失败");
             imageStatus.setImageResource(R.drawable.rollin_status_fail);
             frameFail.setVisibility(View.VISIBLE);

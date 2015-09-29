@@ -32,6 +32,8 @@ public class Urls {
     public final static String current_home = base_server + "currentService/getCurrentMain";
     //认购预处理
     public final static String order_produced = base_server + "userService/subscribePreprocess";
+    //认购
+    public final static String order_pay = base_server + "assetService/subscribe";
     //获取用户信息
     public final static String user_info = base_server + "userService/getUserInfo";
 

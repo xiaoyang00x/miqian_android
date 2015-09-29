@@ -2,7 +2,7 @@ package com.miqian.mq.activity.current;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -12,6 +12,8 @@ import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.Promote;
@@ -19,11 +21,11 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.WFYTitle;
 
-import org.json.JSONArray;
-
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,11 +41,17 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private RelativeLayout frameBankPay;
     private RelativeLayout frameRedPackage;
 
+    private DialogTradePassword dialogTradePasswordSet;
+    private DialogTradePassword dialogTradePasswordInput;
+
+
     private ProducedOrder producedOrder;
     private List<Promote> promList;
+    private String promListString;
 
     private String money;
     private String prodId; //0:充值产品 1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+    private int position = -1;//使用的红包位置，用于获取list
 
     private BigDecimal orderMoney;//订单金额
     private BigDecimal promoteMoney = new BigDecimal(0);//优惠金额： 红包、拾财券
@@ -54,6 +62,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     private static final int REQUEST_CODE_ROLLIN = 1;
     private static final int REQUEST_CODE_REDPACKET = 2;
+
+    public static final int FAIL = 0;
+    public static final int SUCCESS = 1;
+    public static final int PROCESSING = 2;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -95,7 +107,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             btPay.setText("支付");
         }
         textOrderMoney.setText(money + "元");
-        textBest.setText("最多可抵" + producedOrder.getBest() + "元");
+        if (promoteMoney.compareTo(bFlag) > 0) {
+            textBest.setText("抵用" + promoteMoney + "元");
+        } else {
+            textBest.setText("最多可抵" + producedOrder.getBest() + "元");
+        }
         textBalance.setText(balancePay + "元");
         textBankPay.setText("余额不足，银行卡充值 " + rollinMoney + " 元");
     }
@@ -133,7 +149,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     intent.putExtra("money", rollinMoney.toString());
                     startActivityForResult(intent, REQUEST_CODE_ROLLIN);
                 } else {
-
+                    payOrder();
                 }
                 break;
             case R.id.frame_red_package:
@@ -143,6 +159,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 if (promList != null && promList.size() > 0) {
                     Intent intent = new Intent(CurrentInvestment.this, ActivityRedPacket.class);
                     intent.putExtra("producedOrder", JSON.toJSONString(producedOrder));
+                    intent.putExtra("position", position);
                     startActivityForResult(intent, REQUEST_CODE_REDPACKET);
                 }
                 break;
@@ -155,18 +172,30 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_ROLLIN) {
             refreshData();
-            if (resultCode == IntoActivity.SUCCESS) {
+            if (resultCode == SUCCESS) {
                 btPay.setText("支付");
-            } else if (resultCode == IntoActivity.PROCESSING) {
+            } else if (resultCode == PROCESSING) {
                 Uihelper.showToast(mActivity, "正在处理中，请稍后重试");
-            } else if (resultCode == IntoActivity.FAIL) {
+            } else if (resultCode == FAIL) {
                 Uihelper.showToast(mActivity, "充值失败，请重新充值");
             }
         } else if (requestCode == REQUEST_CODE_REDPACKET) {
-            refreshView();
+//          红包、拾财券选择
+            if (resultCode == SUCCESS) {
+                position = data.getIntExtra("position", -1);
+                if (position >= 0) {
+                    Promote promote = promList.get(position);
+                    List<Promote> promListParam = new ArrayList<>();
+                    promListParam.add(promote);
+                    promoteMoney = new BigDecimal(promote.getSa());
+                    promListString = JSON.toJSONString(promListParam, true);
+                } else {
+                    promoteMoney = new BigDecimal(0);
+                    promListString = "";
+                }
+                refreshView();
+            }
         }
-        Log.e("", "requestCode : " + requestCode);
-        Log.e("", "resultCode : " + resultCode);
     }
 
     private boolean isNeedRollin() {
@@ -192,5 +221,102 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             }
         }
         return false;
+    }
+
+    private void payOrder() {
+        mWaitingDialog.show();
+        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+            @Override
+            public void onSucceed(LoginResult result) {
+                mWaitingDialog.dismiss();
+                int status = Integer.parseInt(result.getData().getPayPwdStatus());
+                showTradeDialog(status);
+            }
+
+            @Override
+            public void onFail(String error) {
+                mWaitingDialog.dismiss();
+                Uihelper.showToast(mActivity, error);
+            }
+        });
+    }
+
+    private void showTradeDialog(int type) {
+        initDialogTradePassword(type);
+        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
+            dialogTradePasswordSet.show();
+        } else {
+            dialogTradePasswordInput.show();
+        }
+    }
+
+    private void initDialogTradePassword(int type) {
+
+        if (dialogTradePasswordSet == null && type == DialogTradePassword.TYPE_SETPASSWORD) {
+            dialogTradePasswordSet = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_SETPASSWORD) {
+
+                @Override
+                public void positionBtnClick(String s) {
+                    if (!TextUtils.isEmpty(s)) {
+                        if (s.length() >= 6 && s.length() <= 20) {
+                            //设置交易密码
+                            mWaitingDialog.show();
+                            dismiss();
+                            HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
+                                @Override
+                                public void onSucceed(Meta result) {
+                                    mWaitingDialog.dismiss();
+                                    Uihelper.showToast(mActivity, "设置成功");
+                                    showTradeDialog(DialogTradePassword.TYPE_INPUTPASSWORD);
+                                }
+
+                                @Override
+                                public void onFail(String error) {
+                                    mWaitingDialog.dismiss();
+                                    Uihelper.showToast(mActivity, error);
+                                }
+                            }, s, s);
+                        } else {
+                            Uihelper.showToast(mActivity, R.string.tip_password);
+                        }
+                    } else {
+                        Uihelper.showToast(mActivity, "密码不能为空");
+                    }
+                }
+            };
+        } else {
+            if (dialogTradePasswordInput == null) {
+                dialogTradePasswordInput = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
+
+                    @Override
+                    public void positionBtnClick(String payPassword) {
+                        dismiss();
+                        if (!TextUtils.isEmpty(payPassword)) {
+                            if (payPassword.length() >= 6 && payPassword.length() <= 20) {
+                                //支付
+                                mWaitingDialog.show();
+                                HttpRequest.payOrder(mActivity, new ICallback<ProducedOrderResult>() {
+                                    @Override
+                                    public void onSucceed(ProducedOrderResult result) {
+                                        mWaitingDialog.dismiss();
+                                        Uihelper.showToast(mActivity, result.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onFail(String error) {
+                                        mWaitingDialog.dismiss();
+                                        Uihelper.showToast(mActivity, error);
+                                    }
+                                }, money, prodId, payPassword, "0", promListString);
+                            } else {
+                                Uihelper.showToast(mActivity, R.string.tip_password);
+                            }
+                        } else {
+                            Uihelper.showToast(mActivity, "密码不能为空");
+                        }
+                    }
+                };
+            }
+        }
     }
 }
