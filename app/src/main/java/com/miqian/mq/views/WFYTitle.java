@@ -165,7 +165,7 @@ public class WFYTitle extends RelativeLayout {
 		addView(tvRight);
 	}
 	
-	private void addRightImage(int rightImage) {
+	public void addRightImage(int rightImage) {
 		ivRight = new ImageView(mContext);
 		LayoutParams lpLeft = new LayoutParams(dp2px(mContext, 50), LayoutParams.MATCH_PARENT);
 		lpLeft.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);

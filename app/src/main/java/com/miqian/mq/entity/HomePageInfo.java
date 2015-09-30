@@ -3,11 +3,11 @@ package com.miqian.mq.entity;
 /**
  * Created by sunyong on 9/14/15.
  */
-public class HomePageInfo extends CommonParameters {
+public class HomePageInfo extends CommonEntity<HomePageInfo>{
   //private String message;//text description
   //private int code;//response code
   private AdvertisementImg[] adImgs;
-  private Item newCustomer;
+  private Item[] newCustomer;
   private Item[] subjectInfo;
 
   //public static void main(String[] args) {
@@ -69,11 +69,11 @@ public class HomePageInfo extends CommonParameters {
     this.adImgs = adImgs;
   }
 
-  public Item getNewCustomer() {
+  public Item[] getNewCustomer() {
     return newCustomer;
   }
 
-  public void setNewCustomer(Item newCustomer) {
+  public void setNewCustomer(Item[] newCustomer) {
     this.newCustomer = newCustomer;
   }
 

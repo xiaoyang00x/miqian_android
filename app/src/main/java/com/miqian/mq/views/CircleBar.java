@@ -46,7 +46,7 @@ public class CircleBar extends View {
 
   private void init(AttributeSet attrs, int defStyle) {
 
-    circleStrokeWidth = dip2px(getContext(), 4);
+    circleStrokeWidth = dip2px(getContext(), 2);
     pressExtraStrokeWidth = dip2px(getContext(), 2);
     mTextSize = dip2px(getContext(), 20);
 
@@ -57,7 +57,7 @@ public class CircleBar extends View {
     mColorWheelPaint.setStrokeWidth(circleStrokeWidth);
 
     mDefaultWheelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    mDefaultWheelPaint.setColor(0XFFABBAC2);
+    mDefaultWheelPaint.setColor(0Xffdcdcdc);
     mDefaultWheelPaint.setStyle(Style.STROKE);
     mDefaultWheelPaint.setStrokeWidth(circleStrokeWidth);
 

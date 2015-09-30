@@ -1,6 +1,7 @@
 package com.miqian.mq.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.miqian.mq.R;
 import com.miqian.mq.entity.HomePageInfo;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CircleBar;
 import com.miqian.mq.views.MaterialProgressBarSupport;
 import com.miqian.mq.views.PageIndicator;
@@ -47,12 +49,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   private ImageView imageView;
 
   private ImageView[] imageViews;
-
-  private ViewGroup group;
+  LinearLayout viewGroup;//container for indicator imageviews
 
   ViewPager myPager;
   ViewPagerAdapter adapter = null;
-  View root = null;
   // Range range;
   /////////////////////////////////////////////
 
@@ -93,8 +93,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
    * info.getSubjectInfo().length   5
    */
   @Override public int getItemCount() {
-    return 1 + (info.getNewCustomer() != null ? 1 : 0) + 5 + (hasFooter ? 1
-        : 0);// // TODO: 9/6/15  1：代表footer的item
+
+    return 1+info.getSubjectInfo().length + (null !=info.getNewCustomer()?info.getNewCustomer().length : 0);
+    //return 1 + (info.getNewCustomer() != null ? 1 : 0) + 5 + (hasFooter ? 1
+    //    : 0);// // TODO: 9/6/15  1：代表footer的item
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -137,58 +139,116 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   }
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-    Log.e("keen", "the position is " + position);
     if (1 == position && null != info.getNewCustomer()) {//has object for new customer
-      ((ViewHolder2) viewHolder).title.setText(info.getNewCustomer().getTitle());
-      ((ViewHolder2) viewHolder).subtitle1.setText(info.getNewCustomer().getSubTitleOne());
+      ((ViewHolder2) viewHolder).title.setText(info.getNewCustomer()[0].getSubjectName());
+      ((ViewHolder2) viewHolder).subtitle1.setText(info.getNewCustomer()[0].getBxbzf());
       ((ViewHolder2) viewHolder).purchased_percent.setText(
-          info.getNewCustomer().getPurchasePercent());
-      ((ViewHolder2) viewHolder).purchasers.setText(info.getNewCustomer().getPurchasers() + "");
-      ((ViewHolder2) viewHolder).limit.setText(info.getNewCustomer().getLimit() + "");
+          info.getNewCustomer()[0].getPurchasePercent());
+      ((ViewHolder2) viewHolder).purchasers.setText(info.getNewCustomer()[0].getPersonTime() + "");
+      ((ViewHolder2) viewHolder).limit.setText(
+          info.getNewCustomer()[0].getPresentationYearInterest() + "");
       ((ViewHolder2) viewHolder).annualized_return.setText(
-          info.getNewCustomer().getAnnualizedReturn());
+          info.getNewCustomer()[0].getFromInvestmentAmount());
       ((ViewHolder2) viewHolder).section_header.setVisibility(View.VISIBLE);
-      ((ViewHolder2) viewHolder).section_header_title_left.setText("new customer");
+      ((ViewHolder2) viewHolder).section_header_title_left.setText("新手专享");
       ((ViewHolder2) viewHolder).bar.setMSweepAnglePer(300);
-      //((ViewHolder2)viewHolder).bar.startCustomAnimation();
+      ((ViewHolder2) viewHolder).bar.startCustomAnimation();
+      //subjectId
+      ((ViewHolder2) viewHolder).subjectId = info.getNewCustomer()[0].getSubjectId();
     } else if (position != 0) {
-      int index = null == info.getNewCustomer() ? position - 1 : position - 2;
-      ((ViewHolder2) viewHolder).title.setText((info.getSubjectInfo())[index].getTitle());
-      ((ViewHolder2) viewHolder).subtitle1.setText((info.getSubjectInfo())[index].getSubTitleTwo());
+      int index =
+          (null == info.getNewCustomer()) || info.getNewCustomer().length == 0 ? position - 1
+              : position - 2;
+      ((ViewHolder2) viewHolder).title.setText((info.getSubjectInfo())[index].getSubjectName());
+      ((ViewHolder2) viewHolder).subtitle1.setText(
+          "项目总额" + (info.getSubjectInfo())[index].getSubjectTotalPrice() + "  "
+              + (info.getSubjectInfo())[index].getSchemeList()[0].getPayMode());
       ((ViewHolder2) viewHolder).purchased_percent.setText(
           (info.getSubjectInfo())[index].getPurchasePercent());
-      ((ViewHolder2) viewHolder).purchasers.setText(
-          (info.getSubjectInfo())[index].getPurchasers() + "");
-      ((ViewHolder2) viewHolder).limit.setText((info.getSubjectInfo())[index].getLimit() + "");
+      ((ViewHolder2) viewHolder).purchasers.setText("已认购 X 人");
+      ((ViewHolder2) viewHolder).limit.setText((info.getSubjectInfo())[index].getSchemeList()[0].getLimit());
       ((ViewHolder2) viewHolder).annualized_return.setText(
-          (info.getSubjectInfo())[index].getAnnualizedReturn());
+          (info.getSubjectInfo())[index].getSchemeList()[0].getYearInterest());
       if (position != 5) ((ViewHolder2) viewHolder).bar.startCustomAnimation();
       ((ViewHolder2) viewHolder).bar.setMSweepAnglePer(300);
       if (0 == index) {
         ((ViewHolder2) viewHolder).section_header.setVisibility(View.VISIBLE);
+        ((ViewHolder2) viewHolder).section_header_title_left.setText("本息保障");
+        ((ViewHolder2) viewHolder).underneath.setVisibility(View.VISIBLE);
+        //subjectId
+        ((ViewHolder2) viewHolder).subjectId = (info.getSubjectInfo())[index].getSubjectId();
       }
     }
   }
 
   class ViewHolder0 extends RecyclerView.ViewHolder {
-
-    public ViewHolder0(View itemView) {
+    public ViewHolder0(final View itemView) {
       super(itemView);
       mHomeViewpager = (ViewPager) itemView.findViewById(R.id.vp_home_viewpager);
+      viewGroup = (LinearLayout) itemView.findViewById(R.id.viewGroup);
+      setIndicators(info.getAdImgs().length, viewGroup.getContext());
+
+
       //todo 这里设置的数据需要进行
       initAdapter(itemView);
+
+
+    }
+  }//end ViewHolder0
+
+  /**
+   * 设置滑动图片时的背景图
+   */
+  private void setImageBackground(int selectItems) {
+    for (int i = 0; i < imageViews.length; i++) {
+      if (null == imageViews[i]) {
+        return;
+      }
+
+      if (i == selectItems) {
+        imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+      } else {
+        imageViews[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
+      }
+    }
+  }
+
+  public void setIndicators(int amount, Context ctx) {
+    imageViews = new ImageView[amount];
+    for (int i = 0; i < amount; i++) {
+      imageView = new ImageView(ctx);
+      final LinearLayout.LayoutParams lp =
+          new LinearLayout.LayoutParams(Uihelper.dip2px(ctx, 20), Uihelper.dip2px(ctx, 4));
+      lp.setMargins(0, 0, 18, 0);
+      imageView.setLayoutParams(lp);
+      imageViews[i] = imageView;
+
+      if (i == 0) {
+        imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+      } else {
+        imageViews[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
+      }
+      viewGroup.addView(imageView);
     }
   }
 
   //regular deposit view
   class ViewHolder2 extends RecyclerView.ViewHolder {
     TextView title, subtitle1, annualized_return, limit, purchased_percent, purchasers,
-        section_header_title_left, section_header_title_right;
+        section_header_title_left, section_header_title_right, bubble_txt;
     RelativeLayout section_header;
     CircleBar bar;
+    View underneath;
+    String subjectId;
+    LinearLayout root;
 
     public ViewHolder2(View itemView) {
       super(itemView);
+      underneath = (View) itemView.findViewById(R.id.underneath);
+      root = (LinearLayout)itemView.findViewById(R.id.root);
+      //bubble_txt = (CustomTextView)itemView.findViewById(R.id.bubble_txt);  todo
+
+      //bubble_txt.setIncludeFontPadding(false); //remove the font padding
       title = (TextView) itemView.findViewById(R.id.title);
       subtitle1 = (TextView) itemView.findViewById(R.id.subtitle1);
       annualized_return = (TextView) itemView.findViewById(R.id.annualized_return);
@@ -200,6 +260,16 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
           (TextView) itemView.findViewById(R.id.section_header_title_right);
       section_header = (RelativeLayout) itemView.findViewById(R.id.section_header);
       bar = (CircleBar) itemView.findViewById(R.id.circlebar);
+
+
+      root.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          Toast.makeText(v.getContext(),
+              "OnClick :" + " subjectId is  " + subjectId, Toast.LENGTH_SHORT)
+              .show();
+
+        }
+      });
     }
   }
 
@@ -259,7 +329,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
   }
 
-  //// TODO: 9/6/15  viewpager indicator \\
   private HomeAdPageAdapter mAdpagerAdapter;// 首页焦点图adapter
   private int currentPageState = ViewPager.SCROLL_STATE_IDLE;// Viewpager状态
   public static final int MSG_ACTION_SLIDE_PAGE = 999;
@@ -284,6 +353,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override public void onPageSelected(int index) {
 
       mHomeViewpagerIndictor.setCurrentPage(index % mAdpagerAdapter.getItemCount());
+
+      //在这里设置具体的indicator   // TODO: 9/25/15
+      setImageBackground(index % mAdpagerAdapter.getItemCount());
     }
   }
 
@@ -312,6 +384,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     mHomeViewpagerIndictor = (PageIndicator) view.findViewById(R.id.pi_home_page_indictor);
     mHomeViewpagerIndictor.setPageOrginal(true);
     mHomeViewpagerIndictor.setTotalPageSize(info.getAdImgs().length);
+    //在这里设置indicator的数量  todo
   }
 
   /**
@@ -319,6 +392,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
    * 初始化adapter
    */
   public void initAdapter(View view) {
+    Log.e("keen  for null test : ", "=====info is " + info);
     mAdpagerAdapter = new HomeAdPageAdapter(view.getContext(), Arrays.asList(info.getAdImgs()));
     mHomeViewpager = (ViewPager) view.findViewById(R.id.vp_home_viewpager);
     mHomeViewpager.setAdapter(mAdpagerAdapter);
@@ -330,7 +404,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
       mHomeViewpager.setCurrentItem(pos, true);
       mAdpagerAdapter.setOnPageItemClickListener(new HomeAdPageAdapter.OnPageItemClickListener() {
         @Override public void onPageItemClick(ViewGroup parent, View item, int position) {
-          Toast.makeText(item.getContext(), "postion is " + position + ";;; tag is " + item.getTag(), Toast.LENGTH_SHORT).show();
+          Toast.makeText(item.getContext(),
+              "postion is " + position + ";;; tag is " + item.getTag(), Toast.LENGTH_SHORT).show();
           //todo open the webview
 
         }

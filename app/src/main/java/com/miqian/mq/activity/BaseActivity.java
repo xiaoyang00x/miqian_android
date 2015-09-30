@@ -56,4 +56,8 @@ public  abstract  class BaseActivity extends BaseFragmentActivity {
         contentView.setLayoutParams(lpContent);
         mContentView.addView(contentView);
     }
+
+  public WFYTitle getmTitle(){
+    return mTitle;
+  }
 }

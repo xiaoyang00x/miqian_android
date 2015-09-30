@@ -14,8 +14,8 @@ import com.miqian.mq.R;
 public class CircleButton extends ImageView {
   int color = Color.BLACK;
 	private static final int PRESSED_COLOR_LIGHTUP = 255 / 25;
-	private static final int PRESSED_RING_ALPHA = 75;
-	private static final int DEFAULT_PRESSED_RING_WIDTH_DIP = 4;
+	private static final int PRESSED_RING_ALPHA = 175;
+	private static final int DEFAULT_PRESSED_RING_WIDTH_DIP = 2;
 	private static final int ANIMATION_TIME_ID = android.R.integer.config_shortAnimTime;
 
 	private int centerY;
@@ -52,24 +52,24 @@ public class CircleButton extends ImageView {
 	public void setPressed(boolean pressed) {
 		super.setPressed(pressed);
 
-		if (circlePaint != null) {
-			circlePaint.setColor(pressed ? pressedColor : defaultColor);
-		}
+		//if (circlePaint != null) {
+		//	circlePaint.setColor(pressed ? pressedColor : defaultColor);
+		//}
 
-		if (pressed) {
-			showPressedRing();
-		} else {
-			hidePressedRing();
-		}
+		//if (pressed) {
+		//	showPressedRing();
+		//} else {
+			//hidePressedRing();
+		//}
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		canvas.drawCircle(centerX, centerY, pressedRingRadius + animationProgress, focusPaint);
 		canvas.drawCircle(centerX, centerY, outerRadius - pressedRingWidth, circlePaint);
-    Paint p = new Paint();
-    p.setColor(Color.RED);
-    canvas.drawText("hello",20f,getHeight()/2,p);
+    //Paint p = new Paint();
+    //p.setColor(Color.RED);
+    //canvas.drawText("hello",20f,getHeight()/2,p);
 		super.onDraw(canvas);
 	}
 
@@ -96,7 +96,7 @@ public class CircleButton extends ImageView {
 		this.pressedColor = getHighlightColor(color, PRESSED_COLOR_LIGHTUP);
 
 		circlePaint.setColor(defaultColor);
-		focusPaint.setColor(defaultColor);
+		focusPaint.setColor(0Xff505050);
 		focusPaint.setAlpha(PRESSED_RING_ALPHA);
 
 		this.invalidate();
@@ -106,7 +106,7 @@ public class CircleButton extends ImageView {
   }
 
 	private void hidePressedRing() {
-		pressedAnimator.setFloatValues(pressedRingWidth, 0f);
+		pressedAnimator.setFloatValues(pressedRingWidth, 1f);
 		pressedAnimator.start();
 	}
 
@@ -132,16 +132,16 @@ public class CircleButton extends ImageView {
 
 		if (attrs != null) {
 			final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleButton);
-			color = a.getColor(R.styleable.CircleButton_cb_color, color);
-			pressedRingWidth = (int) a.getDimension(R.styleable.CircleButton_cb_pressedRingWidth, pressedRingWidth);
+			color = a.getColor(R.styleable.CircleButton_cb_color, color);//todo 如果不设置填充的颜色就是哟功能默认的颜色黑色
+			pressedRingWidth = (int) a.getDimension(R.styleable.CircleButton_cb_pressedRingWidth, pressedRingWidth);//todo  设置圆圈而的宽度
 			a.recycle();
 		}
 
 		setColor(color);
 
-		focusPaint.setStrokeWidth(pressedRingWidth);
+		focusPaint.setStrokeWidth(2);
 		final int pressedAnimationTime = getResources().getInteger(ANIMATION_TIME_ID);
-		pressedAnimator = ObjectAnimator.ofFloat(this, "animationProgress", 0f, 0f);
+		pressedAnimator = ObjectAnimator.ofFloat(this, "animationProgress", 1f, 1f);
 		pressedAnimator.setDuration(pressedAnimationTime);
 	}
 

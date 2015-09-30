@@ -75,7 +75,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.DetailsForRegularEarning"
+            android:name=".activity.DetailsForRegularEarningActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

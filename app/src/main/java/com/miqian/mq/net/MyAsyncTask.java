@@ -1,15 +1,12 @@
 package com.miqian.mq.net;
 
-import java.util.List;
-
-
 import android.content.Context;
 import android.text.TextUtils;
-
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.UserUtil;
+import java.util.List;
 
 
 /**
@@ -70,8 +67,10 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                 callback.onFail("请求失败");
             }
         } catch (Exception e) {
+          e.printStackTrace();
             callback.onFail("数据解析失败，请重试");
         }
+
         mContext = null;
         mList = null;
         mUrl = null;
