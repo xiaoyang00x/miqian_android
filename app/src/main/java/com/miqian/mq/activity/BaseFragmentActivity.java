@@ -9,18 +9,18 @@ import com.miqian.mq.receiver.NetBroadReceiver;
 /**
  * Created by Joy on 2015/9/1.
  */
-public class BaseFragmentActivity extends FragmentActivity implements NetBroadReceiver.netEventHandler {
-    protected Context mContext;
-    protected Context mApplicationContext;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mContext = getBaseContext();
-        mApplicationContext = getApplicationContext();
-    }
+public class BaseFragmentActivity extends FragmentActivity
+    implements NetBroadReceiver.netEventHandler {
+  protected Context mContext;
+  protected Context mApplicationContext;
 
-    @Override
-    public void onNetChange() {
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    mContext = getBaseContext();
+    mApplicationContext = getApplicationContext();
+  }
 
-    }
+  @Override public void onNetChange() {
+
+  }
 }
