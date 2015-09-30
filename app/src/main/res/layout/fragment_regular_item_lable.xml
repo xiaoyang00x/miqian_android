@@ -3,7 +3,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_regular_earn_head"
     android:layout_width="match_parent"
-    android:layout_height="30dp">
+    android:layout_height="30dp"
+    android:paddingLeft="@dimen/margin_left_right"
+    android:paddingRight="@dimen/margin_left_right">
 
     <TextView
         android:id="@+id/tv_lable_name"
@@ -12,8 +14,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:text="@string/regular_plan"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textsize_normal" />
+        android:textColor="@color/mq_b1"
+        android:textSize="@dimen/mq_font3" />
 
     <TextView
         android:id="@+id/tv_invest_security"
@@ -22,8 +24,8 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:text="@string/investment_security"
-        android:textColor="@color/green"
-        android:textSize="@dimen/textsize_small" />
+        android:textColor="@color/mq_bl1"
+        android:textSize="@dimen/mq_font4" />
 
     <ImageView
         android:layout_width="wrap_content"

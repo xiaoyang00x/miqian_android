@@ -9,7 +9,11 @@
 
     >
 
+<<<<<<< HEAD
   <ScrollView
+=======
+    <ScrollView
+>>>>>>> 08a59d8e02c3052c85bf2238dd00d1ef06548a92
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:paddingBottom="15dp"

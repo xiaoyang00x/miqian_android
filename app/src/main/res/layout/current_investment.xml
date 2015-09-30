@@ -44,13 +44,14 @@
             android:id="@+id/order_money"
             style="@style/text_black_item"
             android:layout_alignParentRight="true"
-            android:text="--.--元" />
+            android:text="--元" />
 
     </RelativeLayout>
 
     <View style="@style/item_divider" />
 
     <RelativeLayout
+        android:id="@+id/frame_red_package"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
         android:background="@color/white"
@@ -64,6 +65,7 @@
             android:text="红包/拾财券" />
 
         <TextView
+            android:id="@+id/text_best"
             style="@style/text_black_item"
             android:layout_alignParentRight="true"
             android:text="最多可抵" />
@@ -85,12 +87,26 @@
             android:text="余额支付" />
 
         <TextView
+            android:id="@+id/text_balance"
             style="@style/text_black_item"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="20000.00" />
+            android:text="--.--" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/frame_bank_pay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text_bank_pay"
+            style="@style/text_black_item"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,7 +119,7 @@
             android:id="@+id/bt_pay"
             style="@style/click_btn"
             android:layout_height="@dimen/edit_item"
-            android:text="充值" />
+            android:text="支付" />
     </LinearLayout>
 
 </LinearLayout>

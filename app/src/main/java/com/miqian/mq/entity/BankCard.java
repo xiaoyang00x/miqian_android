@@ -1,9 +1,11 @@
 package com.miqian.mq.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/9/22.
  */
-public class BankCard {
+public class BankCard implements Serializable{
     private  String bankNo;
     private  String bankOpenName;
     private  String province;

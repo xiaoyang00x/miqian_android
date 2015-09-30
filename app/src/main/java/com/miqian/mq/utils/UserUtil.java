@@ -11,6 +11,7 @@ import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
 
@@ -29,6 +30,8 @@ public class UserUtil {
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
         Pref.saveString(getPrefKey(context, Pref.REALNAME_STATUS), userInfo.getRealNameStatus(), context);
+        //设置极光别名
+        JpushHelper.setAlias(context);
     }
 
     public static String getToken(Context context) {
@@ -82,6 +85,8 @@ public class UserUtil {
             dialog_login.show();
             return false;
         } else {
+            Intent intent = new Intent(context, cls);
+            context.startActivity(intent);
             return true;
         }
     }
@@ -98,6 +103,7 @@ public class UserUtil {
                             dismiss();
                             UserInfo userInfo = result.getData();
                             saveUserInfo(context, userInfo);
+
                             if (userInfo.getRealNameStatus().equals("0")) {
                                 realName(context);
                             } else {
@@ -145,8 +151,10 @@ public class UserUtil {
         activity.startActivity(intent);
     }
     //  跳转活期认购页
-    public static void currenPay(Activity activity,  final Class<?> cls) {
+    public static void currenPay(Activity activity,  final Class<?> cls, String money) {
         Intent intent = new Intent(activity, cls);
+        intent.putExtra("money", money);
+        intent.putExtra("prodId", "1");//0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
         activity.startActivity(intent);
     }
 

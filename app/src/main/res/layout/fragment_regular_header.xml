@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -16,8 +17,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="@string/regular_plan"
-            android:textColor="@color/black"
-            android:textSize="@dimen/textsize_normal" />
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
 
         <TextView
             android:id="@+id/tv_invest_security"
@@ -26,8 +27,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="@string/investment_security"
-            android:textColor="@color/green"
-            android:textSize="@dimen/textsize_small" />
+            android:textColor="@color/mq_bl1"
+            android:textSize="@dimen/mq_font4" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -40,14 +41,62 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginBottom="20dp"
         android:background="@color/divider_line_color_gray" />
-    <com.miqian.mq.views.DecoratorViewPager
-        android:id="@+id/view_pager"
+
+    <com.miqian.mq.views.PagerContainer
+        android:id="@+id/pager_container"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_gravity="center" />
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:gravity="center"
+        android:weightSum="3">
+
+        <com.miqian.mq.views.DecoratorViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:overScrollMode="never" />
+    </com.miqian.mq.views.PagerContainer>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_centerVertical="true"
+            android:background="@color/mq_b2" />
+
+        <com.miqian.mq.views.indicator.CirclePageIndicator
+            android:id="@+id/circle_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:centered="false"
+            app:fillColor="@color/mq_r1"
+            app:pageColor="#dbdbdb"
+            app:radius="5dp"
+            app:strokeColor="@android:color/transparent" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_limit_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/divider_line_color_gray" />
 
 </LinearLayout>

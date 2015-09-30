@@ -21,7 +21,7 @@ public  abstract  class BaseActivity extends BaseFragmentActivity {
     public WFYTitle mTitle;
     public Activity mActivity;
     public View mViewnoresult;
-    public Dialog mWaitingDialgog;
+    public Dialog mWaitingDialog;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -32,7 +32,7 @@ public  abstract  class BaseActivity extends BaseFragmentActivity {
         mActivity = this;
         mTitle = (WFYTitle) findViewById(R.id.wFYTitle);
         mViewnoresult = findViewById(R.id.frame_no_data);
-        mWaitingDialgog=ProgressDialogView.create(mActivity);
+        mWaitingDialog=ProgressDialogView.create(mActivity);
         initTitle(mTitle);
         initView();
         obtainData();

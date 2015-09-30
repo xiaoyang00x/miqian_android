@@ -1,10 +1,13 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.views.WFYTitle;
 

@@ -1,6 +1,5 @@
 package com.miqian.mq.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,13 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -93,20 +91,21 @@ public class TradePsCaptchaActivity extends BaseActivity {
             @Override
             public void onSucceed(Meta result) {
                 Uihelper.trace("captcha:" + result.getCode());
+                mBtn_sendCaptcha.setEnabled(false);
+                myRunnable = new MyRunnable();
+                thread = new Thread(myRunnable);
+                thread.start(); // 启动线程，进行倒计时
+                isTimer = true;
             }
 
             @Override
             public void onFail(String error) {
 
+                Uihelper.showToast(mActivity,error);
+
             }
         }, "13365047950", TypeUtil.CAPTCHA_TRADEPASSWORD);
 
-
-        mBtn_sendCaptcha.setEnabled(false);
-        myRunnable = new MyRunnable();
-        thread = new Thread(myRunnable);
-        thread.start(); // 启动线程，进行倒计时
-        isTimer = true;
     }
 
     public void btn_click(View v) {

@@ -4,6 +4,16 @@
     <style name="AppTheme" parent="@android:style/Theme.NoTitleBar">
         <!-- Customize your theme here. -->
         <item name="android:windowActionBar">false</item>
+        <item name="android:buttonStyle">@style/MQ_Button</item>
+        <item name="theme_background">@android:color/white</item>
+        <item name="title_bar_bg">@color/mq_r1</item>
+    </style>
+
+    <style name="MQ_Button" parent="android:Widget.Button">
+        <item name="android:background">@drawable/btn_red</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/mq_font1</item>
     </style>
 
     <style name="WrapContent">
@@ -25,7 +35,7 @@
         <item name="com.miqian.mq:leftIsBack">true</item>
         <item name="com.miqian.mq:centerTextColor">@color/white</item>
         <item name="com.miqian.mq:rightTextColor">@color/white</item>
-        <item name="android:background">@color/red_base</item>
+        <item name="android:background">@color/mq_r1</item>
     </style>
 
 
@@ -106,8 +116,8 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textColor">@color/subtitle_text_color</item>
-        <item name="android:textSize">@dimen/textsize_smaller</item>
+        <item name="android:textColor">@color/mq_b2</item>
+        <item name="android:textSize">@dimen/mq_font5</item>
     </style>
 
 </resources>

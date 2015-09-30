@@ -69,7 +69,7 @@ public class MyReceiver extends BroadcastReceiver {
                 return;
             }
             if (TextUtils.isEmpty(title)||TextUtils.isEmpty(content)){
-//                return;
+                return;
             }
             response.setTitle(title);
             response.setContent(content);
@@ -108,26 +108,33 @@ public class MyReceiver extends BroadcastReceiver {
                 }
                 switch (uritype) {
 
-                    case 1:
+                    case 0:
                         notificationIntent = new Intent(context, MainActivity.class);
                         break;
-                    case 2:
+                    case 1:
                         notificationIntent = new Intent(context, AnnounceActivity.class);
                         break;
+                    case 2:
                     case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        //具体页面
                         notificationIntent = new Intent(context, AnnounceResultActivity.class);
                         break;
 
                     // 内置浏览器
-                    case 4:
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                        notificationIntent = new Intent(context, AnnounceResultActivity.class);
 //                        notificationIntent = new Intent(context, WebViewActivity.class);
                         break;
-                    // 外置浏览器
-                    case 5:
-//                        Uri uri = Uri.parse(url);
-//                        notificationIntent= new Intent(Intent.ACTION_VIEW, uri);
-                        break;
-
                     default:
                         notificationIntent = new Intent(context, MainActivity.class);
                         break;
@@ -153,7 +160,7 @@ public class MyReceiver extends BroadcastReceiver {
             int mMinuts = mCalendar.get(Calendar.MINUTE);
 
             // 通过控件的Id设置属性
-//            contentViews.setTextViewText(R.id.titleNo, contentTitle);
+            contentViews.setTextViewText(R.id.titleNo, contentTitle);
             contentViews.setTextViewText(R.id.textNo, contentText);
             String  string_Minutes=""+mMinuts;
             if (mMinuts<10) {

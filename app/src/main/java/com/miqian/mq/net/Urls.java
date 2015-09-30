@@ -27,8 +27,69 @@ public class Urls {
           + "7vhqwHmFAXxnffRtEVZbJk2AsEcE0qJqwoxGbij+O1+OIksDGlxjc/LgnXLlXvvY" + "\r"
           + "ZU0zSqeXVAcdRQ==";
 
+<<<<<<< HEAD
   public static final String base_server = "https://api.shicaidai.com/";
   //    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
+=======
+    public static final String base_server = "https://api.shicaidai.com/";
+//    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
+//    public static final String base_server = "http://172.20.8.11:8082/miqian-app/";
+
+    //测试
+    public final static String test = base_server + "userService/register";
+    //身份认证
+    public final static String idcard_check = base_server + "commonService/idCardAuth";
+    //充值转入接口
+    public final static String roll_in = base_server + "assetService/addRecharge";
+    //充值转入结果查询接口
+    public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
+    //活期首页
+    public final static String current_home = base_server + "currentService/getCurrentMain";
+    //认购预处理
+    public final static String order_produced = base_server + "userService/subscribePreprocess";
+    //认购
+    public final static String subscribe_order = base_server + "assetService/subscribe";
+    //获取用户信息
+    public final static String user_info = base_server + "userService/getUserInfo";
+
+
+    //获取验证码
+    public final static String getCaptcha = base_server + "commonService/getCaptcha";
+    //登录
+    public final static String login = base_server + "userService/login";
+    //注册
+    public final static String register = base_server + "userService/register";
+    //消息详情
+    public final static String getPushDetail = base_server + "pushService/getPushDetail";
+    //设置交易密码
+    public final static String changePayPassword = base_server + "userService/changePayPassword";
+    //修改交易密码
+    public final static String setPayPassword = base_server + "userService/setPayPassword";
+    //修改登录密码
+    public final static String changePassword = base_server + "userService/changePassword";
+    //找回登录密码
+    public final static String getPassword = base_server + "userService/getPassword";
+    //检验验证码
+    public final static String checkCaptcha = base_server + "commonService/checkCaptcha";
+    //获取用户的银行卡
+    public final static String getUserBankCard = base_server + "userService/getUserBankCard";
+    //自动识别银行卡
+    public final static String autoIdentifyBankCard = base_server + "assetService/autoIdentifyBankCard";
+    //绑定银行卡
+    public final static String bindBank = "http://172.20.8.11:8082/miqian-app/" + "commonService/bindBank";
+    //获取城市接口
+    public final static String getAllCity = base_server + "commonService/getAllCity";
+    //获取支行
+    public final static String getSubBranch = base_server + "commonService/getSubBranch";
+    //登出
+    public final static String loginOut  = base_server + "userService/logout";
+    //提现
+    public final static String withdrawCash  = base_server + "assetService/withdrawCash";
+
+    //定期首页
+    public final static String getRegMain = "http://27.154.228.194:30001/subjectService/getRegMain";
+//    public final static String getRegMain = base_server + "subjectService/getRegMain";
+>>>>>>> 08a59d8e02c3052c85bf2238dd00d1ef06548a92
 
   //测试
   public final static String test = base_server + "userService/register";

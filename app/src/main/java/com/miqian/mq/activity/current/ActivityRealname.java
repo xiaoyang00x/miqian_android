@@ -75,16 +75,18 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        mWaitingDialgog.show();
+        mWaitingDialog.show();
         HttpRequest.setIDCardCheck(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                mWaitingDialgog.dismiss();
+                mWaitingDialog.dismiss();
+                ActivityRealname.this.finish();
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialgog.dismiss();
+                Uihelper.showToast(mActivity, error);
+                mWaitingDialog.dismiss();
             }
         }, idCard, name);
     }

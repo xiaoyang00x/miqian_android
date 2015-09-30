@@ -26,7 +26,7 @@ public class Uihelper {
 
     private static void initToast(Context context) {
         if (mToast == null) {
-            mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);
         }
     }
 
@@ -171,6 +171,40 @@ public class Uihelper {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String date = sdf.format(new Date((long) (timestamp * 1000L)));
         return date;
+    }
+
+    /**
+     * 将时间戳转换成yyyyMMdd
+     *
+     * @author Jackie
+     * @date 2015-9-29
+     * @param timestamp
+     * @return
+     */
+    public static String timestampToString(String timestamp) {
+        if (!TextUtils.isEmpty(timestamp)) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+            Date date = new Date(Long.parseLong(timestamp));
+            return sdf.format(date);
+        }
+        return "";
+    }
+
+    /**
+     * 将时间戳转换成yyyyMMdd
+     *
+     * @author Jackie
+     * @date 2015-9-29
+     * @param timestamp
+     * @return
+     */
+    public static String timeToString(String timestamp) {
+        if (!TextUtils.isEmpty(timestamp)) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            Date date = new Date(Long.parseLong(timestamp));
+            return sdf.format(date);
+        }
+        return "";
     }
 
     public static Date parseDate(String str, String format) {

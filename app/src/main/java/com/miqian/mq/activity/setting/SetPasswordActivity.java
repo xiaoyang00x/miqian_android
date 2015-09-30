@@ -1,6 +1,5 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.setting;
 
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
@@ -50,9 +50,7 @@ public class SetPasswordActivity extends BaseActivity {
         captcha = intent.getStringExtra("captcha");
         phone = intent.getStringExtra("phone");
         idCard = intent.getStringExtra("idCard");
-        style = intent.getStringExtra("type");
-
-        mType = Integer.parseInt(style);
+        mType = intent.getIntExtra("type", 0);
 
         if (mType == TypeUtil.PASSWORD_TRADE) {
 
@@ -118,7 +116,7 @@ public class SetPasswordActivity extends BaseActivity {
         }
         //设置交易密码
         else {
-            HttpRequest.changePayPassword(this, new ICallback<Meta>() {
+            HttpRequest.setPayPassword(this, new ICallback<Meta>() {
 
                 @Override
                 public void onSucceed(Meta result) {
@@ -132,7 +130,7 @@ public class SetPasswordActivity extends BaseActivity {
 //				mWaitingDialog.dismiss();
                     Uihelper.showToast(mActivity, error);
                 }
-            }, "SXJ1", "350425198903282412", phone, captcha, password_confirm, password_confirm);
+            }, password_confirm, password_confirm);
         }
 
 

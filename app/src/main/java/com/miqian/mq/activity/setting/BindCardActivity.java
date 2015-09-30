@@ -1,6 +1,8 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.setting;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;
@@ -77,18 +80,18 @@ public class BindCardActivity extends BaseActivity {
 
        final String cardNum = etCardNum.getText().toString();
         if (!TextUtils.isEmpty(cardNum)) {
-            mWaitingDialgog.show();
+            mWaitingDialog.show();
             HttpRequest.autoIdentifyBankCard(mActivity, new ICallback<BankCardResult>() {
                 @Override
                 public void onSucceed(BankCardResult result) {
-                    mWaitingDialgog.dismiss();
+                    mWaitingDialog.dismiss();
                     //绑定银行卡
                     bindCard(result,cardNum);
                 }
 
                 @Override
                 public void onFail(String error) {
-                    mWaitingDialgog.dismiss();
+                    mWaitingDialog.dismiss();
                     Uihelper.showToast(mActivity,error);
                 }
             }, cardNum);
@@ -101,12 +104,18 @@ public class BindCardActivity extends BaseActivity {
 
     }
 
-    private void bindCard(BankCardResult result,String cardNum) {
-           BankCard bankCard= result.getData();
-        if (bankCard!=null){
+    private void bindCard(final BankCardResult bankCardResult,String cardNum) {
+           BankCard bankCard= bankCardResult.getData();
+        if (bankCardResult!=null){
             HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
                 @Override
                 public void onSucceed(Meta result) {
+
+                    Intent intent=new Intent(mActivity,SetBankActivity.class);
+                    Bundle extra=new Bundle();
+                    extra.putSerializable("bankresult",bankCardResult.getData());
+                    intent.putExtras(extra);
+                    startActivity(intent);
 
                 }
 

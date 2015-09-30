@@ -1,9 +1,8 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.user;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,12 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.MobileOS;
-import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
@@ -129,21 +128,20 @@ public class RegisterActivity extends BaseActivity {
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Uihelper.trace(result.getCode() + "");
+                mBtn_sendCaptcha.setEnabled(false);
+                myRunnable = new MyRunnable();
+                thread = new Thread(myRunnable);
+                thread.start(); // 启动线程，进行倒计时
+                isTimer = true;
             }
 
             @Override
             public void onFail(String error) {
+                Uihelper.showToast(mActivity,error);
 
             }
         }, phone, TypeUtil.CAPTCHA_REGISTER);
 
-
-        mBtn_sendCaptcha.setEnabled(false);
-        myRunnable = new MyRunnable();
-        thread = new Thread(myRunnable);
-        thread.start(); // 启动线程，进行倒计时
-        isTimer = true;
     }
 
     public void btn_click(View v) {
@@ -157,11 +155,11 @@ public class RegisterActivity extends BaseActivity {
             if (!TextUtils.isEmpty(captcha)) {
 
                 if (!TextUtils.isEmpty(password)) {
-                    mWaitingDialgog.show();
+                    mWaitingDialog.show();
                     HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
                         @Override
                         public void onSucceed(RegisterResult result) {
-                            mWaitingDialgog.dismiss();
+                            mWaitingDialog.dismiss();
                             Uihelper.showToast(mActivity,"注册成功");
                             finish();
                             Log.e("Register", result.getData().getBalance());
@@ -169,7 +167,7 @@ public class RegisterActivity extends BaseActivity {
 
                         @Override
                         public void onFail(String error) {
-                            mWaitingDialgog.dismiss();
+                            mWaitingDialog.dismiss();
                             Uihelper.showToast(mActivity,error);
                         }
                     }, phone, captcha, password, invite);
