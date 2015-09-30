@@ -902,9 +902,7 @@ public class HttpRequest {
     mList.add(new Param("endDate", RSAUtils.encryptURLEncode(endDate)));
     mList.add(new Param("operationType", RSAUtils.encryptURLEncode(operationType)));
 
-    new MyAsyncTask(context, /*Urls.capitalRecords*//*"http://192.168.0.101:9000/capital"*/
-        "http://10.0.1.155:9000/capital"/*"http://27.154.228.194:30001/userService/getAssetRecord"*/,
-        mList, new ICallback<String>() {
+    new MyAsyncTask(context, Urls.recordsCapital, mList, new ICallback<String>() {
 
       @Override public void onSucceed(String result) {
         CapitalRecord capitalRecord = JsonUtil.parseObject(result, CapitalRecord.class);
@@ -929,8 +927,7 @@ public class HttpRequest {
     mList.clear();
     mList.add(new Param("bankNo", RSAUtils.encryptURLEncode("")));
 
-    new MyAsyncTask(context, /*"http://192.168.0.101:9000/capital"*/
-        "http://10.0.1.91:9000/detailsForRegularEarning", mList, new ICallback<String>() {
+    new MyAsyncTask(context, Urls.detailsOfRegularDeposit, mList, new ICallback<String>() {
 
       @Override public void onSucceed(String result) {
         Log.e("result", result);
