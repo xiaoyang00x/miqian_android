@@ -12,7 +12,6 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -22,37 +21,9 @@ import java.util.List;
  */
 public class HttpUtils {
 
-<<<<<<< HEAD
   public static final String APP_KEY = "&key=jwoxoWHeauio";
   private static final MediaType CONTENT_TYPE =
       MediaType.parse("application/x-www-form-urlencoded");
-=======
-    public static final String APP_KEY = "&key=jwoxoWHeauio";
-    private static final MediaType CONTENT_TYPE =
-            MediaType.parse("application/x-www-form-urlencoded");
-
-    public static String httpPostRequest(Context context, String url, List<Param> list) {
-        if (MobileOS.getNetworkType(context) == -1) {
-            return MyAsyncTask.NETWORK_ERROR;
-        }
-        final OkHttpClient client = new OkHttpClient();
-        FormEncodingBuilder builder = new FormEncodingBuilder();
-        if(list == null) {
-            list = new ArrayList<>();
-        }
-        list.add(new Param("timer", "" + System.currentTimeMillis()));
-        sortParam(list);
-        if (list != null && list.size() > 0) {
-            for (Param param : list) {
-                builder.add(param.key, param.value);
-            }
-        }
-        RequestBody requestBody = null;
-        try {
-            requestBody = builder.build();
-        } catch (Exception e) {
-            requestBody = RequestBody.create(CONTENT_TYPE, "");
->>>>>>> 08a59d8e02c3052c85bf2238dd00d1ef06548a92
 
   public static String httpPostRequest(Context context, String url, List<Param> list) {
     if (MobileOS.getNetworkType(context) == -1) {

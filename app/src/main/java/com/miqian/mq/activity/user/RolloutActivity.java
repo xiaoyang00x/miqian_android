@@ -388,17 +388,17 @@ public class RolloutActivity extends BaseActivity {
     private void rollOut(String password) {
 
 
-        HttpRequest.withdrawCash(mActivity, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-                Uihelper.showToast(mActivity, "提现成功");
-            }
-
-            @Override
-            public void onFail(String error) {
-                Uihelper.showToast(mActivity, error);
-            }
-        },moneyString,userInfo.getBankCode(),cardNum,password);
+        //HttpRequest.withdrawCash(mActivity, new ICallback<Meta>() {
+        //    @Override
+        //    public void onSucceed(Meta result) {
+        //        Uihelper.showToast(mActivity, "提现成功");
+        //    }
+        //
+        //    @Override
+        //    public void onFail(String error) {
+        //        Uihelper.showToast(mActivity, error);
+        //    }
+        //},moneyString,userInfo.getBankCode(),cardNum,password);
 
 
     }

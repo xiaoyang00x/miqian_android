@@ -30,11 +30,7 @@ public class FragmentHome extends Fragment {
 
   @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-<<<<<<< HEAD
     myUpdateOperation();
-=======
-//    myUpdateOperation();
->>>>>>> 08a59d8e02c3052c85bf2238dd00d1ef06548a92
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

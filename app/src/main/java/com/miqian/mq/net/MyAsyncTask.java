@@ -2,11 +2,7 @@ package com.miqian.mq.net;
 
 import android.content.Context;
 import android.text.TextUtils;
-<<<<<<< HEAD
-=======
 import android.util.Log;
-
->>>>>>> 08a59d8e02c3052c85bf2238dd00d1ef06548a92
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MobileOS;
