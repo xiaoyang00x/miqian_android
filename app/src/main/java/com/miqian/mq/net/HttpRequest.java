@@ -2,11 +2,17 @@ package com.miqian.mq.net;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardResult;
+import com.miqian.mq.entity.CapitalRecord;
 import com.miqian.mq.entity.CityInfoResult;
+import com.miqian.mq.entity.CommonEntity;
 import com.miqian.mq.entity.CurrentInfoResult;
+import com.miqian.mq.entity.DetailForRegularDeposit;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
@@ -16,9 +22,13 @@ import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.RegisterResult;
+import com.miqian.mq.entity.RegularEarnResult;
+import com.miqian.mq.entity.RegularPlanResult;
+import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.UserUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +41,9 @@ public class HttpRequest {
 
     /**
      * 测试
-     *
-     * @param callback
-     * @param phone
-     * @param password
      */
-    public static void testHttp(Context context, final ICallback<Meta> callback, String phone, String password) {
+    public static void testHttp(Context context, final ICallback<Meta> callback, String phone,
+                                String password) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -63,10 +70,9 @@ public class HttpRequest {
 
     /**
      * 身份认证
-     *
-     * @param callback
      */
-    public static void setIDCardCheck(Context context, final ICallback<Meta> callback, String idNo, final String realName) {
+    public static void setIDCardCheck(Context context, final ICallback<Meta> callback, String idNo,
+                                      final String realName) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -96,8 +102,6 @@ public class HttpRequest {
 
     /**
      * 活期首页
-     *
-     * @param callback
      */
     public static void getCurrentHome(Context context, final ICallback<CurrentInfoResult> callback) {
         if (mList == null) {
@@ -126,11 +130,12 @@ public class HttpRequest {
     /**
      * 活期、定期赚、定期计划
      * 认购订单生成页面
-     * @param amt  金额
+     *
+     * @param amt    金额
      * @param prodId 0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-     * @param callback
      */
-    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String prodId) {
+    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback,
+                                       String amt, String prodId) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -142,7 +147,48 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                ProducedOrderResult producedOrderResult = JsonUtil.parseObject(result, ProducedOrderResult.class);
+                ProducedOrderResult producedOrderResult =
+                        JsonUtil.parseObject(result, ProducedOrderResult.class);
+                if (producedOrderResult.getCode().equals("000000")) {
+                    callback.onSucceed(producedOrderResult);
+                } else {
+                    callback.onFail(producedOrderResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 活期、定期赚、定期计划
+     * 认购订单生成页面
+     *
+     * @param amt       金额
+     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param subjectId 0:活期
+     */
+    public static void payOrder(Context context, final ICallback<ProducedOrderResult> callback,
+                                String amt, String prodId, String payPassword, String subjectId, String promList) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("amt", amt));
+        mList.add(new Param("prodId", prodId));
+        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("subjectId", subjectId));
+        mList.add(new Param("promList", promList));
+        new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                ProducedOrderResult producedOrderResult =
+                        JsonUtil.parseObject(result, ProducedOrderResult.class);
                 if (producedOrderResult.getCode().equals("000000")) {
                     callback.onSucceed(producedOrderResult);
                 } else {
@@ -159,17 +205,16 @@ public class HttpRequest {
 
     /**
      * 充值
-     *
-     * @param callback
      */
-    public static void rollIn(Context context, final ICallback<PayOrderResult> callback, String amt, String bankNo) {
+    public static void rollIn(Context context, final ICallback<PayOrderResult> callback, String amt,
+                              String bankNo) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-//        mList.add(new Param("bankCode", bankCode));
+        //        mList.add(new Param("bankCode", bankCode));
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
 
         new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
@@ -193,10 +238,9 @@ public class HttpRequest {
 
     /**
      * 充值结果查询
-     *
-     * @param callback
      */
-    public static void rollInResult(Context context, final ICallback<OrderLianResult> callback, String orderNo) {
+    public static void rollInResult(Context context, final ICallback<OrderLianResult> callback,
+                                    String orderNo) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -210,10 +254,10 @@ public class HttpRequest {
                 Log.e("", result);
                 OrderLianResult orderLianResult = JsonUtil.parseObject(result, OrderLianResult.class);
                 callback.onSucceed(orderLianResult);
-//                if (payOrderResult.getCode().equals("000000")) {
-//                } else {
-//                    callback.onFail(payOrderResult.getMessage());
-//                }
+                //                if (payOrderResult.getCode().equals("000000")) {
+                //                } else {
+                //                    callback.onFail(payOrderResult.getMessage());
+                //                }
             }
 
             @Override
@@ -225,8 +269,6 @@ public class HttpRequest {
 
     /**
      * 获取用户信息
-     *
-     * @param callback
      */
     public static void getUserInfo(Context context, final ICallback<LoginResult> callback) {
         if (mList == null) {
@@ -257,10 +299,9 @@ public class HttpRequest {
 
     /**
      * 注册
-     *
-     * @param callback
      */
-    public static void register(Context context, final ICallback<RegisterResult> callback, String mobilePhone, String captcha, String password, String invitationCode) {
+    public static void register(Context context, final ICallback<RegisterResult> callback,
+                                String mobilePhone, String captcha, String password, String invitationCode) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -290,7 +331,8 @@ public class HttpRequest {
     }
 
     //登录
-    public static void login(Context context, final ICallback<LoginResult> callback, String mobilePhone, String password) {
+    public static void login(Context context, final ICallback<LoginResult> callback,
+                             String mobilePhone, String password) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -320,13 +362,11 @@ public class HttpRequest {
     //检验验证码
 
     /**
-     * @param context
-     * @param callback
-     * @param phone
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
      */
-    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType,String captcha) {
+    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone,
+                                    int operationType, String captcha) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -358,13 +398,11 @@ public class HttpRequest {
     //获取验证码
 
     /**
-     * @param context
-     * @param callback
-     * @param phone
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
+    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone,
+                                  int operationType) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -393,7 +431,8 @@ public class HttpRequest {
     }
 
     //获得推送信息详情
-    public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback, int pushSource, String id, String custId) {
+    public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback,
+                                     int pushSource, String id, String custId) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -402,7 +441,6 @@ public class HttpRequest {
         mList.add(new Param("id", id));
         if (pushSource == 1) {
             mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
-
         } else {
             mList.add(new Param("custId", "" + custId));
         }
@@ -425,9 +463,9 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-
     //设置交易密码
-    public static void setPayPassword(Context context, final ICallback<Meta> callback, String payPassword, String confirmPayPassword) {
+    public static void setPayPassword(Context context, final ICallback<Meta> callback,
+                                      String payPassword, String confirmPayPassword) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -456,8 +494,9 @@ public class HttpRequest {
     }
 
     //修改交易密码
-    public static void changePayPassword(Context context, final ICallback<Meta> callback, String tradeType, String idCard, String mobilePhone, String captcha, String payPassword, String confirmPayPassword
-    ) {
+    public static void changePayPassword(Context context, final ICallback<Meta> callback,
+                                         String tradeType, String idCard, String mobilePhone, String captcha, String payPassword,
+                                         String confirmPayPassword) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -490,7 +529,8 @@ public class HttpRequest {
     }
 
     //修改登录密码
-    public static void changePassword(Context context, final ICallback<LoginResult> callback,  String oldPassword, String newPassword, String confirmPassword) {
+    public static void changePassword(Context context, final ICallback<LoginResult> callback,
+                                      String oldPassword, String newPassword, String confirmPassword) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -520,7 +560,8 @@ public class HttpRequest {
     }
 
     //找回登录密码
-    public static void getPassword(Context context, final ICallback<Meta> callback, String mobilePhone, String newPassword, String confirmPassword, String captcha) {
+    public static void getPassword(Context context, final ICallback<Meta> callback,
+                                   String mobilePhone, String newPassword, String confirmPassword, String captcha) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -549,39 +590,41 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-
-  /**
-   * 获取首页信息
-   *
-   * @param callback
-   */
-  public static void getHomePageInfo(Context context, final ICallback<HomePageInfo> callback) {
-    if (mList == null) {
-      mList = new ArrayList<Param>();
-    }
-    mList.clear();
-    //27.154.228.194:30001/commonService/getHome
-    //http://10.0.1.193:9000 + "/jsonRes"
-    new MyAsyncTask(context, "http://27.154.228.194:30001/commonService/getHome", mList, new ICallback<String>() {
-
-      @Override
-      public void onSucceed(String result) {
-        Log.e("", result);
-        HomePageInfo info = JsonUtil.parseObject(result, HomePageInfo.class);
-        if (info.getCode() == 0) {
-          callback.onSucceed(info);
-        } else {
-          callback.onFail(info.getMessage());
+    /**
+     * 获取首页信息
+     *
+     * @param callback
+     */
+    /**
+     * 获取首页信息
+     */
+    public static void getHomePageInfo(Context context, final ICallback<HomePageInfo> callback) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
         }
-      }
+        mList.clear();
+        new MyAsyncTask(context, Urls.homeInfo, mList, new ICallback<String>() {
 
-      @Override
-      public void onFail(String error) {
-        callback.onFail(error);
-      }
-    }).executeOnExecutor();
-  }
+            @Override
+            public void onSucceed(String result) {
+                Log.e("result", result);
+                CommonEntity<HomePageInfo> common =
+                        JSON.parseObject(result, new TypeReference<CommonEntity<HomePageInfo>>() {
+                        });
 
+                if (common.getCode().equals("000000")) {
+                    callback.onSucceed(common.getData());
+                } else {
+                    callback.onFail(common.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
 
     //获取用户的银行卡
     public static void getUserBankCard(Context context, final ICallback<BankCardResult> callback) {
@@ -611,7 +654,8 @@ public class HttpRequest {
     }
 
     //识别银行卡
-    public static void autoIdentifyBankCard(Context context, final ICallback<BankCardResult> callback,String bankNo) {
+    public static void autoIdentifyBankCard(Context context, final ICallback<BankCardResult> callback,
+                                            String bankNo) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -638,7 +682,9 @@ public class HttpRequest {
     }
 
     //绑定银行卡
-    public static void bindBank(Context context, final ICallback<Meta> callback,String bankNo,String tradeType, String bankCode,String bankName,String branchName,String prov,String city) {
+    public static void bindBank(Context context, final ICallback<Meta> callback, String bankNo,
+                                String tradeType, String bankCode, String bankName, String branchName, String prov,
+                                String city) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -672,11 +718,13 @@ public class HttpRequest {
 
     /**
      * 获取定期首页数据
-     * @param context
-     * @param callback
      */
     public static void getMainRegular(Context context, final ICallback<GetRegularResult> callback) {
-        new MyAsyncTask(context, Urls.getRegMain,  null, new ICallback<String>() {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("operationType", "0"));
+        params.add(new Param("pageNo", "1"));
+        params.add(new Param("pageSize", "50"));
+        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -696,12 +744,71 @@ public class HttpRequest {
     }
 
     /**
-     * 获取定期计划详情
-     * @param context
-     * @param callback
+     * 获取定期详情
+     *
+     * @param operationType 0为获取定期赚和定期计划，1为获取定期赚，2为获取定期计划。
+     * @param subjectId     标的编号，如传入则返回改标的相关信息
      */
-    public static void getRegularPlanDetails(Context context, final ICallback<GetRegularResult> callback) {
-        new MyAsyncTask(context, Urls.getRegMain,  null, new ICallback<String>() {
+    public static void getRegularDetails(Context context, String operationType, String subjectId,
+                                         final ICallback<RegularPlanResult> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("operationType", operationType));
+        params.add(new Param("subjectId", subjectId));
+        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                RegularPlanResult meta = JsonUtil.parseObject(result, RegularPlanResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 获取定期赚详情
+     *
+     * @param operationType 0为获取定期赚和定期计划，1为获取定期赚，2为获取定期计划。
+     * @param subjectId     标的编号，如传入则返回改标的相关信息
+     */
+    public static void getRegularEarnDetails(Context context, String operationType, String subjectId,
+                                             final ICallback<RegularEarnResult> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("operationType", operationType));
+        params.add(new Param("subjectId", subjectId));
+        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                RegularEarnResult meta = JsonUtil.parseObject(result, RegularEarnResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 获取定期计划详情
+     */
+    public static void getRegularPlanDetails(Context context,
+                                             final ICallback<GetRegularResult> callback) {
+        new MyAsyncTask(context, Urls.getRegMain, null, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -747,7 +854,8 @@ public class HttpRequest {
     }
 
     //获取支行接口
-    public static void getSubBranch(Context context, final ICallback<BankBranchResult> callback,String provinceName,String city,String bankCode) {
+    public static void getSubBranch(Context context, final ICallback<BankBranchResult> callback,
+                                    String provinceName, String city, String bankCode) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -776,8 +884,6 @@ public class HttpRequest {
 
     /**
      * 登出
-     *
-     * @param callback
      */
     public static void loginOut(Context context, final ICallback<Meta> callback) {
         if (mList == null) {
@@ -807,10 +913,9 @@ public class HttpRequest {
 
     /**
      * 提现
-     *
-     * @param callback
      */
-    public static void withdrawCash(Context context, final ICallback<Meta> callback,String amt,String bankCode,String bankNo,String payPassword) {
+    public static void withdrawCash(Context context, final ICallback<Meta> callback, String amt,
+                                    String bankCode, String bankNo, String payPassword) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -840,4 +945,104 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    /**
+     * 获取资金记录
+     */
+    public static void getCapitalRecords(Context context, final ICallback<CapitalRecord> callback,
+                                         String custId, String pageNum, String pageSize, String startDate, String endDate,
+                                         String operationType) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("pageNum", RSAUtils.encryptURLEncode(pageNum)));
+        mList.add(new Param("startDate", RSAUtils.encryptURLEncode(startDate)));
+        mList.add(new Param("pageSize", RSAUtils.encryptURLEncode(pageSize)));
+        mList.add(new Param("endDate", RSAUtils.encryptURLEncode(endDate)));
+        mList.add(new Param("operationType", RSAUtils.encryptURLEncode(operationType)));
+
+        new MyAsyncTask(context, Urls.recordsCapital, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                CapitalRecord capitalRecord = JsonUtil.parseObject(result, CapitalRecord.class);
+                if (capitalRecord.getCode().equals("000000")) {
+                    callback.onSucceed(capitalRecord);
+                } else {
+                    callback.onFail(capitalRecord.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    public static void detailsForRegularEarning(Context context,
+                                                final ICallback<DetailForRegularDeposit> callback) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode("")));
+
+        new MyAsyncTask(context, Urls.detailsOfRegularDeposit, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Log.e("result", result);
+                DetailForRegularDeposit detailsEarning =
+                        JsonUtil.parseObject(result, DetailForRegularDeposit.class);
+                if (detailsEarning.getCode().equals("000000")) {
+                    callback.onSucceed(detailsEarning);
+                } else {
+                    callback.onFail(detailsEarning.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 活期、定期赚、定期计划
+     * 认购订单生成页面
+     *
+     * @param amt       金额
+     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param subjectId 0:活期
+     */
+    public static void subjectIdOrder(Context context, final ICallback<SubscribeOrderResult> callback,
+                                      String amt, String prodId, String payPassword, String subjectId, String promList) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("amt", amt));
+        mList.add(new Param("prodId", prodId));
+        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("subjectId", subjectId));
+        mList.add(new Param("promList", promList));
+        new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                SubscribeOrderResult subscribeOrderResult =
+                        JsonUtil.parseObject(result, SubscribeOrderResult.class);
+                callback.onSucceed(subscribeOrderResult);
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
 }

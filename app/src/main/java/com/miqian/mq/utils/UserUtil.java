@@ -154,7 +154,7 @@ public class UserUtil {
     public static void currenPay(Activity activity,  final Class<?> cls, String money) {
         Intent intent = new Intent(activity, cls);
         intent.putExtra("money", money);
-        intent.putExtra("prodId", "1");
+        intent.putExtra("prodId", "1");//0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
         activity.startActivity(intent);
     }
 

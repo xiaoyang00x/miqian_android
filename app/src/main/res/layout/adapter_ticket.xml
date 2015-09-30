@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/promote_choosed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:src="@drawable/promote_no_choosed" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/promote_choosed"
+        android:paddingLeft="@dimen/margin_left_right">
+
+        <TextView
+            android:id="@+id/text_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拾财券"
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font4" />
+
+        <TextView
+            android:id="@+id/limit_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_type"
+            android:layout_marginTop="2dp"
+            android:text="限定期赚、定期使用"
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font5" />
+
+        <TextView
+            android:id="@+id/limit_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/limit_type"
+            android:layout_marginTop="2dp"
+            android:text="有效期至"
+            android:textColor="@color/mq_r1"
+            android:textSize="@dimen/mq_font5" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/text_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ticket_bg"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font6" />
+</RelativeLayout>

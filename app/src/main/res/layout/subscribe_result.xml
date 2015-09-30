@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/image_success"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pay_order_success" />
+
+            <TextView
+                android:id="@+id/text_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:textColor="@color/mq_b1"
+                android:textSize="@dimen/mq_font6" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:minHeight="40dp"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="余额支付" />
+
+        <TextView
+            android:id="@+id/text_balance"
+            style="@style/text_black_item"
+            android:layout_alignParentRight="true"
+            android:text="--.--" />
+
+    </RelativeLayout>
+
+    <View style="@style/item_divider" />
+
+    <RelativeLayout
+        android:id="@+id/frame_red_package"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:minHeight="40dp"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            style="@style/text_black_item"
+            android:text="红包优惠" />
+
+        <TextView
+            android:id="@+id/text_promote"
+            style="@style/text_black_item"
+            android:layout_alignParentRight="true"
+            android:text="--.--" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/frame_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:layout_marginTop="@dimen/margin_top"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_centerVertical="true"
+                android:text="交易编号" />
+
+            <TextView
+                android:id="@+id/trade_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="--.--"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font3" />
+        </RelativeLayout>
+
+        <View style="@style/item_divider" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:background="@color/white"
+            android:minHeight="40dp"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_centerVertical="true"
+                android:text="创建时间" />
+
+            <TextView
+                android:id="@+id/text_time"
+                style="@style/text_black_item"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="--.--"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font3" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/frame_fail"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="交易失败"
+                android:textColor="@color/mq_r1"
+                android:textSize="@dimen/mq_font3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="如有问题，请拨打客服电话"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="400-345-3434"
+                android:textColor="@color/mq_bl2"
+                android:textSize="@dimen/mq_font5" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp">
+
+            <Button
+                android:id="@+id/bt_back_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_subscribe_back_home" />
+
+            <Button
+                android:id="@+id/bt_back_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:background="@drawable/btn_subscribe_back_user" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

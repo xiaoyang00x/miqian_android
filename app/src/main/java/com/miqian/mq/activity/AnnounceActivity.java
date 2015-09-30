@@ -1,13 +1,11 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -33,7 +31,8 @@ import java.util.List;
 /**
  * @author Administrator Tuliangtan 3.26
  */
-public class AnnounceActivity extends BaseActivity implements ExtendOperationController.ExtendOperationListener {
+public class AnnounceActivity extends BaseActivity
+        implements ExtendOperationController.ExtendOperationListener {
 
     private SwipeMenuListView mSwipeMenuListView;
     private MessageAdapter adapter;
@@ -46,22 +45,24 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
         if (!UserUtil.hasLogin(mActivity)) {
             jpushInfolist = MyDataBaseHelper.getInstance(mActivity).getjpushInfo(Pref.VISITOR);
         } else {
-            jpushInfolist = MyDataBaseHelper.getInstance(mActivity).getjpushInfo(Pref.getString(Pref.USERID, mActivity, Pref.VISITOR));
+            jpushInfolist = MyDataBaseHelper.getInstance(mActivity)
+                    .getjpushInfo(Pref.getString(Pref.USERID, mActivity, Pref.VISITOR));
         }
         Collections.reverse(jpushInfolist);
         if (jpushInfolist == null || jpushInfolist.size() == 0) {
-//			mView_noresult.setVisibility(View.VISIBLE);
+            //			mView_noresult.setVisibility(View.VISIBLE);
             mTitle.setRightText("");
         } else {
-//			if (mView_noresult != null) {
-//
-//				mView_noresult.setVisibility(View.GONE);
-//				mTitle.setRightText("清空");
-//			}
+            //			if (mView_noresult != null) {
+            //
+            //				mView_noresult.setVisibility(View.GONE);
+            //				mTitle.setRightText("清空");
+            //			}
         }
         Uihelper.trace("" + jpushInfolist.size());
 
-        PullToRefreshSwipeMenuListView pullToListView = (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
+        PullToRefreshSwipeMenuListView pullToListView =
+                (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
 
         mSwipeMenuListView = (SwipeMenuListView) pullToListView.getRefreshableView();
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -122,7 +123,7 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
                                 break;
                             // 内置浏览器
                             case 4:
-//							WebViewActivity.doIntent(mActivity, jpushInfo.getUrl(), true, null);
+                                //							WebViewActivity.doIntent(mActivity, jpushInfo.getUrl(), true, null);
                                 break;
                             default:
                                 break;
@@ -130,16 +131,14 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
                         uritype = null;
                     } else {
                         Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
-//						intent.putExtra("classid", jpushInfo.getClassid());
+                        //						intent.putExtra("classid", jpushInfo.getClassid());
                         intent.putExtra("noticeId", jpushInfo.getId());
                         startActivity(intent);
                     }
-
                 }
             }
         });
         mSwipeMenuListView.setAdapter(adapter);
-
     }
 
     @Override
@@ -191,7 +190,6 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
         dialogTips.show();
     }
 
-
     private void initDialog() {
         if (dialogTips == null) {
             dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
@@ -201,13 +199,14 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
                     if (!UserUtil.hasLogin(mActivity)) {
                         MyDataBaseHelper.getInstance(mActivity).deleteall(Pref.VISITOR);
                     } else {
-                        MyDataBaseHelper.getInstance(mActivity).deleteall(Pref.getString(Pref.USERID, mActivity, Pref.VISITOR));
+                        MyDataBaseHelper.getInstance(mActivity)
+                                .deleteall(Pref.getString(Pref.USERID, mActivity, Pref.VISITOR));
                     }
                     Uihelper.getMessageCount(0, mActivity);
                     jpushInfolist.clear();
                     adapter.notifyDataSetChanged();
                     mTitle.setRightText("");
-//					mView_noresult.setVisibility(View.VISIBLE);
+                    //					mView_noresult.setVisibility(View.VISIBLE);
                     dismiss();
                 }
 
@@ -222,7 +221,6 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
         }
     }
 
-
     @Override
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
@@ -231,7 +229,5 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
                 obtainData();
                 break;
         }
-
     }
-
 }

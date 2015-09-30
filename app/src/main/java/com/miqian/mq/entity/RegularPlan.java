@@ -21,11 +21,29 @@ public class RegularPlan implements Serializable {
     private String payMode; //还款方式
     private String subjectTotalPrice; //标的总额
     private String purchasePrice; //已认购金额
-    private String purchasePercent; //认购进度
+    private float purchasePercent; //认购进度
+    private String bxbzf; //本息保障方
+    private String ddbzf; //兜底保障方
     private String promotionDesc; //"满1万元送100元红包"//促销描述
 
     public String getSubjectId() {
         return subjectId;
+    }
+
+    public String getBxbzf() {
+        return bxbzf;
+    }
+
+    public void setBxbzf(String bxbzf) {
+        this.bxbzf = bxbzf;
+    }
+
+    public String getDdbzf() {
+        return ddbzf;
+    }
+
+    public void setDdbzf(String ddbzf) {
+        this.ddbzf = ddbzf;
     }
 
     public void setSubjectId(String subjectId) {
@@ -128,11 +146,11 @@ public class RegularPlan implements Serializable {
         this.purchasePrice = purchasePrice;
     }
 
-    public String getPurchasePercent() {
+    public float getPurchasePercent() {
         return purchasePercent;
     }
 
-    public void setPurchasePercent(String purchasePercent) {
+    public void setPurchasePercent(float purchasePercent) {
         this.purchasePercent = purchasePercent;
     }
 

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +30,13 @@ public class FragmentHome extends Fragment {
 
   @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-//    myUpdateOperation();
+    myUpdateOperation();
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
 
-    baseURL = "http://10.0.1.193:9000";//拾财贷
+    baseURL = "http://10.0.1.191:9000";//拾财贷
     //baseURL = "27.154.228.194:30001/commonService/getHome";//拾财贷公网
     mContext = getActivity();
     if (savedInstanceState == null || view == null) {
@@ -129,7 +128,7 @@ public class FragmentHome extends Fragment {
     //});
     recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
     swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
-
+    swipeRefresh.setColorSchemeResources(R.color.blue,R.color.grey, R.color.red,R.color.green);
       /*
    * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
    * performs a swipe-to-refresh gesture.
@@ -181,7 +180,6 @@ public class FragmentHome extends Fragment {
     //} catch (Exception ex) {
     //  ex.printStackTrace();
     //}
-    Log.e("keen", "===myUpdateOperation====");
 
     HttpRequest.getHomePageInfo(getActivity(), new ICallback<HomePageInfo>() {
 
@@ -206,6 +204,5 @@ public class FragmentHome extends Fragment {
         Uihelper.showToast(getActivity(), "shenme ");
       }
     });
-    Log.e("keen", "===myUpdateOperation====");
   }
 }

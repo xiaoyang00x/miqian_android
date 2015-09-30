@@ -72,6 +72,7 @@ public abstract class DialogPay extends Dialog {
 
             public void onClick(View arg0) {
                 positionBtnClick(editMoney.getText().toString());
+                editMoney.setText("");
             }
         });
     }

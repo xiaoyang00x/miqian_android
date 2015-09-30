@@ -3,163 +3,349 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="#ffffffff"
     >
-  <!-- section header -->
-  <RelativeLayout
-      android:id="@+id/section_header"
+  <LinearLayout
+      android:id="@+id/root"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:visibility="gone"
+      android:orientation="vertical"
+      android:background="@drawable/home_fragment_item_selector"
       >
-    <TextView
-        android:id="@+id/section_header_title_left"
-        android:layout_width="wrap_content"
+    <!-- section header -->
+    <RelativeLayout
+        android:id="@+id/section_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="精选"
-        />
-    <TextView
-        android:id="@+id/section_header_title_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="本息保障"
-        />
-  </RelativeLayout>
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="170dp"
-      >
+        android:visibility="gone"
+        >
+      <View
+          android:id="@+id/underneath"
+          android:layout_width="match_parent"
+          android:layout_height="13dp"
+          android:background="@color/base_background"
+          android:visibility="gone"
+          />
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="35dp"
+          android:layout_below="@id/underneath"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          >
+        <TextView
+            android:id="@+id/section_header_title_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+
+            android:text="精选"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:textColor="#ff505050"
+            />
+        <TextView
+            android:id="@+id/section_header_title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+
+            android:drawableLeft="@drawable/icon_security"
+            android:text="  本息保障"
+            android:textColor="#ff4ec6c6"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            />
+      </RelativeLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="#33080808"
+        android:background="#ffe6e6e6"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="3dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:id="@+id/divider_line"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="永兴医院医疗设备项目－9"
-        android:textColor="#ff000000"
-        android:textSize="18sp"
-        android:id="@+id/title"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/divider_line"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="项目总额。。。。。。。"
-        android:id="@+id/subtitle1"
-        android:layout_below="@+id/title"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
-
-    <com.miqian.mq.views.CircleBar
-        android:id="@+id/circlebar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        />
     <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-7dp"
+
         >
-
       <TextView
-          android:id="@+id/compliance_total_count"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="立即认购"
-          android:gravity="center"
-          android:textSize="12sp"
-          android:textColor="#aaff0000"
+          android:text="永兴医院医疗设备项目－9"
+          android:textColor="#ff505050"
+          android:textSize="15sp"
+          android:id="@+id/title"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_below="@+id/divider_line"
+          android:layout_marginLeft="15dp"
           />
-
       <TextView
-          android:id="@+id/purchased_percent"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:gravity="center"
-          android:textSize="12sp"
-          android:text="100%"
-          android:paddingBottom="5dp"
-          android:textColor="#aaff0000"
+          android:text="项目总额。。。。。。。"
+          android:id="@+id/subtitle1"
+          android:layout_below="@+id/title"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_marginLeft="15dp"
+          android:textColor="#ffa0a0a0"
+          android:textSize="14sp"
           />
-
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        >
+      <RelativeLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="left|center_vertical"
+          >
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uuuii"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="36dp"
+              android:text="12%"
+              android:textColor="#fff13e3e"
+              android:textSize="30sp"
+              android:id="@+id/annualized_return"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              />
+          <TextView
+              android:id="@+id/bubble_txt"
+              android:layout_width="wrap_content"
+              android:layout_height="22dp"
+              android:background="@drawable/bubble_red"
+              android:text="+0.9% "
+              android:singleLine="true"
+              android:gravity="top"
+              android:layout_toRightOf="@id/annualized_return"
+              android:layout_marginTop="10dp"
+              android:textColor="#ffffffff"
+              />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="年化收益"
+            android:id="@+id/textView20"
+            android:layout_below="@id/uuuii"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="-5dp"
+            android:textColor="#ffa0a0a0"
+            />
+      </RelativeLayout>
+      <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="100dp"
+          android:layout_weight="1"
+          android:gravity="left|center_vertical"
+          android:paddingLeft="20dp"
+          >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="72%"
+            android:textColor="#fff13e3e"
+            android:textSize="30sp"
+            android:id="@+id/limit"
+            android:layout_alignTop="@+id/limit"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="0dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="期限"
+            android:id="@+id/textView22"
+            android:layout_alignBottom="@+id/textView8"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="-6dp"
+            android:textColor="#ffa0a0a0"
+            />
+      </LinearLayout>
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="100dp"
+          android:layout_centerInParent="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:gravity="top|right"
+          android:layout_weight="1"
+          android:layout_gravity="center"
+          >
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:orientation="vertical"-->
+        <!--android:gravity="center_vertical|center_horizontal"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginLeft="34dp"-->
+        <!--android:layout_marginStart="34dp"-->
+        <!-->-->
+
+        <com.miqian.mq.views.CircleBar
+            android:id="@+id/circlebar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:visibility="visible"
+            />
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            >
+          <View
+              android:id="@+id/center_line"
+              android:layout_width="1dp"
+              android:layout_height="1dp"
+              android:layout_centerInParent="true"
+              android:visibility="invisible"
+              android:background="#ff0000ff"
+              ></View>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="立即认购"
+              android:layout_gravity="center"
+              android:textSize="12sp"
+              android:textColor="#fff13e3e"
+              android:id="@+id/compliance_total_count"
+              android:layout_above="@+id/center_line"
+              android:layout_centerHorizontal="true"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:textSize="12sp"
+              android:text="100%"
+              android:paddingBottom="5dp"
+              android:textColor="#fff13e3e"
+              android:id="@+id/purchased_percent"
+              android:layout_below="@id/center_line"
+              android:layout_centerHorizontal="true"
+              />
+        </RelativeLayout>
+        <!--</LinearLayout>-->
+      </RelativeLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="220天"
-        android:textColor="#ffff0000"
-        android:textSize="22sp"
-        android:id="@+id/limit"
-        android:layout_below="@+id/subtitle1"
-        android:layout_toLeftOf="@+id/circlebar"
-        android:layout_toStartOf="@+id/circlebar"
-        android:layout_marginTop="30dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="期限"
-        android:id="@+id/textView8"
-        android:layout_below="@+id/limit"
-        android:layout_alignLeft="@+id/limit"
-        android:layout_alignStart="@+id/limit"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12%"
-        android:textColor="#ffff0000"
-        android:textSize="22sp"
-        android:id="@+id/annualized_return"
-        android:layout_alignTop="@+id/limit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="年化收益"
-        android:id="@+id/textView10"
-        android:layout_alignBottom="@+id/textView8"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="定"
-        android:textColor="#ff6d58"
-        android:id="@+id/textView11"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="5dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="已认购28人"
-        android:id="@+id/purchasers"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="5dp"
-        />
-  </RelativeLayout>
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="-15dp"
+        >
+      <RelativeLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="left|center_vertical"
+          >
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uuuii222"
+            >
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:layout_alignParentLeft="true"
+              android:text="  送拾财券"
+              android:drawableLeft="@drawable/bonus"
+              android:textColor="#fff13e3e"
+              android:textSize="13sp"
+              android:visibility="visible"
+              />
+        </RelativeLayout>
+      </RelativeLayout>
+      <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="left|center_vertical"
+          >
+      </LinearLayout>
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:gravity="top|right"
+          android:layout_weight="1"
+          android:layout_gravity="center"
+          >
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:orientation="vertical"-->
+        <!--android:gravity="center_vertical|center_horizontal"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginLeft="34dp"-->
+        <!--android:layout_marginStart="34dp"-->
+        <!-->-->
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="已认购28人"
+              android:layout_gravity="center"
+              android:textColor="#ffa0a0a0"
+              android:id="@+id/purchasers"
+              android:layout_centerHorizontal="true"
+              android:layout_centerInParent="true"
+              android:textSize="13sp"
+              android:singleLine="true"
+              />
+
+        </RelativeLayout>
+        <!--</LinearLayout>-->
+      </RelativeLayout>
+    </LinearLayout>
+
+  </LinearLayout>
 </LinearLayout>

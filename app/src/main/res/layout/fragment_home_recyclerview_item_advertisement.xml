@@ -23,7 +23,9 @@
         android:layout_below="@+id/vp_home_viewpager"
         android:background="#C4C4C4"
         android:layout_marginBottom="10dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
 
       <com.miqian.mq.views.PageIndicator
           android:id="@+id/pi_home_page_indictor"
@@ -35,14 +37,15 @@
     </LinearLayout>
     <!-- 设置后续的indicator -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:gravity="center"
-        android:background="#ff00ff00"
+        android:id="@+id/viewGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone"
-        ></LinearLayout>
+        android:visibility="visible"
+        >
+    </LinearLayout>
   </RelativeLayout>
 </LinearLayout>
 

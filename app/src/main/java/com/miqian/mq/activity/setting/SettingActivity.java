@@ -186,9 +186,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 mWaitingDialog.dismiss();
                 UserUtil.clearUserInfo(mActivity);
                 finish();
-
             }
         });
-
     }
 }
