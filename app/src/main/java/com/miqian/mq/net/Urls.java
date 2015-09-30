@@ -78,6 +78,8 @@ public class Urls {
     public final static String loginOut = base_server + "userService/logout";
     //提现
     public final static String withdrawCash = base_server + "assetService/withdrawCash";
+    //我的活期
+    public final static String user_current = base_server + "userService/getMyCurrent";
 
     //定期首页
     public final static String getRegMain = base_server + "subjectService/getRegMain";

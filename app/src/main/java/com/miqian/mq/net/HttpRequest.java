@@ -26,6 +26,7 @@ import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TestClass;
+import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.UserUtil;
 
@@ -935,6 +936,35 @@ public class HttpRequest {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 我的活期
+     */
+    public static void getUserCurrent(Context context, final ICallback<UserCurrentResult> callback) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.user_current, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                UserCurrentResult userCurrentResult = JsonUtil.parseObject(result, UserCurrentResult.class);
+                if (userCurrentResult.getCode().equals("000000")) {
+                    callback.onSucceed(userCurrentResult);
+                } else {
+                    callback.onFail(userCurrentResult.getMessage());
                 }
             }
 

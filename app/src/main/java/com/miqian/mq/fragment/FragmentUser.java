@@ -21,6 +21,7 @@ import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
+import com.miqian.mq.activity.user.ActivityUserCurrent;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -153,15 +154,15 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         btn_setting.setImageResource(R.mipmap.account_setting);
         btn_setting.setOnClickListener(this);
 
-         //已登录，显示我的界面
-        if (UserUtil.hasLogin(getActivity())){
+        //已登录，显示我的界面
+        if (UserUtil.hasLogin(getActivity())) {
 
             initUserView();
             obtainData();
 
         }
-           //未登录，显示登录界面
-        else{
+        //未登录，显示登录界面
+        else {
 
             initLoginView();
 
@@ -270,28 +271,25 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     }
 
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             //充值
             case R.id.btn_rollin:
-
-              UserUtil.isLogin(getActivity(),IntoActivity.class);
-
+                UserUtil.isLogin(getActivity(), IntoActivity.class);
                 break;
             //取现
             case R.id.btn_rollout:
-           Intent intent=new Intent(getActivity(), RolloutActivity.class);
-                Bundle bundle=new Bundle();
+                Intent intent = new Intent(getActivity(), RolloutActivity.class);
+                Bundle bundle = new Bundle();
                 bundle.putSerializable("userInfo", userInfo);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
                 break;
             //我的活期
             case R.id.frame_account_current:
+                intent = new Intent(getActivity(), ActivityUserCurrent.class);
+                startActivity(intent);
                 break;
             //我的定期
             case R.id.frame_regular:
@@ -311,9 +309,9 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //我的设置
             case R.id.btn_account:
-                Intent intent_setting=new Intent(getActivity(),SettingActivity.class);
-                Bundle extra=new Bundle();
-                extra.putSerializable("userInfo",userInfo);
+                Intent intent_setting = new Intent(getActivity(), SettingActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("userInfo", userInfo);
                 intent_setting.putExtras(extra);
                 startActivity(intent_setting);
                 break;
