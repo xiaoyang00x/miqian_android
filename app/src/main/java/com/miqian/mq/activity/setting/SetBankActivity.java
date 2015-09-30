@@ -7,10 +7,13 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -18,10 +21,13 @@ import com.miqian.mq.views.WFYTitle;
  */
 public class SetBankActivity extends BaseActivity {
 
-    private View  frame_bank_branch, frame_bank_province;
-    private String  city,branch,province;
-    private TextView  textBranch, tv_bank_province;
+    private View frame_bank_branch, frame_bank_province;
+    private String city, branch, province;
+    private TextView textBranch, tv_bank_province;
     private BankCard bankCard;
+    private UserInfo userInfo;
+    private boolean isChooseCity;
+
     @Override
     public void obtainData() {
 
@@ -31,8 +37,9 @@ public class SetBankActivity extends BaseActivity {
     public void initView() {
 
 
-          Intent intent =getIntent();
-          bankCard= (BankCard)intent.getSerializableExtra("bankresult");
+        Intent intent = getIntent();
+        bankCard = (BankCard) intent.getSerializableExtra("bankCard");
+        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
 
         textBranch = (TextView) findViewById(R.id.tv_bank_branch);
         tv_bank_province = (TextView) findViewById(R.id.tv_bank_province);
@@ -51,26 +58,36 @@ public class SetBankActivity extends BaseActivity {
         frame_bank_branch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
-                startActivityForResult(intent_branch, 0);
+
+                if (isChooseCity){
+                    Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
+                    intent_branch.putExtra("city",city);
+                    intent_branch.putExtra("province",province);
+                    startActivityForResult(intent_branch, 0);
+
+                }else{
+                    Uihelper.showToast(mActivity,"请先选择城市");
+                }
 
             }
         });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data==null){
+        if (data == null) {
             return;
         }
-        if (resultCode==1){
+        if (resultCode == 1) {
             branch = data.getStringExtra("branch");
             if (!TextUtils.isEmpty(branch)) {
                 textBranch.setText(branch);
             }
 
-        }else if(resultCode==0){
+        } else if (resultCode == 0) {
+            isChooseCity=true;
             city = data.getStringExtra("city");
             province = data.getStringExtra("province");
             if (!TextUtils.isEmpty(city)) {
@@ -79,6 +96,7 @@ public class SetBankActivity extends BaseActivity {
         }
 
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_setbank;
@@ -90,20 +108,41 @@ public class SetBankActivity extends BaseActivity {
 
     }
 
-    public void  btn_click(View v){
+    public void btn_click(View v) {
 
-        mWaitingDialog.show();
-//        HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
-//            @Override
-//            public void onSucceed(Meta result) {
-//
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//
-//            }
-//        },bankCard.getBankNo(),);
+        if (!TextUtils.isEmpty(city)){
+            if (!TextUtils.isEmpty(branch)){
+
+                if(bankCard!=null&&userInfo!=null){
+                    //绑定银行卡
+//            mWaitingDialog.show();
+                    HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
+                        @Override
+                        public void onSucceed(Meta result) {
+//                    mWaitingDialog.dismiss();
+                            Uihelper.showToast(mActivity, "设置成功");
+                        }
+
+                        @Override
+                        public void onFail(String error) {
+//                    mWaitingDialog.dismiss();
+                            Uihelper.showToast(mActivity, error);
+
+                        }
+                    }, RSAUtils.decryptByPrivate(bankCard.getBankNo()), "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
+                }else {
+                    Uihelper.showToast(mActivity,"信息不全");
+                }
+
+            }else{
+                Uihelper.showToast(mActivity,"支行名称不能为空");
+            }
+        }else{
+            Uihelper.showToast(mActivity,"城市不能为空");
+
+        }
+
+
 
 
     }

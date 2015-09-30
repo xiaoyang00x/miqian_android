@@ -21,13 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2015/9/23.
+ * Created by Joy on 2015/9/23.
  */
 public class BankBranchActivity extends BaseActivity implements BankBranchAdapter.MyItemClickListener {
 
     private EditText et_bankbranch;
     private RecyclerView recyclerView;
     private List<BankBranch> items;
+    private String city,province;
 
     @Override
     public void obtainData() {
@@ -46,11 +47,15 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
                 mWaitingDialog.dismiss();
 
             }
-        }, "福建省", "厦门市", "300");
+        }, province, city, "300");
     }
 
     @Override
     public void initView() {
+
+        Intent intent = getIntent();
+        city = intent.getStringExtra("city");
+        province = intent.getStringExtra("province");
 
         et_bankbranch = (EditText) findViewById(R.id.et_bankbranch);
         et_bankbranch.setFocusable(false);
@@ -84,14 +89,14 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
             @Override
             public void onClick(View v) {
 
-                String branch=et_bankbranch.getText().toString();
-                if (!TextUtils.isEmpty(branch)){
-                    Intent data=new Intent();
-                    data.putExtra("branch",branch);
+                String branch = et_bankbranch.getText().toString();
+                if (!TextUtils.isEmpty(branch)) {
+                    Intent data = new Intent();
+                    data.putExtra("branch", branch);
                     setResult(1, data);
                     finish();
-                }else{
-                    Uihelper.showToast(mActivity,"请选择或输入支行");
+                } else {
+                    Uihelper.showToast(mActivity, "请选择或输入支行");
                 }
 
             }

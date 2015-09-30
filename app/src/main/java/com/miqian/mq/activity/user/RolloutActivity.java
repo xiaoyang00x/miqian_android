@@ -36,17 +36,13 @@ public class RolloutActivity extends BaseActivity {
     private ImageView iconBank;
     private View frame_bindbranch, frame_bank_branch, frame_bank_province;
     private EditText editMoney;
-    private String bankOpenName, city, province, branch;
+    private String bankOpenName, city, province, branch, moneyString, cardNum, totalMoney;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
-    // private CustomDialog dialogPassword;
-    private CustomDialog dialogTips;
-    private CustomDialog dialogTipsReput;
-    private String totalMoney;
+    private CustomDialog dialogTips, dialogTipsReput;
     private DialogTradePassword dialogTradePassword_set;
     private DialogTradePassword dialogTradePassword_input;
-    private String moneyString;
-    private String cardNum;
+    private boolean isChooseCity;
 
     @Override
     public void obtainData() {
@@ -77,7 +73,6 @@ public class RolloutActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
 
-
                     Intent intent_city = new Intent(mActivity, CityListActivity.class);
                     startActivityForResult(intent_city, 0);
                 }
@@ -86,12 +81,19 @@ public class RolloutActivity extends BaseActivity {
             frame_bank_branch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
-                    startActivityForResult(intent_branch, 0);
+
+                    if (isChooseCity){
+                        Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
+                        intent_branch.putExtra("city",city);
+                        intent_branch.putExtra("province",province);
+                        startActivityForResult(intent_branch, 0);
+
+                    }else{
+                        Uihelper.showToast(mActivity,"请先选择城市");
+                    }
 
                 }
             });
-
 
         } else {
             frame_bindbranch.setVisibility(View.GONE);
@@ -126,15 +128,16 @@ public class RolloutActivity extends BaseActivity {
             }
 
         } else if (resultCode == 0) {
+            isChooseCity=true;
             city = data.getStringExtra("city");
             province = data.getStringExtra("province");
             if (!TextUtils.isEmpty(city)) {
                 tv_bank_province.setText(city);
             }
         }
-         if(branch==null||city==null||province==null||cardNum==null){
-             return;
-         }
+        if (branch == null || city == null || province == null || cardNum == null) {
+            return;
+        }
         //绑定银行卡
         HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
             @Override
@@ -147,7 +150,7 @@ public class RolloutActivity extends BaseActivity {
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, cardNum, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch,province, city);
+        }, cardNum, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
 
     }
 
@@ -392,13 +395,14 @@ public class RolloutActivity extends BaseActivity {
             @Override
             public void onSucceed(Meta result) {
                 Uihelper.showToast(mActivity, "提现成功");
+                finish();
             }
 
             @Override
             public void onFail(String error) {
                 Uihelper.showToast(mActivity, error);
             }
-        },moneyString,userInfo.getBankCode(),cardNum,password);
+        }, moneyString, userInfo.getBankCode(), cardNum, password);
 
 
     }

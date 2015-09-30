@@ -14,7 +14,7 @@ import com.miqian.mq.views.WFYTitle;
 
 public class RollOutResultActivity extends BaseActivity implements View.OnClickListener {
     private Button btBack;
-    private TextView tvMoney,tvOrderNum,tvCardNum;
+    private TextView tvMoney, tvOrderNum, tvCardNum;
 
     @Override
     public void obtainData() {
@@ -34,16 +34,23 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.activity_rollout_result;
     }
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-
+        mTitle.setTitleText("提现");
+        mTitle.setIvLeftVisiable(View.GONE);
     }
 
     @Override
     public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.bt_back:
+
+                break;
+        }
 
 
     }

@@ -10,24 +10,36 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 /**
  * Created by Joy on 2015/9/22.
  */
 public class BindCardActivity extends BaseActivity {
-    private TextView textAgreement;
+    private TextView textAgreement,bindBankName,bindBankNumber;
     private EditText etCardNum;
+    private View frameBank,frameTip;
+    private UserInfo userInfo;
+    private String bankNumber;
+    private ImageView iconBank;
+    private ImageLoader imageLoader;
+    private DisplayImageOptions options;
 
     @Override
     public void obtainData() {
@@ -36,11 +48,40 @@ public class BindCardActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+        imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).displayer(new RoundedBitmapDisplayer(0)).build();
+
         textAgreement = (TextView) findViewById(R.id.text_agreement);
         etCardNum = (EditText) findViewById(R.id.edit_bank_number);
 
+       frameBank=findViewById(R.id.frame_bank);
+       frameTip=findViewById(R.id.frame_tip);
+        bindBankName = (TextView) findViewById(R.id.bind_bank_name);
+        bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
+        iconBank=(ImageView)findViewById(R.id.icon_bank);
+
         SpannableString span = getAgreementSpan();
         textAgreement.setText(span);
+
+        Intent intent = getIntent();
+        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
+        userInfo.setSupportStatus("0");
+
+        if (userInfo.getSupportStatus().equals("0")) {
+            frameBank.setVisibility(View.VISIBLE);
+            frameTip.setVisibility(View.VISIBLE);
+            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+            if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
+                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
+            }
+            bindBankNumber.setText(bankNumber);
+            bindBankName.setText(userInfo.getBankName());
+            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())){
+                imageLoader.displayImage(userInfo.getBankUrlSmall(),iconBank,options);
+            }
+        }
+
     }
 
     private SpannableString getAgreementSpan() {
@@ -114,6 +155,7 @@ public class BindCardActivity extends BaseActivity {
                     Intent intent=new Intent(mActivity,SetBankActivity.class);
                     Bundle extra=new Bundle();
                     extra.putSerializable("bankresult",bankCardResult.getData());
+                    extra.putSerializable("userInfo",userInfo);
                     intent.putExtras(extra);
                     startActivity(intent);
 

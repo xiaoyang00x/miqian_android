@@ -45,39 +45,6 @@
             <View style="@style/item_divider" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/frame_bank"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/listitem_height"
-            android:background="@drawable/ic_launcher"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/text_black_item"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margin_left_right"
-                android:text="开户行 :" />
-
-            <TextView
-                android:id="@+id/branch_bank_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="74dp"
-                android:text="请选择开户行"
-                android:textColor="@color/miqian_gray"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/arrow_right" />
-
-            <View style="@style/item_divider" />
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

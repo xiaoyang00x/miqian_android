@@ -112,6 +112,7 @@ public class MainActivity extends BaseFragmentActivity {
         //判断是否是是极光推送
         boolean isPush = Pref.getBoolean(Pref.IsPush, mContext, false);
         if (isPush) {
+            Pref.saveBoolean(Pref.IsPush,false,mContext);
             String userId = null;
             // 是否登录
             if (!UserUtil.hasLogin(mContext)) {

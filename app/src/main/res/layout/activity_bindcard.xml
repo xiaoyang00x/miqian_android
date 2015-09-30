@@ -4,6 +4,59 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:id="@+id/frame_bank"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/icon_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:src="@drawable/icon_bank" />
+
+        <TextView
+            android:id="@+id/bind_bank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/icon_bank"
+            android:textColor="@color/miqian_black"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/bind_bank_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bind_bank_name"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/icon_bank"
+            android:maxLength="30"
+            android:textColor="@color/miqian_gray"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/frame_tip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/mq_r1"
+            android:textSize="14sp"
+            android:text="移动充值不支持以上银行，请使用新的银行卡"/>
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -29,23 +82,14 @@
             android:numeric="integer" />
     </RelativeLayout>
 
-    <RelativeLayout
-        style="@style/FillContent"
-        android:padding="@dimen/margin_left_right"
-        >
 
-        <TextView
-            android:id="@+id/text_agreement"
-            style="@style/WrapContent"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_small" />
-    </RelativeLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top"
         android:layout_marginLeft="@dimen/margin_left_right"
         android:layout_marginRight="@dimen/margin_left_right"
         >
@@ -57,5 +101,19 @@
             android:layout_height="@dimen/edit_item"
             android:text="确认" />
     </LinearLayout>
+    <RelativeLayout
+        style="@style/FillContent"
+        android:padding="@dimen/margin_left_right"
+        >
+
+        <TextView
+            android:id="@+id/text_agreement"
+            style="@style/WrapContent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/miqian_gray"
+            android:text="3333"
+            android:textSize="@dimen/textsize_small" />
+    </RelativeLayout>
 
 </LinearLayout>

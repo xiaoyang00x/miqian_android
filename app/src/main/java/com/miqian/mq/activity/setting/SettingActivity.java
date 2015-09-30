@@ -2,6 +2,7 @@ package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private UserInfo userInfo;
     private TextView tv_name, tv_card, tv_bindPhone, tv_cardState;
+    private BankCard bankCard;
 
     @Override
     public void obtainData() {
@@ -35,7 +37,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onSucceed(BankCardResult result) {
                 mWaitingDialog.dismiss();
-                BankCard bankCard = result.getData();
+                bankCard = result.getData();
                 String bankOpenName = bankCard.getBankOpenName();
                 //未绑定银行卡
                 if ("0".equals(userInfo.getBindCardStatus())) {
@@ -47,7 +49,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     if (TextUtils.isEmpty(bankNo)) {
                         return;
                     }
-                    tv_card.setText("银行卡号"+" ***** " + bankNo.substring(bankNo.length() - 3, bankNo.length()));
+                    tv_card.setText("银行卡号" + " ***** " + bankNo.substring(bankNo.length() - 3, bankNo.length()));
                     //已绑定支行
                     if (!TextUtils.isEmpty(bankOpenName)) {
                         tv_cardState.setText("已完善");
@@ -130,11 +132,26 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //银行卡号
             case R.id.frame_setting_bankcard:
+                //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
+                if (userInfo.getSupportStatus().equals("0")) {
+                    Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putSerializable("userInfo", userInfo);
+                    intent_bind.putExtras(extra);
+                    startActivity(intent_bind);
+                }   //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
+                else {
+                    Intent intent_bind = new Intent(mActivity, SetBankActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putSerializable("userInfo", userInfo);
+                    if (bankCard != null) {
+                        extra.putSerializable("bankCard", bankCard);
+                    }
+                    intent_bind.putExtras(extra);
+                    startActivity(intent_bind);
+                }
 
-             Intent intent_bind=new Intent(mActivity, BindCardActivity.class);
 
-
-                startActivity(intent_bind);
                 break;
             //意见反馈
             case R.id.frame_setting_suggest:
