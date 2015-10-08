@@ -21,9 +21,11 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.ProducedOrderResult;
+import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.entity.RegularPlanResult;
+import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.entity.UserCurrentResult;
@@ -915,7 +917,7 @@ public class HttpRequest {
     /**
      * 提现
      */
-    public static void withdrawCash(Context context, final ICallback<Meta> callback, String amt,
+    public static void withdrawCash(Context context, final ICallback<RollOutResult> callback, String amt,
                                     String bankCode, String bankNo, String payPassword) {
         if (mList == null) {
             mList = new ArrayList<Param>();
@@ -931,11 +933,11 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
+                RollOutResult rollOutResult = JsonUtil.parseObject(result, RollOutResult.class);
+                if (rollOutResult.getCode().equals("000000")) {
+                    callback.onSucceed(rollOutResult);
                 } else {
-                    callback.onFail(meta.getMessage());
+                    callback.onFail(rollOutResult.getMessage());
                 }
             }
 
@@ -1067,6 +1069,37 @@ public class HttpRequest {
                 SubscribeOrderResult subscribeOrderResult =
                         JsonUtil.parseObject(result, SubscribeOrderResult.class);
                 callback.onSucceed(subscribeOrderResult);
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //我的促销接口，包括红包，拾财券等
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback,
+                                      String promTypCd, String sta, String pageNum, String pageSize) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("promTypCd", promTypCd));
+        mList.add(new Param("sta", sta));
+        mList.add(new Param("pageNum", pageNum));
+        mList.add(new Param("pageSize", pageSize));
+        new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                RedPaperData redPaperData = JsonUtil.parseObject(result, RedPaperData.class);
+                if (redPaperData.getCode().equals("000000")) {
+                    callback.onSucceed(redPaperData);
+                } else {
+                    callback.onFail(redPaperData.getMessage());
+                }
             }
 
             @Override

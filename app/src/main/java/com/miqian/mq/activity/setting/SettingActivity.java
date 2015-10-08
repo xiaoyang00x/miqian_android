@@ -150,14 +150,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     intent_bind.putExtras(extra);
                     startActivity(intent_bind);
                 }
-
-
                 break;
             //意见反馈
             case R.id.frame_setting_suggest:
                 break;
             //关于咪钱
             case R.id.frame_setting_about:
+                startActivity(new Intent(mActivity,AboutUsActivity.class));
                 break;
             //联系客服
             case R.id.frame_setting_telephone:

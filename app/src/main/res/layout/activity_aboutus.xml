@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/FillContent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:orientation="vertical">
+
+        <ImageView
+            style="@style/WrapContent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@drawable/trans"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tvVersion"
+            style="@style/WrapContent"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/current_version"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#A0A0A0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_top"
+            android:orientation="horizontal">
+
+
+            <TextView
+                style="@style/WrapContent"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="客服电话："
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#A0A0A0" />
+
+            <TextView
+                style="@style/WrapContent"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="400-6655-191"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/mq_bl2" />
+
+        </LinearLayout>
+        <TextView
+            style="@style/WrapContent"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="公司地址：北京市朝阳区望京大厦A座10层"
+
+            android:textColor="#A0A0A0" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/FillContent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_top"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Copyright @2015 shicaidai All Rights Reserved"
+            android:textSize="@dimen/mq_font5" />
+    </LinearLayout>
+
+</RelativeLayout>

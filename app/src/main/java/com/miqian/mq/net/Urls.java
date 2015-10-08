@@ -90,4 +90,9 @@ public class Urls {
     public final static String detailsOfRegularDeposit = base_server + "commonService/getHome";
     //records of capital
     public final static String recordsCapital = base_server + "commonService/getHome";
+
+    //我的促销接口
+    public final static String getCustPromotion = base_server + "userService/getCustPromotion";
+
+
 }

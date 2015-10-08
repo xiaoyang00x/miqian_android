@@ -42,10 +42,10 @@
                 android:layout_toRightOf="@id/icon_bank"
                 android:maxLength="30" />
 
-            <View style="@style/item_divider" />
         </RelativeLayout>
 
 
+        <View style="@style/item_divider" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/listitem_height"
@@ -90,7 +90,7 @@
 
         <LinearLayout
             android:id="@+id/frame_bindbranch"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -166,7 +166,7 @@
                 android:id="@+id/tv_arrivetime"
                 style="@style/text_black_item"
                 android:layout_centerVertical="true"
-                android:text="预计到账时间" />
+                android:text="预计到账时间:两个工作日内" />
 
         </RelativeLayout>
 

@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.user;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,9 +12,14 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.setting.BankBranchActivity;
+import com.miqian.mq.activity.setting.BindCardActivity;
 import com.miqian.mq.activity.setting.CityListActivity;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.BankCard;
+import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.RollOut;
+import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
@@ -32,20 +38,51 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
  */
 public class RolloutActivity extends BaseActivity {
     private UserInfo userInfo;
-    private TextView bindBankId, bindBankName, textBranch, textTotalMoney, tv_arrivetime, tv_bank_province;
+    private TextView
+            bindBankId,
+            bindBankName,
+            textBranch,
+            textTotalMoney,
+            tv_arrivetime,
+            tv_bank_province;
     private ImageView iconBank;
-    private View frame_bindbranch, frame_bank_branch, frame_bank_province;
+    private View frame_bindbranch,
+            frame_bank_branch,
+            frame_bank_province;
     private EditText editMoney;
-    private String bankOpenName, city, province, branch, moneyString, cardNum, totalMoney;
+    private String bankOpenName,
+            city,
+            province,
+            branch,
+            moneyString,
+            cardNum,
+            totalMoney;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private CustomDialog dialogTips, dialogTipsReput;
     private DialogTradePassword dialogTradePassword_set;
     private DialogTradePassword dialogTradePassword_input;
     private boolean isChooseCity;
+    private BankCard bankCard;
 
     @Override
     public void obtainData() {
+
+        HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
+            @Override
+            public void onSucceed(BankCardResult result) {
+                bankCard = result.getData();
+                if (bankCard!=null){
+                    bankOpenName = bankCard.getBankOpenName();
+                }
+               initBindBranchView();
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
 
     }
 
@@ -61,12 +98,11 @@ public class RolloutActivity extends BaseActivity {
         }
 
         initBindView();
-        initBindBranchView();
 
     }
 
     private void initBindBranchView() {
-        bankOpenName = "";
+
         if (TextUtils.isEmpty(bankOpenName)) {
             frame_bindbranch.setVisibility(View.VISIBLE);
             frame_bank_province.setOnClickListener(new View.OnClickListener() {
@@ -82,36 +118,21 @@ public class RolloutActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if (isChooseCity){
+                    if (isChooseCity) {
                         Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
-                        intent_branch.putExtra("city",city);
-                        intent_branch.putExtra("province",province);
+                        intent_branch.putExtra("city", city);
+                        intent_branch.putExtra("province", province);
                         startActivityForResult(intent_branch, 0);
 
-                    }else{
-                        Uihelper.showToast(mActivity,"请先选择城市");
+                    } else {
+                        Uihelper.showToast(mActivity, "请先选择城市");
                     }
 
                 }
             });
 
         } else {
-            frame_bindbranch.setVisibility(View.GONE);
         }
-
-
-//        HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
-//            @Override
-//            public void onSucceed(BankCardResult result) {
-//                BankCard bankCard = result.getData();
-//                bankCard.getBankOpenName();
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//
-//            }
-//        });
 
     }
 
@@ -128,7 +149,7 @@ public class RolloutActivity extends BaseActivity {
             }
 
         } else if (resultCode == 0) {
-            isChooseCity=true;
+            isChooseCity = true;
             city = data.getStringExtra("city");
             province = data.getStringExtra("province");
             if (!TextUtils.isEmpty(city)) {
@@ -327,7 +348,7 @@ public class RolloutActivity extends BaseActivity {
                 public void positionBtnClick(String password) {
 
                     if (!TextUtils.isEmpty(password)) {
-                        if (password.length() >= 6 && password.length() <= 20) {
+                        if (password.length() >= 6 && password.length() <= 16) {
                             //设置交易密码
                             mWaitingDialog.show();
                             HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
@@ -367,7 +388,7 @@ public class RolloutActivity extends BaseActivity {
                     public void positionBtnClick(String s) {
                         dismiss();
                         if (!TextUtils.isEmpty(s)) {
-                            if (s.length() >= 6 && s.length() <= 20) {
+                            if (s.length() >= 6 && s.length() <= 16) {
 
                                 //提现
                                 rollOut(s);
@@ -385,21 +406,33 @@ public class RolloutActivity extends BaseActivity {
                 };
             }
         }
-
     }
 
     private void rollOut(String password) {
-
-
-        HttpRequest.withdrawCash(mActivity, new ICallback<Meta>() {
+        mWaitingDialog.show();
+        HttpRequest.withdrawCash(mActivity, new ICallback<RollOutResult>() {
             @Override
-            public void onSucceed(Meta result) {
-                Uihelper.showToast(mActivity, "提现成功");
+            public void onSucceed(RollOutResult result) {
+                mWaitingDialog.dismiss();
+                RollOut rollOut = result.getData();
+                if (rollOut == null) {
+                    return;
+                }
+                rollOut.setBankName(userInfo.getBankName());
+                if (!TextUtils.isEmpty(cardNum)) {
+                    rollOut.setCardNum(cardNum);
+                }
+                Intent intent = new Intent(mActivity, RollOutResultActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("rollOutResult", rollOut);
+                intent.putExtras(extra);
+                startActivity(intent);
                 finish();
             }
 
             @Override
             public void onFail(String error) {
+                mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
         }, moneyString, userInfo.getBankCode(), cardNum, password);

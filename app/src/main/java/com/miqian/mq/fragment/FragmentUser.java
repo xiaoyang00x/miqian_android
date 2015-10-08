@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.user.MyTicketActivity;
+import com.miqian.mq.activity.user.RedPaperActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.setting.SettingActivity;
@@ -81,7 +83,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
-
+                initLoginView();
             }
         });
 
@@ -299,9 +301,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //拾财券
             case R.id.frame_ticket:
+                startActivity(new Intent(getActivity(), MyTicketActivity.class));
                 break;
             //我的红包
             case R.id.frame_redpackage:
+                startActivity(new Intent(getActivity(), RedPaperActivity.class));
                 break;
             //我的消息
             case R.id.btn_message:

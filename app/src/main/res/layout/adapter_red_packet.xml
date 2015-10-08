@@ -23,7 +23,6 @@
             android:id="@+id/limit_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="限定期赚、定期使用"
             android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font4" />
 
@@ -36,6 +35,15 @@
             android:textSize="@dimen/mq_font5" />
 
         <ImageView
+            android:id="@+id/image_redpacket_state"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/image_red_packet"
+            android:layout_marginRight="30dp"
+            />
+
+        <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/image_red_packet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
