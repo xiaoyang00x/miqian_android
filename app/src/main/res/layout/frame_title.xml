@@ -7,10 +7,9 @@
         android:background="@color/mq_r1">
 
         <ImageButton
-            android:id="@+id/btn_message"
-            android:layout_width="50dp"
+            android:id="@+id/bt_left"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
             android:background="@color/transparent" />
 
 <!--         <ImageButton -->
@@ -28,7 +27,7 @@
             android:layout_centerInParent="true"
             android:drawablePadding="5dp"
             android:textColor="@color/white"
-            android:textSize="21sp" />
+            android:textSize="@dimen/mq_font1" />
         
         <ImageView 
             android:id="@+id/title_image"
@@ -38,7 +37,7 @@
             android:visibility="gone"/>
 
         <ImageButton
-            android:id="@+id/btn_account"
+            android:id="@+id/bt_right"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

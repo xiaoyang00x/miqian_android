@@ -107,7 +107,7 @@
     <style name="click_btn" parent="FillContent">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/textsize_middle</item>
+        <item name="android:textSize">@dimen/mq_font1</item>
         <item name="android:background">@drawable/btn_red</item>
     </style>
 

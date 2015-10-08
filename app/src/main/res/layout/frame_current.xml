@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <include layout="@layout/frame_title" />
 
@@ -31,6 +30,31 @@
                         android:id="@+id/wave_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="活存活取"
+                        android:textSize="@dimen/mq_font1"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="40dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="年化收益率"
+                        android:textSize="@dimen/mq_font3"
+                        android:layout_below="@id/text"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#960a0a"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/current_interest"/>
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -52,7 +76,7 @@
                         android:layout_weight="1"
                         android:text="已认购次数"
                         android:textColor="@color/white"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/mq_font3" />
 
                     <TextView
                         android:id="@+id/total_count"
@@ -61,14 +85,14 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/mq_font6" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/white" />
 
                 <LinearLayout
@@ -84,7 +108,7 @@
                         android:layout_weight="1"
                         android:text="累计投资数(元)"
                         android:textColor="@color/white"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/mq_font3" />
 
                     <TextView
                         android:id="@+id/total_money"
@@ -93,7 +117,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/mq_font6" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -108,11 +132,21 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/icon_earning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:src="@drawable/current_earning" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/icon_earning"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="7dp"
+                    android:text="每日计息"
+                    android:textColor="@color/mq_b2"
+                    android:textSize="@dimen/mq_font4" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -121,11 +155,22 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/icon_safe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:src="@drawable/current_safe" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/icon_safe"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="7dp"
+                    android:text="严格风控"
+                    android:textColor="@color/mq_b2"
+                    android:textSize="@dimen/mq_font4" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -134,10 +179,21 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/icon_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:src="@drawable/current_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/icon_back"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="7dp"
+                    android:text="随时赎回"
+                    android:textColor="@color/mq_b2"
+                    android:textSize="@dimen/mq_font4" />
             </RelativeLayout>
 
 
@@ -163,8 +219,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="由融资租赁机构提供本息保障，安全透明值得认购"
-                android:textColor="@color/miqian_gray"
-                android:textSize="12sp" />
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font5" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

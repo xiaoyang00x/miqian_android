@@ -147,12 +147,12 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
         tv_Title.setText("我的");
 
-        ImageButton btn_message = (ImageButton) view.findViewById(R.id.btn_message);
-        btn_message.setImageResource(R.mipmap.account_message);
+        ImageButton btn_message = (ImageButton) view.findViewById(R.id.bt_left);
+        btn_message.setImageResource(R.drawable.account_message);
         btn_message.setOnClickListener(this);
 
-        ImageButton btn_setting = (ImageButton) view.findViewById(R.id.btn_account);
-        btn_setting.setImageResource(R.mipmap.account_setting);
+        ImageButton btn_setting = (ImageButton) view.findViewById(R.id.bt_right);
+        btn_setting.setImageResource(R.drawable.account_setting);
         btn_setting.setOnClickListener(this);
 
         //已登录，显示我的界面
@@ -306,11 +306,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
             case R.id.frame_redpackage:
                 break;
             //我的消息
-            case R.id.btn_message:
+            case R.id.bt_left:
                 startActivity(new Intent(getActivity(), AnnounceActivity.class));
                 break;
             //我的设置
-            case R.id.btn_account:
+            case R.id.bt_right:
                 Intent intent_setting = new Intent(getActivity(), SettingActivity.class);
                 Bundle extra = new Bundle();
                 extra.putSerializable("userInfo", userInfo);
