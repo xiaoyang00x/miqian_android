@@ -39,7 +39,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private TextView textOrderMoney;
     private TextView textBalance;
     private TextView textBest;
-    private TextView textBankPay;
+    private TextView textBestMoney;
+    private TextView textBankPayMoney;
     private RelativeLayout frameBankPay;
     private RelativeLayout frameRedPackage;
 
@@ -91,6 +92,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             public void onSucceed(ProducedOrderResult result) {
                 mWaitingDialog.dismiss();
                 producedOrder = result.getData();
+                promList = producedOrder.getPromList();
                 refreshView();
             }
 
@@ -111,13 +113,22 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             btPay.setText("支付");
         }
         textOrderMoney.setText(money + "元");
-        if (promoteMoney.compareTo(bFlag) > 0) {
-            textBest.setText("抵用" + promoteMoney + "元");
+        if (promList != null && promList.size() > 0) {
+            if (promoteMoney.compareTo(bFlag) > 0) {
+                textBest.setTextColor(getResources().getColor(R.color.mq_b1));
+                textBest.setText("抵用");
+                textBestMoney.setText(promoteMoney + "元");
+            } else {
+                textBest.setTextColor(getResources().getColor(R.color.mq_b2));
+                textBest.setText("最多可抵");
+                textBestMoney.setText(producedOrder.getBest() + "元");
+            }
         } else {
-            textBest.setText("最多可抵" + producedOrder.getBest() + "元");
+            textBest.setTextColor(getResources().getColor(R.color.mq_b2));
+            textBest.setText("无可用");
         }
         textBalance.setText(balancePay + "元");
-        textBankPay.setText("余额不足，银行卡充值 " + rollinMoney + " 元");
+        textBankPayMoney.setText(rollinMoney + " 元");
     }
 
     @Override
@@ -127,7 +138,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         textOrderMoney = (TextView) findViewById(R.id.order_money);
         textBalance = (TextView) findViewById(R.id.text_balance);
         textBest = (TextView) findViewById(R.id.text_best);
-        textBankPay = (TextView) findViewById(R.id.text_bank_pay);
+        textBestMoney = (TextView) findViewById(R.id.text_best_money);
+        textBankPayMoney = (TextView) findViewById(R.id.text_bank_pay_money);
         frameBankPay = (RelativeLayout) findViewById(R.id.frame_bank_pay);
         frameRedPackage = (RelativeLayout) findViewById(R.id.frame_red_package);
         frameRedPackage.setOnClickListener(this);
@@ -157,9 +169,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.frame_red_package:
-                if (producedOrder != null) {
-                    promList = producedOrder.getPromList();
-                }
                 if (promList != null && promList.size() > 0) {
                     Intent intent = new Intent(CurrentInvestment.this, ActivityRedPacket.class);
                     intent.putExtra("producedOrder", JSON.toJSONString(producedOrder));

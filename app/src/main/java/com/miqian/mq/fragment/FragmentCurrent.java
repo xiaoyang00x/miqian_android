@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.activity.user.ActivityUserCurrent;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.net.HttpRequest;
@@ -30,6 +31,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
     private TextView titleText;
     private TextView totalMoneyText;
     private TextView totalCountText;
+    private TextView textDetail;
     private ImageButton btRight;
 
     private Activity mContext;
@@ -66,6 +68,8 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
         totalCountText = (TextView) view.findViewById(R.id.total_count);
         totalMoneyText = (TextView) view.findViewById(R.id.total_money);
+        textDetail = (TextView) view.findViewById(R.id.text_detail);
+        textDetail.setOnClickListener(this);
 
         btInvestment = (Button) view.findViewById(R.id.bt_investment);
         btInvestment.setOnClickListener(this);
@@ -77,13 +81,25 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
                     float money = Float.parseFloat(s);
                     if (money < 1) {
                         this.setTitle("提示：输入请大于一元");
+                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
                         UserUtil.currenPay(mContext, CurrentInvestment.class, s);
+                        this.setEditMoney("");
+                        this.setTitle("认购金额");
+                        this.setTitleColor(getResources().getColor(R.color.mq_b1));
                         this.dismiss();
                     }
                 } else {
                     this.setTitle("提示：请输入金额");
+                    this.setTitleColor(getResources().getColor(R.color.mq_r1));
                 }
+            }
+
+            @Override
+            public void negativeBtnClick() {
+                this.setEditMoney("");
+                this.setTitle("认购金额");
+                this.setTitleColor(getResources().getColor(R.color.mq_b1));
             }
         };
     }
@@ -132,6 +148,12 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.bt_investment:
                 UserUtil.loginPay(mContext, dialogPay);
+                break;
+            case R.id.bt_right:
+                UserUtil.isLogin(mContext, ActivityUserCurrent.class);
+                break;
+            case  R.id.text_detail:
+                // TODO: 2015/10/8
                 break;
             default:
                 break;

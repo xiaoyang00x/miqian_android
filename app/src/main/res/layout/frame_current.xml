@@ -50,6 +50,17 @@
                         android:layout_centerHorizontal="true"
                         android:textColor="#960a0a"/>
 
+                    <TextView
+                        android:id="@+id/text_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="查看详情"
+                        android:textSize="@dimen/mq_font4"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/mq_r1"/>
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

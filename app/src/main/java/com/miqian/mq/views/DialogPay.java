@@ -32,7 +32,7 @@ public abstract class DialogPay extends Dialog {
 
     public abstract void positionBtnClick(String s);
 
-//    public abstract void negativeBtnClick();
+    public abstract void negativeBtnClick();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public abstract class DialogPay extends Dialog {
         btNegative.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-//                negativeBtnClick();
+                negativeBtnClick();
                 dismiss();
             }
         });
@@ -72,7 +72,7 @@ public abstract class DialogPay extends Dialog {
 
             public void onClick(View arg0) {
                 positionBtnClick(editMoney.getText().toString());
-                editMoney.setText("");
+//                editMoney.setText("");
             }
         });
     }
@@ -80,6 +80,18 @@ public abstract class DialogPay extends Dialog {
     public void setTitle(String title) {
         if (titleText != null) {
             titleText.setText(title);
+        }
+    }
+
+    public void setTitleColor(int color) {
+        if (titleText != null) {
+            titleText.setTextColor(color);
+        }
+    }
+
+    public void setEditMoney(String money) {
+        if (editMoney != null) {
+            editMoney.setText(money);
         }
     }
 

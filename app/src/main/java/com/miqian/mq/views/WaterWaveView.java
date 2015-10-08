@@ -40,7 +40,7 @@ public class WaterWaveView extends View {
     private Paint flowPaint;
     private Paint leftPaint;
 
-    private int mRingSTROKEWidth = 15;
+    private int mRingSTROKEWidth = 18;
     private int mCircleSTROKEWidth = 2;
     private int mLineSTROKEWidth = 1;
 
@@ -301,7 +301,7 @@ public class WaterWaveView extends View {
             startX1++;
         }
         canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2, mRingPaint);
-        canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2 + 18, mBigCirclePaint);
+        canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2 + 20, mBigCirclePaint);
 
         canvas.drawCircle(centerX, centerY, mScreenWidth / 4, mCirclePaint);
 

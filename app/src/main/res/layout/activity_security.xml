@@ -31,7 +31,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/right" />
         </RelativeLayout>
 
         <View
@@ -58,7 +58,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/right" />
         </RelativeLayout>
     </LinearLayout>
 
