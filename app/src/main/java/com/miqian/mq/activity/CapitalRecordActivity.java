@@ -68,7 +68,7 @@ public class CapitalRecordActivity extends BaseActivity {
         mWaitingDialog = ProgressDialogView.create(this);
         mWaitingDialog.show();
         mWaitingDialog.setCanceledOnTouchOutside(false);
-        updateData("custId", "pageNum", "pageSize", "startDate", "endDate", "operationType", true);
+        updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", true);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class CapitalRecordActivity extends BaseActivity {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                updateData("custId", "pageNum", "pageSize", "startDate", "endDate", "operationType", false);
+                updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", false);
                 //srl.setRefreshing(false);
             }
         });
@@ -170,8 +170,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        updateData("custId", "pageNum", "pageSize", "startDate", "endDate", "operationType",
-                                true);
+                        updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", true);
                     }
                 }, 3000);
             }
@@ -313,7 +312,7 @@ public class CapitalRecordActivity extends BaseActivity {
         filetr_container.setVisibility(View.GONE);
 
         //todo 到网络获取数据。因为该界面的信息是分页的。
-        updateData("custId", "pageNum", "pageSize", "startDate", "endDate", "operationType", false);
+        updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", false);
     }
 
     private void setPreSelected(CircleButton curC, TextView curT, String txt) {
@@ -353,8 +352,7 @@ public class CapitalRecordActivity extends BaseActivity {
     //    否
     //查询条件，时间区间的结束值
     //    operateType
-    private void updateData(String custId, String pageNum, String pageSize, String startDate,
-                            String endDate, String operationType, boolean loadMore) {
+    private void updateData(String pageNum, String pageSize, String startDate, String endDate, String operationType, boolean loadMore) {
         final boolean isMore = loadMore;
         HttpRequest.getCapitalRecords(this, new ICallback<CapitalRecord>() {
 
@@ -388,6 +386,6 @@ public class CapitalRecordActivity extends BaseActivity {
                 //showEmptyView();
                 //adapter.notifyDataSetChanged();
             }
-        }, custId, pageNum, pageSize, startDate, endDate, operationType);
+        }, pageNum, pageSize, startDate, endDate, operationType);
     }
 }

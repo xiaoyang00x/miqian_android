@@ -2,30 +2,26 @@ package com.miqian.mq.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.activity.user.ActivityUserCurrent;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.pay.BaseHelper;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WaterWaveView;
-
-import org.json.JSONObject;
 
 public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
@@ -35,10 +31,11 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
     private TextView titleText;
     private TextView totalMoneyText;
     private TextView totalCountText;
+    private TextView textDetail;
+    private ImageButton btRight;
 
     private Activity mContext;
     private DialogPay dialogPay;
-//    private MyHandler mHandler;
 
     private CurrentInfo currentInfo;
 
@@ -53,21 +50,26 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
             parent.removeView(view);
         }
         findViewById(view);
-//        mHandler = new MyHandler();
         obtainData();
         return view;
     }
 
     private void findViewById(View view) {
         waterWaveView = (WaterWaveView) view.findViewById(R.id.wave_view);
-        waterWaveView.setmWaterLevel(0.2F);
+        waterWaveView.setmWaterLevel(0.16F);
         waterWaveView.startWave();
 
         titleText = (TextView) view.findViewById(R.id.title);
         titleText.setText("活期");
 
+        btRight = (ImageButton) view.findViewById(R.id.bt_right);
+        btRight.setImageResource(R.drawable.btn_current_right);
+        btRight.setOnClickListener(this);
+
         totalCountText = (TextView) view.findViewById(R.id.total_count);
         totalMoneyText = (TextView) view.findViewById(R.id.total_money);
+        textDetail = (TextView) view.findViewById(R.id.text_detail);
+        textDetail.setOnClickListener(this);
 
         btInvestment = (Button) view.findViewById(R.id.bt_investment);
         btInvestment.setOnClickListener(this);
@@ -79,13 +81,25 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
                     float money = Float.parseFloat(s);
                     if (money < 1) {
                         this.setTitle("提示：输入请大于一元");
+                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
                         UserUtil.currenPay(mContext, CurrentInvestment.class, s);
+                        this.setEditMoney("");
+                        this.setTitle("认购金额");
+                        this.setTitleColor(getResources().getColor(R.color.mq_b1));
                         this.dismiss();
                     }
                 } else {
                     this.setTitle("提示：请输入金额");
+                    this.setTitleColor(getResources().getColor(R.color.mq_r1));
                 }
+            }
+
+            @Override
+            public void negativeBtnClick() {
+                this.setEditMoney("");
+                this.setTitle("认购金额");
+                this.setTitleColor(getResources().getColor(R.color.mq_b1));
             }
         };
     }
@@ -94,6 +108,15 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
         if (currentInfo != null) {
             totalCountText.setText(currentInfo.getBuyItemCount());
             totalMoneyText.setText(currentInfo.getBuyTotalSum());
+            if (currentInfo.getCurrentSwitch().equals("0")) {
+                btInvestment.setText("已售罄");
+                btInvestment.setBackgroundResource(R.drawable.btn_cancel);
+                btInvestment.setEnabled(false);
+            } else {
+                btInvestment.setText("马上认购");
+                btInvestment.setBackgroundResource(R.drawable.btn_red);
+                btInvestment.setEnabled(true);
+            }
         }
     }
 
@@ -125,6 +148,12 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.bt_investment:
                 UserUtil.loginPay(mContext, dialogPay);
+                break;
+            case R.id.bt_right:
+                UserUtil.isLogin(mContext, ActivityUserCurrent.class);
+                break;
+            case  R.id.text_detail:
+                // TODO: 2015/10/8
                 break;
             default:
                 break;

@@ -39,7 +39,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private TextView textOrderMoney;
     private TextView textBalance;
     private TextView textBest;
-    private TextView textBankPay;
+    private TextView textBestMoney;
+    private TextView textBankPayMoney;
     private RelativeLayout frameBankPay;
     private RelativeLayout frameRedPackage;
 
@@ -53,6 +54,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     private String money;
     private String prodId; //0:充值产品 1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+    private String subjectId; //标的id，活期默认为0
     private int position = -1;//使用的红包位置，用于获取list
 
     private BigDecimal orderMoney;//订单金额
@@ -74,6 +76,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         money = FormatUtil.getMoneyString(intent.getStringExtra("money"));
         prodId = intent.getStringExtra("prodId");
+        subjectId = intent.getStringExtra("subjectId");
         super.onCreate(bundle);
     }
 
@@ -89,6 +92,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             public void onSucceed(ProducedOrderResult result) {
                 mWaitingDialog.dismiss();
                 producedOrder = result.getData();
+                promList = producedOrder.getPromList();
                 refreshView();
             }
 
@@ -109,13 +113,22 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             btPay.setText("支付");
         }
         textOrderMoney.setText(money + "元");
-        if (promoteMoney.compareTo(bFlag) > 0) {
-            textBest.setText("抵用" + promoteMoney + "元");
+        if (promList != null && promList.size() > 0) {
+            if (promoteMoney.compareTo(bFlag) > 0) {
+                textBest.setTextColor(getResources().getColor(R.color.mq_b1));
+                textBest.setText("抵用");
+                textBestMoney.setText(promoteMoney + "元");
+            } else {
+                textBest.setTextColor(getResources().getColor(R.color.mq_b2));
+                textBest.setText("最多可抵");
+                textBestMoney.setText(producedOrder.getBest() + "元");
+            }
         } else {
-            textBest.setText("最多可抵" + producedOrder.getBest() + "元");
+            textBest.setTextColor(getResources().getColor(R.color.mq_b2));
+            textBest.setText("无可用");
         }
         textBalance.setText(balancePay + "元");
-        textBankPay.setText("余额不足，银行卡充值 " + rollinMoney + " 元");
+        textBankPayMoney.setText(rollinMoney + " 元");
     }
 
     @Override
@@ -125,7 +138,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         textOrderMoney = (TextView) findViewById(R.id.order_money);
         textBalance = (TextView) findViewById(R.id.text_balance);
         textBest = (TextView) findViewById(R.id.text_best);
-        textBankPay = (TextView) findViewById(R.id.text_bank_pay);
+        textBestMoney = (TextView) findViewById(R.id.text_best_money);
+        textBankPayMoney = (TextView) findViewById(R.id.text_bank_pay_money);
         frameBankPay = (RelativeLayout) findViewById(R.id.frame_bank_pay);
         frameRedPackage = (RelativeLayout) findViewById(R.id.frame_red_package);
         frameRedPackage.setOnClickListener(this);
@@ -155,9 +169,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.frame_red_package:
-                if (producedOrder != null) {
-                    promList = producedOrder.getPromList();
-                }
                 if (promList != null && promList.size() > 0) {
                     Intent intent = new Intent(CurrentInvestment.this, ActivityRedPacket.class);
                     intent.putExtra("producedOrder", JSON.toJSONString(producedOrder));
@@ -326,7 +337,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                         mWaitingDialog.dismiss();
                                         Uihelper.showToast(mActivity, error);
                                     }
-                                }, money, prodId, payPassword, "0", promListString);
+                                }, money, prodId, payPassword, subjectId, promListString);
                             } else {
                                 Uihelper.showToast(mActivity, R.string.tip_password);
                             }

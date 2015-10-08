@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2015/9/6.
  */
-public class UserInfo  implements Serializable{
+public class UserInfo implements Serializable {
 
     public String custId;//客户id
     public String mobilePhone;//手机号
@@ -27,7 +27,7 @@ public class UserInfo  implements Serializable{
     public String redBag;//红包数
     public String bankName;//绑定银行名称
     public String bankUrlSmall;//绑定银行图标url
-    public String  bankUrlBig;//绑定银行图标url
+    public String bankUrlBig;//绑定银行图标url
     public String bankCode;//绑定银行代码
     public String supportStatus;//是否支持连连绑卡
 

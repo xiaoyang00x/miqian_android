@@ -60,6 +60,30 @@
         <item name="android:textSize">@dimen/textsize_normal</item>
     </style>
 
+    <style name="f3_B1" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/mq_b1</item>
+        <item name="android:textSize">@dimen/mq_font3</item>
+    </style>
+
+    <style name="f3_B2" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/mq_b2</item>
+        <item name="android:textSize">@dimen/mq_font3</item>
+    </style>
+
+    <style name="f1_R1" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/mq_r1</item>
+        <item name="android:textSize">@dimen/mq_font1</item>
+    </style>
+
+    <style name="f3_R1" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/mq_r1</item>
+        <item name="android:textSize">@dimen/mq_font3</item>
+    </style>
+
     <style name="text_gray_item" parent="WrapContent">
         <item name="android:textColor">@color/miqian_gray</item>
         <item name="android:textSize">@dimen/textsize_normal</item>
@@ -107,7 +131,7 @@
     <style name="click_btn" parent="FillContent">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/textsize_middle</item>
+        <item name="android:textSize">@dimen/mq_font1</item>
         <item name="android:background">@drawable/btn_red</item>
     </style>
 

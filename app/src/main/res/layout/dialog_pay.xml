@@ -21,6 +21,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:textSize="@dimen/mq_font1"
+                android:textColor="@color/mq_b1"
                 android:text="认购金额" />
         </RelativeLayout>
 

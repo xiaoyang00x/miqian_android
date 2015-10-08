@@ -155,6 +155,7 @@ public class UserUtil {
         Intent intent = new Intent(activity, cls);
         intent.putExtra("money", money);
         intent.putExtra("prodId", "1");//0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+        intent.putExtra("subjectId", "0");//标的id，活期默认为0
         activity.startActivity(intent);
     }
 

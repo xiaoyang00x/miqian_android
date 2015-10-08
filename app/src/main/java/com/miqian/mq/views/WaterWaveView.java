@@ -40,7 +40,7 @@ public class WaterWaveView extends View {
     private Paint flowPaint;
     private Paint leftPaint;
 
-    private int mRingSTROKEWidth = 15;
+    private int mRingSTROKEWidth = 18;
     private int mCircleSTROKEWidth = 2;
     private int mLineSTROKEWidth = 1;
 
@@ -269,11 +269,11 @@ public class WaterWaveView extends View {
         //起始振动X坐标，结束振动X坐标
         int startX, endX;
         if (mWaterLevel > 0.50F) {
-            startX = (int) (centerX - mScreenWidth / 4 + offsetWidth);
-            endX = (int) (centerX + mScreenWidth / 4 - offsetWidth);
+            startX = (int) (centerX - (mScreenWidth + offsetWidth) / 4 + offsetWidth);
+            endX = (int) (centerX + (mScreenWidth + offsetWidth) / 4 - offsetWidth);
         } else {
-            startX = (int) (centerX - mScreenWidth / 4 + offsetWidth - mAmplitude);
-            endX = (int) (centerX + mScreenWidth / 4 - offsetWidth + mAmplitude);
+            startX = (int) (centerX - (mScreenWidth + offsetWidth) / 4 + offsetWidth - mAmplitude);
+            endX = (int) (centerX + (mScreenWidth + offsetWidth) / 4 - offsetWidth + mAmplitude);
         }
         // 波浪效果
         while (startX < endX) {
@@ -286,11 +286,11 @@ public class WaterWaveView extends View {
         //起始振动X坐标，结束振动X坐标
         int startX1, endX1;
         if (mWaterLevel > 0.50F) {
-            startX1 = (int) (centerX - mScreenWidth / 4 + offsetWidth);
-            endX1 = (int) (centerX + mScreenWidth / 4 - offsetWidth);
+            startX1 = (int) (centerX - (mScreenWidth + offsetWidth) / 4 + offsetWidth);
+            endX1 = (int) (centerX + (mScreenWidth + offsetWidth) / 4 - offsetWidth);
         } else {
-            startX1 = (int) (centerX - mScreenWidth / 4 + offsetWidth - mAmplitude);
-            endX1 = (int) (centerX + mScreenWidth / 4 - offsetWidth + mAmplitude);
+            startX1 = (int) (centerX - (mScreenWidth + offsetWidth) / 4 + offsetWidth - mAmplitude);
+            endX1 = (int) (centerX + (mScreenWidth + offsetWidth) / 4 - offsetWidth + mAmplitude);
         }
 
         // 波浪效果
@@ -301,7 +301,7 @@ public class WaterWaveView extends View {
             startX1++;
         }
         canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2, mRingPaint);
-        canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2 + 18, mBigCirclePaint);
+        canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2 + 20, mBigCirclePaint);
 
         canvas.drawCircle(centerX, centerY, mScreenWidth / 4, mCirclePaint);
 
