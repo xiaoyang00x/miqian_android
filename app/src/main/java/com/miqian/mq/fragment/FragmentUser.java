@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
+import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
@@ -296,6 +297,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //资金记录
             case R.id.frame_record:
+                intent = new Intent(getActivity(), CapitalRecordActivity.class);
                 break;
             //拾财券
             case R.id.frame_ticket:

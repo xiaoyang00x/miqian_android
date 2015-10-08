@@ -978,9 +978,7 @@ public class HttpRequest {
     /**
      * 获取资金记录
      */
-    public static void getCapitalRecords(Context context, final ICallback<CapitalRecord> callback,
-                                         String custId, String pageNum, String pageSize, String startDate, String endDate,
-                                         String operationType) {
+    public static void getCapitalRecords(Context context, final ICallback<CapitalRecord> callback, String pageNum, String pageSize, String startDate, String endDate, String operationType) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }

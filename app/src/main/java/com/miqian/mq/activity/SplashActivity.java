@@ -49,7 +49,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         if (!first_use) {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             //Intent intent = new Intent(SplashActivity.this, DetailsForRegularEarningActivity.class);
-            //Intent intent = new Intent(SplashActivity.this, CapitalRecordActivity.class);
 //			if (!TextUtils.isEmpty(uritype)) {
 //
 //				intent.putExtra("uritype", uritype);

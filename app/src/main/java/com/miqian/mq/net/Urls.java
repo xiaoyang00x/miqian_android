@@ -89,5 +89,5 @@ public class Urls {
     //details for regular deposit
     public final static String detailsOfRegularDeposit = base_server + "commonService/getHome";
     //records of capital
-    public final static String recordsCapital = base_server + "commonService/getHome";
+    public final static String recordsCapital = base_server + " userService/getAssetRecord";
 }
