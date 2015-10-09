@@ -72,10 +72,10 @@ public class RolloutActivity extends BaseActivity {
             @Override
             public void onSucceed(BankCardResult result) {
                 bankCard = result.getData();
-                if (bankCard!=null){
+                if (bankCard != null) {
                     bankOpenName = bankCard.getBankOpenName();
                 }
-               initBindBranchView();
+                initBindBranchView();
             }
 
             @Override
@@ -204,16 +204,19 @@ public class RolloutActivity extends BaseActivity {
                 cardNum = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
                 bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
             }
-            if (!TextUtils.isEmpty(userInfo.getBankName())) ;
-            bindBankName.setText(userInfo.getBankName());
+            if (!TextUtils.isEmpty(userInfo.getBankName())) {
+                bindBankName.setText(userInfo.getBankName());
+            }
 
-            if (!TextUtils.isEmpty(userInfo.getBalance())) ;
-            totalMoney = userInfo.getBalance();
-            textTotalMoney.setText(totalMoney + "");
-            editMoney.setHint("最多可转" + totalMoney + "元");
+            if (!TextUtils.isEmpty(userInfo.getBalance())) {
+                totalMoney = userInfo.getBalance();
+                textTotalMoney.setText(totalMoney + "");
+                editMoney.setHint("最多可转" + totalMoney + "元");
+            }
 
-            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) ;
-            imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
+            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
+                imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
+            }
         }
 
     }

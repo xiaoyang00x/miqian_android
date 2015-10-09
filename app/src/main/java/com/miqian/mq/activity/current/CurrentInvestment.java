@@ -272,7 +272,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 @Override
                 public void positionBtnClick(String s) {
                     if (!TextUtils.isEmpty(s)) {
-                        if (s.length() >= 6 && s.length() <= 20) {
+                        if (s.length() >= 6 && s.length() <= 16) {
                             //设置交易密码
                             mWaitingDialog.show();
                             dismiss();
@@ -306,7 +306,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     public void positionBtnClick(String payPassword) {
                         dismiss();
                         if (!TextUtils.isEmpty(payPassword)) {
-                            if (payPassword.length() >= 6 && payPassword.length() <= 20) {
+                            if (payPassword.length() >= 6 && payPassword.length() <= 16) {
                                 //支付
                                 mWaitingDialog.show();
                                 HttpRequest.subjectIdOrder(mActivity, new ICallback<SubscribeOrderResult>() {

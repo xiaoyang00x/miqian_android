@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin_left_right"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@color/white" >
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="赎回本金" />
+
+            <EditText
+                android:id="@+id/edit_money"
+                style="@style/edittext_item"
+                android:layout_height="match_parent"
+                android:paddingLeft="5dp"
+                android:numeric="decimal" >
+            </EditText>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_top"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right"
+            android:paddingTop="@dimen/margin_top" >
+
+            <Button
+                android:id="@+id/bt_rollout"
+                android:layout_height="@dimen/listitem_height"
+                style="@style/click_btn"
+                android:onClick="btn_click"
+                android:text="赎回" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

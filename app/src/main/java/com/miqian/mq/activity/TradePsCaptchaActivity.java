@@ -15,6 +15,7 @@ import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
@@ -34,6 +35,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
     private static Handler handler;
     private EditText mEtRealname;
     private TextView tv_phone;
+    private String telephone;
 
 
     @Override
@@ -58,6 +60,11 @@ public class TradePsCaptchaActivity extends BaseActivity {
     public void initView() {
 
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
+        telephone = Pref.getString(Pref.TELEPHONE, mActivity, "");
+       if (!TextUtils.isEmpty(telephone)){
+           tv_phone.setText("验证码发送至 ****" +telephone.substring(telephone.length()-4,telephone.length()));
+       }
+
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
         mEtRealname = (EditText) findViewById(R.id.et_realname);
 
@@ -70,17 +77,6 @@ public class TradePsCaptchaActivity extends BaseActivity {
             }
         });
 
-        HttpRequest.setIDCardCheck(mActivity, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-             Uihelper.trace("onsuccess:实名认证");
-            }
-
-            @Override
-            public void onFail(String error) {
-                Uihelper.trace("Fail:实名认证");
-            }
-        }, "350425198903282412", "涂良坛");
 
     }
 
@@ -101,10 +97,10 @@ public class TradePsCaptchaActivity extends BaseActivity {
             @Override
             public void onFail(String error) {
 
-                Uihelper.showToast(mActivity,error);
+                Uihelper.showToast(mActivity, error);
 
             }
-        }, "13365047950", TypeUtil.CAPTCHA_TRADEPASSWORD);
+        }, telephone, TypeUtil.CAPTCHA_TRADEPASSWORD);
 
     }
 
@@ -147,7 +143,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, "SXJ0", idCard, "13365047950", captcha, "", "");
+        }, "SXJ0", idCard, telephone, captcha, "", "");
 
     }
 

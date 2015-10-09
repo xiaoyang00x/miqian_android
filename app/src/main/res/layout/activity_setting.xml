@@ -29,6 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/arrow_1"
+            android:text="未认证"
             android:textColor="@color/mq_r1" />
     </RelativeLayout>
 

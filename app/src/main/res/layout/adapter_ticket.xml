@@ -49,6 +49,14 @@
 
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/image_state"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:layout_toLeftOf="@+id/text_money" />
+
     <TextView
         android:id="@+id/text_money"
         android:layout_width="wrap_content"

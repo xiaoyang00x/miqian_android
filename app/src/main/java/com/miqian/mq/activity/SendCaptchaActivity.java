@@ -66,6 +66,9 @@ public class SendCaptchaActivity extends BaseActivity {
 
         Intent intent = getIntent();
         type = intent.getIntExtra("type", 0);
+        if (type == TypeUtil.SENDCAPTCHA_FORGETPSW) {
+            mTitle.setTitleText("修改登录密码");
+        }
 
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
 
@@ -128,7 +131,7 @@ public class SendCaptchaActivity extends BaseActivity {
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Uihelper.trace("captcha:"+result.getCode());
+                Uihelper.trace("captcha:" + result.getCode());
             }
 
             @Override
@@ -167,13 +170,12 @@ public class SendCaptchaActivity extends BaseActivity {
 
     }
 
-    private void summit(final String phone,final String captcha) {
+    private void summit(final String phone, final String captcha) {
         String userId;
-        if (UserUtil.hasLogin(mActivity)){
-            userId=UserUtil.getUserId(mActivity);
-        }
-        else{
-            userId="";
+        if (UserUtil.hasLogin(mActivity)) {
+            userId = UserUtil.getUserId(mActivity);
+        } else {
+            userId = "";
         }
 
         int summitType = 0;
@@ -182,23 +184,23 @@ public class SendCaptchaActivity extends BaseActivity {
                 summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
                 break;
         }
-        HttpRequest.checkCaptcha(mActivity,new ICallback<Meta>() {
+        HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Intent intent=new Intent(mActivity,SetPasswordActivity.class);
-                intent.putExtra("captcha",captcha);
-                intent.putExtra("phone",phone);
-                intent.putExtra("type",TypeUtil.PASSWORD_LOGIN);
+                Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+                intent.putExtra("captcha", captcha);
+                intent.putExtra("phone", phone);
+                intent.putExtra("type", TypeUtil.PASSWORD_LOGIN);
                 startActivity(intent);
             }
 
             @Override
             public void onFail(String error) {
 
-                Uihelper.showToast(mActivity,error);
+                Uihelper.showToast(mActivity, error);
 
             }
-        }, phone,summitType,captcha);
+        }, phone, summitType, captcha);
 
     }
 
