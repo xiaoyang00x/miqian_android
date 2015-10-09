@@ -22,6 +22,7 @@ import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.RedPaperData;
+import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.entity.RegularPlanResult;
@@ -1100,6 +1101,33 @@ public class HttpRequest {
                 }
             }
 
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //赎回
+    public static void redeem(Context context, final ICallback<RedeemData> callback,
+                                        String amt, String payPassword) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("amt", amt));
+        new MyAsyncTask(context, Urls.redeem, mList, new ICallback<String>() {
+            @Override
+            public void onSucceed(String result) {
+                RedeemData redeemResult = JsonUtil.parseObject(result, RedeemData.class);
+                if (redeemResult.getCode().equals("000000")) {
+                    callback.onSucceed(redeemResult);
+                } else {
+                    callback.onFail(redeemResult.getMessage());
+                }
+            }
             @Override
             public void onFail(String error) {
                 callback.onFail(error);

@@ -93,6 +93,8 @@ public class Urls {
 
     //我的促销接口
     public final static String getCustPromotion = base_server + "userService/getCustPromotion";
+    //赎回
+    public final static String redeem = base_server + "assetService/redeem";
 
 
 }

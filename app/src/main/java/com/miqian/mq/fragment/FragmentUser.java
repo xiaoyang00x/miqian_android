@@ -24,7 +24,7 @@ import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
-import com.miqian.mq.activity.user.ActivityUserCurrent;
+import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;

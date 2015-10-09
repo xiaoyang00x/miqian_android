@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
-import com.miqian.mq.activity.user.ActivityUserCurrent;
+import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.net.HttpRequest;

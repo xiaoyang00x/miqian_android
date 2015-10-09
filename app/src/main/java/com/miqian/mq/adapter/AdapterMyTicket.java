@@ -36,10 +36,10 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Redpaper.CustPromotion promote = promList.get(position);
-        ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getPrnUsePerc());
+        ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
         ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getPrnUsePerc() + "%】");
-        ((ViewHolderTicket) holder).limitType.setText(promote.getAllowDonation());
-//        ((ViewHolderTicket) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
+        ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
+        ((ViewHolderTicket) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
             ((ViewHolderTicket) holder).promoteChoosed.setVisibility(View.GONE);
 
     }

@@ -1,5 +1,7 @@
-package com.miqian.mq.activity.user;
+package com.miqian.mq.activity.current;
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -7,6 +9,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.current.ActivityRedeem;
 import com.miqian.mq.entity.UserCurrent;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.net.HttpRequest;
@@ -53,6 +56,18 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             textEarning.setText(userCurrent.getCurYesterDayAmt());
             textCaptial.setText(userCurrent.getCurAsset());
             textTotalEarning.setText(userCurrent.getCurAmt());
+            String capital=userCurrent.getCurAsset();
+
+
+            if (!TextUtils.isEmpty(userCurrent.getCurAsset())){
+                float totalMoneyFloat = Float.parseFloat(capital);
+                if (totalMoneyFloat>0){
+                }else {
+                    btRedeem.setEnabled(false);
+                }
+            }else {
+                btRedeem.setEnabled(false);
+            }
         }
     }
 
@@ -87,13 +102,19 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.frame_current_record:
-            break;
+                break;
             case R.id.frame_project_match:
-            break;
+                break;
             case R.id.bt_redeem:
-            break;
+                Intent intent = new Intent(mActivity, ActivityRedeem.class);
+                //本金
+                intent.putExtra("capital",userCurrent.getCurAsset());
+                intent.putExtra("totalEaring",userCurrent.getCurAmt());
+                startActivity(intent);
+
+                break;
             case R.id.bt_subscribe:
-            break;
+                break;
         }
     }
 }

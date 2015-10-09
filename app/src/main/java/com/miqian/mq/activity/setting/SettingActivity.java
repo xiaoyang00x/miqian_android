@@ -99,6 +99,17 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_telephone.setOnClickListener(this);
         frame_setting_bankcard.setOnClickListener(this);
 
+
+        if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
+            //未认证
+            if ("1".equals(userInfo.getRealNameStatus())) {
+                if (!TextUtils.isEmpty(userInfo.getRealName())) {
+                    tv_name.setText(RSAUtils.decryptByPrivate(userInfo.getRealName()));
+                }
+                findViewById(R.id.arrow_1).setVisibility(View.INVISIBLE);
+            }
+        }
+
     }
 
     @Override
@@ -116,8 +127,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             //姓名
             case R.id.frame_setting_name:
-                Intent intent = new Intent(mActivity, ActivityRealname.class);
-                startActivity(intent);
+
+                if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
+                    //未认证
+                    if ("0".equals(userInfo.getRealNameStatus())) {
+                        Intent intent = new Intent(mActivity, ActivityRealname.class);
+                        startActivity(intent);
+                    }
+                }
+
                 break;
             //绑定手机
             case R.id.frame_setting_bindphone:
@@ -156,7 +174,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //关于咪钱
             case R.id.frame_setting_about:
-                startActivity(new Intent(mActivity,AboutUsActivity.class));
+                startActivity(new Intent(mActivity, AboutUsActivity.class));
                 break;
             //联系客服
             case R.id.frame_setting_telephone:
