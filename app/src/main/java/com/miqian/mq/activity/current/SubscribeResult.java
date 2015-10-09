@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -110,9 +112,11 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.bt_back_home:
                 SubscribeResult.this.finish();
+                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_HOME, null);
                 break;
             case R.id.bt_back_user:
                 SubscribeResult.this.finish();
+                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
                 break;
             default:
                 break;

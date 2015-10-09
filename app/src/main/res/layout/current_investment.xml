@@ -47,7 +47,7 @@
             android:id="@+id/order_money"
             style="@style/f3_B1"
             android:layout_alignParentRight="true"
-            android:text="--元" />
+            android:text="--" />
 
     </RelativeLayout>
 
@@ -71,16 +71,14 @@
             style="@style/f3_R1"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:text="20元" />
+            android:layout_marginRight="15dp" />
 
         <TextView
             android:id="@+id/text_best"
             style="@style/f3_B2"
             android:layout_centerVertical="true"
             android:layout_marginRight="2dp"
-            android:layout_toLeftOf="@id/text_best_money"
-            android:text="最多可抵" />
+            android:layout_toLeftOf="@id/text_best_money" />
 
         <ImageView
             android:layout_width="wrap_content"

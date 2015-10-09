@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import cn.jpush.android.api.JPushInterface;
 import com.miqian.mq.R;
+import com.miqian.mq.utils.Config;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
 
@@ -20,7 +21,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//		Config.init(this);
+		Config.init(this);
 
         setContentView(R.layout.activity_splash);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);

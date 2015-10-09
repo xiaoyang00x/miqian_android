@@ -31,41 +31,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
-                    <TextView
-                        android:id="@+id/text"
+                    <ImageView
+                        android:id="@+id/image_interest"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="活存活取"
-                        android:textSize="@dimen/mq_font1"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="40dp"
-                        android:textColor="@color/white"/>
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/current_interest" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="年化收益率"
-                        android:textSize="@dimen/mq_font3"
-                        android:layout_below="@id/text"
+                        android:layout_above="@id/image_interest"
                         android:layout_centerHorizontal="true"
-                        android:textColor="#960a0a"/>
+                        android:layout_marginBottom="10dp"
+                        android:text="年化收益率"
+                        android:textColor="#960a0a"
+                        android:textSize="@dimen/mq_font3" />
 
                     <TextView
                         android:id="@+id/text_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="查看详情"
-                        android:textSize="@dimen/mq_font4"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="40dp"
+                        android:layout_below="@id/image_interest"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@color/mq_r1"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/current_interest"/>
+                        android:layout_marginTop="30dp"
+                        android:text="查看详情"
+                        android:textColor="@color/mq_r1"
+                        android:textSize="@dimen/mq_font4" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -202,7 +194,7 @@
                     android:layout_below="@id/icon_back"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="7dp"
-                    android:text="随时赎回"
+                    android:text="活存活取"
                     android:textColor="@color/mq_b2"
                     android:textSize="@dimen/mq_font4" />
             </RelativeLayout>

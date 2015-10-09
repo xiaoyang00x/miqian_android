@@ -126,6 +126,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         } else {
             textBest.setTextColor(getResources().getColor(R.color.mq_b2));
             textBest.setText("无可用");
+            textBestMoney.setText("");
         }
         textBalance.setText(balancePay + "元");
         textBankPayMoney.setText(rollinMoney + " 元");
