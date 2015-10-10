@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
 import android.widget.TabWidget;
 
 import com.miqian.mq.MyApplication;
@@ -44,6 +46,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     TabWidget tabWidget;
     LinearLayout tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
     private List<JpushInfo> jpushInfolist;
+    private int current_tab = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,14 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         //设置别名
         JpushHelper.setAlias(this);
         handleJpush();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
+            mTabHost.setCurrentTab(current_tab);
+        }
     }
 
     @Override
@@ -75,6 +86,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         tabIndicator2 = initTabView(tw, R.drawable.tab_current);
         tabIndicator3 = initTabView(tw, R.drawable.tab_regular);
         tabIndicator4 = initTabView(tw, R.drawable.tab_user);
+
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String s) {
+                current_tab = mTabHost.getCurrentTab();
+            }
+        });
     }
 
     private LinearLayout initTabView(TabWidget tw, int drawbleId) {
@@ -176,10 +194,10 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
             case OperationKey.BACK_HOME:
-                mTabHost.setCurrentTab(0);
+                current_tab = 0;
                 break;
             case OperationKey.BACK_USER:
-                mTabHost.setCurrentTab(3);
+                current_tab = 3;
                 break;
         }
 
