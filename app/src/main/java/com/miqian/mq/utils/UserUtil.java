@@ -67,6 +67,7 @@ public class UserUtil {
             Dialog_Login dialog_login = new Dialog_Login(context) {
                 @Override
                 public void login(String telephone, String password) {
+                    // TODO: 2015/10/10 Loading 
                     HttpRequest.login(context, new ICallback<LoginResult>() {
                         @Override
                         public void onSucceed(LoginResult result) {

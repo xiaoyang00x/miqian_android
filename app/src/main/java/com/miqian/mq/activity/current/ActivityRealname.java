@@ -17,6 +17,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.pay.MobileSecurePayer;
 import com.miqian.mq.utils.Constants;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -75,19 +76,23 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        mWaitingDialog.show();
-        HttpRequest.setIDCardCheck(mActivity, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-                mWaitingDialog.dismiss();
-                ActivityRealname.this.finish();
-            }
+        if (idCard.matches(FormatUtil.PATTERN_IDCARD)) {
+            mWaitingDialog.show();
+            HttpRequest.setIDCardCheck(mActivity, new ICallback<Meta>() {
+                @Override
+                public void onSucceed(Meta result) {
+                    mWaitingDialog.dismiss();
+                    ActivityRealname.this.finish();
+                }
 
-            @Override
-            public void onFail(String error) {
-                Uihelper.showToast(mActivity, error);
-                mWaitingDialog.dismiss();
-            }
-        }, idCard, name);
+                @Override
+                public void onFail(String error) {
+                    Uihelper.showToast(mActivity, error);
+                    mWaitingDialog.dismiss();
+                }
+            }, idCard, name);
+        } else {
+            Uihelper.showToast(mActivity, "身份证号码不正确");
+        }
     }
 }
