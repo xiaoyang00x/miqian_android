@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private EditText editBankNumber;
     private TextView bindBankName;
     private TextView bindBankNumber;
+    private ImageView iconBank;
 
     private MyHandler mHandler;
     private UserInfo userInfo;
@@ -110,6 +112,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         editBankNumber = (EditText) findViewById(R.id.edit_bank_number);
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
+        iconBank = (ImageView) findViewById(R.id.icon_bank);
         mHandler = new MyHandler(this);
     }
 
@@ -131,22 +134,29 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
             bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
             if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
-                bankNumber =
-                        "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
+                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
             }
             bindBankNumber.setText(bankNumber);
             bindBankName.setText(userInfo.getBankName());
+
+            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
+                imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
+            }
         }
     }
 
     private void rollIn() {
         if (rollType == 0) {
             money = editMoney.getText().toString();
-        }
-
-        if (TextUtils.isEmpty(money)) {
-            Uihelper.showToast(mActivity, "转入金额不能为空");
-            return;
+            if (TextUtils.isEmpty(money)) {
+                Uihelper.showToast(mActivity, "转入金额不能为空");
+                return;
+            }
+            float tempMoney = Float.parseFloat(money);
+            if (tempMoney < 1) {
+                Uihelper.showToast(mActivity, "转入金额不能为小于1元");
+                return;
+            }
         }
 
         if (bindStatus.equals("0")) {

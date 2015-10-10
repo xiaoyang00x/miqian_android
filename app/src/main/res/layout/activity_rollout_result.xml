@@ -59,7 +59,7 @@
 
                 <TextView
                     style="@style/text_black_item"
-                    android:text="提现金额:" />
+                    android:text="提现金额 :" />
 
                 <TextView
                     android:id="@+id/tv_money"
@@ -67,10 +67,23 @@
                     android:textColor="@color/mq_r1" />
             </LinearLayout>
 
-            <TextView
-                style="@style/text_black_item"
-                android:layout_marginTop="10dp"
-                android:text="资金到账：预计两个工作日内" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_black_item"
+                    android:layout_marginTop="10dp"
+                    android:text="资金到账：" />
+
+                <TextView
+                    style="@style/text_gray_item"
+                    android:layout_marginTop="10dp"
+                    android:text="预计两个工作日内" />
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/tv_cardnum"

@@ -127,4 +127,12 @@
             android:layout_height="@dimen/edit_item"
             android:text="确认" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我同意《资金管理规则》"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/mq_font4"/>
 </LinearLayout>

@@ -31,6 +31,11 @@ public class ExtendOperationController {
 		/** 修改绑定手机 */
 		public static final int MODIFYPHONE = 5001;
 
+		/** 返回首页 */
+		public static final int BACK_HOME = 1001;
+		/** 返回我的 */
+		public static final int BACK_USER = 1004;
+
 	}
 
 	/**

@@ -16,6 +16,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.miqian.mq.utils.Config;
+
 /**
  * @author kince
  * @category View必须是正方形
@@ -25,11 +27,11 @@ public class WaterWaveView extends View {
 
     private Context mContext;
 
-    private int mScreenWidth;
-    private int mScreenHeight;
+    private float mScreenWidth;
+    private float mScreenHeight;
     private int centerX;
     private int centerY;
-    private static final int offsetWidth = 200;
+    private float offsetWidth;
 
     private Paint mRingPaint;
     private Paint mBigCirclePaint;
@@ -40,7 +42,8 @@ public class WaterWaveView extends View {
     private Paint flowPaint;
     private Paint leftPaint;
 
-    private int mRingSTROKEWidth = 18;
+    private float mRingSTROKEWidth;
+    private float mBigOffset;
     private int mCircleSTROKEWidth = 2;
     private int mLineSTROKEWidth = 1;
 
@@ -57,9 +60,6 @@ public class WaterWaveView extends View {
     private float mAmplitude = 10.0F; // 振幅
     private float mWaterLevel = 1F;// 水高(0~1)
     private Path mPath;
-
-//	private String flowNum = "1024M";
-//	private String flowLeft = "还剩余";
 
     /**
      * @param context
@@ -96,6 +96,10 @@ public class WaterWaveView extends View {
     }
 
     private void init(Context context) {
+        offsetWidth = 130 * Config.DENSITY;
+        mRingSTROKEWidth = 12 * Config.DENSITY;
+        mBigOffset = 13 * Config.DENSITY;
+
         mRingPaint = new Paint();
         mRingPaint.setColor(mRingColor);
         mRingPaint.setAlpha(255);
@@ -301,7 +305,7 @@ public class WaterWaveView extends View {
             startX1++;
         }
         canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2, mRingPaint);
-        canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2 + 20, mBigCirclePaint);
+        canvas.drawCircle(centerX, centerY, mScreenWidth / 4 + mRingSTROKEWidth / 2 + mBigOffset, mBigCirclePaint);
 
         canvas.drawCircle(centerX, centerY, mScreenWidth / 4, mCirclePaint);
 

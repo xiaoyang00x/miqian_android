@@ -29,6 +29,7 @@ public class UserUtil {
     public static void saveUserInfo(Context context, UserInfo userInfo) {
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
+        Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobilePhone()), context);
         Pref.saveString(getPrefKey(context, Pref.REALNAME_STATUS), userInfo.getRealNameStatus(), context);
         //设置极光别名
         JpushHelper.setAlias(context);

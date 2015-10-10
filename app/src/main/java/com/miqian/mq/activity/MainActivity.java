@@ -19,19 +19,22 @@ import com.miqian.mq.fragment.FragmentHome;
 import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.fragment.RegularFragment;
 import com.miqian.mq.receiver.JpushHelper;
+import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
+import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 
 import java.util.Collections;
 import java.util.List;
 
-
 /**
  * Created by Administrator on 2015/5/6.
  * <p/>
  * Main
  */
-public class MainActivity extends BaseFragmentActivity {
+public class MainActivity extends BaseFragmentActivity implements ExtendOperationListener {
+
     private final String TAG_HOME = "HOME";
     private final String TAG_CURRENT = "CURRENT";
     private final String TAG_REGULAR = "REGULAR";
@@ -45,10 +48,10 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ExtendOperationController.getInstance().registerExtendOperationListener(this);
         setContentView(R.layout.activity_main);
 
         findTabView();
-
         initTab();
         MyApplication.getInstance().setIsCurrent(true);
         //设置别名
@@ -56,6 +59,11 @@ public class MainActivity extends BaseFragmentActivity {
         handleJpush();
     }
 
+    @Override
+    protected void onDestroy() {
+        ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
+        super.onDestroy();
+    }
 
     public void findTabView() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
@@ -98,7 +106,6 @@ public class MainActivity extends BaseFragmentActivity {
         mTabHost.addTab(tabSpecUser, FragmentUser.class, null);
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -108,11 +115,10 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     private void handleJpush() {
-
         //判断是否是是极光推送
         boolean isPush = Pref.getBoolean(Pref.IsPush, mContext, false);
         if (isPush) {
-            Pref.saveBoolean(Pref.IsPush,false,mContext);
+            Pref.saveBoolean(Pref.IsPush, false, mContext);
             String userId = null;
             // 是否登录
             if (!UserUtil.hasLogin(mContext)) {
@@ -120,7 +126,7 @@ public class MainActivity extends BaseFragmentActivity {
             } else {
                 jpushInfolist = MyDataBaseHelper.getInstance(mContext).getjpushInfo(Pref.getString(Pref.USERID, mContext, Pref.VISITOR));
             }
-            if (jpushInfolist.size()<1) {
+            if (jpushInfolist.size() < 1) {
                 return;
             }
             Collections.reverse(jpushInfolist);
@@ -166,5 +172,16 @@ public class MainActivity extends BaseFragmentActivity {
         }
     }
 
+    @Override
+    public void excuteExtendOperation(int operationKey, Object data) {
+        switch (operationKey) {
+            case OperationKey.BACK_HOME:
+                mTabHost.setCurrentTab(0);
+                break;
+            case OperationKey.BACK_USER:
+                mTabHost.setCurrentTab(3);
+                break;
+        }
 
+    }
 }

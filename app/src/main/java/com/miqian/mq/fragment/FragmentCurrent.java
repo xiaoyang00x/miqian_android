@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
-import com.miqian.mq.activity.user.ActivityUserCurrent;
+import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.net.HttpRequest;
@@ -38,6 +38,9 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
     private DialogPay dialogPay;
 
     private CurrentInfo currentInfo;
+
+    private float downLimit = 1f;
+    private float upLimit = 999999;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,8 +82,11 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
             public void positionBtnClick(String s) {
                 if (!TextUtils.isEmpty(s)) {
                     float money = Float.parseFloat(s);
-                    if (money < 1) {
-                        this.setTitle("提示：输入请大于一元");
+                    if (money < downLimit) {
+                        this.setTitle("提示：输入请大于" + downLimit + "元");
+                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                    } else if (money > upLimit) {
+                        this.setTitle("提示：输入请小于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
                         UserUtil.currenPay(mContext, CurrentInvestment.class, s);
@@ -125,6 +131,8 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
             @Override
             public void onSucceed(CurrentInfoResult result) {
                 currentInfo = result.getData();
+                downLimit = Float.parseFloat(currentInfo.getCurrentBuyDownLimit());
+                upLimit = Float.parseFloat(currentInfo.getCurrentBuyUpLimit());
                 refreshView();
             }
 
@@ -152,7 +160,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
             case R.id.bt_right:
                 UserUtil.isLogin(mContext, ActivityUserCurrent.class);
                 break;
-            case  R.id.text_detail:
+            case R.id.text_detail:
                 // TODO: 2015/10/8
                 break;
             default:
