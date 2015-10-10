@@ -98,7 +98,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_about.setOnClickListener(this);
         frame_setting_telephone.setOnClickListener(this);
         frame_setting_bankcard.setOnClickListener(this);
-
+        if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
+            tv_bindPhone.setText(RSAUtils.decryptByPrivate(userInfo.getMobilePhone()));
+        }
 
         if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
             //未认证
@@ -151,7 +153,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             //银行卡号
             case R.id.frame_setting_bankcard:
                 //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
-                if (userInfo.getSupportStatus().equals("0")) {
+               String supportStatus= userInfo.getSupportStatus();
+                if (TextUtils.isEmpty(supportStatus)){
+                    supportStatus="0";
+                }
+                if (supportStatus.equals("0")) {
                     Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
                     Bundle extra = new Bundle();
                     extra.putSerializable("userInfo", userInfo);

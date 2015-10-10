@@ -66,21 +66,24 @@ public class BindCardActivity extends BaseActivity {
 
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-        userInfo.setSupportStatus("0");
+         String bindCardStatus= userInfo.getBindCardStatus();
+        if ("1".equals(bindCardStatus)){
 
-        if (userInfo.getSupportStatus().equals("0")) {
-            frameBank.setVisibility(View.VISIBLE);
-            frameTip.setVisibility(View.VISIBLE);
-            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
-            if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
-                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
-            }
-            bindBankNumber.setText(bankNumber);
-            bindBankName.setText(userInfo.getBankName());
-            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())){
-                imageLoader.displayImage(userInfo.getBankUrlSmall(),iconBank,options);
+            if (userInfo.getSupportStatus().equals("0")) {
+                frameBank.setVisibility(View.VISIBLE);
+                frameTip.setVisibility(View.VISIBLE);
+                bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+                if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
+                    bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
+                }
+                bindBankNumber.setText(bankNumber);
+                bindBankName.setText(userInfo.getBankName());
+                if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())){
+                    imageLoader.displayImage(userInfo.getBankUrlSmall(),iconBank,options);
+                }
             }
         }
+
 
     }
 

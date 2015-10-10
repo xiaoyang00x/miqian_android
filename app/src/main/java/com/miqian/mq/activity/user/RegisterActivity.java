@@ -13,11 +13,13 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -160,7 +162,9 @@ public class RegisterActivity extends BaseActivity {
                         @Override
                         public void onSucceed(RegisterResult result) {
                             mWaitingDialog.dismiss();
-                            Uihelper.showToast(mActivity,"注册成功");
+                            Uihelper.showToast(mActivity, "注册成功");
+                            UserInfo userInfo = result.getData();
+                            UserUtil.saveUserInfo(mActivity, userInfo);
                             finish();
                             Log.e("Register", result.getData().getBalance());
                         }
