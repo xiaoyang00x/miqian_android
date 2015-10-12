@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:background="@null" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_state"
+        android:paddingLeft="@dimen/margin_left_right">
+
+        <TextView
+            android:id="@+id/text_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font4" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_type"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/mq_b2"
+            android:textSize="@dimen/mq_font5" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_left_right"
+        >
+
+        <TextView
+            android:id="@+id/text_amt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mq_b1"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/mq_font4" />
+
+        <TextView
+            android:id="@+id/tv_interest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_amt"
+            android:layout_marginTop="2dp"
+            android:layout_alignParentRight="true"
+            android:text="ddf"
+            android:textColor="@color/mq_b2"
+            android:textSize="@dimen/mq_font5" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

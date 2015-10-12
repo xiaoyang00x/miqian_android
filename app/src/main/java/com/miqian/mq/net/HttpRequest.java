@@ -12,6 +12,7 @@ import com.miqian.mq.entity.CapitalRecord;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CommonEntity;
 import com.miqian.mq.entity.CurrentInfoResult;
+import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.DetailForRegularDeposit;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
@@ -1079,7 +1080,7 @@ public class HttpRequest {
 
     //我的促销接口，包括红包，拾财券等
     public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback,
-                                      String promTypCd, String sta, String pageNum, String pageSize) {
+                                        String promTypCd, String sta, String pageNum, String pageSize) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -1110,7 +1111,7 @@ public class HttpRequest {
 
     //赎回
     public static void redeem(Context context, final ICallback<RedeemData> callback,
-                                        String amt, String payPassword) {
+                              String amt, String payPassword) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -1128,10 +1129,41 @@ public class HttpRequest {
                     callback.onFail(redeemResult.getMessage());
                 }
             }
+
             @Override
             public void onFail(String error) {
                 callback.onFail(error);
             }
         }).executeOnExecutor();
     }
+
+    //getMyCurrentRecord
+    public static void getMyCurrentRecord(Context context, final ICallback<CurrentRecordResult> callback,
+                                          String pageNo, String pageSize, String isForce) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("pageNo", pageNo));
+        mList.add(new Param("pageSize", pageSize));
+        mList.add(new Param("isForce", isForce));
+        new MyAsyncTask(context, Urls.getMyCurrentRecord, mList, new ICallback<String>() {
+            @Override
+            public void onSucceed(String result) {
+                CurrentRecordResult currentRecordResult = JsonUtil.parseObject(result, CurrentRecordResult.class);
+                if (currentRecordResult.getCode().equals("000000")) {
+                    callback.onSucceed(currentRecordResult);
+                } else {
+                    callback.onFail(currentRecordResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
 }
