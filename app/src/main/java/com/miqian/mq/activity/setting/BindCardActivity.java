@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.AutoIdentyCard;
+import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;
@@ -32,9 +34,9 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
  * Created by Joy on 2015/9/22.
  */
 public class BindCardActivity extends BaseActivity {
-    private TextView textAgreement,bindBankName,bindBankNumber;
+    private TextView textAgreement, bindBankName, bindBankNumber;
     private EditText etCardNum;
-    private View frameBank,frameTip;
+    private View frameBank, frameTip;
     private UserInfo userInfo;
     private String bankNumber;
     private ImageView iconBank;
@@ -55,22 +57,22 @@ public class BindCardActivity extends BaseActivity {
         textAgreement = (TextView) findViewById(R.id.text_agreement);
         etCardNum = (EditText) findViewById(R.id.edit_bank_number);
 
-       frameBank=findViewById(R.id.frame_bank);
-       frameTip=findViewById(R.id.frame_tip);
+        frameBank = findViewById(R.id.frame_bank);
+        frameTip = findViewById(R.id.frame_tip);
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
-        iconBank=(ImageView)findViewById(R.id.icon_bank);
+        iconBank = (ImageView) findViewById(R.id.icon_bank);
 
         SpannableString span = getAgreementSpan();
         textAgreement.setText(span);
 
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-        if (userInfo==null){
+        if (userInfo == null) {
             return;
         }
-         String bindCardStatus= userInfo.getBindCardStatus();
-        if ("1".equals(bindCardStatus)){
+        String bindCardStatus = userInfo.getBindCardStatus();
+        if ("1".equals(bindCardStatus)) {
 
             if (userInfo.getSupportStatus().equals("0")) {
                 frameBank.setVisibility(View.VISIBLE);
@@ -81,8 +83,8 @@ public class BindCardActivity extends BaseActivity {
                 }
                 bindBankNumber.setText(bankNumber);
                 bindBankName.setText(userInfo.getBankName());
-                if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())){
-                    imageLoader.displayImage(userInfo.getBankUrlSmall(),iconBank,options);
+                if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
+                    imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
                 }
             }
         }
@@ -125,21 +127,41 @@ public class BindCardActivity extends BaseActivity {
 
     public void btn_click(View v) {
 
-       final String cardNum = etCardNum.getText().toString();
+        final String cardNum = etCardNum.getText().toString();
         if (!TextUtils.isEmpty(cardNum)) {
             mWaitingDialog.show();
-            HttpRequest.autoIdentifyBankCard(mActivity, new ICallback<BankCardResult>() {
+            HttpRequest.autoIdentifyBankCard(mActivity, new ICallback<AutoIdentyCardResult>() {
                 @Override
-                public void onSucceed(BankCardResult result) {
+                public void onSucceed(AutoIdentyCardResult result) {
                     mWaitingDialog.dismiss();
                     //绑定银行卡
-                    bindCard(result,cardNum);
+
+                    AutoIdentyCard autoIdentyCard = result.getData();
+                    String type = autoIdentyCard.getCardType();
+                    String status = autoIdentyCard.getSupportStatus();
+                    if (!TextUtils.isEmpty(type)) {
+                        if ("2".equals(type)) {
+                            //2为储蓄卡
+                            if (!TextUtils.isEmpty(status)) {
+                                if ("1".equals(status)) {
+                                    bindCard(autoIdentyCard, cardNum);
+                                } else {
+                                    Uihelper.showToast(mActivity, "此储蓄卡不支持连连支付");
+                                }
+                            }
+
+                        } else if ("3".equals(type)) {
+                            //3为信用卡
+                            Uihelper.showToast(mActivity, "信用卡不支持连连支付");
+                        }
+                    }
+
                 }
 
                 @Override
                 public void onFail(String error) {
                     mWaitingDialog.dismiss();
-                    Uihelper.showToast(mActivity,error);
+                    Uihelper.showToast(mActivity, error);
                 }
             }, cardNum);
 
@@ -151,27 +173,27 @@ public class BindCardActivity extends BaseActivity {
 
     }
 
-    private void bindCard(final BankCardResult bankCardResult,String cardNum) {
-           BankCard bankCard= bankCardResult.getData();
-        if (bankCardResult!=null){
+    private void bindCard(final AutoIdentyCard bankCardResult, final String cardNum) {
+        final AutoIdentyCard autoIdentyCard = bankCardResult;
+        if (bankCardResult != null) {
             HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
                 @Override
                 public void onSucceed(Meta result) {
 
-                    Intent intent=new Intent(mActivity,SetBankActivity.class);
-                    Bundle extra=new Bundle();
-                    extra.putSerializable("bankresult",bankCardResult.getData());
-                    extra.putSerializable("userInfo",userInfo);
+                    Intent intent = new Intent(mActivity, SetBankActivity.class);
+                    Bundle extra = new Bundle();
+                    intent.putExtra("cardNo", cardNum);
+                    extra.putSerializable("userInfo", userInfo);
                     intent.putExtras(extra);
                     startActivity(intent);
+                    finish();
 
                 }
-
                 @Override
                 public void onFail(String error) {
 
                 }
-            },cardNum,"XZ",bankCard.getBankCode(),bankCard.getBankName(),"","","");
+            }, cardNum, "XZ", autoIdentyCard.getBankCode(), autoIdentyCard.getBankName(), "", "", "");
         }
 
     }

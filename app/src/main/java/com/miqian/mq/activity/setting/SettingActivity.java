@@ -185,7 +185,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     Bundle extra = new Bundle();
                     extra.putSerializable("userInfo", userInfo);
                     if (bankCard != null) {
-                        extra.putSerializable("bankCard", bankCard);
+                        if (TextUtils.isEmpty(bankCard.getBankNo())){
+                            intent_bind.putExtra("cardNo", RSAUtils.decryptByPrivate(bankCard.getBankNo()));
+                        }
+
                     }
                     intent_bind.putExtras(extra);
                     startActivity(intent_bind);

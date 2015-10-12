@@ -99,7 +99,7 @@ public class Urls {
     //我的资金记录
     public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
     //修改绑定手机
-    public final static String changePhone = base_server + "userService/changePhone";
+    public final static String changePhone = "http://172.20.8.11:8082/miqian-app/" + "userService/changePhone";
 
 
 }

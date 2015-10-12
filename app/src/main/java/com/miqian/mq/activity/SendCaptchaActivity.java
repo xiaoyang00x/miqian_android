@@ -71,9 +71,9 @@ public class SendCaptchaActivity extends BaseActivity {
         type = intent.getIntExtra("type", 0);
         if (type == TypeUtil.SENDCAPTCHA_FORGETPSW) {
             mTitle.setTitleText("忘记密码");
-        }else if (type == TypeUtil.MODIFY_PHONE){
+        } else if (type == TypeUtil.MODIFY_PHONE) {
             mTitle.setTitleText("修改绑定手机号");
-            isModifyPhone=true;
+            isModifyPhone = true;
             oldCaptcha = intent.getStringExtra("captcha");
         }
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
@@ -182,65 +182,37 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void summit(final String phone, final String captcha) {
-        String userId;
-        if (UserUtil.hasLogin(mActivity)) {
-            userId = UserUtil.getUserId(mActivity);
-        } else {
-            userId = "";
-        }
 
-        int summitType = 0;
-        switch (type) {
-            case TypeUtil.SENDCAPTCHA_FORGETPSW:
-                summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
-                break;
-            case TypeUtil.MODIFY_PHONE:
-                summitType = TypeUtil.CAPTCHA_BINTTEL_SECOND;
-                break;
-            default:
-                break;
-        }
-        HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-                if (isModifyPhone){
-                    //绑定新手机号码
-                String    oldPhone = Pref.getString(Pref.TELEPHONE, mActivity, "");
-                    if (!TextUtils.isEmpty(oldPhone)&&!TextUtils.isEmpty(captcha)){
-                        mWaitingDialog.show();
-                        HttpRequest.changePhone(mActivity, new ICallback<Meta>() {
-                            @Override
-                            public void onSucceed(Meta result) {
-                                mWaitingDialog.dismiss();
-                                Uihelper.showToast(mActivity,"绑定成功");
-                                finish();
-                            }
+        if (isModifyPhone) {
+            //绑定新手机号码
+            String oldPhone = Pref.getString(Pref.TELEPHONE, mActivity, "");
+            if (!TextUtils.isEmpty(oldPhone) && !TextUtils.isEmpty(captcha)) {
 
-                            @Override
-                            public void onFail(String error) {
-                                mWaitingDialog.dismiss();
-                                Uihelper.showToast(mActivity, error);
-
-                            }
-                        },oldPhone,oldCaptcha,phone,captcha);
+                mWaitingDialog.show();
+                HttpRequest.changePhone(mActivity, new ICallback<Meta>() {
+                    @Override
+                    public void onSucceed(Meta result) {
+                        mWaitingDialog.dismiss();
+                        Uihelper.showToast(mActivity, "绑定成功");
+                        finish();
                     }
 
-                }else{
-                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-                    intent.putExtra("captcha", captcha);
-                    intent.putExtra("phone", phone);
-                    intent.putExtra("type", TypeUtil.PASSWORD_LOGIN);
-                    startActivity(intent);
-                }
+                    @Override
+                    public void onFail(String error) {
+                        mWaitingDialog.dismiss();
+                        Uihelper.showToast(mActivity, error);
+
+                    }
+                }, oldPhone, oldCaptcha, phone, captcha);
             }
 
-            @Override
-            public void onFail(String error) {
-
-                Uihelper.showToast(mActivity, error);
-
-            }
-        }, phone, summitType, captcha);
+        } else {
+            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+            intent.putExtra("captcha", captcha);
+            intent.putExtra("phone", phone);
+            intent.putExtra("type", TypeUtil.PASSWORD_LOGIN);
+            startActivity(intent);
+        }
 
     }
 

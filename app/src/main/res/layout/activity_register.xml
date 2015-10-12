@@ -111,7 +111,7 @@
             android:layout_toRightOf="@+id/tv_register"
             android:hint="6~16位数字字母组合"
             android:digits="@string/match"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:maxLength="16" >
         </EditText>
 

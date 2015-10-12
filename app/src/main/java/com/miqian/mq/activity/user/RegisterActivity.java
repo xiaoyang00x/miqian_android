@@ -1,5 +1,6 @@
 package com.miqian.mq.activity.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.UserInfo;
@@ -139,7 +141,7 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                Uihelper.showToast(mActivity,error);
+                Uihelper.showToast(mActivity, error);
 
             }
         }, phone, TypeUtil.CAPTCHA_REGISTER);
@@ -166,14 +168,17 @@ public class RegisterActivity extends BaseActivity {
                             UserInfo userInfo = result.getData();
                             UserUtil.saveUserInfo(mActivity, userInfo);
 
+                            Intent intent_identify=new Intent(mActivity, ActivityRealname.class);
+                            intent_identify.putExtra("isRegistered",true);
+                            startActivity(intent_identify);
+
                             finish();
-                            Log.e("Register", result.getData().getBalance());
                         }
 
                         @Override
                         public void onFail(String error) {
                             mWaitingDialog.dismiss();
-                            Uihelper.showToast(mActivity,error);
+                            Uihelper.showToast(mActivity, error);
                         }
                     }, phone, captcha, password, invite);
 

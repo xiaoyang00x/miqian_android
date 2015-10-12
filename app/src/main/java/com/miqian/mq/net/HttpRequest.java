@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecord;
@@ -659,7 +660,7 @@ public class HttpRequest {
     }
 
     //识别银行卡
-    public static void autoIdentifyBankCard(Context context, final ICallback<BankCardResult> callback,
+    public static void autoIdentifyBankCard(Context context, final ICallback<AutoIdentyCardResult> callback,
                                             String bankNo) {
         if (mList == null) {
             mList = new ArrayList<Param>();
@@ -671,11 +672,11 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                BankCardResult bankCardResult = JsonUtil.parseObject(result, BankCardResult.class);
-                if (bankCardResult.getCode().equals("000000")) {
-                    callback.onSucceed(bankCardResult);
+                AutoIdentyCardResult autoIdentyCardResult = JsonUtil.parseObject(result, AutoIdentyCardResult.class);
+                if (autoIdentyCardResult.getCode().equals("000000")) {
+                    callback.onSucceed(autoIdentyCardResult);
                 } else {
-                    callback.onFail(bankCardResult.getMessage());
+                    callback.onFail(autoIdentyCardResult.getMessage());
                 }
             }
 
