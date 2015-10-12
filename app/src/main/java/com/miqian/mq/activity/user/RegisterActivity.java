@@ -165,6 +165,7 @@ public class RegisterActivity extends BaseActivity {
                             Uihelper.showToast(mActivity, "注册成功");
                             UserInfo userInfo = result.getData();
                             UserUtil.saveUserInfo(mActivity, userInfo);
+
                             finish();
                             Log.e("Register", result.getData().getBalance());
                         }

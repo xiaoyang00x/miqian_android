@@ -66,6 +66,9 @@ public class BindCardActivity extends BaseActivity {
 
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
+        if (userInfo==null){
+            return;
+        }
          String bindCardStatus= userInfo.getBindCardStatus();
         if ("1".equals(bindCardStatus)){
 

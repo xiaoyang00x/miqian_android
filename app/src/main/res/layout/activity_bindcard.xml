@@ -78,7 +78,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="54dp"
             android:hint="请输入银行卡号"
-            android:maxLength="20"
+            android:maxLength="19"
             android:numeric="integer" />
     </RelativeLayout>
 

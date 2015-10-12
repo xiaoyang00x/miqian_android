@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
@@ -63,6 +64,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onFail(String error) {
+                tv_card.setText("银行卡未绑定");
+                tv_cardState.setText("");
                 mWaitingDialog.dismiss();
             }
         });
@@ -98,6 +101,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_about.setOnClickListener(this);
         frame_setting_telephone.setOnClickListener(this);
         frame_setting_bankcard.setOnClickListener(this);
+
+        if (userInfo==null){
+            return;
+        }
         if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
             tv_bindPhone.setText(RSAUtils.decryptByPrivate(userInfo.getMobilePhone()));
         }
@@ -141,6 +148,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //绑定手机
             case R.id.frame_setting_bindphone:
+                Intent intent_phone=new Intent(mActivity, TradePsCaptchaActivity.class);
+                intent_phone.putExtra("isModifyPhone",true);
+                startActivity(intent_phone);
 
                 break;
             //安全设置
@@ -152,6 +162,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //银行卡号
             case R.id.frame_setting_bankcard:
+
+                if ("0".equals(userInfo.getBindCardStatus())) {
+                   startActivity(new Intent(mActivity, BindCardActivity.class));
+                    return;
+                }
+
                 //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
                String supportStatus= userInfo.getSupportStatus();
                 if (TextUtils.isEmpty(supportStatus)){

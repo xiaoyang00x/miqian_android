@@ -69,11 +69,13 @@ public class ActivityRedeem extends BaseActivity {
 
             @Override
             public void myAfterTextChanged(Editable s) {
+//				setRollEnabled();
                 try {
                     String temp = s.toString();
                     if (temp.matches(FormatUtil.PATTERN_MONEY)) {
                         return;
                     }
+                    s.delete(temp.length() - 1, temp.length());
                 } catch (Exception e) {
                 }
             }

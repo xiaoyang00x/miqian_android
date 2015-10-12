@@ -1166,4 +1166,36 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    //修改绑定手机
+    public static void changePhone(Context context, final ICallback<Meta> callback,
+                                         String oldMobilePhone, String oldCaptcha, String newMobilePhone, String newCaptcha ) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("oldCaptcha", oldCaptcha));
+        mList.add(new Param("oldMobilePhone", RSAUtils.encryptURLEncode(oldMobilePhone)));
+        mList.add(new Param("newMobilePhone", RSAUtils.encryptURLEncode(newMobilePhone)));
+        mList.add(new Param("newCaptcha", newCaptcha));
+
+        new MyAsyncTask(context, Urls.changePhone, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
 }
