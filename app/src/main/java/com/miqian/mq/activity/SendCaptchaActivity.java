@@ -17,6 +17,7 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -41,6 +42,8 @@ public class SendCaptchaActivity extends BaseActivity {
     private static final int NUM_TYPE_TOAST = 3;
     private TextView tv_phone;
     private int type;   //忘记密码，修改绑定手机
+    private boolean isModifyPhone;
+    private String oldCaptcha;
 
 
     @Override
@@ -67,9 +70,12 @@ public class SendCaptchaActivity extends BaseActivity {
         Intent intent = getIntent();
         type = intent.getIntExtra("type", 0);
         if (type == TypeUtil.SENDCAPTCHA_FORGETPSW) {
-            mTitle.setTitleText("修改登录密码");
+            mTitle.setTitleText("忘记密码");
+        } else if (type == TypeUtil.MODIFY_PHONE) {
+            mTitle.setTitleText("修改绑定手机号");
+            isModifyPhone = true;
+            oldCaptcha = intent.getStringExtra("captcha");
         }
-
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
 
         mEt_Telephone = (EditText) findViewById(R.id.et_account_telephone);
@@ -126,6 +132,11 @@ public class SendCaptchaActivity extends BaseActivity {
             case TypeUtil.SENDCAPTCHA_FORGETPSW:
                 summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
                 break;
+            case TypeUtil.MODIFY_PHONE:
+                summitType = TypeUtil.CAPTCHA_BINTTEL_SECOND;
+                break;
+            default:
+                break;
         }
 
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
@@ -171,36 +182,37 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void summit(final String phone, final String captcha) {
-        String userId;
-        if (UserUtil.hasLogin(mActivity)) {
-            userId = UserUtil.getUserId(mActivity);
+
+        if (isModifyPhone) {
+            //绑定新手机号码
+            String oldPhone = Pref.getString(Pref.TELEPHONE, mActivity, "");
+            if (!TextUtils.isEmpty(oldPhone) && !TextUtils.isEmpty(captcha)) {
+
+                mWaitingDialog.show();
+                HttpRequest.changePhone(mActivity, new ICallback<Meta>() {
+                    @Override
+                    public void onSucceed(Meta result) {
+                        mWaitingDialog.dismiss();
+                        Uihelper.showToast(mActivity, "绑定成功");
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(String error) {
+                        mWaitingDialog.dismiss();
+                        Uihelper.showToast(mActivity, error);
+
+                    }
+                }, oldPhone, oldCaptcha, phone, captcha);
+            }
+
         } else {
-            userId = "";
+            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+            intent.putExtra("captcha", captcha);
+            intent.putExtra("phone", phone);
+            intent.putExtra("type", TypeUtil.PASSWORD_LOGIN);
+            startActivity(intent);
         }
-
-        int summitType = 0;
-        switch (type) {
-            case TypeUtil.SENDCAPTCHA_FORGETPSW:
-                summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
-                break;
-        }
-        HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-                Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-                intent.putExtra("captcha", captcha);
-                intent.putExtra("phone", phone);
-                intent.putExtra("type", TypeUtil.PASSWORD_LOGIN);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFail(String error) {
-
-                Uihelper.showToast(mActivity, error);
-
-            }
-        }, phone, summitType, captcha);
 
     }
 

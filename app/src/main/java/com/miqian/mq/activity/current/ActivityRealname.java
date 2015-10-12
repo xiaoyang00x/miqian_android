@@ -1,5 +1,6 @@
 package com.miqian.mq.activity.current;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,20 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
+
+      Intent intent= getIntent();
+        if (intent!=null){
+            if (intent.getBooleanExtra("isRegistered",false)){
+                mTitle.setRightText("跳过");
+                mTitle.setOnRightClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+            }
+        }
+
         btRealname = (Button) findViewById(R.id.bt_realname);
         btRealname.setOnClickListener(this);
         editName = (EditText) findViewById(R.id.edit_name);
@@ -82,6 +97,7 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
                 @Override
                 public void onSucceed(Meta result) {
                     mWaitingDialog.dismiss();
+                    Uihelper.showToast(mActivity, "实名认证成功");
                     ActivityRealname.this.finish();
                 }
 

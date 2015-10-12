@@ -100,6 +100,8 @@ public class Urls {
     public final static String redeem = base_server + "assetService/redeem";
     //我的活期资金记录
     public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
+    //修改绑定手机
+    public final static String changePhone = "http://172.20.8.11:8082/miqian-app/" + "userService/changePhone";
 
 
 }

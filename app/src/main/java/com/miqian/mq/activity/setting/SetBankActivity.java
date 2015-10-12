@@ -24,7 +24,7 @@ public class SetBankActivity extends BaseActivity {
     private View frame_bank_branch, frame_bank_province;
     private String city, branch, province;
     private TextView textBranch, tv_bank_province;
-    private BankCard bankCard;
+    private String bankCardNo;
     private UserInfo userInfo;
     private boolean isChooseCity;
 
@@ -38,7 +38,7 @@ public class SetBankActivity extends BaseActivity {
 
 
         Intent intent = getIntent();
-        bankCard = (BankCard) intent.getSerializableExtra("bankCard");
+        bankCardNo =intent.getStringExtra("cardNo");
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
 
         textBranch = (TextView) findViewById(R.id.tv_bank_branch);
@@ -59,14 +59,14 @@ public class SetBankActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                if (isChooseCity){
+                if (isChooseCity) {
                     Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
-                    intent_branch.putExtra("city",city);
-                    intent_branch.putExtra("province",province);
+                    intent_branch.putExtra("city", city);
+                    intent_branch.putExtra("province", province);
                     startActivityForResult(intent_branch, 0);
 
-                }else{
-                    Uihelper.showToast(mActivity,"请先选择城市");
+                } else {
+                    Uihelper.showToast(mActivity, "请先选择城市");
                 }
 
             }
@@ -87,7 +87,7 @@ public class SetBankActivity extends BaseActivity {
             }
 
         } else if (resultCode == 0) {
-            isChooseCity=true;
+            isChooseCity = true;
             city = data.getStringExtra("city");
             province = data.getStringExtra("province");
             if (!TextUtils.isEmpty(city)) {
@@ -110,39 +110,38 @@ public class SetBankActivity extends BaseActivity {
 
     public void btn_click(View v) {
 
-        if (!TextUtils.isEmpty(city)){
-            if (!TextUtils.isEmpty(branch)){
+        if (!TextUtils.isEmpty(city)) {
+            if (!TextUtils.isEmpty(branch)) {
 
-                if(bankCard!=null&&userInfo!=null){
+                if ((!TextUtils.isEmpty(bankCardNo))&& userInfo != null) {
                     //绑定银行卡
-//            mWaitingDialog.show();
+                    mWaitingDialog.show();
                     HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
                         @Override
                         public void onSucceed(Meta result) {
-//                    mWaitingDialog.dismiss();
+                            mWaitingDialog.dismiss();
                             Uihelper.showToast(mActivity, "设置成功");
+                            finish();
                         }
 
                         @Override
                         public void onFail(String error) {
-//                    mWaitingDialog.dismiss();
+                            mWaitingDialog.dismiss();
                             Uihelper.showToast(mActivity, error);
 
                         }
-                    }, RSAUtils.decryptByPrivate(bankCard.getBankNo()), "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
-                }else {
-                    Uihelper.showToast(mActivity,"信息不全");
+                    }, bankCardNo, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
+                } else {
+                    Uihelper.showToast(mActivity, "信息不全");
                 }
 
-            }else{
-                Uihelper.showToast(mActivity,"支行名称不能为空");
+            } else {
+                Uihelper.showToast(mActivity, "支行名称不能为空");
             }
-        }else{
-            Uihelper.showToast(mActivity,"城市不能为空");
+        } else {
+            Uihelper.showToast(mActivity, "城市不能为空");
 
         }
-
-
 
 
     }

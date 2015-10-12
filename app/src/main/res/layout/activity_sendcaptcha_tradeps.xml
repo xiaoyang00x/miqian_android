@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:com.miqian.mq="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/margin_top">
+
     <LinearLayout
+        android:id="@+id/frament_modifytradepassword"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
         android:background="@color/white"
@@ -13,16 +15,16 @@
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
-        android:layout_marginTop="@dimen/margin_top"
+
         >
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/trans"
-            android:src="@mipmap/login_password"
             android:layout_gravity="center_vertical"
-            />
+            android:background="@drawable/trans"
+            android:src="@mipmap/login_password" />
+
         <EditText
             android:id="@+id/et_realname"
             style="@style/edittext_item"
@@ -30,20 +32,21 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@+id/tv_register"
-            android:hint="请输入身份证号码"
             android:digits="@string/match"
+            android:hint="请输入身份证号码"
             android:inputType="number"
-            android:maxLength="18" >
-        </EditText>
+            android:maxLength="18"></EditText>
 
     </LinearLayout>
 
-    <View style="@style/item_divider" />
+    <View
+        android:id="@+id/view_1"
+        style="@style/item_divider" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/listitem_height"
-        android:background="@drawable/list_click"
-        >
+        android:background="@drawable/list_click">
 
         <TextView
             android:id="@+id/tv_modifyphone_captcha"
@@ -51,17 +54,17 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_left_right"
-            android:text="验证码发送至 1365665985"
+            android:text="验证码发送至"
             android:textColor="@color/miqian_black"
             android:textSize="@dimen/textsize_normal" />
 
         ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@drawable/arrow_right" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:src="@drawable/arrow_right" />
     </RelativeLayout>
 
     <View style="@style/item_divider" />
@@ -73,29 +76,27 @@
         android:minHeight="40dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        >
+        android:paddingTop="5dp">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/trans"
             android:layout_centerVertical="true"
-            android:src="@mipmap/captcha"
-            android:id="@+id/imageView" />
+            android:background="@drawable/trans"
+            android:src="@mipmap/captcha" />
 
         <EditText
             android:id="@+id/et_account_captcha"
             style="@style/edittext_item"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView"
             android:layout_toLeftOf="@+id/btn_send"
+            android:layout_toRightOf="@+id/imageView"
             android:hint="请输入验证码"
             android:inputType="number"
-            android:maxLength="6"
-            android:layout_toRightOf="@+id/imageView"
-            android:layout_toEndOf="@+id/imageView">
-        </EditText>
+            android:maxLength="6"></EditText>
 
         <Button
             android:id="@+id/btn_send"
@@ -118,12 +119,12 @@
         android:layout_marginBottom="@dimen/margin_top"
         android:layout_marginLeft="@dimen/margin_left_right"
         android:layout_marginRight="@dimen/margin_left_right"
-        android:layout_marginTop="@dimen/margin_top" >
+        android:layout_marginTop="@dimen/margin_top">
 
         <Button
             android:id="@+id/btn_next"
-            android:layout_height="@dimen/listitem_height"
             style="@style/click_btn"
+            android:layout_height="@dimen/listitem_height"
             android:onClick="btn_click"
             android:text="下一步" />
     </LinearLayout>

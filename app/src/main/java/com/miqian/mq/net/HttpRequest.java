@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecord;
@@ -659,7 +660,7 @@ public class HttpRequest {
     }
 
     //识别银行卡
-    public static void autoIdentifyBankCard(Context context, final ICallback<BankCardResult> callback,
+    public static void autoIdentifyBankCard(Context context, final ICallback<AutoIdentyCardResult> callback,
                                             String bankNo) {
         if (mList == null) {
             mList = new ArrayList<Param>();
@@ -671,11 +672,11 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                BankCardResult bankCardResult = JsonUtil.parseObject(result, BankCardResult.class);
-                if (bankCardResult.getCode().equals("000000")) {
-                    callback.onSucceed(bankCardResult);
+                AutoIdentyCardResult autoIdentyCardResult = JsonUtil.parseObject(result, AutoIdentyCardResult.class);
+                if (autoIdentyCardResult.getCode().equals("000000")) {
+                    callback.onSucceed(autoIdentyCardResult);
                 } else {
-                    callback.onFail(bankCardResult.getMessage());
+                    callback.onFail(autoIdentyCardResult.getMessage());
                 }
             }
 
@@ -1190,6 +1191,38 @@ public class HttpRequest {
                     callback.onSucceed(currentRecordResult);
                 } else {
                     callback.onFail(currentRecordResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //修改绑定手机
+    public static void changePhone(Context context, final ICallback<Meta> callback,
+                                         String oldMobilePhone, String oldCaptcha, String newMobilePhone, String newCaptcha ) {
+        if (mList == null) {
+            mList = new ArrayList<Param>();
+        }
+        mList.clear();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("oldCaptcha", oldCaptcha));
+        mList.add(new Param("oldMobilePhone", RSAUtils.encryptURLEncode(oldMobilePhone)));
+        mList.add(new Param("newMobilePhone", RSAUtils.encryptURLEncode(newMobilePhone)));
+        mList.add(new Param("newCaptcha", newCaptcha));
+
+        new MyAsyncTask(context, Urls.changePhone, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
                 }
             }
 

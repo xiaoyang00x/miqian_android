@@ -31,4 +31,9 @@ public class TypeUtil {
     public static final int PASSWORD_TRADE = 20004;
     //发送验证码的类型
     public static final int SENDCAPTCHA_FORGETPSW =30001 ;
+
+    //修改绑定手机
+    public static final int MODIFY_PHONE =30002 ;
+
+
 }
