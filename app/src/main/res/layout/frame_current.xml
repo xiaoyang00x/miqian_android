@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:text="累计投资数(元)"
+                        android:text="累计投资数(万元)"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mq_font3" />
 

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/tv_setting_name"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/tv_settting_bindphone"
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/tv_setting_bankcardstate"
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
     </RelativeLayout>
 
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
     </RelativeLayout>
 
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
     </RelativeLayout>
 
@@ -173,7 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
     </RelativeLayout>
 
@@ -194,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -34,61 +34,14 @@ public class RecordCurrent {
     public void setCurSubRecord(List<CurSubRecord> curSubRecord) {
         this.curSubRecord = curSubRecord;
     }
-    public class Page {
 
-        private String total;
-        private String count;
-        private String sortField;
-        private String start;
-        private String sortOrder;
+    public class CurSubRecord {
 
-        public String getTotal() {
-            return total;
-        }
-
-        public void setTotal(String total) {
-            this.total = total;
-        }
-
-        public String getCount() {
-            return count;
-        }
-
-        public void setCount(String count) {
-            this.count = count;
-        }
-
-        public String getSortField() {
-            return sortField;
-        }
-
-        public void setSortField(String sortField) {
-            this.sortField = sortField;
-        }
-
-        public String getStart() {
-            return start;
-        }
-
-        public void setStart(String start) {
-            this.start = start;
-        }
-
-        public String getSortOrder() {
-            return sortOrder;
-        }
-
-        public void setSortOrder(String sortOrder) {
-            this.sortOrder = sortOrder;
-        }
-    }
-    public class CurSubRecord{
-
-        private  String type;//认购赎回类型
-        private  String amt;//金额
-        private  String crtDt;//操作日期
-        private  String interest; //赎回利息
-        private  String traCd;//交易码SR01 认购交易SS01 赎回交易SZ01  转让交易为空表示是活期认购
+        private String type;//认购赎回类型
+        private String amt;//金额
+        private String crtDt;//操作日期
+        private String interest; //赎回利息
+        private String traCd;//交易码SR01 认购交易SS01 赎回交易SZ01  转让交易为空表示是活期认购
 
         public String getTraCd() {
             return traCd;
@@ -129,9 +82,5 @@ public class RecordCurrent {
         public void setType(String type) {
             this.type = type;
         }
-
-
-
     }
-
 }

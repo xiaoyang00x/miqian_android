@@ -45,8 +45,7 @@ public class HttpUtils {
       requestBody = RequestBody.create(CONTENT_TYPE, "");
     }
     Headers.Builder headerBuilder = getRequestHeader(context, getSign(list));
-    final Request request =
-        new Request.Builder().url(url).post(requestBody).headers(headerBuilder.build()).build();
+    final Request request = new Request.Builder().url(url).post(requestBody).headers(headerBuilder.build()).build();
     Response response = null;
     try {
       response = client.newCall(request).execute();

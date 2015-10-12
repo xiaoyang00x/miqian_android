@@ -33,7 +33,7 @@ public class DetailsForRegularEarningActivity extends BaseActivity {
     myUpdateOperation("1", "", 0, 10);
   }
 
-  TextView projects_matching;
+//  TextView projects_matching;
   TextView money_amount;//总额
   TextView annualized_return;//年化收益率
   TextView limit;//期限
@@ -64,7 +64,7 @@ public class DetailsForRegularEarningActivity extends BaseActivity {
     date_start = (TextView) findViewById(R.id.date_start);
     date_end = (TextView) findViewById(R.id.date_end);
     progress = (RoundCornerProgressBar) findViewById(R.id.progress);
-    projects_matching = (TextView) findViewById(R.id.projects_matching);
+//    projects_matching = (TextView) findViewById(R.id.projects_matching);
     pay_mode = (TextView) findViewById(R.id.pay_mode);
     money_amount = (TextView) findViewById(R.id.money_amount);
     fromInvestmentAmount = (TextView) findViewById(R.id.fromInvestmentAmount);
@@ -146,7 +146,7 @@ public class DetailsForRegularEarningActivity extends BaseActivity {
         //set up the receive data on UI
         if (operationType.equals("1")) {
           topBar.setTitleText("定期赚详情");
-          projects_matching.setText(result.getData().getSubjectName() + "   1");
+//          projects_matching.setText(result.getData().getSubjectName() + "   1");
           money_amount.setText(result.getData().getSubjectTotalPrice());
           limit.setText("项目期限 " + result.getData().getLimit());
 
@@ -161,8 +161,8 @@ public class DetailsForRegularEarningActivity extends BaseActivity {
 
         } else if (operationType.equals("2")) {
           topBar.setTitleText("定期计划详情");
-          projects_matching.setText(result.getData().getSubjectName() + "   2");
-          projects_matching.setText(result.getData().getSubjectName() + "   1");
+//          projects_matching.setText(result.getData().getSubjectName() + "   2");
+//          projects_matching.setText(result.getData().getSubjectName() + "   1");
           money_amount.setText(result.getData().getSubjectTotalPrice());
           annualized_return.setText(result.getData().getSubjectTotalPrice());
           limit.setText(result.getData().getLimit());

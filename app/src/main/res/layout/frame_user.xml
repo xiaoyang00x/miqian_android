@@ -328,7 +328,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/account_current"
@@ -371,7 +371,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/account_regular"
@@ -414,7 +414,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
       </RelativeLayout>
 
@@ -448,7 +448,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/account_ticket"
@@ -491,7 +491,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/account_redpackage"

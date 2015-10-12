@@ -41,7 +41,7 @@ public class Urls {
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
     //认购预处理
-    public final static String order_produced = base_server + "userService/subscribePreprocess";
+    public final static String order_produced = base_server + "assetService/subscribePreprocess";
     //认购
     public final static String subscribe_order = base_server + "assetService/subscribe";
     //获取用户信息
@@ -81,6 +81,8 @@ public class Urls {
     public final static String withdrawCash = base_server + "assetService/withdrawCash";
     //我的活期
     public final static String user_current = base_server + "userService/getMyCurrent";
+    //我的定期
+    public final static String user_regular = base_server + "userService/getMyRegBuyList";
 
     //定期首页
     public final static String getRegMain = base_server + "subjectService/getRegMain";
@@ -96,7 +98,7 @@ public class Urls {
     public final static String getCustPromotion = base_server + "userService/getCustPromotion";
     //赎回
     public final static String redeem = base_server + "assetService/redeem";
-    //我的资金记录
+    //我的活期资金记录
     public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
 
 
