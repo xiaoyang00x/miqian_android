@@ -39,7 +39,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
@@ -124,6 +124,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.IntoResultActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
@@ -198,6 +202,11 @@
             android:name=".activity.current.RedeemResult"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.current.ActivityCurrentRecord"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
 
 
         <activity

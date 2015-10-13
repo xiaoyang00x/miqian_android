@@ -45,54 +45,6 @@ public class CapitalRecord {
     this.data = data;
   }
 
-  public static class Page {
-    int total;// 23,
-    int count;//113
-    String sortField;//"sortField": "",
-    int start;//0
-    String sortOrder;//"sortOrder": ""
-
-    public int getTotal() {
-      return total;
-    }
-
-    public void setTotal(int total) {
-      this.total = total;
-    }
-
-    public int getCount() {
-      return count;
-    }
-
-    public void setCount(int count) {
-      this.count = count;
-    }
-
-    public String getSortField() {
-      return sortField;
-    }
-
-    public void setSortField(String sortField) {
-      this.sortField = sortField;
-    }
-
-    public int getStart() {
-      return start;
-    }
-
-    public void setStart(int start) {
-      this.start = start;
-    }
-
-    public String getSortOrder() {
-      return sortOrder;
-    }
-
-    public void setSortOrder(String sortOrder) {
-      this.sortOrder = sortOrder;
-    }
-  }
-
   public static class Item {
     String traTm;//"traTm": "10:30:58",
     String traDt;//    "traDt": "2015-09-09",

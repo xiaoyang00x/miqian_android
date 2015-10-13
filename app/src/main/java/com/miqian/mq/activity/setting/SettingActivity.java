@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
@@ -65,6 +66,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onFail(String error) {
+                tv_card.setText("银行卡未绑定");
+                tv_cardState.setText("");
                 mWaitingDialog.dismiss();
             }
         });
@@ -101,6 +104,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_telephone.setOnClickListener(this);
         frame_setting_bankcard.setOnClickListener(this);
 
+        if (userInfo==null){
+            return;
+        }
+        if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
+            tv_bindPhone.setText(RSAUtils.decryptByPrivate(userInfo.getMobilePhone()));
+        }
 
         if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
             //未认证
@@ -141,6 +150,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //绑定手机
             case R.id.frame_setting_bindphone:
+                Intent intent_phone=new Intent(mActivity, TradePsCaptchaActivity.class);
+                intent_phone.putExtra("isModifyPhone",true);
+                startActivity(intent_phone);
 
                 break;
             //安全设置
@@ -152,8 +164,18 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //银行卡号
             case R.id.frame_setting_bankcard:
+
+                if ("0".equals(userInfo.getBindCardStatus())) {
+                   startActivity(new Intent(mActivity, BindCardActivity.class));
+                    return;
+                }
+
                 //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
-                if (userInfo.getSupportStatus().equals("0")) {
+               String supportStatus= userInfo.getSupportStatus();
+                if (TextUtils.isEmpty(supportStatus)){
+                    supportStatus="0";
+                }
+                if (supportStatus.equals("0")) {
                     Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
                     Bundle extra = new Bundle();
                     extra.putSerializable("userInfo", userInfo);
@@ -165,7 +187,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     Bundle extra = new Bundle();
                     extra.putSerializable("userInfo", userInfo);
                     if (bankCard != null) {
-                        extra.putSerializable("bankCard", bankCard);
+                        if (TextUtils.isEmpty(bankCard.getBankNo())){
+                            intent_bind.putExtra("cardNo", RSAUtils.decryptByPrivate(bankCard.getBankNo()));
+                        }
+
                     }
                     intent_bind.putExtras(extra);
                     startActivity(intent_bind);

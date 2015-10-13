@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/arrow_right" />
+                android:src="@drawable/right" />
 
             <TextView
                 android:id="@+id/tv_bank_province"
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/arrow_right" />
+                android:src="@drawable/right" />
 
             <TextView
                 android:id="@+id/tv_bank_branch"

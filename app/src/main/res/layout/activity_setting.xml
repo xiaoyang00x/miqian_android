@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/tv_setting_name"
@@ -32,7 +32,33 @@
             android:text="未认证"
             android:textColor="@color/mq_r1" />
     </RelativeLayout>
+    <View style="@style/item_divider" />
+    <RelativeLayout
+        android:id="@+id/frame_setting_bindphone"
+        style="@style/listItem">
 
+        <TextView
+            style="@style/text_black_item"
+            android:layout_centerVertical="true"
+            android:text="手机号码" />
+
+        <ImageView
+            android:id="@+id/arrow_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/right" />
+
+        <TextView
+            android:id="@+id/tv_settting_bindphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/arrow_2"
+            android:textColor="@color/miqian_gray" />
+    </RelativeLayout>
     <View style="@style/item_divider" />
 
     <RelativeLayout
@@ -52,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:id="@+id/tv_setting_bankcardstate"
@@ -64,33 +90,7 @@
             android:textColor="@color/mq_r1" />
     </RelativeLayout>
 
-    <View style="@style/item_divider" />
-    <RelativeLayout
-        android:id="@+id/frame_setting_bindphone"
-        style="@style/listItem">
 
-        <TextView
-            style="@style/text_black_item"
-            android:layout_centerVertical="true"
-            android:text="绑定手机" />
-
-        <ImageView
-            android:id="@+id/arrow_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
-
-        <TextView
-            android:id="@+id/tv_settting_bindphone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/arrow_2"
-            android:textColor="@color/miqian_gray" />
-    </RelativeLayout>
 
     <View style="@style/item_divider" />
 
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
     </RelativeLayout>
 
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
     </RelativeLayout>
 
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
     </RelativeLayout>
 
@@ -173,7 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
     </RelativeLayout>
 
@@ -194,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:src="@drawable/right" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -219,7 +219,7 @@
             style="@style/click_btn"
             android:layout_height="@dimen/listitem_height"
             android:onClick="btn_click"
-            android:text="退出账号" />
+            android:text="退出" />
     </LinearLayout>
 
 </LinearLayout>

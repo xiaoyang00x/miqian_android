@@ -10,7 +10,7 @@ public class CurrentInfo {
     private String currentBuyUpLimit;
     private String currentBuyDownLimit;
     private String currentSwitch;
-//    webViewList
+    private String webViewUrl;
 
     public String getBuyItemCount() {
         return buyItemCount;
@@ -50,5 +50,13 @@ public class CurrentInfo {
 
     public void setCurrentSwitch(String currentSwitch) {
         this.currentSwitch = currentSwitch;
+    }
+
+    public String getWebViewUrl() {
+        return webViewUrl;
+    }
+
+    public void setWebViewUrl(String webViewUrl) {
+        this.webViewUrl = webViewUrl;
     }
 }

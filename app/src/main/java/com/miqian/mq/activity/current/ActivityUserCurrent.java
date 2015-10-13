@@ -102,6 +102,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.frame_current_record:
+                startActivity(new Intent(mActivity,ActivityCurrentRecord.class));
                 break;
             case R.id.frame_project_match:
                 break;

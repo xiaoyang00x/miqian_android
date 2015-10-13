@@ -9,6 +9,7 @@
   <!---->
   <string name="app_loading">处理中…</string>
   <string name="app_loading_more">加载中…</string>
+  <string name="net_error">网络出错，轻触屏幕重新加载</string>
 
   <string name="phone_noeffect">请输入正确的手机号码</string>
   <string name="phone_null">手机号码不能为空</string>

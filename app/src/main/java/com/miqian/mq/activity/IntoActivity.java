@@ -131,6 +131,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 frameBank.setVisibility(View.VISIBLE);
                 frameBankInput.setVisibility(View.VISIBLE);
                 frameTip.setVisibility(View.VISIBLE);
+                editBankNumber.requestFocus();
             }
             bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
             if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {

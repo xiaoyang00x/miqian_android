@@ -47,7 +47,7 @@ public class WFYTitle extends RelativeLayout {
 			addTitleImage(titleImage);
 		}
 		titleColor = ta.getColor(R.styleable.WFYTitle_centerTextColor, Color.parseColor("#ffffff"));
-		titleSize = ta.getDimension(R.styleable.WFYTitle_centerTextSize, 21);
+		titleSize = ta.getDimension(R.styleable.WFYTitle_centerTextSize, 18);
 		if (!TextUtils.isEmpty(title)) {
 			addTitleText(title, titleColor, titleSize);
 		}
@@ -126,11 +126,12 @@ public class WFYTitle extends RelativeLayout {
 
 	private void addLeftImage(int leftImage) {
 		ivLeft = new ImageView(mContext);
-		LayoutParams lpLeft = new LayoutParams(dp2px(mContext, 30), LayoutParams.MATCH_PARENT);
-		lpLeft.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		LayoutParams lpLeft = new LayoutParams(dp2px(mContext, 60), LayoutParams.MATCH_PARENT);
+		lpLeft.addRule(RelativeLayout.CENTER_VERTICAL);
 		ivLeft.setLayoutParams(lpLeft);
 		ivLeft.setImageResource(leftImage);
-		ivLeft.setScaleType(ScaleType.FIT_CENTER);
+		ivLeft.setScaleType(ScaleType.CENTER);
+//		ivLeft.setScaleType(ScaleType.FIT_CENTER);
 //		ivLeft.setPadding(dp2px(mContext, 18), dp2px(mContext, 6), dp2px(mContext, 18), dp2px(mContext, 6));
 		addView(ivLeft);
 	}

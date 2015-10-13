@@ -58,10 +58,7 @@ public class SetPasswordActivity extends BaseActivity {
             tv_newpassword.setText("设置交易密码");
             tv_comfirmpassword.setText("确定交易密码");
             et_password.setHint("请输入交易密码");
-
         }
-
-
     }
 
     @Override

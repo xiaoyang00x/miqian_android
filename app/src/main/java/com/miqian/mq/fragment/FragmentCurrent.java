@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.WebViewActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.entity.CurrentInfo;
@@ -161,7 +162,9 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
                 UserUtil.isLogin(mContext, ActivityUserCurrent.class);
                 break;
             case R.id.text_detail:
-                // TODO: 2015/10/8
+                if (currentInfo != null) {
+                    WebViewActivity.doIntent(mContext, currentInfo.getWebViewUrl(), true, null);
+                }
                 break;
             default:
                 break;

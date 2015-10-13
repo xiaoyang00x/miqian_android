@@ -6,6 +6,7 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 public class  Redpaper{
+
     private Page page;
     private List<CustPromotion> custPromotion;
 
@@ -119,52 +120,4 @@ public class  Redpaper{
         }
     }
 
-    public class Page {
-
-        private String total;
-        private String count;
-        private String sortField;
-        private String start;
-        private String sortOrder;
-
-        public String getTotal() {
-            return total;
-        }
-
-        public void setTotal(String total) {
-            this.total = total;
-        }
-
-        public String getCount() {
-            return count;
-        }
-
-        public void setCount(String count) {
-            this.count = count;
-        }
-
-        public String getSortField() {
-            return sortField;
-        }
-
-        public void setSortField(String sortField) {
-            this.sortField = sortField;
-        }
-
-        public String getStart() {
-            return start;
-        }
-
-        public void setStart(String start) {
-            this.start = start;
-        }
-
-        public String getSortOrder() {
-            return sortOrder;
-        }
-
-        public void setSortOrder(String sortOrder) {
-            this.sortOrder = sortOrder;
-        }
-    }
 }
