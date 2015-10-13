@@ -988,10 +988,7 @@ public class HttpRequest {
      *  @param isForce 默认为0 1 强制刷新  0 不强制刷新
      */
     public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn, String isForce) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<Param>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));

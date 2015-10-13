@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/text_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:text="定期投资："
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
+
+        <TextView
+            android:id="@+id/text_regular_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/text_regular"
+            android:text="2笔"
+            android:textColor="@color/mq_r1"
+            android:textSize="@dimen/mq_font6" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/frame_capital"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/text_capital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="待收本金："
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
+
+        <TextView
+            android:id="@+id/text_earning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:text="待收收益："
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
+    </RelativeLayout>
+</LinearLayout>

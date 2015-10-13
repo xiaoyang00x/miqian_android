@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.CapitalRecord;
-import com.miqian.mq.entity.CapitalRecordResult;
 
 import java.util.List;
 
@@ -145,7 +144,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
 
         public ProgressViewHolder(View v) {
             super(v);
-            progressBar = (ProgressBar) v.findViewById(R.id.progressBar1);
+            progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         }
     }
 }

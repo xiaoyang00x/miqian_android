@@ -195,7 +195,7 @@ public class MobileOS {
 
 	/** 获取手机型号 */
 	public static String getDeviceModel() {
-		return android.os.Build.MODEL;
+		return TextUtils.isEmpty(android.os.Build.MODEL) ? "unknown" : android.os.Build.MODEL;
 	}
 
 	/** 获取系统名称 */
