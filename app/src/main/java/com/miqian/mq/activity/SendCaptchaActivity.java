@@ -71,6 +71,10 @@ public class SendCaptchaActivity extends BaseActivity {
         type = intent.getIntExtra("type", 0);
         if (type == TypeUtil.SENDCAPTCHA_FORGETPSW) {
             mTitle.setTitleText("忘记密码");
+            if (intent.getBooleanExtra("isModify", false)) {
+                mTitle.setTitleText("修改登录密码");
+            }
+
         } else if (type == TypeUtil.MODIFY_PHONE) {
             mTitle.setTitleText("修改绑定手机号");
             isModifyPhone = true;
@@ -253,10 +257,11 @@ public class SendCaptchaActivity extends BaseActivity {
 
     }
 
-    public static void enterActivity(Context context, int type) {
+    public static void enterActivity(Context context, int type, boolean isModify) {
 
         Intent intent = new Intent(context, SendCaptchaActivity.class);
         intent.putExtra("type", type);
+        intent.putExtra("isModify", isModify);
         context.startActivity(intent);
 
     }

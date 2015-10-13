@@ -40,7 +40,7 @@
             android:textColorHint="@color/miqian_gray"
             android:textSize="15sp"
             android:maxLength="11"
-            android:phoneNumber="true"
+            android:inputType="number"
             android:typeface="monospace"
             android:layout_toRightOf="@+id/login_image1"
             android:layout_toEndOf="@+id/login_image1" />

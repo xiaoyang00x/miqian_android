@@ -2,26 +2,24 @@ package com.miqian.mq.activity;
 
 import android.app.Dialog;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.CapitalRecordAdapter;
 import com.miqian.mq.entity.CapitalRecord;
+import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
@@ -39,55 +37,72 @@ import java.util.List;
 public class CapitalRecordActivity extends BaseActivity {
     Animation animHide, animShow;
     RecyclerView rv;
-    SwipeRefreshLayout srl;
     CapitalRecordAdapter adapter;
-    List<CapitalRecord.Item> list = new ArrayList<>();
+    List<CapitalRecord.CapitalItem> list = new ArrayList<>();
     FrameLayout data_view;
     TextView empty_view;
     Dialog mWaitingDialog;
 
-    CircleButton all, saving, withdraw, buy, redeem, transfer, maturity, other, preSelected;
-    TextView all_t, saving_t, withdraw_t, buy_t, redeem_t, transfer_t, maturity_t, other_t,
-            preSelected_t;
+    CircleButton all;
+    CircleButton saving;
+    CircleButton withdraw;
+    CircleButton buy;
+    CircleButton redeem;
+    CircleButton transfer;
+    CircleButton maturity;
+    CircleButton other;
+    CircleButton preSelected;
+    TextView all_t;
+    TextView saving_t;
+    TextView withdraw_t;
+    TextView buy_t;
+    TextView redeem_t;
+    TextView transfer_t;
+    TextView maturity_t;
+    TextView other_t;
+    TextView preSelected_t;
     String preTxt;
-    LinearLayout filetr_container;
+    RelativeLayout filetr_container;
+    RelativeLayout relaHide;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_capital_record);
-        animShow = AnimationUtils.loadAnimation(this, R.anim.view_show);
-        animHide = AnimationUtils.loadAnimation(this, R.anim.view_hide);
-        filetr_container = (LinearLayout) findViewById(R.id.filter_container);
-        filetr_container.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-        mWaitingDialog = ProgressDialogView.create(this);
-        mWaitingDialog.show();
-        mWaitingDialog.setCanceledOnTouchOutside(false);
-        updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", true);
-    }
 
     @Override
     public void obtainData() {
 
+        updateData("1", "99999", "", "", "", false);
     }
 
     private void showEmptyView() {
         if (list.isEmpty()) {
             empty_view.setVisibility(View.VISIBLE);
-            data_view.setVisibility(View.GONE);
         } else {
             empty_view.setVisibility(View.GONE);
-            data_view.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void initView() {
+
+        animShow = AnimationUtils.loadAnimation(this, R.anim.view_show);
+        animHide = AnimationUtils.loadAnimation(this, R.anim.view_hide);
+        filetr_container = (RelativeLayout) findViewById(R.id.filter_container);
+        relaHide = (RelativeLayout) findViewById(R.id.rela_hide);
+        relaHide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (filetr_container.getVisibility()==View.VISIBLE){
+                    filetr_container.startAnimation(animHide);
+                    filetr_container.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
+        mWaitingDialog = ProgressDialogView.create(this);
+        mWaitingDialog.show();
+        mWaitingDialog.setCanceledOnTouchOutside(false);
+
+
         data_view = (FrameLayout) findViewById(R.id.data_view);
         empty_view = (TextView) findViewById(R.id.empty_view);
 
@@ -120,7 +135,6 @@ public class CapitalRecordActivity extends BaseActivity {
         preSelected = all;
         preSelected_t = all_t;
         preSelected_t.setTextColor(Color.WHITE);
-        //
         preSelected.setColor(Color.RED);
 
         rv = (RecyclerView) findViewById(R.id.ultimate_recycler_view);
@@ -128,31 +142,23 @@ public class CapitalRecordActivity extends BaseActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(layoutManager);
+        rv.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).marginResId(R.dimen.margin_left_right).build());
         rv.setVerticalScrollBarEnabled(true);
-        srl = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
-        srl.setColorSchemeResources(R.color.blue, R.color.grey, R.color.red, R.color.green);
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", false);
-                //srl.setRefreshing(false);
-            }
-        });
         adapter = new CapitalRecordAdapter(list, rv);
-        adapter.setOnLoadMoreListener(new CapitalRecordAdapter.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                //add null , so the adapter will check view_type and show progress bar at bottom
-                list.add(null);
-                adapter.notifyItemInserted(list.size() - 1);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", true);
-                    }
-                }, 3000);
-            }
-        });
+//        adapter.setOnLoadMoreListener(new CapitalRecordAdapter.OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                //add null , so the adapter will check view_type and show progress bar at bottom
+//                list.add(null);
+//                adapter.notifyItemInserted(list.size() - 1);
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", true);
+//                    }
+//                }, 3000);
+//            }
+//        });
         rv.setAdapter(adapter);
     }
 
@@ -167,26 +173,25 @@ public class CapitalRecordActivity extends BaseActivity {
     @Override
     public void initTitle(WFYTitle topLayout) {
         topLayout.setTitleText("资金记录");
-        topLayout.addRightImage(R.drawable.ic_launcher);
+        topLayout.addRightImage(R.drawable.record_select);
         topLayout.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CapitalRecordActivity.this, "jjjj", Toast.LENGTH_SHORT).show();
-                if (filetr_container.getVisibility() == View.GONE) {
-                    filetr_container.setVisibility(View.VISIBLE);
-                    filetr_container.startAnimation(animShow);
-                } else {
-                    filetr_container.startAnimation(animHide);
+                if (filetr_container.getVisibility() == View.VISIBLE) {
                     filetr_container.setVisibility(View.GONE);
+                    filetr_container.startAnimation(animHide);
+                } else {
+                    filetr_container.startAnimation(animShow);
+                    filetr_container.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
     public void searchBtn(View v) {
+        String  type="";
         switch (v.getId()) {
             case R.id.all:
-                Toast.makeText(this, "all", Toast.LENGTH_SHORT).show();
                 preSelected.setColor(0xdddddd);
                 preSelected = all;
 
@@ -198,9 +203,10 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t.setTextColor(0xff505050);
                 all_t.setTextColor(Color.WHITE);
                 preSelected_t = all_t;
+
+                type="";
                 break;
             case R.id.saving:
-                Toast.makeText(this, "saving", Toast.LENGTH_SHORT).show();
                 preSelected.setColor(0xdddddd);
                 preSelected = saving;
                 preSelected.setColor(Color.RED);
@@ -211,10 +217,11 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t.setTextColor(0xff505050);
                 saving_t.setTextColor(Color.WHITE);
                 preSelected_t = saving_t;
+
+                type="MQ01";
                 break;
 
             case R.id.buy:
-                Toast.makeText(this, "buy", Toast.LENGTH_SHORT).show();
                 preSelected.setColor(0xdddddd);
                 preSelected = buy;
                 preSelected.setColor(Color.RED);
@@ -224,9 +231,10 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t.setTextColor(0xff505050);
                 buy_t.setTextColor(Color.WHITE);
                 preSelected_t = buy_t;
+
+                type="MQ03";
                 break;
             case R.id.withdraw:
-                Toast.makeText(this, "withdraw", Toast.LENGTH_SHORT).show();
                 preSelected.setColor(0xdddddd);
                 preSelected = withdraw;
                 preSelected.setColor(Color.RED);
@@ -235,11 +243,12 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t.setTextColor(0xff505050);
                 withdraw_t.setTextColor(Color.WHITE);
                 preSelected_t = withdraw_t;
+
+                type="MQ02";
                 break;
 
 
             case R.id.redeem:
-                Toast.makeText(this, "redeem", Toast.LENGTH_SHORT).show();
                 preSelected.setColor(0xdddddd);
                 preSelected = redeem;
 
@@ -249,10 +258,11 @@ public class CapitalRecordActivity extends BaseActivity {
 
                 preSelected.setColor(Color.RED);
                 getmTitle().setTitleText("赎回");
+
+                type="MQ04";
                 break;
 
             case R.id.transfer:
-                Toast.makeText(this, "transfer", Toast.LENGTH_SHORT).show();
                 preSelected.setColor(0xdddddd);
                 preSelected = transfer;
                 preSelected.setColor(Color.RED);
@@ -261,10 +271,11 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t.setTextColor(0xff505050);
                 preSelected_t = transfer_t;
                 preSelected_t.setTextColor(0xffffffff);
+
+                type="MQ05";
                 break;
 
             case R.id.maturity:
-                Toast.makeText(this, "maturity", Toast.LENGTH_SHORT).show();
                 preSelected.setColor(0xdddddd);
                 preSelected = maturity;
                 preSelected.setColor(Color.RED);
@@ -272,10 +283,11 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t.setTextColor(0xff505050);
                 preSelected_t = maturity_t;
                 preSelected_t.setTextColor(0xffffffff);
+
+                type="MQ06";
                 break;
 
             case R.id.other:
-                Toast.makeText(this, "other", Toast.LENGTH_SHORT).show();
                 preSelected.setColor(0xdddddd);
                 preSelected = other;
 
@@ -284,79 +296,56 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t.setTextColor(0xff505050);
                 preSelected_t = other_t;
                 preSelected_t.setTextColor(0xffffffff);
+
+                type="MQ07";
                 break;
         }
         filetr_container.startAnimation(animHide);
         filetr_container.setVisibility(View.GONE);
 
         //todo 到网络获取数据。因为该界面的信息是分页的。
-        updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", false);
+
+        updateData("1", "99999", "", "", type, false);
     }
 
-    private void setPreSelected(CircleButton curC, TextView curT, String txt) {
-        curC.setColor(Color.RED);
-        curT.setText(txt);
-        curT.setTextColor(Color.WHITE);
-
-        //preSelected.setColor(Color.WHITE);//set up the previous CircleButton
-        //preSelected_t.setText(preTxt);//set up the previous selected TextView's text content
-        //preSelected_t.setTextColor(0x505050);//set up the previous selected TextView's text color
-        //preSelected.setBackgroundColor(0);
-
-        preSelected = curC;
-        //preSelected_t = curT;
-    }
 
     protected Handler handler = new Handler();
 
-    //custId
-    //    客户ID
-    //是
-    //    核心数据库中客户的唯一标识
-    //pageNum
-    //    页码
-    //是
-    //    查询条件
-    //pageSize
-    //    每页条数
-    //是
-    //    查询条件
-    //startDate
-    //    起始时间
-    //否
-    //查询条件，时间区间的起始值
-    //    endDate
-    //结束时间
-    //    否
-    //查询条件，时间区间的结束值
-    //    operateType
-    private void updateData(String pageNum, String pageSize, String startDate, String endDate, String operationType, boolean loadMore) {
+    /**
+     * @param pageNo        页码
+     * @param pageSize      每页条数
+     * @param startDate     起始时间
+     * @param endDate       结束时间
+     * @param operationType operateType MQ01充值,MQ02提现,MQ03认购,MQ04赎回,MQ05转让,MQ06到期,MQ07其他,不传查询所有
+     * @param loadMore
+     */
+    private void updateData(String pageNo, String pageSize, String startDate, String endDate, String operationType, boolean loadMore) {
         final boolean isMore = loadMore;
-        HttpRequest.getCapitalRecords(this, new ICallback<CapitalRecord>() {
+        HttpRequest.getCapitalRecords(this, new ICallback<CapitalRecordResult>() {
 
             @Override
-            public void onSucceed(CapitalRecord result) {
-                CapitalRecord record = result;
+            public void onSucceed(CapitalRecordResult result) {
+                CapitalRecordResult record = result;
                 if (list.size() > 0 && isMore) {
                     list.remove(list.size() - 1);
                     adapter.notifyItemRemoved(list.size());
                 }
-                Log.e("keen", "" + record.getData().length);
-                if (!isMore) list.clear();//todo load more时，直接追加
-                list.addAll(Arrays.asList(record.getData()));
-                //list.add(record.getData()[0]);
-
-                srl.setRefreshing(false);
+                //todo load more时，直接追加
+                if (!isMore) {
+                    list.clear();
+                }
+                list.addAll(record.getData().getAssetRecord());
                 mWaitingDialog.dismiss();
                 adapter.setLoaded();
                 showEmptyView();
                 adapter.notifyDataSetChanged();
-                Uihelper.showToast(CapitalRecordActivity.this, "getCapitalRecords");
             }
 
             @Override
             public void onFail(String error) {
                 Uihelper.showToast(CapitalRecordActivity.this, error);
+                showEmptyView();
+                mWaitingDialog.dismiss();
                 //TODO mock the success response
                 //getData();
                 //srl.setRefreshing(false);
@@ -364,6 +353,6 @@ public class CapitalRecordActivity extends BaseActivity {
                 //showEmptyView();
                 //adapter.notifyDataSetChanged();
             }
-        }, pageNum, pageSize, startDate, endDate, operationType);
+        }, pageNo, pageSize, startDate, endDate, operationType);
     }
 }

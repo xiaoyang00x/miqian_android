@@ -1,365 +1,113 @@
 package com.miqian.mq.entity;
 
+import java.util.List;
+
 /**
- * 接口文档
- * https://tower.im/projects/dd55cdc7404448b7bc3f101d5fed84e1/docs/3d14a74c188148d186c518fe441ae551/
- * Created by sunyong on 9/23/15.
+ * Created by Administrator on 2015/10/13.
  */
 public class CapitalRecord {
-  /**
-   * todo 这里参数对应的是res json
-   */
-  String code;//返回代码
-  String message;   //返回代码对应消息
-  Page page;//分页信息
-  Item[] data;//数据信息
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public Page getPage() {
-    return page;
-  }
-
-  public void setPage(Page page) {
-    this.page = page;
-  }
-
-  public Item[] getData() {
-    return data;
-  }
-
-  public void setData(Item[] data) {
-    this.data = data;
-  }
-
-  public static class Item {
-    String traTm;//"traTm": "10:30:58",
-    String traDt;//    "traDt": "2015-09-09",
-    String seqNo;//   "seqNo": "",
-    int totalAmt;//   "totalAmt": 0,
-    int waitRecvAmt;//  "waitRecvAmt": 0,
-    String id;//  "id": "000000000000000000000018585715",
-    String appDt;//  "appDt": "",
-    int freezeSa;//  "freezeSa": 0,
-    String peerFundLYn;//  "peerFundLYn": "",
-    String finDt;//"finDt": "2015-09-09",
-    String traOpNm;//   "traOpNm": "申请提现",
-    String investId;//  "investId": "",
-    int usableSa;//  "usableSa": 0,
-    String finTm;//  "finTm": "10:30:58",
-    String custId;//  "custId": "",
-    String bdId;// "bdId": "",
-    String appTm;// "appTm": "",
-    String traFundNm;// "traFundNm": "资金",
-    String traAmt;// "traAmt": 100,
-    String prodId;// "prodId": "",
-    String freezeYn;//"freezeYn": "Y",
-    String transYn;//   "transYn": "",
-    String pubBdCustId;//   "pubBdCustId": "",
-    String pubBdLoginNm;//    "pubBdLoginNm": "",
-    String peerCustLoginNm;//   "peerCustLoginNm": "系统",
-    String cutLoginNm;//  "custLoginNm": "",
-    String sxtzsNo;//  "sxtzsNo": "",
-    String traOpTypNm;//  "traOpTypNm": "",
-    int peerAmt;//  "peerAmt": 0,
-    String rem;// "rem": "用户申请提现,资金被冻结等待处理",
-    String traOpTypCd;//  "traOpTypCd": "",
-    String traFundCd;//  "traFundCd": "ZJ",
-    String peerCustId;//"peerCustId": "",
-    String traCd;//   "traCd": "",
-    String saChgDire;//    "saChgDire": "JS"
-
-    public String getTraTm() {
-      return traTm;
-    }
-
-    public void setTraTm(String traTm) {
-      this.traTm = traTm;
-    }
-
-    public String getTraDt() {
-      return traDt;
-    }
-
-    public void setTraDt(String traDt) {
-      this.traDt = traDt;
-    }
-
-    public String getSeqNo() {
-      return seqNo;
-    }
-
-    public void setSeqNo(String seqNo) {
-      this.seqNo = seqNo;
-    }
-
-    public int getTotalAmt() {
-      return totalAmt;
-    }
-
-    public void setTotalAmt(int totalAmt) {
-      this.totalAmt = totalAmt;
-    }
-
-    public int getWaitRecvAmt() {
-      return waitRecvAmt;
-    }
-
-    public void setWaitRecvAmt(int waitRecvAmt) {
-      this.waitRecvAmt = waitRecvAmt;
-    }
-
-    public String getId() {
-      return id;
-    }
-
-    public void setId(String id) {
-      this.id = id;
-    }
-
-    public String getAppDt() {
-      return appDt;
-    }
-
-    public void setAppDt(String appDt) {
-      this.appDt = appDt;
-    }
-
-    public int getFreezeSa() {
-      return freezeSa;
-    }
-
-    public void setFreezeSa(int freezeSa) {
-      this.freezeSa = freezeSa;
-    }
-
-    public String getPeerFundLYn() {
-      return peerFundLYn;
-    }
-
-    public void setPeerFundLYn(String peerFundLYn) {
-      this.peerFundLYn = peerFundLYn;
-    }
-
-    public String getFinDt() {
-      return finDt;
-    }
-
-    public void setFinDt(String finDt) {
-      this.finDt = finDt;
-    }
-
-    public String getTraOpNm() {
-      return traOpNm;
-    }
-
-    public void setTraOpNm(String traOpNm) {
-      this.traOpNm = traOpNm;
-    }
-
-    public String getInvestId() {
-      return investId;
-    }
-
-    public void setInvestId(String investId) {
-      this.investId = investId;
-    }
-
-    public int getUsableSa() {
-      return usableSa;
-    }
-
-    public void setUsableSa(int usableSa) {
-      this.usableSa = usableSa;
-    }
-
-    public String getFinTm() {
-      return finTm;
-    }
-
-    public void setFinTm(String finTm) {
-      this.finTm = finTm;
-    }
-
-    public String getCustId() {
-      return custId;
-    }
-
-    public void setCustId(String custId) {
-      this.custId = custId;
-    }
-
-    public String getBdId() {
-      return bdId;
-    }
-
-    public void setBdId(String bdId) {
-      this.bdId = bdId;
-    }
-
-    public String getAppTm() {
-      return appTm;
-    }
-
-    public void setAppTm(String appTm) {
-      this.appTm = appTm;
-    }
-
-    public String getTraFundNm() {
-      return traFundNm;
-    }
-
-    public void setTraFundNm(String traFundNm) {
-      this.traFundNm = traFundNm;
-    }
-
-    public String getTraAmt() {
-      return traAmt;
-    }
-
-    public void setTraAmt(String traAmt) {
-      this.traAmt = traAmt;
-    }
-
-    public String getProdId() {
-      return prodId;
-    }
-
-    public void setProdId(String prodId) {
-      this.prodId = prodId;
-    }
-
-    public String getFreezeYn() {
-      return freezeYn;
-    }
 
-    public void setFreezeYn(String freezeYn) {
-      this.freezeYn = freezeYn;
-    }
-
-    public String getTransYn() {
-      return transYn;
-    }
-
-    public void setTransYn(String transYn) {
-      this.transYn = transYn;
-    }
-
-    public String getPubBdCustId() {
-      return pubBdCustId;
-    }
+    private Page page;
+    private List<CapitalItem> assetRecord;
 
-    public void setPubBdCustId(String pubBdCustId) {
-      this.pubBdCustId = pubBdCustId;
+    public Page getPage() {
+        return page;
     }
 
-    public String getPubBdLoginNm() {
-      return pubBdLoginNm;
+    public void setPage(Page page) {
+        this.page = page;
     }
 
-    public void setPubBdLoginNm(String pubBdLoginNm) {
-      this.pubBdLoginNm = pubBdLoginNm;
+    public List<CapitalItem> getAssetRecord() {
+        return assetRecord;
     }
 
-    public String getPeerCustLoginNm() {
-      return peerCustLoginNm;
+    public void setAssetRecord(List<CapitalItem> assetRecord) {
+        this.assetRecord = assetRecord;
     }
 
-    public void setPeerCustLoginNm(String peerCustLoginNm) {
-      this.peerCustLoginNm = peerCustLoginNm;
-    }
-
-    public String getCutLoginNm() {
-      return cutLoginNm;
-    }
+    public class CapitalItem{
 
-    public void setCutLoginNm(String cutLoginNm) {
-      this.cutLoginNm = cutLoginNm;
-    }
+        private String traDt;//操作日期
+        private String traTm;//操作时间
+        private String traOpNm;//操作类型
+        private String traAmt;//交易金额
+        private String peerCustLoginNm;//操作方
+        private String rem;//备注
+        private String saChgDire;//金额变动方向
+        private String traFundNm;//资金类型名称
+        private String traFundCd;//资金类型编码
 
-    public String getSxtzsNo() {
-      return sxtzsNo;
-    }
+        public String getTraDt() {
+            return traDt;
+        }
 
-    public void setSxtzsNo(String sxtzsNo) {
-      this.sxtzsNo = sxtzsNo;
-    }
+        public void setTraDt(String traDt) {
+            this.traDt = traDt;
+        }
 
-    public String getTraOpTypNm() {
-      return traOpTypNm;
-    }
+        public String getTraTm() {
+            return traTm;
+        }
 
-    public void setTraOpTypNm(String traOpTypNm) {
-      this.traOpTypNm = traOpTypNm;
-    }
+        public void setTraTm(String traTm) {
+            this.traTm = traTm;
+        }
 
-    public int getPeerAmt() {
-      return peerAmt;
-    }
+        public String getTraOpNm() {
+            return traOpNm;
+        }
 
-    public void setPeerAmt(int peerAmt) {
-      this.peerAmt = peerAmt;
-    }
+        public void setTraOpNm(String traOpNm) {
+            this.traOpNm = traOpNm;
+        }
 
-    public String getRem() {
-      return rem;
-    }
+        public String getTraAmt() {
+            return traAmt;
+        }
 
-    public void setRem(String rem) {
-      this.rem = rem;
-    }
+        public void setTraAmt(String traAmt) {
+            this.traAmt = traAmt;
+        }
 
-    public String getTraOpTypCd() {
-      return traOpTypCd;
-    }
+        public String getPeerCustLoginNm() {
+            return peerCustLoginNm;
+        }
 
-    public void setTraOpTypCd(String traOpTypCd) {
-      this.traOpTypCd = traOpTypCd;
-    }
+        public void setPeerCustLoginNm(String peerCustLoginNm) {
+            this.peerCustLoginNm = peerCustLoginNm;
+        }
 
-    public String getTraFundCd() {
-      return traFundCd;
-    }
+        public String getRem() {
+            return rem;
+        }
 
-    public void setTraFundCd(String traFundCd) {
-      this.traFundCd = traFundCd;
-    }
+        public void setRem(String rem) {
+            this.rem = rem;
+        }
 
-    public String getPeerCustId() {
-      return peerCustId;
-    }
+        public String getSaChgDire() {
+            return saChgDire;
+        }
 
-    public void setPeerCustId(String peerCustId) {
-      this.peerCustId = peerCustId;
-    }
+        public void setSaChgDire(String saChgDire) {
+            this.saChgDire = saChgDire;
+        }
 
-    public String getTraCd() {
-      return traCd;
-    }
+        public String getTraFundNm() {
+            return traFundNm;
+        }
 
-    public void setTraCd(String traCd) {
-      this.traCd = traCd;
-    }
+        public void setTraFundNm(String traFundNm) {
+            this.traFundNm = traFundNm;
+        }
 
-    public String getSaChgDire() {
-      return saChgDire;
-    }
+        public String getTraFundCd() {
+            return traFundCd;
+        }
 
-    public void setSaChgDire(String saChgDire) {
-      this.saChgDire = saChgDire;
+        public void setTraFundCd(String traFundCd) {
+            this.traFundCd = traFundCd;
+        }
     }
-  }
 }
