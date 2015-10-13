@@ -1,15 +1,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="0dp"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:background="@color/white"
-    android:gravity="center">
+    android:background="#fffffc"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/mq_b4" />
 
     <ImageView
         android:id="@+id/img_tab"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
         android:layout_gravity="center"
-        android:src="@drawable/tab_home" />
+        android:src="@drawable/tab_home_selector" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:singleLine="true"
+        android:textColor="@drawable/main_tab_text_color"
+        android:textSize="@dimen/mq_font10" />
 </LinearLayout>

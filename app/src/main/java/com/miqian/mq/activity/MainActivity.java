@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
@@ -82,10 +83,10 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         LinearLayout layout = (LinearLayout) mTabHost.getChildAt(0);
         TabWidget tw = (TabWidget) layout.getChildAt(1);
 
-        tabIndicator1 = initTabView(tw, R.drawable.tab_home);
-        tabIndicator2 = initTabView(tw, R.drawable.tab_current);
-        tabIndicator3 = initTabView(tw, R.drawable.tab_regular);
-        tabIndicator4 = initTabView(tw, R.drawable.tab_user);
+        tabIndicator1 = initTabView(tw, R.drawable.tab_home_selector, R.string.main_tab_home);
+        tabIndicator2 = initTabView(tw, R.drawable.tab_current_selector, R.string.main_tab_current);
+        tabIndicator3 = initTabView(tw, R.drawable.tab_regular_selector, R.string.main_tab_regular);
+        tabIndicator4 = initTabView(tw, R.drawable.tab_user_selector, R.string.main_tab_user);
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -95,10 +96,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         });
     }
 
-    private LinearLayout initTabView(TabWidget tw, int drawbleId) {
+    private LinearLayout initTabView(TabWidget tw, int drawbleId, int nameResId) {
         LinearLayout tabIndicator = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.tab_indicator, tw, false);
         ImageView ivTab1 = (ImageView) tabIndicator.findViewById(R.id.img_tab);
+        TextView tv_name = (TextView) tabIndicator.findViewById(R.id.tv_name);
         ivTab1.setImageResource(drawbleId);
+        tv_name.setText(nameResId);
         return tabIndicator;
     }
 

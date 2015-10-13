@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -19,6 +20,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.fb.FeedbackAgent;
 
 /**
  * Created by Administrator on 2015/9/17.
@@ -171,6 +173,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //意见反馈
             case R.id.frame_setting_suggest:
+                Intent feedBackActivity = new Intent(this, CustomFeedBackActivity.class);
+                startActivity(feedBackActivity);
                 break;
             //关于咪钱
             case R.id.frame_setting_about:
@@ -186,6 +190,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
 
     }
+
 
     //退出账号
     public void btn_click(View view) {

@@ -41,4 +41,10 @@
   <string name="principal_interest_security">本息保障</string>
   <string name="title_activity_my_regualr_deposit">MyRegualrDepositActivity</string>
   <string name="buy_now">立即认购</string>
+
+  <!-- 首页-->
+  <string name="main_tab_home">首页</string>
+  <string name="main_tab_current"> 活期</string>
+  <string name="main_tab_regular">定期</string>
+  <string name="main_tab_user">我的</string>
 </resources>

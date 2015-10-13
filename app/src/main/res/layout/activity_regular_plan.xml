@@ -5,7 +5,11 @@
     android:background="?attr/theme_background"
     android:orientation="vertical">
 
-    <include layout="@layout/frame_title" />
+    <LinearLayout
+        android:id="@+id/titlebar_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
 
     <ScrollView
         android:id="@+id/scrollView"
