@@ -39,4 +39,5 @@ dependencies {
   compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
   compile files('libs/image_loader_1.9.2.jar')
   compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
-  }
+  compile 'com.umeng:fb:5.4.0'
+}

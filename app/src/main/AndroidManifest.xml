@@ -324,6 +324,20 @@
             android:label="@string/title_activity_my_regualr_deposit"
             />
 
+        <!--Umeng Start-->
+        <activity
+            android:name=".activity.setting.CustomFeedBackActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <meta-data
+            android:value="54cc3aedfd98c5b1d000039a"
+            android:name="UMENG_APPKEY"/>
+        <meta-data
+            android:value="110"
+            android:name="UMENG_CHANNEL"/>
+        <!--Umeng End-->
     </application>
 
 </manifest>

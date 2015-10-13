@@ -56,7 +56,7 @@
         <com.miqian.mq.views.DecoratorViewPager
             android:id="@+id/view_pager"
             android:layout_width="0dp"
-            android:layout_height="180dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
             android:layout_weight="2"
             android:overScrollMode="never" />
