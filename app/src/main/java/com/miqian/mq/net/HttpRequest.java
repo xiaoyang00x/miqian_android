@@ -9,7 +9,7 @@ import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardResult;
-import com.miqian.mq.entity.CapitalRecord;
+import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CommonEntity;
 import com.miqian.mq.entity.CurrentInfoResult;
@@ -979,10 +979,7 @@ public class HttpRequest {
      *  @param isForce 默认为0 1 强制刷新  0 不强制刷新
      */
     public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn, String isForce) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<Param>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
@@ -1011,23 +1008,23 @@ public class HttpRequest {
     /**
      * 获取资金记录
      */
-    public static void getCapitalRecords(Context context, final ICallback<CapitalRecord> callback, String pageNum, String pageSize, String startDate, String endDate, String operationType) {
+    public static void getCapitalRecords(Context context, final ICallback<CapitalRecordResult> callback, String pageNo, String pageSize, String startDate, String endDate, String operateType) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("pageNum", RSAUtils.encryptURLEncode(pageNum)));
-        mList.add(new Param("startDate", RSAUtils.encryptURLEncode(startDate)));
-        mList.add(new Param("pageSize", RSAUtils.encryptURLEncode(pageSize)));
-        mList.add(new Param("endDate", RSAUtils.encryptURLEncode(endDate)));
-        mList.add(new Param("operationType", RSAUtils.encryptURLEncode(operationType)));
+        mList.add(new Param("pageNo", pageNo));
+        mList.add(new Param("startDate",startDate));
+        mList.add(new Param("pageSize", pageSize));
+        mList.add(new Param("endDate", endDate));
+        mList.add(new Param("operateType", operateType));
 
         new MyAsyncTask(context, Urls.recordsCapital, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                CapitalRecord capitalRecord = JsonUtil.parseObject(result, CapitalRecord.class);
+                CapitalRecordResult capitalRecord = JsonUtil.parseObject(result, CapitalRecordResult.class);
                 if (capitalRecord.getCode().equals("000000")) {
                     callback.onSucceed(capitalRecord);
                 } else {

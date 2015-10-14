@@ -226,7 +226,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendCaptchaActivity.enterActivity(getActivity(), TypeUtil.SENDCAPTCHA_FORGETPSW);
+                SendCaptchaActivity.enterActivity(getActivity(), TypeUtil.SENDCAPTCHA_FORGETPSW,false);
             }
         });
 

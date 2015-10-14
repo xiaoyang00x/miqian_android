@@ -166,7 +166,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.frame_setting_bankcard:
 
                 if ("0".equals(userInfo.getBindCardStatus())) {
-                   startActivity(new Intent(mActivity, BindCardActivity.class));
+                    Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putSerializable("userInfo", userInfo);
+                    intent_bind.putExtras(extra);
+                    startActivity(intent_bind);
                     return;
                 }
 
@@ -187,7 +191,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     Bundle extra = new Bundle();
                     extra.putSerializable("userInfo", userInfo);
                     if (bankCard != null) {
-                        if (TextUtils.isEmpty(bankCard.getBankNo())){
+                        if (!TextUtils.isEmpty(bankCard.getBankNo())){
                             intent_bind.putExtra("cardNo", RSAUtils.decryptByPrivate(bankCard.getBankNo()));
                         }
 

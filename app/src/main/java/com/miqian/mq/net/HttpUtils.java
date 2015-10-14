@@ -101,6 +101,7 @@ public class HttpUtils {
     Headers.Builder headerBuilder = new Headers.Builder();
     headerBuilder.add("deviceId", MobileOS.getIMEI(context));
     headerBuilder.add("cType", "android");
+    headerBuilder.add("deviceModel", MobileOS.getDeviceModel());
     headerBuilder.add("appName", "miqian");
     headerBuilder.add("appVersion", MobileOS.getClientVersion(context));
     headerBuilder.add("channelCode", "0000");

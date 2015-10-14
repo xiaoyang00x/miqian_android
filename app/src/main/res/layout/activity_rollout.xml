@@ -63,7 +63,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
-                android:textColor="@color/miqian_gray"
+                style="@style/text_black_item"
                 android:textSize="16sp" />
         </LinearLayout>
 

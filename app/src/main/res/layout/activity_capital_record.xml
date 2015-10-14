@@ -14,31 +14,26 @@
         android:paddingTop="5dp"
         tools:context="com.miqian.mq.activity.CapitalRecordActivity">
         <!-- using RecyclerView instead of ListView recommended by Google -->
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/ultimate_recycler_view"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" />
-        </android.support.v4.widget.SwipeRefreshLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/filter_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#88b0b0b0"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffffff"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/linearLayout2">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -280,8 +275,20 @@
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
+
             </LinearLayout>
-        </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rela_hide"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@+id/linearLayout2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true">
+
+            </RelativeLayout>
+        </RelativeLayout>
     </FrameLayout>
 
     <TextView

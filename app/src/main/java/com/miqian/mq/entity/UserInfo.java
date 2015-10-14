@@ -14,7 +14,7 @@ public class UserInfo implements Serializable {
     public String realName;//真实姓名
     public String nickName;//昵称
     public String idCard;//身份证号
-    public String bankCardNo;//银行卡号
+    public String bankNo;//银行卡号
     public String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
     public String balance;//可用余额
     public String curAmt;//活期总额
@@ -30,6 +30,7 @@ public class UserInfo implements Serializable {
     public String bankUrlBig;//绑定银行图标url
     public String bankCode;//绑定银行代码
     public String supportStatus;//是否支持连连绑卡
+    public String addRechargeMinValue;//充值最小额度
 
     public String getCustId() {
         return custId;
@@ -87,12 +88,12 @@ public class UserInfo implements Serializable {
         this.idCard = idCard;
     }
 
-    public String getBankCardNo() {
-        return bankCardNo;
+    public String getBankNo() {
+        return bankNo;
     }
 
-    public void setBankCardNo(String bankCardNo) {
-        this.bankCardNo = bankCardNo;
+    public void setBankNo(String bankNo) {
+        this.bankNo = bankNo;
     }
 
     public String getPayPwdStatus() {
@@ -213,5 +214,13 @@ public class UserInfo implements Serializable {
 
     public void setSupportStatus(String supportStatus) {
         this.supportStatus = supportStatus;
+    }
+
+    public String getAddRechargeMinValue() {
+        return addRechargeMinValue;
+    }
+
+    public void setAddRechargeMinValue(String addRechargeMinValue) {
+        this.addRechargeMinValue = addRechargeMinValue;
     }
 }

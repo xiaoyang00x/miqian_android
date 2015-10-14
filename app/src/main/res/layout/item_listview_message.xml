@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/iv_isRead"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_centerVertical="true"
             android:background="@drawable/ic_launcher" />
 
@@ -34,19 +34,33 @@
                     android:id="@+id/tv_title"
                     style="@style/text_black_item"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:maxEms="10"
                     android:singleLine="true"/>
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_title"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/message_system"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/iv_state" />
 
                 <TextView
                     android:id="@+id/tv_time"
                     style="@style/text_gray_item"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/tv_title"
                     android:ellipsize="end"
+                    android:layout_centerVertical="true"
                     android:gravity="right"
                     android:maxLines="2"
-                    android:text=""
-                    android:textSize="14sp" />
+                    android:text="dddddd"
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:layout_toRightOf="@+id/iv_state"
+                    android:layout_toEndOf="@+id/iv_state" />
             </RelativeLayout>
 
             <TextView

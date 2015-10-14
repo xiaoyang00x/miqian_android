@@ -47,7 +47,7 @@ public abstract class Dialog_Login extends Dialog {
         findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW);
+                SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW,false);
             }
         });
 

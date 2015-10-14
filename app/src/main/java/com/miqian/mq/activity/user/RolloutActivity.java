@@ -122,6 +122,7 @@ public class RolloutActivity extends BaseActivity {
                         Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
                         intent_branch.putExtra("city", city);
                         intent_branch.putExtra("province", province);
+                        intent_branch.putExtra("bankCode", bankCard.getBankCode());
                         startActivityForResult(intent_branch, 0);
 
                     } else {
@@ -185,7 +186,12 @@ public class RolloutActivity extends BaseActivity {
                 public void positionBtnClick() {
                     //跳到绑定支行的页面
                     dismiss();
-                    Uihelper.showToast(mActivity, "跳到绑定支行的页面");
+                    Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putSerializable("userInfo", userInfo);
+                    intent_bind.putExtras(extra);
+                    startActivity(intent_bind);
+                    finish();
                 }
 
                 @Override
@@ -200,8 +206,8 @@ public class RolloutActivity extends BaseActivity {
             dialogTips.show();
             dialogTips.setCancelable(false);
         } else {
-            if (!TextUtils.isEmpty(userInfo.getBankCardNo())) {
-                cardNum = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+            if (!TextUtils.isEmpty(userInfo.getBankNo())) {
+                cardNum = RSAUtils.decryptByPrivate(userInfo.getBankNo());
                 bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
             }
             if (!TextUtils.isEmpty(userInfo.getBankName())) {

@@ -4,14 +4,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.adapter.MyRegularDepositAdapter;
+import com.miqian.mq.adapter.AdapterUserRegular;
 import com.miqian.mq.entity.UserRegular;
 import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 import java.util.List;
@@ -21,21 +23,29 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
     private Button titleLeft;
     private Button titleRight;
     private RecyclerView mRecyclerView;
+    private ImageButton btLeft;
 
-    private MyRegularDepositAdapter mAdapter;
-//    private List<MyRegularDepositAdapter.Item> studentList;
+    private AdapterUserRegular mAdapter;
 
+    private int pageNo = 1;
+    private String pageSize = "5";
     private String isExpiry = "N";//是否结息 N：计息中 Y：已结息
     private String isForce = "0";//是否强制刷新 1强制刷新 0不强制刷新
+    private boolean isLoading = false;
+    private int mType = 0;
 
     private UserRegular userRegular;
     private List<UserRegular.RegInvest> regInvestList;
 
     @Override
     public void obtainData() {
+        pageNo = 1;
+        isForce = "0";
+        mWaitingDialog.show();
         HttpRequest.getUserRegular(mActivity, new ICallback<UserRegularResult>() {
             @Override
             public void onSucceed(UserRegularResult result) {
+                mWaitingDialog.dismiss();
                 userRegular = result.getData();
                 regInvestList = userRegular.getRegInvest();
                 refreshView();
@@ -43,13 +53,48 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onFail(String error) {
-
+                mWaitingDialog.dismiss();
+                Uihelper.showToast(mActivity, error);
             }
-        }, "1", "20", isExpiry, isForce);
+        }, String.valueOf(pageNo), pageSize, isExpiry, isForce);
+    }
+
+    private void loadMore() {
+        if (!isLoading) {
+            if (regInvestList.size() >= userRegular.getPage().getCount()) {
+                return;
+            }
+            isLoading = true;
+            pageNo += 1;
+            isForce = "1";
+            HttpRequest.getUserRegular(mActivity, new ICallback<UserRegularResult>() {
+                @Override
+                public void onSucceed(UserRegularResult result) {
+                    userRegular = result.getData();
+                    List<UserRegular.RegInvest> tempList = userRegular.getRegInvest();
+                    if (regInvestList != null && tempList != null && tempList.size() > 0) {
+                        for (UserRegular.RegInvest regInvest : tempList) {
+                            regInvestList.add(regInvest);
+                        }
+                        refreshViewLoadMore();
+                    }
+                    isLoading = false;
+                }
+
+                @Override
+                public void onFail(String error) {
+                    isLoading = false;
+                    Uihelper.showToast(mActivity, error);
+                }
+            }, String.valueOf(pageNo), pageSize, isExpiry, isForce);
+        }
     }
 
     @Override
     public void initView() {
+        btLeft = (ImageButton) findViewById(R.id.bt_left);
+        btLeft.setOnClickListener(this);
+
         titleLeft = (Button) findViewById(R.id.title_left);
         titleRight = (Button) findViewById(R.id.title_right);
 
@@ -62,44 +107,28 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-//        mAdapter = new MyRegularDepositAdapter(studentList, mRecyclerView);
-//        mRecyclerView.setAdapter(mAdapter);
-//
-//        mAdapter.setOnLoadMoreListener(new MyRegularDepositAdapter.OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                //add null , so the adapter will check view_type and show progress bar at bottom
-//                studentList.add(null);
-//                mAdapter.notifyItemInserted(studentList.size() - 1);
-//
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //   remove progress item
-//                        studentList.remove(studentList.size() - 1);
-//                        mAdapter.notifyItemRemoved(studentList.size());
-//                        //add items one by one
-//                        int start = studentList.size();
-//                        int end = start + 20;
-//
-//                        for (int i = start + 1; i <= end; i++) {
-//                            studentList.add(new MyRegularDepositAdapter.Item("Item " + i, "AndroidStudent" + i + "@gmail.com"));
-//                            mAdapter.notifyItemInserted(studentList.size());
-//                        }
-//                        mAdapter.setLoaded();
-//                        //or you can add all at once but do not forget to call mAdapter.notifyDataSetChanged();
-//                    }
-//                }, 2000);
-//            }
-//        });
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                int totalItemCount = layoutManager.getItemCount();
+                if (lastVisibleItem >= totalItemCount - 2 && dy > 0) {
+                    loadMore();
+                }
+            }
+        });
     }
 
     private void refreshView() {
-        if (mAdapter == null) {
-            mAdapter = new MyRegularDepositAdapter(regInvestList, mRecyclerView);
-            mRecyclerView.setAdapter(mAdapter);
-        }
-        mAdapter.notifyDataSetChanged();
+        mAdapter = new AdapterUserRegular(regInvestList, userRegular.getReg(), mType);
+        mAdapter.setMaxItem(userRegular.getPage().getCount());
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void refreshViewLoadMore() {
+        mAdapter.notifyItemInserted(regInvestList.size());
     }
 
     @Override
@@ -122,6 +151,7 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
                 titleRight.setTextColor(getResources().getColor(R.color.white));
                 titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right);
                 isExpiry = "N";
+                mType = 0;
                 obtainData();
                 break;
             case R.id.title_right:
@@ -130,7 +160,11 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
                 titleRight.setTextColor(getResources().getColor(R.color.mq_r1));
                 titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right_selected);
                 isExpiry = "Y";
+                mType = 1;
                 obtainData();
+                break;
+            case R.id.bt_left:
+                MyRegualrDepositActivity.this.finish();
                 break;
         }
     }
