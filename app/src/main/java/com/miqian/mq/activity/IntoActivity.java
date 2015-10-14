@@ -133,7 +133,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 frameTip.setVisibility(View.VISIBLE);
                 editBankNumber.requestFocus();
             }
-            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
             if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
                 bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
             }
@@ -154,8 +154,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 return;
             }
             float tempMoney = Float.parseFloat(money);
-            if (tempMoney < 1) {
-                Uihelper.showToast(mActivity, "转入金额不能为小于1元");
+            float minMoney = Float.parseFloat(userInfo.getAddRechargeMinValue());
+            if (tempMoney < minMoney) {
+                Uihelper.showToast(mActivity, "转入金额不能为小于" + minMoney + "元");
                 return;
             }
         }
@@ -167,7 +168,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 return;
             }
         } else {
-            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
         }
 
         mWaitingDialog.show();

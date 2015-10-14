@@ -206,8 +206,8 @@ public class RolloutActivity extends BaseActivity {
             dialogTips.show();
             dialogTips.setCancelable(false);
         } else {
-            if (!TextUtils.isEmpty(userInfo.getBankCardNo())) {
-                cardNum = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+            if (!TextUtils.isEmpty(userInfo.getBankNo())) {
+                cardNum = RSAUtils.decryptByPrivate(userInfo.getBankNo());
                 bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
             }
             if (!TextUtils.isEmpty(userInfo.getBankName())) {

@@ -18,8 +18,6 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCard;
 import com.miqian.mq.entity.AutoIdentyCardResult;
-import com.miqian.mq.entity.BankCard;
-import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -77,7 +75,7 @@ public class BindCardActivity extends BaseActivity {
             if (userInfo.getSupportStatus().equals("0")) {
                 frameBank.setVisibility(View.VISIBLE);
                 frameTip.setVisibility(View.VISIBLE);
-                bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+                bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
                 if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
                     bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
                 }
