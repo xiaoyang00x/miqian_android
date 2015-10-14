@@ -71,7 +71,7 @@ public class AnnounceActivity extends BaseActivity
             public void create(SwipeMenu menu) {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(mActivity);
                 deleteItem.setBackground(getResources().getDrawable(R.drawable.shape_swip_red));
-                deleteItem.setIcon(getResources().getDrawable(R.mipmap.icon_deleteinfo));
+                deleteItem.setIcon(getResources().getDrawable(R.drawable.messsagedelete_selector));
                 deleteItem.setWidth(Uihelper.px2dip(mActivity, MobileOS.getScreenWidth(mActivity) / 2));
                 menu.addMenuItem(deleteItem);
             }
