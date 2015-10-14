@@ -173,6 +173,12 @@ public class Uihelper {
         return date;
     }
 
+    public static String timestampToDateStr_other(Double timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String date = sdf.format(new Date((long) (timestamp * 1L)));
+        return date;
+    }
+
     /**
      * 将时间戳转换成yyyyMMdd
      *
