@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.HomeAdapter;
@@ -21,6 +22,7 @@ import java.util.TimerTask;
 
 public class FragmentHome extends BasicFragment {
 
+    private TextView titleText;
     private View view;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
@@ -53,6 +55,7 @@ public class FragmentHome extends BasicFragment {
             }
         });
 
+        titleText.setText("首页");
         if(mData != null) {
             adapter = new HomeAdapter(mActivity, mData);
             recyclerView.setAdapter(adapter);
@@ -88,6 +91,7 @@ public class FragmentHome extends BasicFragment {
     private void findView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
+        titleText = (TextView) view.findViewById(R.id.title);
     }
 
     private boolean inProcess = false;
