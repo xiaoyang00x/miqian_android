@@ -17,6 +17,7 @@ import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.DetailForRegularDeposit;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
+import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
@@ -598,30 +599,20 @@ public class HttpRequest {
 
     /**
      * 获取首页信息
-     *
-     * @param callback
      */
-    /**
-     * 获取首页信息
-     */
-    public static void getHomePageInfo(Context context, final ICallback<HomePageInfo> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
-        new MyAsyncTask(context, Urls.homeInfo, mList, new ICallback<String>() {
+    public static void getHomePageInfo(Context context, final ICallback<HomePageInfoResult> callback) {
+        new MyAsyncTask(context, Urls.homeInfo, null, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
                 Log.e("result", result);
-                CommonEntity<HomePageInfo> common =
-                        JSON.parseObject(result, new TypeReference<CommonEntity<HomePageInfo>>() {
-                        });
+                HomePageInfoResult homePageInfoResult =
+                        JSON.parseObject(result, HomePageInfoResult.class);
 
-                if (common.getCode().equals("000000")) {
-                    callback.onSucceed(common.getData());
+                if (homePageInfoResult.getCode().equals("000000")) {
+                    callback.onSucceed(homePageInfoResult);
                 } else {
-                    callback.onFail(common.getMessage());
+                    callback.onFail(homePageInfoResult.getMessage());
                 }
             }
 

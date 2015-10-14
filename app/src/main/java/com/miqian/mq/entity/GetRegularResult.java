@@ -1,7 +1,5 @@
 package com.miqian.mq.entity;
 
-import java.util.ArrayList;
-
 /**
  * Created by guolei_wang on 15/9/24.
  */

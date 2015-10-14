@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.UserUtil;
 import java.util.List;
@@ -39,7 +40,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
             return NETWORK_ERROR;
         }
 
-        Log.d(TAG, "----请求服务器----" + mUrl);
+        LogUtil.d(TAG, "----请求服务器----" + mUrl);
         String httpString = HttpUtils.httpPostRequest(mContext, mUrl, mList);
         if (!TextUtils.isEmpty(httpString)) {
             return httpString;
@@ -52,7 +53,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         try {
             if (result != null) {
-                Log.d(TAG, "----服务器返回数据----" + result);
+                LogUtil.d(TAG, "----服务器返回数据----" + result);
                 if (result.equals(NETWORK_ERROR)) {
                     callback.onFail(result);
                 } else if (result.startsWith(SERVER_ERROR)) {
