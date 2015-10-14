@@ -21,6 +21,8 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RollOut;
 import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.entity.WithDrawResult;
+import com.miqian.mq.entity.WithdrawItem;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.FormatUtil;
@@ -32,6 +34,8 @@ import com.miqian.mq.views.WFYTitle;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
+import java.util.List;
 
 /**
  * Created by Joy on 2015/9/22.
@@ -283,15 +287,9 @@ public class RolloutActivity extends BaseActivity {
 
     public void btn_click(View v) {
         moneyString = editMoney.getText().toString();
-        if (isMoneyMatch(moneyString)) {
-            rollOutHttp();
-        }
-    }
-
-    private boolean isMoneyMatch(String moneyString) {
         if (TextUtils.isEmpty(moneyString)) {
             Uihelper.showToast(mActivity, "交易金额不能为空");
-            return false;
+            return;
         }
         float moneyFloat = Float.parseFloat(moneyString);
         float totalMoneyFloat = Float.parseFloat(totalMoney);
@@ -299,21 +297,47 @@ public class RolloutActivity extends BaseActivity {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额超限");
             dialogTips.show();
-            return false;
+            return ;
         } else if (moneyFloat < 10) {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额不能小于10元");
             dialogTips.show();
-            return false;
-        } else if (moneyFloat < 100) {
-            initTipDialog(1);
-            dialogTipsReput.setNegative(View.VISIBLE);
-            dialogTipsReput.setRemarks("转出金额小于100元时，第三方需收取一元手续费");
-            dialogTipsReput.show();
-            return false;
+            return ;
+        } else {
+            //提现预处理
+            HttpRequest.withdrawPreprocess(mActivity, new ICallback<WithDrawResult>() {
+                @Override
+                public void onSucceed(WithDrawResult result) {
+                    List<WithdrawItem> data = result.getData();
+                    StringBuilder tip = new StringBuilder();
+                    for (WithdrawItem item : data) {
+                        if (!"0".equals(item.getFeeAmt())) {
+                            tip.append("；" + item.getName()).append(",费用" + item.getFeeAmt() + "元");
+                        }
+                    }
+                    if (!TextUtils.isEmpty(tip)) {
+                        tip.deleteCharAt(0);
+                        initTipDialog(1);
+                        dialogTipsReput.setNegative(View.VISIBLE);
+                        dialogTipsReput.setRemarks(tip.toString());
+                        dialogTipsReput.show();
+                    }else {
+                        rollOutHttp();
+                    }
+
+                }
+                @Override
+                public void onFail(String error) {
+                    Uihelper.showToast(mActivity, error);
+
+                }
+            }, moneyString);
+
+
+
         }
-        return true;
     }
+
 
     public void initTipDialog(int code) {
 

@@ -146,7 +146,7 @@
             android:hint="请输入邀请码"
             android:digits="@string/match"
             android:inputType="number"
-            android:maxLength="5" >
+            >
         </EditText>
 
     </LinearLayout>

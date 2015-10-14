@@ -18,6 +18,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.pay.MobileSecurePayer;
 import com.miqian.mq.utils.Constants;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
@@ -80,7 +81,7 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
     }
 
     private void setIdCardCheck() {
-        String name = editName.getText().toString();
+        final String name = editName.getText().toString();
         if (TextUtils.isEmpty(name)) {
             Uihelper.showToast(mActivity, "姓名不能为空");
             return;
@@ -98,7 +99,9 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
                 public void onSucceed(Meta result) {
                     mWaitingDialog.dismiss();
                     Uihelper.showToast(mActivity, "实名认证成功");
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.REAL_NAME, name);
                     ActivityRealname.this.finish();
+
                 }
 
                 @Override

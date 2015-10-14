@@ -102,6 +102,8 @@ public class Urls {
     public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
     //修改绑定手机
     public final static String changePhone = base_server + "userService/changePhone";
+    //提现预处理
+    public final static String withdrawPreprocess = base_server + "assetService/withdrawPreprocess";
 
 
 }

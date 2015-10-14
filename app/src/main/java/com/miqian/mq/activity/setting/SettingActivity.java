@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.fb.FeedbackAgent;
@@ -26,11 +28,12 @@ import com.umeng.fb.FeedbackAgent;
 /**
  * Created by Administrator on 2015/9/17.
  */
-public class SettingActivity extends BaseActivity implements View.OnClickListener {
+public class SettingActivity extends BaseActivity implements View.OnClickListener, ExtendOperationController.ExtendOperationListener {
 
     private UserInfo userInfo;
     private TextView tv_name, tv_card, tv_bindPhone, tv_cardState;
     private BankCard bankCard;
+    private ImageView iconBank;
 
     @Override
     public void obtainData() {
@@ -52,7 +55,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     if (TextUtils.isEmpty(bankNo)) {
                         return;
                     }
-                    tv_card.setText("银行卡号" + " ***** " + bankNo.substring(bankNo.length() - 3, bankNo.length()));
+
+                    if (!TextUtils.isEmpty(bankCard.getBankUrlSmall())) {
+                        imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
+                    }
+                    tv_card.setText("尾号" + bankNo.substring(bankNo.length() - 4, bankNo.length()));
                     //已绑定支行
                     if (!TextUtils.isEmpty(bankOpenName)) {
                         tv_cardState.setText("已完善");
@@ -94,6 +101,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tv_card = (TextView) findViewById(R.id.tv_setting_bankcard);
         tv_cardState = (TextView) findViewById(R.id.tv_setting_bankcardstate);
         tv_bindPhone = (TextView) findViewById(R.id.tv_settting_bindphone);
+        iconBank = (ImageView) findViewById(R.id.icon_bank);
 
         frame_setting_name.setOnClickListener(this);
         frame_setting_bindphone.setOnClickListener(this);
@@ -108,7 +116,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             return;
         }
         if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
-            tv_bindPhone.setText(RSAUtils.decryptByPrivate(userInfo.getMobilePhone()));
+           String phone= RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
+            tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
         }
 
         if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
@@ -240,4 +249,28 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             }
         });
     }
+
+    @Override
+    public void excuteExtendOperation(int operationKey, Object data) {
+
+        switch (operationKey) {
+            case ExtendOperationController.OperationKey.MODIFYPHONE:
+                 String phone=(String)data;
+                if (!TextUtils.isEmpty(phone)){
+                    tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
+                }
+                break;
+            case ExtendOperationController.OperationKey.REAL_NAME:
+                 String name=(String)data;
+                if (!TextUtils.isEmpty(name)){
+                    userInfo.setRealNameStatus("1");
+                    tv_name.setText(name);
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
 }

@@ -34,6 +34,7 @@ import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.entity.UserRegularResult;
+import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.UserUtil;
 
@@ -973,10 +974,11 @@ public class HttpRequest {
 
     /**
      * 我的定期
-     *  @param pageNo 页码(默认1)
-     *  @param pageSize 每页条数（默认20）
-     *  @param clearYn 默认为N  N：计息中  Y：已结息
-     *  @param isForce 默认为0 1 强制刷新  0 不强制刷新
+     *
+     * @param pageNo   页码(默认1)
+     * @param pageSize 每页条数（默认20）
+     * @param clearYn  默认为N  N：计息中  Y：已结息
+     * @param isForce  默认为0 1 强制刷新  0 不强制刷新
      */
     public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn, String isForce) {
         List<Param> mList = new ArrayList<Param>();
@@ -1015,7 +1017,7 @@ public class HttpRequest {
         mList.clear();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
-        mList.add(new Param("startDate",startDate));
+        mList.add(new Param("startDate", startDate));
         mList.add(new Param("pageSize", pageSize));
         mList.add(new Param("endDate", endDate));
         mList.add(new Param("operateType", operateType));
@@ -1191,11 +1193,8 @@ public class HttpRequest {
 
     //修改绑定手机
     public static void changePhone(Context context, final ICallback<Meta> callback,
-                                         String oldMobilePhone, String oldCaptcha, String newMobilePhone, String newCaptcha ) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+                                   String oldMobilePhone, String oldCaptcha, String newMobilePhone, String newCaptcha) {
+        List<Param> mList = new ArrayList<Param>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldCaptcha", oldCaptcha));
         mList.add(new Param("oldMobilePhone", RSAUtils.encryptURLEncode(oldMobilePhone)));
@@ -1211,6 +1210,31 @@ public class HttpRequest {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //赎回预处理
+    public static void withdrawPreprocess(Context context, final ICallback<WithDrawResult> callback, String amt) {
+        List<Param> mList = new ArrayList<Param>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("amt", amt));
+
+        new MyAsyncTask(context, Urls.withdrawPreprocess, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                WithDrawResult drawResult = JsonUtil.parseObject(result, WithDrawResult.class);
+                if (drawResult.getCode().equals("000000")) {
+                    callback.onSucceed(drawResult);
+                } else {
+                    callback.onFail(drawResult.getMessage());
                 }
             }
 

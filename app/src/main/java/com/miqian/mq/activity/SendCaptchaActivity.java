@@ -16,6 +16,7 @@ import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
@@ -172,7 +173,8 @@ public class SendCaptchaActivity extends BaseActivity {
         if (!TextUtils.isEmpty(phone)) {
             if (!TextUtils.isEmpty(captcha)) {
 
-                summit(phone, captcha);
+                //验证验证码
+                checkCaptcha(phone, captcha);
 
             } else {
                 Uihelper.showToast(this, R.string.tip_captcha);
@@ -183,6 +185,29 @@ public class SendCaptchaActivity extends BaseActivity {
         }
 
 
+    }
+
+    private void checkCaptcha(final String phone, final String captcha) {
+        int type=0;
+        if (isModifyPhone) {
+            type= TypeUtil.CAPTCHA_BINDTEL_FIRST;
+        }else {
+            type= TypeUtil.CAPTCHA_FINDPASSWORD;
+        }
+
+        HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
+            @Override
+            public void onSucceed(Meta result) {
+                summit(phone,captcha);
+            }
+
+            @Override
+            public void onFail(String error) {
+
+                Uihelper.showToast(mActivity, error);
+
+            }
+        }, phone, type, captcha);
     }
 
     private void summit(final String phone, final String captcha) {
@@ -198,6 +223,7 @@ public class SendCaptchaActivity extends BaseActivity {
                     public void onSucceed(Meta result) {
                         mWaitingDialog.dismiss();
                         Uihelper.showToast(mActivity, "绑定成功");
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.MODIFYPHONE, phone);
                         finish();
                     }
 
@@ -216,6 +242,7 @@ public class SendCaptchaActivity extends BaseActivity {
             intent.putExtra("phone", phone);
             intent.putExtra("type", TypeUtil.PASSWORD_LOGIN);
             startActivity(intent);
+            finish();
         }
 
     }
