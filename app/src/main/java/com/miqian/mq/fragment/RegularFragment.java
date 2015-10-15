@@ -31,7 +31,6 @@ import java.util.List;
  */
 public class RegularFragment extends BasicFragment {
 
-    private final String TAG = "RegularFragment";
     RegularListAdapter mAdapter;
     private ArrayList<RegularPlan> planList;
     private ArrayList<RegularEarn> regList;
@@ -47,7 +46,6 @@ public class RegularFragment extends BasicFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         getMainRegular();
     }

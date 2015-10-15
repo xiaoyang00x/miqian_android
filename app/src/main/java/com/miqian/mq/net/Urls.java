@@ -25,7 +25,7 @@ public class Urls {
             + "7vhqwHmFAXxnffRtEVZbJk2AsEcE0qJqwoxGbij+O1+OIksDGlxjc/LgnXLlXvvY" + "\r"
             + "ZU0zSqeXVAcdRQ==";
 
-//    public static final String base_server = "http://27.154.228.194:30001/";
+//    public static final String base_server = "http://172.20.8.14:8080/miqian-app/";
     public static final String base_server = "https://api.shicaidai.com/";
     //    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
     //    public static final String base_server = "http://172.20.8.11:8082/miqian-app/";
@@ -102,6 +102,8 @@ public class Urls {
     public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
     //修改绑定手机
     public final static String changePhone = base_server + "userService/changePhone";
+    //提现预处理
+    public final static String withdrawPreprocess = base_server + "assetService/withdrawPreprocess";
 
 
 }

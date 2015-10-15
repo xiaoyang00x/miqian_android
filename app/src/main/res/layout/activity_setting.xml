@@ -65,10 +65,19 @@
         android:id="@+id/frame_setting_bankcard"
         style="@style/listItem">
 
+        <ImageView
+            android:id="@+id/icon_bank"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_bank" />
+
         <TextView
             android:id="@+id/tv_setting_bankcard"
             style="@style/text_black_item"
             android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/icon_bank"
+            android:layout_marginLeft="3dp"
             android:text="银行卡"
             />
 

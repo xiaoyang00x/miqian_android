@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,10 @@ public abstract class DialogTradePassword extends Dialog {
         if (mType==TYPE_INPUTPASSWORD) {
             titleText.setText("交易密码");
             et_password.setHint("请输入密码");
+        }else {
+            //设置交易密码规则:数字和字母的组合
+            String digits = mContext.getResources().getString(R.string.match);
+            et_password.setKeyListener(DigitsKeyListener.getInstance(digits));
         }
 
 

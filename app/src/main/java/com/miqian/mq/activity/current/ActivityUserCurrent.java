@@ -46,6 +46,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
+                refreshView();
                 Uihelper.showToast(mActivity, error);
             }
         });
@@ -56,19 +57,18 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             textEarning.setText(userCurrent.getCurYesterDayAmt());
             textCaptial.setText(userCurrent.getCurAsset());
             textTotalEarning.setText(userCurrent.getCurAmt());
-            String capital=userCurrent.getCurAsset();
-
-
-            if (!TextUtils.isEmpty(userCurrent.getCurAsset())){
-                float totalMoneyFloat = Float.parseFloat(capital);
-                if (totalMoneyFloat>0){
-                }else {
-                    btRedeem.setEnabled(false);
-                }
-            }else {
+            double  money=Float.parseFloat(userCurrent.getCurAsset());
+            if (money<=0){
                 btRedeem.setEnabled(false);
+                btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
             }
+
+
+        }else {
+            btRedeem.setEnabled(false);
+            btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
         }
+
     }
 
     @Override

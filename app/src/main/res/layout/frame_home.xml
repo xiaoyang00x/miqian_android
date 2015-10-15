@@ -1,24 +1,20 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/theme_background"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/http"
-        android:layout_centerInParent="true"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:visibility="gone"
-        />
-  <android.support.v4.widget.SwipeRefreshLayout
-      android:id="@+id/swipeRefresh"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
+    <include layout="@layout/frame_title" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        />
-  </android.support.v4.widget.SwipeRefreshLayout>
-</RelativeLayout>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

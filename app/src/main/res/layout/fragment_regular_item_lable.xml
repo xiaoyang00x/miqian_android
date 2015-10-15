@@ -1,37 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_regular_earn_head"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:paddingLeft="@dimen/margin_left_right"
-    android:paddingRight="@dimen/margin_left_right">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_lable_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:text="@string/regular_plan"
-        android:textColor="@color/mq_b1"
-        android:textSize="@dimen/mq_font3" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/divider_line_color_gray" />
 
-    <TextView
-        android:id="@+id/tv_invest_security"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:text="@string/investment_security"
-        android:textColor="@color/mq_bl1"
-        android:textSize="@dimen/mq_font4" />
+    <RelativeLayout
+        android:id="@+id/layout_regular_earn_head"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@id/tv_invest_security"
-        android:src="@drawable/icon_security" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_lable_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/regular_plan"
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
+
+        <TextView
+            android:id="@+id/tv_invest_security"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/investment_security"
+            android:textColor="@color/mq_bl1"
+            android:textSize="@dimen/mq_font4" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/tv_invest_security"
+            android:src="@drawable/icon_security" />
+    </RelativeLayout>
+</LinearLayout>

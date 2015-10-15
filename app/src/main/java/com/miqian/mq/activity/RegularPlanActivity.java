@@ -43,7 +43,7 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     Button btn_des_close;
     TextView tv_description;
     TextView tv_limit;
-    TextView tv_title;
+//    TextView tv_title;
     TextView tv_annurate_interest_rate;
     TextView tv_add_interest;
     TextView tv_lable1,tv_lable2,tv_lable3,tv_lable4;
@@ -55,7 +55,7 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
         btn_des_close = (Button)findViewById(R.id.btn_des_close);
         tv_description = (TextView)findViewById(R.id.tv_description);
         tv_limit = (TextView)findViewById(R.id.tv_limit);
-        tv_title = (TextView)findViewById(R.id.title);
+//        tv_title = (TextView)findViewById(R.id.title);
         tv_annurate_interest_rate = (TextView)findViewById(R.id.tv_annurate_interest_rate);
         tv_add_interest = (TextView)findViewById(R.id.tv_add_interest);
         tv_lable1 = (TextView)findViewById(R.id.tv_lable1);
@@ -74,7 +74,7 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     private void initView() {
         btn_buy.setOnClickListener(this);
         btn_des_close.setOnClickListener(this);
-        tv_title.setText("定期计划");
+        setTitle("定期计划");
     }
 
     private void updateUI(RegularPlan data) {

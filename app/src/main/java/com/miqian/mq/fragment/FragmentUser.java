@@ -78,62 +78,64 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 mWaitingDialog.dismiss();
                 userInfo = result.getData();
                 if (userInfo != null) {
-                    setData();
+                    setData(userInfo);
                 }
             }
 
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
-                initLoginView();
+                setData(null);
+                Uihelper.showToast(getActivity(), error);
+//                initLoginView();
             }
         });
 
     }
 
-    private void setData() {
+    private void setData(UserInfo userInfo) {
 
         //历史收益
-        if (!TextUtils.isEmpty(userInfo.getTotalProfit())) {
+        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getTotalProfit())) {
             tv_TotalProfit.setText(userInfo.getTotalProfit());
         } else {
-            tv_TotalProfit.setText("0.00");
+            tv_TotalProfit.setText("--.--");
         }
         //账户余额
-        if (!TextUtils.isEmpty(userInfo.getBalance())) {
+        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getBalance())) {
             tv_balance.setText(userInfo.getBalance());
         } else {
-            tv_balance.setText("0.00");
+            tv_balance.setText("--.--");
         }
         //我的活期
-        if (!TextUtils.isEmpty(userInfo.getCurAmt())) {
+        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getCurAmt())) {
             tv_Current.setText(userInfo.getCurAmt() + "元");
         } else {
-            tv_Current.setText("0元");
+            tv_Current.setText("--");
         }
         //我的定期
-        if (!TextUtils.isEmpty(userInfo.getRegTotal())) {
+        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getRegTotal())) {
             tv_Regular.setText(userInfo.getRegTotal() + "笔");
         } else {
-            tv_Regular.setText("0笔");
+            tv_Regular.setText("--");
         }
         //拾财券
-        if (!TextUtils.isEmpty(userInfo.getWealthTicket())) {
+        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getWealthTicket())) {
             tv_Ticket.setText(userInfo.getWealthTicket() + "张");
         } else {
-            tv_Ticket.setText("0张");
+            tv_Ticket.setText("--");
         }
         //红包
-        if (!TextUtils.isEmpty(userInfo.getRedBag())) {
+        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getRedBag())) {
             tv_Redpackage.setText(userInfo.getRedBag() + "个");
         } else {
-            tv_Redpackage.setText("0个");
+            tv_Redpackage.setText("--");
         }
         //总资产
-        if (!TextUtils.isEmpty(userInfo.getTotalAsset())) {
+        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getTotalAsset())) {
             tv_totalasset.setText(userInfo.getTotalAsset());
         } else {
-            tv_totalasset.setText("0.00");
+            tv_totalasset.setText("--.--");
         }
     }
 

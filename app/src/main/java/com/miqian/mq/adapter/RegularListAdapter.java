@@ -17,6 +17,7 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.RegularEarnActivity;
 import com.miqian.mq.activity.RegularPlanActivity;
+import com.miqian.mq.adapter.holder.RegularEarnViewHoder;
 import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.utils.FormatUtil;
@@ -60,76 +61,16 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (viewType == ITEM_TYPE_HEADER) {
             return new HeaderViewHolder(inflater.inflate(R.layout.fragment_regular_header, parent, false), mContext, swipeRefreshLayout, planList);
         } else {
-            return new ViewHolder(inflater.inflate(R.layout.regular_earn_item, parent, false));
+            return new RegularEarnViewHoder(inflater.inflate(R.layout.regular_earn_item, parent, false));
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        if (holder instanceof ViewHolder) {
+        if (holder instanceof RegularEarnViewHoder) {
             final RegularEarn regularEarn = isHasHeader ? items.get(position - 1) : items.get(position);
-            ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.tv_title.setText(regularEarn.getSubjectName());
-            viewHolder.tv_sub_title.setText("项目总额" +  FormatUtil.formatAmount(regularEarn.getSubjectTotalPrice()) + "  " + regularEarn.getPayMode());
-
-            viewHolder.tv_duration.setText(regularEarn.getLimit() + "天");
-            viewHolder.circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
-
-
-            //待开标
-            if("00".equals(regularEarn.getSubjectStatus())) {
-                viewHolder.tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_bl1));
-                viewHolder.tv_duration.setTextColor(mContext.getResources().getColor(R.color.mq_bl1));
-                viewHolder.tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_bl1));
-                viewHolder.tv_progress.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
-                viewHolder.circlebar.setUnfinishedStrokeColor(mContext.getResources().getColor(R.color.mq_bl1));
-                viewHolder.tv_sale_number.setVisibility(View.GONE);
-                viewHolder.tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest_unbegin);
-
-                viewHolder.tv_progress.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "MM月dd日"));
-                viewHolder.tv_buy_now.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "hh:mm"));
-            }else {
-                viewHolder.tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
-                viewHolder.tv_duration.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
-                viewHolder.tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
-                viewHolder.tv_progress.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
-                viewHolder.circlebar.setUnfinishedStrokeColor(mContext.getResources().getColor(R.color.mq_b5));
-                viewHolder.tv_sale_number.setVisibility(View.VISIBLE);
-                viewHolder.tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest);
-
-                viewHolder.tv_buy_now.setText(R.string.buy_now);
-                viewHolder.tv_annurate_interest_rate.setText(regularEarn.getYearInterest() + "%");
-                viewHolder.tv_progress.setText(regularEarn.getPurchasePercent() + "%");
-                viewHolder.tv_sale_number.setText("已认购" + regularEarn.getPersonTime() + "人");
-            }
-            if(TextUtils.isEmpty(regularEarn.getPromotionDesc())) {
-                viewHolder.tv_description.setVisibility(View.GONE);
-            }else {
-                viewHolder.tv_description.setVisibility(View.VISIBLE);
-                viewHolder.tv_description.setText(regularEarn.getPromotionDesc());
-            }
-
-            if("Y".equalsIgnoreCase(regularEarn.getPresentationYesNo())) {
-                viewHolder.tv_add_interest.setVisibility(View.VISIBLE);
-                viewHolder.tv_add_interest.setText(regularEarn.getPresentationYearInterest());
-            }else {
-                viewHolder.tv_add_interest.setVisibility(View.GONE);
-            }
-
-            if (position > 1) {
-                viewHolder.layout_regular_earn_head.setVisibility(View.GONE);
-            } else {
-                viewHolder.layout_regular_earn_head.setVisibility(View.VISIBLE);
-            }
-
-            viewHolder.layout_item.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    RegularEarnActivity.startActivity(mContext, regularEarn.getSubjectId());
-                }
-            });
+            RegularEarnViewHoder viewHolder = (RegularEarnViewHoder) holder;
+            viewHolder.bindView(mContext, regularEarn, position > 1 ? false : true);
         }
     }
 
@@ -159,46 +100,6 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return position == 0 ? ITEM_TYPE_HEADER : ITEM_TYPE_NORMAL;
     }
 
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        private View layout_regular_earn_head;
-        private View layout_item;
-        public TextView tv_lable_name;
-        public TextView tv_invest_security;
-        public TextView tv_title;
-        public TextView tv_sub_title;
-        public TextView tv_annurate_interest_rate;
-        public TextView tv_duration;
-        public TextView tv_progress;
-        public TextView tv_buy_now;
-        public TextView tv_sale_number;
-        public TextView tv_description;
-        public TextView tv_add_interest;
-        public DonutProgress circlebar;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            layout_item = itemView.findViewById(R.id.layout_item);
-            layout_regular_earn_head = itemView.findViewById(R.id.layout_regular_earn_head);
-            tv_lable_name = (TextView) itemView.findViewById(R.id.tv_lable_name);
-            tv_invest_security = (TextView) itemView.findViewById(R.id.tv_invest_security);
-            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-            tv_sub_title = (TextView) itemView.findViewById(R.id.tv_sub_title);
-            tv_annurate_interest_rate = (TextView) itemView.findViewById(R.id.tv_annurate_interest_rate);
-            tv_duration = (TextView) itemView.findViewById(R.id.tv_duration);
-            tv_progress = (TextView) itemView.findViewById(R.id.tv_progress);
-            tv_sale_number = (TextView) itemView.findViewById(R.id.tv_sale_number);
-            tv_buy_now = (TextView) itemView.findViewById(R.id.tv_buy_now);
-            tv_description = (TextView) itemView.findViewById(R.id.tv_description);
-            tv_add_interest = (TextView) itemView.findViewById(R.id.tv_add_interest);
-            circlebar = (DonutProgress) itemView.findViewById(R.id.circlebar);
-
-            tv_lable_name.setText(R.string.regular_earn);
-            tv_invest_security.setText(R.string.principal_interest_security);
-        }
-    }
 
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
         Context mContext;
