@@ -1,5 +1,6 @@
 package com.miqian.mq.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,18 +11,29 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.DialogPay;
 
 /**
  * Created by guolei_wang on 15/9/25.
  */
 public class RegularPlanActivity extends BaseFragmentActivity implements View.OnClickListener {
+
     public static final String KEY_SUBJECT_ID = "KEY_SUBJECT_ID";
     private String subjectId; //标的 ID
+
+    private Activity mActivity;
+    private DialogPay dialogPay;
+
+    private float downLimit = 1f;
+    private float upLimit = 999999;
+    private String interestRateString = "";
 
     public static void startActivity(Context context, String subjectId) {
         Intent intent = new Intent(context, RegularPlanActivity.class);
@@ -32,6 +44,7 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this;
         setContentView(R.layout.activity_regular_plan);
         findView();
         initView();
@@ -50,6 +63,7 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     TextView tv_project_name,tv_fx,tv_bxbz,tv_hkfs;
     ProgressBar progressBar;
     View layout_des;
+
     private void findView() {
         btn_buy = (Button)findViewById(R.id.btn_buy);
         btn_des_close = (Button)findViewById(R.id.btn_des_close);
@@ -69,6 +83,37 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         layout_des = findViewById(R.id.layout_des);
 
+        dialogPay = new DialogPay(mActivity) {
+            @Override
+            public void positionBtnClick(String moneyString) {
+                if (!TextUtils.isEmpty(moneyString)) {
+                    float money = Float.parseFloat(moneyString);
+                    if (money < downLimit) {
+                        this.setTitle("提示：输入请大于" + downLimit + "元");
+                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                    } else if (money > upLimit) {
+                        this.setTitle("提示：输入请小于" + upLimit + "元");
+                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                    } else {
+                        UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_REGULAR_PLAN, subjectId, interestRateString);
+                        this.setEditMoney("");
+                        this.setTitle("认购金额");
+                        this.setTitleColor(getResources().getColor(R.color.mq_b1));
+                        this.dismiss();
+                    }
+                } else {
+                    this.setTitle("提示：请输入金额");
+                    this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                }
+            }
+
+            @Override
+            public void negativeBtnClick() {
+                this.setEditMoney("");
+                this.setTitle("认购金额");
+                this.setTitleColor(getResources().getColor(R.color.mq_b1));
+            }
+        };
     }
 
     private void initView() {
@@ -104,6 +149,7 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_buy:
+                UserUtil.loginPay(mActivity, dialogPay);
                 break;
             case R.id.btn_des_close:
                 layout_des.setVisibility(View.GONE);
@@ -119,6 +165,11 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
             @Override
             public void onSucceed(RegularPlanResult result) {
                 if(result != null) {
+                    RegularPlan regularPlan = result.getData();
+                    downLimit = Float.parseFloat(regularPlan.getFromInvestmentAmount());
+//                    upLimit = Float.parseFloat(currentInfo.getCurrentBuyUpLimit());
+                    float tempInterest = Float.parseFloat(regularPlan.getYearInterest()) + Float.parseFloat(regularPlan.getPresentationYearInterest());
+                    interestRateString = "年化收益率：" + tempInterest + "%  期限：" + regularPlan.getLimit() + "天";
                     updateUI(result.getData());
                 }
             }

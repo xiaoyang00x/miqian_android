@@ -14,6 +14,7 @@ import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CommonEntity;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
+import com.miqian.mq.entity.ProjectInfoResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
@@ -747,8 +748,7 @@ public class HttpRequest {
      * @param operationType 0为获取定期赚和定期计划，1为获取定期赚，2为获取定期计划。
      * @param subjectId     标的编号，如传入则返回改标的相关信息
      */
-    public static void getRegularDetails(Context context, String operationType, String subjectId,
-                                         final ICallback<RegularPlanResult> callback) {
+    public static void getRegularDetails(Context context, String operationType, String subjectId, final ICallback<RegularPlanResult> callback) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("operationType", operationType));
         params.add(new Param("subjectId", subjectId));
@@ -756,11 +756,11 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                RegularPlanResult meta = JsonUtil.parseObject(result, RegularPlanResult.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
+                RegularPlanResult regularPlanResult = JsonUtil.parseObject(result, RegularPlanResult.class);
+                if (regularPlanResult.getCode().equals("000000")) {
+                    callback.onSucceed(regularPlanResult);
                 } else {
-                    callback.onFail(meta.getMessage());
+                    callback.onFail(regularPlanResult.getMessage());
                 }
             }
 
@@ -1077,7 +1077,7 @@ public class HttpRequest {
      *  @param pageSize 每页条数
      *  @param peerCustId 默认不填,(活期赚不填写) 定期计划的匹配项目填:1372
      */
-    public static void projectMatch(Context context, final ICallback<UserRegularDetailResult> callback, String pageNo, String pageSize, String peerCustId) {
+    public static void projectMatch(Context context, final ICallback<ProjectInfoResult> callback, String pageNo, String pageSize, String peerCustId) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
@@ -1088,11 +1088,11 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                UserRegularDetailResult userRegularDetailResult = JsonUtil.parseObject(result, UserRegularDetailResult.class);
-                if (userRegularDetailResult.getCode().equals("000000")) {
-                    callback.onSucceed(userRegularDetailResult);
+                ProjectInfoResult projectInfoResult = JsonUtil.parseObject(result, ProjectInfoResult.class);
+                if (projectInfoResult.getCode().equals("000000")) {
+                    callback.onSucceed(projectInfoResult);
                 } else {
-                    callback.onFail(userRegularDetailResult.getMessage());
+                    callback.onFail(projectInfoResult.getMessage());
                 }
             }
 
@@ -1126,8 +1126,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                SubscribeOrderResult subscribeOrderResult =
-                        JsonUtil.parseObject(result, SubscribeOrderResult.class);
+                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
                 callback.onSucceed(subscribeOrderResult);
             }
 
@@ -1139,8 +1138,7 @@ public class HttpRequest {
     }
 
     //我的促销接口，包括红包，拾财券等
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback,
-                                        String promTypCd, String sta, String pageNum, String pageSize) {
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String promTypCd, String sta, String pageNum, String pageSize) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }

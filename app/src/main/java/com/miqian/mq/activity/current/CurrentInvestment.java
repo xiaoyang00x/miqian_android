@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -35,6 +36,8 @@ import java.util.List;
  */
 public class CurrentInvestment extends BaseActivity implements View.OnClickListener {
 
+    private TextView textProjectType;
+    private TextView textInterestRate;
     private Button btPay;
     private TextView textOrderMoney;
     private TextView textBalance;
@@ -55,6 +58,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private String money;
     private String prodId; //0:充值产品 1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
     private String subjectId; //标的id，活期默认为0
+    private String interestRateString; //年化利率和期限
     private int position = -1;//使用的红包位置，用于获取list
 
     private BigDecimal orderMoney;//订单金额
@@ -71,12 +75,20 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public static final int SUCCESS = 1;
     public static final int PROCESSING = 2;
 
+
+    public static final String PRODID_CURRENT = "1";
+    public static final String PRODID_REGULAR = "3";
+    public static final String PRODID_REGULAR_PLAN = "5";
+
+    public static final String SUBJECTID_CURRENT = "0";
+
     @Override
     public void onCreate(Bundle bundle) {
         Intent intent = getIntent();
         money = FormatUtil.getMoneyString(intent.getStringExtra("money"));
         prodId = intent.getStringExtra("prodId");
         subjectId = intent.getStringExtra("subjectId");
+        interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
     }
 
@@ -134,6 +146,25 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initView() {
+        textProjectType = (TextView) findViewById(R.id.text_project_type);
+        textInterestRate = (TextView) findViewById(R.id.text_interest_rate);
+        if (PRODID_CURRENT.equals(prodId)) {
+            textProjectType.setText("期赚");
+            textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_current), null, null, null);
+            textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.investment_interest), null);
+        } else if (PRODID_REGULAR.equals(prodId)) {
+            textProjectType.setText("期赚");
+            textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_regular), null, null, null);
+            textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            textInterestRate.setText(interestRateString);
+        } else if (PRODID_REGULAR_PLAN.equals(prodId)) {
+            textProjectType.setText("期计划");
+            textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_regular), null, null, null);
+            textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            textInterestRate.setText(interestRateString);
+        }
+
+
         btPay = (Button) findViewById(R.id.bt_pay);
         btPay.setOnClickListener(this);
         textOrderMoney = (TextView) findViewById(R.id.order_money);

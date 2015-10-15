@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.miqian.mq.activity.current.ActivityRealname;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
@@ -152,12 +153,20 @@ public class UserUtil {
         Intent intent = new Intent(activity, ActivityRealname.class);
         activity.startActivity(intent);
     }
-    //  跳转活期认购页
-    public static void currenPay(Activity activity,  final Class<?> cls, String money) {
-        Intent intent = new Intent(activity, cls);
+
+    /**
+     *  跳转认购页
+     * @param money 认购金额
+     * @param prodId  0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param subjectId  标的id，活期默认为0
+     * @param interestRateString  定期计划和定期赚的利率和期限
+     */
+    public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString) {
+        Intent intent = new Intent(activity,  CurrentInvestment.class);
         intent.putExtra("money", money);
-        intent.putExtra("prodId", "1");//0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-        intent.putExtra("subjectId", "0");//标的id，活期默认为0
+        intent.putExtra("prodId", prodId);
+        intent.putExtra("subjectId", subjectId);
+        intent.putExtra("interestRateString", interestRateString);
         activity.startActivity(intent);
     }
 

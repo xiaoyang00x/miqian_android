@@ -80,9 +80,9 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
         dialogPay = new DialogPay(mContext) {
             @Override
-            public void positionBtnClick(String s) {
-                if (!TextUtils.isEmpty(s)) {
-                    float money = Float.parseFloat(s);
+            public void positionBtnClick(String moneyString) {
+                if (!TextUtils.isEmpty(moneyString)) {
+                    float money = Float.parseFloat(moneyString);
                     if (money < downLimit) {
                         this.setTitle("提示：输入请大于" + downLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
@@ -90,7 +90,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
                         this.setTitle("提示：输入请小于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
-                        UserUtil.currenPay(mContext, CurrentInvestment.class, s);
+                        UserUtil.currenPay(mContext, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, "");
                         this.setEditMoney("");
                         this.setTitle("认购金额");
                         this.setTitleColor(getResources().getColor(R.color.mq_b1));
