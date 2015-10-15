@@ -3,7 +3,7 @@ package com.miqian.mq.entity;
 public class UserRegularDetail {
 
     private String id;	          //投资ID（投资编号）
-    private String prodId;	      //产品ID
+    private String prodId;	      //产品ID 定期计划 “4”  定期赚“3”
     private String prodName;      //产品名称
     private String bdNm;	      //标的名称
     private String bdTyp;	      //标的类型{00   标准标的  01   新手专属 02   众人拾财专属 03   老财主专享回馈 04   定向大额投资人 88 88 专属}

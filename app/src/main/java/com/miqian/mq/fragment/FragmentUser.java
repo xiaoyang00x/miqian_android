@@ -18,7 +18,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
-import com.miqian.mq.activity.user.UserRegualrActivity;
+import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RedPaperActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
@@ -299,7 +299,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 break;
             //我的定期
             case R.id.frame_regular:
-                intent = new Intent(getActivity(), UserRegualrActivity.class);
+                intent = new Intent(getActivity(), UserRegularActivity.class);
                 startActivity(intent);
                 break;
             //资金记录

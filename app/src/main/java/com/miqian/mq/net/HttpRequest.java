@@ -1072,6 +1072,38 @@ public class HttpRequest {
     }
 
     /**
+     * 项目匹配
+     *  @param pageNo 页码
+     *  @param pageSize 每页条数
+     *  @param peerCustId 默认不填,(活期赚不填写) 定期计划的匹配项目填:1372
+     */
+    public static void projectMatch(Context context, final ICallback<UserRegularDetailResult> callback, String pageNo, String pageSize, String peerCustId) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("pageNo", pageNo));
+        mList.add(new Param("pageSize", pageSize));
+        mList.add(new Param("peerCustId", peerCustId));
+
+        new MyAsyncTask(context, Urls.project_match, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                UserRegularDetailResult userRegularDetailResult = JsonUtil.parseObject(result, UserRegularDetailResult.class);
+                if (userRegularDetailResult.getCode().equals("000000")) {
+                    callback.onSucceed(userRegularDetailResult);
+                } else {
+                    callback.onFail(userRegularDetailResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
      * 活期、定期赚、定期计划
      * 认购接口
      *

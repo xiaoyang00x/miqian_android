@@ -20,7 +20,7 @@ import com.miqian.mq.views.WFYTitle;
 
 import java.util.List;
 
-public class UserRegualrActivity extends BaseActivity implements View.OnClickListener, AdapterUserRegular.MyItemClickListener {
+public class UserRegularActivity extends BaseActivity implements View.OnClickListener, AdapterUserRegular.MyItemClickListener {
 
     private Button titleLeft;
     private Button titleRight;
@@ -179,7 +179,7 @@ public class UserRegualrActivity extends BaseActivity implements View.OnClickLis
                 obtainData();
                 break;
             case R.id.bt_left:
-                UserRegualrActivity.this.finish();
+                UserRegularActivity.this.finish();
                 break;
         }
     }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.current.ActivityRedeem;
+import com.miqian.mq.activity.user.ProjectMatchActivity;
 import com.miqian.mq.entity.UserCurrent;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.net.HttpRequest;
@@ -105,14 +106,15 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 startActivity(new Intent(mActivity,ActivityCurrentRecord.class));
                 break;
             case R.id.frame_project_match:
+                Intent intent = new Intent(mActivity, ProjectMatchActivity.class);
+                startActivity(intent);
                 break;
             case R.id.bt_redeem:
-                Intent intent = new Intent(mActivity, ActivityRedeem.class);
+                intent = new Intent(mActivity, ActivityRedeem.class);
                 //本金
                 intent.putExtra("capital",userCurrent.getCurAsset());
                 intent.putExtra("totalEaring",userCurrent.getCurAmt());
                 startActivity(intent);
-
                 break;
             case R.id.bt_subscribe:
                 break;

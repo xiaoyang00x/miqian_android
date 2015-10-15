@@ -85,6 +85,8 @@ public class Urls {
     public final static String user_regular = base_server + "userService/getMyRegBuyList";
     //我的定期详情
     public final static String user_regular_detail = base_server + "commonService/getRegDetail";
+    //项目匹配
+    public final static String project_match = base_server + "subjectService/getMatchList";
 
     //定期首页
     public final static String getRegMain = base_server + "subjectService/getRegMain";

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     private RelativeLayout frameTransfer;//转让情况
     private RelativeLayout frameContract;//合同
+
+    private Button btRepayment;//还款详情
 
     private UserRegularDetail userRegularDetail;
 
@@ -98,9 +101,12 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         frameTransfer = (RelativeLayout) findViewById(R.id.frame_transfer);
         frameContract = (RelativeLayout) findViewById(R.id.frame_contract);
 
+        btRepayment = (Button) findViewById(R.id.bt_repayment);
+
         frameProjectMatch.setOnClickListener(this);
         frameTransfer.setOnClickListener(this);
         frameContract.setOnClickListener(this);
+        btRepayment.setOnClickListener(this);
     }
 
     public void refreshView() {
@@ -174,10 +180,22 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.frame_project_match:
+                if (userRegularDetail != null) {
+                    if ("3".equals(userRegularDetail.getProdId())) {
+                        // TODO: 2015/10/15  定期赚 项目
+                    } else if ("4".equals(userRegularDetail.getProdId())) {
+                        //定期计划 项目匹配
+                        Intent intent = new Intent(mActivity, ProjectMatchActivity.class);
+                        intent.putExtra("peerCustId", "1372");
+                        startActivity(intent);
+                    }
+                }
                 break;
-            case R.id.frame_transfer:
+            case R.id.frame_transfer://转让情况
                 break;
-            case R.id.frame_contract:
+            case R.id.frame_contract://查看合同
+                break;
+            case R.id.bt_repayment://还款详情
                 break;
         }
     }
