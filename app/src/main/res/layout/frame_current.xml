@@ -88,7 +88,8 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/mq_font6" />
+                        android:textSize="@dimen/mq_font6"
+                        android:text="——"/>
                 </LinearLayout>
 
                 <View
@@ -120,7 +121,8 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/mq_font6" />
+                        android:textSize="@dimen/mq_font6"
+                        android:text="——"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

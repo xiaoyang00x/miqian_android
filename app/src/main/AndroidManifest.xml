@@ -90,7 +90,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.DetailsForRegularEarningActivity"
+            android:name=".activity.user.UserRegularDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -320,7 +320,7 @@
             android:label="@string/title_activity_capital_record"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.user.MyRegualrDepositActivity"
+            android:name=".activity.user.UserRegualrActivity"
             android:label="@string/title_activity_my_regualr_deposit"
             />
 

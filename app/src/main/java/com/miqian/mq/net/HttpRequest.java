@@ -14,7 +14,7 @@ import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CommonEntity;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
-import com.miqian.mq.entity.DetailForRegularDeposit;
+import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
@@ -988,7 +988,7 @@ public class HttpRequest {
      *  @param isForce 默认为0 1 强制刷新  0 不强制刷新
      */
     public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn, String isForce) {
-        List<Param> mList = new ArrayList<Param>();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
@@ -1048,23 +1048,26 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    public static void detailsForRegularEarning(Context context, final ICallback<DetailForRegularDeposit> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode("")));
+    /**
+     * 我的定期详情
+     *  @param investId 投资产品id
+     *  @param clearYn 默认为N  N：计息中  Y：已结息
+     */
+    public static void getUserRegularDetail(Context context, final ICallback<UserRegularDetailResult> callback, String investId, String clearYn) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("investId", investId));
+        mList.add(new Param("clearYn", clearYn));
 
-        new MyAsyncTask(context, Urls.detailsOfRegularDeposit, mList, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.user_regular_detail, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                Log.e("result", result);
-                DetailForRegularDeposit detailsEarning = JsonUtil.parseObject(result, DetailForRegularDeposit.class);
-                if (detailsEarning.getCode().equals("000000")) {
-                    callback.onSucceed(detailsEarning);
+                UserRegularDetailResult userRegularDetailResult = JsonUtil.parseObject(result, UserRegularDetailResult.class);
+                if (userRegularDetailResult.getCode().equals("000000")) {
+                    callback.onSucceed(userRegularDetailResult);
                 } else {
-                    callback.onFail(detailsEarning.getMessage());
+                    callback.onFail(userRegularDetailResult.getMessage());
                 }
             }
 

@@ -83,14 +83,14 @@ public class Urls {
     public final static String user_current = base_server + "userService/getMyCurrent";
     //我的定期
     public final static String user_regular = base_server + "userService/getMyRegBuyList";
+    //我的定期详情
+    public final static String user_regular_detail = base_server + "commonService/getRegDetail";
 
     //定期首页
     public final static String getRegMain = base_server + "subjectService/getRegMain";
 
     //home
     public final static String homeInfo = base_server + "commonService/getHome";
-    //details for regular deposit
-    public final static String detailsOfRegularDeposit = base_server + "commonService/getHome";
     //records of capital
     public final static String recordsCapital = base_server + "userService/getAssetRecord";
 

@@ -36,8 +36,8 @@ public class UserRegular {
     }
 
     public class Reg {
-        private String regTotalIncome;//待收本金
-        private String regTotalAmt;//待收收益
+        private String regTotalIncome;//待收收益
+        private String regTotalAmt;//待收本金
 
         public String getRegTotalIncome() {
             return regTotalIncome;
@@ -75,8 +75,8 @@ public class UserRegular {
         private String hasTransOper;//是否有转让标识
         private String payMeansName;//月付息，到期还本"
         private String limitCnt;//定期计划期限
-        private String projectState;//项目状态
-        private String bearingStatus;//结息状态
+        private String projectState;//项目状态 0未结息 1转让中 2已转让 3已到期
+        private String bearingStatus;//结息状态 Y:已结息 N：未结息
         private String regAmt;//待收本金
         private String regIncome;//待收收益
         private String prnAmt;//总投资本金

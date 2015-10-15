@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +20,8 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
     private final int VIEW_HEADER = 0;
     private final int VIEW_ITEM = 1;
     private final int VIEW_FOOTER = 2;
+
+    private MyItemClickListener onItemClickListener;
 
     private int maxValue = 999;//最大的值
     private int mType = 0;
@@ -46,13 +50,13 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder;
         if (viewType == VIEW_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_regular_deposit_item_row, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_user_regular, parent, false);
             viewHolder = new ViewHolder(view);
         } else if (viewType == VIEW_HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_user_regular_header, parent, false);
             viewHolder = new HeaderViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.progress_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
             viewHolder = new ProgressViewHolder(view);
         }
         return viewHolder;
@@ -62,7 +66,40 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             UserRegular.RegInvest regInvest = mList.get(position - 1);
+
             ((ViewHolder) holder).bdName.setText(regInvest.getBdNm());
+            if (regInvest.getBearingStatus().equals("Y")) {
+                if (regInvest.getProjectState().equals("3")) {
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_over);
+                } else if (regInvest.getProjectState().equals("2")) {
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_gray);
+                } else {
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.color.transparent);
+                }
+                ((ViewHolder) holder).frameEarning.setVisibility(View.GONE);
+            } else {
+                if (regInvest.getProjectState().equals("1")) {
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
+                } else if (regInvest.getProjectState().equals("2")) {
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_red);
+                } else {
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.color.transparent);
+                }
+                ((ViewHolder) holder).frameEarning.setVisibility(View.VISIBLE);
+            }
+
+            if (regInvest.getProdId().equals("3")) {
+                ((ViewHolder) holder).imageProjectType.setImageResource(R.drawable.user_regular_regular);
+            } else {
+                ((ViewHolder) holder).imageProjectType.setImageResource(R.drawable.user_regular_plan);
+            }
+
+            ((ViewHolder) holder).textCapital.setText(regInvest.getRegAmt());
+            ((ViewHolder) holder).textEarning.setText(regInvest.getRegIncome());
+            ((ViewHolder) holder).textInterestRate.setText(regInvest.getRealInterest());
+
+            ((ViewHolder) holder).textDateSubscribe.setText("认购日期" + regInvest.getCrtDt());
+            ((ViewHolder) holder).textDateOver.setText("到期日" + regInvest.getDueDt());
         } else if (holder instanceof ProgressViewHolder) {
             if (position > maxValue) {
                 ((ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
@@ -102,10 +139,39 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView bdName;
+        public ImageView imageProjectStatus;
+        public ImageView imageProjectType;
+
+        public TextView textCapital;
+        public TextView textEarning;
+        public TextView textInterestRate;
+        public LinearLayout frameEarning;
+
+        public TextView textDateSubscribe;
+        public TextView textDateOver;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            bdName = (TextView) itemView.findViewById(R.id.textView6);
+            bdName = (TextView) itemView.findViewById(R.id.text_name);
+            imageProjectStatus = (ImageView) itemView.findViewById(R.id.image_project_status);
+            imageProjectType = (ImageView) itemView.findViewById(R.id.image_project_type);
+
+            textCapital = (TextView) itemView.findViewById(R.id.text_capital);
+            textEarning = (TextView) itemView.findViewById(R.id.text_earning);
+            textInterestRate = (TextView) itemView.findViewById(R.id.text_interest_rate);
+            frameEarning = (LinearLayout) itemView.findViewById(R.id.frame_earning);
+
+            textDateSubscribe = (TextView) itemView.findViewById(R.id.text_date_subscribe);
+            textDateOver = (TextView) itemView.findViewById(R.id.text_date_over);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(v, getLayoutPosition() - 1);
+                    }
+                }
+            });
         }
     }
 
@@ -134,6 +200,14 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
             textLoading = (TextView) view.findViewById(R.id.text_loading);
         }
+    }
+
+    public void setOnItemClickListener(MyItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
+    public interface MyItemClickListener {
+        void onItemClick(View view, int postion);
     }
 }
 
