@@ -1,6 +1,7 @@
 package com.miqian.mq.net;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -37,6 +38,7 @@ import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 
 import java.util.ArrayList;
@@ -826,7 +828,7 @@ public class HttpRequest {
     }
 
     //获取银行列表
-    public static void getAllCity(Context context, final ICallback<CityInfoResult> callback) {
+    public static void getAllCity(final Context context, final ICallback<CityInfoResult> callback) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
@@ -836,6 +838,8 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
+                //保存到本地数据库
+                Pref.saveString(Pref.CITY, result, context);
                 CityInfoResult cityInfoResult = JsonUtil.parseObject(result, CityInfoResult.class);
                 if (cityInfoResult.getCode().equals("000000")) {
                     callback.onSucceed(cityInfoResult);
@@ -846,7 +850,18 @@ public class HttpRequest {
 
             @Override
             public void onFail(String error) {
-                callback.onFail(error);
+                String city = Pref.getString(Pref.CITY, context, "");
+                if (!TextUtils.isEmpty(city)) {
+                    CityInfoResult cityInfoResult = JsonUtil.parseObject(city, CityInfoResult.class);
+                    if (cityInfoResult.getCode().equals("000000")) {
+                        callback.onSucceed(cityInfoResult);
+                    } else {
+                        callback.onFail(cityInfoResult.getMessage());
+                    }
+                } else {
+                    callback.onFail(error);
+                }
+
             }
         }).executeOnExecutor();
     }
@@ -1043,8 +1058,9 @@ public class HttpRequest {
 
     /**
      * 我的定期详情
-     *  @param investId 投资产品id
-     *  @param clearYn 默认为N  N：计息中  Y：已结息
+     *
+     * @param investId 投资产品id
+     * @param clearYn  默认为N  N：计息中  Y：已结息
      */
     public static void getUserRegularDetail(Context context, final ICallback<UserRegularDetailResult> callback, String investId, String clearYn) {
         List<Param> mList = new ArrayList<>();
@@ -1073,9 +1089,10 @@ public class HttpRequest {
 
     /**
      * 项目匹配
-     *  @param pageNo 页码
-     *  @param pageSize 每页条数
-     *  @param peerCustId 默认不填,(活期赚不填写) 定期计划的匹配项目填:1372
+     *
+     * @param pageNo     页码
+     * @param pageSize   每页条数
+     * @param peerCustId 默认不填,(活期赚不填写) 定期计划的匹配项目填:1372
      */
     public static void projectMatch(Context context, final ICallback<ProjectInfoResult> callback, String pageNo, String pageSize, String peerCustId) {
         List<Param> mList = new ArrayList<>();

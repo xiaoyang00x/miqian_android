@@ -92,69 +92,77 @@ public class TradePsCaptchaActivity extends BaseActivity {
 
 
     }
+
     private void sendMessage() {
-      int captchaType;
+        int captchaType;
         if (isModifyPhone) {
-            captchaType=TypeUtil.CAPTCHA_BINDTEL_FIRST;
-        }else{
-            captchaType=TypeUtil.CAPTCHA_TRADEPASSWORD;
+            captchaType = TypeUtil.CAPTCHA_BINDTEL_FIRST;
+        } else {
+            captchaType = TypeUtil.CAPTCHA_TRADEPASSWORD;
 
         }
-            HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
-                @Override
-                public void onSucceed(Meta result) {
-                    Uihelper.trace("captcha:" + result.getCode());
-                    mBtn_sendCaptcha.setEnabled(false);
-                    myRunnable = new MyRunnable();
-                    thread = new Thread(myRunnable);
-                    thread.start(); // 启动线程，进行倒计时
-                    isTimer = true;
-                }
+        HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
+            @Override
+            public void onSucceed(Meta result) {
+                isSending = true;
+                mBtn_sendCaptcha.setEnabled(false);
+                myRunnable = new MyRunnable();
+                thread = new Thread(myRunnable);
+                thread.start(); // 启动线程，进行倒计时
+                isTimer = true;
+            }
 
-                @Override
-                public void onFail(String error) {
-                    Uihelper.showToast(mActivity, error);
+            @Override
+            public void onFail(String error) {
+                isSending = true;
+                Uihelper.showToast(mActivity, error);
 
-                }
-            }, telephone, captchaType);
+            }
+        }, telephone, captchaType);
 
     }
 
     public void btn_click(View v) {
 
-     final    String captcha = mEt_Captcha.getText().toString();
-        if (isModifyPhone){
+        final String captcha = mEt_Captcha.getText().toString();
+        if (isModifyPhone) {
 
-            HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
-                @Override
-                public void onSucceed(Meta result) {
-                    Intent intent = new Intent(mActivity, SendCaptchaActivity.class);
-                    intent.putExtra("type", TypeUtil.MODIFY_PHONE);
-                    intent.putExtra("captcha", captcha);
-                    startActivity(intent);
-                    finish();
-                }
+            if (isSending) {
+                HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
+                    @Override
+                    public void onSucceed(Meta result) {
+                        Intent intent = new Intent(mActivity, SendCaptchaActivity.class);
+                        intent.putExtra("type", TypeUtil.MODIFY_PHONE);
+                        intent.putExtra("captcha", captcha);
+                        startActivity(intent);
+                        finish();
+                    }
 
-                @Override
-                public void onFail(String error) {
+                    @Override
+                    public void onFail(String error) {
 
-                    Uihelper.showToast(mActivity, error);
+                        Uihelper.showToast(mActivity, error);
+                    }
+                }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
+            } else {
+                Uihelper.showToast(this, "请先获取验证码");
+            }
 
-                }
-            }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
+        } else {
 
-        }else {
             String idCard = mEtRealname.getText().toString();
 
             if (!TextUtils.isEmpty(idCard)) {
-                if (!TextUtils.isEmpty(captcha)) {
-
-                    summit(idCard, captcha);
-
+                if (isSending) {
+                    if (!TextUtils.isEmpty(captcha)) {
+                        summit(idCard, captcha);
+                    } else {
+                        Uihelper.showToast(this, R.string.tip_captcha);
+                    }
                 } else {
-                    Uihelper.showToast(this, R.string.tip_captcha);
+                    Uihelper.showToast(this, "请先获取验证码");
                 }
-                ;
+
             } else {
                 Uihelper.showToast(this, "身份证号码不能为空");
             }
