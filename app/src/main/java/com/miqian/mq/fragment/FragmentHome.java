@@ -30,17 +30,13 @@ public class FragmentHome extends BasicFragment {
     HomePageInfo mData;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getHomePageInfo();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frame_home, null);
         findView(view);
         setView();
-
+        if(mData == null) {
+            getHomePageInfo();
+        }
         return view;
     }
 
@@ -104,6 +100,7 @@ public class FragmentHome extends BasicFragment {
         synchronized (mLock) {
             inProcess = true;
         }
+        swipeRefresh.setRefreshing(true);
         HttpRequest.getHomePageInfo(getActivity(), new ICallback<HomePageInfoResult>() {
 
             @Override

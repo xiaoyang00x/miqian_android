@@ -32,8 +32,7 @@ import java.util.List;
 public class RegularFragment extends BasicFragment {
 
     RegularListAdapter mAdapter;
-    private ArrayList<RegularPlan> planList;
-    private ArrayList<RegularEarn> regList;
+    private GetRegularInfo mData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,13 +40,10 @@ public class RegularFragment extends BasicFragment {
         View view = inflater.inflate(R.layout.fragment_regular, container, false);
         findView(view);
         setView();
+        if(mData == null) {
+            getMainRegular();
+        }
         return view;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getMainRegular();
     }
 
     private RecyclerView recyclerView;
@@ -95,8 +91,8 @@ public class RegularFragment extends BasicFragment {
             }
         });
 
-        if(regList != null) {
-            mAdapter = new RegularListAdapter(regList, planList, mApplicationContext, swipeRefreshLayout);
+        if(mData != null) {
+            mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefreshLayout);
             recyclerView.setAdapter(mAdapter);
         }
     }
@@ -110,6 +106,7 @@ public class RegularFragment extends BasicFragment {
         synchronized (mLock) {
             inProcess = true;
         }
+        swipeRefreshLayout.setRefreshing(true);
         HttpRequest.getMainRegular(getActivity(), new ICallback<GetRegularResult>() {
 
             @Override
@@ -119,17 +116,10 @@ public class RegularFragment extends BasicFragment {
                 }
                 swipeRefreshLayout.setRefreshing(false);
                 if(result == null) return;
-                GetRegularInfo info = result.getData();
-                if(info == null) return;
-                regList = info.getRegList();
-                planList = info.getPlanList();
-//                    if (null == mAdapter) {
-                        mAdapter = new RegularListAdapter(info.getRegList(), info.getPlanList(), mApplicationContext, swipeRefreshLayout);
-                        recyclerView.setAdapter(mAdapter);
-//                    } else {
-//                        mAdapter.clear();
-//                        mAdapter.addAll(info.getRegList());
-//                    }
+                mData = result.getData();
+                if(mData == null) return;
+                mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefreshLayout);
+                recyclerView.setAdapter(mAdapter);
             }
 
             @Override

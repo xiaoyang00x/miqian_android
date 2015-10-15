@@ -35,17 +35,6 @@
   <color name="blue">#3259ff</color>
   <color name="home_business_pressed">#EFEFEF</color>
 
-  <color name="line_color_run_speed_1">#8acb04</color>
-  <color name="line_color_run_speed_3">#4aa657</color>
-  <color name="line_color_run_speed_5">#f3fa07</color>
-  <color name="line_color_run_speed_7">#ffbf05</color>
-  <color name="line_color_run_speed_9">#ff944b</color>
-  <color name="line_color_run_speed_11">#ff6d58</color>
-  <color name="line_color_run_speed_13">#ff2942</color>
-  <color name="line_color_run_speed_15">#e10c05</color>
-  <color name="line_color_run_speed_17">#a5110a</color>
-  <color name="line_color_run_speed_19">#6d0409</color>
-
   <color name="typeface_black">#505050</color>
 
 

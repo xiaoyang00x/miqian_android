@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,11 +12,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.miqian.mq.R;
-import com.miqian.mq.activity.RegularEarnActivity;
 import com.miqian.mq.activity.RegularPlanActivity;
 import com.miqian.mq.adapter.holder.RegularEarnViewHoder;
+import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.utils.FormatUtil;
@@ -37,14 +35,16 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private List<RegularEarn> items;
     private List<RegularPlan> planList;
+    private GetRegularInfo mData;
     private Context mContext;
     private View swipeRefreshLayout;
     private boolean isHasHeader = false;
 
-    public RegularListAdapter(List<RegularEarn> items, List<RegularPlan> planList, Context mContext, View swipeRefreshLayout) {
-        this.items = items;
+    public RegularListAdapter(GetRegularInfo mData, Context mContext, View swipeRefreshLayout) {
         this.mContext = mContext;
-        this.planList = planList;
+        this.mData = mData;
+        this.items = mData.getRegList();
+        this.planList = mData.getPlanList();
         this.swipeRefreshLayout = swipeRefreshLayout;
 
         if (planList != null && planList.size() > 0) {

@@ -24,7 +24,7 @@
             android:id="@+id/progress_view"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            app:progressColor="@color/line_color_run_speed_13"
+            app:progressColor="@color/mq_r1"
             app:progressBackgroundColor="@color/progress_background_light"
             app:progressSmallSize="true"
             android:visibility="gone"
