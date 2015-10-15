@@ -54,6 +54,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/text_capital"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="待收本金"
@@ -61,7 +62,7 @@
                 android:textSize="@dimen/mq_font5"/>
 
             <TextView
-                android:id="@+id/text_capital"
+                android:id="@+id/text_capital_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

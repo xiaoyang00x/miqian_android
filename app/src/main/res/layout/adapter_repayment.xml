@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:singleLine="true"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font5"
+                android:text="2015-01-01"/>
+
+            <TextView
+                android:id="@+id/text_repayment_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:singleLine="true"
+                android:textColor="@color/mq_b1"
+                android:textSize="@dimen/mq_font5"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_capital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:singleLine="true"
+                android:textColor="@color/mq_b1"
+                android:textSize="@dimen/mq_font4"
+                android:text="应还本金："/>
+
+            <TextView
+                android:id="@+id/text_earning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:singleLine="true"
+                android:textColor="@color/mq_r1"
+                android:textSize="@dimen/mq_font4"
+                android:text="应付收益："/>
+
+            <TextView
+                android:id="@+id/text_present"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:singleLine="true"
+                android:textColor="@color/mq_r1"
+                android:textSize="@dimen/mq_font4"
+                android:text="赠送："/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

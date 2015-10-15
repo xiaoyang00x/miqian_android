@@ -69,6 +69,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
 
             ((ViewHolder) holder).bdName.setText(regInvest.getBdNm());
             if (regInvest.getBearingStatus().equals("Y")) {
+                ((ViewHolder) holder).textCapital.setText("投资本金");
                 if (regInvest.getProjectState().equals("3")) {
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_over);
                 } else if (regInvest.getProjectState().equals("2")) {
@@ -78,6 +79,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 }
                 ((ViewHolder) holder).frameEarning.setVisibility(View.GONE);
             } else {
+                ((ViewHolder) holder).textCapital.setText("待收本金");
                 if (regInvest.getProjectState().equals("1")) {
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
                 } else if (regInvest.getProjectState().equals("2")) {
@@ -94,7 +96,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ViewHolder) holder).imageProjectType.setImageResource(R.drawable.user_regular_plan);
             }
 
-            ((ViewHolder) holder).textCapital.setText(regInvest.getRegAmt());
+            ((ViewHolder) holder).textCapitalMoney.setText(regInvest.getRegAmt());
             ((ViewHolder) holder).textEarning.setText(regInvest.getRegIncome());
             ((ViewHolder) holder).textInterestRate.setText(regInvest.getRealInterest());
 
@@ -143,6 +145,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
         public ImageView imageProjectType;
 
         public TextView textCapital;
+        public TextView textCapitalMoney;
         public TextView textEarning;
         public TextView textInterestRate;
         public LinearLayout frameEarning;
@@ -157,6 +160,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             imageProjectType = (ImageView) itemView.findViewById(R.id.image_project_type);
 
             textCapital = (TextView) itemView.findViewById(R.id.text_capital);
+            textCapitalMoney = (TextView) itemView.findViewById(R.id.text_capital_money);
             textEarning = (TextView) itemView.findViewById(R.id.text_earning);
             textInterestRate = (TextView) itemView.findViewById(R.id.text_interest_rate);
             frameEarning = (LinearLayout) itemView.findViewById(R.id.frame_earning);

@@ -16,6 +16,8 @@ import com.miqian.mq.entity.CommonEntity;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.ProjectInfoResult;
+import com.miqian.mq.entity.RepaymentResult;
+import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
@@ -1110,6 +1112,66 @@ public class HttpRequest {
                     callback.onSucceed(projectInfoResult);
                 } else {
                     callback.onFail(projectInfoResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 我的定期转让情况
+     *
+     * @param investId    投资id
+     * @param clearYn   是否结息
+     */
+    public static void getTransferDeatil(Context context, final ICallback<TransferDetailResult> callback, String investId, String clearYn) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("investId", investId));
+        mList.add(new Param("clearYn", clearYn));
+
+        new MyAsyncTask(context, Urls.regular_transfer_detail, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                TransferDetailResult transferDetailResult = JsonUtil.parseObject(result, TransferDetailResult.class);
+                if (transferDetailResult.getCode().equals("000000")) {
+                    callback.onSucceed(transferDetailResult);
+                } else {
+                    callback.onFail(transferDetailResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 还款详情
+     *
+     * @param investId    投资id
+     */
+    public static void getRepayment(Context context, final ICallback<RepaymentResult> callback, String investId) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("investId", investId));
+
+        new MyAsyncTask(context, Urls.repayment_detail, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                RepaymentResult repaymentResult = JsonUtil.parseObject(result, RepaymentResult.class);
+                if (repaymentResult.getCode().equals("000000")) {
+                    callback.onSucceed(repaymentResult);
+                } else {
+                    callback.onFail(repaymentResult.getMessage());
                 }
             }
 
