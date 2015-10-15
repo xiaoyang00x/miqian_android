@@ -86,13 +86,16 @@
         <activity
             android:name=".activity.current.ActivityUserCurrent"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.DetailsForRegularEarningActivity"
+            android:name=".activity.user.UserRegularDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.user.ProjectMatchActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
         <activity
@@ -320,12 +323,11 @@
         <activity
             android:name=".activity.CapitalRecordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_capital_record"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.user.MyRegualrDepositActivity"
-            android:label="@string/title_activity_my_regualr_deposit"
-            />
+            android:name=".activity.user.UserRegularActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
 
         <!--Umeng Start-->
         <activity

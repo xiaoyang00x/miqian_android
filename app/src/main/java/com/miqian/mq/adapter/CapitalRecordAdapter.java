@@ -74,7 +74,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (VIEW_PROG == viewType) {
             View v =
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.progress_item, parent, false);
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
 
             return new ProgressViewHolder(v);
         }

@@ -22,7 +22,7 @@
                 android:layout_height="36dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
-                android:src="@drawable/ic_launcher" />
+                android:src="@null" />
 
             <TextView
                 android:id="@+id/bind_bank_name"

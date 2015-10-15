@@ -140,7 +140,9 @@ public class AdapterPacket extends RecyclerView.Adapter {
                     } else {
                         mPosition = -1;
                     }
-                    onItemClickListener.onItemClick(v, mPosition);
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(v, mPosition);
+                    }
                     notifyDataSetChanged();
                 }
             });

@@ -78,20 +78,6 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         });
-        mEt_Captcha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    if (!TextUtils.isEmpty(mEt_Captcha.getText().toString())) {
-                        //判断邀请码是否存在
-
-
-                    } else {
-                        Uihelper.showToast(RegisterActivity.this, "请输入正确正确格式的邀请码,4到5位的数字字母组合");
-                    }
-                }
-            }
-        });
 
         mBtn_sendCaptcha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,17 +93,11 @@ public class RegisterActivity extends BaseActivity {
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
                 switch (type) {
-                    case NUM_TYPE_TOAST:
-                        break;
                     case NUM_TYPE_CAPTCHA:
                         //发送验证码
                         sendMessage();
-
-                        break;
-                    case NUM_TYPE_SUMMIT:
                         break;
                 }
-
             } else {
                 Uihelper.showToast(this, R.string.phone_noeffect);
             }
@@ -132,6 +112,7 @@ public class RegisterActivity extends BaseActivity {
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
+                isSending = true;
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -153,37 +134,16 @@ public class RegisterActivity extends BaseActivity {
         String captcha = mEt_Captcha.getText().toString();
         String invite = mEt_Invite.getText().toString();
         String password = mEt_Password.getText().toString();
+        phone = mEt_Telephone.getText().toString();
 
 
         if (!TextUtils.isEmpty(phone)) {
             if (!TextUtils.isEmpty(captcha)) {
-
-                if (!TextUtils.isEmpty(password)) {
-                    mWaitingDialog.show();
-                    HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
-                        @Override
-                        public void onSucceed(RegisterResult result) {
-                            mWaitingDialog.dismiss();
-                            Uihelper.showToast(mActivity, "注册成功");
-                            UserInfo userInfo = result.getData();
-                            UserUtil.saveUserInfo(mActivity, userInfo);
-
-                            Intent intent_identify=new Intent(mActivity, ActivityRealname.class);
-                            intent_identify.putExtra("isRegistered",true);
-                            startActivity(intent_identify);
-
-                            finish();
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            mWaitingDialog.dismiss();
-                            Uihelper.showToast(mActivity, error);
-                        }
-                    }, phone, captcha, password, invite);
-
+                if (isSending) {
+                    //检验验证码
+                    checkCaptcha(captcha, invite, password);
                 } else {
-                    Uihelper.showToast(this, R.string.tip_password);
+                    Uihelper.showToast(this, "请先获取验证码");
                 }
 
             } else {
@@ -195,6 +155,60 @@ public class RegisterActivity extends BaseActivity {
         }
 
 
+    }
+
+    private void checkCaptcha(final String captcha, final String invite, final String password) {
+
+        HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
+            @Override
+            public void onSucceed(Meta result) {
+                summit(captcha, invite, password);
+            }
+
+            @Override
+            public void onFail(String error) {
+
+                Uihelper.showToast(mActivity, error);
+
+            }
+        }, phone, TypeUtil.CAPTCHA_REGISTER, captcha);
+    }
+
+    private void summit(final String captcha, final String invite, final String password) {
+
+
+        if (!TextUtils.isEmpty(password)) {
+
+            if (password.length() < 6 || password.length() > 20) {
+                Uihelper.showToast(this, R.string.tip_password);
+            } else {
+                mWaitingDialog.show();
+                HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
+                    @Override
+                    public void onSucceed(RegisterResult result) {
+                        mWaitingDialog.dismiss();
+                        Uihelper.showToast(mActivity, "注册成功");
+                        UserInfo userInfo = result.getData();
+                        UserUtil.saveUserInfo(mActivity, userInfo);
+
+                        Intent intent_identify = new Intent(mActivity, ActivityRealname.class);
+                        intent_identify.putExtra("isRegistered", true);
+                        startActivity(intent_identify);
+
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(String error) {
+                        mWaitingDialog.dismiss();
+                        Uihelper.showToast(mActivity, error);
+                    }
+                }, phone, captcha, password, invite);
+            }
+
+        } else {
+            Uihelper.showToast(this, "密码不能为空");
+        }
     }
 
     class MyRunnable implements Runnable {

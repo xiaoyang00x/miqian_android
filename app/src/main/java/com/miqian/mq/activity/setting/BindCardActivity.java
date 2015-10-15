@@ -190,6 +190,8 @@ public class BindCardActivity extends BaseActivity {
                 @Override
                 public void onFail(String error) {
 
+                    Uihelper.showToast(mActivity,error);
+
                 }
             }, cardNum, "XZ", autoIdentyCard.getBankCode(), autoIdentyCard.getBankName(), "", "", "");
         }

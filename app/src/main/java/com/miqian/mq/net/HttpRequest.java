@@ -14,7 +14,7 @@ import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CommonEntity;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
-import com.miqian.mq.entity.DetailForRegularDeposit;
+import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomePageInfoResult;
@@ -34,6 +34,7 @@ import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.entity.UserRegularResult;
+import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.UserUtil;
 
@@ -973,13 +974,14 @@ public class HttpRequest {
 
     /**
      * 我的定期
-     *  @param pageNo 页码(默认1)
-     *  @param pageSize 每页条数（默认20）
-     *  @param clearYn 默认为N  N：计息中  Y：已结息
-     *  @param isForce 默认为0 1 强制刷新  0 不强制刷新
+     *
+     * @param pageNo   页码(默认1)
+     * @param pageSize 每页条数（默认20）
+     * @param clearYn  默认为N  N：计息中  Y：已结息
+     * @param isForce  默认为0 1 强制刷新  0 不强制刷新
      */
     public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn, String isForce) {
-        List<Param> mList = new ArrayList<Param>();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
@@ -1015,7 +1017,7 @@ public class HttpRequest {
         mList.clear();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
-        mList.add(new Param("startDate",startDate));
+        mList.add(new Param("startDate", startDate));
         mList.add(new Param("pageSize", pageSize));
         mList.add(new Param("endDate", endDate));
         mList.add(new Param("operateType", operateType));
@@ -1039,23 +1041,58 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    public static void detailsForRegularEarning(Context context, final ICallback<DetailForRegularDeposit> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode("")));
+    /**
+     * 我的定期详情
+     *  @param investId 投资产品id
+     *  @param clearYn 默认为N  N：计息中  Y：已结息
+     */
+    public static void getUserRegularDetail(Context context, final ICallback<UserRegularDetailResult> callback, String investId, String clearYn) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("investId", investId));
+        mList.add(new Param("clearYn", clearYn));
 
-        new MyAsyncTask(context, Urls.detailsOfRegularDeposit, mList, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.user_regular_detail, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                Log.e("result", result);
-                DetailForRegularDeposit detailsEarning = JsonUtil.parseObject(result, DetailForRegularDeposit.class);
-                if (detailsEarning.getCode().equals("000000")) {
-                    callback.onSucceed(detailsEarning);
+                UserRegularDetailResult userRegularDetailResult = JsonUtil.parseObject(result, UserRegularDetailResult.class);
+                if (userRegularDetailResult.getCode().equals("000000")) {
+                    callback.onSucceed(userRegularDetailResult);
                 } else {
-                    callback.onFail(detailsEarning.getMessage());
+                    callback.onFail(userRegularDetailResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 项目匹配
+     *  @param pageNo 页码
+     *  @param pageSize 每页条数
+     *  @param peerCustId 默认不填,(活期赚不填写) 定期计划的匹配项目填:1372
+     */
+    public static void projectMatch(Context context, final ICallback<UserRegularDetailResult> callback, String pageNo, String pageSize, String peerCustId) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("pageNo", pageNo));
+        mList.add(new Param("pageSize", pageSize));
+        mList.add(new Param("peerCustId", peerCustId));
+
+        new MyAsyncTask(context, Urls.project_match, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                UserRegularDetailResult userRegularDetailResult = JsonUtil.parseObject(result, UserRegularDetailResult.class);
+                if (userRegularDetailResult.getCode().equals("000000")) {
+                    callback.onSucceed(userRegularDetailResult);
+                } else {
+                    callback.onFail(userRegularDetailResult.getMessage());
                 }
             }
 
@@ -1191,11 +1228,8 @@ public class HttpRequest {
 
     //修改绑定手机
     public static void changePhone(Context context, final ICallback<Meta> callback,
-                                         String oldMobilePhone, String oldCaptcha, String newMobilePhone, String newCaptcha ) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+                                   String oldMobilePhone, String oldCaptcha, String newMobilePhone, String newCaptcha) {
+        List<Param> mList = new ArrayList<Param>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldCaptcha", oldCaptcha));
         mList.add(new Param("oldMobilePhone", RSAUtils.encryptURLEncode(oldMobilePhone)));
@@ -1211,6 +1245,31 @@ public class HttpRequest {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //赎回预处理
+    public static void withdrawPreprocess(Context context, final ICallback<WithDrawResult> callback, String amt) {
+        List<Param> mList = new ArrayList<Param>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("amt", amt));
+
+        new MyAsyncTask(context, Urls.withdrawPreprocess, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                WithDrawResult drawResult = JsonUtil.parseObject(result, WithDrawResult.class);
+                if (drawResult.getCode().equals("000000")) {
+                    callback.onSucceed(drawResult);
+                } else {
+                    callback.onFail(drawResult.getMessage());
                 }
             }
 

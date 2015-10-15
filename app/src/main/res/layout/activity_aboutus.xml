@@ -10,12 +10,13 @@
         android:orientation="vertical">
 
         <ImageView
-            style="@style/WrapContent"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:background="@drawable/trans"
-            android:src="@drawable/ic_launcher" />
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/tvVersion"

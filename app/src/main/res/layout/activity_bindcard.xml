@@ -13,7 +13,7 @@
 
         <ImageView
             android:id="@+id/icon_bank"
-            android:layout_width="wrap_content"
+            android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_left_right"

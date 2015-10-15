@@ -1,5 +1,7 @@
 package com.miqian.mq.activity.user;
 
+import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,19 +20,20 @@ import com.miqian.mq.views.WFYTitle;
 
 import java.util.List;
 
-public class MyRegualrDepositActivity extends BaseActivity implements View.OnClickListener {
+public class UserRegularActivity extends BaseActivity implements View.OnClickListener, AdapterUserRegular.MyItemClickListener {
 
     private Button titleLeft;
     private Button titleRight;
     private RecyclerView mRecyclerView;
     private ImageButton btLeft;
+    private SwipeRefreshLayout swipeRefresh;
 
     private AdapterUserRegular mAdapter;
 
     private int pageNo = 1;
-    private String pageSize = "5";
+    private String pageSize = "10";
     private String isExpiry = "N";//是否结息 N：计息中 Y：已结息
-    private String isForce = "0";//是否强制刷新 1强制刷新 0不强制刷新
+    private String isForce = "1";//是否强制刷新 1强制刷新 0不强制刷新
     private boolean isLoading = false;
     private int mType = 0;
 
@@ -40,12 +43,13 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
     @Override
     public void obtainData() {
         pageNo = 1;
-        isForce = "0";
+        isForce = "1";
         mWaitingDialog.show();
         HttpRequest.getUserRegular(mActivity, new ICallback<UserRegularResult>() {
             @Override
             public void onSucceed(UserRegularResult result) {
                 mWaitingDialog.dismiss();
+                swipeRefresh.setRefreshing(false);
                 userRegular = result.getData();
                 regInvestList = userRegular.getRegInvest();
                 refreshView();
@@ -53,6 +57,7 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onFail(String error) {
+                swipeRefresh.setRefreshing(false);
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
@@ -66,7 +71,7 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
             }
             isLoading = true;
             pageNo += 1;
-            isForce = "1";
+            isForce = "0";
             HttpRequest.getUserRegular(mActivity, new ICallback<UserRegularResult>() {
                 @Override
                 public void onSucceed(UserRegularResult result) {
@@ -101,6 +106,15 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
         titleLeft.setOnClickListener(this);
         titleRight.setOnClickListener(this);
 
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+
+            @Override
+            public void onRefresh() {
+                obtainData();
+            }
+        });
+
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -123,6 +137,7 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
 
     private void refreshView() {
         mAdapter = new AdapterUserRegular(regInvestList, userRegular.getReg(), mType);
+        mAdapter.setOnItemClickListener(this);
         mAdapter.setMaxItem(userRegular.getPage().getCount());
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -133,7 +148,7 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_my_regualr_deposit;
+        return R.layout.user_regualr;
     }
 
     @Override
@@ -164,8 +179,18 @@ public class MyRegualrDepositActivity extends BaseActivity implements View.OnCli
                 obtainData();
                 break;
             case R.id.bt_left:
-                MyRegualrDepositActivity.this.finish();
+                UserRegularActivity.this.finish();
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int postion) {
+        UserRegular.RegInvest regInvest = regInvestList.get(postion);
+        Intent intent = new Intent(mActivity, UserRegularDetailActivity.class);
+        intent.putExtra("investId", regInvest.getId());
+        intent.putExtra("clearYn", regInvest.getBearingStatus());
+        intent.putExtra("projectType", regInvest.getProdId());
+        startActivity(intent);
     }
 }
