@@ -15,11 +15,12 @@ import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.views.WFYTitle;
 
 /**
  * Created by guolei_wang on 15/9/25.
  */
-public class RegularPlanActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class RegularPlanActivity extends BaseActivity implements View.OnClickListener {
     public static final String KEY_SUBJECT_ID = "KEY_SUBJECT_ID";
     private String subjectId; //标的 ID
 
@@ -32,11 +33,13 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regular_plan);
-        findView();
-        initView();
         subjectId = getIntent().getStringExtra(KEY_SUBJECT_ID);
         getRegularDetails(subjectId);
+    }
+
+    @Override
+    public void obtainData() {
+
     }
 
     Button btn_buy;
@@ -50,7 +53,8 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     TextView tv_project_name,tv_fx,tv_bxbz,tv_hkfs;
     ProgressBar progressBar;
     View layout_des;
-    private void findView() {
+
+    public void initView() {
         btn_buy = (Button)findViewById(R.id.btn_buy);
         btn_des_close = (Button)findViewById(R.id.btn_des_close);
         tv_description = (TextView)findViewById(R.id.tv_description);
@@ -69,12 +73,19 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         layout_des = findViewById(R.id.layout_des);
 
-    }
-
-    private void initView() {
         btn_buy.setOnClickListener(this);
         btn_des_close.setOnClickListener(this);
         setTitle("定期计划");
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_regular_plan;
+    }
+
+    @Override
+    public void initTitle(WFYTitle mTitle) {
+        getmTitle().setTitleText("定期计划");
     }
 
     private void updateUI(RegularPlan data) {
@@ -114,10 +125,12 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
     }
 
     private void getRegularDetails(String subjectId) {
+        begin();
         HttpRequest.getRegularDetails(this, "2", subjectId, new ICallback<RegularPlanResult>() {
 
             @Override
             public void onSucceed(RegularPlanResult result) {
+                end();
                 if(result != null) {
                     updateUI(result.getData());
                 }
@@ -125,6 +138,7 @@ public class RegularPlanActivity extends BaseFragmentActivity implements View.On
 
             @Override
             public void onFail(String error) {
+                end();
                 Uihelper.showToast(RegularPlanActivity.this, error);
             }
         });

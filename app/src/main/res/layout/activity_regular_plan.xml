@@ -5,11 +5,11 @@
     android:background="?attr/theme_background"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/titlebar_container"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" />
+    <!--<LinearLayout-->
+        <!--android:id="@+id/titlebar_container"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal" />-->
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -29,7 +29,9 @@
                 android:background="@drawable/bg_regular_activity_des"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/padding_left_right"
-                android:paddingRight="@dimen/padding_left_right">
+                android:paddingRight="@dimen/padding_left_right"
+                android:visibility="gone"
+                >
 
                 <Button
                     android:id="@+id/btn_des_close"
@@ -43,7 +45,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/btn_des_close"
-                    android:text="认购满50000，即送拾财券>>"
                     android:textColor="@color/mq_r1"
                     android:textSize="@dimen/mq_font1" />
             </RelativeLayout>
@@ -82,7 +83,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
-                        android:text="项目期限 110天"
                         android:textColor="@color/mq_b1"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>
@@ -98,7 +98,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="18.44"
                         android:textColor="@color/mq_r1"
                         android:textSize="@dimen/mq_font9" />
 
@@ -109,9 +108,10 @@
                         android:layout_toRightOf="@id/tv_annurate_interest_rate"
                         android:background="@drawable/bg_add_interest"
                         android:padding="3dp"
-                        android:text="+1.5%"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/mq_font4" />
+                        android:textSize="@dimen/mq_font4"
+                        android:visibility="gone"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -135,7 +135,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
-                        android:text="可认购金额 40000元"
                         android:textColor="@color/mq_b1"
                         android:textSize="@dimen/mq_font5" />
 
@@ -146,7 +145,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
-                        android:text="75%已经认购"
                         android:textColor="@color/mq_b1"
                         android:textSize="@dimen/mq_font5" />
                 </LinearLayout>
@@ -158,8 +156,7 @@
                     android:layout_height="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="7dp"
-                    android:layout_marginTop="7dp"
-                    android:progress="80" />
+                    android:layout_marginTop="7dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -173,7 +170,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
-                        android:text="可认购金额 40000元"
                         android:textColor="@color/mq_b1"
                         android:textSize="@dimen/mq_font5" />
 
@@ -184,7 +180,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
-                        android:text="75%已经认购"
                         android:textColor="@color/mq_b1"
                         android:textSize="@dimen/mq_font5" />
                 </LinearLayout>
@@ -220,7 +215,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
-                        android:text="XX项目"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>
@@ -252,7 +246,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
-                        android:text="本息盾"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>
@@ -284,7 +277,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
-                        android:text="xxx"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>
@@ -316,7 +308,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
-                        android:text="xxxxxx"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>

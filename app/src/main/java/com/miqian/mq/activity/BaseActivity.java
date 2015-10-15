@@ -41,6 +41,15 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         mTitle = (WFYTitle) findViewById(R.id.wFYTitle);
         mViewnoresult = findViewById(R.id.frame_no_data);
         mWaitingDialog = ProgressDialogView.create(mActivity);
+
+        getmTitle().setLeftImage(R.drawable.icon_back);
+        getmTitle().setOnLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         initTitle(mTitle);
         initView();
         obtainData();
@@ -68,5 +77,23 @@ public abstract class BaseActivity extends BaseFragmentActivity {
 
     public WFYTitle getmTitle() {
         return mTitle;
+    }
+
+    /**
+     * 显示 loading 对话框
+     */
+    protected void begin() {
+        if(mWaitingDialog != null) {
+            mWaitingDialog.show();
+        }
+    }
+
+    /**
+     * 显示 loading 对话框
+     */
+    protected void end() {
+        if(mWaitingDialog != null && mWaitingDialog.isShowing()) {
+            mWaitingDialog.dismiss();
+        }
     }
 }

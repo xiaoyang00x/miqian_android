@@ -17,11 +17,12 @@ import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.views.WFYTitle;
 
 /**
  * Created by guolei_wang on 15/9/25.
  */
-public class RegularEarnActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class RegularEarnActivity extends BaseActivity implements View.OnClickListener {
     public static final String KEY_SUBJECT_ID = "KEY_SUBJECT_ID";
     private String subjectId; //标的 ID
 
@@ -34,11 +35,13 @@ public class RegularEarnActivity extends BaseFragmentActivity implements View.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regular_plan);
-        findView();
-        initView();
         subjectId = getIntent().getStringExtra(KEY_SUBJECT_ID);
         getRegularDetails(subjectId);
+    }
+
+    @Override
+    public void obtainData() {
+
     }
 
     Button btn_buy;
@@ -51,7 +54,8 @@ public class RegularEarnActivity extends BaseFragmentActivity implements View.On
     TextView tv_project_name,tv_fx,tv_bxbz,tv_hkfs;
     ProgressBar progressBar;
     View layout_des;
-    private void findView() {
+
+    public void initView() {
         btn_buy = (Button)findViewById(R.id.btn_buy);
         btn_des_close = (Button)findViewById(R.id.btn_des_close);
         tv_description = (TextView)findViewById(R.id.tv_description);
@@ -69,12 +73,18 @@ public class RegularEarnActivity extends BaseFragmentActivity implements View.On
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         layout_des = findViewById(R.id.layout_des);
 
-    }
-
-    private void initView() {
         btn_buy.setOnClickListener(this);
         btn_des_close.setOnClickListener(this);
-        setTitle("定期赚");
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_regular_plan;
+    }
+
+    @Override
+    public void initTitle(WFYTitle mTitle) {
+        getmTitle().setTitleText("定期赚");
     }
 
     private void updateUI(RegularEarn data) {
@@ -114,10 +124,12 @@ public class RegularEarnActivity extends BaseFragmentActivity implements View.On
     }
 
     private void getRegularDetails(String subjectId) {
+        begin();
         HttpRequest.getRegularEarnDetails(this, "1", subjectId, new ICallback<RegularEarnResult>() {
 
             @Override
             public void onSucceed(RegularEarnResult result) {
+                end();
                 if (result != null) {
                     updateUI(result.getData());
                 }
@@ -125,6 +137,7 @@ public class RegularEarnActivity extends BaseFragmentActivity implements View.On
 
             @Override
             public void onFail(String error) {
+                end();
                 Uihelper.showToast(RegularEarnActivity.this, error);
             }
         });
