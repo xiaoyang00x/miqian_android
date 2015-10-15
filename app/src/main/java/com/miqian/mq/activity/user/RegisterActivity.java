@@ -122,6 +122,7 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
+                isSending = true;
                 Uihelper.showToast(mActivity, error);
 
             }
@@ -136,20 +137,23 @@ public class RegisterActivity extends BaseActivity {
         String password = mEt_Password.getText().toString();
         phone = mEt_Telephone.getText().toString();
 
-
         if (!TextUtils.isEmpty(phone)) {
-            if (!TextUtils.isEmpty(captcha)) {
-                if (isSending) {
-                    //检验验证码
-                    checkCaptcha(captcha, invite, password);
-                } else {
-                    Uihelper.showToast(this, "请先获取验证码");
-                }
+            if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
+                if (!TextUtils.isEmpty(captcha)) {
+                    if (isSending) {
+                        //检验验证码
+                        checkCaptcha(captcha, invite, password);
+                    } else {
+                        Uihelper.showToast(this, "请先获取验证码");
+                    }
 
+                } else {
+                    Uihelper.showToast(this, R.string.tip_captcha);
+                }
             } else {
-                Uihelper.showToast(this, R.string.tip_captcha);
+                Uihelper.showToast(this, R.string.phone_noeffect);
             }
-            ;
+
         } else {
             Uihelper.showToast(this, R.string.phone_null);
         }

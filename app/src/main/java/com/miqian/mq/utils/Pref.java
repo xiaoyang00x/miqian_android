@@ -47,6 +47,8 @@ public class Pref {
 
 	public static String IsPush="IsPush";
 
+	public static String CITY="city";
+
 	private static SharedPreferences getSettings(final Context contex) {
 		SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);
 		return mSharedPreferences;
