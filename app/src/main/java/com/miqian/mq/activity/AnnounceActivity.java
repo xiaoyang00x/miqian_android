@@ -110,31 +110,31 @@ public class AnnounceActivity extends BaseActivity
                     }
                     String uritype = jpushInfo.getUriType();
                     if (!TextUtils.isEmpty(uritype)) {
-                        switch (Integer.valueOf(Integer.valueOf(uritype))) {
+//                        switch (Integer.valueOf(Integer.valueOf(uritype))) {
 
-                            // 详情页
-                            case 1:
-                            case 2:
-                            case 3:
+//                            // 详情页
+//                            case 1:
+//                            case 2:
+//                            case 3:
                                 Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
                                 intent.putExtra("id", jpushInfo.getId());
                                 intent.putExtra("pushSource", jpushInfo.getPushSource());
                                 startActivity(intent);
-                                break;
-                            // 内置浏览器
-                            case 4:
-                                //							WebViewActivity.doIntent(mActivity, jpushInfo.getUrl(), true, null);
-                                break;
-                            default:
-                                break;
+//                                break;
+//                            // 内置浏览器
+//                            case 4:
+//                                //							WebViewActivity.doIntent(mActivity, jpushInfo.getUrl(), true, null);
+//                                break;
+//                            default:
+//                                break;
                         }
                         uritype = null;
-                    } else {
-                        Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
-                        //						intent.putExtra("classid", jpushInfo.getClassid());
-                        intent.putExtra("noticeId", jpushInfo.getId());
-                        startActivity(intent);
-                    }
+//                    } else {
+//                        Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
+//                        //						intent.putExtra("classid", jpushInfo.getClassid());
+//                        intent.putExtra("noticeId", jpushInfo.getId());
+//                        startActivity(intent);
+//                    }
                 }
             }
         });

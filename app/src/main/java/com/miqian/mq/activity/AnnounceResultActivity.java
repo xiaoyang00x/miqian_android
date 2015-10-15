@@ -79,8 +79,8 @@ public class AnnounceResultActivity extends BaseActivity {
         String sendTime = detailInfo.getSendTime();
         if (!TextUtils.isEmpty(sendTime)) {
 
-//            String time = Uihelper.dateToChineseStrings(mActivity, Double.parseDouble(sendTime));
-//            tv_time.setText(time);
+            String time = Uihelper.timestampToDateStr_other( Double.parseDouble(sendTime));
+            tv_time.setText(time);
         }
     }
 

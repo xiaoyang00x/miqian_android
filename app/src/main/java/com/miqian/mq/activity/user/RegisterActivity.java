@@ -141,8 +141,7 @@ public class RegisterActivity extends BaseActivity {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
                 if (!TextUtils.isEmpty(captcha)) {
                     if (isSending) {
-                        //检验验证码
-                        checkCaptcha(captcha, invite, password);
+                        summit(captcha, invite, password);
                     } else {
                         Uihelper.showToast(this, "请先获取验证码");
                     }
@@ -159,23 +158,6 @@ public class RegisterActivity extends BaseActivity {
         }
 
 
-    }
-
-    private void checkCaptcha(final String captcha, final String invite, final String password) {
-
-        HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-                summit(captcha, invite, password);
-            }
-
-            @Override
-            public void onFail(String error) {
-
-                Uihelper.showToast(mActivity, error);
-
-            }
-        }, phone, TypeUtil.CAPTCHA_REGISTER, captcha);
     }
 
     private void summit(final String captcha, final String invite, final String password) {
