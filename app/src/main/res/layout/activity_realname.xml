@@ -17,11 +17,13 @@
         <TextView
             style="@style/text_black_item"
             android:layout_gravity="center_vertical"
+            android:singleLine="true"
             android:text="姓名        " />
 
         <EditText
             android:id="@+id/edit_name"
             style="@style/edittext_item"
+            android:singleLine="true"
             android:hint="请输入您的姓名" />
     </LinearLayout>
 

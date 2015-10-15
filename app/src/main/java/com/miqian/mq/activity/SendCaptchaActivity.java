@@ -147,21 +147,22 @@ public class SendCaptchaActivity extends BaseActivity {
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                Uihelper.trace("captcha:" + result.getCode());
+                isSending = true;
+                mBtn_sendCaptcha.setEnabled(false);
+                myRunnable = new MyRunnable();
+                thread = new Thread(myRunnable);
+                thread.start(); // 启动线程，进行倒计时
+                isTimer = true;
+
             }
 
             @Override
             public void onFail(String error) {
-
+                isSending = true;
+                Uihelper.showToast(mActivity, error);
             }
         }, phone, summitType);
 
-
-        mBtn_sendCaptcha.setEnabled(false);
-        myRunnable = new MyRunnable();
-        thread = new Thread(myRunnable);
-        thread.start(); // 启动线程，进行倒计时
-        isTimer = true;
     }
 
     public void btn_click(View v) {
@@ -169,22 +170,28 @@ public class SendCaptchaActivity extends BaseActivity {
         String captcha = mEt_Captcha.getText().toString();
         phone = mEt_Telephone.getText().toString();
 
-
         if (!TextUtils.isEmpty(phone)) {
-            if (!TextUtils.isEmpty(captcha)) {
+            if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
+                if (isSending) {
+                    //检验验证码
+                    if (!TextUtils.isEmpty(captcha)) {
+                        //验证验证码
+                        checkCaptcha(phone, captcha);
 
-                //验证验证码
-                checkCaptcha(phone, captcha);
-
-            } else {
-                Uihelper.showToast(this, R.string.tip_captcha);
+                    } else {
+                        Uihelper.showToast(this, R.string.tip_captcha);
+                    }
+                } else {
+                    Uihelper.showToast(this, "请先获取验证码");
+                }
             }
-            ;
+            else {
+                Uihelper.showToast(this, R.string.phone_noeffect);
+            }
+
         } else {
             Uihelper.showToast(this, R.string.phone_null);
         }
-
-
     }
 
     private void checkCaptcha(final String phone, final String captcha) {

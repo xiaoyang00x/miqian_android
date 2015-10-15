@@ -115,13 +115,6 @@ public class CityListActivity extends BaseActivity {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // 这里要利用adapter.getItem(position)来获取当前position所对应的对象
         CityInfo cityInfo = (CityInfo) parent.getAdapter().getItem(position);
-        //
-        //				Intent intent = new Intent(CityListActivity.this, BankListAcivity.class);
-        //				intent.putExtra("bankId", bankId);
-        //				intent.putExtra("bankName", bankName);
-        //				intent.putExtra("city", cityInfo.getCity());
-        //				intent.putExtra("province", cityInfo.getProvince());
-        //				startActivityForResult(intent, RolloutActivity.REQUEST_CODE);
         Intent data = new Intent();
         data.putExtra("city", cityInfo.getCity());
         data.putExtra("province", cityInfo.getProv());

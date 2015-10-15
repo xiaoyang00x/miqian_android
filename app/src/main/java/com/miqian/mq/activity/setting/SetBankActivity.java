@@ -9,6 +9,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
+import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -27,9 +28,41 @@ public class SetBankActivity extends BaseActivity {
     private String bankCardNo;
     private UserInfo userInfo;
     private boolean isChooseCity;
+    private  BankCard  bankCard;
 
     @Override
     public void obtainData() {
+
+        mWaitingDialog.show();
+        HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
+            @Override
+           public void onSucceed(BankCardResult result) {
+                mWaitingDialog.dismiss();
+                bankCard = result.getData();
+                setData(bankCard);
+            }
+
+            @Override
+            public void onFail(String error) {
+                mWaitingDialog.dismiss();
+                Uihelper.showToast(mActivity,error);
+
+            }
+        });
+
+    }
+
+    private void setData(BankCard bankCard) {
+
+        if (!TextUtils.isEmpty(bankCard.getCity())){
+            tv_bank_province.setText(bankCard.getCity());
+            isChooseCity = true;
+            city = bankCard.getCity();
+            province = bankCard.getProvince();
+        }
+        if (!TextUtils.isEmpty(bankCard.getBankOpenName())){
+            textBranch.setText(bankCard.getBankOpenName());
+        }
 
     }
 
@@ -52,6 +85,8 @@ public class SetBankActivity extends BaseActivity {
 
                 Intent intent_city = new Intent(mActivity, CityListActivity.class);
                 startActivityForResult(intent_city, 0);
+                branch="";
+                textBranch.setText("请选择");
             }
         });
 

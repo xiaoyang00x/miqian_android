@@ -20,6 +20,7 @@
       >
 
     <LinearLayout
+        android:id="@+id/linea_right"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -39,10 +40,11 @@
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        >
+
+        android:layout_toLeftOf="@+id/linea_right"
+        android:layout_toStartOf="@+id/linea_right">
       <LinearLayout
           android:orientation="horizontal"
           android:layout_width="wrap_content"
@@ -72,7 +74,7 @@
           android:id="@+id/time_rem"
           android:layout_width="305dp"
           android:layout_height="wrap_content"
-          android:text="2015-12-12  09:30  系统"
+          android:text="dddd"
           android:layout_gravity="left"
           android:textSize="@dimen/mq_font5"
           android:paddingRight="5dp"
