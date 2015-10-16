@@ -106,6 +106,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 producedOrder = result.getData();
                 promList = producedOrder.getPromList();
                 refreshView();
+                // TODO: 2015/10/16
+//                {
+//                    "message": "超出用户可认购额度，用户剩余可认购4700元",
+//                        "code": "102002"
+//                }
+
             }
 
             @Override
@@ -113,7 +119,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
-        }, money, prodId);
+        }, money, subjectId, prodId);
     }
 
     private void refreshView() {
