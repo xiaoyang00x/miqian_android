@@ -102,7 +102,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         btRedeem.setOnClickListener(this);
         btSubscribe.setOnClickListener(this);
 
-        dialogPay = new DialogPay(mContext) {
+        dialogPay = new DialogPay(mActivity) {
             @Override
             public void positionBtnClick(String moneyString) {
                 if (!TextUtils.isEmpty(moneyString)) {
@@ -164,7 +164,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.bt_subscribe:
 
-                UserUtil.loginPay(mActivity, dialogPay);
+               dialogPay.show();
 
                 break;
         }
