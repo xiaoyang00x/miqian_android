@@ -17,16 +17,9 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.RegularEarn;
-import com.miqian.mq.entity.RegularEarnResult;
-import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.net.ICallback;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WebChromeClientEx;
 
