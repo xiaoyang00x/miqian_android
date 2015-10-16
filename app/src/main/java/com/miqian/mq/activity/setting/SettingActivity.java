@@ -269,4 +269,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "设置";
+    }
 }

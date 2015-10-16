@@ -35,7 +35,7 @@
                 android:singleLine="true"
                 android:textColor="@color/mq_b1"
                 android:textSize="@dimen/mq_font4"
-                android:text="0"/>
+                android:text="--"/>
 
             <TextView
                 android:id="@+id/text_transfer_status"
@@ -59,7 +59,7 @@
                 android:singleLine="true"
                 android:textColor="@color/mq_r1"
                 android:textSize="@dimen/mq_font4"
-                android:text="0"/>
+                android:text="--"/>
         </RelativeLayout>
 
         <RelativeLayout

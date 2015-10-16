@@ -148,13 +148,14 @@ public class HttpRequest {
      * @param amt    金额
      * @param prodId 0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      */
-    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String prodId) {
+    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId, String prodId) {
         if (mList == null) {
             mList = new ArrayList<Param>();
         }
         mList.clear();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
+        mList.add(new Param("subjectId", subjectId));
         mList.add(new Param("prodId", prodId));
         new MyAsyncTask(context, Urls.order_produced, mList, new ICallback<String>() {
 

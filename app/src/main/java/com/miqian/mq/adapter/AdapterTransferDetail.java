@@ -57,7 +57,7 @@ public class AdapterTransferDetail extends RecyclerView.Adapter {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textTransferingMoney = (TextView) itemView.findViewById(R.id.text_transfer_money);
+            textTransferingMoney = (TextView) itemView.findViewById(R.id.text_transfering_money);
             textTransferStatus = (TextView) itemView.findViewById(R.id.text_transfer_status);
             textTransferMoney = (TextView) itemView.findViewById(R.id.text_transfer_money);
             textDate = (TextView) itemView.findViewById(R.id.text_date);

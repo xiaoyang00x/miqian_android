@@ -484,4 +484,8 @@ public class WebViewActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected String getPageName() {
+        return "内置浏览器";
+    }
 }

@@ -33,4 +33,9 @@ public class RegularPlanFragment extends BasicFragment {
 
     private void setView() {
     }
+
+    @Override
+    protected String getPageName() {
+        return "定期首页 Header";
+    }
 }

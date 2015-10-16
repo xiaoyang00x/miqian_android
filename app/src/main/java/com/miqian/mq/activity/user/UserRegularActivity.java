@@ -193,4 +193,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
         intent.putExtra("projectType", regInvest.getProdId());
         startActivity(intent);
     }
+
+    @Override
+    protected String getPageName() {
+        return "我的定期";
+    }
 }

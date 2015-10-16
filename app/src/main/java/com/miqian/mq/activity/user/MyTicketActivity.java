@@ -84,4 +84,8 @@ public class MyTicketActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "拾财券";
+    }
 }

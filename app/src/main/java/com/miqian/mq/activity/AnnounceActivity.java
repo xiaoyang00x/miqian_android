@@ -185,6 +185,11 @@ public class AnnounceActivity extends BaseActivity
         });
     }
 
+    @Override
+    protected String getPageName() {
+        return "消息";
+    }
+
     private void showDialog() {
         initDialog();
         dialogTips.show();

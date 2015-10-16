@@ -65,6 +65,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         //设置别名
         JpushHelper.setAlias(this);
         handleJpush();
+
+        setExsitFragment(true);
     }
 
     @Override
@@ -73,6 +75,11 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
+    }
+
+    @Override
+    protected String getPageName() {
+        return "首页";
     }
 
     @Override

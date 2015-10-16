@@ -9,22 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miqian.mq.R;
-import com.miqian.mq.adapter.HomeAdapter;
 import com.miqian.mq.adapter.RegularListAdapter;
 import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
-import com.miqian.mq.entity.HomePageInfo;
-import com.miqian.mq.entity.RegularEarn;
-import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by guolei_wang on 15/9/16.
@@ -131,5 +123,10 @@ public class RegularFragment extends BasicFragment {
                 Uihelper.showToast(getActivity(), error);
             }
         });
+    }
+
+    @Override
+    protected String getPageName() {
+        return "定期首页";
     }
 }

@@ -137,4 +137,8 @@ public class AnnounceResultActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "消息详情";
+    }
 }

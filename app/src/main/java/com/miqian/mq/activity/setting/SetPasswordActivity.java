@@ -140,4 +140,8 @@ public class SetPasswordActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "设置登录密码";
+    }
 }

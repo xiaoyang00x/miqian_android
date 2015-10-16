@@ -23,11 +23,11 @@
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
 
     <!-- Optional for location -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />-->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
@@ -348,7 +348,7 @@
             android:value="54cc3aedfd98c5b1d000039a"
             android:name="UMENG_APPKEY"/>
         <meta-data
-            android:value="110"
+            android:value="${CHANNEL_VALUE}"
             android:name="UMENG_CHANNEL"/>
         <!--Umeng End-->
     </application>

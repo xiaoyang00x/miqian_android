@@ -146,6 +146,11 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     }
 
     @Override
+    protected String getPageName() {
+        return "我的活期";
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.frame_current_record:

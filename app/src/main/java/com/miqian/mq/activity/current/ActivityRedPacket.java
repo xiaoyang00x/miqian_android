@@ -75,6 +75,11 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
     }
 
     @Override
+    protected String getPageName() {
+        return "红包/拾财券";
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_confirm:

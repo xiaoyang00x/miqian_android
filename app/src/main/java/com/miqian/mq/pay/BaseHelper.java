@@ -1,29 +1,17 @@
 package com.miqian.mq.pay;
 
-//import java.io.BufferedReader;
-//import java.io.IOException;
-//import java.io.InputStream;
-//import java.io.InputStreamReader;
+import com.miqian.mq.net.Param;
+
+import org.apache.http.NameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-//import java.util.Collections;
-//import java.util.Comparator;
 import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-//import android.app.Activity;
-//import android.app.AlertDialog;
-//import android.app.ProgressDialog;
-//import android.content.Context;
-//import android.util.Log;
-//
 ///**
 // * 工具类
 // */
@@ -192,11 +180,11 @@ public class BaseHelper {
      * @param bean
      * @return
      */
-    public static List<NameValuePair> bean2Parameters(Object bean) {
+    public static List<Param> bean2Parameters(Object bean) {
         if (bean == null) {
             return null;
         }
-        List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+        List<Param> parameters = new ArrayList<>();
 
         // 取得bean所有public 方法
         Method[] Methods = bean.getClass().getMethods();
@@ -230,7 +218,7 @@ public class BaseHelper {
                             String first = String.valueOf(param.charAt(0)).toLowerCase();
                             param = first + param.substring(1);
                         }
-                        parameters.add(new BasicNameValuePair(param, value));
+                        parameters.add(new Param(param, value));
                     }
                 } catch (IllegalArgumentException e) {
 //					Log.e("IllegalArgumentException", e.getMessage(), e);
@@ -243,39 +231,39 @@ public class BaseHelper {
     }
 
     /**
-     * 对Object进行List<NameValuePair>转换后按key进行升序排序，以key=value&...形式返回
+     * 对Object进行List<Param>转换后按key进行升序排序，以key=value&...形式返回
      *
      * @param list
      * @return
      */
     public static String sortParam(Object order) {
-        List<NameValuePair> list = bean2Parameters(order);
+        List<Param> list = bean2Parameters(order);
         return sortParam(list);
     }
 
     /**
-     * 对List<NameValuePair>按key进行升序排序，以key=value&...形式返回
+     * 对List<Param>按key进行升序排序，以key=value&...形式返回
      *
      * @param list
      * @return
      */
-    public static String sortParam(List<NameValuePair> list) {
+    public static String sortParam(List<Param> list) {
         if (list == null) {
             return null;
         }
-        Collections.sort(list, new Comparator<NameValuePair>() {
+        Collections.sort(list, new Comparator<Param>() {
             @Override
-            public int compare(NameValuePair lhs, NameValuePair rhs) {
-                return lhs.getName().compareToIgnoreCase(rhs.getName());
+            public int compare(Param lhs, Param rhs) {
+                return lhs.getKey().compareToIgnoreCase(rhs.getKey());
             }
         });
         StringBuffer sb = new StringBuffer();
-        for (NameValuePair nameVal : list) {
+        for (Param nameVal : list) {
 
-            if (null != nameVal.getValue() && !"".equals(nameVal.getValue()) && !nameVal.getName().equals("id_type") && !nameVal.getName().equals("id_no") && !nameVal.getName().equals("acct_name")
-                    && !nameVal.getName().equals("flag_modify") && !nameVal.getName().equals("user_id") && !nameVal.getName().equals("no_agree") && !nameVal.getName().equals("card_no")
-                    && !nameVal.getName().equals("test_mode")) {
-                sb.append(nameVal.getName());
+            if (null != nameVal.getValue() && !"".equals(nameVal.getValue()) && !nameVal.getKey().equals("id_type") && !nameVal.getKey().equals("id_no") && !nameVal.getKey().equals("acct_name")
+                    && !nameVal.getKey().equals("flag_modify") && !nameVal.getKey().equals("user_id") && !nameVal.getKey().equals("no_agree") && !nameVal.getKey().equals("card_no")
+                    && !nameVal.getKey().equals("test_mode")) {
+                sb.append(nameVal.getKey());
                 sb.append(PARAM_EQUAL);
                 sb.append(nameVal.getValue());
                 sb.append(PARAM_AND);

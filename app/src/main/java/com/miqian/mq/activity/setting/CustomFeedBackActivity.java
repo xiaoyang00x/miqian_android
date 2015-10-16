@@ -1,6 +1,5 @@
 package com.miqian.mq.activity.setting;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -70,6 +69,11 @@ public class CustomFeedBackActivity extends BaseFragmentActivity {
 		mListView.setAdapter(adapter);
 		sync();
 
+	}
+
+	@Override
+	protected String getPageName() {
+		return "意见反馈";
 	}
 
 	private void setUpUmengFeedback(final FeedbackAgent fb) {

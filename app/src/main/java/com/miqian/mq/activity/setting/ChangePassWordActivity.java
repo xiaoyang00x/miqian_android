@@ -197,4 +197,9 @@ public class ChangePassWordActivity extends BaseActivity {
 
     mTitle.setTitleText("修改登录密码");
   }
+
+  @Override
+  protected String getPageName() {
+    return "修改登录密码";
+  }
 }

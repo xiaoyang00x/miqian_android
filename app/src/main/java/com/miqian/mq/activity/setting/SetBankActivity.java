@@ -180,4 +180,9 @@ public class SetBankActivity extends BaseActivity {
 
 
     }
+
+    @Override
+    protected String getPageName() {
+        return "设置银行卡";
+    }
 }

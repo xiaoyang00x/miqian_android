@@ -88,4 +88,9 @@ public class ActivityCurrentRecord extends BaseActivity {
         mTitle.setTitleText("活期资金记录");
 
     }
+
+    @Override
+    protected String getPageName() {
+        return "活期资金记录";
+    }
 }

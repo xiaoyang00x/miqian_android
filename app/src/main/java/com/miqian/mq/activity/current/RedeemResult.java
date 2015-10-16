@@ -130,4 +130,9 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+
+    @Override
+    protected String getPageName() {
+        return title;
+    }
 }

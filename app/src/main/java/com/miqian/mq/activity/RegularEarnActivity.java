@@ -1,6 +1,5 @@
 package com.miqian.mq.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +13,12 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.RegularEarnResult;
-import com.miqian.mq.entity.RegularPlan;
-import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.WFYTitle;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
+import com.miqian.mq.views.WFYTitle;
 
 /**
  * Created by guolei_wang on 15/9/25.
@@ -128,6 +125,11 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initTitle(WFYTitle mTitle) {
         getmTitle().setTitleText("定期赚");
+    }
+
+    @Override
+    protected String getPageName() {
+        return "定期赚";
     }
 
     private void updateUI(RegularEarn data) {

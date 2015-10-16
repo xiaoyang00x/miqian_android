@@ -197,6 +197,11 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected String getPageName() {
+        return "注册";
+    }
+
     class MyRunnable implements Runnable {
 
         @Override

@@ -85,7 +85,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     @Override
     public void onCreate(Bundle bundle) {
         Intent intent = getIntent();
-        money = FormatUtil.getMoneyString(intent.getStringExtra("money"));
+        money = intent.getStringExtra("money");
         prodId = intent.getStringExtra("prodId");
         subjectId = intent.getStringExtra("subjectId");
         interestRateString = intent.getStringExtra("interestRateString");
@@ -185,6 +185,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("确认订单");
+    }
+
+    @Override
+    protected String getPageName() {
+        return "确认订单";
     }
 
     @Override

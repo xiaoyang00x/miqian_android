@@ -1,6 +1,5 @@
 package com.miqian.mq.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +16,9 @@ import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.WFYTitle;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
+import com.miqian.mq.views.WFYTitle;
 
 /**
  * Created by guolei_wang on 15/9/25.
@@ -126,6 +125,11 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initTitle(WFYTitle mTitle) {
         getmTitle().setTitleText("定期计划");
+    }
+
+    @Override
+    protected String getPageName() {
+        return "定期计划";
     }
 
     private void updateUI(RegularPlan data) {

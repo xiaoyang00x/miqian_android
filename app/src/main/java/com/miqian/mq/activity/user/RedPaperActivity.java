@@ -82,4 +82,8 @@ public class RedPaperActivity extends BaseActivity{
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "红包";
+    }
 }
