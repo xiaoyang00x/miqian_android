@@ -8,7 +8,7 @@
         android:id="@+id/tv_bank_branch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="efef"
+        android:text="--"
         android:textSize="@dimen/textsize_normal"
         android:textColor="@color/miqian_black"
         android:layout_margin="10dp"

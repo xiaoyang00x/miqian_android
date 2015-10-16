@@ -45,51 +45,41 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
 
             switch (traCd) {
                 case "SR01"://认购交易
-                    ((ViewHolderRecord) holder).ivState.setBackgroundResource(R.drawable.record_subscribe);
+                    ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_subscribe);
                     ((ViewHolderRecord) holder).textType.setText(data.getType());
-                    if (!TextUtils.isEmpty(data.getAmt())) {
-                        ((ViewHolderRecord) holder).tvAmt.setText("-" + data.getAmt());
-                    }
+                    ((ViewHolderRecord) holder).tvAmt.setText("-" + data.getAmt());
                     ((ViewHolderRecord) holder).tvInterest.setText("金额(元)");
 
                     break;
                 case "SS01"://赎回交易
-                    ((ViewHolderRecord) holder).ivState.setBackgroundResource(R.drawable.record_redem);
+                    ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
                     ((ViewHolderRecord) holder).textType.setText(data.getType());
-                    if (!TextUtils.isEmpty(data.getAmt())) {
-                        ((ViewHolderRecord) holder).tvAmt.setText("+" + data.getAmt());
-                    }
-                    if (!TextUtils.isEmpty(data.getInterest())) {
-                        ((ViewHolderRecord) holder).tvInterest.setText("利息"+data.getInterest()+"元");
-                    }
+                    ((ViewHolderRecord) holder).tvAmt.setText("+" + data.getAmt());
+                    ((ViewHolderRecord) holder).tvInterest.setText("利息" + data.getInterest() + "元");
                     break;
-                case "SZ01  "://转让交易
+                case "SZ01"://转让交易
                     ((ViewHolderRecord) holder).textType.setText(data.getType());
-                    ((ViewHolderRecord) holder).ivState.setBackgroundResource(R.drawable.record_transfer);
-                    if (!TextUtils.isEmpty(data.getAmt())) {
-                        ((ViewHolderRecord) holder).tvAmt.setText("+" + data.getAmt());
-                    }
-                    if (!TextUtils.isEmpty(data.getInterest())) {
-                        ((ViewHolderRecord) holder).tvInterest.setText("利息"+data.getInterest()+"元");
-                    }
+                    ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_transfer);
+                    ((ViewHolderRecord) holder).tvAmt.setText("+" + data.getAmt());
+                    ((ViewHolderRecord) holder).tvInterest.setText("利息" + data.getInterest() + "元");
                     break;
                 default:
                     ((ViewHolderRecord) holder).textType.setText("");
-                    ((ViewHolderRecord) holder).ivState.setVisibility(View.INVISIBLE);
+                    ((ViewHolderRecord) holder).ivState.setImageResource(R.color.transparent);
                     break;
             }
 
         } else {//空为活期认购
-            ((ViewHolderRecord) holder).ivState.setBackgroundResource(R.drawable.record_subscribe);
+            ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_subscribe);
             ((ViewHolderRecord) holder).textType.setText(data.getType());
-            if (!TextUtils.isEmpty(data.getAmt())) {
-                ((ViewHolderRecord) holder).tvAmt.setText("-" + data.getAmt());
-            }
+            ((ViewHolderRecord) holder).tvAmt.setText("-" + data.getAmt());
             ((ViewHolderRecord) holder).tvInterest.setText("金额(元)");
 
         }
         if (!TextUtils.isEmpty(data.getCrtDt())) {
             ((ViewHolderRecord) holder).tvTime.setText(data.getCrtDt());
+        } else {
+            ((ViewHolderRecord) holder).tvTime.setText("--");
         }
 
     }

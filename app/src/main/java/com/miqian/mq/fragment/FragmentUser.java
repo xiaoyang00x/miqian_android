@@ -18,6 +18,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RedPaperActivity;
@@ -282,7 +283,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             //充值
             case R.id.btn_rollin:
-                UserUtil.isLogin(getActivity(), IntoActivity.class);
+                    //未认证
+                    if ("0".equals(userInfo.getRealNameStatus())) {
+                        Intent intent = new Intent(getActivity(), ActivityRealname.class);
+                        startActivity(intent);
+                    }else {
+                    UserUtil.isLogin(getActivity(), IntoActivity.class);
+                }
+
                 break;
             //取现
             case R.id.btn_rollout:

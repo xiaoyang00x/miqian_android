@@ -86,23 +86,12 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
         if (list.get(position) != null) {
-             CapitalRecord.CapitalItem  item= list.get(position);
-            if (!TextUtils.isEmpty(item.getTraAmt())){
-                ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
-            }
-            if (!TextUtils.isEmpty(item.getPeerCustLoginNm())){
-                ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getPeerCustLoginNm());
-            }
-            if (!TextUtils.isEmpty(item.getTraOpNm())){
-                ((ItemVH) vh).tvTraOpNm.setText(item.getTraOpNm());
-            }
-            if (!TextUtils.isEmpty(item.getTraDt())&&(!TextUtils.isEmpty(item.getTraTm()))){
-                ((ItemVH) vh).tvTime.setText(item.getTraDt()+" "+item.getTraTm());
-                if (!TextUtils.isEmpty(item.getRem())){
-                    ((ItemVH) vh).tvTime.setText(item.getTraDt()+" "+item.getTraTm()+"("+item.getRem()+")");
-                }
-            }
-
+            CapitalRecord.CapitalItem item = list.get(position);
+            ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
+            ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getPeerCustLoginNm());
+            ((ItemVH) vh).tvTraOpNm.setText(item.getTraOpNm());
+            ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm());
+            ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm() + "(" + item.getRem() + ")");
 
         }
     }
@@ -113,7 +102,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
     }
 
     public static class ItemVH extends RecyclerView.ViewHolder {
-        TextView tvTraOpNm, tvPeerCustLoginNm, tvMoney,tvTime;
+        TextView tvTraOpNm, tvPeerCustLoginNm, tvMoney, tvTime;
 
         public ItemVH(View v) {
             super(v);

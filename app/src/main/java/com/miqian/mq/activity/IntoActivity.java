@@ -127,6 +127,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             if (userInfo.getSupportStatus().equals("1")) {
                 frameBankInput.setVisibility(View.GONE);
                 frameTip.setVisibility(View.GONE);
+                if (rollType == 1) {
+                    btRollin.performClick();
+                }
             } else {
                 frameBank.setVisibility(View.VISIBLE);
                 frameBankInput.setVisibility(View.VISIBLE);

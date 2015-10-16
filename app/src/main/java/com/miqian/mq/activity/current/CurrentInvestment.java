@@ -85,7 +85,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     @Override
     public void onCreate(Bundle bundle) {
         Intent intent = getIntent();
-        money = FormatUtil.getMoneyString(intent.getStringExtra("money"));
+        money = intent.getStringExtra("money");
         prodId = intent.getStringExtra("prodId");
         subjectId = intent.getStringExtra("subjectId");
         interestRateString = intent.getStringExtra("interestRateString");
