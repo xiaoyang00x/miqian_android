@@ -18,6 +18,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
@@ -44,7 +45,7 @@ import com.miqian.mq.views.ProgressDialogView;
  * @created 2015-3-18
  */
 
-public class FragmentUser extends Fragment implements View.OnClickListener {
+public class FragmentUser extends Fragment implements View.OnClickListener, MainActivity.RefeshDataListener {
 
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket, tv_Redpackage;
@@ -61,6 +62,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         if (parent != null) {
             parent.removeView(view);
         }
+        MainActivity mainActivity = (MainActivity) getActivity();//.setReshListener(this);
+        mainActivity.setReshListener(this);
 
         return view;
     }
@@ -97,43 +100,43 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
     private void setData(UserInfo userInfo) {
 
         //历史收益
-        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getTotalProfit())) {
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalProfit())) {
             tv_TotalProfit.setText(userInfo.getTotalProfit());
         } else {
             tv_TotalProfit.setText("--.--");
         }
         //账户余额
-        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getBalance())) {
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getBalance())) {
             tv_balance.setText(userInfo.getBalance());
         } else {
             tv_balance.setText("--.--");
         }
         //我的活期
-        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getCurAmt())) {
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getCurAmt())) {
             tv_Current.setText(userInfo.getCurAmt() + "元");
         } else {
             tv_Current.setText("--");
         }
         //我的定期
-        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getRegTotal())) {
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getRegTotal())) {
             tv_Regular.setText(userInfo.getRegTotal() + "笔");
         } else {
             tv_Regular.setText("--");
         }
         //拾财券
-        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getWealthTicket())) {
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getWealthTicket())) {
             tv_Ticket.setText(userInfo.getWealthTicket() + "张");
         } else {
             tv_Ticket.setText("--");
         }
         //红包
-        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getRedBag())) {
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getRedBag())) {
             tv_Redpackage.setText(userInfo.getRedBag() + "个");
         } else {
             tv_Redpackage.setText("--");
         }
         //总资产
-        if (userInfo!=null&&!TextUtils.isEmpty(userInfo.getTotalAsset())) {
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalAsset())) {
             tv_totalasset.setText(userInfo.getTotalAsset());
         } else {
             tv_totalasset.setText("--.--");
@@ -217,6 +220,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         final View relaPassword = view.findViewById(R.id.rela_password);
         final EditText editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
         final EditText editPassword = (EditText) view.findViewById(R.id.edit_password);
+        editPassword.setText("");
+        editTelephone.setText("");
         Button btnLogin = (Button) view.findViewById(R.id.btn_login);
         view.findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,7 +234,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendCaptchaActivity.enterActivity(getActivity(), TypeUtil.SENDCAPTCHA_FORGETPSW,false);
+                SendCaptchaActivity.enterActivity(getActivity(), TypeUtil.SENDCAPTCHA_FORGETPSW, false);
             }
         });
 
@@ -283,11 +288,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             //充值
             case R.id.btn_rollin:
-                    //未认证
-                    if ("0".equals(userInfo.getRealNameStatus())) {
-                        Intent intent = new Intent(getActivity(), ActivityRealname.class);
-                        startActivity(intent);
-                    }else {
+                //未认证
+                if ("0".equals(userInfo.getRealNameStatus())) {
+                    Intent intent = new Intent(getActivity(), ActivityRealname.class);
+                    startActivity(intent);
+                } else {
                     UserUtil.isLogin(getActivity(), IntoActivity.class);
                 }
 
@@ -336,5 +341,10 @@ public class FragmentUser extends Fragment implements View.OnClickListener {
                 startActivity(intent_setting);
                 break;
         }
+    }
+
+    @Override
+    public void changeData() {
+        onStart();
     }
 }

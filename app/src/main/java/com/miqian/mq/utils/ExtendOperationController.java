@@ -38,6 +38,9 @@ public class ExtendOperationController {
 		/** 实名认证 */
 		public static final int REAL_NAME = 1005;
 
+		/** token改变 */
+		public static final int CHANGE_TOKEN = 1006;
+
 	}
 
 	/**

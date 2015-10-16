@@ -112,11 +112,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_telephone.setOnClickListener(this);
         frame_setting_bankcard.setOnClickListener(this);
 
-        if (userInfo==null){
+        if (userInfo == null) {
             return;
         }
         if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
-           String phone= RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
+            String phone = RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
             tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
         }
 
@@ -128,6 +128,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }
                 findViewById(R.id.arrow_1).setVisibility(View.INVISIBLE);
             }
+        }
+
+        if ("0".equals(userInfo.getBindCardStatus())) {
+            frame_setting_bindphone.setVisibility(View.GONE);
+            findViewById(R.id.divider_bank).setVisibility(View.GONE);
         }
 
     }
@@ -159,8 +164,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //绑定手机
             case R.id.frame_setting_bindphone:
-                Intent intent_phone=new Intent(mActivity, TradePsCaptchaActivity.class);
-                intent_phone.putExtra("isModifyPhone",true);
+                Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
+                intent_phone.putExtra("isModifyPhone", true);
                 startActivity(intent_phone);
 
                 break;
@@ -174,19 +179,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             //银行卡号
             case R.id.frame_setting_bankcard:
 
-                if ("0".equals(userInfo.getBindCardStatus())) {
-                    Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
-                    Bundle extra = new Bundle();
-                    extra.putSerializable("userInfo", userInfo);
-                    intent_bind.putExtras(extra);
-                    startActivity(intent_bind);
-                    return;
-                }
-
                 //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
-               String supportStatus= userInfo.getSupportStatus();
-                if (TextUtils.isEmpty(supportStatus)){
-                    supportStatus="0";
+                String supportStatus = userInfo.getSupportStatus();
+                if (TextUtils.isEmpty(supportStatus)) {
+                    supportStatus = "0";
                 }
                 if (supportStatus.equals("0")) {
                     Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
@@ -200,7 +196,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     Bundle extra = new Bundle();
                     extra.putSerializable("userInfo", userInfo);
                     if (bankCard != null) {
-                        if (!TextUtils.isEmpty(bankCard.getBankNo())){
+                        if (!TextUtils.isEmpty(bankCard.getBankNo())) {
                             intent_bind.putExtra("cardNo", RSAUtils.decryptByPrivate(bankCard.getBankNo()));
                         }
 
@@ -255,14 +251,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         switch (operationKey) {
             case ExtendOperationController.OperationKey.MODIFYPHONE:
-                 String phone=(String)data;
-                if (!TextUtils.isEmpty(phone)){
+                String phone = (String) data;
+                if (!TextUtils.isEmpty(phone)) {
                     tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
                 }
                 break;
             case ExtendOperationController.OperationKey.REAL_NAME:
-                 String name=(String)data;
-                if (!TextUtils.isEmpty(name)){
+                String name = (String) data;
+                if (!TextUtils.isEmpty(name)) {
                     userInfo.setRealNameStatus("1");
                     tv_name.setText(name);
                 }

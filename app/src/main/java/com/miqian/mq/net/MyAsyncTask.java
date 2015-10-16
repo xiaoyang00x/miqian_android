@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
@@ -65,7 +66,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                     callback.onSucceed(result);
                     Meta response = JsonUtil.parseObject(result, Meta.class);
                     if (response.getCode().equals("999995")) {
-                        UserUtil.clearUserInfo(mContext);
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
                     }
                 }
             } else {

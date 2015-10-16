@@ -101,7 +101,9 @@
 
 
 
-    <View style="@style/item_divider" />
+    <View
+        android:id="@+id/divider_bank"
+        style="@style/item_divider" />
 
     <RelativeLayout
         android:id="@+id/frame_setting_security"

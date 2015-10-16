@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.miqian.mq.R;
+import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.views.ProgressDialogView;
 import com.miqian.mq.views.WFYTitle;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -53,6 +54,10 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         initTitle(mTitle);
         initView();
         obtainData();
+
+        //增加栈管理器
+        ActivityStack.getActivityStack().pushActivity(this);
+
     }
 
     //获得数据
@@ -77,6 +82,14 @@ public abstract class BaseActivity extends BaseFragmentActivity {
 
     public WFYTitle getmTitle() {
         return mTitle;
+    }
+
+    @Override
+    protected void onDestroy() {
+        //推出Activity
+        ActivityStack.getActivityStack().popActivity(this);
+
+        super.onDestroy();
     }
 
     /**

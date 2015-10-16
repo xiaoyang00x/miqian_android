@@ -22,11 +22,14 @@ import com.miqian.mq.fragment.FragmentHome;
 import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.fragment.RegularFragment;
 import com.miqian.mq.receiver.JpushHelper;
+import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.CustomDialog;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +51,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     LinearLayout tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
     private List<JpushInfo> jpushInfolist;
     private int current_tab = 0;
+    private   RefeshDataListener mRefeshDataListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     protected void onResume() {
         super.onResume();
-        if(mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
+        if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
     }
@@ -193,6 +197,15 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         }
     }
 
+    public interface RefeshDataListener {
+        void changeData();
+    }
+
+    public void setReshListener(RefeshDataListener refeshDataListener) {
+       mRefeshDataListener = refeshDataListener;
+    }
+
+
     @Override
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
@@ -201,6 +214,40 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 break;
             case OperationKey.BACK_USER:
                 current_tab = 3;
+                break;
+            case OperationKey.CHANGE_TOKEN:
+                //清除Token
+                UserUtil.clearUserInfo(this);
+                ActivityStack.getActivityStack().clearActivity();
+                current_tab = 3;
+                boolean currentActivity = true;
+                if (currentActivity) {
+                    if (mTabHost.getCurrentTab() == 3) {
+                        mRefeshDataListener. changeData();
+
+                    } else {
+                        mTabHost.setCurrentTab(current_tab);
+                    }
+                }
+
+                Uihelper.showToast(this, "dfefefef");
+//                 if (dialogTips==null){
+//                     dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
+//
+//                         @Override
+//                         public void positionBtnClick() {
+//                             dismiss();
+//                         }
+//
+//                         @Override
+//                         public void negativeBtnClick() {
+//
+//                         }
+//                     };
+//                 }
+//                dialogTips.setRemarks("  账户信息已变动，请重新登录");
+//                dialogTips.show();
+
                 break;
         }
 

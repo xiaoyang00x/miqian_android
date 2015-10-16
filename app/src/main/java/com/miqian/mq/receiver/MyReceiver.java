@@ -24,6 +24,7 @@ import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SplashActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
@@ -37,7 +38,7 @@ import static android.util.Log.d;
 
 /**
  * 自定义接收器
- *
+ * <p/>
  * 如果不定义这个 Receiver，则：
  * 1) 默认用户会打开主界面
  * 2) 接收不到自定义消息
@@ -47,28 +48,30 @@ public class MyReceiver extends BroadcastReceiver {
     private JpushInfo response;
     private Intent notificationIntent;
     private int uritype;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-      if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
+        if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             processCustomMessage(context, bundle);
         }
 
     }
+
     //send msg to MainActivity
     private void processCustomMessage(Context context, Bundle bundle) {
-        String title=bundle.getString(JPushInterface.EXTRA_TITLE);
+        String title = bundle.getString(JPushInterface.EXTRA_TITLE);
         String content = bundle.getString(JPushInterface.EXTRA_MESSAGE);
         String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
 
-        if (!TextUtils.isEmpty(extra)){
-            Log.e("processCustomMessage",extra);
+        if (!TextUtils.isEmpty(extra)) {
+            Log.e("processCustomMessage", extra);
             response = JsonUtil.parseObject(extra, JpushInfo.class);
             // 解析数据
-            if (response==null){
+            if (response == null) {
                 return;
             }
-            if (TextUtils.isEmpty(title)||TextUtils.isEmpty(content)){
+            if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
                 return;
             }
             response.setTitle(title);
@@ -109,8 +112,8 @@ public class MyReceiver extends BroadcastReceiver {
                 switch (uritype) {
 
                     case 0:
-                        notificationIntent = new Intent(context, MainActivity.class);
-                        break;
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
+                        return;
                     case 1:
                         notificationIntent = new Intent(context, AnnounceActivity.class);
                         break;
@@ -140,7 +143,7 @@ public class MyReceiver extends BroadcastReceiver {
                         break;
                 }
             }
-            if (TextUtils.isEmpty(noticeId)){
+            if (TextUtils.isEmpty(noticeId)) {
                 return;
             }
 
@@ -162,9 +165,9 @@ public class MyReceiver extends BroadcastReceiver {
             // 通过控件的Id设置属性
             contentViews.setTextViewText(R.id.titleNo, contentTitle);
             contentViews.setTextViewText(R.id.textNo, contentText);
-            String  string_Minutes=""+mMinuts;
-            if (mMinuts<10) {
-                string_Minutes="0"+mMinuts;
+            String string_Minutes = "" + mMinuts;
+            if (mMinuts < 10) {
+                string_Minutes = "0" + mMinuts;
             }
             contentViews.setTextViewText(R.id.timeNo, mHour + ":" + string_Minutes);
             String tickerText = context.getResources().getString(R.string.app_name);
@@ -179,10 +182,9 @@ public class MyReceiver extends BroadcastReceiver {
             String ns = Context.NOTIFICATION_SERVICE;
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
             mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
-        }
-        else {
-            Log.e("====MessageReceiver==","==response=nulL=");
+        } else {
+            Log.e("====MessageReceiver==", "==response=nulL=");
         }
 
-        }
     }
+}
