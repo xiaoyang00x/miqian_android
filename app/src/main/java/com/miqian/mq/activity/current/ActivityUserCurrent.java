@@ -16,6 +16,8 @@ import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -32,6 +34,10 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private Button btSubscribe;//认购
 
     private UserCurrent userCurrent;
+    private float downLimit = 1f;
+    private float upLimit = 999999;
+    private DialogPay dialogPay;
+
 
     @Override
     public void obtainData() {
@@ -58,14 +64,22 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             textEarning.setText(userCurrent.getCurYesterDayAmt());
             textCaptial.setText(userCurrent.getCurAsset());
             textTotalEarning.setText(userCurrent.getCurAmt());
-            double  money=Float.parseFloat(userCurrent.getCurAsset());
-            if (money<=0){
+            float money = Float.parseFloat(userCurrent.getCurAsset());
+            if (!TextUtils.isEmpty(userCurrent.getCurrentBuyDownLimit())){
+                downLimit = Float.parseFloat(userCurrent.getCurrentBuyDownLimit());
+            }
+            if (!TextUtils.isEmpty(userCurrent.getCurrentBuyUpLimit())){
+                upLimit = Float.parseFloat(userCurrent.getCurrentBuyUpLimit());
+            }
+            if (money <= 0) {
                 btRedeem.setEnabled(false);
                 btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
             }
-
-
-        }else {
+            if ("0".equals(userCurrent.getCurrentSwitch())) {//关闭认购开关
+                btSubscribe.setEnabled(false);
+                btSubscribe.setTextColor(getResources().getColor(R.color.mq_b5));
+            }
+        } else {
             btRedeem.setEnabled(false);
             btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
         }
@@ -87,6 +101,38 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         frameProjectMatch.setOnClickListener(this);
         btRedeem.setOnClickListener(this);
         btSubscribe.setOnClickListener(this);
+
+        dialogPay = new DialogPay(mContext) {
+            @Override
+            public void positionBtnClick(String moneyString) {
+                if (!TextUtils.isEmpty(moneyString)) {
+                    float money = Float.parseFloat(moneyString);
+                    if (money < downLimit) {
+                        this.setTitle("提示：输入请大于" + downLimit + "元");
+                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                    } else if (money > upLimit) {
+                        this.setTitle("提示：输入请小于" + upLimit + "元");
+                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                    } else {
+                        UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, "");
+                        this.setEditMoney("");
+                        this.setTitle("认购金额");
+                        this.setTitleColor(getResources().getColor(R.color.mq_b1));
+                        this.dismiss();
+                    }
+                } else {
+                    this.setTitle("提示：请输入金额");
+                    this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                }
+            }
+
+            @Override
+            public void negativeBtnClick() {
+                this.setEditMoney("");
+                this.setTitle("认购金额");
+                this.setTitleColor(getResources().getColor(R.color.mq_b1));
+            }
+        };
     }
 
     @Override
@@ -103,7 +149,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.frame_current_record:
-                startActivity(new Intent(mActivity,ActivityCurrentRecord.class));
+                startActivity(new Intent(mActivity, ActivityCurrentRecord.class));
                 break;
             case R.id.frame_project_match:
                 Intent intent = new Intent(mActivity, ProjectMatchActivity.class);
@@ -112,11 +158,14 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             case R.id.bt_redeem:
                 intent = new Intent(mActivity, ActivityRedeem.class);
                 //本金
-                intent.putExtra("capital",userCurrent.getCurAsset());
-                intent.putExtra("totalEaring",userCurrent.getCurAmt());
+                intent.putExtra("capital", userCurrent.getCurAsset());
+                intent.putExtra("totalEaring", userCurrent.getCurAmt());
                 startActivity(intent);
                 break;
             case R.id.bt_subscribe:
+
+                UserUtil.loginPay(mActivity, dialogPay);
+
                 break;
         }
     }

@@ -56,7 +56,7 @@
                     android:layout_centerVertical="true"
                     android:gravity="right"
                     android:maxLines="2"
-                    android:text="dddddd"
+                    android:text="--"
                     android:singleLine="true"
                     android:textSize="14sp"
                     android:layout_toRightOf="@+id/iv_state"
@@ -68,7 +68,7 @@
                 style="@style/text_gray_item"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试"
+                android:text="--"
                 android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>

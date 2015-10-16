@@ -165,7 +165,7 @@ public class RegisterActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(password)) {
 
-            if (password.length() < 6 || password.length() > 20) {
+            if (password.length() < 6 || password.length() > 16) {
                 Uihelper.showToast(this, R.string.tip_password);
             } else {
                 mWaitingDialog.show();
