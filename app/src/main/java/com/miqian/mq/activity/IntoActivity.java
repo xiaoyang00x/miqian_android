@@ -313,4 +313,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
         }, orderNo);
     }
+
+    @Override
+    protected String getPageName() {
+        return "充值";
+    }
 }

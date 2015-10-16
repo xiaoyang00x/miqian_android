@@ -114,4 +114,9 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
             Uihelper.showToast(mActivity, "身份证号码不正确");
         }
     }
+
+    @Override
+    protected String getPageName() {
+        return "实名认证";
+    }
 }

@@ -198,6 +198,11 @@ public class BindCardActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "绑定银行卡";
+    }
+
     class Clickable extends ClickableSpan implements View.OnClickListener {
         private final View.OnClickListener mListener;
 

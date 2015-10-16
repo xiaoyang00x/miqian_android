@@ -291,6 +291,11 @@ public class SendCaptchaActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "注册";
+    }
+
     public static void enterActivity(Context context, int type, boolean isModify) {
 
         Intent intent = new Intent(context, SendCaptchaActivity.class);

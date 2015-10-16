@@ -98,4 +98,9 @@ public class TransferDetailActivity extends BaseActivity {
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("转让情况");
     }
+
+    @Override
+    protected String getPageName() {
+        return "转让情况";
+    }
 }

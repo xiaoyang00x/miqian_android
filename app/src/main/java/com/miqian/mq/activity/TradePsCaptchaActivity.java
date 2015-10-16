@@ -230,4 +230,8 @@ public class TradePsCaptchaActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "修改交易密码";
+    }
 }

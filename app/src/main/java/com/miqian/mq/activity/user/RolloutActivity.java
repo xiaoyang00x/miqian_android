@@ -285,6 +285,11 @@ public class RolloutActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "提现";
+    }
+
     public void btn_click(View v) {
         moneyString = editMoney.getText().toString();
         if (TextUtils.isEmpty(moneyString)) {

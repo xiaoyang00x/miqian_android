@@ -188,6 +188,11 @@ public class CapitalRecordActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected String getPageName() {
+        return "资金记录";
+    }
+
     public void searchBtn(View v) {
         String  type="";
         switch (v.getId()) {

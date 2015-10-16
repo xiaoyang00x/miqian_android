@@ -188,6 +188,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     @Override
+    protected String getPageName() {
+        return "确认订单";
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:

@@ -93,4 +93,9 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
                 break;
         }
     }
+
+    @Override
+    protected String getPageName() {
+        return "充值结果";
+    }
 }

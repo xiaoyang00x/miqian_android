@@ -109,4 +109,9 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
         et_bankbranch.setText(items.get(postion).getShortBranchName());
 
     }
+
+    @Override
+    protected String getPageName() {
+        return "选择开户行";
+    }
 }

@@ -132,4 +132,9 @@ public class RegularFragment extends BasicFragment {
             }
         });
     }
+
+    @Override
+    protected String getPageName() {
+        return "定期首页";
+    }
 }

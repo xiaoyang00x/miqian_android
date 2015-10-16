@@ -34,4 +34,8 @@ public class AboutUsActivity extends BaseActivity {
 
 	}
 
+	@Override
+	protected String getPageName() {
+		return "关于秒钱";
+	}
 }

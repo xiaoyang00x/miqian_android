@@ -59,6 +59,15 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         super.onCreate(bundle);
     }
 
+    @Override
+    protected String getPageName() {
+        if (projectType.equals("3")) {
+            return "定期赚详情";
+        } else {
+            return "定期计划详情";
+        }
+    }
+
     public void obtainData() {
         mWaitingDialog.show();
         HttpRequest.getUserRegularDetail(mActivity, new ICallback<UserRegularDetailResult>() {

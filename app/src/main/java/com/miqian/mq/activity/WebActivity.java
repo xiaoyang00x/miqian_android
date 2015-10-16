@@ -56,6 +56,11 @@ public class WebActivity extends BaseFragmentActivity {
         initView();
     }
 
+    @Override
+    protected String getPageName() {
+        return "内置浏览器";
+    }
+
     private void findView() {
         progressBar = (ProgressBar)findViewById(R.id.progressbar);
         webview = (SwipeWebView)findViewById(R.id.webview);

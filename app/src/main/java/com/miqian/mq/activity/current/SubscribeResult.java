@@ -58,6 +58,11 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    protected String getPageName() {
+        return title;
+    }
+
+    @Override
     public void obtainData() {
         refreshView();
     }

@@ -35,6 +35,11 @@ public class RepaymentActivity extends BaseActivity {
         super.onCreate(bundle);
     }
 
+    @Override
+    protected String getPageName() {
+        return "还款情况";
+    }
+
 
     @Override
     public void obtainData() {

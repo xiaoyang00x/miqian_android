@@ -95,6 +95,11 @@ public class ActivityRedeem extends BaseActivity {
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "赎回";
+    }
+
     public void btn_click(View v) {
 
         money = editMoney.getText().toString();

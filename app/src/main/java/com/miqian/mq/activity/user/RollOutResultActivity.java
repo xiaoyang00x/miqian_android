@@ -63,6 +63,11 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
+    protected String getPageName() {
+        return "提现结果";
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {

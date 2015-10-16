@@ -168,4 +168,9 @@ public class CityListActivity extends BaseActivity {
       }
     });
   }
+
+  @Override
+  protected String getPageName() {
+    return "选择城市";
+  }
 }

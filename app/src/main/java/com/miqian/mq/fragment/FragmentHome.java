@@ -78,6 +78,11 @@ public class FragmentHome extends BasicFragment {
     }
 
     @Override
+    protected String getPageName() {
+        return "首页";
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         adapter = null;

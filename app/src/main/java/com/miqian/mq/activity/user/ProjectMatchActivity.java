@@ -51,6 +51,11 @@ public class ProjectMatchActivity extends BaseActivity {
     }
 
     @Override
+    protected String getPageName() {
+        return "项目匹配";
+    }
+
+    @Override
     public void obtainData() {
         mWaitingDialog.show();
         HttpRequest.projectMatch(mActivity, new ICallback<ProjectInfoResult>() {

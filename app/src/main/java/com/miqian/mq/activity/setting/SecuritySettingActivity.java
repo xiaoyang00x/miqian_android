@@ -60,4 +60,8 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
 
     }
 
+    @Override
+    protected String getPageName() {
+        return "安全设置";
+    }
 }
