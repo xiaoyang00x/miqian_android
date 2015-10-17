@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
@@ -36,6 +37,7 @@ import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.ProgressDialogView;
 
 /**
@@ -52,6 +54,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     private Dialog mWaitingDialog;
     private UserInfo userInfo;
     private TextView tv_TotalProfit, tv_balance, tv_totalasset;
+    private CustomDialog dialogTips;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,14 +67,44 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         }
         MainActivity mainActivity = (MainActivity) getActivity();//.setReshListener(this);
         mainActivity.setReshListener(this);
-
+        findViewById(view);
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        findViewById(view);
+        //已登录，显示我的界面
+        if (UserUtil.hasLogin(getActivity())) {
+
+            initUserView();
+            obtainData();
+        }
+        //未登录，显示登录界面
+        else {
+            initLoginView();
+        }
+        Uihelper.trace("isShowTips====fefefefe"+MyApplication.getInstance().isShowTips());
+        if (MyApplication.getInstance().isShowTips()){
+            Uihelper.trace("isShowTips====true");
+            MyApplication.getInstance().setShowTips(false);
+            if (dialogTips == null) {
+                dialogTips = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
+
+                    @Override
+                    public void positionBtnClick() {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void negativeBtnClick() {
+
+                    }
+                };
+            }
+            dialogTips.setRemarks("  账户信息已变动，请重新登录");
+            dialogTips.show();
+        }
     }
 
     private void obtainData() {
@@ -164,26 +197,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         btn_setting.setImageResource(R.drawable.account_setting);
         btn_setting.setOnClickListener(this);
 
-        //已登录，显示我的界面
-        if (UserUtil.hasLogin(getActivity())) {
-
-            initUserView();
-            obtainData();
-
-        }
-        //未登录，显示登录界面
-        else {
-
-            initLoginView();
-
-        }
-
-    }
-
-    private void initUserView() {
-
-        view.findViewById(R.id.layout_logined).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.layout_nologin).setVisibility(View.GONE);
+        //*********已登录的的Ui***************
         Button btn_RollIn = (Button) view.findViewById(R.id.btn_rollin);
         Button btn_RollOut = (Button) view.findViewById(R.id.btn_rollout);
 
@@ -210,12 +224,10 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         frame_record.setOnClickListener(this);
         frame_ticket.setOnClickListener(this);
         frame_redpackage.setOnClickListener(this);
-    }
 
-    private void initLoginView() {
 
-        view.findViewById(R.id.layout_logined).setVisibility(View.GONE);
-        view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
+        //*********未登录的的Ui***************
+
         final View relaTelephone = view.findViewById(R.id.rela_telephone);
         final View relaPassword = view.findViewById(R.id.rela_password);
         final EditText editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
@@ -259,6 +271,21 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
             }
         });
+
+    }
+
+    private void initUserView() {
+
+        view.findViewById(R.id.layout_logined).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.layout_nologin).setVisibility(View.GONE);
+
+    }
+
+    private void initLoginView() {
+
+        view.findViewById(R.id.layout_logined).setVisibility(View.GONE);
+        view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
+
     }
 
     private void login(String telephone, String password) {

@@ -60,10 +60,10 @@ public class AdapterMyRedPaper extends RecyclerView.Adapter {
                 ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package_grey);
                 ((ViewHolder) holder).textMoney.setTextColor(Color.parseColor("#f8d4d4"));
             } else {
-                ((ViewHolder) holder).imageRedpacketState.setVisibility(View.GONE);
+                ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package);
             }
         }else {
-            ((ViewHolder) holder).imageRedpacketState.setVisibility(View.GONE);
+            ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package);
         }
 
     }

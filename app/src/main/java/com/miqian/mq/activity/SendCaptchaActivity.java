@@ -36,7 +36,6 @@ public class SendCaptchaActivity extends BaseActivity {
     private boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;
     private Thread thread;
-    private boolean isSending;
     private static Handler handler;
     private static final int NUM_TYPE_CAPTCHA = 1;
     private static final int NUM_TYPE_SUMMIT = 2;
@@ -56,7 +55,6 @@ public class SendCaptchaActivity extends BaseActivity {
                 String timeInfo = msg.getData().getString("time");
                 mBtn_sendCaptcha.setText(timeInfo + "秒后重新获取");
                 if ("0".equals(timeInfo)) {
-                    isSending = false;
                     mBtn_sendCaptcha.setEnabled(true);
                     mBtn_sendCaptcha.setText("获取验证码");
                 }
@@ -143,11 +141,11 @@ public class SendCaptchaActivity extends BaseActivity {
             default:
                 break;
         }
-
+        mWaitingDialog.show();
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                isSending = true;
+                mWaitingDialog.dismiss();
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -158,7 +156,7 @@ public class SendCaptchaActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                isSending = true;
+                mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
         }, phone, summitType);
@@ -172,7 +170,6 @@ public class SendCaptchaActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
-                if (isSending) {
                     //检验验证码
                     if (!TextUtils.isEmpty(captcha)) {
                         //验证验证码
@@ -181,9 +178,6 @@ public class SendCaptchaActivity extends BaseActivity {
                     } else {
                         Uihelper.showToast(this, R.string.tip_captcha);
                     }
-                } else {
-                    Uihelper.showToast(this, "请先获取验证码");
-                }
             }
             else {
                 Uihelper.showToast(this, R.string.phone_noeffect);
@@ -277,7 +271,6 @@ public class SendCaptchaActivity extends BaseActivity {
 
         }
     }
-
 
     @Override
     public int getLayoutId() {
