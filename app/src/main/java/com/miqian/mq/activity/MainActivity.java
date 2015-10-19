@@ -17,6 +17,11 @@ import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.ActivityCurrentRecord;
+import com.miqian.mq.activity.current.ActivityRedPacket;
+import com.miqian.mq.activity.user.MyTicketActivity;
+import com.miqian.mq.activity.user.RedPaperActivity;
+import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.fragment.FragmentCurrent;
@@ -55,6 +60,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     private int current_tab = 0;
     private RefeshDataListener mRefeshDataListener;
     private CustomDialog dialogTips;
+    private CustomDialog jpushDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,12 +80,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     @Override
     protected void onResume() {
-        super.onResume();
+
         //设置在主页的状态
-        MyApplication.getInstance().setIsOnMainAcitivity(true);
+//        MyApplication.getInstance().setIsOnMainAcitivity(true);
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
+        super.onResume();
     }
 
     @Override
@@ -179,34 +186,96 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 uritype = Integer.valueOf(string_uritype);
             }
             switch (uritype) {
-                case 1:
+                case 1://交易密码修改，到消息列表页
+                    startActivity(new Intent(mContext, AnnounceActivity.class));
                     break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
+                case 2://提现受理，跳到资金记录
+                    startActivity(new Intent(mContext, CapitalRecordActivity.class));
+                    break;
+                case 3://充值成功，到我的
+                    mTabHost.setCurrentTab(3);
+                    break;
+                case 4://认购 ，到资金记录
+                    startActivity(new Intent(mContext, CapitalRecordActivity.class));
+                    break;
+                case 5://定期赚到期，到我的定期列表页
+                    startActivity(new Intent(mContext, UserRegularActivity.class));
+                    break;
+                case 6://定期计划到期，到我的定期列表页
+                    startActivity(new Intent(mContext, UserRegularActivity.class));
+                    break;
+                case 7://活期赎回，到资金记录
+                    startActivity(new Intent(mContext, ActivityCurrentRecord.class));
+                    break;
+                case 8://转让被认购完成,跳到资金记录
+                    startActivity(new Intent(mContext, CapitalRecordActivity.class));
+                    break;
                 case 9:
                 case 10:
-                    //具体页面
-                    startActivity(new Intent(mContext, AnnounceResultActivity.class));
+                case 11:
+                case 12://收到红包 弹框
+                    showTipDialog(jInfo);
                     break;
 
-                // 内置浏览器
-                case 12:
-                case 13:
-                case 14:
-                case 15:
-                    startActivity(new Intent(mContext, AnnounceResultActivity.class));
-//                        notificationIntent = new Intent(context, WebViewActivity.class);
+                case 50://系统升级,系统维护
+                    startActivity(new Intent(mContext, AnnounceActivity.class));
+                    break;
+                case 51://活动利好 首页弹框，webView
+                case 52://平台相关新闻 首页弹框，webView
+                case 53://相关项目 首页弹框，webView
+                    showTipDialog(jInfo);
                     break;
                 default:
                     break;
 
             }
         }
+    }
+
+    private void showTipDialog(final JpushInfo jpush) {
+        final int type = Integer.valueOf(jpush.getUriType());
+
+        if (jpushDialog == null) {
+            jpushDialog = new CustomDialog(mContext, CustomDialog.CODE_TIPS) {
+                @Override
+                public void positionBtnClick() {
+
+                    switch (type) {
+                        case 9:
+                            startActivity(new Intent(mContext, RedPaperActivity.class));
+                            break;
+                        case 10:
+                            startActivity(new Intent(mContext, MyTicketActivity.class));
+                            break;
+                        case 11:
+                            startActivity(new Intent(mContext, RedPaperActivity.class));
+                            break;
+                        case 12:
+                            startActivity(new Intent(mContext, MyTicketActivity.class));
+                            break;
+                        case 51:
+                        case 52:
+                        case 53:
+
+                            WebViewActivity.doIntent(mContext, jpush.getUrl(), true, null);
+
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+
+                @Override
+                public void negativeBtnClick() {
+
+                }
+            };
+        }
+
+        jpushDialog.setTitle(jpush.getTitle());
+        jpushDialog.setRemarks(jpush.getContent());
+
     }
 
     public interface RefeshDataListener {
@@ -229,7 +298,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 break;
             case OperationKey.CHANGE_TOKEN:
                 //清除Token
-                Uihelper.trace("onResume11");
                 UserUtil.clearUserInfo(this);
                 ActivityStack.getActivityStack().clearActivity();
                 current_tab = 3;
@@ -242,8 +310,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                         mTabHost.setCurrentTab(current_tab);
                     }
                     showDialog();
-                }else {
-                    if (mTabHost.getCurrentTab()==3){
+                } else {
+                    if (mTabHost.getCurrentTab() == 3) {
 
                         MyApplication.getInstance().setShowTips(true);
                         mRefeshDataListener.changeData();
@@ -270,7 +338,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 }
             };
         }
-        dialogTips.setRemarks("  账户信息已变动，请重新登录");
+        dialogTips.setRemarks("  账户信息已变更，请重新登录");
         dialogTips.show();
     }
 

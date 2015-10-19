@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
     @Override
     public void onStart() {
-        super.onStart();
+
         //已登录，显示我的界面
         if (UserUtil.hasLogin(getActivity())) {
 
@@ -84,27 +85,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         else {
             initLoginView();
         }
-        Uihelper.trace("isShowTips====fefefefe"+MyApplication.getInstance().isShowTips());
-        if (MyApplication.getInstance().isShowTips()){
-            Uihelper.trace("isShowTips====true");
-            MyApplication.getInstance().setShowTips(false);
-            if (dialogTips == null) {
-                dialogTips = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
 
-                    @Override
-                    public void positionBtnClick() {
-                        dismiss();
-                    }
-
-                    @Override
-                    public void negativeBtnClick() {
-
-                    }
-                };
-            }
-            dialogTips.setRemarks("  账户信息已变动，请重新登录");
-            dialogTips.show();
-        }
+        super.onStart();
     }
 
     private void obtainData() {
@@ -372,6 +354,25 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
     @Override
     public void changeData() {
+        if (MyApplication.getInstance().isShowTips()){
+            MyApplication.getInstance().setShowTips(false);
+            if (dialogTips == null) {
+                dialogTips = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
+
+                    @Override
+                    public void positionBtnClick() {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void negativeBtnClick() {
+
+                    }
+                };
+            }
+            dialogTips.setRemarks("  账户信息已变更，请重新登录");
+            dialogTips.show();
+        }
         onStart();
     }
 }

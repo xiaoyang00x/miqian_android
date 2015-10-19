@@ -44,7 +44,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             ((ViewHolderTicket) holder).promoteChoosed.setVisibility(View.GONE);
 
         String state = promote.getSta();
-        ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.ticket_bg);
+        ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
         if (!TextUtils.isEmpty(state)) {
 
             ((ViewHolderTicket) holder).imageState.setVisibility(View.VISIBLE);
@@ -55,10 +55,10 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.hb_expired);
                 ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg_grey);
             } else {
-                ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.ticket_bg);
+                ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
             }
         }else {
-            ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.ticket_bg);
+            ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
         }
 
     }

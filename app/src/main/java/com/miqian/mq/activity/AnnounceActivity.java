@@ -50,7 +50,6 @@ public class AnnounceActivity extends BaseActivity
         }
         Collections.reverse(jpushInfolist);
         if (jpushInfolist == null || jpushInfolist.size() == 0) {
-            //			mView_noresult.setVisibility(View.VISIBLE);
             mTitle.setRightText("");
         } else {
             //			if (mView_noresult != null) {
@@ -61,8 +60,7 @@ public class AnnounceActivity extends BaseActivity
         }
         Uihelper.trace("" + jpushInfolist.size());
 
-        PullToRefreshSwipeMenuListView pullToListView =
-                (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
+        PullToRefreshSwipeMenuListView pullToListView = (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
 
         mSwipeMenuListView = (SwipeMenuListView) pullToListView.getRefreshableView();
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -101,40 +99,46 @@ public class AnnounceActivity extends BaseActivity
                 if (position == 0) {
 
                 } else {
-
                     JpushInfo jpushInfo = jpushInfolist.get(position - 1);
                     if (jpushInfo.getState().equals("1")) {
                         Uihelper.getMessageCount(-1, mActivity);
                         jpushInfo.setState("2");
                         MyDataBaseHelper.getInstance(mActivity).recordJpush(jpushInfo);
                     }
-                    String uritype = jpushInfo.getUriType();
-                    if (!TextUtils.isEmpty(uritype)) {
-//                        switch (Integer.valueOf(Integer.valueOf(uritype))) {
+                    switch (Integer.valueOf(Integer.valueOf(jpushInfo.getUriType()))) {
 
-//                            // 详情页
-//                            case 1:
-//                            case 2:
-//                            case 3:
-                                Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
-                                intent.putExtra("id", jpushInfo.getId());
-                                intent.putExtra("pushSource", jpushInfo.getPushSource());
-                                startActivity(intent);
-//                                break;
-//                            // 内置浏览器
-//                            case 4:
-//                                //							WebViewActivity.doIntent(mActivity, jpushInfo.getUrl(), true, null);
-//                                break;
-//                            default:
-//                                break;
-                        }
-                        uritype = null;
-//                    } else {
-//                        Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
-//                        //						intent.putExtra("classid", jpushInfo.getClassid());
-//                        intent.putExtra("noticeId", jpushInfo.getId());
-//                        startActivity(intent);
-//                    }
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                            Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
+                            intent.putExtra("id", jpushInfo.getId());
+                            intent.putExtra("pushSource", jpushInfo.getPushSource());
+                            startActivity(intent);
+                            break;
+                        // 内置浏览器
+                        case 50:
+                        case 51:
+                        case 52:
+                        case 53:
+                            WebViewActivity.doIntent(mContext, jpushInfo.getUrl(), true, null);
+                            break;
+                        default:
+                            Intent intent_other = new Intent(mActivity, AnnounceResultActivity.class);
+                            intent_other.putExtra("id", jpushInfo.getId());
+                            intent_other.putExtra("pushSource", jpushInfo.getPushSource());
+                            startActivity(intent_other);
+                            break;
+                    }
                 }
             }
         });

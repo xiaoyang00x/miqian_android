@@ -20,8 +20,14 @@ import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.AnnounceResultActivity;
+import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SplashActivity;
+import com.miqian.mq.activity.WebViewActivity;
+import com.miqian.mq.activity.current.ActivityCurrentRecord;
+import com.miqian.mq.activity.user.MyTicketActivity;
+import com.miqian.mq.activity.user.RedPaperActivity;
+import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -114,32 +120,54 @@ public class MyReceiver extends BroadcastReceiver {
                     case 0:
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
                         return;
-                    case 1:
-                        notificationIntent = new Intent(context, AnnounceActivity.class);
+
+                    case 1://交易密码修改，到消息列表页
+                        notificationIntent= new Intent(context, AnnounceActivity.class);
                         break;
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
+                    case 2://提现受理，跳到资金记录
+                        notificationIntent= new Intent(context, CapitalRecordActivity.class);
+                        break;
+                    case 3://充值成功，到我的
+                        notificationIntent= new Intent(context, MainActivity.class);
+                        break;
+                    case 4://认购 ，到资金记录
+                        notificationIntent= new Intent(context, CapitalRecordActivity.class);
+                        break;
+                    case 5://定期赚到期，到我的定期列表页
+                    case 6://定期计划到期，到我的定期列表页
+                        notificationIntent= new Intent(context, UserRegularActivity.class);
+                        break;
+                    case 7://活期赎回，到资金记录
+                        notificationIntent= new Intent(context, ActivityCurrentRecord.class);
+                        break;
+                    case 8://转让被认购完成,跳到资金记录
+                        notificationIntent= new Intent(context, CapitalRecordActivity.class);
+                        break;
                     case 9:
+                        notificationIntent= new Intent(context, RedPaperActivity.class);
+                        break;
                     case 10:
-                        //具体页面
-                        notificationIntent = new Intent(context, AnnounceResultActivity.class);
+                        notificationIntent= new Intent(context, MyTicketActivity.class);
+                        break;
+                    case 11:
+                        notificationIntent= new Intent(context, RedPaperActivity.class);
+                        break;
+                    case 12:
+                        notificationIntent= new Intent(context, MyTicketActivity.class);
                         break;
 
-                    // 内置浏览器
-                    case 12:
-                    case 13:
-                    case 14:
-                    case 15:
-                        notificationIntent = new Intent(context, AnnounceResultActivity.class);
-//                        notificationIntent = new Intent(context, WebViewActivity.class);
+                    case 50://系统升级,系统维护
+                        notificationIntent= new Intent(context, AnnounceActivity.class);
+                        break;
+                    case 51://活动利好 首页弹框，webView
+                    case 52://平台相关新闻 首页弹框，webView
+                    case 53://相关项目 首页弹框，webView
+                        notificationIntent= new Intent(context, WebViewActivity.class);
+                        notificationIntent.putExtra("is_use_web_title", true);
+                        notificationIntent.putExtra("url", response.getUrl());
+                        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         break;
                     default:
-                        notificationIntent = new Intent(context, MainActivity.class);
                         break;
                 }
             }
