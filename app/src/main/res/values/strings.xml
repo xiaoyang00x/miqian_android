@@ -1,10 +1,5 @@
 <resources>
-  <string name="app_name">咪钱</string>
-
-  <string name="hello_world">Hello world!</string>
-  <string name="action_settings">Settings</string>
-  <string name="current_version">版本号1.0</string>
-
+  <string name="app_name">秒钱</string>
 
   <!---->
   <string name="app_loading">处理中…</string>
