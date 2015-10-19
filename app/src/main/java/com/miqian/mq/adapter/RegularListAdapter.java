@@ -251,7 +251,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public int getCount() {
-            return MAX_PLAN_NUMBER;
+            return planList.size() < MAX_PLAN_NUMBER? planList.size() : MAX_PLAN_NUMBER;
         }
 
         @Override

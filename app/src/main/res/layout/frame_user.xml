@@ -311,7 +311,7 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/account_current" />
+            android:src="@drawable/account_current" />
 
         <TextView
             style="@style/text_black_item"
@@ -354,7 +354,7 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/account_regular" />
+            android:src="@drawable/account_regular" />
 
         <TextView
             style="@style/text_black_item"
@@ -397,7 +397,7 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/account_record" />
+            android:src="@drawable/account_record" />
 
         <TextView
             style="@style/text_black_item"
@@ -431,7 +431,7 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/account_ticket" />
+            android:src="@drawable/account_ticket" />
 
         <TextView
             style="@style/text_black_item"
@@ -474,7 +474,7 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:src="@mipmap/account_redpackage" />
+            android:src="@drawable/account_redpackage" />
 
         <TextView
             style="@style/text_black_item"
