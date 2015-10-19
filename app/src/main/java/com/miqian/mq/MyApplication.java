@@ -17,6 +17,24 @@ import cn.jpush.android.api.JPushInterface;
 public class MyApplication extends Application {
     private static MyApplication myApplication;
     private static boolean isCurrent;
+    private static boolean isOnMainAcitivity;
+    private static boolean showTips;
+
+    public static boolean isShowTips() {
+        return showTips;
+    }
+
+    public static void setShowTips(boolean showTips) {
+        MyApplication.showTips = showTips;
+    }
+
+    public static boolean isOnMainAcitivity() {
+        return isOnMainAcitivity;
+    }
+
+    public static void setIsOnMainAcitivity(boolean isOnMainAcitivity) {
+        MyApplication.isOnMainAcitivity = isOnMainAcitivity;
+    }
 
     public static boolean isCurrent() {
         return isCurrent;

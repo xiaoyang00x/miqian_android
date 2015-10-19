@@ -1,5 +1,6 @@
 package com.miqian.mq.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -51,7 +53,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     LinearLayout tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
     private List<JpushInfo> jpushInfolist;
     private int current_tab = 0;
-    private   RefeshDataListener mRefeshDataListener;
+    private RefeshDataListener mRefeshDataListener;
+    private CustomDialog dialogTips;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     protected void onResume() {
         super.onResume();
+        //设置在主页的状态
+        MyApplication.getInstance().setIsOnMainAcitivity(true);
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
@@ -209,7 +214,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     }
 
     public void setReshListener(RefeshDataListener refeshDataListener) {
-       mRefeshDataListener = refeshDataListener;
+        mRefeshDataListener = refeshDataListener;
     }
 
 
@@ -224,39 +229,49 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 break;
             case OperationKey.CHANGE_TOKEN:
                 //清除Token
+                Uihelper.trace("onResume11");
                 UserUtil.clearUserInfo(this);
                 ActivityStack.getActivityStack().clearActivity();
                 current_tab = 3;
-                boolean currentActivity = true;
+                boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
                 if (currentActivity) {
                     if (mTabHost.getCurrentTab() == 3) {
-                        mRefeshDataListener. changeData();
+                        mRefeshDataListener.changeData();
 
                     } else {
                         mTabHost.setCurrentTab(current_tab);
                     }
-                }
+                    showDialog();
+                }else {
+                    if (mTabHost.getCurrentTab()==3){
 
-                Uihelper.showToast(this, "dfefefef");
-//                 if (dialogTips==null){
-//                     dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-//
-//                         @Override
-//                         public void positionBtnClick() {
-//                             dismiss();
-//                         }
-//
-//                         @Override
-//                         public void negativeBtnClick() {
-//
-//                         }
-//                     };
-//                 }
-//                dialogTips.setRemarks("  账户信息已变动，请重新登录");
-//                dialogTips.show();
+                        MyApplication.getInstance().setShowTips(true);
+                        mRefeshDataListener.changeData();
+                    }
+                }
 
                 break;
         }
 
     }
+
+    private void showDialog() {
+        if (dialogTips == null) {
+            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
+
+                @Override
+                public void positionBtnClick() {
+                    dismiss();
+                }
+
+                @Override
+                public void negativeBtnClick() {
+
+                }
+            };
+        }
+        dialogTips.setRemarks("  账户信息已变动，请重新登录");
+        dialogTips.show();
+    }
+
 }

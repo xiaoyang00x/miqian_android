@@ -173,7 +173,7 @@ public class RolloutActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                Uihelper.showToast(mActivity, error);
+                Uihelper.showToast(mActivity, error+"绑定支行失败");
 
             }
         }, cardNum, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);

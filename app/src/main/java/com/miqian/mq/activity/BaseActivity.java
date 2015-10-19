@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.views.ProgressDialogView;
@@ -57,6 +58,8 @@ public abstract class BaseActivity extends BaseFragmentActivity {
 
         //增加栈管理器
         ActivityStack.getActivityStack().pushActivity(this);
+        //设置不在主页
+        MyApplication.getInstance().setIsOnMainAcitivity(false);
 
     }
 
