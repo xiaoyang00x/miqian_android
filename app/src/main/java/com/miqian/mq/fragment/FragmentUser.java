@@ -308,26 +308,34 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                 break;
             //取现
             case R.id.btn_rollout:
-                Intent intent = new Intent(getActivity(), RolloutActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("userInfo", userInfo);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                String balance = userInfo.getBalance();
+                if (!TextUtils.isEmpty(balance)) {
+                    float float_banlance = Float.parseFloat(balance);
+                    if (float_banlance > 0f) {
+                        Intent intent = new Intent(getActivity(), RolloutActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userInfo", userInfo);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    } else {
+                        Uihelper.showToast(getActivity(), "账户余额为0，无法体现");
+                    }
+
+                }
+
                 break;
             //我的活期
             case R.id.frame_account_current:
-                intent = new Intent(getActivity(), ActivityUserCurrent.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), ActivityUserCurrent.class));
                 break;
             //我的定期
             case R.id.frame_regular:
-                intent = new Intent(getActivity(), UserRegularActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), UserRegularActivity.class));
                 break;
             //资金记录
             case R.id.frame_record:
-                intent = new Intent(getActivity(), CapitalRecordActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
                 break;
             //拾财券
             case R.id.frame_ticket:
@@ -349,12 +357,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                 intent_setting.putExtras(extra);
                 startActivity(intent_setting);
                 break;
+            default:
+                break;
         }
     }
 
     @Override
     public void changeData() {
-        if (MyApplication.getInstance().isShowTips()){
+        if (MyApplication.getInstance().isShowTips()) {
             MyApplication.getInstance().setShowTips(false);
             if (dialogTips == null) {
                 dialogTips = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {

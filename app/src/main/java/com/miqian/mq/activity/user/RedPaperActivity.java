@@ -8,6 +8,10 @@ import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDivi
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.adapter.AdapterMyRedPaper;
+import com.miqian.mq.adapter.AdapterMyTicket;
+import com.miqian.mq.adapter.AdapterProjectMatch;
+import com.miqian.mq.entity.Page;
+import com.miqian.mq.entity.ProjectInfo;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.Redpaper;
 import com.miqian.mq.net.HttpRequest;
@@ -22,37 +26,44 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 public class RedPaperActivity extends BaseActivity{
+    public List<Redpaper.CustPromotion> promList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ArrayList<Redpaper.CustPromotion> promList;
-    private AdapterMyRedPaper adapterPacket;
+    private AdapterMyRedPaper adapterMyRedPaper;
+
+
+    private int pageNo = 1;
+    private String pageSize = "20";
+    private Page page;
+    private boolean isLoading = false;
+
 
     @Override
     public void obtainData() {
         mWaitingDialog.show();
         HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
-            public List<Redpaper.CustPromotion> promList;
+
 
             @Override
             public void onSucceed(RedPaperData result) {
                 mWaitingDialog.dismiss();
-             Redpaper  redpaper= result.getData();
-                if (redpaper!=null){
-                    promList= redpaper.getCustPromotion();
-                    adapterPacket = new AdapterMyRedPaper(promList);
-                    recyclerView.setAdapter(adapterPacket);
+                Redpaper redpaper = result.getData();
+                page = result.getData().getPage();
+                if (redpaper != null) {
+                    promList = redpaper.getCustPromotion();
+                    refreshView();
                 }
-
             }
 
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
-                Uihelper.showToast(mActivity,error);
+                Uihelper.showToast(mActivity, error);
 
             }
-        },"HB","","1","999999");
+        }, "HB", "", "1", pageSize);
 
     }
+
     @Override
     public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -60,10 +71,64 @@ public class RedPaperActivity extends BaseActivity{
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
         recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).marginResId(R.dimen.margin_left_right).build());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                int totalItemCount = layoutManager.getItemCount();
+                if (lastVisibleItem >= totalItemCount - 2) {
+
+                    loadMore();
+                }
+            }
+        });
     }
 
+    private void loadMore() {
+        if (!isLoading) {
+            if (promList.size() >= page.getCount()) {
+                return;
+            }
+            isLoading = true;
+            pageNo += 1;
+            HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
+
+
+                @Override
+                public void onSucceed(RedPaperData result) {
+                    mWaitingDialog.dismiss();
+                    Redpaper redpaper = result.getData();
+                    page = result.getData().getPage();
+                    if (redpaper != null) {
+                        if (promList != null && promList != null && promList.size() > 0){
+                            promList.addAll(redpaper.getCustPromotion());
+                            adapterMyRedPaper.notifyItemInserted(promList.size());
+                        }
+                        isLoading = false;
+                    }
+                }
+
+                @Override
+                public void onFail(String error) {
+                    mWaitingDialog.dismiss();
+                    isLoading = false;
+
+                }
+            }, "HB", "", String.valueOf(pageNo), pageSize);
+        }
+    }
+
+
+
+
+    private void refreshView() {
+        adapterMyRedPaper = new AdapterMyRedPaper(promList);
+        adapterMyRedPaper.setMaxItem(page.getCount());
+        recyclerView.setAdapter(adapterMyRedPaper);
+    }
     @Override
     public int getLayoutId() {
         return R.layout.activity_myredpaper;
