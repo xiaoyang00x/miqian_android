@@ -37,6 +37,8 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
     private String title;
     private Redeem redeem;
     private String capital;
+    private String errormessage;
+    private TextView tvTip;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -48,6 +50,7 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
         } else {
             title = "赎回失败";
             capital = intent.getStringExtra("capital");
+            errormessage = intent.getStringExtra("errormessage");
         }
 
         super.onCreate(bundle);
@@ -69,6 +72,8 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
         btBackUser = (Button) findViewById(R.id.bt_back_user);
         btBackHome.setOnClickListener(this);
         btBackUser.setOnClickListener(this);
+
+         tvTip= (TextView)findViewById(R.id.tv_tip);
 
         frameSuccess = (LinearLayout) findViewById(R.id.frame_success);
         frameFail = (RelativeLayout) findViewById(R.id.frame_fail);
@@ -99,6 +104,7 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
             findViewById(R.id.frame_arriveAmt).setVisibility(View.GONE);
             findViewById(R.id.view_divider2).setVisibility(View.GONE);
             findViewById(R.id.frame_interest).setVisibility(View.GONE);
+            tvTip.setText(errormessage);
             frameSuccess.setVisibility(View.GONE);
             frameFail.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(capital)) {

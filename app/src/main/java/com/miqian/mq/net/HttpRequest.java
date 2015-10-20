@@ -1257,13 +1257,8 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RedeemData redeemResult = JsonUtil.parseObject(result, RedeemData.class);
-                if (redeemResult.getCode().equals("000000")) {
                     callback.onSucceed(redeemResult);
-                } else {
-                    callback.onFail(redeemResult.getMessage());
-                }
             }
-
             @Override
             public void onFail(String error) {
                 callback.onFail(error);
