@@ -271,17 +271,13 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     }
 
     private void initUserView() {
-
-        view.findViewById(R.id.layout_logined).setVisibility(View.VISIBLE);
+        swipeRefresh.setVisibility(View.VISIBLE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.GONE);
-
     }
 
     private void initLoginView() {
-
-        view.findViewById(R.id.layout_logined).setVisibility(View.GONE);
+        swipeRefresh.setVisibility(View.GONE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
-
     }
 
     private void login(String telephone, String password) {
