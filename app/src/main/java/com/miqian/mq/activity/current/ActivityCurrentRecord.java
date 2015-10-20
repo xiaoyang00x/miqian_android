@@ -3,11 +3,13 @@ package com.miqian.mq.activity.current;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.adapter.AdapterMyTicket;
 import com.miqian.mq.adapter.AdapterPacket;
 import com.miqian.mq.adapter.typeadapter.AdapterCurrrentRecord;
@@ -142,6 +144,13 @@ public class ActivityCurrentRecord extends BaseActivity {
     public void initTitle(WFYTitle mTitle) {
 
         mTitle.setTitleText("活期资金记录");
+        mTitle.setRightText("查看合同");
+        mTitle.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+            }
+        });
 
     }
 
