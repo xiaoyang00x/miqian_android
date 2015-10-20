@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:text="@string/regular_plan"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
+            android:textSize="@dimen/mq_font2" />
 
         <TextView
             android:id="@+id/tv_invest_security"
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:layout_centerVertical="true"
-            android:background="@color/mq_b2" />
+            android:background="#eaeaea" />
 
         <com.miqian.mq.views.indicator.CirclePageIndicator
             android:id="@+id/circle_indicator"

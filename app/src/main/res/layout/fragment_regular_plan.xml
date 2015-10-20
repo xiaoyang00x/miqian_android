@@ -55,7 +55,7 @@
             android:layout_below="@id/tv_annurate_interest_rate"
             android:text="马上认购"
             android:textColor="@color/white"
-            android:textSize="@dimen/mq_font1" />
+            android:textSize="@dimen/mq_font4" />
 
     </RelativeLayout>
     <TextView

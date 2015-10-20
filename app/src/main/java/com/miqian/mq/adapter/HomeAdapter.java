@@ -93,6 +93,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }else {
                 regularEarn = info.getNewCustomer().get(position - 1);
                 holder.setLableName("新手专享");
+                holder.showDiverView(false);
             }
             holder.bindView(activity.getBaseContext(), regularEarn, (position == 1 || position == newCustomerSize + 1) ? true : false);
         }

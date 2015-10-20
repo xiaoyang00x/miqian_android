@@ -140,6 +140,13 @@ public class WebActivity extends BaseFragmentActivity {
         startActivity(intent);
     }
 
+
+    @JavascriptInterface
+    public void login() {
+//        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+//        startActivity(intent);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

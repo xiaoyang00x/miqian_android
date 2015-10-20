@@ -30,6 +30,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
     private TextView tv_description;
     private TextView tv_add_interest;
     private DonutProgress circlebar;
+    private View divider_view;
 
     public RegularEarnViewHoder(View itemView) {
         super(itemView);
@@ -48,6 +49,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
         tv_description = (TextView) itemView.findViewById(R.id.tv_description);
         tv_add_interest = (TextView) itemView.findViewById(R.id.tv_add_interest);
         circlebar = (DonutProgress) itemView.findViewById(R.id.circlebar);
+        divider_view = itemView.findViewById(R.id.divider_view);
 
         tv_lable_name.setText(R.string.regular_earn);
         tv_invest_security.setText(R.string.principal_interest_security);
@@ -59,6 +61,14 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
      */
     public void setLableName(String name) {
         tv_lable_name.setText(name);
+    }
+
+    /**
+     * 是否显示 divider
+     * @param show
+     */
+    public void showDiverView(boolean show) {
+        divider_view.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
 
