@@ -79,6 +79,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
 
         tv_duration.setText(regularEarn.getLimit() + "天");
         circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
+        circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
 
 
         //待开标
@@ -103,10 +104,10 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest);
 
             tv_buy_now.setText(R.string.buy_now);
-            tv_annurate_interest_rate.setText(regularEarn.getYearInterest() + "%");
             tv_progress.setText(regularEarn.getPurchasePercent() + "%");
             tv_sale_number.setText("已认购" + regularEarn.getPersonTime() + "人");
         }
+        tv_annurate_interest_rate.setText(regularEarn.getYearInterest() + "%");
         if(TextUtils.isEmpty(regularEarn.getPromotionDesc())) {
             tv_description.setVisibility(View.GONE);
         }else {

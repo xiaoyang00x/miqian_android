@@ -31,7 +31,6 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final int ITEM_TYPE_HEADER = 0;
     private final int ITEM_TYPE_NORMAL = 1;
 
-    public  final static int MAX_PLAN_NUMBER = 6;   //定期计划显示的最大数量
 
     private List<RegularEarn> items;
     private List<RegularPlan> planList;
@@ -119,7 +118,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             layout_limit_container.removeAllViews();
             if(planList != null && planList.size() > 0) {
-                int count = planList.size() < MAX_PLAN_NUMBER? planList.size() : MAX_PLAN_NUMBER;
+                int count = planList.size() ;
                 layout_limit_container.setWeightSum((count+1) * 2);
                 for(int i = 0; i < count; i++) {
                     TextView textView = new TextView(mContext);
@@ -251,7 +250,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public int getCount() {
-            return planList.size() < MAX_PLAN_NUMBER? planList.size() : MAX_PLAN_NUMBER;
+            return planList != null? planList.size() : 0;
         }
 
         @Override

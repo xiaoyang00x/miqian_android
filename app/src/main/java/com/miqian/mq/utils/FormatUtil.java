@@ -2,6 +2,7 @@ package com.miqian.mq.utils;
 
 import android.text.TextUtils;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -49,9 +50,9 @@ public class FormatUtil {
      * @param amount
      * @return
      */
-    public static String formatAmount(String amount) {
+    public static String formatAmount(BigDecimal amount) {
         NumberFormat nf = new DecimalFormat("#,###.####");
-        String format = amount;
+        String format = amount.toString();
         try{
             format = nf.format(amount);
         }catch (Exception e) {

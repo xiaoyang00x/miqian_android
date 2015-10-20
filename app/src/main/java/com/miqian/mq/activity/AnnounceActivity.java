@@ -130,7 +130,7 @@ public class AnnounceActivity extends BaseActivity
                         case 51:
                         case 52:
                         case 53:
-                            WebViewActivity.doIntent(mContext, jpushInfo.getUrl(), true, null);
+                            WebActivity.startActivity(mContext, jpushInfo.getUrl());
                             break;
                         default:
                             Intent intent_other = new Intent(mActivity, AnnounceResultActivity.class);

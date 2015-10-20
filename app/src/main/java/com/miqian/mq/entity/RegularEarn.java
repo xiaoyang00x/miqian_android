@@ -1,6 +1,7 @@
 package com.miqian.mq.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -17,15 +18,25 @@ public class RegularEarn implements Serializable {
     private String personTime; //认购人次
     private String subjectType; //标的类型
     private String subjectStatus; //标的状态  投标状态编码: 99待开标不显示   00待开标   01已开标   02已满标（已售罄）  03已到期  04已撤销  05已流标   06审批中    07还款中    08正常还完
-    private String subjectTotalPrice; //标的总额
-    private String purchasePrice; //已认购金额
+    private BigDecimal subjectTotalPrice; //标的总额
+    private BigDecimal purchasePrice; //已认购金额
     private String bxbzf; //本息保障方
     private String ddbzf; //兜底保障方
     private String presentationYesNo; // "N",//是否赠送收益
     private String presentationYearInterest; //赠送年利率
-    private String fromInvestmentAmount; //起投金额
+    private BigDecimal fromInvestmentAmount; //起投金额
     private String promotionDesc; //"满1万元送100元红包"//促销描述
     private ArrayList<RegularEarnSubInfo> schemeList;
+
+    public BigDecimal getSubjectMaxBuy() {
+        return subjectMaxBuy;
+    }
+
+    public void setSubjectMaxBuy(BigDecimal subjectMaxBuy) {
+        this.subjectMaxBuy = subjectMaxBuy;
+    }
+
+    private BigDecimal subjectMaxBuy; //最大认购金额
 
     //以下字段只有再取详情的时候才有
     private String yearInterest; //年化收益
@@ -146,19 +157,19 @@ public class RegularEarn implements Serializable {
         this.subjectStatus = subjectStatus;
     }
 
-    public String getSubjectTotalPrice() {
+    public BigDecimal getSubjectTotalPrice() {
         return subjectTotalPrice;
     }
 
-    public void setSubjectTotalPrice(String subjectTotalPrice) {
+    public void setSubjectTotalPrice(BigDecimal subjectTotalPrice) {
         this.subjectTotalPrice = subjectTotalPrice;
     }
 
-    public String getPurchasePrice() {
+    public BigDecimal getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(String purchasePrice) {
+    public void setPurchasePrice(BigDecimal purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
@@ -194,11 +205,11 @@ public class RegularEarn implements Serializable {
         this.presentationYearInterest = presentationYearInterest;
     }
 
-    public String getFromInvestmentAmount() {
+    public BigDecimal getFromInvestmentAmount() {
         return fromInvestmentAmount;
     }
 
-    public void setFromInvestmentAmount(String fromInvestmentAmount) {
+    public void setFromInvestmentAmount(BigDecimal fromInvestmentAmount) {
         this.fromInvestmentAmount = fromInvestmentAmount;
     }
 

@@ -257,8 +257,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                         case 51:
                         case 52:
                         case 53:
-
-                            WebViewActivity.doIntent(mContext, jpush.getUrl(), true, null);
+                            WebActivity.startActivity(mContext, jpush.getUrl());
 
                             break;
                         default:

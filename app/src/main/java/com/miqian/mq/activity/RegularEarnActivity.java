@@ -15,10 +15,13 @@ import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WFYTitle;
+
+import java.math.BigDecimal;
 
 /**
  * Created by guolei_wang on 15/9/25.
@@ -29,8 +32,8 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
 
     private DialogPay dialogPay;
 
-    private float downLimit = 1f;
-    private float upLimit = 999999;
+    private BigDecimal downLimit = BigDecimal.ONE;
+    private BigDecimal upLimit = new BigDecimal(999999);
     private String interestRateString = "";
 
     public static void startActivity(Context context, String subjectId) {
@@ -87,11 +90,11 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void positionBtnClick(String moneyString) {
                 if (!TextUtils.isEmpty(moneyString)) {
-                    float money = Float.parseFloat(moneyString);
-                    if (money < downLimit) {
+                    BigDecimal money = new BigDecimal(moneyString);
+                    if (money.compareTo(downLimit) == -1) {
                         this.setTitle("提示：输入请大于" + downLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
-                    } else if (money > upLimit) {
+                    } else if (money.compareTo(upLimit) == 1) {
                         this.setTitle("提示：输入请小于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
@@ -153,6 +156,21 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         progressBar.setProgress((new Float(data.getPurchasePercent())).intValue());
         tv_fx.setText(data.getDdbzf());
         tv_bxbz.setText(data.getBxbzf());
+
+        tv_lable1.setText( "总金额" + FormatUtil.formatAmount(data.getSubjectTotalPrice()) + "元");
+        tv_lable3.setText("起投金额￥" + FormatUtil.formatAmount(data.getFromInvestmentAmount()));
+        if(data.getSubjectMaxBuy().compareTo(BigDecimal.ZERO) == 1) {
+            tv_lable4.setText("每人限额￥" + FormatUtil.formatAmount(data.getSubjectMaxBuy()));
+        }else {
+            tv_lable4.setText("");
+        }
+
+        //待开标
+        if("00".equals(data.getSubjectStatus())) {
+            tv_lable2.setText(FormatUtil.formatDate(data.getStartTimestamp(), "dd日 hh:mm:ss开售"));
+        }else {
+            tv_lable2.setText(data.getPurchasePercent() + "%，已认购" + data.getPersonTime() + "人");
+        }
     }
 
     @Override
@@ -178,7 +196,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                 end();
                 if (result != null) {
                     RegularEarn regularEarn = result.getData();
-                    downLimit = Float.parseFloat(regularEarn.getFromInvestmentAmount());
+                    downLimit = regularEarn.getFromInvestmentAmount();
 //                    upLimit = Float.parseFloat(currentInfo.getCurrentBuyUpLimit());
                     float tempInterest = Float.parseFloat(regularEarn.getYearInterest()) + Float.parseFloat(regularEarn.getPresentationYearInterest());
                     interestRateString = "年化收益率：" + tempInterest + "%  期限：" + regularEarn.getLimit() + "天";

@@ -32,7 +32,6 @@
 
 
 -keep class com.miqian.mq.activity.WebActivity { *;}
--keep class com.miqian.mq.activity.WebViewActivity { *;}
 
 -keep class com.miqian.mq.entity.** { *;}
 

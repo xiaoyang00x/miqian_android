@@ -19,7 +19,7 @@
             android:layout_centerInParent="true"
             android:text="18%"
             android:textColor="@color/mq_r1"
-            android:textSize="@dimen/mq_font8" />
+            android:textSize="45dp" />
         <TextView
         android:id="@+id/tv_add_interest"
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:layout_marginLeft="-5dp"
         android:background="@drawable/bg_add_interest"
         android:textColor="@color/white"
-        android:textSize="@dimen/mq_font4"
+        android:textSize="@dimen/mq_font2"
         android:text="+1.5%"
         />
         <TextView
@@ -43,19 +43,19 @@
             android:layout_marginBottom="22dp"
             android:text="年化利率"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
+            android:textSize="@dimen/mq_font1" />
 
         <TextView
             android:id="@+id/tv_status"
             android:layout_width="205dp"
             android:layout_height="45dp"
             android:gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tv_annurate_interest_rate"
             android:text="马上认购"
             android:textColor="@color/white"
-            android:textSize="@dimen/mq_font4" />
+            android:textSize="@dimen/mq_font1" />
 
     </RelativeLayout>
     <TextView
@@ -80,6 +80,6 @@
         android:layout_below="@id/layout_circle"
         android:layout_centerHorizontal="true"
         android:textColor="@color/mq_b2"
-        android:textSize="@dimen/mq_font4"
+        android:textSize="@dimen/mq_font3"
         />
 </RelativeLayout>
