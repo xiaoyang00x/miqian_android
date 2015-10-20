@@ -32,7 +32,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
  * Created by Joy on 2015/9/22.
  */
 public class BindCardActivity extends BaseActivity {
-    private TextView textAgreement, bindBankName, bindBankNumber;
+    private TextView  bindBankName, bindBankNumber;
     private EditText etCardNum;
     private View frameBank, frameTip;
     private UserInfo userInfo;
@@ -52,7 +52,6 @@ public class BindCardActivity extends BaseActivity {
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).displayer(new RoundedBitmapDisplayer(0)).build();
 
-        textAgreement = (TextView) findViewById(R.id.text_agreement);
         etCardNum = (EditText) findViewById(R.id.edit_bank_number);
 
         frameBank = findViewById(R.id.frame_bank);
@@ -61,8 +60,6 @@ public class BindCardActivity extends BaseActivity {
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
         iconBank = (ImageView) findViewById(R.id.icon_bank);
 
-        SpannableString span = getAgreementSpan();
-        textAgreement.setText(span);
 
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
@@ -89,28 +86,6 @@ public class BindCardActivity extends BaseActivity {
 
 
     }
-
-    private SpannableString getAgreementSpan() {
-        SpannableString spanableInfo = new SpannableString("同意《财旺旺服务协议》和《授权委托书》");
-
-        spanableInfo.setSpan(new Clickable(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-//                    WebViewActivity.doIntent(mActivity, Urls.agreement_server, true, null);
-            }
-        }), 2, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        spanableInfo.setSpan(new Clickable(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-//                    WebViewActivity.doIntent(mActivity, Urls.agreement_entrust, true, null);
-            }
-        }), 12, 19, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spanableInfo;
-    }
-
 
     @Override
     public int getLayoutId() {

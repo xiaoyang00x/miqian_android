@@ -259,35 +259,112 @@ public class CapitalRecordActivity extends BaseActivity {
     public void searchBtn(View v) {
         switch (v.getId()) {
             case R.id.all:
-                changeState(all, "资金记录", all_t, "");
+                preSelected.setColor(0xdddddd);
+                preSelected = all;
 
+                preSelected.setColor(Color.WHITE);
+                preSelected.setColor(Color.RED);
+                getmTitle().setTitleText("资金记录");
+
+                //white text
+                preSelected_t.setTextColor(0xff505050);
+                all_t.setTextColor(Color.WHITE);
+                preSelected_t = all_t;
+
+                mType="";
                 break;
             case R.id.saving:
-                changeState(saving, "充值", saving_t, "MQ01");
+                preSelected.setColor(0xdddddd);
+                preSelected = saving;
+                preSelected.setColor(Color.RED);
+                getmTitle().setTitleText("充值");
+
+
+                //white text
+                preSelected_t.setTextColor(0xff505050);
+                saving_t.setTextColor(Color.WHITE);
+                preSelected_t = saving_t;
+
+                mType="MQ01";
                 break;
 
             case R.id.buy:
-                changeState(buy, "认购", buy_t, "MQ03");
+                preSelected.setColor(0xdddddd);
+                preSelected = buy;
+                preSelected.setColor(Color.RED);
+                getmTitle().setTitleText("认购");
+
+                //white text
+                preSelected_t.setTextColor(0xff505050);
+                buy_t.setTextColor(Color.WHITE);
+                preSelected_t = buy_t;
+
+                mType="MQ03";
+                break;
+            case R.id.withdraw:
+                preSelected.setColor(0xdddddd);
+                preSelected = withdraw;
+                preSelected.setColor(Color.RED);
+                getmTitle().setTitleText("提现");
+
+                preSelected_t.setTextColor(0xff505050);
+                withdraw_t.setTextColor(Color.WHITE);
+                preSelected_t = withdraw_t;
+
+                mType="MQ02";
                 break;
 
-            case R.id.withdraw:
-                changeState(withdraw, "提现", withdraw_t, "MQ02");
-                break;
 
             case R.id.redeem:
-                changeState(redeem, "赎回", redeem_t, "MQ04");
+                preSelected.setColor(0xdddddd);
+                preSelected = redeem;
+
+                preSelected_t.setTextColor(0xff505050);
+                preSelected_t = redeem_t;
+                preSelected_t.setTextColor(0xffffffff);
+
+                preSelected.setColor(Color.RED);
+                getmTitle().setTitleText("赎回");
+
+                mType="MQ04";
                 break;
 
             case R.id.transfer:
-                changeState(transfer, "转让", transfer_t, "MQ05");
+                preSelected.setColor(0xdddddd);
+                preSelected = transfer;
+                preSelected.setColor(Color.RED);
+                getmTitle().setTitleText("转让");
+
+                preSelected_t.setTextColor(0xff505050);
+                preSelected_t = transfer_t;
+                preSelected_t.setTextColor(0xffffffff);
+
+                mType="MQ05";
                 break;
 
             case R.id.maturity:
-                changeState(maturity, "到期", maturity_t, "MQ06");
+                preSelected.setColor(0xdddddd);
+                preSelected = maturity;
+                preSelected.setColor(Color.RED);
+                getmTitle().setTitleText("到期");
+                preSelected_t.setTextColor(0xff505050);
+                preSelected_t = maturity_t;
+                preSelected_t.setTextColor(0xffffffff);
+
+                mType="MQ06";
                 break;
 
             case R.id.other:
-                changeState(other, "其他", other_t, "MQ07");
+                preSelected.setColor(0xdddddd);
+                preSelected = other;
+
+                preSelected.setColor(Color.RED);
+                getmTitle().setTitleText("其他");
+                preSelected_t.setTextColor(0xff505050);
+                preSelected_t = other_t;
+                preSelected_t.setTextColor(0xffffffff);
+
+                mType="MQ07";
                 break;
             default:
                 break;
@@ -298,22 +375,6 @@ public class CapitalRecordActivity extends BaseActivity {
         //todo 到网络获取数据。因为该界面的信息是分页的。
 
         obtainData();
-    }
-
-    private void changeState(CircleButton circleButton, String title, TextView tv_select, String type) {
-        preSelected.setColor(0xdddddd);
-        preSelected = circleButton;
-        preSelected.setColor(Color.WHITE);
-        preSelected.setColor(Color.RED);
-
-        getmTitle().setTitleText(title);
-
-        //white text
-        preSelected_t.setTextColor(0xff505050);
-        all_t.setTextColor(Color.WHITE);
-        preSelected_t = tv_select;
-
-        mType = type;
     }
 
 }

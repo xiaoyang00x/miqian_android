@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.Redeem;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -121,10 +122,12 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_back_home:
-                RedeemResult.this.finish();
+                mActivity.finish();
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_HOME,null);
                 break;
             case R.id.bt_back_user:
                 RedeemResult.this.finish();
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER,null);
                 break;
             default:
                 break;
