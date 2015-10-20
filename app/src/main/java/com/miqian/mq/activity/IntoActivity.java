@@ -51,6 +51,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private EditText editBankNumber;
     private TextView bindBankName;
     private TextView bindBankNumber;
+    private TextView textLaw;
     private ImageView iconBank;
 
     private MyHandler mHandler;
@@ -113,6 +114,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
         iconBank = (ImageView) findViewById(R.id.icon_bank);
+        textLaw = (TextView) findViewById(R.id.text_law);
+        textLaw.setOnClickListener(this);
         mHandler = new MyHandler(this);
     }
 
@@ -209,6 +212,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.bt_rollin:
                 rollIn();
+                break;
+            case R.id.text_law:
+                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
                 break;
             default:
                 break;

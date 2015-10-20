@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
@@ -32,6 +34,7 @@ public class RegisterActivity extends BaseActivity {
 
     private EditText mEt_Telephone, mEt_Captcha, mEt_Invite, mEt_Password;
     private Button mBtn_sendCaptcha;
+    private TextView textLaw;
     private String phone;
     private boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;
@@ -66,7 +69,6 @@ public class RegisterActivity extends BaseActivity {
         mEt_Invite = (EditText) findViewById(R.id.et_account_invite);
         mEt_Password = (EditText) findViewById(R.id.et_account_password);
         mBtn_sendCaptcha = (Button) findViewById(R.id.btn_send);
-
 
         mEt_Telephone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -152,6 +154,10 @@ public class RegisterActivity extends BaseActivity {
         }
 
 
+    }
+
+    public void textLawCick(View v) {
+        WebActivity.startActivity(mActivity, "https://www.baidu.com/");
     }
 
     private void summit(final String captcha, final String invite, final String password) {
