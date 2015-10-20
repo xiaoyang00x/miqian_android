@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.UserRegularDetail;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.net.HttpRequest;
@@ -208,6 +209,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 }
                 break;
             case R.id.frame_contract://查看合同
+                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
                 break;
             case R.id.bt_repayment://还款详情
                 if (userRegularDetail != null) {

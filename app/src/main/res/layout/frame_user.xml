@@ -141,14 +141,14 @@
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/frame_title">
+        android:layout_below="@+id/frame_title"
+        android:visibility="gone">
 
         <ScrollView
             android:id="@+id/layout_logined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
-
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"

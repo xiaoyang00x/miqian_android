@@ -1,9 +1,15 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -13,6 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.ProducedOrder;
@@ -25,6 +32,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTradePassword;
+import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 
 import java.math.BigDecimal;
@@ -48,6 +56,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private RelativeLayout frameRedPackage;
     private RelativeLayout frameTip;
     private TextView textTip;
+    private TextView textLaw;
+    private MySwipeRefresh swipeRefresh;
 
     private DialogTradePassword dialogTradePasswordSet;
     private DialogTradePassword dialogTradePasswordInput;
@@ -100,11 +110,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     private void refreshData() {
-        mWaitingDialog.show();
+        if (!swipeRefresh.isRefreshing()) {
+            mWaitingDialog.show();
+        }
         HttpRequest.getProduceOrder(mActivity, new ICallback<ProducedOrderResult>() {
             @Override
             public void onSucceed(ProducedOrderResult result) {
                 mWaitingDialog.dismiss();
+                swipeRefresh.setRefreshing(false);
                 if ("102002".equals(result.getCode()) || "102003".equals(result.getCode())) {
                     showTips(true, result);
                 } else {
@@ -118,6 +131,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
+                swipeRefresh.setRefreshing(false);
                 Uihelper.showToast(mActivity, error);
             }
         }, money, subjectId, prodId);
@@ -197,6 +211,19 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         frameBankPay = (RelativeLayout) findViewById(R.id.frame_bank_pay);
         frameRedPackage = (RelativeLayout) findViewById(R.id.frame_red_package);
         frameRedPackage.setOnClickListener(this);
+
+        textLaw = (TextView) findViewById(R.id.text_law);
+        SpannableString span = getAgreementSpan(prodId);
+        textLaw.setText(span);
+        textLaw.setMovementMethod(LinkMovementMethod.getInstance());
+
+        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
     }
 
     @Override
@@ -237,6 +264,59 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 break;
             default:
                 break;
+        }
+    }
+
+    private SpannableString getAgreementSpan(String prodId) {
+        SpannableString spanableInfo = null;
+        if (PRODID_CURRENT.equals(prodId)) {
+            spanableInfo = new SpannableString("已同意《活期赚服务协议》");
+            spanableInfo.setSpan(new Clickable(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+                }
+            }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else if (PRODID_REGULAR.equals(prodId)) {
+            spanableInfo = new SpannableString("已同意《定期赚服务协议》");
+            spanableInfo.setSpan(new Clickable(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+                }
+            }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else {
+            spanableInfo = new SpannableString("已同意《定期计划服务协议》");
+            spanableInfo.setSpan(new Clickable(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+                }
+            }), 3, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spanableInfo;
+    }
+
+    class Clickable extends ClickableSpan implements View.OnClickListener {
+        private final View.OnClickListener mListener;
+
+        public Clickable(View.OnClickListener l) {
+            mListener = l;
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onClick(v);
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            ds.setColor(Color.rgb(26, 196, 233));
+            ds.setUnderlineText(false);
         }
     }
 

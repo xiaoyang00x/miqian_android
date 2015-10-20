@@ -9,7 +9,7 @@
         android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:minHeight="40dp"
+        android:layout_marginTop="@dimen/margin_top"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right">
 
@@ -154,6 +154,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

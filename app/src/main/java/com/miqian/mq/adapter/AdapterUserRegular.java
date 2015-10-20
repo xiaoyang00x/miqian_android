@@ -71,21 +71,25 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             if (regInvest.getBearingStatus().equals("Y")) {
                 ((ViewHolder) holder).textCapital.setText("投资本金");
                 if (regInvest.getProjectState().equals("3")) {
+                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_over);
                 } else if (regInvest.getProjectState().equals("2")) {
+                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_gray);
                 } else {
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.color.transparent);
+                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 }
                 ((ViewHolder) holder).frameEarning.setVisibility(View.GONE);
             } else {
                 ((ViewHolder) holder).textCapital.setText("待收本金");
                 if (regInvest.getProjectState().equals("1")) {
+                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
                 } else if (regInvest.getProjectState().equals("2")) {
+                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_red);
                 } else {
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.color.transparent);
+                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 }
                 ((ViewHolder) holder).frameEarning.setVisibility(View.VISIBLE);
             }

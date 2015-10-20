@@ -99,7 +99,6 @@ public class RedPaperActivity extends BaseActivity{
 
                 @Override
                 public void onSucceed(RedPaperData result) {
-                    mWaitingDialog.dismiss();
                     Redpaper redpaper = result.getData();
                     page = result.getData().getPage();
                     if (redpaper != null) {
@@ -113,7 +112,6 @@ public class RedPaperActivity extends BaseActivity{
 
                 @Override
                 public void onFail(String error) {
-                    mWaitingDialog.dismiss();
                     isLoading = false;
 
                 }

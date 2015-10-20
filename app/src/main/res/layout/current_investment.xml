@@ -2,169 +2,202 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/margin_top">
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/frame_tip"
+    <com.miqian.mq.views.MySwipeRefresh
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="#ffeebc"
-        android:visibility="gone"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frame_title">
 
-        <TextView
-            android:id="@+id/text_tip"
-            style="@style/f3_B1"
-            android:layout_centerVertical="true"
-            android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/icon_tip_warning" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
-        <View style="@style/item_divider"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/margin_top">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+                <RelativeLayout
+                    android:id="@+id/frame_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_item"
+                    android:background="#ffeebc"
+                    android:paddingLeft="@dimen/margin_left_right"
+                    android:paddingRight="@dimen/margin_left_right"
+                    android:visibility="gone">
 
-        <TextView
-            android:id="@+id/text_project_type"
-            style="@style/f3_B1"
-            android:drawableLeft="@drawable/icon_type_current"
-            android:drawablePadding="3dp"
-            android:text="期赚" />
+                    <TextView
+                        android:id="@+id/text_tip"
+                        style="@style/f3_B1"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/icon_tip_warning"
+                        android:drawablePadding="10dp" />
 
-        <TextView
-            android:id="@+id/text_interest_rate"
-            style="@style/f3_B1"
-            android:layout_alignParentRight="true"
-            android:drawableRight="@drawable/investment_interest"
-            android:text="年化收益率：" />
+                    <View
+                        style="@style/item_divider"
+                        android:layout_alignParentBottom="true" />
+                </RelativeLayout>
 
-    </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_item"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_left_right"
+                    android:paddingRight="@dimen/margin_left_right">
 
-    <View style="@style/item_divider" />
+                    <TextView
+                        android:id="@+id/text_project_type"
+                        style="@style/f3_B1"
+                        android:drawableLeft="@drawable/icon_type_current"
+                        android:drawablePadding="3dp"
+                        android:text="期赚" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:minHeight="40dp"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+                    <TextView
+                        android:id="@+id/text_interest_rate"
+                        style="@style/f3_B1"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@drawable/investment_interest"
+                        android:text="年化收益率：" />
 
-        <TextView
-            style="@style/f3_B1"
-            android:text="认购金额" />
+                </RelativeLayout>
 
-        <TextView
-            android:id="@+id/order_money"
-            style="@style/f3_B1"
-            android:layout_alignParentRight="true"
-            android:text="--" />
+                <View style="@style/item_divider" />
 
-    </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_item"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:minHeight="40dp"
+                    android:paddingLeft="@dimen/margin_left_right"
+                    android:paddingRight="@dimen/margin_left_right">
 
-    <View style="@style/item_divider" />
+                    <TextView
+                        style="@style/f3_B1"
+                        android:text="认购金额" />
 
-    <RelativeLayout
-        android:id="@+id/frame_red_package"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+                    <TextView
+                        android:id="@+id/order_money"
+                        style="@style/f3_B1"
+                        android:layout_alignParentRight="true"
+                        android:text="--" />
 
-        <TextView
-            style="@style/f3_B1"
-            android:layout_centerVertical="true"
-            android:text="红包/拾财券" />
+                </RelativeLayout>
 
-        <TextView
-            android:id="@+id/text_best_money"
-            style="@style/f3_R1"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp" />
+                <View style="@style/item_divider" />
 
-        <TextView
-            android:id="@+id/text_best"
-            style="@style/f3_B2"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="2dp"
-            android:layout_toLeftOf="@id/text_best_money" />
+                <RelativeLayout
+                    android:id="@+id/frame_red_package"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_item"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/margin_left_right"
+                    android:paddingRight="@dimen/margin_left_right">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/right" />
-    </RelativeLayout>
+                    <TextView
+                        style="@style/f3_B1"
+                        android:layout_centerVertical="true"
+                        android:text="红包/拾财券" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:layout_marginTop="@dimen/margin_top"
-        android:background="@color/white"
-        android:minHeight="40dp"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+                    <TextView
+                        android:id="@+id/text_best_money"
+                        style="@style/f3_R1"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp" />
 
-        <TextView
-            style="@style/f3_B1"
-            android:layout_centerVertical="true"
-            android:text="余额支付" />
+                    <TextView
+                        android:id="@+id/text_best"
+                        style="@style/f3_B2"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2dp"
+                        android:layout_toLeftOf="@id/text_best_money" />
 
-        <TextView
-            android:id="@+id/text_balance"
-            style="@style/f1_R1"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="--.--" />
-    </RelativeLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/right" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/frame_bank_pay"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right"
-        android:visibility="gone">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_item"
+                    android:layout_marginTop="@dimen/margin_top"
+                    android:background="@color/white"
+                    android:minHeight="40dp"
+                    android:paddingLeft="@dimen/margin_left_right"
+                    android:paddingRight="@dimen/margin_left_right">
 
-        <TextView
-            android:id="@+id/text_bank_pay"
-            style="@style/f3_B1"
-            android:layout_centerVertical="true"
-            android:text="余额不足，银行卡充值 " />
+                    <TextView
+                        style="@style/f3_B1"
+                        android:layout_centerVertical="true"
+                        android:text="余额支付" />
 
-        <TextView
-            android:id="@+id/text_bank_pay_money"
-            style="@style/f1_R1"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/text_bank_pay"
-            android:text="80.00元" />
-    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/text_balance"
+                        style="@style/f1_R1"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="--.--" />
+                </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right"
-        android:layout_marginTop="@dimen/margin_top">
+                <RelativeLayout
+                    android:id="@+id/frame_bank_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_item"
+                    android:paddingLeft="@dimen/margin_left_right"
+                    android:paddingRight="@dimen/margin_left_right"
+                    android:visibility="gone">
 
-        <Button
-            android:id="@+id/bt_pay"
-            style="@style/click_btn"
-            android:layout_height="@dimen/edit_item"
-            android:text="支付" />
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/text_bank_pay"
+                        style="@style/f3_B1"
+                        android:layout_centerVertical="true"
+                        android:text="余额不足，银行卡充值 " />
 
+                    <TextView
+                        android:id="@+id/text_bank_pay_money"
+                        style="@style/f1_R1"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/text_bank_pay"
+                        android:text="80.00元" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:layout_marginRight="@dimen/margin_left_right"
+                    android:layout_marginTop="@dimen/margin_top">
+
+                    <Button
+                        android:id="@+id/bt_pay"
+                        style="@style/click_btn"
+                        android:layout_height="@dimen/edit_item"
+                        android:text="支付" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/text_law"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/mq_font4" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </com.miqian.mq.views.MySwipeRefresh>
 </LinearLayout>

@@ -101,19 +101,5 @@
             android:layout_height="@dimen/edit_item"
             android:text="确认" />
     </LinearLayout>
-    <RelativeLayout
-        style="@style/FillContent"
-        android:padding="@dimen/margin_left_right"
-        >
-
-        <TextView
-            android:id="@+id/text_agreement"
-            style="@style/WrapContent"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/miqian_gray"
-            android:text="3333"
-            android:textSize="@dimen/textsize_small" />
-    </RelativeLayout>
 
 </LinearLayout>

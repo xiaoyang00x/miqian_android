@@ -204,26 +204,33 @@ public class ActivityRedeem extends BaseActivity {
             @Override
             public void onSucceed(RedeemData result) {
 
-                Redeem redeem = result.getData();
                 mWaitingDialog.dismiss();
+                String code = result.getCode();
 
                 Intent intent = new Intent(mActivity, RedeemResult.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("redeemData", redeem);
-                intent.putExtra("state", 1);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
+
+                if (code.equals("999993")) {
+                    Uihelper.showToast(mActivity, result.getMessage());
+                } else {
+                    if (code.equals("000000")) {
+                        intent.putExtra("state", 1);
+                        Redeem redeem = result.getData();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("redeemData", redeem);
+                        intent.putExtras(bundle);
+                    } else {
+                        intent.putExtra("state", 0);
+                        intent.putExtra("errormessage", result.getMessage());
+                        intent.putExtra("capital",money);
+                    }
+                    startActivity(intent);
+                    finish();
+                }
             }
 
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
-                Intent intent = new Intent(mActivity, RedeemResult.class);
-                intent.putExtra("state",0);
-                intent.putExtra("capital",money);
-                startActivity(intent);
-                finish();
             }
         }, money, password);
 

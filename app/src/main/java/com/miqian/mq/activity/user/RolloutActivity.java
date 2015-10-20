@@ -393,14 +393,12 @@ public class RolloutActivity extends BaseActivity {
                                 @Override
                                 public void onSucceed(Meta result) {
                                     dismiss();
-                                    mWaitingDialog.show();
                                     Uihelper.showToast(mActivity, "设置成功");
                                 }
 
                                 @Override
                                 public void onFail(String error) {
                                     dismiss();
-                                    mWaitingDialog.show();
                                     Uihelper.showToast(mActivity, error);
                                 }
                             }, password, password);
