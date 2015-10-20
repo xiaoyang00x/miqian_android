@@ -39,6 +39,7 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.ProgressDialogView;
 
 /**
@@ -56,6 +57,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     private UserInfo userInfo;
     private TextView tv_TotalProfit, tv_balance, tv_totalasset;
     private CustomDialog dialogTips;
+    private MySwipeRefresh swipeRefresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,10 +92,13 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     }
 
     private void obtainData() {
-        mWaitingDialog.show();
+        if (!swipeRefresh.isRefreshing()) {
+            mWaitingDialog.show();
+        }
         HttpRequest.getUserInfo(getActivity(), new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
+                swipeRefresh.setRefreshing(false);
                 mWaitingDialog.dismiss();
                 userInfo = result.getData();
                 if (userInfo != null) {
@@ -103,6 +108,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
             @Override
             public void onFail(String error) {
+                swipeRefresh.setRefreshing(false);
                 mWaitingDialog.dismiss();
                 setData(null);
                 Uihelper.showToast(getActivity(), error);
@@ -165,6 +171,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     }
 
     private void findViewById(View view) {
+
+        swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+            @Override
+            public void onRefresh() {
+                obtainData();
+            }
+        });
 
         mWaitingDialog = ProgressDialogView.create(getActivity());
 

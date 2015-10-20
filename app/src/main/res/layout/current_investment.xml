@@ -2,15 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/margin_top">
+
+    <RelativeLayout
+        android:id="@+id/frame_tip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="#ffeebc"
+        android:visibility="gone"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            android:id="@+id/text_tip"
+            style="@style/f3_B1"
+            android:layout_centerVertical="true"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/icon_tip_warning" />
+
+        <View style="@style/item_divider"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
-        android:layout_marginTop="@dimen/margin_top"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:minHeight="40dp"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right">
 

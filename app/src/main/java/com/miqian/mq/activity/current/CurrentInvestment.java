@@ -46,6 +46,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private TextView textBankPayMoney;
     private RelativeLayout frameBankPay;
     private RelativeLayout frameRedPackage;
+    private RelativeLayout frameTip;
+    private TextView textTip;
 
     private DialogTradePassword dialogTradePasswordSet;
     private DialogTradePassword dialogTradePasswordInput;
@@ -103,15 +105,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             @Override
             public void onSucceed(ProducedOrderResult result) {
                 mWaitingDialog.dismiss();
-                producedOrder = result.getData();
-                promList = producedOrder.getPromList();
-                refreshView();
-                // TODO: 2015/10/16
-//                {
-//                    "message": "超出用户可认购额度，用户剩余可认购4700元",
-//                        "code": "102002"
-//                }
-
+                if ("102002".equals(result.getCode()) || "102003".equals(result.getCode())) {
+                    showTips(true, result);
+                } else {
+                    showTips(false, result);
+                    producedOrder = result.getData();
+                    promList = producedOrder.getPromList();
+                    refreshView();
+                }
             }
 
             @Override
@@ -120,6 +121,19 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 Uihelper.showToast(mActivity, error);
             }
         }, money, subjectId, prodId);
+    }
+
+    private void showTips(boolean flag, ProducedOrderResult result) {
+        if (flag) {
+            frameTip.setVisibility(View.VISIBLE);
+            btPay.setBackgroundResource(R.drawable.btn_cancel);
+            btPay.setEnabled(false);
+            textTip.setText(result.getMessage());
+        } else {
+            frameTip.setVisibility(View.GONE);
+            btPay.setBackgroundResource(R.drawable.btn_red);
+            btPay.setEnabled(true);
+        }
     }
 
     private void refreshView() {
@@ -152,6 +166,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initView() {
+        textTip = (TextView) findViewById(R.id.text_tip);
+        frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
+
         textProjectType = (TextView) findViewById(R.id.text_project_type);
         textInterestRate = (TextView) findViewById(R.id.text_interest_rate);
         if (PRODID_CURRENT.equals(prodId)) {
@@ -169,7 +186,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             textInterestRate.setText(interestRateString);
         }
-
 
         btPay = (Button) findViewById(R.id.bt_pay);
         btPay.setOnClickListener(this);

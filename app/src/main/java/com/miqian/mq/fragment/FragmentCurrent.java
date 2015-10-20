@@ -22,6 +22,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
+import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WaterWaveView;
 
 public class FragmentCurrent extends Fragment implements View.OnClickListener {
@@ -34,6 +35,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
     private TextView totalCountText;
     private TextView textDetail;
     private ImageButton btRight;
+    private MySwipeRefresh swipeRefresh;
 
     private Activity mContext;
     private DialogPay dialogPay;
@@ -109,6 +111,13 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
                 this.setTitleColor(getResources().getColor(R.color.mq_b1));
             }
         };
+        swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+            @Override
+            public void onRefresh() {
+                obtainData();
+            }
+        });
     }
 
     private void refreshView() {
@@ -131,6 +140,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
         HttpRequest.getCurrentHome(mContext, new ICallback<CurrentInfoResult>() {
             @Override
             public void onSucceed(CurrentInfoResult result) {
+                swipeRefresh.setRefreshing(false);
                 currentInfo = result.getData();
                 downLimit = Float.parseFloat(currentInfo.getCurrentBuyDownLimit());
                 upLimit = Float.parseFloat(currentInfo.getCurrentBuyUpLimit());
@@ -139,6 +149,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
+                swipeRefresh.setRefreshing(false);
                 Uihelper.showToast(mContext, error);
             }
         });

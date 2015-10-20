@@ -7,8 +7,8 @@
 
     <include layout="@layout/frame_title" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <com.miqian.mq.views.MySwipeRefresh
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,5 +17,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.miqian.mq.views.MySwipeRefresh>
 </LinearLayout>

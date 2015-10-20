@@ -291,9 +291,11 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
             case OperationKey.BACK_HOME:
+                ActivityStack.getActivityStack().clearActivity();
                 current_tab = 0;
                 break;
             case OperationKey.BACK_USER:
+                ActivityStack.getActivityStack().clearActivity();
                 current_tab = 3;
                 break;
             case OperationKey.CHANGE_TOKEN:
