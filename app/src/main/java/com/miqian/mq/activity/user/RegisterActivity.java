@@ -36,7 +36,6 @@ public class RegisterActivity extends BaseActivity {
     private boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;
     private Thread thread;
-    private boolean isSending;
     private static Handler handler;
     private static final int NUM_TYPE_CAPTCHA = 1;
     private static final int NUM_TYPE_SUMMIT = 2;
@@ -51,7 +50,6 @@ public class RegisterActivity extends BaseActivity {
                 String timeInfo = msg.getData().getString("time");
                 mBtn_sendCaptcha.setText(timeInfo + "秒后重新获取");
                 if ("0".equals(timeInfo)) {
-                    isSending = false;
                     mBtn_sendCaptcha.setEnabled(true);
                     mBtn_sendCaptcha.setText("获取验证码");
                 }
@@ -108,11 +106,11 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void sendMessage() {
-
+        mWaitingDialog.show();
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                isSending = true;
+                mWaitingDialog.dismiss();
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -122,7 +120,7 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                isSending = true;
+                mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
 
             }
@@ -140,11 +138,7 @@ public class RegisterActivity extends BaseActivity {
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
                 if (!TextUtils.isEmpty(captcha)) {
-                    if (isSending) {
-                        summit(captcha, invite, password);
-                    } else {
-                        Uihelper.showToast(this, "请先获取验证码");
-                    }
+                    summit(captcha, invite, password);
 
                 } else {
                     Uihelper.showToast(this, R.string.tip_captcha);

@@ -1,9 +1,10 @@
 package com.miqian.mq.activity.user;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +17,7 @@ import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private Button titleRight;
     private RecyclerView mRecyclerView;
     private ImageButton btLeft;
-    private SwipeRefreshLayout swipeRefresh;
+    private MySwipeRefresh swipeRefresh;
 
     private AdapterUserRegular mAdapter;
 
@@ -44,12 +46,14 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     public void obtainData() {
         pageNo = 1;
         isForce = "1";
-        mWaitingDialog.show();
+        if (!swipeRefresh.isRefreshing()) {
+            mWaitingDialog.show();
+        }
         HttpRequest.getUserRegular(mActivity, new ICallback<UserRegularResult>() {
             @Override
             public void onSucceed(UserRegularResult result) {
-                mWaitingDialog.dismiss();
                 swipeRefresh.setRefreshing(false);
+                mWaitingDialog.dismiss();
                 userRegular = result.getData();
                 regInvestList = userRegular.getRegInvest();
                 refreshView();
@@ -106,9 +110,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
         titleLeft.setOnClickListener(this);
         titleRight.setOnClickListener(this);
 
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-
+        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
+//        swipeRefresh.setHeaderView(mContext);
+        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
                 obtainData();

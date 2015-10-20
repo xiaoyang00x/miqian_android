@@ -17,6 +17,7 @@ import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.views.MySwipeRefresh;
 
 /**
  * Created by guolei_wang on 15/9/16.
@@ -32,19 +33,26 @@ public class RegularFragment extends BasicFragment {
         View view = inflater.inflate(R.layout.fragment_regular, container, false);
         findView(view);
         setView();
-        if(mData == null) {
+        if (mData == null) {
             getMainRegular();
         }
         return view;
     }
 
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private MySwipeRefresh swipeRefresh;
     private TextView titleText;
+
     private void findView(View view) {
-        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
-        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeRefreshLayout);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         titleText = (TextView) view.findViewById(R.id.title);
+        swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getMainRegular();
+            }
+        });
     }
 
     private void setView() {
@@ -76,21 +84,15 @@ public class RegularFragment extends BasicFragment {
 
         });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getMainRegular();
-            }
-        });
-
-        if(mData != null) {
-            mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefreshLayout);
+        if (mData != null) {
+            mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
             recyclerView.setAdapter(mAdapter);
         }
     }
 
     private boolean inProcess = false;
     private final Object mLock = new Object();
+
     private void getMainRegular() {
         if (inProcess) {
             return;
@@ -98,7 +100,7 @@ public class RegularFragment extends BasicFragment {
         synchronized (mLock) {
             inProcess = true;
         }
-        swipeRefreshLayout.setRefreshing(true);
+        swipeRefresh.setRefreshing(true);
         HttpRequest.getMainRegular(getActivity(), new ICallback<GetRegularResult>() {
 
             @Override
@@ -106,11 +108,11 @@ public class RegularFragment extends BasicFragment {
                 synchronized (mLock) {
                     inProcess = false;
                 }
-                swipeRefreshLayout.setRefreshing(false);
-                if(result == null) return;
+                swipeRefresh.setRefreshing(false);
+                if (result == null) return;
                 mData = result.getData();
-                if(mData == null) return;
-                mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefreshLayout);
+                if (mData == null) return;
+                mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
                 recyclerView.setAdapter(mAdapter);
             }
 
@@ -119,7 +121,7 @@ public class RegularFragment extends BasicFragment {
                 synchronized (mLock) {
                     inProcess = false;
                 }
-                swipeRefreshLayout.setRefreshing(false);
+                swipeRefresh.setRefreshing(false);
                 Uihelper.showToast(getActivity(), error);
             }
         });

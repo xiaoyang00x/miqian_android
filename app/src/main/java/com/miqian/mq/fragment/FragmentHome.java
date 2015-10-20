@@ -16,6 +16,7 @@ import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.views.MySwipeRefresh;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,7 +26,7 @@ public class FragmentHome extends BasicFragment {
     private TextView titleText;
     private View view;
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout swipeRefresh;
+    private MySwipeRefresh swipeRefresh;
     HomeAdapter adapter;
     HomePageInfo mData;
 
@@ -34,7 +35,7 @@ public class FragmentHome extends BasicFragment {
         view = inflater.inflate(R.layout.frame_home, null);
         findView(view);
         setView();
-        if(mData == null) {
+        if (mData == null) {
             getHomePageInfo();
         }
         return view;
@@ -44,15 +45,9 @@ public class FragmentHome extends BasicFragment {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getHomePageInfo();
-            }
-        });
 
         titleText.setText("首页");
-        if(mData != null) {
+        if (mData != null) {
             adapter = new HomeAdapter(mActivity, mData);
             recyclerView.setAdapter(adapter);
         }
@@ -60,6 +55,7 @@ public class FragmentHome extends BasicFragment {
 
     private Timer timer;// 首页焦点图自动滑动timer
     private TimerTask timerTask;// 首页焦点图自动滑动TimerTask
+
     private class AutoScrollTimerTask extends TimerTask {
         @Override
         public void run() {
@@ -91,8 +87,14 @@ public class FragmentHome extends BasicFragment {
 
     private void findView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
         titleText = (TextView) view.findViewById(R.id.title);
+        swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getHomePageInfo();
+            }
+        });
     }
 
     private boolean inProcess = false;
@@ -118,8 +120,8 @@ public class FragmentHome extends BasicFragment {
                 mData = result.getData();
                 if (mData == null) return;
 //                if (null == adapter) {
-                    adapter = new HomeAdapter(mActivity, mData);
-                    recyclerView.setAdapter(adapter);
+                adapter = new HomeAdapter(mActivity, mData);
+                recyclerView.setAdapter(adapter);
 //                } else {
 //                    adapter.notifyDataSetChanged(info);
 //                }
@@ -130,6 +132,7 @@ public class FragmentHome extends BasicFragment {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                swipeRefresh.setRefreshing(false);
                 Uihelper.showToast(getActivity(), error);
             }
         });

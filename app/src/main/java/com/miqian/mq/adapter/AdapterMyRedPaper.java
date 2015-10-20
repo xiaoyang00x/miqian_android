@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -23,6 +24,9 @@ import java.util.List;
 public class AdapterMyRedPaper extends RecyclerView.Adapter {
 
     private List<Redpaper.CustPromotion> promList;
+    private int maxValue = 999;//最大的值
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_FOOTER = 2;
 
 
     public AdapterMyRedPaper(List<Redpaper.CustPromotion> promList) {
@@ -30,50 +34,94 @@ public class AdapterMyRedPaper extends RecyclerView.Adapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position + 1 == getItemCount()) {
+            return VIEW_FOOTER;
+        } else {
+            return VIEW_ITEM;
+        }
+    }
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_red_packet, parent, false);
-        return new ViewHolder(view);
+
+        RecyclerView.ViewHolder viewHolder;
+        if (viewType == VIEW_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_red_packet, parent, false);
+            viewHolder = new ViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
+            viewHolder = new ProgressViewHolder(view);
+        }
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        Redpaper.CustPromotion promote = promList.get(position);
-        ((ViewHolder) holder).textMoney.setText("￥" + promote.getCanUseAmt());
-        ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
-        ((ViewHolder) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
-        ((ViewHolder) holder).promoteChoosed.setVisibility(View.GONE);
+        if ((holder instanceof ViewHolder)){
+            Redpaper.CustPromotion promote = promList.get(position);
+            ((ViewHolder) holder).textMoney.setText("￥" + promote.getCanUseAmt());
+            ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
+            ((ViewHolder) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
+            ((ViewHolder) holder).promoteChoosed.setVisibility(View.GONE);
 
-        String state = promote.getSta();
-        ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package);
-        ((ViewHolder) holder).textMoney.setTextColor(Color.parseColor("#f13e3e"));
-        if (!TextUtils.isEmpty(state)) {
+            String state = promote.getSta();
+            ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package);
+            ((ViewHolder) holder).textMoney.setTextColor(Color.parseColor("#f13e3e"));
+            if (!TextUtils.isEmpty(state)) {
 
-            ((ViewHolder) holder).imageRedpacketState.setVisibility(View.VISIBLE);
-            if ("YW".equals(state)) {
-                ((ViewHolder) holder).imageRedpacketState.setImageResource(R.drawable.hb_used);
-                ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package_grey);
-                ((ViewHolder) holder).textMoney.setTextColor(Color.parseColor("#f8d4d4"));
-            } else if ("GQ".equals(state)) {
-                ((ViewHolder) holder).imageRedpacketState.setImageResource(R.drawable.hb_expired);
-                ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package_grey);
-                ((ViewHolder) holder).textMoney.setTextColor(Color.parseColor("#f8d4d4"));
-            } else {
+                ((ViewHolder) holder).imageRedpacketState.setVisibility(View.VISIBLE);
+                if ("YW".equals(state)) {
+                    ((ViewHolder) holder).imageRedpacketState.setImageResource(R.drawable.hb_used);
+                    ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package_grey);
+                    ((ViewHolder) holder).textMoney.setTextColor(Color.parseColor("#f8d4d4"));
+                } else if ("GQ".equals(state)) {
+                    ((ViewHolder) holder).imageRedpacketState.setImageResource(R.drawable.hb_expired);
+                    ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package_grey);
+                    ((ViewHolder) holder).textMoney.setTextColor(Color.parseColor("#f8d4d4"));
+                } else {
+                    ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package);
+                }
+            }else {
                 ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package);
             }
-        }else {
-            ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package);
+        }
+        else if (holder instanceof ProgressViewHolder) {
+            if (position >= maxValue) {
+                ((ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
+                if (maxValue <=15) {
+                    ((ProgressViewHolder) holder).textLoading.setVisibility(View.GONE);
+                } else {
+                    ((ProgressViewHolder) holder).textLoading.setText("没有更多");
+                }
+            } else {
+                ((ProgressViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
+                ((ProgressViewHolder) holder).textLoading.setText("加载更多");
+            }
         }
 
-    }
 
+
+    }
+    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+        public TextView textLoading;
+
+        public ProgressViewHolder(View view) {
+            super(view);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+            textLoading = (TextView) view.findViewById(R.id.text_loading);
+        }
+    }
     @Override
     public int getItemCount() {
         if (promList != null) {
-            return promList.size();
+            return promList.size() + 1;//+1 尾部：加载更多
         }
         return 0;
+    }
+    public void setMaxItem(int value) {
+        maxValue = value;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

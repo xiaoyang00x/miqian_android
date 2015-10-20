@@ -149,10 +149,7 @@ public class HttpRequest {
      * @param prodId 0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      */
     public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId, String prodId) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<Param>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
         mList.add(new Param("subjectId", subjectId));
@@ -161,9 +158,8 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                ProducedOrderResult producedOrderResult =
-                        JsonUtil.parseObject(result, ProducedOrderResult.class);
-                if (producedOrderResult.getCode().equals("000000")) {
+                ProducedOrderResult producedOrderResult = JsonUtil.parseObject(result, ProducedOrderResult.class);
+                if ("000000".equals(producedOrderResult.getCode()) || "102002".equals(producedOrderResult.getCode()) || "102003".equals(producedOrderResult.getCode())) {
                     callback.onSucceed(producedOrderResult);
                 } else {
                     callback.onFail(producedOrderResult.getMessage());
@@ -1126,8 +1122,8 @@ public class HttpRequest {
     /**
      * 我的定期转让情况
      *
-     * @param investId    投资id
-     * @param clearYn   是否结息
+     * @param investId 投资id
+     * @param clearYn  是否结息
      */
     public static void getTransferDeatil(Context context, final ICallback<TransferDetailResult> callback, String investId, String clearYn) {
         List<Param> mList = new ArrayList<>();
@@ -1157,7 +1153,7 @@ public class HttpRequest {
     /**
      * 还款详情
      *
-     * @param investId    投资id
+     * @param investId 投资id
      */
     public static void getRepayment(Context context, final ICallback<RepaymentResult> callback, String investId) {
         List<Param> mList = new ArrayList<>();

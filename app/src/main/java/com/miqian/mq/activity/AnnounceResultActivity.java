@@ -45,16 +45,19 @@ public class AnnounceResultActivity extends BaseActivity {
         }
 
         if (!TextUtils.isEmpty(noticeId)) {
+            begin();
             HttpRequest.getPushDetail(mActivity, new ICallback<MessageInfoResult>() {
 
                 @Override
                 public void onSucceed(MessageInfoResult result) {
+                    end();
                     MessageInfo detailInfo = result.getData();
                     setData(detailInfo);
                 }
 
                 @Override
                 public void onFail(String error) {
+                    end();
                     linear_noresult.setVisibility(View.GONE);
                     mViewnoresult.setVisibility(View.VISIBLE);
                 }
@@ -118,7 +121,7 @@ public class AnnounceResultActivity extends BaseActivity {
             }
         }
 
-        Uihelper.trace("", "xgmessage:classid" + intent.getStringExtra("classid") + noticeId);
+        Uihelper.trace("xgInfo", "classid=="+ noticeId);
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_content = (TextView) findViewById(R.id.tv_content);
         tv_time = (TextView) findViewById(R.id.tv_time);

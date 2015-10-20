@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.ProgressDialogView;
 
 /**
@@ -55,6 +57,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     private UserInfo userInfo;
     private TextView tv_TotalProfit, tv_balance, tv_totalasset;
     private CustomDialog dialogTips;
+    private MySwipeRefresh swipeRefresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
     @Override
     public void onStart() {
-        super.onStart();
+
         //已登录，显示我的界面
         if (UserUtil.hasLogin(getActivity())) {
 
@@ -84,34 +87,18 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         else {
             initLoginView();
         }
-        Uihelper.trace("isShowTips====fefefefe"+MyApplication.getInstance().isShowTips());
-        if (MyApplication.getInstance().isShowTips()){
-            Uihelper.trace("isShowTips====true");
-            MyApplication.getInstance().setShowTips(false);
-            if (dialogTips == null) {
-                dialogTips = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
 
-                    @Override
-                    public void positionBtnClick() {
-                        dismiss();
-                    }
-
-                    @Override
-                    public void negativeBtnClick() {
-
-                    }
-                };
-            }
-            dialogTips.setRemarks("  账户信息已变动，请重新登录");
-            dialogTips.show();
-        }
+        super.onStart();
     }
 
     private void obtainData() {
-        mWaitingDialog.show();
+        if (!swipeRefresh.isRefreshing()) {
+            mWaitingDialog.show();
+        }
         HttpRequest.getUserInfo(getActivity(), new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
+                swipeRefresh.setRefreshing(false);
                 mWaitingDialog.dismiss();
                 userInfo = result.getData();
                 if (userInfo != null) {
@@ -121,6 +108,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
             @Override
             public void onFail(String error) {
+                swipeRefresh.setRefreshing(false);
                 mWaitingDialog.dismiss();
                 setData(null);
                 Uihelper.showToast(getActivity(), error);
@@ -183,6 +171,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     }
 
     private void findViewById(View view) {
+
+        swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+            @Override
+            public void onRefresh() {
+                obtainData();
+            }
+        });
 
         mWaitingDialog = ProgressDialogView.create(getActivity());
 
@@ -326,26 +322,34 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                 break;
             //取现
             case R.id.btn_rollout:
-                Intent intent = new Intent(getActivity(), RolloutActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("userInfo", userInfo);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                String balance = userInfo.getBalance();
+                if (!TextUtils.isEmpty(balance)) {
+                    float float_banlance = Float.parseFloat(balance);
+                    if (float_banlance > 0f) {
+                        Intent intent = new Intent(getActivity(), RolloutActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("userInfo", userInfo);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    } else {
+                        Uihelper.showToast(getActivity(), "账户余额为0，无法体现");
+                    }
+
+                }
+
                 break;
             //我的活期
             case R.id.frame_account_current:
-                intent = new Intent(getActivity(), ActivityUserCurrent.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), ActivityUserCurrent.class));
                 break;
             //我的定期
             case R.id.frame_regular:
-                intent = new Intent(getActivity(), UserRegularActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), UserRegularActivity.class));
                 break;
             //资金记录
             case R.id.frame_record:
-                intent = new Intent(getActivity(), CapitalRecordActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
                 break;
             //拾财券
             case R.id.frame_ticket:
@@ -367,11 +371,32 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                 intent_setting.putExtras(extra);
                 startActivity(intent_setting);
                 break;
+            default:
+                break;
         }
     }
 
     @Override
     public void changeData() {
+        if (MyApplication.getInstance().isShowTips()) {
+            MyApplication.getInstance().setShowTips(false);
+            if (dialogTips == null) {
+                dialogTips = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
+
+                    @Override
+                    public void positionBtnClick() {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void negativeBtnClick() {
+
+                    }
+                };
+            }
+            dialogTips.setRemarks("  账户信息已变更，请重新登录");
+            dialogTips.show();
+        }
         onStart();
     }
 }

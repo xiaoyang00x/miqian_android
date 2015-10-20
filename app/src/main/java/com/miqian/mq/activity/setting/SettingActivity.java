@@ -131,7 +131,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
 
         if ("0".equals(userInfo.getBindCardStatus())) {
-            frame_setting_bindphone.setVisibility(View.GONE);
+            frame_setting_bankcard.setVisibility(View.GONE);
             findViewById(R.id.divider_bank).setVisibility(View.GONE);
         }
 
