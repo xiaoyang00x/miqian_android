@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
+import com.miqian.mq.adapter.AdapterMyTicket;
 import com.miqian.mq.adapter.CapitalRecordAdapter;
 import com.miqian.mq.entity.CapitalRecord;
 import com.miqian.mq.entity.CapitalRecordResult;
+import com.miqian.mq.entity.Page;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
@@ -36,7 +38,7 @@ import java.util.List;
  */
 public class CapitalRecordActivity extends BaseActivity {
     Animation animHide, animShow;
-    RecyclerView rv;
+    RecyclerView recyclerView;
     CapitalRecordAdapter adapter;
     List<CapitalRecord.CapitalItem> list = new ArrayList<>();
     FrameLayout data_view;
@@ -65,11 +67,41 @@ public class CapitalRecordActivity extends BaseActivity {
     RelativeLayout filetr_container;
     RelativeLayout relaHide;
 
+    private int pageNo = 1;
+    private String pageSize = "20";
+    private Page page;
+    private boolean isLoading = false;
+    private String mType="";
+
 
     @Override
     public void obtainData() {
+        pageNo=1;
+        begin();
+        //取全部
+        HttpRequest.getCapitalRecords(this, new ICallback<CapitalRecordResult>() {
 
-        updateData("1", "99999", "", "", "", false);
+            @Override
+            public void onSucceed(CapitalRecordResult result) {
+                end();
+                list.clear();
+                CapitalRecordResult record = result;
+                if (record.getData() != null) {
+                    page = record.getData().getPage();
+                    list.addAll(record.getData().getAssetRecord());
+                    refreshView();
+                } else {
+                    showEmptyView();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                end();
+                Uihelper.showToast(CapitalRecordActivity.this, error);
+                showEmptyView();
+            }
+        }, String.valueOf(pageNo), pageSize, "", "", mType);
     }
 
     private void showEmptyView() {
@@ -78,6 +110,12 @@ public class CapitalRecordActivity extends BaseActivity {
         } else {
             empty_view.setVisibility(View.GONE);
         }
+    }
+
+    private void refreshView() {
+        adapter = new CapitalRecordAdapter(list);
+        adapter.setMaxItem(page.getCount());
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -90,19 +128,12 @@ public class CapitalRecordActivity extends BaseActivity {
         relaHide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (filetr_container.getVisibility()==View.VISIBLE){
+                if (filetr_container.getVisibility() == View.VISIBLE) {
                     filetr_container.startAnimation(animHide);
                     filetr_container.setVisibility(View.GONE);
                 }
             }
         });
-
-
-        mWaitingDialog = ProgressDialogView.create(this);
-        mWaitingDialog.show();
-        mWaitingDialog.setCanceledOnTouchOutside(false);
-
-
         data_view = (FrameLayout) findViewById(R.id.data_view);
         empty_view = (TextView) findViewById(R.id.empty_view);
 
@@ -137,29 +168,61 @@ public class CapitalRecordActivity extends BaseActivity {
         preSelected_t.setTextColor(Color.WHITE);
         preSelected.setColor(Color.RED);
 
-        rv = (RecyclerView) findViewById(R.id.ultimate_recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.ultimate_recycler_view);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(layoutManager);
-        rv.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).marginResId(R.dimen.margin_left_right).build());
-        rv.setVerticalScrollBarEnabled(true);
-        adapter = new CapitalRecordAdapter(list, rv);
-//        adapter.setOnLoadMoreListener(new CapitalRecordAdapter.OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                //add null , so the adapter will check view_type and show progress bar at bottom
-//                list.add(null);
-//                adapter.notifyItemInserted(list.size() - 1);
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        updateData("pageNum", "pageSize", "startDate", "endDate", "operationType", true);
-//                    }
-//                }, 3000);
-//            }
-//        });
-        rv.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).marginResId(R.dimen.margin_left_right).build());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                int totalItemCount = layoutManager.getItemCount();
+                if (lastVisibleItem >= totalItemCount - 2) {
+
+                    loadMore();
+                }
+            }
+        });
+    }
+
+    private void loadMore() {
+
+        if (!isLoading) {
+            if (list.size() >= page.getCount()) {
+                return;
+            }
+            isLoading = true;
+            pageNo += 1;
+            //加载更多
+            HttpRequest.getCapitalRecords(this, new ICallback<CapitalRecordResult>() {
+
+                @Override
+                public void onSucceed(CapitalRecordResult result) {
+                    end();
+                    CapitalRecordResult record = result;
+                    if (record.getData() != null) {
+                        if (list != null && list != null && list.size() > 0) {
+                            list.addAll(record.getData().getAssetRecord());
+                            refreshView();
+                        }
+
+                        isLoading = false;
+                    } else {
+                        showEmptyView();
+                    }
+                }
+
+                @Override
+                public void onFail(String error) {
+                    isLoading = false;
+                }
+            }, String.valueOf(pageNo), pageSize, "", "", mType);
+
+        }
     }
 
     @Override
@@ -194,115 +257,39 @@ public class CapitalRecordActivity extends BaseActivity {
     }
 
     public void searchBtn(View v) {
-        String  type="";
         switch (v.getId()) {
             case R.id.all:
-                preSelected.setColor(0xdddddd);
-                preSelected = all;
+                changeState(all, "资金记录", all_t, "");
 
-                preSelected.setColor(Color.WHITE);
-                preSelected.setColor(Color.RED);
-                getmTitle().setTitleText("资金记录");
-
-                //white text
-                preSelected_t.setTextColor(0xff505050);
-                all_t.setTextColor(Color.WHITE);
-                preSelected_t = all_t;
-
-                type="";
                 break;
             case R.id.saving:
-                preSelected.setColor(0xdddddd);
-                preSelected = saving;
-                preSelected.setColor(Color.RED);
-                getmTitle().setTitleText("充值");
-
-
-                //white text
-                preSelected_t.setTextColor(0xff505050);
-                saving_t.setTextColor(Color.WHITE);
-                preSelected_t = saving_t;
-
-                type="MQ01";
+                changeState(saving, "充值", saving_t, "MQ01");
                 break;
 
             case R.id.buy:
-                preSelected.setColor(0xdddddd);
-                preSelected = buy;
-                preSelected.setColor(Color.RED);
-                getmTitle().setTitleText("认购");
-
-                //white text
-                preSelected_t.setTextColor(0xff505050);
-                buy_t.setTextColor(Color.WHITE);
-                preSelected_t = buy_t;
-
-                type="MQ03";
+                changeState(buy, "认购", buy_t, "MQ03");
                 break;
+
             case R.id.withdraw:
-                preSelected.setColor(0xdddddd);
-                preSelected = withdraw;
-                preSelected.setColor(Color.RED);
-                getmTitle().setTitleText("提现");
-
-                preSelected_t.setTextColor(0xff505050);
-                withdraw_t.setTextColor(Color.WHITE);
-                preSelected_t = withdraw_t;
-
-                type="MQ02";
+                changeState(withdraw, "提现", withdraw_t, "MQ02");
                 break;
-
 
             case R.id.redeem:
-                preSelected.setColor(0xdddddd);
-                preSelected = redeem;
-
-                preSelected_t.setTextColor(0xff505050);
-                preSelected_t = redeem_t;
-                preSelected_t.setTextColor(0xffffffff);
-
-                preSelected.setColor(Color.RED);
-                getmTitle().setTitleText("赎回");
-
-                type="MQ04";
+                changeState(redeem, "赎回", redeem_t, "MQ04");
                 break;
 
             case R.id.transfer:
-                preSelected.setColor(0xdddddd);
-                preSelected = transfer;
-                preSelected.setColor(Color.RED);
-                getmTitle().setTitleText("转让");
-
-                preSelected_t.setTextColor(0xff505050);
-                preSelected_t = transfer_t;
-                preSelected_t.setTextColor(0xffffffff);
-
-                type="MQ05";
+                changeState(transfer, "转让", transfer_t, "MQ05");
                 break;
 
             case R.id.maturity:
-                preSelected.setColor(0xdddddd);
-                preSelected = maturity;
-                preSelected.setColor(Color.RED);
-                getmTitle().setTitleText("到期");
-                preSelected_t.setTextColor(0xff505050);
-                preSelected_t = maturity_t;
-                preSelected_t.setTextColor(0xffffffff);
-
-                type="MQ06";
+                changeState(maturity, "到期", maturity_t, "MQ06");
                 break;
 
             case R.id.other:
-                preSelected.setColor(0xdddddd);
-                preSelected = other;
-
-                preSelected.setColor(Color.RED);
-                getmTitle().setTitleText("其他");
-                preSelected_t.setTextColor(0xff505050);
-                preSelected_t = other_t;
-                preSelected_t.setTextColor(0xffffffff);
-
-                type="MQ07";
+                changeState(other, "其他", other_t, "MQ07");
+                break;
+            default:
                 break;
         }
         filetr_container.startAnimation(animHide);
@@ -310,54 +297,23 @@ public class CapitalRecordActivity extends BaseActivity {
 
         //todo 到网络获取数据。因为该界面的信息是分页的。
 
-        updateData("1", "99999", "", "", type, false);
+        obtainData();
     }
 
+    private void changeState(CircleButton circleButton, String title, TextView tv_select, String type) {
+        preSelected.setColor(0xdddddd);
+        preSelected = circleButton;
+        preSelected.setColor(Color.WHITE);
+        preSelected.setColor(Color.RED);
 
-    protected Handler handler = new Handler();
+        getmTitle().setTitleText(title);
 
-    /**
-     * @param pageNo        页码
-     * @param pageSize      每页条数
-     * @param startDate     起始时间
-     * @param endDate       结束时间
-     * @param operationType operateType MQ01充值,MQ02提现,MQ03认购,MQ04赎回,MQ05转让,MQ06到期,MQ07其他,不传查询所有
-     * @param loadMore
-     */
-    private void updateData(String pageNo, String pageSize, String startDate, String endDate, String operationType, boolean loadMore) {
-        final boolean isMore = loadMore;
-        HttpRequest.getCapitalRecords(this, new ICallback<CapitalRecordResult>() {
+        //white text
+        preSelected_t.setTextColor(0xff505050);
+        all_t.setTextColor(Color.WHITE);
+        preSelected_t = tv_select;
 
-            @Override
-            public void onSucceed(CapitalRecordResult result) {
-                CapitalRecordResult record = result;
-                if (list.size() > 0 && isMore) {
-                    list.remove(list.size() - 1);
-                    adapter.notifyItemRemoved(list.size());
-                }
-                //todo load more时，直接追加
-                if (!isMore) {
-                    list.clear();
-                }
-                list.addAll(record.getData().getAssetRecord());
-                mWaitingDialog.dismiss();
-                adapter.setLoaded();
-                showEmptyView();
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFail(String error) {
-                Uihelper.showToast(CapitalRecordActivity.this, error);
-                showEmptyView();
-                mWaitingDialog.dismiss();
-                //TODO mock the success response
-                //getData();
-                //srl.setRefreshing(false);
-                //mWaitingDialog.dismiss();
-                //showEmptyView();
-                //adapter.notifyDataSetChanged();
-            }
-        }, pageNo, pageSize, startDate, endDate, operationType);
+        mType = type;
     }
+
 }

@@ -19,86 +19,78 @@ import java.util.List;
  */
 public class CapitalRecordAdapter extends RecyclerView.Adapter {
     List<CapitalRecord.CapitalItem> list;
-    private int visibleThreshold = 0;
-    private int lastVisibleItem, totalItemCount;
 
-    public CapitalRecordAdapter(List<CapitalRecord.CapitalItem> list, RecyclerView recyclerView) {
+    public CapitalRecordAdapter(List<CapitalRecord.CapitalItem> list) {
         this.list = list;
 
-        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-
-            final LinearLayoutManager linearLayoutManager =
-                    (LinearLayoutManager) recyclerView.getLayoutManager();
-
-            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-
-                    totalItemCount = linearLayoutManager.getItemCount();
-                    lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-
-                    //todo  如果最后一个item的高度小于屏幕的高度。则不执行加载更多
-                    //DisplayMetrics displaymetrics = new DisplayMetrics();
-                    //((Activity)recyclerView.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                    //int height = displaymetrics.heightPixels;
-                    //if(linearLayoutManager.getChildAt(lastVisibleItem).getHeight() < height){
-                    //  return ;
-                    //}
-                    if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                        // End has been reached
-                        // Do something
-                        if (onLoadMoreListener != null) {
-                            onLoadMoreListener.onLoadMore();
-                        }
-                        loading = true;
-                    }
-                    visibleThreshold = 1;
-                }
-            });
-        }
     }
 
-    private final int VIEW_PROG = 0;
+    private int maxValue = 999;//最大的值
     private final int VIEW_ITEM = 1;
+    private final int VIEW_FOOTER = 2;
 
-    @Override
     public int getItemViewType(int position) {
-        if (position == list.size() - 1 && list.get(position) == null) {
-            return VIEW_PROG;
+        if (position + 1 == getItemCount()) {
+            return VIEW_FOOTER;
+        } else {
+            return VIEW_ITEM;
         }
-        return VIEW_ITEM;
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (VIEW_PROG == viewType) {
-            View v =
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
 
-            return new ProgressViewHolder(v);
+
+        RecyclerView.ViewHolder viewHolder;
+        if (viewType == VIEW_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_capital_record_row, parent, false);
+            viewHolder = new ItemVH(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
+            viewHolder = new ProgressViewHolder(view);
         }
-        LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
-        View v = mInflater.inflate(R.layout.activity_capital_record_row, parent, false);
-        return new ItemVH(v);
+        return viewHolder;
+
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
-        if (list.get(position) != null) {
-            CapitalRecord.CapitalItem item = list.get(position);
-            ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
-            ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getPeerCustLoginNm());
-            ((ItemVH) vh).tvTraOpNm.setText(item.getTraOpNm());
-            ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm());
-            ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm() + "(" + item.getRem() + ")");
-
+        if ((vh instanceof ItemVH)){
+            if (list.get(position) != null) {
+                CapitalRecord.CapitalItem item = list.get(position);
+                ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
+                ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getPeerCustLoginNm());
+                ((ItemVH) vh).tvTraOpNm.setText(item.getTraOpNm());
+                ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm());
+                ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm() + "(" + item.getRem() + ")");
+            }
+        } else if (vh instanceof ProgressViewHolder) {
+            if (position >= maxValue) {
+                ((ProgressViewHolder) vh).progressBar.setVisibility(View.GONE);
+                if (maxValue <=15) {
+                    ((ProgressViewHolder) vh).textLoading.setVisibility(View.GONE);
+                } else {
+                    ((ProgressViewHolder) vh).textLoading.setText("没有更多");
+                }
+            } else {
+                ((ProgressViewHolder) vh).progressBar.setVisibility(View.VISIBLE);
+                ((ProgressViewHolder) vh).textLoading.setText("加载更多");
+            }
         }
+
+
+
+    }
+
+    public void setMaxItem(int value) {
+        maxValue = value;
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list != null) {
+            return list.size() + 1;//+1 尾部：加载更多
+        }
+        return 0;
     }
 
     public static class ItemVH extends RecyclerView.ViewHolder {
@@ -130,10 +122,13 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
 
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
+        public TextView textLoading;
 
-        public ProgressViewHolder(View v) {
-            super(v);
-            progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        public ProgressViewHolder(View view) {
+            super(view);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+            textLoading = (TextView) view.findViewById(R.id.text_loading);
         }
     }
+
 }
