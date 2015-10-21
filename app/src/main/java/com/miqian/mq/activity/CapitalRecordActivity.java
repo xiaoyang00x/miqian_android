@@ -104,13 +104,6 @@ public class CapitalRecordActivity extends BaseActivity {
         }, String.valueOf(pageNo), pageSize, "", "", mType);
     }
 
-    private void showEmptyView() {
-        if (list.isEmpty()) {
-            empty_view.setVisibility(View.VISIBLE);
-        } else {
-            empty_view.setVisibility(View.GONE);
-        }
-    }
 
     private void refreshView() {
         adapter = new CapitalRecordAdapter(list);
