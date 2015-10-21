@@ -64,6 +64,7 @@ public class CapitalRecordActivity extends BaseActivity {
     private boolean isLoading = false;
     private String mType="";
     private TextView tvTips;
+    private View mViewnoresult_data;
 
 
     @Override
@@ -91,7 +92,7 @@ public class CapitalRecordActivity extends BaseActivity {
             public void onFail(String error) {
                 end();
                 Uihelper.showToast(CapitalRecordActivity.this, error);
-                showEmptyView();
+                showErrorView();
             }
         }, String.valueOf(pageNo), pageSize, "", "", mType);
     }
@@ -171,6 +172,8 @@ public class CapitalRecordActivity extends BaseActivity {
                 }
             }
         });
+
+        mViewnoresult_data = findViewById(R.id.frame_no_recorddata);
         findViewById(R.id.tv_refreshdata
         ).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -378,7 +381,7 @@ public class CapitalRecordActivity extends BaseActivity {
      */
     protected void showEmptyView() {
         mContentView.setVisibility(View.VISIBLE);
-        mViewnoresult.setVisibility(View.VISIBLE);
+        mViewnoresult_data.setVisibility(View.VISIBLE);
         findViewById(R.id.tv_refreshdata).setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         tvTips.setText("暂时没有数据");
@@ -389,7 +392,7 @@ public class CapitalRecordActivity extends BaseActivity {
      */
     protected void showContentView() {
         mContentView.setVisibility(View.VISIBLE);
-        mViewnoresult.setVisibility(View.GONE);
+        mViewnoresult_data.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
 
     }
@@ -400,8 +403,10 @@ public class CapitalRecordActivity extends BaseActivity {
     protected void showErrorView() {
 
         mContentView.setVisibility(View.VISIBLE);
-        mViewnoresult.setVisibility(View.VISIBLE);
+        mViewnoresult_data.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        findViewById(R.id.tv_refreshdata).setVisibility(View.VISIBLE);
+        tvTips.setText("数据获取失败，请重新获取");
     }
 
 }

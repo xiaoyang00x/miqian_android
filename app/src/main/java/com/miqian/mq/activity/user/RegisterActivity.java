@@ -238,4 +238,9 @@ public class RegisterActivity extends BaseActivity {
         mTitle.setTitleText("注册");
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isTimer=false;
+    }
 }

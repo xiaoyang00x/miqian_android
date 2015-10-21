@@ -225,4 +225,10 @@ public class TradePsCaptchaActivity extends BaseActivity {
     protected String getPageName() {
         return "修改交易密码";
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isTimer=false;
+    }
 }
