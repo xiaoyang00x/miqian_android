@@ -33,7 +33,7 @@ public class CapitalRecordActivity extends BaseActivity {
     RecyclerView recyclerView;
     CapitalRecordAdapter adapter;
     List<CapitalItem> list = new ArrayList<>();
-    FrameLayout data_view;
+    RelativeLayout data_view;
     TextView empty_view;
 
     CircleButton all;
@@ -63,6 +63,7 @@ public class CapitalRecordActivity extends BaseActivity {
     private Page page;
     private boolean isLoading = false;
     private String mType="";
+    private TextView tvTips;
 
 
     @Override
@@ -77,7 +78,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 end();
                 list.clear();
                 CapitalRecordResult record = result;
-                if (record.getData() != null) {
+                if (record.getData() != null&&record.getData().getAssetRecord().size()>0) {
                     page = record.getData().getPage();
                     list.addAll(record.getData().getAssetRecord());
                     refreshView();
@@ -118,8 +119,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 }
             }
         });
-        data_view = (FrameLayout) findViewById(R.id.data_view);
-        empty_view = (TextView) findViewById(R.id.empty_view);
+        data_view = (RelativeLayout) findViewById(R.id.data_view);
 
         all = (CircleButton) findViewById(R.id.all);
         all.setColor(0xdddddd);
@@ -171,6 +171,16 @@ public class CapitalRecordActivity extends BaseActivity {
                 }
             }
         });
+        findViewById(R.id.tv_refreshdata
+        ).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showContentView();
+                obtainData();
+            }
+        });
+        tvTips = (TextView) findViewById(R.id.tv_recordtip);
     }
 
     private void loadMore() {
@@ -209,6 +219,7 @@ public class CapitalRecordActivity extends BaseActivity {
         }
     }
 
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_capital_record;
@@ -224,6 +235,7 @@ public class CapitalRecordActivity extends BaseActivity {
         topLayout.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showContentView();
                 if (filetr_container.getVisibility() == View.VISIBLE) {
                     filetr_container.setVisibility(View.GONE);
                     filetr_container.startAnimation(animHide);
@@ -241,6 +253,7 @@ public class CapitalRecordActivity extends BaseActivity {
     }
 
     public void searchBtn(View v) {
+
         switch (v.getId()) {
             case R.id.all:
                 preSelected.setColor(0xdddddd);
@@ -359,6 +372,36 @@ public class CapitalRecordActivity extends BaseActivity {
         //todo 到网络获取数据。因为该界面的信息是分页的。
 
         obtainData();
+    }
+    /**
+     * 无数据
+     */
+    protected void showEmptyView() {
+        mContentView.setVisibility(View.VISIBLE);
+        mViewnoresult.setVisibility(View.VISIBLE);
+        findViewById(R.id.tv_refreshdata).setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+        tvTips.setText("暂时没有数据");
+    }
+
+    /**
+     * 显示数据
+     */
+    protected void showContentView() {
+        mContentView.setVisibility(View.VISIBLE);
+        mViewnoresult.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+
+    }
+
+    /**
+     * 获取失败，请重新获取
+     */
+    protected void showErrorView() {
+
+        mContentView.setVisibility(View.VISIBLE);
+        mViewnoresult.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
     }
 
 }

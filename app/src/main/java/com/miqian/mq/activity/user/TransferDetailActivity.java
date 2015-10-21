@@ -54,14 +54,19 @@ public class TransferDetailActivity extends BaseActivity {
             public void onSucceed(TransferDetailResult result) {
                 mWaitingDialog.dismiss();
                 mList = result.getData().getTranslist();
-                transferInfo = result.getData().getTransAmt();
-                refreshView();
+                if (mList != null && mList.size() > 0) {
+                    transferInfo = result.getData().getTransAmt();
+                    refreshView();
+                } else {
+                    showEmptyView();
+                }
             }
 
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
+                showErrorView();
             }
         }, investId, clearYn);
     }

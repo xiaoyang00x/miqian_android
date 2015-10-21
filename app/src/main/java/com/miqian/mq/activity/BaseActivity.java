@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
@@ -30,6 +31,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     public Dialog mWaitingDialog;
     public ImageLoader imageLoader;
     public DisplayImageOptions options;
+    private TextView tvTips;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -41,8 +43,20 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).displayer(new RoundedBitmapDisplayer(0)).build();
         mTitle = (WFYTitle) findViewById(R.id.wFYTitle);
-        mViewnoresult = findViewById(R.id.frame_no_data);
         mWaitingDialog = ProgressDialogView.create(mActivity);
+
+        mViewnoresult = findViewById(R.id.frame_no_data);
+
+
+        findViewById(R.id.tv_reFresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showContentView();
+                obtainData();
+            }
+        });
+        tvTips = (TextView) findViewById(R.id.tv_tips);
 
         getmTitle().setLeftImage(R.drawable.icon_back);
         getmTitle().setOnLeftClickListener(new View.OnClickListener() {
@@ -64,7 +78,9 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     }
 
     //获得数据
-    public abstract void obtainData();
+    public abstract void obtainData(
+
+    );
 
     public abstract void initView();
 
@@ -99,7 +115,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
      * 显示 loading 对话框
      */
     protected void begin() {
-        if(mWaitingDialog != null) {
+        if (mWaitingDialog != null) {
             mWaitingDialog.show();
         }
     }
@@ -108,8 +124,37 @@ public abstract class BaseActivity extends BaseFragmentActivity {
      * 显示 loading 对话框
      */
     protected void end() {
-        if(mWaitingDialog != null && mWaitingDialog.isShowing()) {
+        if (mWaitingDialog != null && mWaitingDialog.isShowing()) {
             mWaitingDialog.dismiss();
         }
     }
+
+    /**
+     * 无数据
+     */
+    protected void showEmptyView() {
+        mContentView.setVisibility(View.GONE);
+        mViewnoresult.setVisibility(View.VISIBLE);
+        findViewById(R.id.tv_reFresh).setVisibility(View.GONE);
+        tvTips.setText("暂时没有数据");
+    }
+
+    /**
+     * 显示数据
+     */
+    protected void showContentView() {
+        mContentView.setVisibility(View.VISIBLE);
+        mViewnoresult.setVisibility(View.GONE);
+
+    }
+
+    /**
+     * 获取失败，请重新获取
+     */
+    protected void showErrorView() {
+
+        mContentView.setVisibility(View.GONE);
+        mViewnoresult.setVisibility(View.VISIBLE);
+    }
+
 }

@@ -48,7 +48,12 @@ public class RedPaperActivity extends BaseActivity{
                 page = result.getData().getPage();
                 if (redpaper != null) {
                     promList = redpaper.getCustPromotion();
-                    refreshView();
+                    if (promList!=null&&promList.size()>0){
+                        refreshView();
+                    }else {
+                        showEmptyView();
+                    }
+
                 }
             }
 
@@ -56,6 +61,7 @@ public class RedPaperActivity extends BaseActivity{
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
+                showErrorView();
 
             }
         }, "HB", "", "1", pageSize);

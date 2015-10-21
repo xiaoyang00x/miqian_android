@@ -49,7 +49,12 @@ public class ActivityCurrentRecord extends BaseActivity {
                 page = data.getPage();
                 if (data != null) {
                     dataList = data.getCurSubRecord();
-                    refreshView();
+                    if (dataList!=null&&dataList.size()>0){
+                        refreshView();
+                    }else {
+                        showEmptyView();
+                    }
+
                 }
             }
 
@@ -57,6 +62,7 @@ public class ActivityCurrentRecord extends BaseActivity {
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
+                showErrorView();
             }
         }, String.valueOf(pageNo), pageSize, "");
 

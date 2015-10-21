@@ -47,8 +47,11 @@ public class MyTicketActivity extends BaseActivity {
                 Redpaper redpaper = result.getData();
                 page = result.getData().getPage();
                 if (redpaper != null) {
-                    promList = redpaper.getCustPromotion();
-                    refreshView();
+                    if (promList!=null&&promList.size()>0){
+                        refreshView();
+                    }else {
+                        showEmptyView();
+                    }
                 }
             }
 
@@ -56,6 +59,7 @@ public class MyTicketActivity extends BaseActivity {
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
+                showErrorView();
 
             }
         }, "SC", "", "1", pageSize);
