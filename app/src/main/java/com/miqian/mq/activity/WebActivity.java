@@ -20,6 +20,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WebChromeClientEx;
 
@@ -34,11 +35,15 @@ public class WebActivity extends BaseFragmentActivity {
     private SwipeWebView webview;
     private ProgressBar progressBar;
 
-    public static void startActivity(Context context, String subjectId) {
+    public static void startActivity(Context context, String url) {
+        context.startActivity(getIntent(context, url));
+    }
+
+    public static Intent getIntent(Context context, String url) {
         Intent intent = new Intent(context, WebActivity.class);
-        intent.putExtra(KEY_URL, subjectId);
+        intent.putExtra(KEY_URL, url);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        return intent;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -137,6 +142,13 @@ public class WebActivity extends BaseFragmentActivity {
     @JavascriptInterface
     public void call(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        startActivity(intent);
+    }
+
+
+    @JavascriptInterface
+    public void register() {
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 

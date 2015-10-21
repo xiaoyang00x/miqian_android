@@ -1,6 +1,5 @@
 package com.miqian.mq.adapter;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.Redpaper;
+import com.miqian.mq.entity.CustPromotion;
 import com.miqian.mq.utils.Uihelper;
 
 import java.util.List;
@@ -21,12 +20,12 @@ import java.util.List;
  */
 public class AdapterMyTicket extends RecyclerView.Adapter {
 
-    private List<Redpaper.CustPromotion> promList;
+    private List<CustPromotion> promList;
     private int maxValue = 999;//最大的值
     private final int VIEW_ITEM = 1;
     private final int VIEW_FOOTER = 2;
 
-    public AdapterMyTicket(List<Redpaper.CustPromotion> promList) {
+    public AdapterMyTicket(List<CustPromotion> promList) {
         this.promList = promList;
     }
     @Override
@@ -55,7 +54,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if ((holder instanceof ViewHolderTicket)){
-            Redpaper.CustPromotion promote = promList.get(position);
+            CustPromotion promote = promList.get(position);
             ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
             ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getPrnUsePerc() + "%】");
             ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());

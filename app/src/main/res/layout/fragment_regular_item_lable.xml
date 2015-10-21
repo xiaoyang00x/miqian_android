@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <View
+        android:id="@+id/divider_view"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/divider_line_color_gray" />
@@ -24,7 +25,7 @@
             android:layout_centerVertical="true"
             android:text="@string/regular_plan"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
+            android:textSize="@dimen/mq_font2" />
 
         <TextView
             android:id="@+id/tv_invest_security"

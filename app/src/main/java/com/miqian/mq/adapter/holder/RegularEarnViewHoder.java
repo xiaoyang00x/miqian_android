@@ -30,6 +30,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
     private TextView tv_description;
     private TextView tv_add_interest;
     private DonutProgress circlebar;
+    private View divider_view;
 
     public RegularEarnViewHoder(View itemView) {
         super(itemView);
@@ -48,6 +49,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
         tv_description = (TextView) itemView.findViewById(R.id.tv_description);
         tv_add_interest = (TextView) itemView.findViewById(R.id.tv_add_interest);
         circlebar = (DonutProgress) itemView.findViewById(R.id.circlebar);
+        divider_view = itemView.findViewById(R.id.divider_view);
 
         tv_lable_name.setText(R.string.regular_earn);
         tv_invest_security.setText(R.string.principal_interest_security);
@@ -61,6 +63,14 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
         tv_lable_name.setText(name);
     }
 
+    /**
+     * 是否显示 divider
+     * @param show
+     */
+    public void showDiverView(boolean show) {
+        divider_view.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
 
     public void bindView(final Context mContext, final RegularEarn regularEarn, boolean showLable) {
 
@@ -68,6 +78,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
         tv_sub_title.setText("项目总额" +  FormatUtil.formatAmount(regularEarn.getSubjectTotalPrice()) + "  " + regularEarn.getPayMode());
 
         tv_duration.setText(regularEarn.getLimit() + "天");
+        circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
         circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
 
 
@@ -93,10 +104,10 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest);
 
             tv_buy_now.setText(R.string.buy_now);
-            tv_annurate_interest_rate.setText(regularEarn.getYearInterest() + "%");
             tv_progress.setText(regularEarn.getPurchasePercent() + "%");
             tv_sale_number.setText("已认购" + regularEarn.getPersonTime() + "人");
         }
+        tv_annurate_interest_rate.setText(regularEarn.getYearInterest() + "%");
         if(TextUtils.isEmpty(regularEarn.getPromotionDesc())) {
             tv_description.setVisibility(View.GONE);
         }else {

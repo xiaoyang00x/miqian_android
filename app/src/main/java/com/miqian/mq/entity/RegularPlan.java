@@ -1,6 +1,7 @@
 package com.miqian.mq.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by guolei_wang on 15/9/17.
@@ -17,14 +18,24 @@ public class RegularPlan implements Serializable {
     private String limit; //期限
     private String presentationYesNo; // "N",//是否赠送收益
     private String presentationYearInterest; //赠送年利率
-    private String fromInvestmentAmount; //起投金额
+    private BigDecimal fromInvestmentAmount; //起投金额
     private String payMode; //还款方式
-    private String subjectTotalPrice; //标的总额
-    private String purchasePrice; //已认购金额
+    private BigDecimal subjectTotalPrice; //标的总额
+    private BigDecimal purchasePrice; //已认购金额
     private float purchasePercent; //认购进度
     private String bxbzf; //本息保障方
     private String ddbzf; //兜底保障方
     private String promotionDesc; //"满1万元送100元红包"//促销描述
+
+    public BigDecimal getSubjectMaxBuy() {
+        return subjectMaxBuy;
+    }
+
+    public void setSubjectMaxBuy(BigDecimal subjectMaxBuy) {
+        this.subjectMaxBuy = subjectMaxBuy;
+    }
+
+    private BigDecimal subjectMaxBuy; //最大认购金额
 
     public String getSubjectId() {
         return subjectId;
@@ -114,11 +125,11 @@ public class RegularPlan implements Serializable {
         this.presentationYearInterest = presentationYearInterest;
     }
 
-    public String getFromInvestmentAmount() {
+    public BigDecimal getFromInvestmentAmount() {
         return fromInvestmentAmount;
     }
 
-    public void setFromInvestmentAmount(String fromInvestmentAmount) {
+    public void setFromInvestmentAmount(BigDecimal fromInvestmentAmount) {
         this.fromInvestmentAmount = fromInvestmentAmount;
     }
 
@@ -130,19 +141,19 @@ public class RegularPlan implements Serializable {
         this.payMode = payMode;
     }
 
-    public String getSubjectTotalPrice() {
+    public BigDecimal getSubjectTotalPrice() {
         return subjectTotalPrice;
     }
 
-    public void setSubjectTotalPrice(String subjectTotalPrice) {
+    public void setSubjectTotalPrice(BigDecimal subjectTotalPrice) {
         this.subjectTotalPrice = subjectTotalPrice;
     }
 
-    public String getPurchasePrice() {
+    public BigDecimal getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(String purchasePrice) {
+    public void setPurchasePrice(BigDecimal purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 

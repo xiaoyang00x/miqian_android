@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.Reg;
+import com.miqian.mq.entity.RegInvest;
 import com.miqian.mq.entity.UserRegular;
 
 import java.util.List;
@@ -26,10 +28,10 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
     private int maxValue = 999;//最大的值
     private int mType = 0;
 
-    private List<UserRegular.RegInvest> mList;
-    private UserRegular.Reg mReg;
+    private List<RegInvest> mList;
+    private Reg mReg;
 
-    public AdapterUserRegular(List<UserRegular.RegInvest> list, UserRegular.Reg reg, int type) {
+    public AdapterUserRegular(List<RegInvest> list, Reg reg, int type) {
         this.mList = list;
         this.mReg = reg;
         this.mType = type;
@@ -65,7 +67,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
-            UserRegular.RegInvest regInvest = mList.get(position - 1);
+            RegInvest regInvest = mList.get(position - 1);
 
             ((ViewHolder) holder).bdName.setText(regInvest.getBdNm());
             if (regInvest.getBearingStatus().equals("Y")) {

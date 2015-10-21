@@ -1,7 +1,6 @@
 package com.miqian.mq.activity.user;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.widget.ImageButton;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.adapter.AdapterUserRegular;
+import com.miqian.mq.entity.RegInvest;
 import com.miqian.mq.entity.UserRegular;
 import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.net.HttpRequest;
@@ -40,7 +40,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private int mType = 0;
 
     private UserRegular userRegular;
-    private List<UserRegular.RegInvest> regInvestList;
+    private List<RegInvest> regInvestList;
 
     @Override
     public void obtainData() {
@@ -80,9 +80,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void onSucceed(UserRegularResult result) {
                     userRegular = result.getData();
-                    List<UserRegular.RegInvest> tempList = userRegular.getRegInvest();
+                    List<RegInvest> tempList = userRegular.getRegInvest();
                     if (regInvestList != null && tempList != null && tempList.size() > 0) {
-                        for (UserRegular.RegInvest regInvest : tempList) {
+                        for (RegInvest regInvest : tempList) {
                             regInvestList.add(regInvest);
                         }
                         refreshViewLoadMore();
@@ -190,7 +190,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onItemClick(View view, int postion) {
-        UserRegular.RegInvest regInvest = regInvestList.get(postion);
+        RegInvest regInvest = regInvestList.get(postion);
         Intent intent = new Intent(mActivity, UserRegularDetailActivity.class);
         intent.putExtra("investId", regInvest.getId());
         intent.putExtra("clearYn", regInvest.getBearingStatus());

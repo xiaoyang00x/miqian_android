@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -55,7 +56,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     FragmentTabHost mTabHost;
     TabWidget tabWidget;
-    LinearLayout tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
+    ViewGroup tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
     private List<JpushInfo> jpushInfolist;
     private int current_tab = 0;
     private RefeshDataListener mRefeshDataListener;
@@ -119,8 +120,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         });
     }
 
-    private LinearLayout initTabView(TabWidget tw, int drawbleId, int nameResId) {
-        LinearLayout tabIndicator = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.tab_indicator, tw, false);
+    private ViewGroup initTabView(TabWidget tw, int drawbleId, int nameResId) {
+        ViewGroup tabIndicator = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.tab_indicator, tw, false);
         ImageView ivTab1 = (ImageView) tabIndicator.findViewById(R.id.img_tab);
         TextView tv_name = (TextView) tabIndicator.findViewById(R.id.tv_name);
         ivTab1.setImageResource(drawbleId);
@@ -256,8 +257,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                         case 51:
                         case 52:
                         case 53:
-
-                            WebViewActivity.doIntent(mContext, jpush.getUrl(), true, null);
+                            WebActivity.startActivity(mContext, jpush.getUrl());
 
                             break;
                         default:

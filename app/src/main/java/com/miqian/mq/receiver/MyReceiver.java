@@ -19,11 +19,10 @@ import android.widget.RemoteViews;
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
-import com.miqian.mq.activity.AnnounceResultActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SplashActivity;
-import com.miqian.mq.activity.WebViewActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RedPaperActivity;
@@ -39,8 +38,6 @@ import com.miqian.mq.utils.UserUtil;
 import java.util.Calendar;
 
 import cn.jpush.android.api.JPushInterface;
-
-import static android.util.Log.d;
 
 /**
  * 自定义接收器
@@ -162,10 +159,7 @@ public class MyReceiver extends BroadcastReceiver {
                     case 51://活动利好 首页弹框，webView
                     case 52://平台相关新闻 首页弹框，webView
                     case 53://相关项目 首页弹框，webView
-                        notificationIntent= new Intent(context, WebViewActivity.class);
-                        notificationIntent.putExtra("is_use_web_title", true);
-                        notificationIntent.putExtra("url", response.getUrl());
-                        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        notificationIntent= WebActivity.getIntent(context, response.getUrl());
                         break;
                     default:
                         break;

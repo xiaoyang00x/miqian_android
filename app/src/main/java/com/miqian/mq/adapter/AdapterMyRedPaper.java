@@ -3,7 +3,6 @@ package com.miqian.mq.adapter;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.Promote;
-import com.miqian.mq.entity.Redpaper;
+import com.miqian.mq.entity.CustPromotion;
 import com.miqian.mq.utils.Uihelper;
 
 import java.util.List;
@@ -23,13 +21,13 @@ import java.util.List;
  */
 public class AdapterMyRedPaper extends RecyclerView.Adapter {
 
-    private List<Redpaper.CustPromotion> promList;
+    private List<CustPromotion> promList;
     private int maxValue = 999;//最大的值
     private final int VIEW_ITEM = 1;
     private final int VIEW_FOOTER = 2;
 
 
-    public AdapterMyRedPaper(List<Redpaper.CustPromotion> promList) {
+    public AdapterMyRedPaper(List<CustPromotion> promList) {
         this.promList = promList;
     }
 
@@ -59,7 +57,7 @@ public class AdapterMyRedPaper extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if ((holder instanceof ViewHolder)){
-            Redpaper.CustPromotion promote = promList.get(position);
+            CustPromotion promote = promList.get(position);
             ((ViewHolder) holder).textMoney.setText("￥" + promote.getCanUseAmt());
             ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
             ((ViewHolder) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));

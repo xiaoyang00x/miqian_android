@@ -1,20 +1,15 @@
 package com.miqian.mq.activity.user;
 
-import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.adapter.AdapterMyRedPaper;
 import com.miqian.mq.adapter.AdapterMyTicket;
-import com.miqian.mq.adapter.AdapterProjectMatch;
+import com.miqian.mq.entity.CustPromotion;
 import com.miqian.mq.entity.Page;
-import com.miqian.mq.entity.ProjectInfo;
-import com.miqian.mq.entity.ProjectInfoResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.Redpaper;
 import com.miqian.mq.net.HttpRequest;
@@ -29,7 +24,7 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 public class MyTicketActivity extends BaseActivity {
-    public List<Redpaper.CustPromotion> promList = new ArrayList<>();
+    public List<CustPromotion> promList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterMyTicket adapterMyTicket;
 
