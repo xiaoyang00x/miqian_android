@@ -87,13 +87,13 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemCount() {
         int itemsCount = items == null ? 0 : items.size();
-        return planList == null ? itemsCount : itemsCount + 1;
+        return (planList == null || planList.size() == 0) ? itemsCount : itemsCount + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
 //        return ITEM_TYPE_NORMAL;
-        if (planList == null) {
+        if (planList == null  || planList.size() == 0) {
             return ITEM_TYPE_NORMAL;
         }
         return position == 0 ? ITEM_TYPE_HEADER : ITEM_TYPE_NORMAL;

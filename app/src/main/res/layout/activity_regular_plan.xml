@@ -213,7 +213,9 @@
                         android:id="@+id/tv_project_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:gravity="right|center_vertical"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
@@ -244,7 +246,9 @@
                         android:id="@+id/tv_fx"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:gravity="right|center_vertical"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
@@ -275,7 +279,9 @@
                         android:id="@+id/tv_bxbz"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:gravity="right|center_vertical"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
@@ -306,7 +312,9 @@
                         android:id="@+id/tv_hkfs"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:gravity="right|center_vertical"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
