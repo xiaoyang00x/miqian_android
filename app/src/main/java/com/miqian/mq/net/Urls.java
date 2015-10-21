@@ -112,4 +112,15 @@ public class Urls {
     public final static String withdrawPreprocess = base_server + "assetService/withdrawPreprocess";
 
 
+    //网页的URL
+    //注册页：《秒钱用户注册协议》
+    public final static String web_register = base_server + "webView/register";
+    //充值页面：《资金管理协议》
+    public final static String web_recharge = base_server + "webView/recharge";
+    //活期认购页：《活期赚服务协议》
+    public final static String web_current = base_server + "webView/current-buy";
+    //定期赚认购页面：《定期赚服务协议》
+    public final static String web_regular = base_server + "webView/regular-buy";
+    //定期计划认购页面：《定期计划服务协议》
+    public final static String web_regplan = base_server + "webView/regplan-buy";
 }

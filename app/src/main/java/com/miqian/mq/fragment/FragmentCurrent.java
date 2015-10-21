@@ -25,6 +25,8 @@ import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WaterWaveView;
 
+import java.math.BigDecimal;
+
 public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
     private View view;
@@ -42,8 +44,8 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
     private CurrentInfo currentInfo;
 
-    private float downLimit = 1f;
-    private float upLimit = 999999;
+    private BigDecimal downLimit = new BigDecimal(1);
+    private BigDecimal upLimit = new BigDecimal(999999);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,11 +86,11 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
             @Override
             public void positionBtnClick(String moneyString) {
                 if (!TextUtils.isEmpty(moneyString)) {
-                    float money = Float.parseFloat(moneyString);
-                    if (money < downLimit) {
+                    BigDecimal money = new BigDecimal(moneyString);
+                    if (money.compareTo(downLimit) < 0) {
                         this.setTitle("提示：输入请大于" + downLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
-                    } else if (money > upLimit) {
+                    } else if (money.compareTo(upLimit) > 0) {
                         this.setTitle("提示：输入请小于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
@@ -122,6 +124,8 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
     private void refreshView() {
         if (currentInfo != null) {
+            downLimit = new BigDecimal(currentInfo.getCurrentBuyDownLimit());
+            upLimit = new BigDecimal(currentInfo.getCurrentBuyUpLimit());
             totalCountText.setText(currentInfo.getBuyItemCount());
             totalMoneyText.setText(currentInfo.getBuyTotalSum());
             if (currentInfo.getCurrentSwitch().equals("0")) {
@@ -142,8 +146,6 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
             public void onSucceed(CurrentInfoResult result) {
                 swipeRefresh.setRefreshing(false);
                 currentInfo = result.getData();
-                downLimit = Float.parseFloat(currentInfo.getCurrentBuyDownLimit());
-                upLimit = Float.parseFloat(currentInfo.getCurrentBuyUpLimit());
                 refreshView();
             }
 
