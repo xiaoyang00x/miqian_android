@@ -10,8 +10,9 @@ import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDivi
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.adapter.AdapterTransferDetail;
-import com.miqian.mq.entity.TransferDetail;
+import com.miqian.mq.entity.TranferDetailInfo;
 import com.miqian.mq.entity.TransferDetailResult;
+import com.miqian.mq.entity.TransferInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
@@ -32,8 +33,8 @@ public class TransferDetailActivity extends BaseActivity {
     private String investId;
     private String clearYn;
 
-    private List<TransferDetail.TranferDetailInfo> mList;
-    private TransferDetail.TransferInfo transferInfo;
+    private List<TranferDetailInfo> mList;
+    private TransferInfo transferInfo;
 
     private AdapterTransferDetail mAdapter;
 
@@ -53,14 +54,19 @@ public class TransferDetailActivity extends BaseActivity {
             public void onSucceed(TransferDetailResult result) {
                 mWaitingDialog.dismiss();
                 mList = result.getData().getTranslist();
-                transferInfo = result.getData().getTransAmt();
-                refreshView();
+                if (mList != null && mList.size() > 0) {
+                    transferInfo = result.getData().getTransAmt();
+                    refreshView();
+                } else {
+                    showEmptyView();
+                }
             }
 
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
+                showErrorView();
             }
         }, investId, clearYn);
     }

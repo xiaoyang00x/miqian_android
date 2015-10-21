@@ -30,7 +30,7 @@ public class RepaymentActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        Intent intent =getIntent();
+        Intent intent = getIntent();
         investId = intent.getStringExtra("investId");
         super.onCreate(bundle);
     }
@@ -47,12 +47,17 @@ public class RepaymentActivity extends BaseActivity {
             @Override
             public void onSucceed(RepaymentResult result) {
                 mList = result.getData().getRepaymentPlan();
-                refreshView();
+                if (mList != null && mList.size() > 0) {
+
+                    refreshView();
+                } else {
+                    showEmptyView();
+                }
             }
 
             @Override
             public void onFail(String error) {
-
+                showErrorView();
             }
         }, investId);
     }

@@ -297,4 +297,9 @@ public class SendCaptchaActivity extends BaseActivity {
         context.startActivity(intent);
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isTimer=false;
+    }
 }

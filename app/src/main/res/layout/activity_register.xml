@@ -20,7 +20,7 @@
           android:layout_height="30dp"
           android:background="@drawable/trans"
           android:layout_gravity="center_vertical"
-          android:src="@mipmap/login_phone"
+          android:src="@drawable/login_phone"
           />
         <EditText
             android:id="@+id/et_account_telephone"
@@ -52,7 +52,7 @@
             android:layout_height="30dp"
             android:background="@drawable/trans"
             android:layout_centerVertical="true"
-            android:src="@mipmap/captcha"
+            android:src="@drawable/captcha"
             android:id="@+id/imageView" />
 
         <EditText
@@ -98,7 +98,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/trans"
-            android:src="@mipmap/login_password"
+            android:src="@drawable/login_password"
             android:layout_gravity="center_vertical"
             />
         <EditText
@@ -132,7 +132,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/trans"
-            android:src="@mipmap/register_invite"
+            android:src="@drawable/register_invite"
             android:layout_gravity="center_vertical"
             />
         <EditText

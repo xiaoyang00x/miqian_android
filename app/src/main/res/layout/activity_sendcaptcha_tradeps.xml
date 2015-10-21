@@ -23,7 +23,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/trans"
-            android:src="@mipmap/login_password" />
+            android:src="@drawable/login_password" />
 
         <EditText
             android:id="@+id/et_realname"
@@ -84,7 +84,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:background="@drawable/trans"
-            android:src="@mipmap/captcha" />
+            android:src="@drawable/captcha" />
 
         <EditText
             android:id="@+id/et_account_captcha"

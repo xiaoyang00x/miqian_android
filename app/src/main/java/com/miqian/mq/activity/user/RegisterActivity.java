@@ -20,6 +20,7 @@ import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -157,7 +158,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     public void textLawCick(View v) {
-        WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+        WebActivity.startActivity(mActivity, Urls.web_register);
     }
 
     private void summit(final String captcha, final String invite, final String password) {
@@ -237,5 +238,10 @@ public class RegisterActivity extends BaseActivity {
 
         mTitle.setTitleText("注册");
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isTimer=false;
     }
 }

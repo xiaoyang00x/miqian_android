@@ -10,9 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.RecordCurrent;
-import com.miqian.mq.entity.Redpaper;
-import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.entity.CurSubRecord;
 
 import java.util.List;
 
@@ -21,14 +19,14 @@ import java.util.List;
  */
 public class AdapterCurrrentRecord extends RecyclerView.Adapter {
 
-    private List<RecordCurrent.CurSubRecord> dataList;
+    private List<CurSubRecord> dataList;
 
     private int maxValue = 999;//最大的值
     private final int VIEW_ITEM = 1;
     private final int VIEW_FOOTER = 2;
 
 
-    public AdapterCurrrentRecord(List<RecordCurrent.CurSubRecord> dataList) {
+    public AdapterCurrrentRecord(List<CurSubRecord> dataList) {
         this.dataList = dataList;
     }
 
@@ -69,7 +67,7 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof ViewHolderRecord){
-            RecordCurrent.CurSubRecord data = dataList.get(position);
+            CurSubRecord data = dataList.get(position);
             String traCd = data.getTraCd();
 
             if (!TextUtils.isEmpty(traCd)) {

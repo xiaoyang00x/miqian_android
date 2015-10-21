@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:layout_centerVertical="true"
-            android:background="@mipmap/login_phone"
+            android:background="@drawable/login_phone"
             android:id="@+id/login_image1" />
         <EditText
             android:id="@+id/edit_telephone"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/login_password"
+                android:background="@drawable/login_password"
                  />
             <EditText
                 android:id="@+id/edit_password"

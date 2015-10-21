@@ -8,7 +8,7 @@
         android:id="@+id/layout_nologin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/account_blur"
+        android:background="@drawable/mohu"
         android:visibility="gone">
 
         <LinearLayout
@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="3dp"
-                    android:background="@mipmap/login_phone" />
+                    android:background="@drawable/login_phone" />
 
                 <EditText
                     android:id="@+id/edit_telephone"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="3dp"
-                    android:background="@mipmap/login_password" />
+                    android:background="@drawable/login_password" />
 
                 <EditText
                     android:id="@+id/edit_password"

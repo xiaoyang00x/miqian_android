@@ -29,6 +29,7 @@ import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTradePassword;
@@ -275,7 +276,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+                    WebActivity.startActivity(mActivity, Urls.web_current);
                 }
             }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else if (PRODID_REGULAR.equals(prodId)) {
@@ -284,7 +285,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+                    WebActivity.startActivity(mActivity, Urls.web_regular);
                 }
             }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else {
@@ -293,7 +294,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+                    WebActivity.startActivity(mActivity, Urls.web_regplan);
                 }
             }), 3, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }

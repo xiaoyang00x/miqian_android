@@ -1,8 +1,6 @@
 package com.miqian.mq.adapter;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.CapitalRecord;
+import com.miqian.mq.entity.CapitalItem;
 
 import java.util.List;
 
@@ -18,9 +16,9 @@ import java.util.List;
  * Created by sunyong on 9/23/15.
  */
 public class CapitalRecordAdapter extends RecyclerView.Adapter {
-    List<CapitalRecord.CapitalItem> list;
+    List<CapitalItem> list;
 
-    public CapitalRecordAdapter(List<CapitalRecord.CapitalItem> list) {
+    public CapitalRecordAdapter(List<CapitalItem> list) {
         this.list = list;
 
     }
@@ -56,7 +54,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
         if ((vh instanceof ItemVH)){
             if (list.get(position) != null) {
-                CapitalRecord.CapitalItem item = list.get(position);
+                CapitalItem item = list.get(position);
                 ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
                 ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getPeerCustLoginNm());
                 ((ItemVH) vh).tvTraOpNm.setText(item.getTraOpNm());

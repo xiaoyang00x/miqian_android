@@ -41,7 +41,7 @@ public class ProjectMatchActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        Intent intent =getIntent();
+        Intent intent = getIntent();
         if (!TextUtils.isEmpty(intent.getStringExtra("peerCustId"))) {
             peerCustId = intent.getStringExtra("peerCustId");
         } else {
@@ -63,14 +63,19 @@ public class ProjectMatchActivity extends BaseActivity {
             public void onSucceed(ProjectInfoResult result) {
                 mWaitingDialog.dismiss();
                 mList = result.getData().getMatchsubList();
-                page = result.getData().getPage();
-                refreshView();
+                if (mList != null && mList.size() > 0) {
+                    page = result.getData().getPage();
+                    refreshView();
+                } else {
+                    showEmptyView();
+                }
             }
 
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
+                showErrorView();
             }
         }, String.valueOf(pageNo), pageSize, peerCustId);
     }

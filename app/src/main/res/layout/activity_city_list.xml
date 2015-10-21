@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/search_bar_edit_normal"
-            android:drawableLeft="@mipmap/icon_search"
+            android:drawableLeft="@drawable/icon_search"
             android:drawablePadding="10dp"
             android:hint="输入城市名、拼音或首字母查询"
             android:paddingLeft="20dp"

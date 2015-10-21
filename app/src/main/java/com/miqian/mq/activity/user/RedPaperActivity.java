@@ -8,10 +8,8 @@ import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDivi
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.adapter.AdapterMyRedPaper;
-import com.miqian.mq.adapter.AdapterMyTicket;
-import com.miqian.mq.adapter.AdapterProjectMatch;
+import com.miqian.mq.entity.CustPromotion;
 import com.miqian.mq.entity.Page;
-import com.miqian.mq.entity.ProjectInfo;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.Redpaper;
 import com.miqian.mq.net.HttpRequest;
@@ -26,7 +24,7 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 public class RedPaperActivity extends BaseActivity{
-    public List<Redpaper.CustPromotion> promList = new ArrayList<>();
+    public List<CustPromotion> promList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterMyRedPaper adapterMyRedPaper;
 
@@ -50,7 +48,12 @@ public class RedPaperActivity extends BaseActivity{
                 page = result.getData().getPage();
                 if (redpaper != null) {
                     promList = redpaper.getCustPromotion();
-                    refreshView();
+                    if (promList!=null&&promList.size()>0){
+                        refreshView();
+                    }else {
+                        showEmptyView();
+                    }
+
                 }
             }
 
@@ -58,6 +61,7 @@ public class RedPaperActivity extends BaseActivity{
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
+                showErrorView();
 
             }
         }, "HB", "", "1", pageSize);

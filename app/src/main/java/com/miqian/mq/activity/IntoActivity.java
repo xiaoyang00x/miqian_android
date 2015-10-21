@@ -25,6 +25,7 @@ import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.pay.BaseHelper;
 import com.miqian.mq.pay.MobileSecurePayer;
 import com.miqian.mq.utils.Constants;
@@ -36,6 +37,7 @@ import com.miqian.mq.views.WFYTitle;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
 
 /**
  * Created by Joy on 2015/9/10.
@@ -159,9 +161,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 Uihelper.showToast(mActivity, "转入金额不能为空");
                 return;
             }
-            float tempMoney = Float.parseFloat(money);
-            float minMoney = Float.parseFloat(userInfo.getAddRechargeMinValue());
-            if (tempMoney < minMoney) {
+            BigDecimal tempMoney = new BigDecimal(money);
+            BigDecimal minMoney = new BigDecimal(userInfo.getAddRechargeMinValue());
+            if (minMoney.compareTo(tempMoney) > 0) {
                 Uihelper.showToast(mActivity, "转入金额不能为小于" + minMoney + "元");
                 return;
             }
@@ -214,7 +216,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 rollIn();
                 break;
             case R.id.text_law:
-                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+                WebActivity.startActivity(mActivity, Urls.web_recharge);
                 break;
             default:
                 break;
