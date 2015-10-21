@@ -1,6 +1,8 @@
 package com.miqian.mq.activity;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -155,6 +157,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             MyApplication.getInstance().setIsCurrent(false);
+            MyApplication.getInstance().setIsBackStage(true);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -343,5 +346,25 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         dialogTips.setRemarks("  账户信息已变更，请重新登录");
         dialogTips.show();
     }
+
+    public BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
+        String SYSTEM_REASON = "reason";
+        String SYSTEM_HOME_KEY = "homekey";
+        String SYSTEM_HOME_KEY_LONG = "recentapps";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
+                String reason = intent.getStringExtra(SYSTEM_REASON);
+                if (TextUtils.equals(reason, SYSTEM_HOME_KEY)) {
+                    // 设置为在后台运行的标志
+                    // 表示按了home键,程序到了后台
+                    MyApplication.getInstance().setIsBackStage(true);
+
+                }
+            }
+        }
+    };
 
 }

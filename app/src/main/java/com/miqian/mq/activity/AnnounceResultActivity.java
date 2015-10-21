@@ -39,9 +39,8 @@ public class AnnounceResultActivity extends BaseActivity {
         // 是否登录
         if (!UserUtil.hasLogin(mActivity)) {
             userId = "";
-        }
-        else{
-            userId=  Pref.getString(Pref.USERID, mActivity, Pref.VISITOR);
+        } else {
+            userId = Pref.getString(Pref.USERID, mActivity, Pref.VISITOR);
         }
 
         if (!TextUtils.isEmpty(noticeId)) {
@@ -52,16 +51,21 @@ public class AnnounceResultActivity extends BaseActivity {
                 public void onSucceed(MessageInfoResult result) {
                     end();
                     MessageInfo detailInfo = result.getData();
-                    setData(detailInfo);
+                    if (detailInfo != null) {
+                        setData(detailInfo);
+                    } else {
+                        showEmptyView();
+                    }
                 }
 
                 @Override
                 public void onFail(String error) {
                     end();
-                    linear_noresult.setVisibility(View.GONE);
-                    mViewnoresult.setVisibility(View.VISIBLE);
+                    showErrorView();
                 }
             }, Integer.valueOf(pushSource), noticeId, userId);
+        }else {
+            showEmptyView();
         }
 
 
@@ -82,7 +86,7 @@ public class AnnounceResultActivity extends BaseActivity {
         String sendTime = detailInfo.getSendTime();
         if (!TextUtils.isEmpty(sendTime)) {
 
-            String time = Uihelper.timestampToDateStr_other( Double.parseDouble(sendTime));
+            String time = Uihelper.timestampToDateStr_other(Double.parseDouble(sendTime));
             tv_time.setText(time);
         }
     }
@@ -121,7 +125,7 @@ public class AnnounceResultActivity extends BaseActivity {
             }
         }
 
-        Uihelper.trace("xgInfo", "classid=="+ noticeId);
+        Uihelper.trace("xgInfo", "classid==" + noticeId);
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_content = (TextView) findViewById(R.id.tv_content);
         tv_time = (TextView) findViewById(R.id.tv_time);

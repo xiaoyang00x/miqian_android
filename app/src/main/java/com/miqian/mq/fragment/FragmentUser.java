@@ -348,7 +348,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                         startActivity(intent);
 
                     } else {
-                        Uihelper.showToast(getActivity(), "账户余额为0，无法体现");
+                        Uihelper.showToast(getActivity(), "账户余额为0，无法提现");
                     }
 
                 }

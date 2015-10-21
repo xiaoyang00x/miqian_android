@@ -18,7 +18,9 @@ public class MyApplication extends Application {
     private static MyApplication myApplication;
     private static boolean isCurrent;
     private static boolean isOnMainAcitivity;
+    private static boolean isBackStage;
     private static boolean showTips;
+
 
     public static boolean isShowTips() {
         return showTips;
@@ -35,7 +37,7 @@ public class MyApplication extends Application {
     public static void setIsOnMainAcitivity(boolean isOnMainAcitivity) {
         MyApplication.isOnMainAcitivity = isOnMainAcitivity;
     }
-
+    //判断app的状态,退出app则为false,点home键还是为true
     public static boolean isCurrent() {
         return isCurrent;
     }
@@ -43,6 +45,17 @@ public class MyApplication extends Application {
     public static void setIsCurrent(boolean isCurrent) {
         MyApplication.isCurrent = isCurrent;
     }
+
+    //isCurrent为true时，判断是否在前台
+
+    public static boolean isBackStage() {
+        return isBackStage;
+    }
+
+    public static void setIsBackStage(boolean isBackStage) {
+        MyApplication.isBackStage = isBackStage;
+    }
+    //
 
 
     @Override

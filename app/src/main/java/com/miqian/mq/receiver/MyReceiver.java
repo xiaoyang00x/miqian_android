@@ -207,7 +207,12 @@ public class MyReceiver extends BroadcastReceiver {
             // 定义NotificationManager
             String ns = Context.NOTIFICATION_SERVICE;
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
-            mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
+            //判断是否在后台,在后台则发送通知
+            if (!MyApplication.getInstance().isBackStage()){
+
+            }else {
+                mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
+            }
         } else {
             Log.e("====MessageReceiver==", "==response=nulL=");
         }
