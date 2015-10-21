@@ -47,9 +47,9 @@ public class MyTicketActivity extends BaseActivity {
                 Redpaper redpaper = result.getData();
                 page = result.getData().getPage();
                 if (redpaper != null) {
-                    if (promList!=null&&promList.size()>0){
+                    if (promList != null && promList.size() > 0) {
                         refreshView();
-                    }else {
+                    } else {
                         showEmptyView();
                     }
                 }
@@ -104,7 +104,7 @@ public class MyTicketActivity extends BaseActivity {
                     Redpaper redpaper = result.getData();
                     page = result.getData().getPage();
                     if (redpaper != null) {
-                        if (promList != null && promList != null && promList.size() > 0){
+                        if (promList != null && promList != null && promList.size() > 0) {
                             promList.addAll(redpaper.getCustPromotion());
                             adapterMyTicket.notifyItemInserted(promList.size());
                         }
@@ -122,13 +122,12 @@ public class MyTicketActivity extends BaseActivity {
     }
 
 
-
-
     private void refreshView() {
         adapterMyTicket = new AdapterMyTicket(promList);
         adapterMyTicket.setMaxItem(page.getCount());
         recyclerView.setAdapter(adapterMyTicket);
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_myredpaper;

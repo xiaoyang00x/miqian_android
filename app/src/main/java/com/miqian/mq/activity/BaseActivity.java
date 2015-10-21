@@ -155,8 +155,6 @@ public abstract class BaseActivity extends BaseFragmentActivity {
 
         mContentView.setVisibility(View.GONE);
         mViewnoresult.setVisibility(View.VISIBLE);
-        findViewById(R.id.tv_reFresh).setVisibility(View.VISIBLE);
-        tvTips.setText("数据获取失败，请重新获取");
     }
 
 }

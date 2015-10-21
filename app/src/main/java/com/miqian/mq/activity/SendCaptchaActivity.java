@@ -170,16 +170,15 @@ public class SendCaptchaActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
-                    //检验验证码
-                    if (!TextUtils.isEmpty(captcha)) {
-                        //验证验证码
-                        checkCaptcha(phone, captcha);
+                //检验验证码
+                if (!TextUtils.isEmpty(captcha)) {
+                    //验证验证码
+                    checkCaptcha(phone, captcha);
 
-                    } else {
-                        Uihelper.showToast(this, R.string.tip_captcha);
-                    }
-            }
-            else {
+                } else {
+                    Uihelper.showToast(this, R.string.tip_captcha);
+                }
+            } else {
                 Uihelper.showToast(this, R.string.phone_noeffect);
             }
 
@@ -189,17 +188,17 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void checkCaptcha(final String phone, final String captcha) {
-        int type=0;
+        int type = 0;
         if (isModifyPhone) {
-            type= TypeUtil.CAPTCHA_BINDTEL_FIRST;
-        }else {
-            type= TypeUtil.CAPTCHA_FINDPASSWORD;
+            summit(phone, captcha);
+        } else {
+            type = TypeUtil.CAPTCHA_FINDPASSWORD;
         }
 
         HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                summit(phone,captcha);
+                summit(phone, captcha);
             }
 
             @Override
@@ -297,9 +296,10 @@ public class SendCaptchaActivity extends BaseActivity {
         context.startActivity(intent);
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        isTimer=false;
+        isTimer = false;
     }
 }

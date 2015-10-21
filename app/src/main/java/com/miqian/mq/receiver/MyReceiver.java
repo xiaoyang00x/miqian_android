@@ -95,6 +95,10 @@ public class MyReceiver extends BroadcastReceiver {
 
             // 保存到数据库
             MyDataBaseHelper.getInstance(context).recordJpush(response);
+            //通知更新ui
+            // 通知消息页面更新
+
+            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.RERESH_JPUSH, null);
 
             // 解析数据
             String contentTitle = response.getTitle();

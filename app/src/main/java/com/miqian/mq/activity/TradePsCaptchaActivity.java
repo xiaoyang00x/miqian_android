@@ -126,33 +126,33 @@ public class TradePsCaptchaActivity extends BaseActivity {
         final String captcha = mEt_Captcha.getText().toString();
         if (isModifyPhone) {
 
-                HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
-                    @Override
-                    public void onSucceed(Meta result) {
-                        Intent intent = new Intent(mActivity, SendCaptchaActivity.class);
-                        intent.putExtra("type", TypeUtil.MODIFY_PHONE);
-                        intent.putExtra("captcha", captcha);
-                        startActivity(intent);
-                        finish();
-                    }
+            HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
+                @Override
+                public void onSucceed(Meta result) {
+                    Intent intent = new Intent(mActivity, SendCaptchaActivity.class);
+                    intent.putExtra("type", TypeUtil.MODIFY_PHONE);
+                    intent.putExtra("captcha", captcha);
+                    startActivity(intent);
+                    finish();
+                }
 
-                    @Override
-                    public void onFail(String error) {
+                @Override
+                public void onFail(String error) {
 
-                        Uihelper.showToast(mActivity, error);
-                    }
-                }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
+                    Uihelper.showToast(mActivity, error);
+                }
+            }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
 
         } else {
 
             String idCard = mEtRealname.getText().toString();
 
             if (!TextUtils.isEmpty(idCard)) {
-                    if (!TextUtils.isEmpty(captcha)) {
-                        summit(idCard, captcha);
-                    } else {
-                        Uihelper.showToast(this, R.string.tip_captcha);
-                    }
+                if (!TextUtils.isEmpty(captcha)) {
+                    summit(idCard, captcha);
+                } else {
+                    Uihelper.showToast(this, R.string.tip_captcha);
+                }
 
             } else {
                 Uihelper.showToast(this, "身份证号码不能为空");
@@ -229,6 +229,6 @@ public class TradePsCaptchaActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        isTimer=false;
+        isTimer = false;
     }
 }

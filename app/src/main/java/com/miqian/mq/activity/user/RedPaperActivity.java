@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/10/8.
  */
-public class RedPaperActivity extends BaseActivity{
+public class RedPaperActivity extends BaseActivity {
     public List<CustPromotion> promList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterMyRedPaper adapterMyRedPaper;
@@ -48,9 +48,9 @@ public class RedPaperActivity extends BaseActivity{
                 page = result.getData().getPage();
                 if (redpaper != null) {
                     promList = redpaper.getCustPromotion();
-                    if (promList!=null&&promList.size()>0){
+                    if (promList != null && promList.size() > 0) {
                         refreshView();
-                    }else {
+                    } else {
                         showEmptyView();
                     }
 
@@ -106,7 +106,7 @@ public class RedPaperActivity extends BaseActivity{
                     Redpaper redpaper = result.getData();
                     page = result.getData().getPage();
                     if (redpaper != null) {
-                        if (promList != null && promList != null && promList.size() > 0){
+                        if (promList != null && promList != null && promList.size() > 0) {
                             promList.addAll(redpaper.getCustPromotion());
                             adapterMyRedPaper.notifyItemInserted(promList.size());
                         }
@@ -124,13 +124,12 @@ public class RedPaperActivity extends BaseActivity{
     }
 
 
-
-
     private void refreshView() {
         adapterMyRedPaper = new AdapterMyRedPaper(promList);
         adapterMyRedPaper.setMaxItem(page.getCount());
         recyclerView.setAdapter(adapterMyRedPaper);
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_myredpaper;

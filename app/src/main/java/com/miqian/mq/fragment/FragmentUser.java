@@ -34,6 +34,7 @@ import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -49,7 +50,7 @@ import com.miqian.mq.views.ProgressDialogView;
  * @created 2015-3-18
  */
 
-public class FragmentUser extends Fragment implements View.OnClickListener, MainActivity.RefeshDataListener {
+public class FragmentUser extends Fragment implements View.OnClickListener, MainActivity.RefeshDataListener,ExtendOperationController.ExtendOperationListener {
 
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket, tv_Redpackage;
@@ -58,6 +59,9 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     private TextView tv_TotalProfit, tv_balance, tv_totalasset;
     private CustomDialog dialogTips;
     private MySwipeRefresh swipeRefresh;
+    private ImageButton btn_message;
+    private EditText editTelephone;
+    private EditText editPassword;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +81,13 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     @Override
     public void onStart() {
 
+        int message = Uihelper.getMessageCount(4, getActivity());
+        if (message > 0) {
+            btn_message.setImageResource(R.drawable.icon_hasmessage);
+        } else {
+            btn_message.setImageResource(R.drawable.account_message);
+        }
+
         //已登录，显示我的界面
         if (UserUtil.hasLogin(getActivity())) {
 
@@ -86,6 +97,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         //未登录，显示登录界面
         else {
             initLoginView();
+            editPassword.setText("");
+            editTelephone.setText("");
         }
 
         super.onStart();
@@ -170,7 +183,15 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         super.onResume();
     }
 
+    @Override
+    public void onDestroy() {
+        ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
+        super.onDestroy();
+    }
+
     private void findViewById(View view) {
+
+        ExtendOperationController.getInstance().registerExtendOperationListener(this);
 
         swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -185,8 +206,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
         tv_Title.setText("我的");
 
-        ImageButton btn_message = (ImageButton) view.findViewById(R.id.bt_left);
-        btn_message.setImageResource(R.drawable.account_message);
+        btn_message = (ImageButton) view.findViewById(R.id.bt_left);
         btn_message.setOnClickListener(this);
 
         ImageButton btn_setting = (ImageButton) view.findViewById(R.id.bt_right);
@@ -226,10 +246,9 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
         final View relaTelephone = view.findViewById(R.id.rela_telephone);
         final View relaPassword = view.findViewById(R.id.rela_password);
-        final EditText editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
-        final EditText editPassword = (EditText) view.findViewById(R.id.edit_password);
-        editPassword.setText("");
-        editTelephone.setText("");
+         editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
+         editPassword = (EditText) view.findViewById(R.id.edit_password);
+
         Button btnLogin = (Button) view.findViewById(R.id.btn_login);
         view.findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -394,5 +413,21 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
             dialogTips.show();
         }
         onStart();
+    }
+
+    @Override
+    public void excuteExtendOperation(int operationKey, Object data) {
+        switch (operationKey) {
+            case ExtendOperationController.OperationKey.RERESH_XGPUSH:
+                // 更新数据
+                int message = Uihelper.getMessageCount(4, getActivity());
+                if (message > 0) {
+                    btn_message.setImageResource(R.drawable.icon_hasmessage);
+                } else {
+                    btn_message.setImageResource(R.drawable.account_message);
+                }
+                break;
+        }
+
     }
 }

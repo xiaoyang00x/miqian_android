@@ -40,6 +40,8 @@ public class ExtendOperationController {
 
 		/** token改变 */
 		public static final int CHANGE_TOKEN = 1006;
+		/** 极光推送更新ui */
+		public static final int RERESH_JPUSH = 1007;
 
 	}
 

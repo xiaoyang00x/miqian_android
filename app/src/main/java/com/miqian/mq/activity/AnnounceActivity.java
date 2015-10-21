@@ -31,8 +31,7 @@ import java.util.List;
 /**
  * @author Administrator Tuliangtan 3.26
  */
-public class AnnounceActivity extends BaseActivity
-        implements ExtendOperationController.ExtendOperationListener {
+public class AnnounceActivity extends BaseActivity implements ExtendOperationController.ExtendOperationListener {
 
     private SwipeMenuListView mSwipeMenuListView;
     private MessageAdapter adapter;
@@ -50,13 +49,10 @@ public class AnnounceActivity extends BaseActivity
         }
         Collections.reverse(jpushInfolist);
         if (jpushInfolist == null || jpushInfolist.size() == 0) {
+            showEmptyView();
             mTitle.setRightText("");
         } else {
-            //			if (mView_noresult != null) {
-            //
-            //				mView_noresult.setVisibility(View.GONE);
-            //				mTitle.setRightText("清空");
-            //			}
+
         }
         Uihelper.trace("" + jpushInfolist.size());
 
@@ -154,7 +150,7 @@ public class AnnounceActivity extends BaseActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        this.setIntent(intent);
+        AnnounceActivity.this.setIntent(intent);
         initView();
         obtainData();
     }
@@ -215,7 +211,7 @@ public class AnnounceActivity extends BaseActivity
                     jpushInfolist.clear();
                     adapter.notifyDataSetChanged();
                     mTitle.setRightText("");
-                    //					mView_noresult.setVisibility(View.VISIBLE);
+                    showEmptyView();
                     dismiss();
                 }
 
@@ -239,4 +235,5 @@ public class AnnounceActivity extends BaseActivity
                 break;
         }
     }
+
 }

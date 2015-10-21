@@ -61,14 +61,14 @@ public class CapitalRecordActivity extends BaseActivity {
     private String pageSize = "20";
     private Page page;
     private boolean isLoading = false;
-    private String mType="";
+    private String mType = "";
     private TextView tvTips;
     private View mViewnoresult_data;
 
 
     @Override
     public void obtainData() {
-        pageNo=1;
+        pageNo = 1;
         begin();
         //取全部
         HttpRequest.getCapitalRecords(this, new ICallback<CapitalRecordResult>() {
@@ -78,7 +78,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 end();
                 list.clear();
                 CapitalRecordResult record = result;
-                if (record.getData() != null&&record.getData().getAssetRecord().size()>0) {
+                if (record.getData() != null && record.getData().getAssetRecord().size() > 0) {
                     page = record.getData().getPage();
                     list.addAll(record.getData().getAssetRecord());
                     refreshView();
@@ -270,7 +270,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 all_t.setTextColor(Color.WHITE);
                 preSelected_t = all_t;
 
-                mType="";
+                mType = "";
                 break;
             case R.id.saving:
                 preSelected.setColor(0xdddddd);
@@ -284,7 +284,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 saving_t.setTextColor(Color.WHITE);
                 preSelected_t = saving_t;
 
-                mType="MQ01";
+                mType = "MQ01";
                 break;
 
             case R.id.buy:
@@ -298,7 +298,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 buy_t.setTextColor(Color.WHITE);
                 preSelected_t = buy_t;
 
-                mType="MQ03";
+                mType = "MQ03";
                 break;
             case R.id.withdraw:
                 preSelected.setColor(0xdddddd);
@@ -310,7 +310,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 withdraw_t.setTextColor(Color.WHITE);
                 preSelected_t = withdraw_t;
 
-                mType="MQ02";
+                mType = "MQ02";
                 break;
 
 
@@ -325,7 +325,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected.setColor(Color.RED);
                 getmTitle().setTitleText("赎回");
 
-                mType="MQ04";
+                mType = "MQ04";
                 break;
 
             case R.id.transfer:
@@ -338,7 +338,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t = transfer_t;
                 preSelected_t.setTextColor(0xffffffff);
 
-                mType="MQ05";
+                mType = "MQ05";
                 break;
 
             case R.id.maturity:
@@ -350,7 +350,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t = maturity_t;
                 preSelected_t.setTextColor(0xffffffff);
 
-                mType="MQ06";
+                mType = "MQ06";
                 break;
 
             case R.id.other:
@@ -363,7 +363,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 preSelected_t = other_t;
                 preSelected_t.setTextColor(0xffffffff);
 
-                mType="MQ07";
+                mType = "MQ07";
                 break;
             default:
                 break;
@@ -375,6 +375,7 @@ public class CapitalRecordActivity extends BaseActivity {
 
         obtainData();
     }
+
     /**
      * 无数据
      */
