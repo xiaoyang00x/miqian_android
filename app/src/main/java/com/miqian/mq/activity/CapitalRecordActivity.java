@@ -1,36 +1,28 @@
 package com.miqian.mq.activity;
 
-import android.app.Dialog;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
-import com.miqian.mq.adapter.AdapterMyTicket;
 import com.miqian.mq.adapter.CapitalRecordAdapter;
-import com.miqian.mq.entity.CapitalRecord;
+import com.miqian.mq.entity.CapitalItem;
 import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.Page;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CircleButton;
-import com.miqian.mq.views.ProgressDialogView;
 import com.miqian.mq.views.WFYTitle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,10 +32,9 @@ public class CapitalRecordActivity extends BaseActivity {
     Animation animHide, animShow;
     RecyclerView recyclerView;
     CapitalRecordAdapter adapter;
-    List<CapitalRecord.CapitalItem> list = new ArrayList<>();
+    List<CapitalItem> list = new ArrayList<>();
     FrameLayout data_view;
     TextView empty_view;
-    Dialog mWaitingDialog;
 
     CircleButton all;
     CircleButton saving;

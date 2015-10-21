@@ -5,14 +5,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CityInfoResult;
-import com.miqian.mq.entity.CommonEntity;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.ProjectInfoResult;
@@ -20,7 +18,6 @@ import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
-import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
@@ -35,7 +32,6 @@ import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.SubscribeOrderResult;
-import com.miqian.mq.entity.TestClass;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.entity.WithDrawResult;
@@ -52,35 +48,6 @@ import java.util.List;
 public class HttpRequest {
 
     private static List<Param> mList;
-
-    /**
-     * 测试
-     */
-    public static void testHttp(Context context, final ICallback<Meta> callback, String phone,
-                                String password) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
-        mList.add(new Param("invitationCode", ""));
-        mList.add(new Param("captcha", "1423"));
-        mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
-
-        new MyAsyncTask(context, Urls.test, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                TestClass test = JsonUtil.parseObject(result, TestClass.class);
-                Log.e("", "L: " + RSAUtils.decryptByPrivate(test.getTestEncrypt()));
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
 
     /**
      * 身份认证

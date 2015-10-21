@@ -10,14 +10,11 @@ import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDivi
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.adapter.AdapterMyTicket;
-import com.miqian.mq.adapter.AdapterPacket;
 import com.miqian.mq.adapter.typeadapter.AdapterCurrrentRecord;
+import com.miqian.mq.entity.CurSubRecord;
+import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.Page;
 import com.miqian.mq.entity.RecordCurrent;
-import com.miqian.mq.entity.CurrentRecordResult;
-import com.miqian.mq.entity.RedPaperData;
-import com.miqian.mq.entity.Redpaper;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
@@ -31,7 +28,7 @@ import java.util.List;
 public class ActivityCurrentRecord extends BaseActivity {
     private TextView tvInterest;
     private RecyclerView recyclerView;
-    private List<RecordCurrent.CurSubRecord> dataList;
+    private List<CurSubRecord> dataList;
 
     private int pageNo = 1;
     private String pageSize = "20";

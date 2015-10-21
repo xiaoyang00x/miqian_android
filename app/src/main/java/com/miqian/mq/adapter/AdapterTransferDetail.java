@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.TransferDetail;
+import com.miqian.mq.entity.TranferDetailInfo;
 
 import java.util.List;
 
 public class AdapterTransferDetail extends RecyclerView.Adapter {
 
-    private List<TransferDetail.TranferDetailInfo> mList;
+    private List<TranferDetailInfo> mList;
 
-    public AdapterTransferDetail(List<TransferDetail.TranferDetailInfo> list) {
+    public AdapterTransferDetail(List<TranferDetailInfo> list) {
         this.mList = list;
     }
 
@@ -30,7 +30,7 @@ public class AdapterTransferDetail extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
-            TransferDetail.TranferDetailInfo tranferDetailInfo = mList.get(position);
+            TranferDetailInfo tranferDetailInfo = mList.get(position);
             ((ViewHolder) holder).textTransferingMoney.setText(tranferDetailInfo.getPrin());
             ((ViewHolder) holder).textTransferStatus.setText(tranferDetailInfo.getTransState());
             ((ViewHolder) holder).textTransferMoney.setText(tranferDetailInfo.getBuyAmt());

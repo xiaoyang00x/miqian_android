@@ -16,26 +16,4 @@ public class ProjectInfoResult extends Meta {
     public void setData(ProjectMatch data) {
         this.data = data;
     }
-
-    public class ProjectMatch {
-
-        private List<ProjectInfo> matchsubList;
-        private Page page;
-
-        public List<ProjectInfo> getMatchsubList() {
-            return matchsubList;
-        }
-
-        public void setMatchsubList(List<ProjectInfo> matchsubList) {
-            this.matchsubList = matchsubList;
-        }
-
-        public Page getPage() {
-            return page;
-        }
-
-        public void setPage(Page page) {
-            this.page = page;
-        }
-    }
 }

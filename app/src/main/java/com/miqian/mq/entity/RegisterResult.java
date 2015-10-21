@@ -1,7 +1,5 @@
 package com.miqian.mq.entity;
 
-import java.util.Map;
-
 /**
  * Created by Administrator on 2015/9/6.
  */
