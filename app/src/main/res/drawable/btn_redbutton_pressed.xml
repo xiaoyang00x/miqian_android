@@ -5,6 +5,6 @@
     <corners
         android:radius="@dimen/btn_radius" />
 
-    <solid android:color="@color/red_press" />
+    <solid android:color="@color/mq_r2" />
 
 </shape>
