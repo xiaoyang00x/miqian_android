@@ -16,6 +16,11 @@
     //输入框,确认按钮的高度
     <dimen name="edit_item">45dp</dimen>
 
+    //按钮的高度
+    <dimen name="bt_height">45dp</dimen>
+    //按钮下距文字高度
+    <dimen name="bt_under_text">10dp</dimen>
+
     //list item 高度
     <dimen name="listitem_height">50dp</dimen>
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,15 +12,15 @@
         android:minHeight="40dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp" >
+        android:paddingTop="5dp">
 
-      <ImageView
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:background="@drawable/trans"
-          android:layout_gravity="center_vertical"
-          android:src="@drawable/login_phone"
-          />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/trans"
+            android:src="@drawable/login_phone" />
+
         <EditText
             android:id="@+id/et_account_telephone"
             style="@style/edittext_item"
@@ -31,8 +30,7 @@
             android:layout_toRightOf="@+id/tv_register"
             android:hint="请输入手机号码"
             android:inputType="number"
-            android:maxLength="11" >
-        </EditText>
+            android:maxLength="11"/>
     </LinearLayout>
 
     <View style="@style/item_divider" />
@@ -44,29 +42,28 @@
         android:minHeight="40dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        >
+        android:paddingTop="5dp">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/trans"
             android:layout_centerVertical="true"
-            android:src="@drawable/captcha"
-            android:id="@+id/imageView" />
+            android:background="@drawable/trans"
+            android:src="@drawable/captcha" />
 
         <EditText
             android:id="@+id/et_account_captcha"
             style="@style/edittext_item"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView"
             android:layout_toLeftOf="@+id/btn_send"
+            android:layout_toRightOf="@+id/imageView"
             android:hint="请输入验证码"
             android:inputType="number"
             android:maxLength="6"
-            android:layout_toRightOf="@+id/imageView"
-            android:layout_toEndOf="@+id/imageView">
-        </EditText>
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/btn_send"
@@ -86,21 +83,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:minHeight="40dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
         android:layout_marginTop="@dimen/margin_top"
-        >
+        android:background="@color/white"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp">
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/trans"
-            android:src="@drawable/login_password"
             android:layout_gravity="center_vertical"
-            />
+            android:background="@drawable/trans"
+            android:src="@drawable/login_password" />
+
         <EditText
             android:id="@+id/et_account_password"
             style="@style/edittext_item"
@@ -108,11 +102,10 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@+id/tv_register"
-            android:hint="6~16位数字字母组合"
             android:digits="@string/match"
+            android:hint="登录密码6~16位数字字母组合"
             android:inputType="numberPassword"
-            android:maxLength="16" >
-        </EditText>
+            android:maxLength="16"/>
 
     </LinearLayout>
 
@@ -125,16 +118,15 @@
         android:minHeight="40dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        >
+        android:paddingTop="5dp">
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/trans"
-            android:src="@drawable/register_invite"
             android:layout_gravity="center_vertical"
-            />
+            android:background="@drawable/trans"
+            android:src="@drawable/register_invite" />
+
         <EditText
             android:id="@+id/et_account_invite"
             style="@style/edittext_item"
@@ -142,26 +134,24 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@+id/tv_register"
-            android:hint="请输入邀请码"
             android:digits="@string/match"
-            android:inputType="number"
-            >
-        </EditText>
+            android:hint="邀请码(非必填)"
+            android:inputType="number"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:layout_marginBottom="@dimen/margin_top"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/bt_under_text"
         android:layout_marginLeft="@dimen/margin_left_right"
         android:layout_marginRight="@dimen/margin_left_right"
-        android:layout_marginTop="@dimen/margin_top" >
+        android:layout_marginTop="@dimen/margin_top">
 
         <Button
             android:id="@+id/btn_next"
             style="@style/click_btn"
-            android:layout_height="@dimen/listitem_height"
+            android:layout_height="@dimen/bt_height"
             android:onClick="btn_click"
             android:text="下一步" />
     </LinearLayout>
@@ -174,21 +164,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已同意"
             android:layout_gravity="center_vertical"
-            android:textSize="@dimen/mq_font4"
-            android:textColor="@color/mq_b2"/>
+            android:text="已同意"
+            android:textColor="@color/mq_b2"
+            android:textSize="@dimen/mq_font4" />
 
         <Button
             android:id="@+id/text_law"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="《秒钱用户注册协议》"
             android:layout_gravity="center_vertical"
-            android:textSize="@dimen/mq_font4"
+            android:background="@color/transparent"
             android:onClick="textLawCick"
+            android:text="《秒钱用户注册协议》"
             android:textColor="@color/mq_bl2"
-            android:background="@color/transparent"/>
+            android:textSize="@dimen/mq_font4" />
     </LinearLayout>
 
 

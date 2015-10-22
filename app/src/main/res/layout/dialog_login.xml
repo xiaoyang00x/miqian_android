@@ -70,7 +70,7 @@
                 android:background="@null"
                 android:layout_marginRight="10dp"
                 android:singleLine="true"
-                android:hint="请输入密码"
+                android:hint="请输入登录密码"
                 android:inputType="textPassword"
                 android:typeface="monospace"
                 android:textColor="@color/miqian_black"
