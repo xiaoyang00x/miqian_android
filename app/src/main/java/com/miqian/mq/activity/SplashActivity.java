@@ -5,11 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import cn.jpush.android.api.JPushInterface;
+
 import com.miqian.mq.R;
 import com.miqian.mq.utils.Config;
+import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Pref;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UpdateConfig;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
 
@@ -22,20 +29,17 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		Config.init(this);
-
+        //      设置友盟渠道号
+        String channelId = Pref.getString(Pref.CHANNEL_ID, this, "");
+        if (TextUtils.isEmpty(channelId)) {
+            Pref.saveString(Pref.CHANNEL_ID, MobileOS.getChannelName(this), this);
+        } else {
+            UmengUpdateAgent.setChannel(channelId);
+        }
         setContentView(R.layout.activity_splash);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         framePages = (LinearLayout) findViewById(R.id.frame_pages);
 
-        Intent intent = getIntent();
-
-//
-//		uritype = intent.getStringExtra("uritype");
-//		classid = intent.getStringExtra("classid");
-//		noticeId = intent.getStringExtra("noticeId");
-//		url = intent.getStringExtra("url");
-
-//		MyApplication.getIntence().setIsCurrent(true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -49,23 +53,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         boolean first_use = false;
         if (!first_use) {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-//			if (!TextUtils.isEmpty(uritype)) {
-//
-//				intent.putExtra("uritype", uritype);
-//			}
-//			if (!TextUtils.isEmpty(noticeId)) {
-//
-//				intent.putExtra("noticeId", noticeId);
-//			}
-//			if (!TextUtils.isEmpty(url)) {
-//
-//				intent.putExtra("url", url);
-//			}
-//			if (!TextUtils.isEmpty(classid)) {
-//
-//				intent.putExtra("classid", classid);
-//			}
-
             startActivity(intent);
             SplashActivity.this.finish();
         } else {

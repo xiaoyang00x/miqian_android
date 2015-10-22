@@ -1,16 +1,13 @@
 package com.miqian.mq.activity;
 
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +18,6 @@ import android.widget.TextView;
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.ActivityCurrentRecord;
-import com.miqian.mq.activity.current.ActivityRedPacket;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RedPaperActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
@@ -37,9 +33,9 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.Pref;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.Collections;
 import java.util.List;
@@ -68,9 +64,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UmengUpdateAgent.update(this);
         ExtendOperationController.getInstance().registerExtendOperationListener(this);
         setContentView(R.layout.activity_main);
-
         findTabView();
         initTab();
         MyApplication.getInstance().setIsCurrent(true);

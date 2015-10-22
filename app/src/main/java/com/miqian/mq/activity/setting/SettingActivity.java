@@ -21,9 +21,13 @@ import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
-import com.umeng.fb.FeedbackAgent;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 /**
  * Created by Administrator on 2015/9/17.
@@ -50,7 +54,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     tv_card.setText("银行卡未绑定");
                     tv_cardState.setText("");
                 } else {
-
                     String bankNo = RSAUtils.decryptByPrivate(bankCard.getBankNo());
                     if (TextUtils.isEmpty(bankNo)) {
                         return;
@@ -96,6 +99,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         View frame_setting_about = findViewById(R.id.frame_setting_about);
         View frame_setting_telephone = findViewById(R.id.frame_setting_telephone);
         View frame_setting_bankcard = findViewById(R.id.frame_setting_bankcard);
+        View frameUpdate = findViewById(R.id.frame_update);
+        TextView textVersion = (TextView) findViewById(R.id.text_version);
+        textVersion.setText("V" + MobileOS.getAppVersionName(mActivity));
 
         tv_name = (TextView) findViewById(R.id.tv_setting_name);
         tv_card = (TextView) findViewById(R.id.tv_setting_bankcard);
@@ -103,6 +109,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tv_bindPhone = (TextView) findViewById(R.id.tv_settting_bindphone);
         iconBank = (ImageView) findViewById(R.id.icon_bank);
 
+        frameUpdate.setOnClickListener(this);
         frame_setting_name.setOnClickListener(this);
         frame_setting_bindphone.setOnClickListener(this);
         frame_setting_security.setOnClickListener(this);
@@ -152,8 +159,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             //姓名
             case R.id.frame_setting_name:
-
-                if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
+                if (userInfo != null && !TextUtils.isEmpty(userInfo.getRealNameStatus())) {
                     //未认证
                     if ("0".equals(userInfo.getRealNameStatus())) {
                         Intent intent = new Intent(mActivity, ActivityRealname.class);
@@ -178,6 +184,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //银行卡号
             case R.id.frame_setting_bankcard:
+                if (userInfo == null) {
+                    return;
+                }
 
                 //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
                 String supportStatus = userInfo.getSupportStatus();
@@ -210,21 +219,40 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 Intent feedBackActivity = new Intent(this, CustomFeedBackActivity.class);
                 startActivity(feedBackActivity);
                 break;
+            //版本更新
+            case R.id.frame_update:
+                UmengUpdateAgent.setUpdateAutoPopup(false);
+                UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+                    @Override
+                    public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
+                        switch (updateStatus) {
+                            case UpdateStatus.Yes: // has update
+                                UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
+                                break;
+                            case UpdateStatus.No: // has no update
+                                Toast.makeText(mContext, "没有更新", Toast.LENGTH_SHORT).show();
+                                break;
+                            case UpdateStatus.NoneWifi: // none wifi
+                                UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
+                                break;
+                            case UpdateStatus.Timeout: // time out
+                                Toast.makeText(mContext, "超时", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                });
+                UmengUpdateAgent.forceUpdate(mActivity);
+                break;
             //关于咪钱
             case R.id.frame_setting_about:
                 startActivity(new Intent(mActivity, AboutUsActivity.class));
                 break;
             //联系客服
             case R.id.frame_setting_telephone:
-
-
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4000010520")));
-
                 break;
         }
-
     }
-
 
     //退出账号
     public void btn_click(View view) {

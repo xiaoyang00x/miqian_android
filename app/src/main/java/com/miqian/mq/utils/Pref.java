@@ -37,8 +37,8 @@ public class Pref {
 
 	//用户信息
 	public static final String REALNAME_STATUS = "RealnameStatus";
-
-	public static final String USER_ = "ServerErrorCode";
+//	渠道id
+	public static final String CHANNEL_ID = "ChannelId";
 
 	// 是否退出应用
 	public static final String EXIT = "Exit";

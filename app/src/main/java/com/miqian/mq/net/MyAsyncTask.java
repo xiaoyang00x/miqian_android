@@ -9,6 +9,8 @@ import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.UserUtil;
+import com.umeng.update.UmengUpdateAgent;
+
 import java.util.List;
 
 
@@ -62,12 +64,13 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
 //                    TCAgent.onEvent(mContext, Pref.SERVER_ERROR_CODE, Pref.getString(Pref.USERID, mContext, Pref.VISITOR) + result);
                     callback.onFail(SERVER_ERROR);
                 } else {
-
-                    callback.onSucceed(result);
                     Meta response = JsonUtil.parseObject(result, Meta.class);
                     if (response.getCode().equals("999995")) {
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
+                    } else if (response.getCode().equals("900000")) {
+                        UmengUpdateAgent.forceUpdate(mContext);
                     }
+                    callback.onSucceed(result);
                 }
             } else {
                 callback.onFail("请求失败");
