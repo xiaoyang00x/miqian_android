@@ -59,8 +59,8 @@
                                     android:layout_above="@id/image_interest"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="10dp"
-                                    android:text="年化收益率"
-                                    android:textColor="#960a0a"
+                                    android:text="年化利率"
+                                    android:textColor="@color/white"
                                     android:textSize="@dimen/mq_font3" />
 
                                 <TextView

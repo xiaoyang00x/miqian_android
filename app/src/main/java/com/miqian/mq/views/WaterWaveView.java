@@ -97,7 +97,7 @@ public class WaterWaveView extends View {
 
     private void init(Context context) {
         offsetWidth = 130 * Config.DENSITY;
-        mRingSTROKEWidth = 12 * Config.DENSITY;
+        mRingSTROKEWidth = 10 * Config.DENSITY;
         mBigOffset = 13 * Config.DENSITY;
 
         mRingPaint = new Paint();

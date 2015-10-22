@@ -1,31 +1,35 @@
 package com.miqian.mq.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.ActivityUserCurrent;
+import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.adapter.RegularListAdapter;
 import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
 
 /**
  * Created by guolei_wang on 15/9/16.
  */
-public class RegularFragment extends BasicFragment {
+public class RegularFragment extends BasicFragment implements View.OnClickListener {
 
     RegularListAdapter mAdapter;
     private GetRegularInfo mData;
+    private ImageButton btRight;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +48,10 @@ public class RegularFragment extends BasicFragment {
     private TextView titleText;
 
     private void findView(View view) {
+        btRight = (ImageButton) view.findViewById(R.id.bt_right);
+        btRight.setImageResource(R.drawable.btn_regular_right);
+        btRight.setOnClickListener(this);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         titleText = (TextView) view.findViewById(R.id.title);
         swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
@@ -130,5 +138,14 @@ public class RegularFragment extends BasicFragment {
     @Override
     protected String getPageName() {
         return "定期首页";
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_right:
+                UserUtil.isLogin(getActivity(), UserRegularActivity.class);
+                break;
+        }
     }
 }
