@@ -1,33 +1,15 @@
 package com.miqian.mq.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.holder.HomeHeaderViewHolder;
 import com.miqian.mq.adapter.holder.RegularEarnViewHoder;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.RegularEarn;
-import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.CircleBar;
-import com.miqian.mq.views.MaterialProgressBarSupport;
-import com.miqian.mq.views.PageIndicator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by guolei_wang
@@ -37,7 +19,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int ITEM_TYPE_NEW = 1;
     private final int ITEM_TYPE_JINGXUAN = 2;
     HomePageInfo info;
-    ViewPagerAdapter adapter = null;
     Activity activity;
     HomeHeaderViewHolder homeHeaderViewHolder;
 
