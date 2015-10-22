@@ -78,7 +78,7 @@
                 android:background="@drawable/btn_cancel"
                 android:text="取消"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textsize_middle" />
+                android:textSize="@dimen/mq_font1" />
 
             <Button
                 android:id="@+id/btn_sure"
@@ -89,7 +89,7 @@
                 android:background="@drawable/btn_red"
                 android:text="确定"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textsize_middle" />
+                android:textSize="@dimen/mq_font1" />
         </LinearLayout>
     </LinearLayout>
 

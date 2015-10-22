@@ -57,7 +57,7 @@
     <style name="text_black_item" parent="WrapContent">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/miqian_black</item>
-        <item name="android:textSize">@dimen/textsize_normal</item>
+        <item name="android:textSize">@dimen/mq_font2</item>
     </style>
 
     <style name="f3_B1" parent="WrapContent">
@@ -86,13 +86,13 @@
 
     <style name="text_gray_item" parent="WrapContent">
         <item name="android:textColor">@color/miqian_gray</item>
-        <item name="android:textSize">@dimen/textsize_normal</item>
+        <item name="android:textSize">@dimen/mq_font2</item>
     </style>
     <style name="edittext_item" parent="FillContent">
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">@dimen/edit_item</item>
         <item name="android:background">@drawable/trans</item>
-        <item name="android:textSize">@dimen/textsize_normal</item>
+        <item name="android:textSize">@dimen/mq_font2</item>
         <item name="android:textColor">@color/miqian_black</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:textColorHint">@color/miqian_gray</item>
@@ -118,7 +118,7 @@
     <style name="listItem_tv1" parent="WrapContent">
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">@color/miqian_black</item>
-        <item name="android:textSize">@dimen/textsize_normal</item>
+        <item name="android:textSize">@dimen/mq_font2</item>
     </style>
 
     <style name="item_divider" parent="FillContent">

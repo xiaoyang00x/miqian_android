@@ -313,7 +313,7 @@
                 android:id="@+id/tv_recordtip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/mq_font2"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/miqian_gray"
@@ -325,7 +325,7 @@
                 android:layout_marginTop="15dp"
                 android:text="再试一次"
                 android:gravity="center"
-                android:textSize="@dimen/textsize_normal"
+                android:textSize="@dimen/mq_font2"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/edit_normal"
                 />

@@ -51,7 +51,7 @@
             android:layout_marginLeft="@dimen/margin_left_right"
             android:text="验证码发送至 1365665985"
             android:textColor="@color/miqian_black"
-            android:textSize="@dimen/textsize_normal" />
+            android:textSize="@dimen/mq_font2" />
 
         ImageView
             android:layout_width="wrap_content"
