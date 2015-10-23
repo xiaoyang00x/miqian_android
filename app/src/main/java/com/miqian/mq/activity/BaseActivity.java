@@ -58,7 +58,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         });
         tvTips = (TextView) findViewById(R.id.tv_tips);
 
-        getmTitle().setLeftImage(R.drawable.icon_back);
+        getmTitle().setLeftImage(R.drawable.btn_back_selector);
         getmTitle().setOnLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -17,7 +17,7 @@
             android:id="@+id/img_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_back" />
+            android:src="@drawable/btn_back_selector" />
     </LinearLayout>
 
     <LinearLayout

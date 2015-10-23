@@ -233,7 +233,7 @@ public class CapitalRecordActivity extends BaseActivity {
     @Override
     public void initTitle(WFYTitle topLayout) {
         topLayout.setTitleText("资金记录");
-        topLayout.addRightImage(R.drawable.record_select);
+        topLayout.addRightImage(R.drawable.btn_capital_record);
         topLayout.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

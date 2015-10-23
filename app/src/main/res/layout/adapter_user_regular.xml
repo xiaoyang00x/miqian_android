@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_left_right"
-            android:src="@drawable/user_regular_transfer_gray"/>
+            android:src="@drawable/user_regular_transfering"/>
 
         <TextView
             android:id="@+id/text_name"
