@@ -15,6 +15,7 @@ import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -146,14 +147,18 @@ public class TradePsCaptchaActivity extends BaseActivity {
 
         } else {
             String idCard = mEtRealname.getText().toString();
-            if (!TextUtils.isEmpty(idCard)) {
-                if (!TextUtils.isEmpty(captcha)) {
-                    summit(idCard, captcha);
-                } else {
-                    Uihelper.showToast(this, R.string.tip_captcha);
-                }
+            if (TextUtils.isEmpty(idCard)) {
+                Uihelper.showToast(mActivity, "身份证号码不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(captcha)) {
+                Uihelper.showToast(this, R.string.tip_captcha);
+                return;
+            }
+            if (idCard.matches(FormatUtil.PATTERN_IDCARD)) {
+                summit(idCard, captcha);
             } else {
-                Uihelper.showToast(this, "身份证号码不能为空");
+                Uihelper.showToast(mActivity, "身份证号码不正确");
             }
         }
 

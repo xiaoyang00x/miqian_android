@@ -81,7 +81,7 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
         }
         String idCard = editCardId.getText().toString();
         if (TextUtils.isEmpty(idCard)) {
-            Uihelper.showToast(mActivity, "身份证号不能为空");
+            Uihelper.showToast(mActivity, "身份证号码不能为空");
             return;
         }
 
