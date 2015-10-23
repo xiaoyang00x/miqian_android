@@ -39,6 +39,7 @@ public class ActivityCurrentRecord extends BaseActivity {
 
     @Override
     public void obtainData() {
+        pageNo = 1;
         mWaitingDialog.show();
         HttpRequest.getMyCurrentRecord(mActivity, new ICallback<CurrentRecordResult>() {
             @Override
@@ -49,9 +50,9 @@ public class ActivityCurrentRecord extends BaseActivity {
                 page = data.getPage();
                 if (data != null) {
                     dataList = data.getCurSubRecord();
-                    if (dataList!=null&&dataList.size()>0){
+                    if (dataList != null && dataList.size() > 0) {
                         refreshView();
-                    }else {
+                    } else {
                         showEmptyView();
                     }
 
@@ -82,6 +83,7 @@ public class ActivityCurrentRecord extends BaseActivity {
             tvInterest.setText(currentRecord.getCurAmt());
         }
     }
+
     @Override
     public void initView() {
 
@@ -120,14 +122,12 @@ public class ActivityCurrentRecord extends BaseActivity {
             HttpRequest.getMyCurrentRecord(mActivity, new ICallback<CurrentRecordResult>() {
                 @Override
                 public void onSucceed(CurrentRecordResult result) {
-                    RecordCurrent data = result.getData();
-                    if (data != null) {
-                        if (dataList != null && dataList != null && dataList.size() > 0) {
-                            dataList.addAll(data.getCurSubRecord());
-                            adapterCurrrentRecord.notifyItemInserted(dataList.size());
-                        }
-                        isLoading = false;
+                    List<CurSubRecord> tempList = result.getData().getCurSubRecord();
+                    if (dataList != null && tempList != null && tempList.size() > 0) {
+                        dataList.addAll(tempList);
+                        adapterCurrrentRecord.notifyItemInserted(dataList.size());
                     }
+                    isLoading = false;
                 }
 
                 @Override

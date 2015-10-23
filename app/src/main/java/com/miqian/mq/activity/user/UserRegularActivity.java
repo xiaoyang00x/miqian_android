@@ -79,12 +79,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             HttpRequest.getUserRegular(mActivity, new ICallback<UserRegularResult>() {
                 @Override
                 public void onSucceed(UserRegularResult result) {
-                    userRegular = result.getData();
-                    List<RegInvest> tempList = userRegular.getRegInvest();
+                    List<RegInvest> tempList = result.getData().getRegInvest();
                     if (regInvestList != null && tempList != null && tempList.size() > 0) {
-                        for (RegInvest regInvest : tempList) {
-                            regInvestList.add(regInvest);
-                        }
+                        regInvestList.addAll(tempList);
                         refreshViewLoadMore();
                     }
                     isLoading = false;

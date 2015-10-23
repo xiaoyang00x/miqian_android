@@ -37,6 +37,7 @@ public class RedPaperActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
+        pageNo = 1;
         mWaitingDialog.show();
         HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
 
@@ -64,7 +65,7 @@ public class RedPaperActivity extends BaseActivity {
                 showErrorView();
 
             }
-        }, "HB", "", "1", pageSize);
+        }, "HB", String.valueOf(pageNo), pageSize);
 
     }
 
@@ -103,15 +104,12 @@ public class RedPaperActivity extends BaseActivity {
 
                 @Override
                 public void onSucceed(RedPaperData result) {
-                    Redpaper redpaper = result.getData();
-                    page = result.getData().getPage();
-                    if (redpaper != null) {
-                        if (promList != null && promList != null && promList.size() > 0) {
-                            promList.addAll(redpaper.getCustPromotion());
-                            adapterMyRedPaper.notifyItemInserted(promList.size());
-                        }
-                        isLoading = false;
+                    List<CustPromotion> tempList = result.getData().getCustPromotion();
+                    if (promList != null && tempList != null && tempList.size() > 0) {
+                        promList.addAll(tempList);
+                        adapterMyRedPaper.notifyItemInserted(promList.size());
                     }
+                    isLoading = false;
                 }
 
                 @Override
@@ -119,7 +117,7 @@ public class RedPaperActivity extends BaseActivity {
                     isLoading = false;
 
                 }
-            }, "HB", "", String.valueOf(pageNo), pageSize);
+            }, "HB", String.valueOf(pageNo), pageSize);
         }
     }
 

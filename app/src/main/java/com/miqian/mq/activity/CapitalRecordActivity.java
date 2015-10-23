@@ -93,7 +93,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 Uihelper.showToast(CapitalRecordActivity.this, error);
                 showErrorView();
             }
-        }, String.valueOf(pageNo), pageSize, "", "", mType);
+        }, String.valueOf(pageNo), pageSize, mType);
     }
 
 
@@ -166,15 +166,13 @@ public class CapitalRecordActivity extends BaseActivity {
                 int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
                 if (lastVisibleItem >= totalItemCount - 2) {
-
                     loadMore();
                 }
             }
         });
 
         mViewnoresult_data = findViewById(R.id.frame_no_recorddata);
-        findViewById(R.id.tv_refreshdata
-        ).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_refreshdata).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -186,7 +184,6 @@ public class CapitalRecordActivity extends BaseActivity {
     }
 
     private void loadMore() {
-
         if (!isLoading) {
             if (list.size() >= page.getCount()) {
                 return;
@@ -198,25 +195,20 @@ public class CapitalRecordActivity extends BaseActivity {
 
                 @Override
                 public void onSucceed(CapitalRecordResult result) {
-                    end();
-                    CapitalRecordResult record = result;
-                    if (record.getData() != null) {
-                        if (list != null && list != null && list.size() > 0) {
-                            list.addAll(record.getData().getAssetRecord());
-                            refreshView();
-                        }
-
-                        isLoading = false;
-                    } else {
-                        showEmptyView();
+                    List<CapitalItem> tempList = result.getData().getAssetRecord();
+                    if (list != null && tempList != null && tempList.size() > 0) {
+                        list.addAll(tempList);
+                        adapter.notifyItemInserted(list.size());
                     }
+                    isLoading = false;
                 }
 
                 @Override
                 public void onFail(String error) {
                     isLoading = false;
+                    Uihelper.showToast(mActivity, error);
                 }
-            }, String.valueOf(pageNo), pageSize, "", "", mType);
+            }, String.valueOf(pageNo), pageSize, mType);
 
         }
     }

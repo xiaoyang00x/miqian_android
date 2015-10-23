@@ -37,6 +37,7 @@ public class MyTicketActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
+        pageNo = 1;
         mWaitingDialog.show();
         HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
 
@@ -62,7 +63,7 @@ public class MyTicketActivity extends BaseActivity {
                 showErrorView();
 
             }
-        }, "SC", "", "1", pageSize);
+        }, "SC", String.valueOf(pageNo), pageSize);
 
     }
 
@@ -101,15 +102,12 @@ public class MyTicketActivity extends BaseActivity {
 
                 @Override
                 public void onSucceed(RedPaperData result) {
-                    Redpaper redpaper = result.getData();
-                    page = result.getData().getPage();
-                    if (redpaper != null) {
-                        if (promList != null && promList != null && promList.size() > 0) {
-                            promList.addAll(redpaper.getCustPromotion());
-                            adapterMyTicket.notifyItemInserted(promList.size());
-                        }
-                        isLoading = false;
+                    List<CustPromotion> tempList = result.getData().getCustPromotion();
+                    if (promList != null && tempList != null && tempList.size() > 0) {
+                        promList.addAll(tempList);
+                        adapterMyTicket.notifyItemInserted(promList.size());
                     }
+                    isLoading = false;
                 }
 
                 @Override
@@ -117,7 +115,7 @@ public class MyTicketActivity extends BaseActivity {
                     isLoading = false;
 
                 }
-            }, "SC", "", String.valueOf(pageNo), pageSize);
+            }, "SC", String.valueOf(pageNo), pageSize);
         }
     }
 

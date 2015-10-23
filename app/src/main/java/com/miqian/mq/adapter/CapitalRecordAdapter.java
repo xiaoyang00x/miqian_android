@@ -103,21 +103,6 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private OnLoadMoreListener onLoadMoreListener;
-    private boolean loading;
-
-    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-        this.onLoadMoreListener = onLoadMoreListener;
-    }
-
-    public void setLoaded() {
-        loading = false;
-    }
-
-    public static interface OnLoadMoreListener {
-        void onLoadMore();
-    }
-
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
         public TextView textLoading;

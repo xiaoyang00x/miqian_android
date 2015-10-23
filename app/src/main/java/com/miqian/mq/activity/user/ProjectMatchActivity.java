@@ -92,9 +92,7 @@ public class ProjectMatchActivity extends BaseActivity {
                 public void onSucceed(ProjectInfoResult result) {
                     List<ProjectInfo> tempList = result.getData().getMatchsubList();
                     if (mList != null && tempList != null && tempList.size() > 0) {
-                        for (ProjectInfo projectInfo : tempList) {
-                            mList.add(projectInfo);
-                        }
+                        mList.addAll(tempList);
                         mAdapter.notifyItemInserted(mList.size());
                     }
                     isLoading = false;
