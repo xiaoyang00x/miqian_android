@@ -39,7 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
         android:background="@color/white"
-        android:minHeight="40dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingTop="5dp">
@@ -83,7 +82,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
-        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp">

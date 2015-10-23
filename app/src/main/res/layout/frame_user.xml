@@ -284,7 +284,7 @@
                     <Button
                         android:id="@+id/btn_rollin"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/bt_height"
                         android:layout_margin="13dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_red"
@@ -295,7 +295,7 @@
                     <Button
                         android:id="@+id/btn_rollout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/bt_height"
                         android:layout_margin="13dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_blue"
@@ -472,6 +472,7 @@
                     android:id="@+id/frame_redpackage"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/listitem_height"
+                    android:layout_marginBottom="@dimen/margin_top"
                     android:background="@drawable/list_click">
 
                     <ImageView
@@ -508,7 +509,6 @@
                         android:text="0个"
                         android:textColor="@color/mq_r1" />
                 </RelativeLayout>
-
             </LinearLayout>
         </ScrollView>
     </com.miqian.mq.views.MySwipeRefresh>

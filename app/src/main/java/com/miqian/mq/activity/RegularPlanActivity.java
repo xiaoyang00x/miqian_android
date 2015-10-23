@@ -33,7 +33,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
     private DialogPay dialogPay;
 
     private BigDecimal downLimit = BigDecimal.ONE;
-    private BigDecimal upLimit = new BigDecimal(999999);
+    private BigDecimal upLimit = new BigDecimal(9999999.99);
     private String interestRateString = "";
 
     public static void startActivity(Context context, String subjectId) {
@@ -197,8 +197,8 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
                 if(result != null) {
                     RegularPlan regularPlan = result.getData();
                     downLimit = regularPlan.getFromInvestmentAmount();
-//                    upLimit = Float.parseFloat(currentInfo.getCurrentBuyUpLimit());
-                    float tempInterest = Float.parseFloat(regularPlan.getYearInterest()) + Float.parseFloat(regularPlan.getPresentationYearInterest());
+                    upLimit = regularPlan.getSubjectMaxBuy();
+                    BigDecimal tempInterest = new BigDecimal(regularPlan.getYearInterest()).add(new BigDecimal(regularPlan.getPresentationYearInterest()));
                     interestRateString = "年化收益率：" + tempInterest + "%  期限：" + regularPlan.getLimit() + "天";
                     updateUI(result.getData());
                 }

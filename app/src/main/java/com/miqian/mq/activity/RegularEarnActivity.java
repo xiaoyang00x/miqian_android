@@ -33,7 +33,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
     private DialogPay dialogPay;
 
     private BigDecimal downLimit = BigDecimal.ONE;
-    private BigDecimal upLimit = new BigDecimal(999999);
+    private BigDecimal upLimit = new BigDecimal(9999999.99);
     private String interestRateString = "";
 
     public static void startActivity(Context context, String subjectId) {
@@ -197,8 +197,8 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                 if (result != null) {
                     RegularEarn regularEarn = result.getData();
                     downLimit = regularEarn.getFromInvestmentAmount();
-//                    upLimit = Float.parseFloat(currentInfo.getCurrentBuyUpLimit());
-                    float tempInterest = Float.parseFloat(regularEarn.getYearInterest()) + Float.parseFloat(regularEarn.getPresentationYearInterest());
+                    upLimit = regularEarn.getSubjectMaxBuy();
+                    BigDecimal tempInterest = new BigDecimal(regularEarn.getYearInterest()).add(new BigDecimal(regularEarn.getPresentationYearInterest()));
                     interestRateString = "年化收益率：" + tempInterest + "%  期限：" + regularEarn.getLimit() + "天";
                     updateUI(result.getData());
                 }

@@ -45,7 +45,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
     private CurrentInfo currentInfo;
 
     private BigDecimal downLimit = new BigDecimal(1);
-    private BigDecimal upLimit = new BigDecimal(999999);
+    private BigDecimal upLimit = new BigDecimal(9999999.99);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
