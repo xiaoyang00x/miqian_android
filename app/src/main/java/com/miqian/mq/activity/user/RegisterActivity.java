@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -35,7 +33,6 @@ public class RegisterActivity extends BaseActivity {
 
     private EditText mEt_Telephone, mEt_Captcha, mEt_Invite, mEt_Password;
     private Button mBtn_sendCaptcha;
-    private TextView textLaw;
     private String phone;
     private boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;

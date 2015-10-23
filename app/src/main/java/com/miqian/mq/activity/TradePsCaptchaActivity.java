@@ -122,10 +122,12 @@ public class TradePsCaptchaActivity extends BaseActivity {
     }
 
     public void btn_click(View v) {
-
         final String captcha = mEt_Captcha.getText().toString();
         if (isModifyPhone) {
-
+            if (TextUtils.isEmpty(captcha)) {
+                Uihelper.showToast(this, R.string.tip_captcha);
+                return;
+            }
             HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
                 @Override
                 public void onSucceed(Meta result) {
@@ -138,22 +140,18 @@ public class TradePsCaptchaActivity extends BaseActivity {
 
                 @Override
                 public void onFail(String error) {
-
                     Uihelper.showToast(mActivity, error);
                 }
             }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
 
         } else {
-
             String idCard = mEtRealname.getText().toString();
-
             if (!TextUtils.isEmpty(idCard)) {
                 if (!TextUtils.isEmpty(captcha)) {
                     summit(idCard, captcha);
                 } else {
                     Uihelper.showToast(this, R.string.tip_captcha);
                 }
-
             } else {
                 Uihelper.showToast(this, "身份证号码不能为空");
             }

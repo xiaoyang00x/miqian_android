@@ -23,9 +23,9 @@
         <EditText
             android:id="@+id/edit_name"
             style="@style/edittext_item"
-            android:singleLine="true"
             android:hint="请输入您的姓名"
-            android:maxLength="16"/>
+            android:maxLength="16"
+            android:singleLine="true" />
     </LinearLayout>
 
     <View style="@style/item_divider" />
@@ -51,8 +51,10 @@
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/tv_register"
-            android:maxLength="18"
-            android:hint="请输入您的身份证号"/>
+            android:digits="0123456789Xx"
+            android:hint="请输入您的身份证号"
+            android:inputType="number"
+            android:maxLength="18" />
     </RelativeLayout>
 
     <LinearLayout
@@ -68,5 +70,4 @@
             android:layout_height="@dimen/edit_item"
             android:text="认证" />
     </LinearLayout>
-
 </LinearLayout>

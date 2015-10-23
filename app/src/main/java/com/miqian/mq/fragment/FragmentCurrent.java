@@ -130,11 +130,9 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
             totalMoneyText.setText(currentInfo.getBuyTotalSum());
             if (currentInfo.getCurrentSwitch().equals("0")) {
                 btInvestment.setText("已售罄");
-                btInvestment.setBackgroundResource(R.drawable.btn_cancel);
                 btInvestment.setEnabled(false);
             } else {
                 btInvestment.setText("马上认购");
-                btInvestment.setBackgroundResource(R.drawable.btn_red);
                 btInvestment.setEnabled(true);
             }
         }

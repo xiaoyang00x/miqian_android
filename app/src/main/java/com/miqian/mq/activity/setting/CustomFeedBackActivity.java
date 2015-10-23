@@ -19,8 +19,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.BaseFragmentActivity;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.WFYTitle;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.SyncListener;
 import com.umeng.fb.model.Conversation;
@@ -33,7 +35,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomFeedBackActivity extends BaseFragmentActivity {
+/**
+ * 意见反馈
+ */
+public class CustomFeedBackActivity extends BaseActivity {
 
 	private ListView mListView;
 	private FeedbackAgent mAgent;
@@ -41,7 +46,7 @@ public class CustomFeedBackActivity extends BaseFragmentActivity {
 	private ReplyAdapter adapter;
 	private Button sendBtn;
 	private EditText inputEdit;
-	private SwipeRefreshLayout mSwipeRefreshLayout;
+	private MySwipeRefresh swipeRefresh;
 	private final int VIEW_TYPE_COUNT = 2;
 	private final int VIEW_TYPE_USER = 0;
 	private final int VIEW_TYPE_DEV = 1;
@@ -56,19 +61,51 @@ public class CustomFeedBackActivity extends BaseFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_custom_feedback);
-
-		initView();
 		mAgent = new FeedbackAgent(this);
 		setUpUmengFeedback(mAgent);
 		mComversation = new FeedbackAgent(this).getDefaultConversation();
+		super.onCreate(savedInstanceState);
+	}
 
+	@Override
+	public void obtainData() {
+		sync();
+	}
 
+	@Override
+	public void initView() {
+		mListView = (ListView) findViewById(R.id.fb_reply_list);
 		adapter = new ReplyAdapter();
 		mListView.setAdapter(adapter);
-		sync();
+		sendBtn = (Button) findViewById(R.id.fb_send_btn);
+		inputEdit = (EditText) findViewById(R.id.fb_send_content);
+		// 下拉刷新组件
+		sendBtn.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				String content = inputEdit.getText().toString();
+				inputEdit.getEditableText().clear();
+				if (!TextUtils.isEmpty(content)) {
+					// 将内容添加到会话列表
+					mComversation.addUserReply(content);
+					// 刷新新ListView
+					mHandler.sendMessage(new Message());
+					// 数据同步
+					sync();
+				}
+			}
+		});
+
+		swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
+		// 下拉刷新
+		swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+			@Override
+			public void onRefresh() {
+				obtainData();
+				sync();
+			}
+		});
 	}
 
 	@Override
@@ -96,37 +133,14 @@ public class CustomFeedBackActivity extends BaseFragmentActivity {
 		}).start();
 	}
 
-	private void initView() {
-		setTitle("意见反馈");
-		mListView = (ListView) findViewById(R.id.fb_reply_list);
-		sendBtn = (Button) findViewById(R.id.fb_send_btn);
-		inputEdit = (EditText) findViewById(R.id.fb_send_content);
-		// 下拉刷新组件
-		mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.fb_reply_refresh);
-		sendBtn.setOnClickListener(new OnClickListener() {
+	@Override
+	public int getLayoutId() {
+		return R.layout.activity_custom_feedback;
+	}
 
-			@Override
-			public void onClick(View v) {
-				String content = inputEdit.getText().toString();
-				inputEdit.getEditableText().clear();
-				if (!TextUtils.isEmpty(content)) {
-					// 将内容添加到会话列表
-					mComversation.addUserReply(content);
-					// 刷新新ListView
-					mHandler.sendMessage(new Message());
-					// 数据同步
-					sync();
-				}
-			}
-		});
-
-		// 下拉刷新
-		mSwipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-			@Override
-			public void onRefresh() {
-				sync();
-			}
-		});
+	@Override
+	public void initTitle(WFYTitle mTitle) {
+		mTitle.setTitleText("意见反馈");
 	}
 
 	// 数据同步
@@ -141,7 +155,7 @@ public class CustomFeedBackActivity extends BaseFragmentActivity {
 			@Override
 			public void onReceiveDevReply(List<Reply> replyList) {
 				// SwipeRefreshLayout停止刷新
-				mSwipeRefreshLayout.setRefreshing(false);
+				swipeRefresh.setRefreshing(false);
 				// 发送消息，刷新ListView
 				mHandler.sendMessage(new Message());
 				// 如果开发者没有新的回复数据，则返回

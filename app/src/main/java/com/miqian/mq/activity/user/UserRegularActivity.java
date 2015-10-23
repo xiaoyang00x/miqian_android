@@ -111,7 +111,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
         titleRight.setOnClickListener(this);
 
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
-//        swipeRefresh.setHeaderView(mContext);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {

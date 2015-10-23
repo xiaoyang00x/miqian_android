@@ -2,7 +2,6 @@ package com.miqian.mq.activity.current;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -30,7 +29,6 @@ import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
-import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.MySwipeRefresh;
@@ -141,12 +139,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private void showTips(boolean flag, ProducedOrderResult result) {
         if (flag) {
             frameTip.setVisibility(View.VISIBLE);
-            btPay.setBackgroundResource(R.drawable.btn_cancel);
             btPay.setEnabled(false);
             textTip.setText(result.getMessage());
         } else {
             frameTip.setVisibility(View.GONE);
-            btPay.setBackgroundResource(R.drawable.btn_red);
             btPay.setEnabled(true);
         }
     }
