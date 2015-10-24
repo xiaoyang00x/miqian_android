@@ -42,6 +42,8 @@ import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.ProgressDialogView;
 
+import java.math.BigDecimal;
+
 /**
  * Description:
  *
@@ -338,14 +340,12 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
             case R.id.btn_rollout:
                 String balance = userInfo.getBalance();
                 if (!TextUtils.isEmpty(balance)) {
-                    float float_banlance = Float.parseFloat(balance);
-                    if (float_banlance > 0f) {
+                    if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
                         Intent intent = new Intent(getActivity(), RolloutActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("userInfo", userInfo);
                         intent.putExtras(bundle);
                         startActivity(intent);
-
                     } else {
                         Uihelper.showToast(getActivity(), "账户余额为0，无法提现");
                     }

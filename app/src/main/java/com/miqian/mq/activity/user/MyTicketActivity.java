@@ -46,7 +46,8 @@ public class MyTicketActivity extends BaseActivity {
             public void onSucceed(RedPaperData result) {
                 mWaitingDialog.dismiss();
                 Redpaper redpaper = result.getData();
-                page = result.getData().getPage();
+                promList = redpaper.getCustPromotion();
+                page = redpaper.getPage();
                 if (redpaper != null) {
                     if (promList != null && promList.size() > 0) {
                         refreshView();
@@ -61,7 +62,6 @@ public class MyTicketActivity extends BaseActivity {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
-
             }
         }, "SC", String.valueOf(pageNo), pageSize);
 
@@ -82,7 +82,7 @@ public class MyTicketActivity extends BaseActivity {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
-                if (lastVisibleItem >= totalItemCount - 2) {
+                if (lastVisibleItem >= totalItemCount - 3) {
 
                     loadMore();
                 }

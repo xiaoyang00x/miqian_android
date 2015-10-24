@@ -30,11 +30,11 @@ public class Uihelper {
         }
     }
 
-    public static void showToast(final Activity activity, final String content) {
-        if (activity == null) {
+    public static void showToast(final Context context, final String content) {
+        if (context == null) {
             return;
         }
-        initToast(activity);
+        initToast(context);
         if (!TextUtils.isEmpty(content)) {
             mToast.setText(content);
             mToast.show();

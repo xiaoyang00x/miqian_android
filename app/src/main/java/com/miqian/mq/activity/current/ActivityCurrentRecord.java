@@ -104,7 +104,7 @@ public class ActivityCurrentRecord extends BaseActivity {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
-                if (lastVisibleItem >= totalItemCount - 2) {
+                if (lastVisibleItem >= totalItemCount - 3) {
 
                     loadMore();
                 }

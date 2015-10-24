@@ -33,6 +33,33 @@ public class PayOrder implements Serializable {
     private String card_no;     // 银行卡号 卡前置，卡首次支付的时候传入，卡历次支付传入对应协议号就可以
     private String flag_modify;
     private String user_id; // 用户id
+    private String singleAmtLimit; // 用户id
+    private String dayAmtLimit; // 用户id
+    private String monthAmtLimit ; // 用户id
+
+    public String getSingleAmtLimit() {
+        return singleAmtLimit;
+    }
+
+    public void setSingleAmtLimit(String singleAmtLimit) {
+        this.singleAmtLimit = singleAmtLimit;
+    }
+
+    public String getDayAmtLimit() {
+        return dayAmtLimit;
+    }
+
+    public void setDayAmtLimit(String dayAmtLimit) {
+        this.dayAmtLimit = dayAmtLimit;
+    }
+
+    public String getMonthAmtLimit() {
+        return monthAmtLimit;
+    }
+
+    public void setMonthAmtLimit(String monthAmtLimit) {
+        this.monthAmtLimit = monthAmtLimit;
+    }
 
     public String getUser_id() {
         return user_id;
