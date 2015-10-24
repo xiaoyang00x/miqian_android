@@ -120,7 +120,6 @@
 
         <Button
             android:id="@+id/btn_next"
-            android:layout_height="@dimen/bt_height"
             style="@style/click_btn"
             android:onClick="btn_click"
             android:text="下一步" />

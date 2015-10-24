@@ -67,7 +67,6 @@
         <Button
             android:id="@+id/bt_realname"
             style="@style/click_btn"
-            android:layout_height="@dimen/edit_item"
             android:text="认证" />
     </LinearLayout>
 </LinearLayout>

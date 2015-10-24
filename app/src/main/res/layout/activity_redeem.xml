@@ -10,7 +10,6 @@
         android:orientation="vertical" >
 
         <LinearLayout
-            android:layout_marginTop="@dimen/margin_left_right"
             android:layout_width="match_parent"
             android:layout_height="@dimen/listitem_height"
             android:background="@color/white" >
@@ -42,7 +41,6 @@
 
             <Button
                 android:id="@+id/bt_rollout"
-                android:layout_height="@dimen/listitem_height"
                 style="@style/click_btn"
                 android:onClick="btn_click"
                 android:text="赎回" />

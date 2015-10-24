@@ -129,6 +129,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/frame_subscribe"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
@@ -140,22 +141,28 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/btn_user_current_redeem"
-                android:textColor="@drawable/btn_user_current_redeem_text"
-                android:text="赎回" />
+                android:text="赎回"
+                android:textColor="@drawable/btn_user_current_redeem_text" />
 
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/mq_b4"/>
+                android:background="@color/mq_b4" />
 
             <Button
                 android:id="@+id/bt_subscribe"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textColor="@drawable/btn_user_current_redeem_text"
                 android:background="@drawable/btn_user_current_redeem"
-                android:text="认购"/>
+                android:text="认购"
+                android:textColor="@drawable/btn_user_current_redeem_text" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@id/frame_subscribe"
+            android:background="@color/mq_b4" />
     </RelativeLayout>
 </LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="@dimen/listitem_height"
     android:background="@color/white">
 
     <ImageView
@@ -9,8 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        />
+        android:layout_marginLeft="@dimen/margin_left_right" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -40,26 +39,25 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/margin_left_right"
-        >
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_left_right">
 
         <TextView
             android:id="@+id/text_amt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/mq_b1"
             android:layout_alignParentRight="true"
+            android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font4" />
 
         <TextView
             android:id="@+id/tv_interest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_below="@id/text_amt"
             android:layout_marginTop="2dp"
-            android:layout_alignParentRight="true"
             android:textColor="@color/mq_b2"
             android:textSize="@dimen/mq_font5" />
 
