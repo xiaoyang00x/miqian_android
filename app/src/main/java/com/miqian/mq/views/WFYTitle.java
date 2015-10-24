@@ -147,7 +147,7 @@ public class WFYTitle extends RelativeLayout {
 		tvLeft.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 		tvLeft.setTypeface(Typeface.MONOSPACE);
 		tvLeft.setLines(1);
-		tvLeft.setPadding(dp2px(mContext, 8), 0, 0, 0);
+		tvLeft.setPadding(dp2px(mContext, 15), 0, 0, 0);
 		addView(tvLeft);
 	}
 

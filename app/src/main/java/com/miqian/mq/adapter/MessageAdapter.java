@@ -88,7 +88,6 @@ public class MessageAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        View view_line;
         TextView tv_title;
         TextView tv_content;
         TextView tv_time;

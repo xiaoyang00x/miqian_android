@@ -8,7 +8,7 @@
 
         <ImageButton
             android:id="@+id/bt_left"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@color/transparent" />
 
@@ -38,7 +38,7 @@
 
         <ImageButton
             android:id="@+id/bt_right"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@color/transparent" />
