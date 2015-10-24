@@ -54,11 +54,15 @@ public class MessageAdapter extends BaseAdapter {
             holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             holder.iv_isRead = (ImageView) convertView.findViewById(R.id.iv_isRead);
             holder.iv_state = (ImageView) convertView.findViewById(R.id.iv_state);
-//			holder.view_line = convertView.findViewById(R.id.view_line);
-
+			holder.divider = convertView.findViewById(R.id.divider);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+        }
+        if (position == getCount() -1) {
+            holder.divider.setVisibility(View.GONE);
+        } else {
+            holder.divider.setVisibility(View.VISIBLE);
         }
         final JpushInfo jpushInfo = jpushInfolist.get(position);
         holder.tv_title.setText(jpushInfo.getTitle());
@@ -74,7 +78,7 @@ public class MessageAdapter extends BaseAdapter {
             }
         }
 
-        // 判断是否是未读状态
+        // 判断消息类型 个人系统
         if (!TextUtils.isEmpty(jpushInfo.getPushSource())) {
             if (Integer.valueOf(jpushInfo.getPushSource()) == 0) {
                 holder.iv_state.setBackgroundResource(R.drawable.message_system);
@@ -93,5 +97,6 @@ public class MessageAdapter extends BaseAdapter {
         TextView tv_time;
         ImageView iv_isRead;
         ImageView iv_state;
+        View divider;
     }
 }
