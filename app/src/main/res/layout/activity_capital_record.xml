@@ -12,17 +12,18 @@
         tools:context="com.miqian.mq.activity.CapitalRecordActivity">
         <!-- using RecyclerView instead of ListView recommended by Google -->
 
-            <android.support.v7.widget.RecyclerView
-                android:visibility="visible"
-                android:id="@+id/ultimate_recycler_view"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ultimate_recycler_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="visible" />
 
         <RelativeLayout
             android:id="@+id/frame_hide"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#88b0b0b0"/>
+            android:background="#88b0b0b0"
+            android:visibility="gone" />
 
 
         <RelativeLayout
@@ -33,26 +34,26 @@
             android:visibility="gone">
 
             <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical"
-                android:id="@+id/linearLayout2">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:paddingLeft="@dimen/margin_left_right"
                     android:text="切换资金记录"
-                    android:layout_marginTop="10dp"
                     android:textColor="@color/mq_b2"
                     android:textSize="@dimen/mq_font4" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
@@ -137,7 +138,7 @@
                             android:layout_height="80dp"
                             android:layout_centerInParent="true"
                             android:onClick="searchBtn"
-                            app:cb_color="@color/white"/>
+                            app:cb_color="@color/white" />
 
                         <TextView
                             android:id="@+id/buy_t"
@@ -153,11 +154,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="15dp">
+                    android:paddingRight="10dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -261,55 +262,53 @@
             </LinearLayout>
 
             <!--<RelativeLayout-->
-                <!--android:id="@+id/rela_hide"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_below="@+id/linearLayout2"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_alignParentBottom="true">-->
+            <!--android:id="@+id/rela_hide"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_below="@+id/linearLayout2"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_alignParentBottom="true">-->
 
             <!--</RelativeLayout>-->
         </RelativeLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/frame_no_recorddata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:orientation="vertical"
-            >
+            android:visibility="gone">
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/nodata"
                 android:layout_gravity="center_horizontal"
-                />
+                android:background="@drawable/nodata" />
 
             <TextView
                 android:id="@+id/tv_recordtip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/mq_font2"
-                android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="数据获取失败，点击重新获取"
                 android:textColor="@color/miqian_gray"
-                android:text="数据获取失败，点击重新获取"/>
+                android:textSize="@dimen/mq_font2" />
+
             <TextView
                 android:id="@+id/tv_refreshdata"
                 android:layout_width="200dp"
                 android:layout_height="35dp"
-                android:layout_marginTop="15dp"
-                android:text="再试一次"
-                android:gravity="center"
-                android:textSize="@dimen/mq_font2"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/edit_normal"
-                />
+                android:gravity="center"
+                android:text="再试一次"
+                android:textSize="@dimen/mq_font2" />
 
         </LinearLayout>
     </RelativeLayout>
