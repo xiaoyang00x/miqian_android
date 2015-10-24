@@ -55,7 +55,7 @@ public class CapitalRecordActivity extends BaseActivity {
     TextView preSelected_t;
     String preTxt;
     RelativeLayout filetr_container;
-    RelativeLayout relaHide;
+    private RelativeLayout frameHide;
 
     private int pageNo = 1;
     private String pageSize = "20";
@@ -109,13 +109,14 @@ public class CapitalRecordActivity extends BaseActivity {
         animShow = AnimationUtils.loadAnimation(this, R.anim.view_show);
         animHide = AnimationUtils.loadAnimation(this, R.anim.view_hide);
         filetr_container = (RelativeLayout) findViewById(R.id.filter_container);
-        relaHide = (RelativeLayout) findViewById(R.id.rela_hide);
-        relaHide.setOnClickListener(new View.OnClickListener() {
+        frameHide = (RelativeLayout) findViewById(R.id.frame_hide);
+        frameHide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (filetr_container.getVisibility() == View.VISIBLE) {
+                if (filetr_container.isShown() || frameHide.isShown()) {
                     filetr_container.startAnimation(animHide);
                     filetr_container.setVisibility(View.GONE);
+                    frameHide.setVisibility(View.GONE);
                 }
             }
         });
@@ -230,12 +231,14 @@ public class CapitalRecordActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 showContentView();
-                if (filetr_container.getVisibility() == View.VISIBLE) {
+                if (filetr_container.isShown()) {
                     filetr_container.setVisibility(View.GONE);
                     filetr_container.startAnimation(animHide);
+                    frameHide.setVisibility(View.GONE);
                 } else {
                     filetr_container.startAnimation(animShow);
                     filetr_container.setVisibility(View.VISIBLE);
+                    frameHide.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -362,9 +365,7 @@ public class CapitalRecordActivity extends BaseActivity {
         }
         filetr_container.startAnimation(animHide);
         filetr_container.setVisibility(View.GONE);
-
-        //todo 到网络获取数据。因为该界面的信息是分页的。
-
+        frameHide.setVisibility(View.GONE);
         obtainData();
     }
 
