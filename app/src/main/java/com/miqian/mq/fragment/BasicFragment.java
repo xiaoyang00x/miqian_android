@@ -1,10 +1,11 @@
 package com.miqian.mq.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.view.View;
 
+import com.miqian.mq.views.ProgressDialogView;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -15,6 +16,7 @@ public abstract class BasicFragment extends Fragment {
     protected Context mContext;
     protected Context mApplicationContext;
     protected Activity mActivity;
+    private Dialog mWaitingDialog;
 
     @Override
     public void onAttach(Activity activity) {
@@ -22,6 +24,19 @@ public abstract class BasicFragment extends Fragment {
         mActivity = activity;
         mContext = activity.getBaseContext();
         mApplicationContext = activity.getApplicationContext();
+    }
+
+    protected void begin() {
+        if (mWaitingDialog == null) {
+            mWaitingDialog = ProgressDialogView.create(getActivity());
+        }
+        if (!mWaitingDialog.isShowing())
+            mWaitingDialog.show();
+    }
+
+    protected void end() {
+        if (mWaitingDialog != null && mWaitingDialog.isShowing())
+            mWaitingDialog.dismiss();
     }
 
     @Override
@@ -38,6 +53,7 @@ public abstract class BasicFragment extends Fragment {
 
     /**
      * 获取页面名称，用于友盟页面统计
+     *
      * @return
      */
     protected abstract String getPageName();

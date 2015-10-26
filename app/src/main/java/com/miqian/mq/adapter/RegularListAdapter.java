@@ -28,6 +28,7 @@ import java.util.List;
  * Created by guolei_wang on 15/9/17.
  */
 public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final String TAG = RegularListAdapter.class.getSimpleName();
     private final int ITEM_TYPE_HEADER = 0;
     private final int ITEM_TYPE_NORMAL = 1;
 
@@ -93,7 +94,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
 //        return ITEM_TYPE_NORMAL;
-        if (planList == null  || planList.size() == 0) {
+        if (planList == null || planList.size() == 0) {
             return ITEM_TYPE_NORMAL;
         }
         return position == 0 ? ITEM_TYPE_HEADER : ITEM_TYPE_NORMAL;
@@ -117,10 +118,10 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             view_pager.setOffscreenPageLimit(3);
 
             layout_limit_container.removeAllViews();
-            if(planList != null && planList.size() > 0) {
-                int count = planList.size() ;
-                layout_limit_container.setWeightSum((count+1) * 2);
-                for(int i = 0; i < count; i++) {
+            if (planList != null && planList.size() > 0) {
+                int count = planList.size();
+                layout_limit_container.setWeightSum((count + 1) * 2);
+                for (int i = 0; i < count; i++) {
                     TextView textView = new TextView(mContext);
                     textView.setText(planList.get(i).getLimit() + "天");
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 2);
@@ -156,11 +157,21 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override
                 public void onPageSelected(int position) {
                     int childCount = layout_limit_container.getChildCount();
-                    if(childCount < 1) return;
-                    for(int i = 0; i < childCount; i++) {
-                        TextView textView = (TextView)layout_limit_container.getChildAt(i);
-                        textView.setTextColor(mContext.getResources().getColor(i == position?R.color.mq_r1:R.color.mq_b2));
+                    if (childCount < 1) return;
+                    for (int i = 0; i < childCount; i++) {
+                        TextView textView = (TextView) layout_limit_container.getChildAt(i);
+                        textView.setTextColor(mContext.getResources().getColor(i == position ? R.color.mq_r1 : R.color.mq_b2));
+
                     }
+
+                    for (int j = 0; j < view_pager.getChildCount(); j++) {
+                        View view = view_pager.getChildAt(j);
+                        if (view != null) {
+                            view.setAlpha(0.3f);
+                        }
+                    }
+                    view_pager.findViewById(position).setAlpha(1f);
+
                 }
 
                 @Override
@@ -191,21 +202,19 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             TextView tv_add_interest = (TextView) view.findViewById(R.id.tv_add_interest);
             TextView tv_status = (TextView) view.findViewById(R.id.tv_status);
             TextView tv_begin_time = (TextView) view.findViewById(R.id.tv_begin_time);
-            TextView tv_description = (TextView) view.findViewById(R.id.tv_description);
             TextView lable_annurate_interest_rate = (TextView) view.findViewById(R.id.lable_annurate_interest_rate);
             container.addView(view);
 
             final RegularPlan plan = planList.get(position);
             tv_annurate_interest_rate.setText(plan.getYearInterest() + "%");
-            if("Y".equalsIgnoreCase(plan.getPresentationYesNo())) {
-                tv_add_interest.setText(plan.getPresentationYearInterest() + "%");
+            if ("Y".equalsIgnoreCase(plan.getPresentationYesNo())) {
+                tv_add_interest.setText(" +" + plan.getPresentationYearInterest() + "% ");
                 tv_add_interest.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 tv_add_interest.setVisibility(View.GONE);
             }
-            tv_description.setText(plan.getPromotionDesc());
 
-            if("00".equals(plan.getSubjectStatus())) {
+            if ("00".equals(plan.getSubjectStatus())) {
                 tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest);
                 layout_circle.setBackgroundResource(R.drawable.bg_circle_unbegin);
                 lable_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b1));
@@ -213,7 +222,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 tv_begin_time.setText(FormatUtil.formatDate(plan.getStartTimestamp(), "dd日 hh:mm开售"));
                 tv_begin_time.setVisibility(View.VISIBLE);
                 tv_status.setVisibility(View.GONE);
-            }else if("01".equals(plan.getSubjectStatus())) {
+            } else if ("01".equals(plan.getSubjectStatus())) {
                 tv_status.setText("马上认购");
                 tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest);
                 layout_circle.setBackgroundResource(R.drawable.bg_circle_buy);
@@ -233,24 +242,33 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 tv_status.setVisibility(View.VISIBLE);
             }
 
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     RegularPlanActivity.startActivity(mContext, plan.getSubjectId());
                 }
             });
+            if (position == 0) {
+                view.setAlpha(1f);
+            } else {
+                view.setAlpha(0.3f);
+            }
+            view.setId(position);
             return view;
         }
 
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
+            View view = (View) object;
+            view.setAlpha(0.3f);
             container.removeView((View) object);
         }
 
         @Override
         public int getCount() {
-            return planList != null? planList.size() : 0;
+            return planList != null ? planList.size() : 0;
         }
 
         @Override

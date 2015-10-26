@@ -108,6 +108,7 @@ public class RegularFragment extends BasicFragment implements View.OnClickListen
         synchronized (mLock) {
             inProcess = true;
         }
+        begin();
         swipeRefresh.setRefreshing(true);
         HttpRequest.getMainRegular(getActivity(), new ICallback<GetRegularResult>() {
 
@@ -116,6 +117,7 @@ public class RegularFragment extends BasicFragment implements View.OnClickListen
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                end();
                 swipeRefresh.setRefreshing(false);
                 if (result == null) return;
                 mData = result.getData();
@@ -129,6 +131,7 @@ public class RegularFragment extends BasicFragment implements View.OnClickListen
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                end();
                 swipeRefresh.setRefreshing(false);
                 Uihelper.showToast(getActivity(), error);
             }

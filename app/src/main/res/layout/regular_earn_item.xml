@@ -121,7 +121,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
                             android:background="@drawable/bg_add_interest"
-                            android:padding="3dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:text="+1.5%"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mq_font5" />
@@ -145,7 +146,7 @@
                     <TextView
                         android:id="@+id/tv_annurate_interest_lable"
                         style="@style/regular_earn_item_lable"
-                        android:text="年化收益率" />
+                        android:text="年化收益" />
 
                     <TextView
                         android:id="@+id/textView8"

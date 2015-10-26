@@ -75,12 +75,13 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
     public void bindView(final Context mContext, final RegularEarn regularEarn, boolean showLable) {
 
         tv_title.setText(regularEarn.getSubjectName());
-        tv_sub_title.setText("项目总额" +  FormatUtil.formatAmount(regularEarn.getSubjectTotalPrice()) + "  " + regularEarn.getPayMode());
+        tv_sub_title.setVisibility(View.GONE);
+//        tv_sub_title.setText("项目总额" +  FormatUtil.formatAmount(regularEarn.getSubjectTotalPrice()) + "  " + regularEarn.getPayMode());
 
         tv_duration.setText(regularEarn.getLimit() + "天");
         circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
         circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
-
+        tv_sale_number.setVisibility(View.GONE);
 
         //待开标
         if("00".equals(regularEarn.getSubjectStatus())) {
@@ -89,7 +90,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_bl1));
             tv_progress.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
             circlebar.setUnfinishedStrokeColor(mContext.getResources().getColor(R.color.mq_bl1));
-            tv_sale_number.setVisibility(View.GONE);
+//            tv_sale_number.setVisibility(View.GONE);
             tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest_unbegin);
 
             tv_progress.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "MM月dd日"));
@@ -100,12 +101,12 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
             tv_progress.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
             circlebar.setUnfinishedStrokeColor(mContext.getResources().getColor(R.color.mq_b5));
-            tv_sale_number.setVisibility(View.VISIBLE);
+//            tv_sale_number.setVisibility(View.VISIBLE);
             tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest);
 
             tv_buy_now.setText(R.string.buy_now);
-            tv_progress.setText(regularEarn.getPurchasePercent() + "%");
-            tv_sale_number.setText("已认购" + regularEarn.getPersonTime() + "人");
+            tv_progress.setText(Float.valueOf(regularEarn.getPurchasePercent()).intValue() + "%");
+//            tv_sale_number.setText("已认购" + regularEarn.getPersonTime() + "人");
         }
         tv_annurate_interest_rate.setText(regularEarn.getYearInterest() + "%");
         if(TextUtils.isEmpty(regularEarn.getPromotionDesc())) {
@@ -117,7 +118,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
 
         if("Y".equalsIgnoreCase(regularEarn.getPresentationYesNo())) {
             tv_add_interest.setVisibility(View.VISIBLE);
-            tv_add_interest.setText(regularEarn.getPresentationYearInterest());
+            tv_add_interest.setText(" +" + regularEarn.getPresentationYearInterest() + "% ");
         }else {
             tv_add_interest.setVisibility(View.GONE);
         }
