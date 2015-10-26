@@ -2,6 +2,7 @@ package com.miqian.mq.entity;
 
 public class UserRegularDetail {
 
+    private String bdId;	      //标的id
     private String id;	          //投资ID（投资编号）
     private String prodId;	      //产品ID 定期计划 “4”  定期赚“3”
     private String prodName;      //产品名称
@@ -27,6 +28,14 @@ public class UserRegularDetail {
     private String regAmt;         //待收本金
     private String regIncome;      //待收收益
     private String regAssert;      //已结息收益
+
+    public String getBdId() {
+        return bdId;
+    }
+
+    public void setBdId(String bdId) {
+        this.bdId = bdId;
+    }
 
     public String getId() {
         return id;

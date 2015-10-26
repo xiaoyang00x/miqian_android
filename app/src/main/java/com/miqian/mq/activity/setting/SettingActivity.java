@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.TradePsCaptchaActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -21,6 +22,7 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
@@ -189,6 +191,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //帮助中心
             case R.id.frame_setting_helpcenter:
+                WebActivity.startActivity(mActivity, Urls.web_help);
                 break;
             //银行卡号
             case R.id.frame_setting_bankcard:

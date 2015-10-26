@@ -10,9 +10,11 @@ import android.widget.Button;
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.adapter.AdapterPacket;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.Promote;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.views.WFYTitle;
 
@@ -72,6 +74,12 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("红包/拾财券");
         mTitle.setRightText("使用规则");
+        mTitle.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.startActivity(mActivity, Urls.web_promote);
+            }
+        });
     }
 
     @Override

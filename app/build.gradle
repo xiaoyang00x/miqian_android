@@ -22,7 +22,7 @@ android {
 
     // 渠道名称
     productFlavors {
-        "100" {}
+        "MiaoQian" {}
 //        "1002" {}
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [CHANNEL_VALUE: name]

@@ -168,7 +168,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     public void textLawCick(View v) {
-        WebActivity.startActivity(mActivity, Urls.web_register);
+        WebActivity.startActivity(mActivity, Urls.web_register_law);
     }
 
     private void summit(final String captcha, final String invite, final String password) {

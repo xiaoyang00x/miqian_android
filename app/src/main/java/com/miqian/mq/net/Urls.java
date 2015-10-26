@@ -111,16 +111,36 @@ public class Urls {
     //提现预处理
     public final static String withdrawPreprocess = base_server + "assetService/withdrawPreprocess";
 
-
-    //网页的URL
+    /**
+     *网页的URL
+     */
     //注册页：《秒钱用户注册协议》
-    public final static String web_register = base_server + "webView/register";
+    public final static String web_register_law = base_server + "webView/register";
     //充值页面：《资金管理协议》
-    public final static String web_recharge = base_server + "webView/recharge";
+    public final static String web_recharge_law = base_server + "webView/recharge";
     //活期认购页：《活期赚服务协议》
-    public final static String web_current = base_server + "webView/current-buy";
+    public final static String web_current_law = base_server + "webView/current-buy";
     //定期赚认购页面：《定期赚服务协议》
-    public final static String web_regular = base_server + "webView/regular-buy";
+    public final static String web_regular_law = base_server + "webView/regular-buy";
     //定期计划认购页面：《定期计划服务协议》
-    public final static String web_regplan = base_server + "webView/regplan-buy";
+    public final static String web_regplan_law = base_server + "webView/regplan-buy";
+
+    //提现说明
+    public final static String web_rollout = base_server + "webView/presentDescription";
+    //红包使用规则
+    public final static String web_red_paper = base_server + "webView/hbServiceRegulations";
+    //拾财券使用规则
+    public final static String web_ticket = base_server + "webView/scServiceRegulations";
+    //红包、拾财券使用规则(认购页面)
+    public final static String web_promote = base_server + "webView/preferServiceRegulations";
+
+    //定期赚详情
+    public final static String web_regular = base_server + "webView/getRegDetail/";
+    //定期计划详情
+    public final static String web_regular_plan = base_server + "webView/regPlanDetail";
+    //活期详情
+    public final static String web_current = base_server + "webView/currentDetail";
+
+    //活期详情
+    public final static String web_help = base_server + "webView/helpCenter";
 }

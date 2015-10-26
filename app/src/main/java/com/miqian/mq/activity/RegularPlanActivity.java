@@ -15,6 +15,7 @@ import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -128,7 +129,14 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        getmTitle().setTitleText("定期计划");
+        mTitle.setTitleText("定期计划");
+        mTitle.setRightText("产品特点");
+        mTitle.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.startActivity(mActivity, Urls.web_regular_plan);
+            }
+        });
     }
 
     @Override

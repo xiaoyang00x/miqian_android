@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.BankBranchActivity;
 import com.miqian.mq.activity.setting.BindCardActivity;
 import com.miqian.mq.activity.setting.CityListActivity;
@@ -25,6 +26,7 @@ import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.entity.WithdrawItem;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Uihelper;
@@ -279,7 +281,7 @@ public class RolloutActivity extends BaseActivity {
 
             @Override
             public void onClick(View arg0) {
-//                WebViewActivity.doIntent(mActivity, Urls.help_rollout_url, true, null);
+                WebActivity.startActivity(mActivity, Urls.web_rollout);
             }
         });
 
