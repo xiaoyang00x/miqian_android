@@ -1,6 +1,7 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
     private TextView textOrderNo;
     private RelativeLayout frameFail;
     private TextView textStatus;
+    private TextView textTel;
     private Button btBack;
 
     private int status;
@@ -51,7 +53,9 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
         textOrderNo = (TextView) findViewById(R.id.text_order_no);
         frameFail = (RelativeLayout) findViewById(R.id.frame_fail);
         textStatus = (TextView) findViewById(R.id.text_status);
+        textTel = (TextView) findViewById(R.id.text_tel);
         btBack = (Button) findViewById(R.id.bt_back);
+        textTel.setOnClickListener(this);
         btBack.setOnClickListener(this);
         refreshView();
     }
@@ -88,6 +92,9 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.bt_back:
                 IntoResultActivity.this.finish();
+                break;
+            case R.id.text_tel:
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
                 break;
             default:
                 break;

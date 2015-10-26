@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private TextView textPromote;
     private TextView tradeNumber;
     private TextView textTime;
+    private TextView textTel;
     private Button btBackHome;
     private Button btBackUser;
     private LinearLayout frameSuccess;
@@ -77,6 +79,8 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         textTime = (TextView) findViewById(R.id.text_time);
         btBackHome = (Button) findViewById(R.id.bt_back_home);
         btBackUser = (Button) findViewById(R.id.bt_back_user);
+        textTel = (TextView) findViewById(R.id.text_tel);
+        textTel.setOnClickListener(this);
         btBackHome.setOnClickListener(this);
         btBackUser.setOnClickListener(this);
 
@@ -115,6 +119,9 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.text_tel:
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
+                break;
             case R.id.bt_back_home:
                 SubscribeResult.this.finish();
                 ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_HOME, null);

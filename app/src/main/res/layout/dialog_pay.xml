@@ -54,7 +54,7 @@
                 android:inputType="numberDecimal"
                 android:paddingLeft="8dp"
                 android:singleLine="true"
-                android:textColor="@color/miqian_black"
+                android:textColor="@color/mq_b1"
                 android:textColorHint="@color/miqian_gray"
                 android:textSize="15sp" />
 

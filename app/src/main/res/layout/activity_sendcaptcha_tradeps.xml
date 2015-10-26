@@ -54,7 +54,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:text="验证码发送至"
-            android:textColor="@color/miqian_black"
+            android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font2" />
 
         ImageView

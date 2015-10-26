@@ -163,15 +163,16 @@
                 android:layout_marginTop="5dp"
                 android:text="如有问题，请拨打客服电话"
                 android:textColor="@color/mq_b2"
-                android:textSize="@dimen/mq_font5" />
+                android:textSize="@dimen/mq_font4" />
 
             <TextView
+                android:id="@+id/text_tel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="400-345-3434"
+                android:text="400-6656-191"
                 android:textColor="@color/mq_bl2"
-                android:textSize="@dimen/mq_font5" />
+                android:textSize="@dimen/mq_font4" />
         </LinearLayout>
     </RelativeLayout>
 
