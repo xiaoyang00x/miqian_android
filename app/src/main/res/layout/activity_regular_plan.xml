@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/theme_background"
     android:orientation="vertical">
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/titlebar_container"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal" />-->
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -21,32 +17,40 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/layout_des"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_regular_activity_des"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/padding_left_right"
-                android:paddingRight="@dimen/padding_left_right"
-                android:visibility="gone"
-                >
+                android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/btn_des_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/bg_close" />
-
-                <TextView
-                    android:id="@+id/tv_description"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/btn_des_close"
-                    android:textColor="@color/mq_r1"
-                    android:textSize="@dimen/mq_font1" />
-            </RelativeLayout>
+                    android:layout_height="10dp" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_regular_activity_des"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/padding_left_right"
+                    android:paddingRight="@dimen/padding_left_right"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/btn_des_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/bg_close" />
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/btn_des_close"
+                        android:textColor="@color/mq_r1"
+                        android:textSize="@dimen/mq_font1" />
+                </RelativeLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,11 +110,11 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/tv_annurate_interest_rate"
                         android:background="@drawable/bg_add_interest"
-                        android:padding="3dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mq_font4"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -148,14 +152,20 @@
                         android:textSize="@dimen/mq_font5" />
                 </LinearLayout>
 
-                <ProgressBar
+                <com.miqian.mq.views.RoundCornerProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="7dp"
-                    android:layout_marginTop="7dp"/>
+                    android:layout_marginTop="7dp"
+                    app:rcBackgroundColor="@color/mq_b4"
+                    app:rcBackgroundPadding="0dp"
+                    app:rcBackgroundRadius="6dp"
+                    app:rcMax="100"
+                    app:rcProgress="0"
+                    app:rcProgressColor="@color/mq_y" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -213,9 +223,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:singleLine="true"
                         android:ellipsize="end"
                         android:gravity="right|center_vertical"
+                        android:singleLine="true"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>
@@ -246,9 +256,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:singleLine="true"
                         android:ellipsize="end"
                         android:gravity="right|center_vertical"
+                        android:singleLine="true"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>
@@ -279,9 +289,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:singleLine="true"
                         android:ellipsize="end"
                         android:gravity="right|center_vertical"
+                        android:singleLine="true"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>
@@ -312,9 +322,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:singleLine="true"
                         android:ellipsize="end"
                         android:gravity="right|center_vertical"
+                        android:singleLine="true"
                         android:textColor="@color/mq_b2"
                         android:textSize="@dimen/mq_font3" />
                 </LinearLayout>
@@ -332,8 +342,7 @@
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:layout_marginRight="@dimen/margin_left_right"
                 android:layout_marginTop="15dp"
-                android:text="认购"
-                />
+                android:text="认购" />
         </LinearLayout>
 
     </ScrollView>
