@@ -114,7 +114,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
             android:background="@color/white"
-            android:minHeight="40dp"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right">
 

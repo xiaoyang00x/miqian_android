@@ -38,7 +38,7 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
             tvCardNum.setText("银行卡号：" + rollOut.getBankName() + "（****" + cardNum.substring(cardNum.length() - 4, cardNum.length()) + ")");
         }
         if (!TextUtils.isEmpty(rollOut.getOrderNo())) {
-            tvOrderNum.setText("资金编号:" + rollOut.getOrderNo());
+            tvOrderNum.setText("资金编号：" + rollOut.getOrderNo());
         }
 
 
