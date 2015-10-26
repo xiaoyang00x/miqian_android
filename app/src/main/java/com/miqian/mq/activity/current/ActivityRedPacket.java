@@ -55,7 +55,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).marginResId(R.dimen.margin_left_right).build());
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).build());
 
         AdapterPacket adapterPacket = new AdapterPacket(promList);
         adapterPacket.setOnItemClickListener(this);

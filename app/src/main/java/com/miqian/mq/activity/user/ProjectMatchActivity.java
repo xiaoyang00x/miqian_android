@@ -57,6 +57,7 @@ public class ProjectMatchActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
+        pageNo = 1;
         mWaitingDialog.show();
         HttpRequest.projectMatch(mActivity, new ICallback<ProjectInfoResult>() {
             @Override
