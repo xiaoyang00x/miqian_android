@@ -68,14 +68,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
                     }
                     tv_card.setText("尾号" + bankNo.substring(bankNo.length() - 4, bankNo.length()));
-                    //已绑定支行
-                    if (!TextUtils.isEmpty(bankOpenName)) {
-                        tv_cardState.setText("已完善");
-                    }
-                    //未绑定支行
-                    else {
-                        tv_cardState.setText("未完善");
-                    }
                 }
             }
 
@@ -133,7 +125,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
 
         if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
-            //未认证
+            //已认证
             if ("1".equals(userInfo.getRealNameStatus())) {
                 if (!TextUtils.isEmpty(userInfo.getRealName())) {
                     tv_name.setText(RSAUtils.decryptByPrivate(userInfo.getRealName()));

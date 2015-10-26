@@ -35,6 +35,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -68,6 +69,7 @@ public class RolloutActivity extends BaseActivity {
     private DialogTradePassword dialogTradePassword_input;
     private boolean isChooseCity;
     private BankCard bankCard;
+    private boolean isSuccessBindBranch;
 
     @Override
     public void obtainData() {
@@ -168,13 +170,13 @@ public class RolloutActivity extends BaseActivity {
         HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-
+                isSuccessBindBranch = true;
             }
 
             @Override
             public void onFail(String error) {
-                Uihelper.showToast(mActivity, error + "绑定支行失败");
-
+                isSuccessBindBranch = false;
+                Uihelper.showToast(mActivity, error);
             }
         }, cardNum, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
 
@@ -188,7 +190,7 @@ public class RolloutActivity extends BaseActivity {
 
                 @Override
                 public void positionBtnClick() {
-                    //跳到绑定支行的页面
+                    //跳到绑定银行卡的页面
                     dismiss();
                     Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
                     Bundle extra = new Bundle();
@@ -296,14 +298,22 @@ public class RolloutActivity extends BaseActivity {
             Uihelper.showToast(mActivity, "交易金额不能为空");
             return;
         }
-        float moneyFloat = Float.parseFloat(moneyString);
-        float totalMoneyFloat = Float.parseFloat(totalMoney);
-        if (moneyFloat > totalMoneyFloat) {
+        if (TextUtils.isEmpty(bankOpenName) && !isSuccessBindBranch) {
+            Uihelper.showToast(mActivity, "开户支行信息不全,请重新选择");
+        } else {
+            handleData();
+        }
+    }
+
+    private void handleData() {
+        BigDecimal moneyCurrent = new BigDecimal(moneyString);
+        BigDecimal moneyTotal = new BigDecimal(totalMoney);
+        if (moneyCurrent.compareTo(moneyTotal) > 0) {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额超限");
             dialogTips.show();
             return;
-        } else if (moneyFloat < 10) {
+        } else if (moneyCurrent.compareTo(BigDecimal.TEN) < 0) {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额不能小于10元");
             dialogTips.show();
@@ -339,7 +349,6 @@ public class RolloutActivity extends BaseActivity {
 
                 }
             }, moneyString);
-
 
         }
     }
