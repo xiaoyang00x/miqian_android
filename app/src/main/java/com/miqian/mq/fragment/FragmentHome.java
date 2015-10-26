@@ -107,6 +107,7 @@ public class FragmentHome extends BasicFragment {
         synchronized (mLock) {
             inProcess = true;
         }
+        begin();
         swipeRefresh.setRefreshing(true);
         HttpRequest.getHomePageInfo(getActivity(), new ICallback<HomePageInfoResult>() {
 
@@ -115,6 +116,7 @@ public class FragmentHome extends BasicFragment {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                end();
                 swipeRefresh.setRefreshing(false);
                 if (result == null) return;
                 mData = result.getData();
@@ -132,6 +134,7 @@ public class FragmentHome extends BasicFragment {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                end();
                 swipeRefresh.setRefreshing(false);
                 Uihelper.showToast(getActivity(), error);
             }

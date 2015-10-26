@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -19,6 +18,7 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
+import com.miqian.mq.views.RoundCornerProgressBar;
 import com.miqian.mq.views.WFYTitle;
 
 import java.math.BigDecimal;
@@ -42,6 +42,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,27 +61,27 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
     TextView tv_limit;
     TextView tv_annurate_interest_rate;
     TextView tv_add_interest;
-    TextView tv_lable1,tv_lable2,tv_lable3,tv_lable4;
-    TextView tv_project_name,tv_fx,tv_bxbz,tv_hkfs;
-    ProgressBar progressBar;
+    TextView tv_lable1, tv_lable2, tv_lable3, tv_lable4;
+    TextView tv_project_name, tv_fx, tv_bxbz, tv_hkfs;
+    RoundCornerProgressBar progressBar;
     View layout_des;
 
     public void initView() {
-        btn_buy = (Button)findViewById(R.id.btn_buy);
-        btn_des_close = (Button)findViewById(R.id.btn_des_close);
-        tv_description = (TextView)findViewById(R.id.tv_description);
-        tv_limit = (TextView)findViewById(R.id.tv_limit);
-        tv_annurate_interest_rate = (TextView)findViewById(R.id.tv_annurate_interest_rate);
-        tv_add_interest = (TextView)findViewById(R.id.tv_add_interest);
-        tv_lable1 = (TextView)findViewById(R.id.tv_lable1);
-        tv_lable2 = (TextView)findViewById(R.id.tv_lable2);
-        tv_lable3 = (TextView)findViewById(R.id.tv_lable3);
-        tv_lable4 = (TextView)findViewById(R.id.tv_lable4);
-        tv_project_name = (TextView)findViewById(R.id.tv_project_name);
-        tv_fx = (TextView)findViewById(R.id.tv_fx);
-        tv_bxbz = (TextView)findViewById(R.id.tv_bxbz);
-        tv_hkfs = (TextView)findViewById(R.id.tv_hkfs);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        btn_buy = (Button) findViewById(R.id.btn_buy);
+        btn_des_close = (Button) findViewById(R.id.btn_des_close);
+        tv_description = (TextView) findViewById(R.id.tv_description);
+        tv_limit = (TextView) findViewById(R.id.tv_limit);
+        tv_annurate_interest_rate = (TextView) findViewById(R.id.tv_annurate_interest_rate);
+        tv_add_interest = (TextView) findViewById(R.id.tv_add_interest);
+        tv_lable1 = (TextView) findViewById(R.id.tv_lable1);
+        tv_lable2 = (TextView) findViewById(R.id.tv_lable2);
+        tv_lable3 = (TextView) findViewById(R.id.tv_lable3);
+        tv_lable4 = (TextView) findViewById(R.id.tv_lable4);
+        tv_project_name = (TextView) findViewById(R.id.tv_project_name);
+        tv_fx = (TextView) findViewById(R.id.tv_fx);
+        tv_bxbz = (TextView) findViewById(R.id.tv_bxbz);
+        tv_hkfs = (TextView) findViewById(R.id.tv_hkfs);
+        progressBar = (RoundCornerProgressBar) findViewById(R.id.progressBar);
         layout_des = findViewById(R.id.layout_des);
 
         btn_buy.setOnClickListener(this);
@@ -136,19 +137,19 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void updateUI(RegularEarn data) {
-        if(data == null) return;
-        if(TextUtils.isEmpty(data.getPromotionDesc())) {
+        if (data == null) return;
+        if (TextUtils.isEmpty(data.getPromotionDesc())) {
             layout_des.setVisibility(View.GONE);
-        }else {
+        } else {
             layout_des.setVisibility(View.VISIBLE);
             tv_description.setText(data.getPromotionDesc());
         }
         tv_limit.setText("项目期限 " + data.getLimit() + "天");
         tv_annurate_interest_rate.setText(data.getYearInterest());
-        if("Y".equalsIgnoreCase(data.getPresentationYesNo())) {
+        if ("Y".equalsIgnoreCase(data.getPresentationYesNo())) {
             tv_add_interest.setVisibility(View.VISIBLE);
-            tv_add_interest.setText(data.getPresentationYearInterest());
-        }else {
+            tv_add_interest.setText(" +" + data.getPresentationYearInterest() + "% ");
+        } else {
             tv_add_interest.setVisibility(View.GONE);
         }
         tv_project_name.setText(data.getSubjectName());
@@ -157,19 +158,32 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         tv_fx.setText(data.getDdbzf());
         tv_bxbz.setText(data.getBxbzf());
 
-        tv_lable1.setText( "总金额" + FormatUtil.formatAmount(data.getSubjectTotalPrice()) + "元");
-        tv_lable3.setText("起投金额￥" + FormatUtil.formatAmount(data.getFromInvestmentAmount()));
-        if(data.getSubjectMaxBuy().compareTo(BigDecimal.ZERO) == 1) {
-            tv_lable4.setText("每人限额￥" + FormatUtil.formatAmount(data.getSubjectMaxBuy()));
-        }else {
-            tv_lable4.setText("");
+        if (data.getSubjectMaxBuy().compareTo(BigDecimal.ZERO) == 1) {
+            tv_lable1.setText("每人限额" + FormatUtil.formatAmount(data.getSubjectMaxBuy()) + "元");
+        } else {
+            tv_lable1.setText("");
         }
 
         //待开标
-        if("00".equals(data.getSubjectStatus())) {
+        if ("00".equals(data.getSubjectStatus())) {
             tv_lable2.setText(FormatUtil.formatDate(data.getStartTimestamp(), "dd日 hh:mm:ss开售"));
-        }else {
-            tv_lable2.setText(data.getPurchasePercent() + "%，已认购" + data.getPersonTime() + "人");
+        } else {
+            tv_lable2.setText(Float.valueOf(data.getPurchasePercent()).intValue() + "%");
+        }
+        tv_lable3.setText("剩余额度" + FormatUtil.formatAmount(data.getSubjectTotalPrice().subtract(data.getPurchasePrice())) + "元");
+        tv_lable4.setText("标的总额" + FormatUtil.formatAmount(data.getSubjectTotalPrice()) + "元");
+
+        //待开标
+        if ("00".equals(data.getSubjectStatus())) {
+            btn_buy.setText("待开标");
+            btn_buy.setEnabled(false);
+        } else if ("01".equals(data.getSubjectStatus())) {
+            //已开标
+            btn_buy.setText("认购");
+            btn_buy.setEnabled(true);
+        } else {
+            btn_buy.setText("已售罄");
+            btn_buy.setEnabled(false);
         }
     }
 

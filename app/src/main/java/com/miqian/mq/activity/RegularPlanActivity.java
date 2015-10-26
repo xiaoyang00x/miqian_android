@@ -19,6 +19,7 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
+import com.miqian.mq.views.RoundCornerProgressBar;
 import com.miqian.mq.views.WFYTitle;
 
 import java.math.BigDecimal;
@@ -63,7 +64,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
     TextView tv_add_interest;
     TextView tv_lable1,tv_lable2,tv_lable3,tv_lable4;
     TextView tv_project_name,tv_fx,tv_bxbz,tv_hkfs;
-    ProgressBar progressBar;
+    RoundCornerProgressBar progressBar;
     View layout_des;
 
     public void initView() {
@@ -82,7 +83,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
         tv_fx = (TextView)findViewById(R.id.tv_fx);
         tv_bxbz = (TextView)findViewById(R.id.tv_bxbz);
         tv_hkfs = (TextView)findViewById(R.id.tv_hkfs);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        progressBar = (RoundCornerProgressBar)findViewById(R.id.progressBar);
         layout_des = findViewById(R.id.layout_des);
 
         dialogPay = new DialogPay(mActivity) {
@@ -147,7 +148,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
         tv_annurate_interest_rate.setText(data.getYearInterest());
         if("Y".equalsIgnoreCase(data.getPresentationYesNo())) {
             tv_add_interest.setVisibility(View.VISIBLE);
-            tv_add_interest.setText(data.getPresentationYearInterest());
+            tv_add_interest.setText(" +" + data.getPresentationYearInterest() + "% ");
         }else {
             tv_add_interest.setVisibility(View.GONE);
         }
@@ -157,19 +158,32 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
         tv_fx.setText(data.getDdbzf());
         tv_bxbz.setText(data.getBxbzf());
 
-        tv_lable1.setText( "总金额" + FormatUtil.formatAmount(data.getSubjectTotalPrice()) + "元");
-        tv_lable3.setText("起投金额￥" + FormatUtil.formatAmount(data.getFromInvestmentAmount()));
-        if(data.getSubjectMaxBuy().compareTo(BigDecimal.ZERO) == 1) {
-            tv_lable4.setText("每人限额￥" + FormatUtil.formatAmount(data.getSubjectMaxBuy()));
-        }else {
-            tv_lable4.setText("");
+        if (data.getSubjectMaxBuy().compareTo(BigDecimal.ZERO) == 1) {
+            tv_lable1.setText("每人限额" + FormatUtil.formatAmount(data.getSubjectMaxBuy()) + "元");
+        } else {
+            tv_lable1.setText("");
         }
 
         //待开标
-        if("00".equals(data.getSubjectStatus())) {
+        if ("00".equals(data.getSubjectStatus())) {
             tv_lable2.setText(FormatUtil.formatDate(data.getStartTimestamp(), "dd日 hh:mm:ss开售"));
-        }else {
-            tv_lable2.setText(data.getPurchasePercent() + "%");
+        } else {
+            tv_lable2.setText(Float.valueOf(data.getPurchasePercent()).intValue() + "%");
+        }
+        tv_lable3.setText("剩余额度" + FormatUtil.formatAmount(data.getSubjectTotalPrice().subtract(data.getPurchasePrice())) + "元");
+        tv_lable4.setText("标的总额" + FormatUtil.formatAmount(data.getSubjectTotalPrice()) + "元");
+
+        //待开标
+        if ("00".equals(data.getSubjectStatus())) {
+            btn_buy.setText("待开标");
+            btn_buy.setEnabled(false);
+        } else if ("01".equals(data.getSubjectStatus())) {
+            //已开标
+            btn_buy.setText("认购");
+            btn_buy.setEnabled(true);
+        } else {
+            btn_buy.setText("已售罄");
+            btn_buy.setEnabled(false);
         }
     }
 

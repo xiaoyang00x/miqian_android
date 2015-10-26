@@ -46,12 +46,12 @@ public class FormatUtil {
     }
 
     /**
-     * 格式化金额 保留4位小数且三位三位的隔开
+     * 格式化金额 保留2位小数且三位三位的隔开
      * @param amount
      * @return
      */
     public static String formatAmount(BigDecimal amount) {
-        NumberFormat nf = new DecimalFormat("#,###.####");
+        NumberFormat nf = new DecimalFormat("#,###.##");
         String format = amount.toString();
         try{
             format = nf.format(amount);
