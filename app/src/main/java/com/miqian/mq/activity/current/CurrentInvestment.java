@@ -73,11 +73,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private int position = -1;//使用的红包位置，用于获取list
 
     private BigDecimal orderMoney;//订单金额
-    private BigDecimal promoteMoney = new BigDecimal(0);//优惠金额： 红包、拾财券
+    private BigDecimal promoteMoney = BigDecimal.ZERO;//优惠金额： 红包、拾财券
     private BigDecimal balanceMoney;//账户余额
     private BigDecimal balancePay;//需余额支付额度
     private BigDecimal rollinMoney;//需转入金额
-    private BigDecimal bFlag = new BigDecimal(0);
+    private BigDecimal bFlag = BigDecimal.ZERO;
 
     private static final int REQUEST_CODE_ROLLIN = 1;
     private static final int REQUEST_CODE_REDPACKET = 2;
@@ -339,7 +339,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     promoteMoney = new BigDecimal(promote.getSa());
                     promListString = JSON.toJSONString(promListParam, true);
                 } else {
-                    promoteMoney = new BigDecimal(0);
+                    promoteMoney = BigDecimal.ZERO;
                     promListString = "";
                 }
                 refreshView();

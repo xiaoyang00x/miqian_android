@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.current.ActivityRedeem;
 import com.miqian.mq.activity.user.ProjectMatchActivity;
 import com.miqian.mq.entity.UserCurrent;
 import com.miqian.mq.entity.UserCurrentResult;
@@ -19,6 +18,8 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WFYTitle;
+
+import java.math.BigDecimal;
 
 /**
  * Created by Jackie on 2015/9/30.
@@ -34,8 +35,8 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private Button btSubscribe;//认购
 
     private UserCurrent userCurrent;
-    private float downLimit = 1f;
-    private float upLimit = 999999;
+    private BigDecimal downLimit = BigDecimal.ONE;
+    private BigDecimal upLimit = new BigDecimal(9999999999L);
     private DialogPay dialogPay;
 
 
@@ -64,14 +65,10 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             textEarning.setText(userCurrent.getCurYesterDayAmt());
             textCaptial.setText(userCurrent.getCurAsset());
             textTotalEarning.setText(userCurrent.getCurAmt());
-            float money = Float.parseFloat(userCurrent.getCurAsset());
-            if (!TextUtils.isEmpty(userCurrent.getCurrentBuyDownLimit())){
-                downLimit = Float.parseFloat(userCurrent.getCurrentBuyDownLimit());
-            }
-            if (!TextUtils.isEmpty(userCurrent.getCurrentBuyUpLimit())){
-                upLimit = Float.parseFloat(userCurrent.getCurrentBuyUpLimit());
-            }
-            if (money <= 0) {
+            BigDecimal money = new BigDecimal(userCurrent.getCurAsset());
+            downLimit = userCurrent.getCurrentBuyDownLimit();
+            upLimit = userCurrent.getCurrentBuyUpLimit();
+            if (money.compareTo(BigDecimal.ZERO) <= 0) {
                 btRedeem.setEnabled(false);
                 btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
             }
@@ -106,11 +103,11 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             @Override
             public void positionBtnClick(String moneyString) {
                 if (!TextUtils.isEmpty(moneyString)) {
-                    float money = Float.parseFloat(moneyString);
-                    if (money < downLimit) {
+                    BigDecimal money = new BigDecimal(moneyString);
+                    if (money.compareTo(downLimit) < 0) {
                         this.setTitle("提示：输入请大于" + downLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
-                    } else if (money > upLimit) {
+                    } else if (money.compareTo(upLimit) > 0) {
                         this.setTitle("提示：输入请小于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {

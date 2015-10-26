@@ -33,7 +33,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
     private DialogPay dialogPay;
 
     private BigDecimal downLimit = BigDecimal.ONE;
-    private BigDecimal upLimit = new BigDecimal(9999999.99);
+    private BigDecimal upLimit = new BigDecimal(9999999999L);
     private String interestRateString = "";
 
     public static void startActivity(Context context, String subjectId) {
