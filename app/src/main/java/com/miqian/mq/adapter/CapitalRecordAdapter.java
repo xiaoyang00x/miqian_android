@@ -84,7 +84,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if (list != null || list.size() != 0) {
+        if (list != null && list.size() != 0) {
             return list.size() + 1;//+1 尾部：加载更多
         }
         return 0;

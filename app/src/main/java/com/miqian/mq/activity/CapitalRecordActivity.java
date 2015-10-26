@@ -230,8 +230,12 @@ public class CapitalRecordActivity extends BaseActivity {
         topLayout.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 showContentView();
                 if (filetr_container.isShown()) {
+                    if (list == null || list.size() == 0) {
+                        showEmptyView();
+                    }
                     filetr_container.setVisibility(View.GONE);
                     filetr_container.startAnimation(animHide);
                     frameHide.setVisibility(View.GONE);

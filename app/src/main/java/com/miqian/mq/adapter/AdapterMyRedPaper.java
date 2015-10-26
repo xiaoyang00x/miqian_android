@@ -113,7 +113,7 @@ public class AdapterMyRedPaper extends RecyclerView.Adapter {
     }
     @Override
     public int getItemCount() {
-        if (promList != null) {
+        if (promList != null && promList.size() != 0) {
             return promList.size() + 1;//+1 尾部：加载更多
         }
         return 0;
