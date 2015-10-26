@@ -137,9 +137,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             }
         }
 
-        if ("0".equals(userInfo.getBindCardStatus())) {
-            frame_setting_bankcard.setVisibility(View.GONE);
-            findViewById(R.id.divider_bank).setVisibility(View.GONE);
+        if ("1".equals(userInfo.getBindCardStatus())) {
+            frame_setting_bankcard.setVisibility(View.VISIBLE);
+            findViewById(R.id.divider_bank).setVisibility(View.VISIBLE);
         }
 
     }
@@ -249,7 +249,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //联系客服
             case R.id.frame_setting_telephone:
-                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4000010520")));
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
                 break;
         }
     }

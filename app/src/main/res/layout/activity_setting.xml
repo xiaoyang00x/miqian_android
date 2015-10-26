@@ -75,6 +75,7 @@
             <View style="@style/item_divider" />
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/frame_setting_bankcard"
                 style="@style/listItem">
 
@@ -113,6 +114,7 @@
 
 
             <View
+                android:visibility="gone"
                 android:id="@+id/divider_bank"
                 style="@style/item_divider" />
 
@@ -185,7 +187,7 @@
                 <TextView
                     style="@style/text_black_item"
                     android:layout_centerVertical="true"
-                    android:text="关于咪钱" />
+                    android:text="关于秒钱" />
 
                 <ImageView
                     android:id="@+id/arrow_6"
@@ -228,7 +230,7 @@
                 <TextView
                     style="@style/text_black_item"
                     android:layout_centerVertical="true"
-                    android:text="拨打客服妹子电话" />
+                    android:text="拨打客服电话" />
 
                 <ImageView
                     android:id="@+id/arrow_7"
@@ -244,7 +246,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/arrow_7"
-                    android:text="400-0010-520"
+                    android:text="400-6656-191"
                     android:textColor="@color/mq_bl1" />
             </RelativeLayout>
 
@@ -260,7 +262,7 @@
                     android:id="@+id/btn_next"
                     style="@style/click_btn"
                     android:onClick="btn_click"
-                    android:text="退出" />
+                    android:text="退出登录" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
