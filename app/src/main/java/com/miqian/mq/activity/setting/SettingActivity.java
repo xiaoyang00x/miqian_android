@@ -13,6 +13,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
+import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
@@ -22,7 +23,10 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
@@ -38,6 +42,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView tv_name, tv_card, tv_bindPhone, tv_cardState;
     private BankCard bankCard;
     private ImageView iconBank;
+    private CustomDialog dialogTips;
 
     @Override
     public void obtainData() {
@@ -161,7 +166,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.frame_setting_name:
                 if (userInfo != null && !TextUtils.isEmpty(userInfo.getRealNameStatus())) {
                     //未认证
-                    if ("0".equals(userInfo.getRealNameStatus())) {
+                    if ("1".equals(userInfo.getRealNameStatus())) {
                         Intent intent = new Intent(mActivity, ActivityRealname.class);
                         startActivity(intent);
                     }
@@ -170,14 +175,17 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //绑定手机
             case R.id.frame_setting_bindphone:
-                Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
-                intent_phone.putExtra("isModifyPhone", true);
-                startActivity(intent_phone);
+                initTipDialog();
 
                 break;
             //安全设置
             case R.id.frame_setting_security:
-                startActivity(new Intent(mActivity, SecuritySettingActivity.class));
+                if (userInfo != null && !TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
+                    Intent intent = new Intent(mActivity, SecuritySettingActivity.class);
+                    intent.putExtra("payPwdStatus", userInfo.getPayPwdStatus());
+                    startActivity(intent);
+                }
+
                 break;
             //帮助中心
             case R.id.frame_setting_helpcenter:
@@ -252,6 +260,29 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
                 break;
         }
+    }
+
+    private void initTipDialog() {
+
+        if (dialogTips == null) {
+            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
+                @Override
+                public void positionBtnClick() {
+                    Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
+                    intent_phone.putExtra("isModifyPhone", true);
+                    startActivity(intent_phone);
+                }
+
+                @Override
+                public void negativeBtnClick() {
+
+                }
+            };
+            dialogTips.setNegative(View.VISIBLE);
+            dialogTips.setRemarks("     是否修改手机号码？");
+            dialogTips.setNegative("取消");
+        }
+        dialogTips.show();
     }
 
     //退出账号

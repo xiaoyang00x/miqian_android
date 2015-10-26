@@ -46,7 +46,6 @@ public class SetBankActivity extends BaseActivity {
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity,error);
-
             }
         });
 
@@ -59,6 +58,7 @@ public class SetBankActivity extends BaseActivity {
             isChooseCity = true;
             city = bankCard.getCity();
             province = bankCard.getProvince();
+            branch = bankCard.getBankOpenName();
         }
         if (!TextUtils.isEmpty(bankCard.getBankOpenName())){
             textBranch.setText(bankCard.getBankOpenName());

@@ -138,7 +138,20 @@ public class RegisterActivity extends BaseActivity {
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
                 if (!TextUtils.isEmpty(captcha)) {
-                    summit(captcha, invite, password);
+                    if (captcha.length() < 6) {
+
+                        Uihelper.showToast(mActivity, R.string.capthcha_num);
+                    } else {
+                              if (TextUtils.isEmpty(invite)){
+                                  summit(captcha, invite, password);
+                              }else {
+                                  if (invite.length()<4){
+                                      Uihelper.showToast(mActivity,R.string.invite_num);
+                                  }else {
+                                      summit(captcha, invite, password);
+                                  }
+                              }
+                    }
 
                 } else {
                     Uihelper.showToast(this, R.string.tip_captcha);

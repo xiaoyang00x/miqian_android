@@ -103,7 +103,7 @@
             android:layout_toRightOf="@+id/tv_register"
             android:digits="@string/match"
             android:hint="登录密码6~16位数字字母组合"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:maxLength="16"/>
 
     </LinearLayout>
@@ -134,8 +134,9 @@
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@+id/tv_register"
             android:digits="@string/match"
+            android:maxLength="5"
             android:hint="邀请码(非必填)"
-            android:inputType="number"/>
+            android:inputType="text"/>
 
     </LinearLayout>
 
