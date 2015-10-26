@@ -173,7 +173,7 @@ public class RolloutActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                Uihelper.showToast(mActivity, error+"绑定支行失败");
+                Uihelper.showToast(mActivity, error + "绑定支行失败");
 
             }
         }, cardNum, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
@@ -302,12 +302,12 @@ public class RolloutActivity extends BaseActivity {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额超限");
             dialogTips.show();
-            return ;
+            return;
         } else if (moneyFloat < 10) {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额不能小于10元");
             dialogTips.show();
-            return ;
+            return;
         } else {
             //提现预处理
             HttpRequest.withdrawPreprocess(mActivity, new ICallback<WithDrawResult>() {
@@ -327,18 +327,18 @@ public class RolloutActivity extends BaseActivity {
                         dialogTipsReput.setRemarks(tip.toString());
                         dialogTipsReput.setNegative("取消");
                         dialogTipsReput.show();
-                    }else {
+                    } else {
                         rollOutHttp();
                     }
 
                 }
+
                 @Override
                 public void onFail(String error) {
                     Uihelper.showToast(mActivity, error);
 
                 }
             }, moneyString);
-
 
 
         }

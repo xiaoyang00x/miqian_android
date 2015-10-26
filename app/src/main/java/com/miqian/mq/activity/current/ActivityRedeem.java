@@ -23,6 +23,8 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.WFYTitle;
 
+import java.math.BigDecimal;
+
 /**
  * 赎回
  * Created by TuLiangTan on 2015/10/9.
@@ -105,13 +107,16 @@ public class ActivityRedeem extends BaseActivity {
         money = editMoney.getText().toString();
         if (!TextUtils.isEmpty(money)) {
 
-            float moneyFloat = Float.parseFloat(money);
+            BigDecimal moneyCurrent = new BigDecimal(money);
+
             if (TextUtils.isEmpty(capital)) {
                 return;
             }
-            float totalMoneyFloat = Float.parseFloat(capital);
-            if (moneyFloat > totalMoneyFloat) {
+            BigDecimal moneyTotal = new BigDecimal(capital);
+            if (moneyCurrent.compareTo(moneyTotal) > 0) {
                 Uihelper.showToast(mActivity, "超出可赎回的金额");
+            } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
+                Uihelper.showToast(mActivity, "金额不能小于0.01");
             } else {
                 if (userInfo.getPayPwdStatus() != null) {
                     int state = Integer.parseInt(userInfo.getPayPwdStatus());
@@ -221,7 +226,7 @@ public class ActivityRedeem extends BaseActivity {
                     } else {
                         intent.putExtra("state", 0);
                         intent.putExtra("errormessage", result.getMessage());
-                        intent.putExtra("capital",money);
+                        intent.putExtra("capital", money);
                     }
                     startActivity(intent);
                     finish();
