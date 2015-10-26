@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="30dp"
             android:src="@drawable/rollin_status_success"/>
 
         <TextView
@@ -23,8 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="@dimen/margin_top"
-            android:textSize="22sp"
+            android:paddingTop="15dp"
+            android:textSize="@dimen/mq_font2"
+            android:textColor="@color/mq_b1"
             android:text="充值成功"/>
 
         <TextView
@@ -47,12 +48,12 @@
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
-            style="@style/text_black_item"
+            style="@style/f3_B1"
             android:text="充值金额" />
 
         <TextView
             android:id="@+id/text_order_money"
-            style="@style/text_black_item"
+            style="@style/f3_B1"
             android:layout_alignParentRight="true"
             android:text="--" />
 
@@ -69,13 +70,12 @@
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
-            style="@style/text_black_item"
+            style="@style/f3_B1"
             android:text="业务编号" />
 
         <TextView
             android:id="@+id/text_order_no"
-            style="@style/text_black_item"
-            android:textSize="14sp"
+            style="@style/f3_B1"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 
@@ -98,7 +98,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginTop="15dp"
         android:orientation="vertical">
 
         <TextView
