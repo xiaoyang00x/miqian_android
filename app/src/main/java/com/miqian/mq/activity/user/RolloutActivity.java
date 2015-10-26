@@ -317,7 +317,7 @@ public class RolloutActivity extends BaseActivity {
                     StringBuilder tip = new StringBuilder();
                     for (WithdrawItem item : data) {
                         if (!"0".equals(item.getFeeAmt())) {
-                            tip.append("；" + item.getName()).append(",费用" + item.getFeeAmt() + "元");
+                            tip.append("；" + item.getName()).append("费用" + item.getFeeAmt() + "元");
                         }
                     }
                     if (!TextUtils.isEmpty(tip)) {
@@ -325,6 +325,7 @@ public class RolloutActivity extends BaseActivity {
                         initTipDialog(1);
                         dialogTipsReput.setNegative(View.VISIBLE);
                         dialogTipsReput.setRemarks(tip.toString());
+                        dialogTipsReput.setNegative("取消");
                         dialogTipsReput.show();
                     }else {
                         rollOutHttp();

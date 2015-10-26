@@ -14,9 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-
-        <View style="@style/item_divider" />
-
         <RelativeLayout
             android:id="@+id/frame_bank_province"
             style="@style/listItem">
