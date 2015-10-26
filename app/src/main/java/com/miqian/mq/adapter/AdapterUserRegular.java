@@ -118,8 +118,8 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((HeaderViewHolder) holder).frameCapital.setVisibility(View.GONE);
             } else {
                 ((HeaderViewHolder) holder).frameCapital.setVisibility(View.VISIBLE);
-                ((HeaderViewHolder) holder).textCapital.setText("待收本金：" + mReg.getRegTotalIncome());
-                ((HeaderViewHolder) holder).textEarning.setText("待收收益：" + mReg.getRegTotalAmt());
+                ((HeaderViewHolder) holder).textCapital.setText("待收本金：" + mReg.getRegTotalAmt());
+                ((HeaderViewHolder) holder).textEarning.setText("待收收益：" + mReg.getRegTotalIncome());
             }
         }
     }
