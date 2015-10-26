@@ -2,19 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <com.handmark.pulltorefresh.library.PullToRefreshSwipeMenuListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-         android:divider="#C7C7BB"
-        android:dividerHeight="1px"
-        android:scrollbars=""
-        android:headerDividersEnabled="false"
         android:layout_marginTop="20dp"
-        app:ptrAnimationStyle="flip"
-        >
-    </com.handmark.pulltorefresh.library.PullToRefreshSwipeMenuListView>
+        android:divider="@null"
+        android:headerDividersEnabled="false"
+        android:scrollbars="none"
+        app:ptrAnimationStyle="flip"/>
 
 </RelativeLayout>

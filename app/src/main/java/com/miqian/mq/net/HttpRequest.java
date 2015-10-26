@@ -947,16 +947,13 @@ public class HttpRequest {
     /**
      * 获取资金记录
      */
-    public static void getCapitalRecords(Context context, final ICallback<CapitalRecordResult> callback, String pageNo, String pageSize, String startDate, String endDate, String operateType) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+    public static void getCapitalRecords(Context context, final ICallback<CapitalRecordResult> callback, String pageNo, String pageSize, String operateType) {
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
-        mList.add(new Param("startDate", startDate));
+        mList.add(new Param("startDate", ""));
         mList.add(new Param("pageSize", pageSize));
-        mList.add(new Param("endDate", endDate));
+        mList.add(new Param("endDate", ""));
         mList.add(new Param("operateType", operateType));
 
         new MyAsyncTask(context, Urls.recordsCapital, mList, new ICallback<String>() {
@@ -1137,14 +1134,11 @@ public class HttpRequest {
     }
 
     //我的促销接口，包括红包，拾财券等
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String promTypCd, String sta, String pageNum, String pageSize) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String promTypCd, String pageNum, String pageSize) {
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("promTypCd", promTypCd));
-        mList.add(new Param("sta", sta));
+        mList.add(new Param("sta", ""));
         mList.add(new Param("pageNum", pageNum));
         mList.add(new Param("pageSize", pageSize));
         new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {

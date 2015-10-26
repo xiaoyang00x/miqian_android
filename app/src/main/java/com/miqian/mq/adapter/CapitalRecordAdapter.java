@@ -20,7 +20,6 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
 
     public CapitalRecordAdapter(List<CapitalItem> list) {
         this.list = list;
-
     }
 
     private int maxValue = 999;//最大的值
@@ -34,6 +33,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
             return VIEW_ITEM;
         }
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -52,7 +52,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
-        if ((vh instanceof ItemVH)){
+        if ((vh instanceof ItemVH)) {
             if (list.get(position) != null) {
                 CapitalItem item = list.get(position);
                 ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
@@ -64,7 +64,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
         } else if (vh instanceof ProgressViewHolder) {
             if (position >= maxValue) {
                 ((ProgressViewHolder) vh).progressBar.setVisibility(View.GONE);
-                if (maxValue <=15) {
+                if (maxValue <= 15) {
                     ((ProgressViewHolder) vh).textLoading.setVisibility(View.GONE);
                 } else {
                     ((ProgressViewHolder) vh).textLoading.setText("没有更多");
@@ -76,7 +76,6 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
         }
 
 
-
     }
 
     public void setMaxItem(int value) {
@@ -85,7 +84,7 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if (list != null) {
+        if (list != null && list.size() != 0) {
             return list.size() + 1;//+1 尾部：加载更多
         }
         return 0;
@@ -101,21 +100,6 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
             tvMoney = (TextView) v.findViewById(R.id.money);
             tvTime = (TextView) v.findViewById(R.id.time_rem);
         }
-    }
-
-    private OnLoadMoreListener onLoadMoreListener;
-    private boolean loading;
-
-    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-        this.onLoadMoreListener = onLoadMoreListener;
-    }
-
-    public void setLoaded() {
-        loading = false;
-    }
-
-    public static interface OnLoadMoreListener {
-        void onLoadMore();
     }
 
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {

@@ -16,7 +16,6 @@
         <Button
             android:id="@+id/bt_confirm"
             style="@style/click_btn"
-            android:layout_height="@dimen/edit_item"
             android:text="确定" />
     </LinearLayout>
 

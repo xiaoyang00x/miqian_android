@@ -14,6 +14,8 @@ import com.miqian.mq.views.WFYTitle;
 
 public class SecuritySettingActivity extends BaseActivity implements OnClickListener {
 
+    private String payPwdStatus;
+
     @Override
     public void obtainData() {
         // TODO Auto-generated method stub
@@ -24,6 +26,7 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
     public void initView() {
 
         Intent intent = getIntent();
+        payPwdStatus = intent.getStringExtra("payPwdStatus");
 
         findViewById(R.id.password_login).setOnClickListener(this);
         findViewById(R.id.password_transaction).setOnClickListener(this);
@@ -47,11 +50,13 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
         switch (v.getId()) {
             case R.id.password_login:
 
-                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW,true);
+                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, true);
 
                 break;
             case R.id.password_transaction:
-              startActivity(new Intent(mActivity,TradePsCaptchaActivity.class));
+                Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
+                intent.putExtra("payPwdStatus", payPwdStatus);
+                startActivity(intent);
                 break;
 
             default:

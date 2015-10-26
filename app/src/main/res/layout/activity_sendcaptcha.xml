@@ -50,7 +50,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:text="验证码发送至 1365665985"
-            android:textColor="@color/miqian_black"
+            android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font2" />
 
         ImageView
@@ -112,7 +112,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_top"
         android:layout_marginLeft="@dimen/margin_left_right"
         android:layout_marginRight="@dimen/margin_left_right"
@@ -120,7 +120,6 @@
 
         <Button
             android:id="@+id/btn_next"
-            android:layout_height="@dimen/listitem_height"
             style="@style/click_btn"
             android:onClick="btn_click"
             android:text="下一步" />

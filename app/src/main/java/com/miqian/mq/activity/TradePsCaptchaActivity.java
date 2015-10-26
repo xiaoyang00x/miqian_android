@@ -67,6 +67,13 @@ public class TradePsCaptchaActivity extends BaseActivity {
                 findViewById(R.id.view_1).setVisibility(View.GONE);
                 mTitle.setTitleText("更换手机号");
             }
+
+             String  payPwdStatus=intent.getStringExtra("payPwdStatus");
+            if (!TextUtils.isEmpty(payPwdStatus)){
+                if ("0".equals(payPwdStatus)){
+                    mTitle.setTitleText("设置交易密码");
+                }
+            }
         }
 
 
@@ -127,7 +134,11 @@ public class TradePsCaptchaActivity extends BaseActivity {
         if (isModifyPhone) {
             if (TextUtils.isEmpty(captcha)) {
                 Uihelper.showToast(this, R.string.tip_captcha);
-                return;
+            } else {
+                if (captcha.length() < 6) {
+                    Uihelper.showToast(mActivity, R.string.capthcha_num);
+                    return;
+                }
             }
             HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
                 @Override
@@ -146,20 +157,28 @@ public class TradePsCaptchaActivity extends BaseActivity {
             }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
 
         } else {
+
             String idCard = mEtRealname.getText().toString();
-            if (TextUtils.isEmpty(idCard)) {
-                Uihelper.showToast(mActivity, "身份证号码不能为空");
-                return;
-            }
-            if (TextUtils.isEmpty(captcha)) {
-                Uihelper.showToast(this, R.string.tip_captcha);
-                return;
-            }
-            if (idCard.matches(FormatUtil.PATTERN_IDCARD)) {
-                summit(idCard, captcha);
+
+            if (!TextUtils.isEmpty(idCard)) {
+                if (idCard.matches(FormatUtil.PATTERN_IDCARD)) {
+                    if (TextUtils.isEmpty(captcha)) {
+                        Uihelper.showToast(this, R.string.tip_captcha);
+                    } else {
+                        if (captcha.length() < 6) {
+                            Uihelper.showToast(mActivity, R.string.capthcha_num);
+                        } else {
+                            summit(idCard, captcha);
+                        }
+                    }
+                } else {
+                    Uihelper.showToast(mActivity, "身份证号码不正确");
+                }
             } else {
-                Uihelper.showToast(mActivity, "身份证号码不正确");
+                Uihelper.showToast(mActivity, "身份证号码不能为空");
             }
+
+
         }
 
     }

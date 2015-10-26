@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +20,15 @@ import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
-import com.miqian.mq.activity.user.UserRegularActivity;
+import com.miqian.mq.activity.current.ActivityUserCurrent;
+import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RedPaperActivity;
-import com.miqian.mq.activity.user.RolloutActivity;
-import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
-import com.miqian.mq.activity.current.ActivityUserCurrent;
+import com.miqian.mq.activity.user.RolloutActivity;
+import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -42,6 +41,8 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.ProgressDialogView;
+
+import java.math.BigDecimal;
 
 /**
  * Description:
@@ -83,9 +84,9 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
         int message = Uihelper.getMessageCount(4, getActivity());
         if (message > 0) {
-            btn_message.setImageResource(R.drawable.icon_hasmessage);
+            btn_message.setImageResource(R.drawable.btn_message);
         } else {
-            btn_message.setImageResource(R.drawable.account_message);
+            btn_message.setImageResource(R.drawable.btn_message_none);
         }
 
         //已登录，显示我的界面
@@ -210,7 +211,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         btn_message.setOnClickListener(this);
 
         ImageButton btn_setting = (ImageButton) view.findViewById(R.id.bt_right);
-        btn_setting.setImageResource(R.drawable.account_setting);
+        btn_setting.setImageResource(R.drawable.btn_setting);
         btn_setting.setOnClickListener(this);
 
         //*********已登录的的Ui***************
@@ -339,14 +340,12 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
             case R.id.btn_rollout:
                 String balance = userInfo.getBalance();
                 if (!TextUtils.isEmpty(balance)) {
-                    float float_banlance = Float.parseFloat(balance);
-                    if (float_banlance > 0f) {
+                    if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
                         Intent intent = new Intent(getActivity(), RolloutActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("userInfo", userInfo);
                         intent.putExtras(bundle);
                         startActivity(intent);
-
                     } else {
                         Uihelper.showToast(getActivity(), "账户余额为0，无法提现");
                     }
@@ -422,9 +421,9 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                 // 更新数据
                 int message = Uihelper.getMessageCount(4, getActivity());
                 if (message > 0) {
-                    btn_message.setImageResource(R.drawable.icon_hasmessage);
+                    btn_message.setImageResource(R.drawable.btn_message);
                 } else {
-                    btn_message.setImageResource(R.drawable.account_message);
+                    btn_message.setImageResource(R.drawable.btn_message_none);
                 }
                 break;
         }

@@ -14,9 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-
-        <View style="@style/item_divider" />
-
         <RelativeLayout
             android:id="@+id/frame_bank_province"
             style="@style/listItem">
@@ -87,7 +84,6 @@
         <Button
             android:id="@+id/btn_next"
             style="@style/click_btn"
-            android:layout_height="@dimen/listitem_height"
             android:onClick="btn_click"
             android:text="确定" />
     </LinearLayout>

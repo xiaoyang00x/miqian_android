@@ -11,6 +11,8 @@
         android:background="@color/white"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:id="@+id/linearLayout">
 
         <EditText
@@ -20,6 +22,7 @@
             android:layout_centerVertical="true"
             android:hint="请输入或选择银行"
             >
+
 
         </EditText>
     </LinearLayout>

@@ -121,7 +121,6 @@ public abstract class CustomDialog extends Dialog {
 			titleText.setText("提示");
 			editFirst.setVisibility(View.GONE);
 			editSecond.setVisibility(View.GONE);
-			remarksText.setTextSize(20);
 			btNegative.setText("重新输入");
 			btNegative.setVisibility(View.GONE);
 			break;

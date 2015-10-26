@@ -58,7 +58,6 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
         province = intent.getStringExtra("province");
 
         et_bankbranch = (EditText) findViewById(R.id.et_bankbranch);
-        et_bankbranch.setFocusable(false);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         items = new ArrayList<>();
         setView();

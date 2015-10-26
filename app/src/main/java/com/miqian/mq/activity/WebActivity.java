@@ -21,6 +21,9 @@ import android.widget.ProgressBar;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.RegisterActivity;
+import com.miqian.mq.net.MyAsyncTask;
+import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WebChromeClientEx;
 
@@ -36,6 +39,10 @@ public class WebActivity extends BaseFragmentActivity {
     private ProgressBar progressBar;
 
     public static void startActivity(Context context, String url) {
+        if (MobileOS.getNetworkType(context) == -1) {
+            Uihelper.showToast(context, MyAsyncTask.NETWORK_ERROR);
+            return;
+        }
         context.startActivity(getIntent(context, url));
     }
 

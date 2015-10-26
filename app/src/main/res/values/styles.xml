@@ -56,7 +56,7 @@
 
     <style name="text_black_item" parent="WrapContent">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/miqian_black</item>
+        <item name="android:textColor">@color/mq_b1</item>
         <item name="android:textSize">@dimen/mq_font2</item>
     </style>
 
@@ -93,7 +93,7 @@
         <item name="android:layout_height">@dimen/edit_item</item>
         <item name="android:background">@drawable/trans</item>
         <item name="android:textSize">@dimen/mq_font2</item>
-        <item name="android:textColor">@color/miqian_black</item>
+        <item name="android:textColor">@color/mq_b1</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:textColorHint">@color/miqian_gray</item>
         <item name="android:ems">10</item>
@@ -117,7 +117,7 @@
 
     <style name="listItem_tv1" parent="WrapContent">
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:textColor">@color/miqian_black</item>
+        <item name="android:textColor">@color/mq_b1</item>
         <item name="android:textSize">@dimen/mq_font2</item>
     </style>
 
@@ -133,6 +133,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/mq_font1</item>
         <item name="android:background">@drawable/btn_red</item>
+        <item name="android:layout_height">@dimen/bt_height</item>
     </style>
 
     <!--定期赚item view-->

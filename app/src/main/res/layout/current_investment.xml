@@ -129,7 +129,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edit_item"
-                    android:layout_marginTop="@dimen/margin_top"
+                    android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:minHeight="40dp"
                     android:paddingLeft="@dimen/margin_left_right"
@@ -180,7 +180,6 @@
                     <Button
                         android:id="@+id/bt_pay"
                         style="@style/click_btn"
-                        android:layout_height="@dimen/edit_item"
                         android:text="支付" />
                 </LinearLayout>
 

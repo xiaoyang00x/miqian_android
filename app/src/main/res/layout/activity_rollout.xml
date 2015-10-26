@@ -182,7 +182,6 @@
             <Button
                 android:id="@+id/bt_rollout"
                 style="@style/click_btn"
-                android:layout_height="@dimen/listitem_height"
                 android:onClick="btn_click"
                 android:text="确认转出" />
         </LinearLayout>

@@ -10,10 +10,10 @@
     <dimen name="margin_top">20dp</dimen>
 
     // 页面上下左右边距14dp
-    <dimen name="margin_left_right">14dp</dimen>
-    <dimen name="padding_left_right">14dp</dimen>
+    <dimen name="margin_left_right">15dp</dimen>
+    <dimen name="padding_left_right">15dp</dimen>
 
-    //输入框,确认按钮的高度
+    //输入框
     <dimen name="edit_item">45dp</dimen>
 
     //按钮的高度
@@ -51,6 +51,7 @@
     <dimen name="mq_font8">36sp</dimen>
     <dimen name="mq_font9">70sp</dimen>
     <dimen name="mq_font10">9sp</dimen>
+    <dimen name="mq_font11">44sp</dimen>
 
     <dimen name="divider_height">4dp</dimen>
 </resources>

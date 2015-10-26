@@ -58,6 +58,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private MyHandler mHandler;
     private UserInfo userInfo;
+    private PayOrder payOrder;
 
     private String money;
     private String bankNumber;
@@ -184,8 +185,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onSucceed(PayOrderResult payOrderResult) {
                 mWaitingDialog.dismiss();
-                PayOrder newPayOrder = constructPreCardPayOrder(payOrderResult.getData());
-                String content4Pay = JSON.toJSONString(newPayOrder);
+                payOrder = constructPreCardPayOrder(payOrderResult.getData());
+                String content4Pay = JSON.toJSONString(payOrder);
                 Log.e("", "content4Pay---------- : " + content4Pay);
                 MobileSecurePayer msp = new MobileSecurePayer();
                 msp.pay(content4Pay, mHandler, Constants.RQF_PAY, mActivity, false);
@@ -263,6 +264,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                         if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
                             checkOrder(orderNo);
                         }
+//                    } else if (Constants.RET_CODE_LIMIT.equals(retCode)) {//签约失败，余额不足，银行各种限制
+//                        //700314
+//                        Uihelper.showToast(mActivity, "单笔限额" + payOrder.getSingleAmtLimit() + "元");
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {

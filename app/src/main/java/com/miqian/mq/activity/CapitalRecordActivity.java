@@ -55,7 +55,7 @@ public class CapitalRecordActivity extends BaseActivity {
     TextView preSelected_t;
     String preTxt;
     RelativeLayout filetr_container;
-    RelativeLayout relaHide;
+    private RelativeLayout frameHide;
 
     private int pageNo = 1;
     private String pageSize = "20";
@@ -93,7 +93,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 Uihelper.showToast(CapitalRecordActivity.this, error);
                 showErrorView();
             }
-        }, String.valueOf(pageNo), pageSize, "", "", mType);
+        }, String.valueOf(pageNo), pageSize, mType);
     }
 
 
@@ -109,13 +109,14 @@ public class CapitalRecordActivity extends BaseActivity {
         animShow = AnimationUtils.loadAnimation(this, R.anim.view_show);
         animHide = AnimationUtils.loadAnimation(this, R.anim.view_hide);
         filetr_container = (RelativeLayout) findViewById(R.id.filter_container);
-        relaHide = (RelativeLayout) findViewById(R.id.rela_hide);
-        relaHide.setOnClickListener(new View.OnClickListener() {
+        frameHide = (RelativeLayout) findViewById(R.id.frame_hide);
+        frameHide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (filetr_container.getVisibility() == View.VISIBLE) {
+                if (filetr_container.isShown() || frameHide.isShown()) {
                     filetr_container.startAnimation(animHide);
                     filetr_container.setVisibility(View.GONE);
+                    frameHide.setVisibility(View.GONE);
                 }
             }
         });
@@ -165,16 +166,14 @@ public class CapitalRecordActivity extends BaseActivity {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
-                if (lastVisibleItem >= totalItemCount - 2) {
-
+                if (lastVisibleItem >= totalItemCount - 3) {
                     loadMore();
                 }
             }
         });
 
         mViewnoresult_data = findViewById(R.id.frame_no_recorddata);
-        findViewById(R.id.tv_refreshdata
-        ).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_refreshdata).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -186,7 +185,6 @@ public class CapitalRecordActivity extends BaseActivity {
     }
 
     private void loadMore() {
-
         if (!isLoading) {
             if (list.size() >= page.getCount()) {
                 return;
@@ -198,25 +196,20 @@ public class CapitalRecordActivity extends BaseActivity {
 
                 @Override
                 public void onSucceed(CapitalRecordResult result) {
-                    end();
-                    CapitalRecordResult record = result;
-                    if (record.getData() != null) {
-                        if (list != null && list != null && list.size() > 0) {
-                            list.addAll(record.getData().getAssetRecord());
-                            refreshView();
-                        }
-
-                        isLoading = false;
-                    } else {
-                        showEmptyView();
+                    List<CapitalItem> tempList = result.getData().getAssetRecord();
+                    if (list != null && tempList != null && tempList.size() > 0) {
+                        list.addAll(tempList);
+                        adapter.notifyItemInserted(list.size());
                     }
+                    isLoading = false;
                 }
 
                 @Override
                 public void onFail(String error) {
                     isLoading = false;
+                    Uihelper.showToast(mActivity, error);
                 }
-            }, String.valueOf(pageNo), pageSize, "", "", mType);
+            }, String.valueOf(pageNo), pageSize, mType);
 
         }
     }
@@ -233,17 +226,23 @@ public class CapitalRecordActivity extends BaseActivity {
     @Override
     public void initTitle(WFYTitle topLayout) {
         topLayout.setTitleText("资金记录");
-        topLayout.addRightImage(R.drawable.record_select);
+        topLayout.addRightImage(R.drawable.btn_capital_record);
         topLayout.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 showContentView();
-                if (filetr_container.getVisibility() == View.VISIBLE) {
+                if (filetr_container.isShown()) {
+                    if (list == null || list.size() == 0) {
+                        showEmptyView();
+                    }
                     filetr_container.setVisibility(View.GONE);
                     filetr_container.startAnimation(animHide);
+                    frameHide.setVisibility(View.GONE);
                 } else {
                     filetr_container.startAnimation(animShow);
                     filetr_container.setVisibility(View.VISIBLE);
+                    frameHide.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -370,9 +369,7 @@ public class CapitalRecordActivity extends BaseActivity {
         }
         filetr_container.startAnimation(animHide);
         filetr_container.setVisibility(View.GONE);
-
-        //todo 到网络获取数据。因为该界面的信息是分页的。
-
+        frameHide.setVisibility(View.GONE);
         obtainData();
     }
 

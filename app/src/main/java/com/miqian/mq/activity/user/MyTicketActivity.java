@@ -37,6 +37,7 @@ public class MyTicketActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
+        pageNo = 1;
         mWaitingDialog.show();
         HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
 
@@ -45,7 +46,8 @@ public class MyTicketActivity extends BaseActivity {
             public void onSucceed(RedPaperData result) {
                 mWaitingDialog.dismiss();
                 Redpaper redpaper = result.getData();
-                page = result.getData().getPage();
+                promList = redpaper.getCustPromotion();
+                page = redpaper.getPage();
                 if (redpaper != null) {
                     if (promList != null && promList.size() > 0) {
                         refreshView();
@@ -60,9 +62,8 @@ public class MyTicketActivity extends BaseActivity {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
-
             }
-        }, "SC", "", "1", pageSize);
+        }, "SC", String.valueOf(pageNo), pageSize);
 
     }
 
@@ -73,7 +74,7 @@ public class MyTicketActivity extends BaseActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).marginResId(R.dimen.margin_left_right).build());
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).build());
         recyclerView.setHasFixedSize(true);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -81,7 +82,7 @@ public class MyTicketActivity extends BaseActivity {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
-                if (lastVisibleItem >= totalItemCount - 2) {
+                if (lastVisibleItem >= totalItemCount - 3) {
 
                     loadMore();
                 }
@@ -101,15 +102,12 @@ public class MyTicketActivity extends BaseActivity {
 
                 @Override
                 public void onSucceed(RedPaperData result) {
-                    Redpaper redpaper = result.getData();
-                    page = result.getData().getPage();
-                    if (redpaper != null) {
-                        if (promList != null && promList != null && promList.size() > 0) {
-                            promList.addAll(redpaper.getCustPromotion());
-                            adapterMyTicket.notifyItemInserted(promList.size());
-                        }
-                        isLoading = false;
+                    List<CustPromotion> tempList = result.getData().getCustPromotion();
+                    if (promList != null && tempList != null && tempList.size() > 0) {
+                        promList.addAll(tempList);
+                        adapterMyTicket.notifyItemInserted(promList.size());
                     }
+                    isLoading = false;
                 }
 
                 @Override
@@ -117,7 +115,7 @@ public class MyTicketActivity extends BaseActivity {
                     isLoading = false;
 
                 }
-            }, "SC", "", String.valueOf(pageNo), pageSize);
+            }, "SC", String.valueOf(pageNo), pageSize);
         }
     }
 

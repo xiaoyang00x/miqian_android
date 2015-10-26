@@ -53,7 +53,7 @@
             android:layout_toRightOf="@+id/tv_register"
             android:digits="0123456789Xx"
             android:hint="请输入您的身份证号"
-            android:inputType="number"
+            android:inputType="text"
             android:maxLength="18" />
     </RelativeLayout>
 
@@ -67,7 +67,6 @@
         <Button
             android:id="@+id/bt_realname"
             style="@style/click_btn"
-            android:layout_height="@dimen/edit_item"
             android:text="认证" />
     </LinearLayout>
 </LinearLayout>

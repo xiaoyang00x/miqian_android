@@ -57,6 +57,7 @@ public class ProjectMatchActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
+        pageNo = 1;
         mWaitingDialog.show();
         HttpRequest.projectMatch(mActivity, new ICallback<ProjectInfoResult>() {
             @Override
@@ -92,9 +93,7 @@ public class ProjectMatchActivity extends BaseActivity {
                 public void onSucceed(ProjectInfoResult result) {
                     List<ProjectInfo> tempList = result.getData().getMatchsubList();
                     if (mList != null && tempList != null && tempList.size() > 0) {
-                        for (ProjectInfo projectInfo : tempList) {
-                            mList.add(projectInfo);
-                        }
+                        mList.addAll(tempList);
                         mAdapter.notifyItemInserted(mList.size());
                     }
                     isLoading = false;
@@ -123,7 +122,7 @@ public class ProjectMatchActivity extends BaseActivity {
 
                 int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
-                if (lastVisibleItem >= totalItemCount - 2) {
+                if (lastVisibleItem >= totalItemCount - 3) {
                     loadMore();
                 }
             }

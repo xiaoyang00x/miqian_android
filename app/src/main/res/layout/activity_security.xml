@@ -22,7 +22,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:text="登录密码"
-                android:textColor="@color/miqian_black"
+                android:textColor="@color/mq_b1"
                 android:textSize="@dimen/mq_font2" />
 
             <ImageView
@@ -49,7 +49,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:text="交易密码"
-                android:textColor="@color/miqian_black"
+                android:textColor="@color/mq_b1"
                 android:textSize="@dimen/mq_font2" />
 
             <ImageView

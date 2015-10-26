@@ -72,15 +72,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             ((ViewHolder) holder).bdName.setText(regInvest.getBdNm());
             if (regInvest.getBearingStatus().equals("Y")) {
                 ((ViewHolder) holder).textCapital.setText("投资本金");
-                if (regInvest.getProjectState().equals("3")) {
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_over);
-                } else if (regInvest.getProjectState().equals("2")) {
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_gray);
-                } else {
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
-                }
+                ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 ((ViewHolder) holder).frameEarning.setVisibility(View.GONE);
             } else {
                 ((ViewHolder) holder).textCapital.setText("待收本金");
@@ -126,8 +118,8 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((HeaderViewHolder) holder).frameCapital.setVisibility(View.GONE);
             } else {
                 ((HeaderViewHolder) holder).frameCapital.setVisibility(View.VISIBLE);
-                ((HeaderViewHolder) holder).textCapital.setText("待收本金：" + mReg.getRegTotalIncome());
-                ((HeaderViewHolder) holder).textEarning.setText("待收收益：" + mReg.getRegTotalAmt());
+                ((HeaderViewHolder) holder).textCapital.setText("待收本金：" + mReg.getRegTotalAmt());
+                ((HeaderViewHolder) holder).textEarning.setText("待收收益：" + mReg.getRegTotalIncome());
             }
         }
     }

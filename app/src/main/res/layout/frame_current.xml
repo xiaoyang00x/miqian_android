@@ -92,7 +92,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
-                                    android:text="已认购次数"
+                                    android:text="认购次数"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/mq_font3" />
 
@@ -125,7 +125,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
-                                    android:text="累计投资数(万元)"
+                                    android:text="累计投资(万元)"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/mq_font3" />
 
@@ -227,7 +227,6 @@
                         <Button
                             android:id="@+id/bt_investment"
                             style="@style/click_btn"
-                            android:layout_height="@dimen/bt_height"
                             android:layout_marginBottom="8dp"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"

@@ -126,7 +126,7 @@ public class WFYTitle extends RelativeLayout {
 
 	private void addLeftImage(int leftImage) {
 		ivLeft = new ImageView(mContext);
-		LayoutParams lpLeft = new LayoutParams(dp2px(mContext, 60), LayoutParams.MATCH_PARENT);
+		LayoutParams lpLeft = new LayoutParams(dp2px(mContext, 50), LayoutParams.MATCH_PARENT);
 		lpLeft.addRule(RelativeLayout.CENTER_VERTICAL);
 		ivLeft.setLayoutParams(lpLeft);
 		ivLeft.setImageResource(leftImage);
@@ -147,7 +147,7 @@ public class WFYTitle extends RelativeLayout {
 		tvLeft.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 		tvLeft.setTypeface(Typeface.MONOSPACE);
 		tvLeft.setLines(1);
-		tvLeft.setPadding(dp2px(mContext, 8), 0, 0, 0);
+		tvLeft.setPadding(dp2px(mContext, 15), 0, 0, 0);
 		addView(tvLeft);
 	}
 
@@ -162,7 +162,7 @@ public class WFYTitle extends RelativeLayout {
 		tvRight.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 		tvRight.setTypeface(Typeface.MONOSPACE);
 		tvRight.setLines(1);
-		tvRight.setPadding(0, 0, dp2px(mContext, 8), 0);
+		tvRight.setPadding(0, 0, dp2px(mContext, 15), 0);
 		addView(tvRight);
 	}
 	
