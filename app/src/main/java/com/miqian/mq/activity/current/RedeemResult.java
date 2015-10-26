@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,6 +29,7 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
     private TextView textCapital;
     private TextView tradeNumber;
     private TextView textTime;
+    private TextView textTel;
     private Button btBackHome;
     private Button btBackUser;
     private LinearLayout frameSuccess;
@@ -68,8 +70,10 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
         textInterest = (TextView) findViewById(R.id.text_interest);
         tradeNumber = (TextView) findViewById(R.id.trade_number);
         textTime = (TextView) findViewById(R.id.text_time);
+        textTel = (TextView) findViewById(R.id.text_tel);
         btBackHome = (Button) findViewById(R.id.bt_back_home);
         btBackUser = (Button) findViewById(R.id.bt_back_user);
+        textTel.setOnClickListener(this);
         btBackHome.setOnClickListener(this);
         btBackUser.setOnClickListener(this);
 
@@ -127,6 +131,9 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.text_tel:
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
+                break;
             case R.id.bt_back_home:
                 mActivity.finish();
                 ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_HOME,null);

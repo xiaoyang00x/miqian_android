@@ -1,5 +1,7 @@
 package com.miqian.mq.activity.user;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,8 @@ import com.miqian.mq.views.WFYTitle;
  */
 
 public class RollOutResultActivity extends BaseActivity implements View.OnClickListener {
+
+    private TextView textTel;
     private Button btBack;
     private TextView tvMoney, tvOrderNum, tvCardNum;
     private RollOut rollOut;
@@ -23,18 +27,18 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
     public void obtainData() {
 
         rollOut = (RollOut) getIntent().getSerializableExtra("rollOutResult");
-        if(rollOut==null){
+        if (rollOut == null) {
             finish();
         }
-        if (!TextUtils.isEmpty(rollOut.getMoneyOrder())){
+        if (!TextUtils.isEmpty(rollOut.getMoneyOrder())) {
             tvMoney.setText(rollOut.getMoneyOrder() + "元");
         }
-        String cardNum= rollOut.getCardNum();
-        if (!TextUtils.isEmpty(rollOut.getBankName())&&!TextUtils.isEmpty(cardNum)){
-            tvCardNum.setText("银行卡号："+rollOut.getBankName()+"（****"+cardNum.substring(cardNum.length() - 4, cardNum.length())+")");
+        String cardNum = rollOut.getCardNum();
+        if (!TextUtils.isEmpty(rollOut.getBankName()) && !TextUtils.isEmpty(cardNum)) {
+            tvCardNum.setText("银行卡号：" + rollOut.getBankName() + "（****" + cardNum.substring(cardNum.length() - 4, cardNum.length()) + ")");
         }
-        if (!TextUtils.isEmpty(rollOut.getOrderNo())){
-            tvOrderNum.setText("资金编号:"+rollOut.getOrderNo());
+        if (!TextUtils.isEmpty(rollOut.getOrderNo())) {
+            tvOrderNum.setText("资金编号：" + rollOut.getOrderNo());
         }
 
 
@@ -46,9 +50,11 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
         tvMoney = (TextView) findViewById(R.id.tv_money);
         tvOrderNum = (TextView) findViewById(R.id.tv_ordernum);
         tvCardNum = (TextView) findViewById(R.id.tv_cardnum);
+        textTel = (TextView) findViewById(R.id.text_tel);
 
         btBack = (Button) findViewById(R.id.bt_back);
         btBack.setOnClickListener(this);
+        textTel.setOnClickListener(this);
     }
 
     @Override
@@ -73,6 +79,9 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.bt_back:
                 finish();
+                break;
+            case R.id.text_tel:
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
                 break;
         }
 

@@ -3,7 +3,6 @@
 
   <!-- 颜色规范 -->
   <color name="miqian_gray">#c8c8c8</color>
-  <color name="miqian_black">#505050</color>
 
   <color name="base_background">#FAFAFA</color>
   <color name="white">#ffffff</color>

@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="30dp"
             android:src="@drawable/rollin_status_success" />
 
         <TextView
@@ -23,9 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="@dimen/margin_top"
+            android:paddingTop="10dp"
             android:text="提现成功受理"
-            android:textSize="22sp" />
+            android:textSize="@dimen/mq_font2"
+            android:textColor="@color/mq_b1"/>
 
         <TextView
             android:id="@+id/text_processing"
@@ -40,7 +41,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginTop="30dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/margin_left_right"
@@ -54,52 +55,50 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/text_black_item"
-                    android:text="提现金额 :" />
+                    style="@style/f3_B1"
+                    android:text="提现金额：" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/tv_money"
-                    style="@style/text_black_item"
-                    android:textColor="@color/mq_r1" />
+                    android:textSize="@dimen/mq_font3"
+                    android:singleLine="true"
+                    android:textColor="@color/mq_r1"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/text_black_item"
-                    android:layout_marginTop="10dp"
+                    style="@style/f3_B1"
                     android:text="资金到账：" />
 
                 <TextView
-                    style="@style/text_gray_item"
-                    android:layout_marginTop="10dp"
+                    style="@style/f3_B1"
                     android:text="预计两个工作日内" />
             </LinearLayout>
 
-
-
             <TextView
                 android:id="@+id/tv_cardnum"
-                style="@style/text_black_item"
-                android:layout_marginTop="10dp"
+                style="@style/f3_B1"
+                android:layout_marginTop="15dp"
                 android:text="银行卡号：" />
 
             <TextView
                 android:id="@+id/tv_ordernum"
-                style="@style/text_gray_item"
+                style="@style/f3_B1"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:singleLine="true"
-                android:ellipsize="end"
-                android:text="资金编号" />
-
+                android:text="资金编号："/>
 
         </LinearLayout>
 
@@ -111,20 +110,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginTop="15dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="如果遇到问题请拨打客服电话:" />
+            android:text="如有问题，请拨打客服电话"
+            android:textColor="@color/mq_b2"
+            android:textSize="@dimen/mq_font4" />
 
         <TextView
+            android:id="@+id/text_tel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="400-345-3434" />
+            android:text="400-6656-191"
+            android:textColor="@color/mq_bl2"
+            android:textSize="@dimen/mq_font4"/>
 
     </LinearLayout>
 
@@ -136,7 +140,9 @@
             android:id="@+id/bt_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/btn_order_result" />
     </RelativeLayout>
 
