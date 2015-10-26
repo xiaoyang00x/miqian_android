@@ -14,6 +14,7 @@ import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -129,6 +130,13 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initTitle(WFYTitle mTitle) {
         getmTitle().setTitleText("定期赚");
+        mTitle.setRightText("详情");
+        mTitle.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.startActivity(mActivity, Urls.web_regular + subjectId + "/3");
+            }
+        });
     }
 
     @Override

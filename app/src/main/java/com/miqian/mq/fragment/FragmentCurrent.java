@@ -19,6 +19,7 @@ import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
@@ -174,7 +175,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
                 break;
             case R.id.text_detail:
                 if (currentInfo != null) {
-                    WebActivity.startActivity(mContext, currentInfo.getWebViewUrl());
+                    WebActivity.startActivity(mContext, Urls.web_current);
                 }
                 break;
             default:

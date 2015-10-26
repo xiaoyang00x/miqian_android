@@ -15,6 +15,7 @@ import com.miqian.mq.entity.UserRegularDetail;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.RoundCornerProgressBar;
 import com.miqian.mq.views.WFYTitle;
@@ -50,6 +51,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private String investId;//投资产品id
     private String clearYn;//Y:已结息  N:未结息
     private String projectType;//Y:已结息  N:未结息
+    private String subjectId;//标的id
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -191,7 +193,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             case R.id.frame_project_match:
                 if (userRegularDetail != null) {
                     if ("3".equals(userRegularDetail.getProdId())) {
-                        // TODO: 2015/10/15  定期赚 项目
+                        subjectId = userRegularDetail.getBdId();
+                        WebActivity.startActivity(mActivity, Urls.web_regular + subjectId + "/3");
                     } else if ("4".equals(userRegularDetail.getProdId())) {
                         //定期计划 项目匹配
                         Intent intent = new Intent(mActivity, ProjectMatchActivity.class);
