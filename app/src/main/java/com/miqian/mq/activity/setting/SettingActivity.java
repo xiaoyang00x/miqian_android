@@ -166,7 +166,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.frame_setting_name:
                 if (userInfo != null && !TextUtils.isEmpty(userInfo.getRealNameStatus())) {
                     //未认证
-                    if ("1".equals(userInfo.getRealNameStatus())) {
+                    if ("0".equals(userInfo.getRealNameStatus())) {
                         Intent intent = new Intent(mActivity, ActivityRealname.class);
                         startActivity(intent);
                     }
