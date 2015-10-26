@@ -69,4 +69,38 @@
             style="@style/click_btn"
             android:text="认证" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:text="为了保障资金安全，请先完成实名认证"
+        android:textSize="@dimen/mq_font4"
+        android:textColor="@color/mq_b2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="如有问题，请拨打客服电话"
+            android:textColor="@color/mq_b2"
+            android:textSize="@dimen/mq_font4"/>
+
+        <TextView
+            android:id="@+id/text_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="400-6656-191"
+            android:textColor="@color/mq_bl2"
+            android:textSize="@dimen/mq_font4"/>
+
+    </LinearLayout>
 </LinearLayout>
