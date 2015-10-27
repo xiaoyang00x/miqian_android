@@ -3,7 +3,6 @@ package com.miqian.mq.activity.user;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -82,7 +81,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                     List<RegInvest> tempList = result.getData().getRegInvest();
                     if (regInvestList != null && tempList != null && tempList.size() > 0) {
                         regInvestList.addAll(tempList);
-                        refreshViewLoadMore();
+                        mAdapter.notifyItemInserted(regInvestList.size());
                     }
                     isLoading = false;
                 }
@@ -125,10 +124,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
                 int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
-                if (lastVisibleItem >= totalItemCount - 3) {
+                if (lastVisibleItem >= totalItemCount - 2) {
                     loadMore();
                 }
             }
@@ -140,10 +138,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
         mAdapter.setOnItemClickListener(this);
         mAdapter.setMaxItem(userRegular.getPage().getCount());
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private void refreshViewLoadMore() {
-        mAdapter.notifyItemInserted(regInvestList.size());
     }
 
     @Override

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Reg;
 import com.miqian.mq.entity.RegInvest;
-import com.miqian.mq.entity.UserRegular;
 
 import java.util.List;
 

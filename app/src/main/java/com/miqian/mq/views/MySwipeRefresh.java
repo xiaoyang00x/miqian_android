@@ -81,7 +81,7 @@ public class MySwipeRefresh extends ViewGroup {
     private View mTarget;
 
     private OnPullRefreshListener mListener;// 下拉刷新listener
-    private OnPushLoadMoreListener mOnPushLoadMoreListener;// 上拉加载更多
+//    private OnPushLoadMoreListener mOnPushLoadMoreListener;// 上拉加载更多
 
     private boolean mRefreshing = false;
     private boolean mLoadMore = false;
@@ -341,15 +341,15 @@ public class MySwipeRefresh extends ViewGroup {
         mHeadViewContainer.setBackgroundColor(color);
     }
 
-    /**
-     * 设置上拉加载更多的接口
-     *
-     * @param onPushLoadMoreListener
-     */
-    public void setOnPushLoadMoreListener(
-            OnPushLoadMoreListener onPushLoadMoreListener) {
-        this.mOnPushLoadMoreListener = onPushLoadMoreListener;
-    }
+//    /**
+//     * 设置上拉加载更多的接口
+//     *
+//     * @param onPushLoadMoreListener
+//     */
+//    public void setOnPushLoadMoreListener(
+//            OnPushLoadMoreListener onPushLoadMoreListener) {
+//        this.mOnPushLoadMoreListener = onPushLoadMoreListener;
+//    }
 
     /**
      * Notify the widget that refresh state has changed. Do not call this when
@@ -631,8 +631,7 @@ public class MySwipeRefresh extends ViewGroup {
         if (mReturningToStart && action == MotionEvent.ACTION_DOWN) {
             mReturningToStart = false;
         }
-        if (!isEnabled() || mReturningToStart || mRefreshing || mLoadMore
-                || (!isChildScrollToTop() && !isChildScrollToBottom())) {
+        if (!isEnabled() || mReturningToStart || mRefreshing || mLoadMore || (!isChildScrollToTop() && !isChildScrollToBottom())) {
             // 如果子View可以滑动，不拦截事件，交给子View处理-下拉刷新
             // 或者子View没有滑动到底部不拦截事件-上拉加载更多
             return false;
@@ -718,7 +717,7 @@ public class MySwipeRefresh extends ViewGroup {
         }
 
         if (isChildScrollToBottom()) {// 上拉加载更多
-            return handlerPushTouchEvent(ev, action);
+            return true;
         } else {// 下拉刷新
             return handlerPullTouchEvent(ev, action);
         }
@@ -859,74 +858,73 @@ public class MySwipeRefresh extends ViewGroup {
      * @param action
      * @return
      */
-    private boolean handlerPushTouchEvent(MotionEvent ev, int action) {
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
-                mIsBeingDragged = false;
-                break;
-            case MotionEvent.ACTION_MOVE: {
-                final int pointerIndex = MotionEventCompat.findPointerIndex(ev,
-                        mActivePointerId);
-                if (pointerIndex < 0) {
-                    return false;
-                }
-                final float y = MotionEventCompat.getY(ev, pointerIndex);
-                final float overscrollBottom = (mInitialMotionY - y) * DRAG_RATE;
-                if (mIsBeingDragged) {
-                    pushDistance = (int) overscrollBottom;
-                    updateFooterViewPosition();
-                    if (mOnPushLoadMoreListener != null) {
-                        mOnPushLoadMoreListener
-                                .onPushEnable(pushDistance >= mFooterViewHeight);
-                    }
-                }
-                break;
-            }
-            case MotionEventCompat.ACTION_POINTER_DOWN: {
-                final int index = MotionEventCompat.getActionIndex(ev);
-                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
-                break;
-            }
-
-            case MotionEventCompat.ACTION_POINTER_UP:
-                onSecondaryPointerUp(ev);
-                break;
-
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL: {
-                if (mActivePointerId == INVALID_POINTER) {
-                    if (action == MotionEvent.ACTION_UP) {
-                    }
-                    return false;
-                }
-                final int pointerIndex = MotionEventCompat.findPointerIndex(ev,
-                        mActivePointerId);
-                final float y = MotionEventCompat.getY(ev, pointerIndex);
-                final float overscrollBottom = (mInitialMotionY - y) * DRAG_RATE;// 松手是下拉的距离
-                mIsBeingDragged = false;
-                mActivePointerId = INVALID_POINTER;
-                if (overscrollBottom < mFooterViewHeight
-                        || mOnPushLoadMoreListener == null) {// 直接取消
-                    pushDistance = 0;
-                } else {// 下拉到mFooterViewHeight
-                    pushDistance = mFooterViewHeight;
-                }
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    updateFooterViewPosition();
-                    if (pushDistance == mFooterViewHeight
-                            && mOnPushLoadMoreListener != null) {
-                        mLoadMore = true;
-                        mOnPushLoadMoreListener.onLoadMore();
-                    }
-                } else {
-                    animatorFooterToBottom((int) overscrollBottom, pushDistance);
-                }
-                return false;
-            }
-        }
-        return true;
-    }
+//    private boolean handlerPushTouchEvent(MotionEvent ev, int action) {
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
+//                mIsBeingDragged = false;
+//                break;
+//            case MotionEvent.ACTION_MOVE: {
+//                final int pointerIndex = MotionEventCompat.findPointerIndex(ev,
+//                        mActivePointerId);
+//                if (pointerIndex < 0) {
+//                    return false;
+//                }
+//                final float y = MotionEventCompat.getY(ev, pointerIndex);
+//                final float overscrollBottom = (mInitialMotionY - y) * DRAG_RATE;
+//                if (mIsBeingDragged) {
+//                    pushDistance = (int) overscrollBottom;
+//                    updateFooterViewPosition();
+////                    if (mOnPushLoadMoreListener != null) {
+////                        mOnPushLoadMoreListener.onPushEnable(pushDistance >= mFooterViewHeight);
+////                    }
+//                }
+//                break;
+//            }
+//            case MotionEventCompat.ACTION_POINTER_DOWN: {
+//                final int index = MotionEventCompat.getActionIndex(ev);
+//                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
+//                break;
+//            }
+//
+//            case MotionEventCompat.ACTION_POINTER_UP:
+//                onSecondaryPointerUp(ev);
+//                break;
+//
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_CANCEL: {
+//                if (mActivePointerId == INVALID_POINTER) {
+//                    if (action == MotionEvent.ACTION_UP) {
+//                    }
+//                    return false;
+//                }
+//                final int pointerIndex = MotionEventCompat.findPointerIndex(ev,
+//                        mActivePointerId);
+//                final float y = MotionEventCompat.getY(ev, pointerIndex);
+//                final float overscrollBottom = (mInitialMotionY - y) * DRAG_RATE;// 松手是下拉的距离
+//                mIsBeingDragged = false;
+//                mActivePointerId = INVALID_POINTER;
+//                if (overscrollBottom < mFooterViewHeight
+//                        || mOnPushLoadMoreListener == null) {// 直接取消
+//                    pushDistance = 0;
+//                } else {// 下拉到mFooterViewHeight
+//                    pushDistance = mFooterViewHeight;
+//                }
+//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//                    updateFooterViewPosition();
+//                    if (pushDistance == mFooterViewHeight
+//                            && mOnPushLoadMoreListener != null) {
+//                        mLoadMore = true;
+//                        mOnPushLoadMoreListener.onLoadMore();
+//                    }
+//                } else {
+//                    animatorFooterToBottom((int) overscrollBottom, pushDistance);
+//                }
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     /**
      * 松手之后，使用动画将Footer从距离start变化到end
@@ -950,14 +948,14 @@ public class MySwipeRefresh extends ViewGroup {
         valueAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (end > 0 && mOnPushLoadMoreListener != null) {
-                    // start loading more
-                    mLoadMore = true;
-                    mOnPushLoadMoreListener.onLoadMore();
-                } else {
+//                if (end > 0 && mOnPushLoadMoreListener != null) {
+//                    // start loading more
+//                    mLoadMore = true;
+//                    mOnPushLoadMoreListener.onLoadMore();
+//                } else {
                     resetTargetLayout();
                     mLoadMore = false;
-                }
+//                }
             }
         });
         valueAnimator.setInterpolator(mDecelerateInterpolator);
@@ -1131,9 +1129,9 @@ public class MySwipeRefresh extends ViewGroup {
     }
 
     private void updatePushDistanceListener() {
-        if (mOnPushLoadMoreListener != null) {
-            mOnPushLoadMoreListener.onPushDistance(pushDistance);
-        }
+//        if (mOnPushLoadMoreListener != null) {
+//            mOnPushLoadMoreListener.onPushDistance(pushDistance);
+//        }
     }
 
     private void onSecondaryPointerUp(MotionEvent ev) {
