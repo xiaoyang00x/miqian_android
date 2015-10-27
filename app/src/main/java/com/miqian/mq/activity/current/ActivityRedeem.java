@@ -214,7 +214,7 @@ public class ActivityRedeem extends BaseActivity {
 
                 Intent intent = new Intent(mActivity, RedeemResult.class);
 
-                if (code.equals("999993")) {
+                if (code.equals("999993")||code.equals("999988")) {
                     Uihelper.showToast(mActivity, result.getMessage());
                 } else {
                     if (code.equals("000000")) {

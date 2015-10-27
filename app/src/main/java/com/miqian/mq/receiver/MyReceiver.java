@@ -141,6 +141,7 @@ public class MyReceiver extends BroadcastReceiver {
                         notificationIntent = new Intent(context, ActivityCurrentRecord.class);
                         break;
                     case 8://转让被认购完成,跳到资金记录
+                    case 15://提现受理失败
                         notificationIntent = new Intent(context, CapitalRecordActivity.class);
                         break;
                     case 9:

@@ -3,6 +3,7 @@ package com.miqian.mq.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
@@ -76,13 +77,17 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         handleJpush();
 
         setExsitFragment(true);
+
+        //注册广播
+        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(
+                Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
     }
 
     @Override
     protected void onResume() {
         Config.init(this);
         //设置在主页的状态
-//        MyApplication.getInstance().setIsOnMainAcitivity(true);
+        MyApplication.setIsBackStage(false);
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
@@ -97,6 +102,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     protected void onDestroy() {
         ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
+        //反注册广播
+        unregisterReceiver(mHomeKeyEventReceiver);
         super.onDestroy();
     }
 
@@ -253,6 +260,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                             break;
                         case 12:
                             startActivity(new Intent(mContext, MyTicketActivity.class));
+                            break;
+                        case 15:
+                            startActivity(new Intent(mContext, CapitalRecordActivity.class));
                             break;
                         case 51:
                         case 52:
