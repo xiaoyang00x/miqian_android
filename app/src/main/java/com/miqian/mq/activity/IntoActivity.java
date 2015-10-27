@@ -217,7 +217,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 rollIn();
                 break;
             case R.id.text_law:
-                WebActivity.startActivity(mActivity, Urls.web_recharge_law);
+//                WebActivity.startActivity(mActivity, Urls.web_recharge_law);
                 break;
             default:
                 break;

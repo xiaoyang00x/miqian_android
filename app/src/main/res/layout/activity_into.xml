@@ -131,7 +131,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/bt_under_text">
+        android:layout_marginTop="@dimen/bt_under_text"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"

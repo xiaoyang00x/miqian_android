@@ -72,10 +72,12 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             ((ViewHolder) holder).bdName.setText(regInvest.getBdNm());
             if (regInvest.getBearingStatus().equals("Y")) {
                 ((ViewHolder) holder).textCapital.setText("投资本金");
+                ((ViewHolder) holder).textCapitalMoney.setText(regInvest.getPrnAmt());
                 ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 ((ViewHolder) holder).frameEarning.setVisibility(View.GONE);
             } else {
                 ((ViewHolder) holder).textCapital.setText("待收本金");
+                ((ViewHolder) holder).textCapitalMoney.setText(regInvest.getRegAmt());
                 if (regInvest.getProjectState().equals("1")) {
                     ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
@@ -94,7 +96,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ViewHolder) holder).imageProjectType.setImageResource(R.drawable.user_regular_plan);
             }
 
-            ((ViewHolder) holder).textCapitalMoney.setText(regInvest.getRegAmt());
+
             ((ViewHolder) holder).textEarning.setText(regInvest.getRegIncome());
             ((ViewHolder) holder).textInterestRate.setText(regInvest.getRealInterest());
 

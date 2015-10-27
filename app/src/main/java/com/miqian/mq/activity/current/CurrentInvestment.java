@@ -276,7 +276,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, Urls.web_current_law);
+//                    WebActivity.startActivity(mActivity, Urls.web_current_law);
                 }
             }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else if (PRODID_REGULAR.equals(prodId)) {
@@ -285,7 +285,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_law);
+//                    WebActivity.startActivity(mActivity, Urls.web_regular_law);
                 }
             }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else {
@@ -294,7 +294,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, Urls.web_regplan_law);
+//                    WebActivity.startActivity(mActivity, Urls.web_regplan_law);
                 }
             }), 3, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
