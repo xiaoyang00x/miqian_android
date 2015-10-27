@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.BankBranchActivity;
 import com.miqian.mq.activity.setting.BindCardActivity;
 import com.miqian.mq.activity.setting.CityListActivity;
@@ -25,6 +26,7 @@ import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.entity.WithdrawItem;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Uihelper;
@@ -35,6 +37,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -68,6 +71,7 @@ public class RolloutActivity extends BaseActivity {
     private DialogTradePassword dialogTradePassword_input;
     private boolean isChooseCity;
     private BankCard bankCard;
+    private boolean isSuccessBindBranch;
 
     @Override
     public void obtainData() {
@@ -168,13 +172,13 @@ public class RolloutActivity extends BaseActivity {
         HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-
+                isSuccessBindBranch = true;
             }
 
             @Override
             public void onFail(String error) {
-                Uihelper.showToast(mActivity, error+"绑定支行失败");
-
+                isSuccessBindBranch = false;
+                Uihelper.showToast(mActivity, error);
             }
         }, cardNum, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
 
@@ -188,7 +192,7 @@ public class RolloutActivity extends BaseActivity {
 
                 @Override
                 public void positionBtnClick() {
-                    //跳到绑定支行的页面
+                    //跳到绑定银行卡的页面
                     dismiss();
                     Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
                     Bundle extra = new Bundle();
@@ -279,7 +283,7 @@ public class RolloutActivity extends BaseActivity {
 
             @Override
             public void onClick(View arg0) {
-//                WebViewActivity.doIntent(mActivity, Urls.help_rollout_url, true, null);
+                WebActivity.startActivity(mActivity, Urls.web_rollout);
             }
         });
 
@@ -296,18 +300,26 @@ public class RolloutActivity extends BaseActivity {
             Uihelper.showToast(mActivity, "交易金额不能为空");
             return;
         }
-        float moneyFloat = Float.parseFloat(moneyString);
-        float totalMoneyFloat = Float.parseFloat(totalMoney);
-        if (moneyFloat > totalMoneyFloat) {
+        if (TextUtils.isEmpty(bankOpenName) && !isSuccessBindBranch) {
+            Uihelper.showToast(mActivity, "开户支行未绑定成功,请重试");
+        } else {
+            handleData();
+        }
+    }
+
+    private void handleData() {
+        BigDecimal moneyCurrent = new BigDecimal(moneyString);
+        BigDecimal moneyTotal = new BigDecimal(totalMoney);
+        if (moneyCurrent.compareTo(moneyTotal) > 0) {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额超限");
             dialogTips.show();
-            return ;
-        } else if (moneyFloat < 10) {
+            return;
+        } else if (moneyCurrent.compareTo(BigDecimal.TEN) < 0) {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额不能小于10元");
             dialogTips.show();
-            return ;
+            return;
         } else {
             //提现预处理
             HttpRequest.withdrawPreprocess(mActivity, new ICallback<WithDrawResult>() {
@@ -327,19 +339,18 @@ public class RolloutActivity extends BaseActivity {
                         dialogTipsReput.setRemarks(tip.toString());
                         dialogTipsReput.setNegative("取消");
                         dialogTipsReput.show();
-                    }else {
+                    } else {
                         rollOutHttp();
                     }
 
                 }
+
                 @Override
                 public void onFail(String error) {
                     Uihelper.showToast(mActivity, error);
 
                 }
             }, moneyString);
-
-
 
         }
     }
@@ -393,12 +404,14 @@ public class RolloutActivity extends BaseActivity {
                             HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
                                 @Override
                                 public void onSucceed(Meta result) {
+                                    mWaitingDialog.dismiss();
                                     dismiss();
                                     Uihelper.showToast(mActivity, "设置成功");
                                 }
 
                                 @Override
                                 public void onFail(String error) {
+                                    mWaitingDialog.dismiss();
                                     dismiss();
                                     Uihelper.showToast(mActivity, error);
                                 }

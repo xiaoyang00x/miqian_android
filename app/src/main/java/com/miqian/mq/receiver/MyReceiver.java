@@ -121,49 +121,48 @@ public class MyReceiver extends BroadcastReceiver {
                     case 0:
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
                         return;
-
                     case 1://交易密码修改，到消息列表页
-                        notificationIntent= new Intent(context, AnnounceActivity.class);
+                        notificationIntent = new Intent(context, AnnounceActivity.class);
                         break;
                     case 2://提现受理，跳到资金记录
-                        notificationIntent= new Intent(context, CapitalRecordActivity.class);
+                        notificationIntent = new Intent(context, CapitalRecordActivity.class);
                         break;
                     case 3://充值成功，到我的
-                        notificationIntent= new Intent(context, MainActivity.class);
+                        notificationIntent = new Intent(context, MainActivity.class);
                         break;
                     case 4://认购 ，到资金记录
-                        notificationIntent= new Intent(context, CapitalRecordActivity.class);
+                        notificationIntent = new Intent(context, CapitalRecordActivity.class);
                         break;
                     case 5://定期赚到期，到我的定期列表页
                     case 6://定期计划到期，到我的定期列表页
-                        notificationIntent= new Intent(context, UserRegularActivity.class);
+                        notificationIntent = new Intent(context, UserRegularActivity.class);
                         break;
                     case 7://活期赎回，到资金记录
-                        notificationIntent= new Intent(context, ActivityCurrentRecord.class);
+                        notificationIntent = new Intent(context, ActivityCurrentRecord.class);
                         break;
                     case 8://转让被认购完成,跳到资金记录
-                        notificationIntent= new Intent(context, CapitalRecordActivity.class);
+                        notificationIntent = new Intent(context, CapitalRecordActivity.class);
                         break;
                     case 9:
-                        notificationIntent= new Intent(context, RedPaperActivity.class);
+                        notificationIntent = new Intent(context, RedPaperActivity.class);
                         break;
                     case 10:
-                        notificationIntent= new Intent(context, MyTicketActivity.class);
+                        notificationIntent = new Intent(context, MyTicketActivity.class);
                         break;
                     case 11:
-                        notificationIntent= new Intent(context, RedPaperActivity.class);
+                        notificationIntent = new Intent(context, RedPaperActivity.class);
                         break;
                     case 12:
-                        notificationIntent= new Intent(context, MyTicketActivity.class);
+                        notificationIntent = new Intent(context, MyTicketActivity.class);
                         break;
 
                     case 50://系统升级,系统维护
-                        notificationIntent= new Intent(context, AnnounceActivity.class);
+                        notificationIntent = new Intent(context, AnnounceActivity.class);
                         break;
                     case 51://活动利好 首页弹框，webView
                     case 52://平台相关新闻 首页弹框，webView
                     case 53://相关项目 首页弹框，webView
-                        notificationIntent= WebActivity.getIntent(context, response.getUrl());
+                        notificationIntent = WebActivity.getIntent(context, response.getUrl());
                         break;
                     default:
                         break;
@@ -208,9 +207,11 @@ public class MyReceiver extends BroadcastReceiver {
             String ns = Context.NOTIFICATION_SERVICE;
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
             //判断是否在后台,在后台则发送通知
-            if ((!MyApplication.getInstance().isBackStage())&&MyApplication.getInstance().isCurrent()){
+            boolean isBackStage = MyApplication.getInstance().isBackStage();
+            boolean isCurrent = MyApplication.getInstance().isCurrent();
+            if (!isBackStage && isCurrent) {
 
-            }else {
+            } else {
                 mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
             }
         } else {

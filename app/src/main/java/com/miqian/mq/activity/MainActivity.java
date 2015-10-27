@@ -29,6 +29,7 @@ import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.fragment.RegularFragment;
 import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.utils.ActivityStack;
+import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
@@ -79,7 +80,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     @Override
     protected void onResume() {
-
+        Config.init(this);
         //设置在主页的状态
 //        MyApplication.getInstance().setIsOnMainAcitivity(true);
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {

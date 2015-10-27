@@ -98,6 +98,7 @@ public class SetBankActivity extends BaseActivity {
                     Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
                     intent_branch.putExtra("city", city);
                     intent_branch.putExtra("province", province);
+                    intent_branch.putExtra("bankcode",userInfo.getBankCode());
                     startActivityForResult(intent_branch, 0);
 
                 } else {

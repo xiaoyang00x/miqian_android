@@ -54,6 +54,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private RelativeLayout frameBankPay;
     private RelativeLayout frameRedPackage;
     private RelativeLayout frameTip;
+    private View frameSpace;
     private TextView textTip;
     private TextView textLaw;
     private MySwipeRefresh swipeRefresh;
@@ -139,10 +140,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private void showTips(boolean flag, ProducedOrderResult result) {
         if (flag) {
             frameTip.setVisibility(View.VISIBLE);
+            frameSpace.setVisibility(View.GONE);
             btPay.setEnabled(false);
             textTip.setText(result.getMessage());
         } else {
             frameTip.setVisibility(View.GONE);
+            frameSpace.setVisibility(View.VISIBLE);
             btPay.setEnabled(true);
         }
     }
@@ -179,6 +182,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public void initView() {
         textTip = (TextView) findViewById(R.id.text_tip);
         frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
+        frameSpace = (View) findViewById(R.id.frame_space);
 
         textProjectType = (TextView) findViewById(R.id.text_project_type);
         textInterestRate = (TextView) findViewById(R.id.text_interest_rate);
@@ -272,7 +276,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, Urls.web_current);
+                    WebActivity.startActivity(mActivity, Urls.web_current_law);
                 }
             }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else if (PRODID_REGULAR.equals(prodId)) {
@@ -281,7 +285,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular);
+                    WebActivity.startActivity(mActivity, Urls.web_regular_law);
                 }
             }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else {
@@ -290,7 +294,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onClick(View v) {
-                    WebActivity.startActivity(mActivity, Urls.web_regplan);
+                    WebActivity.startActivity(mActivity, Urls.web_regplan_law);
                 }
             }), 3, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }

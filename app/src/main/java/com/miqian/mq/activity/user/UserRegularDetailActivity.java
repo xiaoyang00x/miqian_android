@@ -15,6 +15,7 @@ import com.miqian.mq.entity.UserRegularDetail;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.RoundCornerProgressBar;
 import com.miqian.mq.views.WFYTitle;
@@ -41,7 +42,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private TextView textTransferMoney;
 
     private RelativeLayout frameTransfer;//转让情况
-    private RelativeLayout frameContract;//合同
+//    private RelativeLayout frameContract;//合同
 
     private Button btRepayment;//还款详情
 
@@ -50,6 +51,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private String investId;//投资产品id
     private String clearYn;//Y:已结息  N:未结息
     private String projectType;//Y:已结息  N:未结息
+    private String subjectId;//标的id
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -108,13 +110,13 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
         textTransferMoney = (TextView) findViewById(R.id.text_transfer_money);
         frameTransfer = (RelativeLayout) findViewById(R.id.frame_transfer);
-        frameContract = (RelativeLayout) findViewById(R.id.frame_contract);
+//        frameContract = (RelativeLayout) findViewById(R.id.frame_contract);
 
         btRepayment = (Button) findViewById(R.id.bt_repayment);
 
         frameProjectMatch.setOnClickListener(this);
         frameTransfer.setOnClickListener(this);
-        frameContract.setOnClickListener(this);
+//        frameContract.setOnClickListener(this);
         btRepayment.setOnClickListener(this);
     }
 
@@ -191,7 +193,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             case R.id.frame_project_match:
                 if (userRegularDetail != null) {
                     if ("3".equals(userRegularDetail.getProdId())) {
-                        // TODO: 2015/10/15  定期赚 项目
+                        subjectId = userRegularDetail.getBdId();
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
                     } else if ("4".equals(userRegularDetail.getProdId())) {
                         //定期计划 项目匹配
                         Intent intent = new Intent(mActivity, ProjectMatchActivity.class);
@@ -208,9 +211,9 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                     startActivity(intent);
                 }
                 break;
-            case R.id.frame_contract://查看合同
-                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
-                break;
+//            case R.id.frame_contract://查看合同
+//                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+//                break;
             case R.id.bt_repayment://还款详情
                 if (userRegularDetail != null) {
                     Intent intent = new Intent(mActivity, RepaymentActivity.class);

@@ -7,6 +7,7 @@ import android.view.View;
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.adapter.AdapterMyRedPaper;
 import com.miqian.mq.entity.CustPromotion;
 import com.miqian.mq.entity.Page;
@@ -14,6 +15,7 @@ import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.Redpaper;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -140,7 +142,7 @@ public class RedPaperActivity extends BaseActivity {
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                WebActivity.startActivity(mActivity, Urls.web_red_paper);
             }
         });
 

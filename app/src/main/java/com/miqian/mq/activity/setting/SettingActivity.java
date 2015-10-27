@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.TradePsCaptchaActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -21,6 +22,7 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
@@ -68,14 +70,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
                     }
                     tv_card.setText("尾号" + bankNo.substring(bankNo.length() - 4, bankNo.length()));
-                    //已绑定支行
-                    if (!TextUtils.isEmpty(bankOpenName)) {
-                        tv_cardState.setText("已完善");
-                    }
-                    //未绑定支行
-                    else {
-                        tv_cardState.setText("未完善");
-                    }
                 }
             }
 
@@ -133,7 +127,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
 
         if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
-            //未认证
+            //已认证
             if ("1".equals(userInfo.getRealNameStatus())) {
                 if (!TextUtils.isEmpty(userInfo.getRealName())) {
                     tv_name.setText(RSAUtils.decryptByPrivate(userInfo.getRealName()));
@@ -189,13 +183,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //帮助中心
             case R.id.frame_setting_helpcenter:
+                WebActivity.startActivity(mActivity, Urls.web_help);
                 break;
             //银行卡号
             case R.id.frame_setting_bankcard:
                 if (userInfo == null) {
                     return;
                 }
-
                 //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
                 String supportStatus = userInfo.getSupportStatus();
                 if (TextUtils.isEmpty(supportStatus)) {

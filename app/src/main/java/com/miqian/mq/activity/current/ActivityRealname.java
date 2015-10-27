@@ -1,10 +1,12 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -24,6 +26,7 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
     private Button btRealname;
     private EditText editName;
     private EditText editCardId;
+    private TextView textTel;
 
     @Override
     public void obtainData() {
@@ -50,6 +53,8 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
         btRealname.setOnClickListener(this);
         editName = (EditText) findViewById(R.id.edit_name);
         editCardId = (EditText) findViewById(R.id.edit_card_id);
+        textTel = (TextView) findViewById(R.id.text_tel);
+        textTel.setOnClickListener(this);
     }
 
     @Override
@@ -68,6 +73,9 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
             case R.id.bt_realname:
                 setIdCardCheck();
                 break;
+            case R.id.text_tel:
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
+                break;
             default:
                 break;
         }
@@ -77,6 +85,10 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
         final String name = editName.getText().toString();
         if (TextUtils.isEmpty(name)) {
             Uihelper.showToast(mActivity, "姓名不能为空");
+            return;
+        }
+        if (name.length() < 2) {
+            Uihelper.showToast(mActivity, "姓名输入有误");
             return;
         }
         String idCard = editCardId.getText().toString();
