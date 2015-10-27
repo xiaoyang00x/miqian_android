@@ -301,7 +301,7 @@ public class RolloutActivity extends BaseActivity {
             return;
         }
         if (TextUtils.isEmpty(bankOpenName) && !isSuccessBindBranch) {
-            Uihelper.showToast(mActivity, "开户支行信息不全,请重新选择");
+            Uihelper.showToast(mActivity, "开户支行未绑定成功,请重试");
         } else {
             handleData();
         }
@@ -404,12 +404,14 @@ public class RolloutActivity extends BaseActivity {
                             HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
                                 @Override
                                 public void onSucceed(Meta result) {
+                                    mWaitingDialog.dismiss();
                                     dismiss();
                                     Uihelper.showToast(mActivity, "设置成功");
                                 }
 
                                 @Override
                                 public void onFail(String error) {
+                                    mWaitingDialog.dismiss();
                                     dismiss();
                                     Uihelper.showToast(mActivity, error);
                                 }

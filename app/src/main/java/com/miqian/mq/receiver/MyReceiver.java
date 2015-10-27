@@ -120,7 +120,7 @@ public class MyReceiver extends BroadcastReceiver {
 
                     case 0:
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
-                        break;
+                        return;
                     case 1://交易密码修改，到消息列表页
                         notificationIntent = new Intent(context, AnnounceActivity.class);
                         break;

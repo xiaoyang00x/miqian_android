@@ -190,7 +190,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (userInfo == null) {
                     return;
                 }
-
                 //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
                 String supportStatus = userInfo.getSupportStatus();
                 if (TextUtils.isEmpty(supportStatus)) {
