@@ -95,6 +95,12 @@ public abstract class DialogPay extends Dialog {
         }
     }
 
+    public void setEditMoneyHint(String hint) {
+        if (editMoney != null) {
+            editMoney.setHint(hint);
+        }
+    }
+
 //	public void setRemarks(String content) {
 //		if (remarksText != null) {
 //			remarksText.setText(content);

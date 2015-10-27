@@ -26,7 +26,20 @@ public class RegularEarn implements Serializable {
     private String presentationYearInterest; //赠送年利率
     private BigDecimal fromInvestmentAmount; //起投金额
     private String promotionDesc; //"满1万元送100元红包"//促销描述
+    private BigDecimal continueInvestmentLimit; //递增金额
     private ArrayList<RegularEarnSubInfo> schemeList;
+
+    //以下字段只有再取详情的时候才有
+    private String yearInterest; //年化收益
+    private String limit; //期限
+
+    public BigDecimal getContinueInvestmentLimit() {
+        return continueInvestmentLimit;
+    }
+
+    public void setContinueInvestmentLimit(BigDecimal continueInvestmentLimit) {
+        this.continueInvestmentLimit = continueInvestmentLimit;
+    }
 
     public BigDecimal getSubjectMaxBuy() {
         return subjectMaxBuy;
@@ -38,9 +51,6 @@ public class RegularEarn implements Serializable {
 
     private BigDecimal subjectMaxBuy; //最大认购金额
 
-    //以下字段只有再取详情的时候才有
-    private String yearInterest; //年化收益
-    private String limit; //期限
 
     public void setPayMode(String payMode) {
         this.payMode = payMode;
@@ -59,10 +69,11 @@ public class RegularEarn implements Serializable {
 
     /**
      * 获取第一个子标的年化收益
+     *
      * @return
      */
     public String getYearInterest() {
-        if(schemeList != null && schemeList.size() > 0) {
+        if (schemeList != null && schemeList.size() > 0) {
             return schemeList.get(0).getYearInterest();
         }
         return yearInterest;
@@ -71,10 +82,11 @@ public class RegularEarn implements Serializable {
 
     /**
      * 获取第一个子标的期限
+     *
      * @return
      */
     public String getLimit() {
-        if(schemeList != null && schemeList.size() > 0) {
+        if (schemeList != null && schemeList.size() > 0) {
             return schemeList.get(0).getLimit();
         }
         return limit;
@@ -82,15 +94,15 @@ public class RegularEarn implements Serializable {
 
     /**
      * 获取第一个子标的还款方式
+     *
      * @return
      */
     public String getPayMode() {
-        if(schemeList != null && schemeList.size() > 0) {
+        if (schemeList != null && schemeList.size() > 0) {
             return schemeList.get(0).getPayMode();
         }
         return payMode;
     }
-
 
 
     public String getSubjectId() {

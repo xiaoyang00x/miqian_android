@@ -36,6 +36,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
 
     private BigDecimal downLimit = BigDecimal.ONE;
     private BigDecimal upLimit = new BigDecimal(9999999999L);
+    private BigDecimal continueLimit = new BigDecimal(100);//递增
     private String interestRateString = "";
 
     public static void startActivity(Context context, String subjectId) {
@@ -92,11 +93,15 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
             public void positionBtnClick(String moneyString) {
                 if (!TextUtils.isEmpty(moneyString)) {
                     BigDecimal money = new BigDecimal(moneyString);
+                    BigDecimal remainder = money.remainder(continueLimit);
                     if (money.compareTo(downLimit) == -1) {
-                        this.setTitle("提示：输入请大于" + downLimit + "元");
+                        this.setTitle("提示：请输入大于等于" + downLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else if (money.compareTo(upLimit) == 1) {
-                        this.setTitle("提示：输入请小于" + upLimit + "元");
+                        this.setTitle("提示：请输入小于等于" + upLimit + "元");
+                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                    } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
+                        this.setTitle("提示：请输入" + continueLimit + "的整数倍");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
                         UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_REGULAR_PLAN, subjectId, interestRateString);
@@ -199,6 +204,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_buy:
+                dialogPay.setEditMoneyHint(downLimit +"起，" + continueLimit + "整数倍");
                 UserUtil.loginPay(mActivity, dialogPay);
                 break;
             case R.id.btn_des_close:
@@ -220,6 +226,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
                     RegularPlan regularPlan = result.getData();
                     downLimit = regularPlan.getFromInvestmentAmount();
                     upLimit = regularPlan.getSubjectMaxBuy();
+                    continueLimit = regularPlan.getContinueInvestmentLimit();
                     BigDecimal tempInterest = new BigDecimal(regularPlan.getYearInterest()).add(new BigDecimal(regularPlan.getPresentationYearInterest()));
                     interestRateString = "年化收益率：" + tempInterest + "%  期限：" + regularPlan.getLimit() + "天";
                     updateUI(result.getData());
