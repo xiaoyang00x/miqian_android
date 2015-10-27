@@ -116,6 +116,7 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
                         case 10:
                         case 11:
                         case 12:
+                        case 15:
                             Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
                             intent.putExtra("id", jpushInfo.getId());
                             intent.putExtra("pushSource", jpushInfo.getPushSource());

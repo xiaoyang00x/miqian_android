@@ -56,7 +56,7 @@ public abstract class DialogTradePassword extends Dialog {
 
         if (mType==TYPE_INPUTPASSWORD) {
             titleText.setText("交易密码");
-            et_password.setHint("请输入密码");
+            et_password.setHint("请输入交易密码");
         }else {
             //设置交易密码规则:数字和字母的组合
             String digits = mContext.getResources().getString(R.string.match);

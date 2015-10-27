@@ -57,6 +57,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 bankCard = result.getData();
                 String bankOpenName = bankCard.getBankOpenName();
                 //未绑定银行卡
+                if (userInfo==null){
+                    return;
+                }
                 if ("0".equals(userInfo.getBindCardStatus())) {
                     tv_card.setText("银行卡未绑定");
                     tv_cardState.setText("");
