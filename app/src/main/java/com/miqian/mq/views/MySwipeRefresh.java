@@ -28,6 +28,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -229,6 +230,8 @@ public class MySwipeRefresh extends ViewGroup {
     @SuppressWarnings("deprecation")
     public MySwipeRefresh(Context context, AttributeSet attrs) {
         super(context, attrs);
+        // 添加了一个手势选择器
+        gestureDetector=new GestureDetector(new Yscroll() );
 
         /**
          * getScaledTouchSlop是一个距离，表示滑动的时候，手的移动要大于这个距离才开始移动控件。如果小于这个距离就不触发移动控件
@@ -682,7 +685,9 @@ public class MySwipeRefresh extends ViewGroup {
                 break;
         }
 
-        return mIsBeingDragged;// 如果正在拖动，则拦截子View的事件
+//        return mIsBeingDragged;// 如果正在拖动，则拦截子View的事件
+
+        return mIsBeingDragged && gestureDetector.onTouchEvent(ev);
     }
 
     private float getMotionEventY(MotionEvent ev, int activePointerId) {
@@ -1444,6 +1449,22 @@ public class MySwipeRefresh extends ViewGroup {
         protected void onDetachedFromWindow() {
             isOnDraw = false;
             super.onDetachedFromWindow();
+        }
+
+    }
+
+    GestureDetector gestureDetector;
+    View.OnTouchListener onTouchListener;
+    class Yscroll extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2,
+                                float distanceX, float distanceY) {
+//控制手指滑动的距离
+            if (Math.abs(distanceY)>=Math.abs(distanceX)) {
+                return true;
+            }
+            return false;
         }
 
     }

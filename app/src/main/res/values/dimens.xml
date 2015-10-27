@@ -38,7 +38,7 @@
 
     <!--定期页面相关-->
     <dimen name="view_pager_margin">20dp</dimen>
-    <dimen name="regular_plan_circle_width">210dp</dimen>
+    <dimen name="regular_plan_circle_width">158dp</dimen>
 
     <!--UI标准字号-->
     <dimen name="mq_font1">18sp</dimen>

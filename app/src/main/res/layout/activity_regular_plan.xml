@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/theme_background"
     android:orientation="vertical">
 
     <ScrollView
@@ -55,15 +54,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
                 android:orientation="vertical"
+                android:background="@color/white"
                 android:paddingLeft="@dimen/padding_left_right"
                 android:paddingRight="@dimen/padding_left_right">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -93,8 +92,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="70dp"
-                    android:layout_marginTop="50dp">
+                    android:layout_marginBottom="68dp"
+                    android:layout_marginTop="45dp">
 
                     <TextView
                         android:id="@+id/tv_annurate_interest_rate"
@@ -158,8 +157,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="6dp"
                     app:rcBackgroundColor="@color/mq_b4"
                     app:rcBackgroundPadding="0dp"
                     app:rcBackgroundRadius="6dp"
@@ -199,6 +198,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="@dimen/padding_left_right"
                 android:paddingRight="@dimen/padding_left_right">
 
@@ -232,8 +232,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider_line_color_gray" />
+                    android:layout_height="1px"
+                    android:background="@color/mq_b4" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -265,8 +265,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider_line_color_gray" />
+                    android:layout_height="1px"
+                    android:background="@color/mq_b4" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -298,8 +298,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider_line_color_gray" />
+                    android:layout_height="1px"
+                    android:background="@color/mq_b4" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -331,17 +331,15 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider_line_color_gray" />
+                    android:layout_height="1px"
+                    android:background="@color/mq_b4" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_buy"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginLeft="@dimen/margin_left_right"
-                android:layout_marginRight="@dimen/margin_left_right"
-                android:layout_marginTop="15dp"
+                android:layout_height="42dp"
+                android:layout_margin="15dp"
                 android:text="认购" />
         </LinearLayout>
 

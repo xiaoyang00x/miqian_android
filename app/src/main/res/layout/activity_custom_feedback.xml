@@ -39,8 +39,8 @@
 
                 <Button
                     android:id="@+id/fb_send_btn"
-                    android:layout_width="70dp"
-                    android:layout_height="33dp"
+                    android:layout_width="80dp"
+                    android:layout_height="38dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -58,10 +58,13 @@
                     android:layout_toLeftOf="@id/fb_send_btn"
                     android:layout_toStartOf="@id/fb_send_btn"
                     android:hint="@string/umeng_fb_feedback"
-                    android:minHeight="33dp"
+                    android:minHeight="38dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:scrollbars="vertical"
+                    android:textColor="@color/mq_b1"
+                    android:textColorHint="@color/miqian_gray"
+                    android:background="@drawable/edittext_bg_selector"
                     android:textSize="16sp" />
             </RelativeLayout>
         </LinearLayout>

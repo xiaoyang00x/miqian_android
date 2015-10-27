@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/layout_regular_earn_head"
     android:orientation="vertical">
 
     <View
         android:id="@+id/divider_view"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/divider_line_color_gray" />
+        android:background="@color/divider_line_color_gray"
+        />
 
     <RelativeLayout
-        android:id="@+id/layout_regular_earn_head"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:paddingLeft="@dimen/margin_left_right"

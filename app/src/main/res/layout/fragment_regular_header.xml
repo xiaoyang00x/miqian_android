@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:text="@string/regular_plan"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font2" />
+            android:textSize="@dimen/mq_font3" />
 
         <TextView
             android:id="@+id/tv_invest_security"
@@ -48,13 +48,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:weightSum="3">
 
         <com.miqian.mq.views.DecoratorViewPager
             android:id="@+id/view_pager"
             android:layout_width="0dp"
-            android:layout_height="210dp"
+            android:layout_height="@dimen/regular_plan_circle_width"
             android:layout_gravity="center"
             android:layout_weight="2"
             android:overScrollMode="never" />

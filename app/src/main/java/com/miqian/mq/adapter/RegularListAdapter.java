@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -126,8 +127,8 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     textView.setText(planList.get(i).getLimit() + "天");
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 2);
                     textView.setGravity(Gravity.CENTER);
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(R.dimen.mq_font4));
                     textView.setTextColor(mContext.getResources().getColor(i == 0 ? R.color.mq_r1 : R.color.mq_b2));
-//                    textView.setBackgroundColor(mContext.getResources().getColor(i%2==0?R.color.mq_y:R.color.mq_r1));
                     layout_limit_container.addView(textView, i, params);
                 }
             }

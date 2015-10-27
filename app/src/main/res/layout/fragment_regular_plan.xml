@@ -11,38 +11,27 @@
         android:background="@drawable/bg_circle_buy">
 
         <TextView
-            android:id="@+id/tv_annurate_interest_rate1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="@color/mq_r1"
-            android:textSize="45dp"
-            android:visibility="invisible"
-            />
-
-
-        <TextView
             android:id="@+id/lable_annurate_interest_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/tv_annurate_interest_rate1"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="22dp"
+            android:layout_marginTop="26dp"
             android:text="年化利率"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font1" />
+            android:textSize="@dimen/mq_font3" />
 
         <TextView
             android:id="@+id/tv_status"
             android:layout_width="205dp"
-            android:layout_height="45dp"
-            android:layout_below="@id/tv_annurate_interest_rate1"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginBottom="12dp"
             android:gravity="center"
             android:text="马上认购"
             android:textColor="@color/white"
-            android:textSize="@dimen/mq_font1" />
+            android:textSize="@dimen/mq_font3" />
 
     </RelativeLayout>
 
@@ -52,7 +41,7 @@
         android:layout_height="45dp"
         android:layout_alignBottom="@id/layout_circle"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/bg_wait_buy"
         android:gravity="center"
         android:textColor="@color/white"
@@ -66,21 +55,20 @@
         android:layout_centerInParent="true"
         android:text="18%"
         android:textColor="@color/mq_r1"
-        android:textSize="45dp" />
+        android:textSize="34sp" />
 
     <TextView
         android:id="@+id/tv_add_interest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/tv_annurate_interest_rate"
-        android:layout_marginBottom="-5dp"
+        android:layout_marginBottom="-10dp"
         android:layout_marginLeft="-5dp"
         android:layout_toRightOf="@id/tv_annurate_interest_rate"
         android:background="@drawable/bg_add_interest"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:text="+1.5%"
         android:textColor="@color/white"
-        android:textSize="@dimen/mq_font2" />
+        android:textSize="@dimen/mq_font4" />
 
 </RelativeLayout>

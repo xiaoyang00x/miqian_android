@@ -123,4 +123,8 @@ public class Urls {
     public final static String web_regular = base_server + "webView/regular-buy";
     //定期计划认购页面：《定期计划服务协议》
     public final static String web_regplan = base_server + "webView/regplan-buy";
+    //定期赚详情
+    public final static String web_regular_earn_detail = base_server + "webView/getRegDetail/";
+    //定期计划详情
+    public final static String web_regular_plan_detail = base_server + "webView/regPlanDetail";
 }

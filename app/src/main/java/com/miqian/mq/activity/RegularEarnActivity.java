@@ -14,6 +14,7 @@ import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -129,6 +130,13 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initTitle(WFYTitle mTitle) {
         getmTitle().setTitleText("定期赚");
+        mTitle.setRightText("详情");
+        mTitle.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
+            }
+        });
     }
 
     @Override
@@ -158,10 +166,10 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         tv_fx.setText(data.getDdbzf());
         tv_bxbz.setText(data.getBxbzf());
 
-        if (data.getSubjectMaxBuy().compareTo(BigDecimal.ZERO) == 1) {
-            tv_lable1.setText("每人限额" + FormatUtil.formatAmount(data.getSubjectMaxBuy()) + "元");
-        } else {
+        if (data.getSubjectMaxBuy().compareTo(new BigDecimal(999999999999L)) == 0) {
             tv_lable1.setText("");
+        } else {
+            tv_lable1.setText("每人限额" + FormatUtil.formatAmount(data.getSubjectMaxBuy()) + "元");
         }
 
         //待开标
