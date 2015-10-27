@@ -73,7 +73,7 @@ public class MobileOS {
 	 * @return
 	 */
 	public static String getClientVersion(Context context) {
-		String verName = "";
+		String verName = "unknown";
 		try {
 			verName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
 		} catch (NameNotFoundException e) {
@@ -191,7 +191,7 @@ public class MobileOS {
 	/** 获取系统版本号 */
 	public static String getOsVersion() {
 		String osVersion = android.os.Build.VERSION.RELEASE;
-		return !TextUtils.isEmpty(osVersion) ? osVersion : "";
+		return !TextUtils.isEmpty(osVersion) ? osVersion : "unknown";
 	}
 
 	/**
@@ -257,7 +257,7 @@ public class MobileOS {
 		if (context == null) {
 			return null;
 		}
-		String channelName = null;
+		String channelName = "unknown";
 		try {
 			PackageManager packageManager = context.getPackageManager();
 			if (packageManager != null) {
@@ -265,12 +265,13 @@ public class MobileOS {
 				ApplicationInfo applicationInfo = packageManager.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
 				if (applicationInfo != null) {
 					if (applicationInfo.metaData != null) {
-						channelName = applicationInfo.metaData.getString("UMENG_CHANNEL");
+						channelName = applicationInfo.metaData.get("UMENG_CHANNEL") + "";
 					}
 				}
 
 			}
 		} catch (PackageManager.NameNotFoundException e) {
+			channelName = "unknown";
 			e.printStackTrace();
 		}
 		return channelName;
