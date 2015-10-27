@@ -54,6 +54,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private RelativeLayout frameBankPay;
     private RelativeLayout frameRedPackage;
     private RelativeLayout frameTip;
+    private View frameSpace;
     private TextView textTip;
     private TextView textLaw;
     private MySwipeRefresh swipeRefresh;
@@ -139,10 +140,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private void showTips(boolean flag, ProducedOrderResult result) {
         if (flag) {
             frameTip.setVisibility(View.VISIBLE);
+            frameSpace.setVisibility(View.GONE);
             btPay.setEnabled(false);
             textTip.setText(result.getMessage());
         } else {
             frameTip.setVisibility(View.GONE);
+            frameSpace.setVisibility(View.VISIBLE);
             btPay.setEnabled(true);
         }
     }
@@ -179,6 +182,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public void initView() {
         textTip = (TextView) findViewById(R.id.text_tip);
         frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
+        frameSpace = (View) findViewById(R.id.frame_space);
 
         textProjectType = (TextView) findViewById(R.id.text_project_type);
         textInterestRate = (TextView) findViewById(R.id.text_interest_rate);

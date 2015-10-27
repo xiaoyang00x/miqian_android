@@ -265,31 +265,31 @@
                         android:layout_alignParentBottom="true" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/frame_contract"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/listitem_height">
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/frame_contract"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/listitem_height">-->
 
-                    <TextView
-                        style="@style/f3_B1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/margin_left_right"
-                        android:text="查看合同" />
+                    <!--<TextView-->
+                        <!--style="@style/f3_B1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="@dimen/margin_left_right"-->
+                        <!--android:text="查看合同" />-->
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/margin_left_right"
-                        android:src="@drawable/right" />
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginRight="@dimen/margin_left_right"-->
+                        <!--android:src="@drawable/right" />-->
 
-                    <View
-                        style="@style/item_divider"
-                        android:layout_alignParentBottom="true" />
-                </RelativeLayout>
+                    <!--<View-->
+                        <!--style="@style/item_divider"-->
+                        <!--android:layout_alignParentBottom="true" />-->
+                <!--</RelativeLayout>-->
             </LinearLayout>
 
             <LinearLayout
