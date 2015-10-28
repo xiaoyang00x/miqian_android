@@ -6,7 +6,7 @@
     <LinearLayout
         style="@style/FillContent"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical">
 
         <ImageView
@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:background="@drawable/trans"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/icon_miaoqian" />
 
         <TextView
             android:id="@+id/tvVersion"
@@ -44,6 +44,7 @@
 
             <TextView
                 style="@style/WrapContent"
+                android:id="@+id/tv_telephone"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:text="400-6655-191"

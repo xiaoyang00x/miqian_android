@@ -102,7 +102,7 @@
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@+id/tv_register"
             android:digits="@string/match"
-            android:hint="登录密码6~16位数字字母组合"
+            android:hint="6~16位数字字母组合"
             android:inputType="textPassword"
             android:maxLength="16"/>
 
