@@ -147,14 +147,13 @@ public class ActivityCurrentRecord extends BaseActivity {
     public void initTitle(WFYTitle mTitle) {
 
         mTitle.setTitleText("活期资金记录");
-        mTitle.setRightText("查看合同");
-        mTitle.setOnRightClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
-            }
-        });
-
+//        mTitle.setRightText("查看合同");
+//        mTitle.setOnRightClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
+//            }
+//        });
     }
 
     @Override
