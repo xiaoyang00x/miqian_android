@@ -55,7 +55,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
         if (promote.getPromType().equals("HB")) {
             ((ViewHolder) holder).textMoney.setText("￥" + promote.getCanUseAmt());
             ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
-            ((ViewHolder) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
+            ((ViewHolder) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             if (mPosition == position) {
                 ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
             } else {
@@ -65,7 +65,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
             ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
             ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getToUseRate() + "%】");
             ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
-            ((ViewHolderTicket) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
+            ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             if (mPosition == position) {
                 ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
             } else {
