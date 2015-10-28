@@ -70,6 +70,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private void loadMore() {
         if (!isLoading) {
             if (regInvestList.size() >= userRegular.getPage().getCount()) {
+                mAdapter.notifyItemChanged(regInvestList.size() + 1);
                 return;
             }
             isLoading = true;
