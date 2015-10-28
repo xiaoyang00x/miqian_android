@@ -60,7 +60,7 @@ public class AdapterMyRedPaper extends RecyclerView.Adapter {
             CustPromotion promote = promList.get(position);
             ((ViewHolder) holder).textMoney.setText("￥" + promote.getCanUseAmt());
             ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
-            ((ViewHolder) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
+            ((ViewHolder) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             ((ViewHolder) holder).promoteChoosed.setVisibility(View.GONE);
 
             String state = promote.getSta();
