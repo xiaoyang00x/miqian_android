@@ -122,7 +122,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 ProducedOrderResult producedOrderResult = JsonUtil.parseObject(result, ProducedOrderResult.class);
-                if ("000000".equals(producedOrderResult.getCode()) || "102002".equals(producedOrderResult.getCode()) || "102003".equals(producedOrderResult.getCode())) {
+                if ("000000".equals(producedOrderResult.getCode()) || "996633".equals(producedOrderResult.getCode())) {
                     callback.onSucceed(producedOrderResult);
                 } else {
                     callback.onFail(producedOrderResult.getMessage());

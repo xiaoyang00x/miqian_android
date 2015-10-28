@@ -26,20 +26,11 @@ public class RegularEarn implements Serializable {
     private String presentationYearInterest; //赠送年利率
     private BigDecimal fromInvestmentAmount; //起投金额
     private String promotionDesc; //"满1万元送100元红包"//促销描述
-    private BigDecimal continueInvestmentLimit; //递增金额
     private ArrayList<RegularEarnSubInfo> schemeList;
 
     //以下字段只有再取详情的时候才有
     private String yearInterest; //年化收益
     private String limit; //期限
-
-    public BigDecimal getContinueInvestmentLimit() {
-        return continueInvestmentLimit;
-    }
-
-    public void setContinueInvestmentLimit(BigDecimal continueInvestmentLimit) {
-        this.continueInvestmentLimit = continueInvestmentLimit;
-    }
 
     public BigDecimal getSubjectMaxBuy() {
         return subjectMaxBuy;
