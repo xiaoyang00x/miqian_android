@@ -171,7 +171,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
         textDateStart.setText(userRegularDetail.getCrtDt() + "起");
         textDateEnd.setText(userRegularDetail.getDueDt() + "结束");
-        progressBar.setProgress(Float.parseFloat(userRegularDetail.getTimeProgress()));
+        progressBar.setProgress((new Float(userRegularDetail.getTimeProgress())).intValue());
         textRepayment.setText(userRegularDetail.getPayMeansName());
     }
 
