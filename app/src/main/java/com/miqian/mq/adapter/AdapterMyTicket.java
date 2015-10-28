@@ -74,9 +74,11 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                     ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg_grey);
                 } else {
                     ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
+                    ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg);
                 }
             }else {
                 ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
+                ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg);
             }
 
         }

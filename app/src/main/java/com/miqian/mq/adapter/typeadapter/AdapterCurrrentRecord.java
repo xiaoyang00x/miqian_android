@@ -59,6 +59,7 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
         }
         return 0;
     }
+
     public void setMaxItem(int value) {
         maxValue = value;
     }
@@ -66,7 +67,7 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (holder instanceof ViewHolderRecord){
+        if (holder instanceof ViewHolderRecord) {
             CurSubRecord data = dataList.get(position);
             String traCd = data.getTraCd();
 
@@ -74,22 +75,22 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
 
                 switch (traCd) {
                     case "SR01"://认购交易
-                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_subscribe);
+                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
                         ((ViewHolderRecord) holder).textType.setText(data.getType());
-                        ((ViewHolderRecord) holder).tvAmt.setText("-" + data.getAmt());
-                        ((ViewHolderRecord) holder).tvInterest.setText("金额(元)");
+                        ((ViewHolderRecord) holder).tvAmt.setText(data.getAmt());
+                        ((ViewHolderRecord) holder).tvInterest.setText("利息" + data.getInterest() + "元");
 
                         break;
                     case "SS01"://赎回交易
                         ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
                         ((ViewHolderRecord) holder).textType.setText(data.getType());
-                        ((ViewHolderRecord) holder).tvAmt.setText("+" + data.getAmt());
+                        ((ViewHolderRecord) holder).tvAmt.setText(data.getAmt());
                         ((ViewHolderRecord) holder).tvInterest.setText("利息" + data.getInterest() + "元");
                         break;
                     case "SZ01"://转让交易
                         ((ViewHolderRecord) holder).textType.setText(data.getType());
-                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_transfer);
-                        ((ViewHolderRecord) holder).tvAmt.setText("+" + data.getAmt());
+                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
+                        ((ViewHolderRecord) holder).tvAmt.setText(data.getAmt());
                         ((ViewHolderRecord) holder).tvInterest.setText("利息" + data.getInterest() + "元");
                         break;
                     default:
@@ -101,7 +102,7 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
             } else {//空为活期认购
                 ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_subscribe);
                 ((ViewHolderRecord) holder).textType.setText(data.getType());
-                ((ViewHolderRecord) holder).tvAmt.setText("-" + data.getAmt());
+                ((ViewHolderRecord) holder).tvAmt.setText(data.getAmt());
                 ((ViewHolderRecord) holder).tvInterest.setText("金额(元)");
 
             }
@@ -110,11 +111,10 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
             } else {
                 ((ViewHolderRecord) holder).tvTime.setText("--");
             }
-        }
-        else if (holder instanceof ProgressViewHolder) {
+        } else if (holder instanceof ProgressViewHolder) {
             if (position >= maxValue) {
                 ((ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
-                if (maxValue <=15) {
+                if (maxValue <= 15) {
                     ((ProgressViewHolder) holder).textLoading.setVisibility(View.GONE);
                 } else {
                     ((ProgressViewHolder) holder).textLoading.setText("没有更多");
@@ -126,6 +126,7 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
         }
 
     }
+
     class ViewHolderRecord extends RecyclerView.ViewHolder {
 
         public TextView textType;
@@ -143,6 +144,7 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
             ivState = (ImageView) itemView.findViewById(R.id.iv_state);
         }
     }
+
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
         public TextView textLoading;
