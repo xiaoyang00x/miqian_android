@@ -76,6 +76,7 @@
                 android:textColor="@color/mq_b1"
                 android:textColorHint="@color/miqian_gray"
                 android:textSize="15sp"
+                android:maxLength="16"
                 android:layout_toRightOf="@+id/login_image2"
                 android:layout_toEndOf="@+id/login_image2" />
         </RelativeLayout>
