@@ -188,7 +188,7 @@ public class ActivityRedeem extends BaseActivity {
                                 redoom(s);
 
                             } else {
-                                Uihelper.showToast(mActivity, R.string.tip_password);
+                                Uihelper.showToast(mActivity, R.string.tip_password_pc);
                             }
                         } else {
 

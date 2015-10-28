@@ -444,7 +444,7 @@ public class RolloutActivity extends BaseActivity {
                                 rollOut(s);
 
                             } else {
-                                Uihelper.showToast(mActivity, R.string.tip_password);
+                                Uihelper.showToast(mActivity, R.string.tip_password_pc);
                             }
                         } else {
 

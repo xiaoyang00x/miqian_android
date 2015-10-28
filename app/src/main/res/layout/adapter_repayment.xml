@@ -3,7 +3,12 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:layout_marginTop="5dp"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="50dp"
+        android:background="@color/mq_r1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +39,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/margin_left_right"
                 android:singleLine="true"
-                android:textColor="@color/mq_b1"
+                android:textColor="@color/mq_b2"
                 android:textSize="@dimen/mq_font5"/>
         </RelativeLayout>
 

@@ -479,7 +479,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                     }
                                 }, money, prodId, payPassword, subjectId, promListString);
                             } else {
-                                Uihelper.showToast(mActivity, R.string.tip_password);
+                                Uihelper.showToast(mActivity, R.string.tip_password_pc);
                             }
                         } else {
                             Uihelper.showToast(mActivity, "密码不能为空");

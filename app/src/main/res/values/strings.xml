@@ -9,6 +9,7 @@
   <string name="phone_noeffect">请输入正确的手机号码</string>
   <string name="phone_null">手机号码不能为空</string>
   <string name="tip_password">请输入6到16位的数字或字母组合</string>
+  <string name="tip_password_pc">请输入6到16位的交易密码</string>
   <string name="feedback_prompt">请描述您的问题，最多240个字。</string>
   <string name="tip_captcha">请输入验证码</string>
   <string name="please_input_old_password">请输入原密码</string>
