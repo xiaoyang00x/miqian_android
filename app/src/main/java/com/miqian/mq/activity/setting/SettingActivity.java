@@ -268,6 +268,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
                     intent_phone.putExtra("isModifyPhone", true);
                     startActivity(intent_phone);
+                    dismiss();
                 }
 
                 @Override

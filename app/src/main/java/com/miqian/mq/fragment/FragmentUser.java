@@ -1,5 +1,6 @@
 package com.miqian.mq.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -274,15 +275,19 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                 if (!TextUtils.isEmpty(telephone)) {
                     if (MobileOS.isMobileNO(telephone) && telephone.length() == 11) {
                         if (!TextUtils.isEmpty(password)) {
-                            login(telephone, password);
+                            if (password.length() >= 6 && password.length() <= 16) {
+                                login(telephone, password);
+                            }else {
+                                Uihelper.showToast(getActivity(), R.string.tip_password_login);
+                            }
                         } else {
-                            Toast.makeText(getActivity(), "密码不能为空", Toast.LENGTH_SHORT).show();
+                            Uihelper.showToast(getActivity(), "密码不能为空");
                         }
                     } else {
-                        Toast.makeText(getActivity(), R.string.phone_noeffect, Toast.LENGTH_SHORT).show();
+                        Uihelper.showToast(getActivity(), R.string.phone_noeffect);
                     }
                 } else {
-                    Toast.makeText(getActivity(), "电话号码不能为空", Toast.LENGTH_SHORT).show();
+                    Uihelper.showToast(getActivity(), "电话号码不能为空");
                 }
 
             }
