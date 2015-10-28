@@ -25,6 +25,7 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WaterWaveView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 
@@ -168,6 +169,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_investment:
+                MobclickAgent.onEvent(mContext,"1001");
                 UserUtil.loginPay(mContext, dialogPay);
                 break;
             case R.id.bt_right:
