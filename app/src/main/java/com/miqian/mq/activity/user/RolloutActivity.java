@@ -130,7 +130,7 @@ public class RolloutActivity extends BaseActivity {
                         Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
                         intent_branch.putExtra("city", city);
                         intent_branch.putExtra("province", province);
-                        intent_branch.putExtra("bankCode", bankCard.getBankCode());
+                        intent_branch.putExtra("bankcode", bankCard.getBankCode());
                         startActivityForResult(intent_branch, 0);
 
                     } else {
@@ -329,7 +329,7 @@ public class RolloutActivity extends BaseActivity {
                     StringBuilder tip = new StringBuilder();
                     for (WithdrawItem item : data) {
                         if (!"0".equals(item.getFeeAmt())) {
-                            tip.append("；" + item.getName()).append("费用" + item.getFeeAmt() + "元");
+                            tip.append("；" + item.getName()).append(item.getFeeAmt() + "元");
                         }
                     }
                     if (!TextUtils.isEmpty(tip)) {
@@ -405,8 +405,11 @@ public class RolloutActivity extends BaseActivity {
                                 @Override
                                 public void onSucceed(Meta result) {
                                     mWaitingDialog.dismiss();
-                                    dismiss();
+                                    dismiss();//设置状态
+                                    userInfo.setPayPwdStatus("1");
                                     Uihelper.showToast(mActivity, "设置成功");
+                                    rollOutHttp();
+
                                 }
 
                                 @Override

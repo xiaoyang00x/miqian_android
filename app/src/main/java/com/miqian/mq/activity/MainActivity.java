@@ -55,6 +55,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     private final String TAG_USER = "USER";
 
     FragmentTabHost mTabHost;
+    Context context;
     TabWidget tabWidget;
     ViewGroup tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
     private List<JpushInfo> jpushInfolist;
@@ -67,6 +68,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UmengUpdateAgent.update(this);
+        context=this;
         ExtendOperationController.getInstance().registerExtendOperationListener(this);
         setContentView(R.layout.activity_main);
         findTabView();
@@ -74,7 +76,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         MyApplication.getInstance().setIsCurrent(true);
         //设置别名
         JpushHelper.setAlias(this);
-        handleJpush();
+//        handleJpush();
 
         setExsitFragment(true);
 
@@ -244,7 +246,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         final int type = Integer.valueOf(jpush.getUriType());
 
         if (jpushDialog == null) {
-            jpushDialog = new CustomDialog(mContext, CustomDialog.CODE_TIPS) {
+            jpushDialog = new CustomDialog(context, CustomDialog.CODE_TIPS) {
                 @Override
                 public void positionBtnClick() {
 
@@ -285,7 +287,16 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
         jpushDialog.setTitle(jpush.getTitle());
         jpushDialog.setRemarks(jpush.getContent());
+        jpushDialog.show();
 
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus){
+            handleJpush();
+        }
     }
 
     public interface RefeshDataListener {

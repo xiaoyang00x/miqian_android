@@ -151,6 +151,9 @@ public class ActivityRedeem extends BaseActivity {
                                     dismiss();
                                     mWaitingDialog.show();
                                     Uihelper.showToast(mActivity, "设置成功");
+                                    initDialogTradePassword(1);
+                                    dialogTradePassword_input.show();
+
                                 }
 
                                 @Override
@@ -214,7 +217,7 @@ public class ActivityRedeem extends BaseActivity {
 
                 Intent intent = new Intent(mActivity, RedeemResult.class);
 
-                if (code.equals("999993")||code.equals("999988")) {
+                if (code.equals("999993") || code.equals("999988")) {
                     Uihelper.showToast(mActivity, result.getMessage());
                 } else {
                     if (code.equals("000000")) {

@@ -141,22 +141,23 @@ public class TradePsCaptchaActivity extends BaseActivity {
                     Uihelper.showToast(mActivity, R.string.capthcha_num);
                     return;
                 }
-            }
-            HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
-                @Override
-                public void onSucceed(Meta result) {
-                    Intent intent = new Intent(mActivity, SendCaptchaActivity.class);
-                    intent.putExtra("type", TypeUtil.MODIFY_PHONE);
-                    intent.putExtra("captcha", captcha);
-                    startActivity(intent);
-                    finish();
-                }
+                HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
+                    @Override
+                    public void onSucceed(Meta result) {
+                        Intent intent = new Intent(mActivity, SendCaptchaActivity.class);
+                        intent.putExtra("type", TypeUtil.MODIFY_PHONE);
+                        intent.putExtra("captcha", captcha);
+                        startActivity(intent);
+                        finish();
+                    }
 
-                @Override
-                public void onFail(String error) {
-                    Uihelper.showToast(mActivity, error);
-                }
-            }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
+                    @Override
+                    public void onFail(String error) {
+                        Uihelper.showToast(mActivity, error);
+                    }
+                }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
+            }
+
 
         } else {
 

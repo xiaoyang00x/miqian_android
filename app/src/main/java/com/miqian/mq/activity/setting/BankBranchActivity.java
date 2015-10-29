@@ -29,7 +29,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
     private RecyclerView recyclerView;
     private List<BankBranch> items;
     private String city,province;
-    private String bankcode;
+    private int bankcode;
 
     @Override
     public void obtainData() {
@@ -48,7 +48,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
                 mWaitingDialog.dismiss();
 
             }
-        }, province, city, bankcode);
+        }, province, city, ""+bankcode);
     }
 
     @Override
@@ -57,8 +57,10 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
         Intent intent = getIntent();
         city = intent.getStringExtra("city");
         province = intent.getStringExtra("province");
-        bankcode = intent.getStringExtra("bankcode");
-
+        String   stringBankcode = intent.getStringExtra("bankcode");
+        if (!TextUtils.isEmpty(stringBankcode)){
+            bankcode=Integer.parseInt(stringBankcode);
+        }
         et_bankbranch = (EditText) findViewById(R.id.et_bankbranch);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         items = new ArrayList<>();

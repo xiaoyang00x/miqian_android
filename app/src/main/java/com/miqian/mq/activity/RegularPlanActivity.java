@@ -47,14 +47,14 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         subjectId = getIntent().getStringExtra(KEY_SUBJECT_ID);
-        getRegularDetails(subjectId);
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public void obtainData() {
-
+        getRegularDetails(subjectId);
     }
 
     Button btn_buy;
@@ -242,6 +242,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
             public void onFail(String error) {
                 end();
                 Uihelper.showToast(RegularPlanActivity.this, error);
+                showErrorView();
             }
         });
     }
