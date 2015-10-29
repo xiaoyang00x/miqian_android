@@ -16,7 +16,9 @@ import com.miqian.mq.utils.net.HttpImageUtils;
 import com.miqian.mq.utils.net.ImageLoadTask;
 import com.miqian.mq.utils.net.ImageLoaderManager;
 import com.miqian.mq.utils.net.NetUtility;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,6 +30,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     private LayoutParams lp =
             new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     private ImageLoader imageLoader;
+    private DisplayImageOptions options;
     private OnPageItemClickListener onPageItemClickListener;
     Context ctx;
 
@@ -60,6 +63,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
         ctx = context;
         recylcer = new Recylcer(context);
         imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
     }
 
     public void reload(ArrayList<AdvertisementImg> recommends) {
@@ -97,7 +101,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     public Object instantiateItem(final ViewGroup container, final int position) {
         final ImageView imageView = (ImageView) recylcer.requestView();
         String url = list.get(position % list.size()).getImgUrl();
-        imageLoader.displayImage(url, imageView);
+        imageLoader.displayImage(url, imageView, options);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setTag(list.get(position % list.size()).getJumpUrl());// 绑定imageview 视图
         container.addView(imageView, lp);

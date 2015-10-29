@@ -37,12 +37,10 @@ public class WebActivity extends BaseFragmentActivity {
     private String url;
     private SwipeWebView webview;
     private ProgressBar progressBar;
+    private View load_webview_error;
+    private View tv_refresh;
 
     public static void startActivity(Context context, String url) {
-        if (MobileOS.getNetworkType(context) == -1) {
-            Uihelper.showToast(context, MyAsyncTask.NETWORK_ERROR);
-            return;
-        }
         context.startActivity(getIntent(context, url));
     }
 
@@ -69,6 +67,8 @@ public class WebActivity extends BaseFragmentActivity {
     private void findView() {
         progressBar = (ProgressBar)findViewById(R.id.progressbar);
         webview = (SwipeWebView)findViewById(R.id.webview);
+        load_webview_error = findViewById(R.id.load_webview_error);
+        tv_refresh = findViewById(R.id.tv_refresh);
     }
 
     private void initView() {
@@ -110,7 +110,7 @@ public class WebActivity extends BaseFragmentActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
+                loadUrl(url);
                 return false;
             }
 
@@ -141,11 +141,27 @@ public class WebActivity extends BaseFragmentActivity {
             }
         });
 
-
         webview.addJavascriptInterface(this, JS_INTERFACE_NAME);
-        webview.loadUrl(url);
-    }
+        tv_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadUrl(url);
+            }
+        });
+        loadUrl(url);
 
+    }
+    private void loadUrl(String url) {
+        if (MobileOS.getNetworkType(this) == -1) {
+            webview.setVisibility(View.GONE);
+            load_webview_error.setVisibility(View.VISIBLE);
+            setTitle("无网络");
+        }else {
+            webview.setVisibility(View.VISIBLE);
+            load_webview_error.setVisibility(View.GONE);
+            webview.loadUrl(url);
+        }
+    }
     @JavascriptInterface
     public void call(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
