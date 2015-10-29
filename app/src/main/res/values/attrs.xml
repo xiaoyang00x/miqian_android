@@ -93,6 +93,8 @@
         <attr name="strokeWidth" format="float"/>
         <!-- View background -->
         <attr name="android:background"/>
+        <!--每页显示的圆点数量-->
+        <attr name="pageCount" format="integer"/>
     </declare-styleable>
 
     <declare-styleable name="ViewPagerIndicator">

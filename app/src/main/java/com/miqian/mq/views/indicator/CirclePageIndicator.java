@@ -16,8 +16,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 
 import com.miqian.mq.R;
+import com.miqian.mq.utils.LogUtil;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import static android.widget.LinearLayout.HORIZONTAL;
@@ -28,6 +32,7 @@ import static android.widget.LinearLayout.VERTICAL;
  * others are only stroked.
  */
 public class CirclePageIndicator extends View implements PageIndicator {
+    public static final String TAG = CirclePageIndicator.class.getSimpleName();
     private static final int INVALID_POINTER = -1;
 
     private float mRadius;
@@ -35,6 +40,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private final Paint mPaintStroke = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
     private ViewPager mViewPager;
+    private HorizontalScrollView horizontalScrollView;
+//    private LinearLayout indicatorContainer;
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage;
     private int mSnapPage;
@@ -43,6 +50,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mOrientation;
     private boolean mCentered;
     private boolean mSnap;
+    private int mPageCount;
 
     private int mTouchSlop;
     private float mLastMotionX = -1;
@@ -87,6 +95,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
         mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
         mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
+        mPageCount = a.getInteger(R.styleable.CirclePageIndicator_pageCount, 4);
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
         if (background != null) {
@@ -97,8 +106,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
         screenWidth = getResources().getDisplayMetrics().widthPixels;
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+
     }
-int screenWidth = 0;
+
+    int screenWidth = 0;
 
     public void setCentered(boolean centered) {
         mCentered = centered;
@@ -183,7 +194,6 @@ int screenWidth = 0;
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         if (mViewPager == null) {
             return;
         }
@@ -196,13 +206,13 @@ int screenWidth = 0;
             setCurrentItem(count - 1);
             return;
         }
-
         int longSize;
         int longPaddingBefore;
         int longPaddingAfter;
         int shortPaddingBefore;
         if (mOrientation == HORIZONTAL) {
-            longSize = getWidth();
+//            longSize = getWidth();
+            longSize = screenWidth;
             longPaddingBefore = getPaddingLeft();
             longPaddingAfter = getPaddingRight();
             shortPaddingBefore = getPaddingTop();
@@ -216,11 +226,14 @@ int screenWidth = 0;
 //        final float threeRadius = mRadius * 3;
 
         //wgl
-        final float threeRadius = (screenWidth - mRadius*2*count)/(count + 1);
+//        final float threeRadius = (screenWidth - mRadius*2*count)/(count + 1);
+        final float threeRadius = (longSize - mRadius * 2) / count;
+        final float stepSize = (longSize - longPaddingBefore - longPaddingAfter) / mPageCount;
 
 
         final float shortOffset = shortPaddingBefore + mRadius;
-        float longOffset = longPaddingBefore + mRadius;
+//        float longOffset = longPaddingBefore + mRadius;
+        float longOffset = longPaddingBefore;
         if (mCentered) {
             longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
         }
@@ -237,8 +250,9 @@ int screenWidth = 0;
         for (int iLoop = 0; iLoop < count; iLoop++) {
 //            float drawLong = longOffset + (iLoop * threeRadius);
             //wgl
-            float drawLong = longOffset + ((iLoop + 1) * threeRadius);
-            drawLong = drawLong + ((iLoop + 1)*2 - 1)* mRadius - 3*mRadius;
+//            float drawLong = longOffset + ((iLoop + 1) * threeRadius);
+//            float drawLong = longOffset + ((iLoop + 1) * stepSize);
+            float drawLong = longOffset + iLoop * stepSize + stepSize / 2;
 
             if (mOrientation == HORIZONTAL) {
                 dX = drawLong;
@@ -256,107 +270,120 @@ int screenWidth = 0;
             if (pageFillRadius != mRadius) {
                 canvas.drawCircle(dX, dY, mRadius, mPaintStroke);
             }
+
+            LogUtil.d(TAG, "iLoop = " + iLoop + "dX = " + dX + "---------  dY = " + dY);
         }
 
         //Draw the filled circle according to the current scroll
-        float cx = (mSnap ? mSnapPage : mCurrentPage) * threeRadius;
+        float cx = (mSnap ? mSnapPage : mCurrentPage) * stepSize + stepSize / 2;
         if (!mSnap) {
-            cx += mPageOffset * threeRadius;
+            cx += mPageOffset * stepSize;
         }
+        LogUtil.d(TAG, "cx = " + cx + "------------mPageOffset = " + mPageOffset + "------------mCurrentPage = " + mCurrentPage);
         if (mOrientation == HORIZONTAL) {
-//            dX = longOffset + cx;
-            //wgl
-            dX = longOffset + cx + threeRadius + ((mCurrentPage + 1)*2 -1)*mRadius - 3*mRadius;
+            dX = cx;
             dY = shortOffset;
         } else {
             dX = shortOffset;
             dY = longOffset + cx;
         }
         canvas.drawCircle(dX, dY, mRadius, mPaintFill);
+        if (mPageOffset == 0) {
+            if (screenWidth >= dX) {
+
+                horizontalScrollView.smoothScrollTo(0, 0);
+            } else {
+                if (dX % screenWidth > 0) {
+                    horizontalScrollView.smoothScrollTo((int) ((dX / screenWidth) * screenWidth), 0);
+                } else {
+                    horizontalScrollView.smoothScrollTo(0, 0);
+                }
+            }
+        }
     }
 
-    public boolean onTouchEvent(android.view.MotionEvent ev) {
-        if (super.onTouchEvent(ev)) {
-            return true;
-        }
-        if ((mViewPager == null) || (mViewPager.getAdapter().getCount() == 0)) {
-            return false;
-        }
-
-        final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
-                mLastMotionX = ev.getX();
-                break;
-
-            case MotionEvent.ACTION_MOVE: {
-                final int activePointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
-                final float x = MotionEventCompat.getX(ev, activePointerIndex);
-                final float deltaX = x - mLastMotionX;
-
-                if (!mIsDragging) {
-                    if (Math.abs(deltaX) > mTouchSlop) {
-                        mIsDragging = true;
-                    }
-                }
-
-                if (mIsDragging) {
-                    mLastMotionX = x;
-                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
-                        mViewPager.fakeDragBy(deltaX);
-                    }
-                }
-
-                break;
-            }
-
-            case MotionEvent.ACTION_CANCEL:
-            case MotionEvent.ACTION_UP:
-                if (!mIsDragging) {
-                    final int count = mViewPager.getAdapter().getCount();
-                    final int width = getWidth();
-                    final float halfWidth = width / 2f;
-                    final float sixthWidth = width / 6f;
-
-                    if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
-                        if (action != MotionEvent.ACTION_CANCEL) {
-                            mViewPager.setCurrentItem(mCurrentPage - 1);
-                        }
-                        return true;
-                    } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
-                        if (action != MotionEvent.ACTION_CANCEL) {
-                            mViewPager.setCurrentItem(mCurrentPage + 1);
-                        }
-                        return true;
-                    }
-                }
-
-                mIsDragging = false;
-                mActivePointerId = INVALID_POINTER;
-                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
-                break;
-
-            case MotionEventCompat.ACTION_POINTER_DOWN: {
-                final int index = MotionEventCompat.getActionIndex(ev);
-                mLastMotionX = MotionEventCompat.getX(ev, index);
-                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
-                break;
-            }
-
-            case MotionEventCompat.ACTION_POINTER_UP:
-                final int pointerIndex = MotionEventCompat.getActionIndex(ev);
-                final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
-                if (pointerId == mActivePointerId) {
-                    final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-                    mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
-                }
-                mLastMotionX = MotionEventCompat.getX(ev, MotionEventCompat.findPointerIndex(ev, mActivePointerId));
-                break;
-        }
-
-        return true;
-    }
+//    public boolean onTouchEvent(android.view.MotionEvent ev) {
+//        if (super.onTouchEvent(ev)) {
+//            return true;
+//        }
+//        if ((mViewPager == null) || (mViewPager.getAdapter().getCount() == 0)) {
+//            return false;
+//        }
+//
+//        final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
+//                mLastMotionX = ev.getX();
+//                break;
+//
+//            case MotionEvent.ACTION_MOVE: {
+//                final int activePointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+//                final float x = MotionEventCompat.getX(ev, activePointerIndex);
+//                final float deltaX = x - mLastMotionX;
+//
+//                if (!mIsDragging) {
+//                    if (Math.abs(deltaX) > mTouchSlop) {
+//                        mIsDragging = true;
+//                    }
+//                }
+//
+//                if (mIsDragging) {
+//                    mLastMotionX = x;
+//                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
+//                        mViewPager.fakeDragBy(deltaX);
+//                    }
+//                }
+//
+//                break;
+//            }
+//
+//            case MotionEvent.ACTION_CANCEL:
+//            case MotionEvent.ACTION_UP:
+//                if (!mIsDragging) {
+//                    final int count = mViewPager.getAdapter().getCount();
+//                    final int width = getWidth();
+//                    final float halfWidth = width / 2f;
+//                    final float sixthWidth = width / 6f;
+//
+//                    if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
+//                        if (action != MotionEvent.ACTION_CANCEL) {
+//                            mViewPager.setCurrentItem(mCurrentPage - 1);
+//                        }
+//                        return true;
+//                    } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
+//                        if (action != MotionEvent.ACTION_CANCEL) {
+//                            mViewPager.setCurrentItem(mCurrentPage + 1);
+//                        }
+//                        return true;
+//                    }
+//                }
+//
+//                mIsDragging = false;
+//                mActivePointerId = INVALID_POINTER;
+//                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
+//                break;
+//
+//            case MotionEventCompat.ACTION_POINTER_DOWN: {
+//                final int index = MotionEventCompat.getActionIndex(ev);
+//                mLastMotionX = MotionEventCompat.getX(ev, index);
+//                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
+//                break;
+//            }
+//
+//            case MotionEventCompat.ACTION_POINTER_UP:
+//                final int pointerIndex = MotionEventCompat.getActionIndex(ev);
+//                final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
+//                if (pointerId == mActivePointerId) {
+//                    final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
+//                    mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
+//                }
+//                mLastMotionX = MotionEventCompat.getX(ev, MotionEventCompat.findPointerIndex(ev, mActivePointerId));
+//                break;
+//        }
+//
+//        return true;
+//    }
 
     @Override
     public void setViewPager(ViewPager view) {
@@ -373,6 +400,14 @@ int screenWidth = 0;
         mViewPager.setOnPageChangeListener(this);
         invalidate();
     }
+
+    public void setScrollView(HorizontalScrollView view) {
+        horizontalScrollView = view;
+    }
+
+//    public void setIndicatorContainer(LinearLayout viewGroup) {
+//        indicatorContainer = viewGroup;
+//    }
 
     @Override
     public void setViewPager(ViewPager view, int initialPosition) {
@@ -441,17 +476,39 @@ int screenWidth = 0;
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mOrientation == HORIZONTAL) {
-            setMeasuredDimension(measureLong(widthMeasureSpec), measureShort(heightMeasureSpec));
+            setMeasuredDimension(getLongSize(), measureShort(heightMeasureSpec));
+//            setMeasuredDimension(measureLong(widthMeasureSpec), measureShort(heightMeasureSpec));
         } else {
             setMeasuredDimension(measureShort(widthMeasureSpec), measureLong(heightMeasureSpec));
         }
     }
 
+    private int getLongSize() {
+        ViewGroup parent = (ViewGroup) getParent();
+        int parentWidth;
+        int longPaddingBefore;
+        int longPaddingAfter;
+        if (mOrientation == HORIZONTAL) {
+            longPaddingBefore = getPaddingLeft();
+            longPaddingAfter = getPaddingRight();
+            parentWidth = getResources().getDisplayMetrics().widthPixels;
+            ;
+        } else {
+            longPaddingBefore = getPaddingTop();
+            longPaddingAfter = getPaddingBottom();
+            parentWidth = getResources().getDisplayMetrics().heightPixels;
+        }
+        final float stepSize = (parentWidth - longPaddingBefore - longPaddingAfter) / mPageCount;
+
+        float width = stepSize * mViewPager.getAdapter().getCount();
+        LogUtil.d(TAG, "getLongSize() = " + width);
+        return (int) width;
+    }
+
     /**
      * Determines the width of this view
      *
-     * @param measureSpec
-     *            A measureSpec packed into an int
+     * @param measureSpec A measureSpec packed into an int
      * @return The width of the view, honoring constraints from measureSpec
      */
     private int measureLong(int measureSpec) {
@@ -465,21 +522,22 @@ int screenWidth = 0;
         } else {
             //Calculate the width according the views count
             final int count = mViewPager.getAdapter().getCount();
-            result = (int)(getPaddingLeft() + getPaddingRight()
+            result = (int) (getPaddingLeft() + getPaddingRight()
                     + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
         }
+
+        LogUtil.d(TAG, "measureLong   result = " + result);
         return result;
     }
 
     /**
      * Determines the height of this view
      *
-     * @param measureSpec
-     *            A measureSpec packed into an int
+     * @param measureSpec A measureSpec packed into an int
      * @return The height of the view, honoring constraints from measureSpec
      */
     private int measureShort(int measureSpec) {
@@ -492,18 +550,19 @@ int screenWidth = 0;
             result = specSize;
         } else {
             //Measure the height
-            result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
+            result = (int) (2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
         }
+        LogUtil.d(TAG, "measureShort   result = " + result);
         return result;
     }
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        SavedState savedState = (SavedState)state;
+        SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
         mCurrentPage = savedState.currentPage;
         mSnapPage = savedState.currentPage;

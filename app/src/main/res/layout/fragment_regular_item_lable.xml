@@ -26,7 +26,7 @@
             android:layout_centerVertical="true"
             android:text="@string/regular_plan"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font2" />
+            android:textSize="@dimen/mq_font3" />
 
         <TextView
             android:id="@+id/tv_invest_security"

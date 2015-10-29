@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.views.DecoratorViewPager;
 import com.miqian.mq.views.indicator.CirclePageIndicator;
 
@@ -121,19 +123,23 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             layout_limit_container.removeAllViews();
             if (planList != null && planList.size() > 0) {
                 int count = planList.size();
-                layout_limit_container.setWeightSum((count + 1) * 2);
+                layout_limit_container.setWeightSum(count);
+//                layout_limit_container.setWeightSum((count + 1) * 2);
                 for (int i = 0; i < count; i++) {
                     TextView textView = new TextView(mContext);
                     textView.setText(planList.get(i).getLimit() + "天");
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 2);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
                     textView.setGravity(Gravity.CENTER);
                     textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(R.dimen.mq_font4));
                     textView.setTextColor(mContext.getResources().getColor(i == 0 ? R.color.mq_r1 : R.color.mq_b2));
                     layout_limit_container.addView(textView, i, params);
                 }
             }
+            HorizontalScrollView viewPager_HorizonScrollView = (HorizontalScrollView) itemView.findViewById(R.id.viewPager_HorizonScrollView);
             CirclePageIndicator circle_indicator = (CirclePageIndicator) itemView.findViewById(R.id.circle_indicator);
             circle_indicator.setViewPager(view_pager);
+//            circle_indicator.setIndicatorContainer(layout_limit_container);
+            circle_indicator.setScrollView(viewPager_HorizonScrollView);
             view_pager.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
