@@ -35,6 +35,7 @@ import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -137,19 +138,19 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
         //历史收益
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalProfit())) {
-            tv_TotalProfit.setText(userInfo.getTotalProfit());
+            tv_TotalProfit.setText(FormatUtil.formatAmountStr(userInfo.getTotalProfit()));
         } else {
             tv_TotalProfit.setText("--.--");
         }
         //账户余额
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getBalance())) {
-            tv_balance.setText(userInfo.getBalance());
+            tv_balance.setText(FormatUtil.formatAmountStr(userInfo.getBalance()));
         } else {
             tv_balance.setText("--.--");
         }
         //我的活期
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getCurAmt())) {
-            tv_Current.setText(userInfo.getCurAmt() + "元");
+            tv_Current.setText(FormatUtil.formatAmountStr(userInfo.getCurAmt()) + "元");
         } else {
             tv_Current.setText("--");
         }
