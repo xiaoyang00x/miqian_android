@@ -187,7 +187,7 @@
                                 android:layout_below="@id/icon_safe"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="7dp"
-                                android:text="严格风控"
+                                android:text="本息保障"
                                 android:textColor="@color/mq_b2"
                                 android:textSize="@dimen/mq_font4" />
 

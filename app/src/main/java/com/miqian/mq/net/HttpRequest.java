@@ -139,26 +139,21 @@ public class HttpRequest {
     /**
      * 充值
      */
-    public static void rollIn(Context context, final ICallback<PayOrderResult> callback, String amt,
-                              String bankNo) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+    public static void rollIn(Context context, final ICallback<String> callback, String amt, String bankNo) {
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-        //        mList.add(new Param("bankCode", bankCode));
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
 
         new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
-                if (payOrderResult.getCode().equals("000000")) {
-                    callback.onSucceed(payOrderResult);
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if ("999991".equals(meta.getCode()) || "000000".equals(meta.getCode())) {
+                    callback.onSucceed(result);
                 } else {
-                    callback.onFail(payOrderResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 

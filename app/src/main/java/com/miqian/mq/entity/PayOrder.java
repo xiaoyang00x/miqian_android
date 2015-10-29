@@ -33,9 +33,9 @@ public class PayOrder implements Serializable {
     private String card_no;     // 银行卡号 卡前置，卡首次支付的时候传入，卡历次支付传入对应协议号就可以
     private String flag_modify;
     private String user_id; // 用户id
-    private String singleAmtLimit; // 用户id
-    private String dayAmtLimit; // 用户id
-    private String monthAmtLimit ; // 用户id
+    private String singleAmtLimit; //单笔限额
+    private String dayAmtLimit; // 每日限额
+    private String monthAmtLimit ; // 每月限额
 
     public String getSingleAmtLimit() {
         return singleAmtLimit;
