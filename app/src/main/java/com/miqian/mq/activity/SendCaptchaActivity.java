@@ -193,21 +193,21 @@ public class SendCaptchaActivity extends BaseActivity {
             summit(phone, captcha);
         } else {
             type = TypeUtil.CAPTCHA_FINDPASSWORD;
+            HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
+                @Override
+                public void onSucceed(Meta result) {
+                    summit(phone, captcha);
+                }
+
+                @Override
+                public void onFail(String error) {
+
+                    Uihelper.showToast(mActivity, error);
+
+                }
+            }, phone, type, captcha);
         }
 
-        HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-                summit(phone, captcha);
-            }
-
-            @Override
-            public void onFail(String error) {
-
-                Uihelper.showToast(mActivity, error);
-
-            }
-        }, phone, type, captcha);
     }
 
     private void summit(final String phone, final String captcha) {

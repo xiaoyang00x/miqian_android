@@ -143,7 +143,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             frame_setting_bankcard.setVisibility(View.VISIBLE);
             findViewById(R.id.divider_bank).setVisibility(View.VISIBLE);
         }
+        ExtendOperationController.getInstance().registerExtendOperationListener(this);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
     }
 
     @Override
