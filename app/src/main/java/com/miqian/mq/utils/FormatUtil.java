@@ -60,4 +60,20 @@ public class FormatUtil {
         }
         return format;
     }
+
+    /**
+     * 格式化金额 保留2位小数且三位三位的隔开
+     * @param amount
+     * @return
+     */
+    public static String formatAmountStr(String amount) {
+        NumberFormat nf = new DecimalFormat("#,###.##");
+        String format = amount;
+        try{
+            format = nf.format(new BigDecimal(amount));
+        }catch (Exception e) {
+
+        }
+        return format;
+    }
 }
