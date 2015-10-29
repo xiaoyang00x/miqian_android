@@ -1,6 +1,5 @@
 package com.miqian.mq.fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
@@ -35,6 +33,7 @@ import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -42,6 +41,7 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.ProgressDialogView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 
@@ -137,19 +137,19 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
         //历史收益
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalProfit())) {
-            tv_TotalProfit.setText(userInfo.getTotalProfit());
+            tv_TotalProfit.setText(FormatUtil.formatAmountStr(userInfo.getTotalProfit()));
         } else {
             tv_TotalProfit.setText("--.--");
         }
         //账户余额
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getBalance())) {
-            tv_balance.setText(userInfo.getBalance());
+            tv_balance.setText(FormatUtil.formatAmountStr(userInfo.getBalance()));
         } else {
             tv_balance.setText("--.--");
         }
         //我的活期
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getCurAmt())) {
-            tv_Current.setText(userInfo.getCurAmt() + "元");
+            tv_Current.setText(FormatUtil.formatAmountStr(userInfo.getCurAmt()) + "元");
         } else {
             tv_Current.setText("--");
         }
@@ -255,6 +255,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         view.findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(getActivity(), "1048");
                 //跳到注册页
                 getActivity().startActivity(new Intent(getActivity(), RegisterActivity.class));
 
@@ -263,6 +264,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         view.findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(getActivity(), "1047");
                 SendCaptchaActivity.enterActivity(getActivity(), TypeUtil.SENDCAPTCHA_FORGETPSW, false);
             }
         });
@@ -270,6 +272,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(getActivity(), "1046");
                 String telephone = editTelephone.getText().toString();
                 String password = editPassword.getText().toString();
                 if (!TextUtils.isEmpty(telephone)) {
@@ -332,6 +335,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         switch (v.getId()) {
             //充值
             case R.id.btn_rollin:
+                MobclickAgent.onEvent(getActivity(), "1017");
                 //未认证
                 if ("0".equals(userInfo.getRealNameStatus())) {
                     Intent intent = new Intent(getActivity(), ActivityRealname.class);
@@ -343,6 +347,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                 break;
             //取现
             case R.id.btn_rollout:
+                MobclickAgent.onEvent(getActivity(), "1018");
                 String balance = userInfo.getBalance();
                 if (!TextUtils.isEmpty(balance)) {
                     if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
@@ -360,30 +365,37 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                 break;
             //我的活期
             case R.id.frame_account_current:
+                MobclickAgent.onEvent(getActivity(), "1019");
                 startActivity(new Intent(getActivity(), ActivityUserCurrent.class));
                 break;
             //我的定期
             case R.id.frame_regular:
+                MobclickAgent.onEvent(getActivity(), "1020");
                 startActivity(new Intent(getActivity(), UserRegularActivity.class));
                 break;
             //资金记录
             case R.id.frame_record:
+                MobclickAgent.onEvent(getActivity(), "1021");
                 startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
                 break;
             //拾财券
             case R.id.frame_ticket:
+                MobclickAgent.onEvent(getActivity(), "1022");
                 startActivity(new Intent(getActivity(), MyTicketActivity.class));
                 break;
             //我的红包
             case R.id.frame_redpackage:
+                MobclickAgent.onEvent(getActivity(), "1023");
                 startActivity(new Intent(getActivity(), RedPaperActivity.class));
                 break;
             //我的消息
             case R.id.bt_left:
+                MobclickAgent.onEvent(getActivity(), "1015");
                 startActivity(new Intent(getActivity(), AnnounceActivity.class));
                 break;
             //我的设置
             case R.id.bt_right:
+                MobclickAgent.onEvent(getActivity(), "1016");
                 Intent intent_setting = new Intent(getActivity(), SettingActivity.class);
                 Bundle extra = new Bundle();
                 extra.putSerializable("userInfo", userInfo);

@@ -11,6 +11,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.RegularEarnActivity;
 import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.utils.FormatUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by guolei_wang on 15/10/13.
@@ -133,6 +134,13 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
 
             @Override
             public void onClick(View view) {
+                if ("01".equals(regularEarn.getSubjectType())) {
+                    MobclickAgent.onEvent(mContext, "1003");
+                } else if ("03".equals(regularEarn.getSubjectType())) {
+                    MobclickAgent.onEvent(mContext, "1004");
+                } else if ("00".equals(regularEarn.getSubjectType())) {
+                    MobclickAgent.onEvent(mContext, "1010");
+                }
                 RegularEarnActivity.startActivity(mContext, regularEarn.getSubjectId());
             }
         });

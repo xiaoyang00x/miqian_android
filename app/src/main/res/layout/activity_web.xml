@@ -18,7 +18,40 @@
         android:layout_height="3dp"
         android:layout_below="@id/titlebar_container" />
 
+    <LinearLayout
+        android:id="@+id/load_webview_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/progressbar"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="133dp"
+            android:layout_height="133dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="135dp"
+            android:src="@drawable/img_no_network" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="14dp"
+            android:text="网络无法连接，请检查你的手机是否联网"
+            android:textColor="@color/mq_b2"
+            android:textSize="@dimen/mq_font3" />
+
+        <Button
+            android:id="@+id/tv_refresh"
+            android:layout_width="248dp"
+            android:layout_height="38dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textColor="#505050"
+            android:background="@drawable/btn_white"
+            android:text="再试一次" />
+    </LinearLayout>
     <com.miqian.mq.views.SwipeWebView
         android:id="@+id/webview"
         android:layout_width="match_parent"

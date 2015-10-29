@@ -18,6 +18,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 
@@ -151,13 +152,16 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.frame_current_record:
+                MobclickAgent.onEvent(mActivity, "1035");
                 startActivity(new Intent(mActivity, ActivityCurrentRecord.class));
                 break;
             case R.id.frame_project_match:
+                MobclickAgent.onEvent(mActivity, "1036");
                 Intent intent = new Intent(mActivity, ProjectMatchActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_redeem:
+                MobclickAgent.onEvent(mActivity, "1038");
                 intent = new Intent(mActivity, ActivityRedeem.class);
                 //本金
                 intent.putExtra("capital", userCurrent.getCurAsset());
@@ -165,8 +169,8 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.bt_subscribe:
-
-               dialogPay.show();
+                MobclickAgent.onEvent(mActivity, "1037");
+                dialogPay.show();
 
                 break;
         }

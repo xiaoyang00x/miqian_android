@@ -21,6 +21,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by guolei_wang on 15/9/16.
@@ -147,6 +148,7 @@ public class RegularFragment extends BasicFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_right:
+                MobclickAgent.onEvent(mContext, "1008");
                 UserUtil.isLogin(getActivity(), UserRegularActivity.class);
                 break;
         }

@@ -30,6 +30,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
 import com.umeng.update.UpdateResponse;
@@ -168,6 +169,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             //姓名
             case R.id.frame_setting_name:
+                MobclickAgent.onEvent(mActivity, "1024");
                 if (userInfo != null && !TextUtils.isEmpty(userInfo.getRealNameStatus())) {
                     //未认证
                     if ("0".equals(userInfo.getRealNameStatus())) {
@@ -179,11 +181,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //绑定手机
             case R.id.frame_setting_bindphone:
+                MobclickAgent.onEvent(mActivity, "1025");
                 initTipDialog();
-
                 break;
             //安全设置
             case R.id.frame_setting_security:
+                MobclickAgent.onEvent(mActivity, "1026");
                 if (userInfo != null && !TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
                     Intent intent = new Intent(mActivity, SecuritySettingActivity.class);
                     intent.putExtra("payPwdStatus", userInfo.getPayPwdStatus());
@@ -193,6 +196,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //帮助中心
             case R.id.frame_setting_helpcenter:
+                MobclickAgent.onEvent(mActivity, "1030");
                 WebActivity.startActivity(mActivity, Urls.web_help);
                 break;
             //银行卡号
@@ -228,11 +232,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //意见反馈
             case R.id.frame_setting_suggest:
+                MobclickAgent.onEvent(mActivity, "1029");
                 Intent feedBackActivity = new Intent(this, CustomFeedBackActivity.class);
                 startActivity(feedBackActivity);
                 break;
             //版本更新
             case R.id.frame_update:
+                MobclickAgent.onEvent(mActivity, "1032");
                 UmengUpdateAgent.setUpdateAutoPopup(false);
                 UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
                     @Override
@@ -257,10 +263,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //关于咪钱
             case R.id.frame_setting_about:
+                MobclickAgent.onEvent(mActivity, "1031");
                 startActivity(new Intent(mActivity, AboutUsActivity.class));
                 break;
             //联系客服
             case R.id.frame_setting_telephone:
+                MobclickAgent.onEvent(mActivity, "1033");
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
                 break;
         }
@@ -292,6 +300,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     //退出账号
     public void btn_click(View view) {
+        MobclickAgent.onEvent(mActivity, "1034");
         mWaitingDialog.show();
         HttpRequest.loginOut(mActivity, new ICallback<Meta>() {
             @Override

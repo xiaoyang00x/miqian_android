@@ -23,6 +23,7 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Joy on 2015/9/4.
@@ -133,9 +134,11 @@ public class SendCaptchaActivity extends BaseActivity {
         int summitType = 0;
         switch (type) {
             case TypeUtil.SENDCAPTCHA_FORGETPSW:
+                MobclickAgent.onEvent(mContext, "1049");
                 summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
                 break;
             case TypeUtil.MODIFY_PHONE:
+                MobclickAgent.onEvent(mContext, "1050");
                 summitType = TypeUtil.CAPTCHA_BINTTEL_SECOND;
                 break;
             default:

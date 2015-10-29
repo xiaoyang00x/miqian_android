@@ -20,6 +20,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CircleButton;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -257,6 +258,7 @@ public class CapitalRecordActivity extends BaseActivity {
 
         switch (v.getId()) {
             case R.id.all:
+                MobclickAgent.onEvent(mActivity, "1041");
                 preSelected.setColor(0xdddddd);
                 preSelected = all;
 
@@ -272,6 +274,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 mType = "";
                 break;
             case R.id.saving:
+                MobclickAgent.onEvent(mActivity, "1041_1");
                 preSelected.setColor(0xdddddd);
                 preSelected = saving;
                 preSelected.setColor(Color.RED);
@@ -287,6 +290,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 break;
 
             case R.id.buy:
+                MobclickAgent.onEvent(mActivity, "1041_3");
                 preSelected.setColor(0xdddddd);
                 preSelected = buy;
                 preSelected.setColor(Color.RED);
@@ -300,6 +304,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 mType = "MQ03";
                 break;
             case R.id.withdraw:
+                MobclickAgent.onEvent(mActivity, "1041_2");
                 preSelected.setColor(0xdddddd);
                 preSelected = withdraw;
                 preSelected.setColor(Color.RED);
@@ -314,6 +319,7 @@ public class CapitalRecordActivity extends BaseActivity {
 
 
             case R.id.redeem:
+                MobclickAgent.onEvent(mActivity, "1041_4");
                 preSelected.setColor(0xdddddd);
                 preSelected = redeem;
 
@@ -328,6 +334,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 break;
 
             case R.id.transfer:
+                MobclickAgent.onEvent(mActivity, "1041_5");
                 preSelected.setColor(0xdddddd);
                 preSelected = transfer;
                 preSelected.setColor(Color.RED);
@@ -341,6 +348,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 break;
 
             case R.id.maturity:
+                MobclickAgent.onEvent(mActivity, "1041_6");
                 preSelected.setColor(0xdddddd);
                 preSelected = maturity;
                 preSelected.setColor(Color.RED);
@@ -353,6 +361,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 break;
 
             case R.id.other:
+                MobclickAgent.onEvent(mActivity, "1041_7");
                 preSelected.setColor(0xdddddd);
                 preSelected = other;
 

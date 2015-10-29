@@ -1,22 +1,17 @@
 package com.miqian.mq.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.miqian.mq.R;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.AdvertisementImg;
-import com.miqian.mq.utils.LogUtil;
-import com.miqian.mq.utils.net.HttpImageUtils;
-import com.miqian.mq.utils.net.ImageLoadTask;
-import com.miqian.mq.utils.net.ImageLoaderManager;
-import com.miqian.mq.utils.net.NetUtility;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,6 +23,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     private LayoutParams lp =
             new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     private ImageLoader imageLoader;
+    private DisplayImageOptions options;
     private OnPageItemClickListener onPageItemClickListener;
     Context ctx;
 
@@ -60,6 +56,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
         ctx = context;
         recylcer = new Recylcer(context);
         imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
     }
 
     public void reload(ArrayList<AdvertisementImg> recommends) {
@@ -97,7 +94,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     public Object instantiateItem(final ViewGroup container, final int position) {
         final ImageView imageView = (ImageView) recylcer.requestView();
         String url = list.get(position % list.size()).getImgUrl();
-        imageLoader.displayImage(url, imageView);
+        imageLoader.displayImage(url, imageView, options);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setTag(list.get(position % list.size()).getJumpUrl());// 绑定imageview 视图
         container.addView(imageView, lp);
@@ -105,6 +102,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(imageView.getContext(), "1002");
                 WebActivity.startActivity(imageView.getContext(), imageView.getTag().toString());
             }
         });

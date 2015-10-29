@@ -17,6 +17,7 @@ import com.miqian.mq.entity.CityInfo;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Uihelper;
+import com.umeng.analytics.MobclickAgent;
 
 
 public abstract class DialogTradePassword extends Dialog {
@@ -68,7 +69,11 @@ public abstract class DialogTradePassword extends Dialog {
         btNegative.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-//                negativeBtnClick();
+                if (mType==TYPE_INPUTPASSWORD) {
+                    MobclickAgent.onEvent(mContext, "1060");
+                } else {
+                    MobclickAgent.onEvent(mContext, "1062");
+                }
                 dismiss();
             }
         });
@@ -77,6 +82,11 @@ public abstract class DialogTradePassword extends Dialog {
         btn_sure.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
+                if (mType==TYPE_INPUTPASSWORD) {
+                    MobclickAgent.onEvent(mContext, "1061");
+                } else {
+                    MobclickAgent.onEvent(mContext, "1063");
+                }
                 positionBtnClick(et_password.getText().toString());
                 et_password.setText("");
             }
