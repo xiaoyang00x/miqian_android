@@ -58,7 +58,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
             ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getPrnUsePerc() + "%】");
             ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
-            ((ViewHolderTicket) holder).limitDate.setText("有效期至" + Uihelper.timestampToString(promote.getEndTimestamp()));
+            ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             ((ViewHolderTicket) holder).promoteChoosed.setVisibility(View.GONE);
 
             String state = promote.getSta();
@@ -74,9 +74,11 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                     ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg_grey);
                 } else {
                     ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
+                    ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg);
                 }
             }else {
                 ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
+                ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg);
             }
 
         }

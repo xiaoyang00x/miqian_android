@@ -197,6 +197,24 @@ public class Uihelper {
     }
 
     /**
+     * 红包显示时间格式
+     *
+     * @author Jackie
+     * @date 2015-9-29
+     * @param timestamp
+     * @return
+     */
+    public static String redPaperTime(String timestamp) {
+        if (TextUtils.isEmpty(timestamp)) {
+            return "";
+        } else if ("253402185600000".equals(timestamp)) {
+            return "无期限";
+        } else {
+            return "有效期至" + Uihelper.timestampToString(timestamp);
+        }
+    }
+
+    /**
      * 将时间戳转换成yyyyMMdd
      *
      * @author Jackie

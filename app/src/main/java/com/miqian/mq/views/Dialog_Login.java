@@ -1,5 +1,6 @@
 package com.miqian.mq.views;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
+import com.miqian.mq.utils.Uihelper;
 
 /**
  * Created by Administrator on 2015/9/1.
@@ -59,16 +61,21 @@ public abstract class Dialog_Login extends Dialog {
                 if (!TextUtils.isEmpty(telephone)) {
                     if (MobileOS.isMobileNO(telephone) && telephone.length() == 11) {
                         if (!TextUtils.isEmpty(password)) {
-                            dismiss();
-                            login(telephone, password);
+                            if (password.length() >= 6 && password.length() <= 16) {
+                                dismiss();
+                                login(telephone, password);
+                            }else {
+                                Uihelper.showToast((Activity)mContext, R.string.tip_password_login);
+                            }
+
                         } else {
-                            Toast.makeText(mContext, "密码不能为空", Toast.LENGTH_SHORT).show();
+                           Uihelper.showToast(mContext, "密码不能为空");
                         }
                     } else {
-                        Toast.makeText(mContext, R.string.phone_noeffect, Toast.LENGTH_SHORT).show();
+                        Uihelper.showToast((Activity)mContext, R.string.phone_noeffect);
                     }
                 } else {
-                    Toast.makeText(mContext, "电话号码不能为空", Toast.LENGTH_SHORT).show();
+                    Uihelper.showToast(mContext, "电话号码不能为空");
                 }
 
             }

@@ -115,7 +115,7 @@ public class Urls {
      *网页的URL
      */
     //注册页：《秒钱用户注册协议》
-    public final static String web_register_law = base_server + "webView/register";
+    public final static String web_register_law = base_server + "webView/service-items";
 //    //充值页面：《资金管理协议》
 //    public final static String web_recharge_law = base_server + "webView/recharge";
 //    //活期认购页：《活期赚服务协议》

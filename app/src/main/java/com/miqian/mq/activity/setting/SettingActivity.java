@@ -235,13 +235,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
                                 break;
                             case UpdateStatus.No: // has no update
-                                Toast.makeText(mContext, "没有更新", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "当前已是最新版本", Toast.LENGTH_SHORT).show();
                                 break;
                             case UpdateStatus.NoneWifi: // none wifi
                                 UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
                                 break;
                             case UpdateStatus.Timeout: // time out
-                                Toast.makeText(mContext, "超时", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "请求超时", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -268,6 +268,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
                     intent_phone.putExtra("isModifyPhone", true);
                     startActivity(intent_phone);
+                    dismiss();
                 }
 
                 @Override

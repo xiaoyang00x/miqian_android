@@ -26,15 +26,6 @@ public class RegularPlan implements Serializable {
     private String bxbzf; //本息保障方
     private String ddbzf; //兜底保障方
     private String promotionDesc; //"满1万元送100元红包"//促销描述
-    private BigDecimal continueInvestmentLimit; //递增金额
-
-    public BigDecimal getContinueInvestmentLimit() {
-        return continueInvestmentLimit;
-    }
-
-    public void setContinueInvestmentLimit(BigDecimal continueInvestmentLimit) {
-        this.continueInvestmentLimit = continueInvestmentLimit;
-    }
 
     public BigDecimal getSubjectMaxBuy() {
         return subjectMaxBuy;

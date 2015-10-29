@@ -70,6 +70,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private void loadMore() {
         if (!isLoading) {
             if (regInvestList.size() >= userRegular.getPage().getCount()) {
+//                mAdapter.notifyItemChanged(regInvestList.size() + 1);
                 return;
             }
             isLoading = true;
@@ -81,7 +82,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                     List<RegInvest> tempList = result.getData().getRegInvest();
                     if (regInvestList != null && tempList != null && tempList.size() > 0) {
                         regInvestList.addAll(tempList);
-                        mAdapter.notifyItemInserted(regInvestList.size());
+                        mAdapter.notifyItemInserted(regInvestList.size() + 1);
                     }
                     isLoading = false;
                 }

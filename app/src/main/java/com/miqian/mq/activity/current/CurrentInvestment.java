@@ -118,7 +118,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             public void onSucceed(ProducedOrderResult result) {
                 mWaitingDialog.dismiss();
                 swipeRefresh.setRefreshing(false);
-                if ("102002".equals(result.getCode()) || "102003".equals(result.getCode())) {
+                if ("996633".equals(result.getCode())) {
                     showTips(true, result);
                 } else {
                     showTips(false, result);

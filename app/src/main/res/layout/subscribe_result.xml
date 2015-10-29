@@ -67,7 +67,7 @@
 
         <TextView
             style="@style/f3_B1"
-            android:text="红包优惠" />
+            android:text="红包/拾财券优惠" />
 
         <TextView
             android:id="@+id/text_promote"

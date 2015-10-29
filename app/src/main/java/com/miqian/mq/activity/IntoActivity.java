@@ -18,6 +18,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OrderLian;
 import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrder;
@@ -30,7 +31,10 @@ import com.miqian.mq.pay.BaseHelper;
 import com.miqian.mq.pay.MobileSecurePayer;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.SupportBankMsg;
+import com.miqian.mq.utils.SupportBankMsgResult;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -55,6 +59,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private TextView bindBankNumber;
     private TextView textLaw;
     private ImageView iconBank;
+    private TextView textSupportBank;
 
     private MyHandler mHandler;
     private UserInfo userInfo;
@@ -115,6 +120,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         });
         editBankNumber = (EditText) findViewById(R.id.edit_bank_number);
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
+        textSupportBank = (TextView) findViewById(R.id.text_support_bank);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
         iconBank = (ImageView) findViewById(R.id.icon_bank);
         textLaw = (TextView) findViewById(R.id.text_law);
@@ -181,15 +187,24 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         }
 
         mWaitingDialog.show();
-        HttpRequest.rollIn(mActivity, new ICallback<PayOrderResult>() {
+        HttpRequest.rollIn(mActivity, new ICallback<String>() {
             @Override
-            public void onSucceed(PayOrderResult payOrderResult) {
+            public void onSucceed(String result) {
                 mWaitingDialog.dismiss();
-                payOrder = constructPreCardPayOrder(payOrderResult.getData());
-                String content4Pay = JSON.toJSONString(payOrder);
-                Log.e("", "content4Pay---------- : " + content4Pay);
-                MobileSecurePayer msp = new MobileSecurePayer();
-                msp.pay(content4Pay, mHandler, Constants.RQF_PAY, mActivity, false);
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if ("000000".equals(meta.getCode())) {
+                    textSupportBank.setText("");
+                    PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
+                    payOrder = constructPreCardPayOrder(payOrderResult.getData());
+                    String content4Pay = JSON.toJSONString(payOrder);
+                    Log.e("", "content4Pay---------- : " + content4Pay);
+                    MobileSecurePayer msp = new MobileSecurePayer();
+                    msp.pay(content4Pay, mHandler, Constants.RQF_PAY, mActivity, false);
+                } else if ("999991".equals(meta.getCode())) {
+                    SupportBankMsgResult supportBankMsgResult = JsonUtil.parseObject(result, SupportBankMsgResult.class);
+                    textSupportBank.setText("支持以下银行储蓄卡：\n" + supportBankMsgResult.getData().getAllSupportBankMsg());
+                    Uihelper.showToast(mActivity, supportBankMsgResult.getMessage());
+                }
             }
 
             @Override
