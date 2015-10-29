@@ -19,6 +19,7 @@ import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.RoundCornerProgressBar;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 public class UserRegularDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -191,6 +192,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.frame_project_match:
+                MobclickAgent.onEvent(mActivity, "1045");
                 if (userRegularDetail != null) {
                     if ("3".equals(userRegularDetail.getProdId())) {
                         subjectId = userRegularDetail.getBdId();
@@ -215,6 +217,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
 //                break;
             case R.id.bt_repayment://还款详情
+                MobclickAgent.onEvent(mActivity, "1044");
                 if (userRegularDetail != null) {
                     Intent intent = new Intent(mActivity, RepaymentActivity.class);
                     intent.putExtra("investId", userRegularDetail.getId());

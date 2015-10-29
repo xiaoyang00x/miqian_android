@@ -17,6 +17,7 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Jackie on 2015/9/18.
@@ -39,6 +40,7 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
       Intent intent= getIntent();
         if (intent!=null){
             if (intent.getBooleanExtra("isRegistered",false)){
+                MobclickAgent.onEvent(mContext, "1052");
                 mTitle.setRightText("跳过");
                 mTitle.setOnRightClickListener(new View.OnClickListener() {
                     @Override
@@ -82,6 +84,7 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
     }
 
     private void setIdCardCheck() {
+        MobclickAgent.onEvent(mContext, "1054");
         final String name = editName.getText().toString();
         if (TextUtils.isEmpty(name)) {
             Uihelper.showToast(mActivity, "姓名不能为空");
@@ -123,5 +126,11 @@ public class ActivityRealname extends BaseActivity implements View.OnClickListen
     @Override
     protected String getPageName() {
         return "实名认证";
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MobclickAgent.onEvent(mContext, "1055");
     }
 }

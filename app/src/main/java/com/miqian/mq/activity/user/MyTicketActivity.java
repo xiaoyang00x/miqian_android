@@ -18,6 +18,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +141,7 @@ public class MyTicketActivity extends BaseActivity {
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(mActivity, "1042");
                 WebActivity.startActivity(mActivity, Urls.web_ticket);
             }
         });

@@ -87,6 +87,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
         dialogPay = new DialogPay(mContext) {
             @Override
             public void positionBtnClick(String moneyString) {
+                MobclickAgent.onEvent(mContext, "1057");
                 if (!TextUtils.isEmpty(moneyString)) {
                     BigDecimal money = new BigDecimal(moneyString);
                     if (money.compareTo(downLimit) < 0) {
@@ -110,6 +111,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
             @Override
             public void negativeBtnClick() {
+                MobclickAgent.onEvent(mContext, "1056");
                 this.setEditMoney("");
                 this.setTitle("认购金额");
                 this.setTitleColor(getResources().getColor(R.color.mq_b1));
@@ -169,13 +171,15 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_investment:
-                MobclickAgent.onEvent(mContext,"1001");
+                MobclickAgent.onEvent(mContext,"1007");
                 UserUtil.loginPay(mContext, dialogPay);
                 break;
             case R.id.bt_right:
+                MobclickAgent.onEvent(mContext, "1005");
                 UserUtil.isLogin(mContext, ActivityUserCurrent.class);
                 break;
             case R.id.text_detail:
+                MobclickAgent.onEvent(mContext, "1006");
                 if (currentInfo != null) {
                     WebActivity.startActivity(mContext, Urls.web_current);
                 }

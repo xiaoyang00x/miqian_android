@@ -18,6 +18,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -165,6 +166,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                 obtainData();
                 break;
             case R.id.title_right:
+
                 titleLeft.setTextColor(getResources().getColor(R.color.white));
                 titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left);
                 titleRight.setTextColor(getResources().getColor(R.color.mq_r1));
@@ -182,6 +184,11 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onItemClick(View view, int postion) {
         RegInvest regInvest = regInvestList.get(postion);
+        if (regInvest.getBearingStatus().equals("Y")) {
+            MobclickAgent.onEvent(mActivity, "1040");
+        } else {
+            MobclickAgent.onEvent(mActivity, "1039");
+        }
         Intent intent = new Intent(mActivity, UserRegularDetailActivity.class);
         intent.putExtra("investId", regInvest.getId());
         intent.putExtra("clearYn", regInvest.getBearingStatus());

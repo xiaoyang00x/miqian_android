@@ -1,24 +1,17 @@
 package com.miqian.mq.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.miqian.mq.R;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.AdvertisementImg;
-import com.miqian.mq.utils.LogUtil;
-import com.miqian.mq.utils.net.HttpImageUtils;
-import com.miqian.mq.utils.net.ImageLoadTask;
-import com.miqian.mq.utils.net.ImageLoaderManager;
-import com.miqian.mq.utils.net.NetUtility;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -109,6 +102,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(imageView.getContext(), "1002");
                 WebActivity.startActivity(imageView.getContext(), imageView.getTag().toString());
             }
         });
