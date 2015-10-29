@@ -33,6 +33,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -247,15 +248,18 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_pay:
                 if (isNeedRollin()) {
+                    MobclickAgent.onEvent(mContext, "1067");
                     Intent intent = new Intent(CurrentInvestment.this, IntoActivity.class);
                     intent.putExtra("rollType", 1);
                     intent.putExtra("money", rollinMoney.toString());
                     startActivityForResult(intent, REQUEST_CODE_ROLLIN);
                 } else {
+                    MobclickAgent.onEvent(mContext, "1068");
                     payOrder();
                 }
                 break;
             case R.id.frame_red_package:
+                MobclickAgent.onEvent(mContext, "1066");
                 if (promList != null && promList.size() > 0) {
                     Intent intent = new Intent(CurrentInvestment.this, ActivityRedPacket.class);
                     intent.putExtra("producedOrder", JSON.toJSONString(producedOrder));

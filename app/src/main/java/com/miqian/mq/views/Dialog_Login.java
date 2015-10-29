@@ -17,6 +17,7 @@ import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Administrator on 2015/9/1.
@@ -40,6 +41,7 @@ public abstract class Dialog_Login extends Dialog {
         findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(mContext, "1048");
                 //跳到注册页
                 dismiss();
                 mContext.startActivity(new Intent(mContext, RegisterActivity.class));
@@ -49,6 +51,7 @@ public abstract class Dialog_Login extends Dialog {
         findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(mContext, "1047");
                 SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW,false);
             }
         });
@@ -56,6 +59,7 @@ public abstract class Dialog_Login extends Dialog {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(mContext, "1046");
                 String telephone = editTelephone.getText().toString();
                 String password = editPassword.getText().toString();
                 if (!TextUtils.isEmpty(telephone)) {

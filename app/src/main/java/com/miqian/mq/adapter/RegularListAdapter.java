@@ -24,6 +24,7 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.views.DecoratorViewPager;
 import com.miqian.mq.views.indicator.CirclePageIndicator;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -170,6 +171,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 @Override
                 public void onPageSelected(int position) {
+                    MobclickAgent.onEvent(mContext, "1009");
                     int childCount = layout_limit_container.getChildCount();
                     if (childCount < 1) return;
                     for (int i = 0; i < childCount; i++) {

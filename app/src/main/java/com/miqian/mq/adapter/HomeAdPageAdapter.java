@@ -17,6 +17,7 @@ import com.miqian.mq.utils.net.ImageLoadTask;
 import com.miqian.mq.utils.net.ImageLoaderManager;
 import com.miqian.mq.utils.net.NetUtility;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -105,6 +106,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(imageView.getContext(), "1002");
                 WebActivity.startActivity(imageView.getContext(), imageView.getTag().toString());
             }
         });

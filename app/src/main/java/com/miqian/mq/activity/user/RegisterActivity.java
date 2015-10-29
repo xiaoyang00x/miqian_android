@@ -24,6 +24,7 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Joy on 2015/9/4.
@@ -80,6 +81,7 @@ public class RegisterActivity extends BaseActivity {
         mBtn_sendCaptcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(mContext, "1049");
                 watchEdittext(NUM_TYPE_CAPTCHA);
             }
         });
@@ -168,6 +170,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     public void textLawCick(View v) {
+        MobclickAgent.onEvent(mContext, "1051");
         WebActivity.startActivity(mActivity, Urls.web_register_law);
     }
 
@@ -183,6 +186,7 @@ public class RegisterActivity extends BaseActivity {
                 HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
                     @Override
                     public void onSucceed(RegisterResult result) {
+                        MobclickAgent.onEvent(mContext, "1053");
                         mWaitingDialog.dismiss();
                         Uihelper.showToast(mActivity, "注册成功");
                         UserInfo userInfo = result.getData();

@@ -10,6 +10,7 @@ import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 
 public class SecuritySettingActivity extends BaseActivity implements OnClickListener {
@@ -49,11 +50,12 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.password_login:
-
+                MobclickAgent.onEvent(mActivity, "1027");
                 SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, true);
 
                 break;
             case R.id.password_transaction:
+                MobclickAgent.onEvent(mActivity, "1028");
                 Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
                 intent.putExtra("payPwdStatus", payPwdStatus);
                 startActivity(intent);

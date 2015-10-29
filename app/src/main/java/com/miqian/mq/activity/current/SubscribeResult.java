@@ -16,6 +16,7 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Jackie on 2015/9/29.
@@ -123,10 +124,12 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
                 break;
             case R.id.bt_back_home:
+                MobclickAgent.onEvent(mContext, "1064");
                 SubscribeResult.this.finish();
                 ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_HOME, null);
                 break;
             case R.id.bt_back_user:
+                MobclickAgent.onEvent(mContext, "1065");
                 SubscribeResult.this.finish();
                 ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
                 break;

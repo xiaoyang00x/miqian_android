@@ -20,6 +20,7 @@ import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Joy on 2015/9/4.
@@ -92,6 +93,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
         mBtn_sendCaptcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(mContext, "1049");
                 sendMessage();
             }
         });

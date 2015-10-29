@@ -21,6 +21,7 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.RoundCornerProgressBar;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 
@@ -91,6 +92,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         dialogPay = new DialogPay(mActivity) {
             @Override
             public void positionBtnClick(String moneyString) {
+                MobclickAgent.onEvent(mContext, "1059");
                 if (!TextUtils.isEmpty(moneyString)) {
                     BigDecimal money = new BigDecimal(moneyString);
                     BigDecimal remainder = money.remainder(downLimit);
@@ -118,6 +120,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void negativeBtnClick() {
+                MobclickAgent.onEvent(mContext, "1058");
                 this.setEditMoney("");
                 this.setTitle("认购金额");
                 this.setTitleColor(getResources().getColor(R.color.mq_b1));
@@ -138,6 +141,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MobclickAgent.onEvent(mContext, "1013");
                 WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
             }
         });
@@ -203,6 +207,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_buy:
+                MobclickAgent.onEvent(mContext, "1014");
                 dialogPay.setEditMoneyHint(downLimit + "起，" + downLimit + "整数倍");
                 UserUtil.loginPay(mActivity, dialogPay);
                 break;
