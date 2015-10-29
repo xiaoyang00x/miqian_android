@@ -140,6 +140,13 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             circle_indicator.setViewPager(view_pager);
 //            circle_indicator.setIndicatorContainer(layout_limit_container);
             circle_indicator.setScrollView(viewPager_HorizonScrollView);
+            viewPager_HorizonScrollView.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    return true;
+                }
+            });
             view_pager.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
