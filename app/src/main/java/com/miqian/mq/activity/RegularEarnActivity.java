@@ -36,6 +36,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
 
     private BigDecimal downLimit = new BigDecimal(100);//下限
     private BigDecimal upLimit = new BigDecimal(9999999999L);//上限
+    private BigDecimal leftLimit = new BigDecimal(9999999999L);//标的剩余额度
     private String interestRateString = "";
 
     public static void startActivity(Context context, String subjectId) {
@@ -94,6 +95,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
             public void positionBtnClick(String moneyString) {
                 MobclickAgent.onEvent(mContext, "1059");
                 if (!TextUtils.isEmpty(moneyString)) {
+                    upLimit = leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
                     BigDecimal money = new BigDecimal(moneyString);
                     BigDecimal remainder = money.remainder(downLimit);
                     if (money.compareTo(downLimit) == -1) {
@@ -230,6 +232,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                     RegularEarn regularEarn = result.getData();
                     downLimit = regularEarn.getFromInvestmentAmount();
                     upLimit = regularEarn.getSubjectMaxBuy();
+                    leftLimit = regularEarn.getSubjectTotalPrice().subtract(regularEarn.getPurchasePrice());
                     BigDecimal tempInterest = new BigDecimal(regularEarn.getYearInterest()).add(new BigDecimal(regularEarn.getPresentationYearInterest()));
                     interestRateString = "年化收益率：" + tempInterest + "%  期限：" + regularEarn.getLimit() + "天";
                     updateUI(result.getData());
