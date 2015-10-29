@@ -25,7 +25,7 @@ public class AboutUsActivity extends BaseActivity {
 		findViewById(R.id.tv_telephone).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:4006655191")));
+				startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:4006656191")));
 			}
 		});
 
