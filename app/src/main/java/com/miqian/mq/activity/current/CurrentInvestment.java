@@ -414,31 +414,23 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void positionBtnClick(String s) {
-                    if (!TextUtils.isEmpty(s)) {
-                        if (s.length() >= 6 && s.length() <= 16) {
-                            //设置交易密码
-                            mWaitingDialog.show();
-                            dismiss();
-                            HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
-                                @Override
-                                public void onSucceed(Meta result) {
-                                    mWaitingDialog.dismiss();
-                                    Uihelper.showToast(mActivity, "设置成功");
-                                    showTradeDialog(DialogTradePassword.TYPE_INPUTPASSWORD);
-                                }
-
-                                @Override
-                                public void onFail(String error) {
-                                    mWaitingDialog.dismiss();
-                                    Uihelper.showToast(mActivity, error);
-                                }
-                            }, s, s);
-                        } else {
-                            Uihelper.showToast(mActivity, R.string.tip_password);
+                    //设置交易密码
+                    mWaitingDialog.show();
+                    dismiss();
+                    HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
+                        @Override
+                        public void onSucceed(Meta result) {
+                            mWaitingDialog.dismiss();
+                            Uihelper.showToast(mActivity, "设置成功");
+                            showTradeDialog(DialogTradePassword.TYPE_INPUTPASSWORD);
                         }
-                    } else {
-                        Uihelper.showToast(mActivity, "密码不能为空");
-                    }
+
+                        @Override
+                        public void onFail(String error) {
+                            mWaitingDialog.dismiss();
+                            Uihelper.showToast(mActivity, error);
+                        }
+                    }, s, s);
                 }
             };
         } else {
@@ -448,46 +440,38 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     @Override
                     public void positionBtnClick(String payPassword) {
                         dismiss();
-                        if (!TextUtils.isEmpty(payPassword)) {
-                            if (payPassword.length() >= 6 && payPassword.length() <= 16) {
-                                //支付
-                                mWaitingDialog.show();
-                                HttpRequest.subjectIdOrder(mActivity, new ICallback<SubscribeOrderResult>() {
-                                    @Override
-                                    public void onSucceed(SubscribeOrderResult result) {
-                                        mWaitingDialog.dismiss();
-                                        Intent intent = new Intent(CurrentInvestment.this, SubscribeResult.class);
-                                        SubscribeOrder subscribeOrder = result.getData();
-                                        if (result.getCode().equals("999993")) {
-                                            Uihelper.showToast(mActivity, result.getMessage());
-                                        } else {
-                                            if (result.getCode().equals("000000")) {
-                                                intent.putExtra("status", 1);
-                                                intent.putExtra("orderNo", subscribeOrder.getOrderNo());
-                                                intent.putExtra("addTime", subscribeOrder.getAddTime());
-                                            } else {
-                                                intent.putExtra("status", 0);
-                                            }
-                                            intent.putExtra("money", orderMoney.toString());
-                                            intent.putExtra("balance", balancePay.toString());
-                                            intent.putExtra("promoteMoney", promoteMoney.toString());
-                                            startActivity(intent);
-                                            CurrentInvestment.this.finish();
-                                        }
+                        //支付
+                        mWaitingDialog.show();
+                        HttpRequest.subjectIdOrder(mActivity, new ICallback<SubscribeOrderResult>() {
+                            @Override
+                            public void onSucceed(SubscribeOrderResult result) {
+                                mWaitingDialog.dismiss();
+                                Intent intent = new Intent(CurrentInvestment.this, SubscribeResult.class);
+                                SubscribeOrder subscribeOrder = result.getData();
+                                if (result.getCode().equals("996633")) {
+                                    Uihelper.showToast(mActivity, result.getMessage());
+                                } else {
+                                    if (result.getCode().equals("000000")) {
+                                        intent.putExtra("status", 1);
+                                        intent.putExtra("orderNo", subscribeOrder.getOrderNo());
+                                        intent.putExtra("addTime", subscribeOrder.getAddTime());
+                                    } else {
+                                        intent.putExtra("status", 0);
                                     }
-
-                                    @Override
-                                    public void onFail(String error) {
-                                        mWaitingDialog.dismiss();
-                                        Uihelper.showToast(mActivity, error);
-                                    }
-                                }, money, prodId, payPassword, subjectId, promListString);
-                            } else {
-                                Uihelper.showToast(mActivity, R.string.tip_password_pc);
+                                    intent.putExtra("money", orderMoney.toString());
+                                    intent.putExtra("balance", balancePay.toString());
+                                    intent.putExtra("promoteMoney", promoteMoney.toString());
+                                    startActivity(intent);
+                                    CurrentInvestment.this.finish();
+                                }
                             }
-                        } else {
-                            Uihelper.showToast(mActivity, "密码不能为空");
-                        }
+
+                            @Override
+                            public void onFail(String error) {
+                                mWaitingDialog.dismiss();
+                                Uihelper.showToast(mActivity, error);
+                            }
+                        }, money, prodId, payPassword, subjectId, promListString);
                     }
                 };
             }

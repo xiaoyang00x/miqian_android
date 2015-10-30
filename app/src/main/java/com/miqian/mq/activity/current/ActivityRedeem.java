@@ -141,64 +141,40 @@ public class ActivityRedeem extends BaseActivity {
                 @Override
                 public void positionBtnClick(String password) {
 
-                    if (!TextUtils.isEmpty(password)) {
-                        if (password.length() >= 6 && password.length() <= 16) {
-                            //设置交易密码
+                    //设置交易密码
+                    mWaitingDialog.show();
+                    HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
+                        @Override
+                        public void onSucceed(Meta result) {
+                            dismiss();
                             mWaitingDialog.show();
-                            HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
-                                @Override
-                                public void onSucceed(Meta result) {
-                                    dismiss();
-                                    mWaitingDialog.show();
-                                    Uihelper.showToast(mActivity, "设置成功");
-                                    initDialogTradePassword(1);
-                                    dialogTradePassword_input.show();
+                            Uihelper.showToast(mActivity, "设置成功");
+                            initDialogTradePassword(1);
+                            dialogTradePassword_input.show();
 
-                                }
-
-                                @Override
-                                public void onFail(String error) {
-                                    dismiss();
-                                    mWaitingDialog.show();
-                                    Uihelper.showToast(mActivity, error);
-                                }
-                            }, password, password);
-
-                        } else {
-                            Uihelper.showToast(mActivity, R.string.tip_password);
                         }
-                    } else {
 
-                        Uihelper.showToast(mActivity, "密码不能为空");
-
-                    }
+                        @Override
+                        public void onFail(String error) {
+                            dismiss();
+                            mWaitingDialog.show();
+                            Uihelper.showToast(mActivity, error);
+                        }
+                    }, password, password);
 
 
                 }
             };
         } else {
             if (dialogTradePassword_input == null) {
-
                 dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
 
                     @Override
                     public void positionBtnClick(String s) {
                         dismiss();
-                        if (!TextUtils.isEmpty(s)) {
-                            if (s.length() >= 6 && s.length() <= 16) {
 
-                                //赎回
-                                redoom(s);
-
-                            } else {
-                                Uihelper.showToast(mActivity, R.string.tip_password_pc);
-                            }
-                        } else {
-
-                            Uihelper.showToast(mActivity, "密码不能为空");
-
-                        }
-
+                        //赎回
+                        redoom(s);
 
                     }
                 };
@@ -217,7 +193,7 @@ public class ActivityRedeem extends BaseActivity {
 
                 Intent intent = new Intent(mActivity, RedeemResult.class);
 
-                if (code.equals("999993") || code.equals("999988")) {
+                if (code.equals("999993") || code.equals("999988") || code.equals("996633")) {
                     Uihelper.showToast(mActivity, result.getMessage());
                 } else {
                     if (code.equals("000000")) {

@@ -80,6 +80,7 @@ public class CapitalRecordActivity extends BaseActivity {
                 list.clear();
                 CapitalRecordResult record = result;
                 if (record.getData() != null && record.getData().getAssetRecord().size() > 0) {
+                    showContentView();
                     page = record.getData().getPage();
                     list.addAll(record.getData().getAssetRecord());
                     refreshView();

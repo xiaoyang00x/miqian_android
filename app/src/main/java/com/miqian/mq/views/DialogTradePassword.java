@@ -24,9 +24,9 @@ public abstract class DialogTradePassword extends Dialog {
 
     private TextView titleText;
     private EditText et_password;
-    public  final  static int TYPE_SETPASSWORD=0;
-    public  final  static int TYPE_INPUTPASSWORD=1;
-    private  int mType;
+    public final static int TYPE_SETPASSWORD = 0;
+    public final static int TYPE_INPUTPASSWORD = 1;
+    private int mType;
     private Context mContext;
 
     /**
@@ -34,11 +34,11 @@ public abstract class DialogTradePassword extends Dialog {
      *                确定按钮的内容 如：去认证，确定等
      * @author Tuliangtan
      */
-    public DialogTradePassword(Activity context,int type) {
+    public DialogTradePassword(Activity context, int type) {
         super(context, R.style.Dialog);
         this.setContentView(R.layout.dialog_tradepassword);
-        this.mType=type;
-        this.mContext=context;
+        this.mType = type;
+        this.mContext = context;
         initViewCode();
     }
 
@@ -55,10 +55,10 @@ public abstract class DialogTradePassword extends Dialog {
         titleText = (TextView) findViewById(R.id.dialog_title);
         et_password = (EditText) findViewById(R.id.et_password);
 
-        if (mType==TYPE_INPUTPASSWORD) {
+        if (mType == TYPE_INPUTPASSWORD) {
             titleText.setText("交易密码");
             et_password.setHint("请输入交易密码");
-        }else {
+        } else {
             //设置交易密码规则:数字和字母的组合
             String digits = mContext.getResources().getString(R.string.match);
             et_password.setKeyListener(DigitsKeyListener.getInstance(digits));
@@ -69,7 +69,7 @@ public abstract class DialogTradePassword extends Dialog {
         btNegative.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                if (mType==TYPE_INPUTPASSWORD) {
+                if (mType == TYPE_INPUTPASSWORD) {
                     MobclickAgent.onEvent(mContext, "1060");
                 } else {
                     MobclickAgent.onEvent(mContext, "1062");
@@ -82,13 +82,25 @@ public abstract class DialogTradePassword extends Dialog {
         btn_sure.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                if (mType==TYPE_INPUTPASSWORD) {
+                int tipId = 0;
+                if (mType == TYPE_INPUTPASSWORD) {
                     MobclickAgent.onEvent(mContext, "1061");
+                    tipId = R.string.tip_password_pc;
                 } else {
+                    tipId = R.string.tip_password;
                     MobclickAgent.onEvent(mContext, "1063");
                 }
-                positionBtnClick(et_password.getText().toString());
-                et_password.setText("");
+                String text = et_password.getText().toString();
+                if (TextUtils.isEmpty(text)) {
+                    Uihelper.showToast(mContext, "密码不能为空");
+                } else {
+                    if (text.length() >= 6 && text.length() <= 16) {
+                        positionBtnClick(text);
+                        et_password.setText("");
+                    } else {
+                        Uihelper.showToast(mContext, tipId);
+                    }
+                }
             }
         });
     }

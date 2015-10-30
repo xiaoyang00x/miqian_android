@@ -51,6 +51,7 @@ public class ActivityCurrentRecord extends BaseActivity {
                 if (data != null) {
                     dataList = data.getCurSubRecord();
                     if (dataList != null && dataList.size() > 0) {
+                        showContentView();
                         refreshView();
                     } else {
                         showEmptyView();

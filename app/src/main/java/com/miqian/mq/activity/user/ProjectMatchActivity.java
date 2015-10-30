@@ -65,6 +65,7 @@ public class ProjectMatchActivity extends BaseActivity {
                 mWaitingDialog.dismiss();
                 mList = result.getData().getMatchsubList();
                 if (mList != null && mList.size() > 0) {
+                    showContentView();
                     page = result.getData().getPage();
                     refreshView();
                 } else {

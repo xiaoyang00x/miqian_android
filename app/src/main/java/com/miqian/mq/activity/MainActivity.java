@@ -40,7 +40,10 @@ import com.miqian.mq.views.CustomDialog;
 import com.umeng.update.UmengUpdateAgent;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2015/5/6.
@@ -68,11 +71,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UmengUpdateAgent.update(this);
-        context=this;
+        context = this;
         ExtendOperationController.getInstance().registerExtendOperationListener(this);
         setContentView(R.layout.activity_main);
         findTabView();
         initTab();
+        MyApplication.getInstance().setIsOnMainAcitivity(true);
         MyApplication.getInstance().setIsCurrent(true);
         //设置别名
         JpushHelper.setAlias(this);
@@ -89,11 +93,41 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     protected void onResume() {
         Config.init(this);
         //设置在主页的状态
+        MyApplication.getInstance().setIsOnMainAcitivity(true);
         MyApplication.setIsBackStage(false);
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
+
+        //app在当前
+        showJushTip();
         super.onResume();
+    }
+
+    private void showJushTip() {
+
+        if (Pref.getBoolean(Pref.IsPush, mContext, false)) {
+            return;
+        }
+        HashMap<String, Boolean> jpushList = MyApplication.getInstance().getPushList();
+        if (jpushList.size() > 0) {
+
+
+            Set set = jpushList.entrySet();
+            java.util.Iterator it = jpushList.entrySet().iterator();
+            while (it.hasNext()) {
+                java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
+                boolean hasTip = (boolean) entry.getValue();
+                String noticeId = (String) entry.getKey();
+                if (!hasTip) {
+                    JpushInfo jpushInfo = MyDataBaseHelper.getInstance(mContext).getJpushInfo(noticeId);
+                    showTipDialog(jpushInfo);
+                    jpushList.put(noticeId, true);
+                    MyApplication.getInstance().setPushList(jpushList);
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -107,6 +141,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         //反注册广播
         unregisterReceiver(mHomeKeyEventReceiver);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //设置不在主页
+        MyApplication.getInstance().setIsOnMainAcitivity(false);
     }
 
     public void findTabView() {
@@ -249,6 +290,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             jpushDialog = new CustomDialog(context, CustomDialog.CODE_TIPS) {
                 @Override
                 public void positionBtnClick() {
+                    dismiss();
 
                     switch (type) {
                         case 9:
@@ -294,7 +336,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus){
+        if (hasFocus) {
             handleJpush();
         }
     }
@@ -338,9 +380,17 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
                         MyApplication.getInstance().setShowTips(true);
                         mRefeshDataListener.changeData();
+                    }else {
+                        showDialog();
                     }
                 }
 
+                break;
+            case OperationKey.ShowTips:
+                showJushTip();
+
+                break;
+            default:
                 break;
         }
 
@@ -379,6 +429,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     // 设置为在后台运行的标志
                     // 表示按了home键,程序到了后台
                     MyApplication.getInstance().setIsBackStage(true);
+                    //设置不在主页
+                    MyApplication.getInstance().setIsOnMainAcitivity(false);
 
                 }
             }

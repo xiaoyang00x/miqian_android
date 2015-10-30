@@ -20,6 +20,7 @@ import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
@@ -54,6 +55,7 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
         mContext = getActivity();
         if (savedInstanceState == null || view == null) {
             view = inflater.inflate(R.layout.frame_current, null);
+            Config.init(getActivity());
         }
         ViewGroup parent = (ViewGroup) view.getParent();
         if (parent != null) {
@@ -162,8 +164,10 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
     @Override
     public void onDestroy() {
-        waterWaveView.stopWave();
-        waterWaveView = null;
+        if (waterWaveView!=null){
+            waterWaveView.stopWave();
+            waterWaveView = null;
+        }
         super.onDestroy();
     }
 

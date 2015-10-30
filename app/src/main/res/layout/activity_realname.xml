@@ -70,15 +70,6 @@
             android:text="认证" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:text="为了保障资金安全，请先完成实名认证"
-        android:textSize="@dimen/mq_font4"
-        android:textColor="@color/mq_b2"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

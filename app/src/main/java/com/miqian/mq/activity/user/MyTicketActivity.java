@@ -53,6 +53,7 @@ public class MyTicketActivity extends BaseActivity {
                 page = redpaper.getPage();
                 if (redpaper != null) {
                     if (promList != null && promList.size() > 0) {
+                        showContentView();
                         refreshView();
                     } else {
                         showEmptyView();

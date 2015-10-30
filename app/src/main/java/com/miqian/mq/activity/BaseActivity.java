@@ -57,7 +57,6 @@ public abstract class BaseActivity extends BaseFragmentActivity {
             @Override
             public void onClick(View v) {
 
-                showContentView();
                 obtainData();
             }
         });

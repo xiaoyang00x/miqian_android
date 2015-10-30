@@ -105,7 +105,9 @@ public class MyReceiver extends BroadcastReceiver {
             String contentText = response.getContent();
             String string_uritype = response.getUriType();
             String noticeId = response.getId();
-
+            if (TextUtils.isEmpty(noticeId)) {
+                return;
+            }
             if (!MyApplication.getInstance().isCurrent()) {
                 notificationIntent = new Intent(context, SplashActivity.class);
                 Pref.saveBoolean(Pref.IsPush, true, context);
@@ -144,11 +146,19 @@ public class MyReceiver extends BroadcastReceiver {
                     case 15://提现受理失败
                         notificationIntent = new Intent(context, CapitalRecordActivity.class);
                         break;
-                    case 9:
+                    case 9://收到红包
                         notificationIntent = new Intent(context, RedPaperActivity.class);
+                        MyApplication.getInstance().addJpushList(noticeId, false);
+                        if (MyApplication.isOnMainAcitivity()) {
+                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
+                        }
                         break;
-                    case 10:
+                    case 10://收到拾财券
                         notificationIntent = new Intent(context, MyTicketActivity.class);
+                        MyApplication.getInstance().addJpushList(noticeId, false);
+                        if (MyApplication.isOnMainAcitivity()) {
+                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
+                        }
                         break;
                     case 11:
                         notificationIntent = new Intent(context, RedPaperActivity.class);
@@ -164,14 +174,16 @@ public class MyReceiver extends BroadcastReceiver {
                     case 52://平台相关新闻 首页弹框，webView
                     case 53://相关项目 首页弹框，webView
                         notificationIntent = WebActivity.getIntent(context, response.getUrl());
+                        MyApplication.getInstance().addJpushList(noticeId, false);
+                        if (MyApplication.isOnMainAcitivity()) {
+                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
+                        }
                         break;
                     default:
                         break;
                 }
             }
-            if (TextUtils.isEmpty(noticeId)) {
-                return;
-            }
+
 
             int requestCode = (int) System.currentTimeMillis();
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
