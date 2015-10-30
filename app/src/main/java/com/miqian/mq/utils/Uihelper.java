@@ -41,7 +41,7 @@ public class Uihelper {
         }
     }
 
-    public static void showToast(final Activity context, int id) {
+    public static void showToast(final Context context, int id) {
         initToast(context);
         mToast.setText(id);
         mToast.show();

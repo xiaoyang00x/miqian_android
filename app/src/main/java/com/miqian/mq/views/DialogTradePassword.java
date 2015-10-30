@@ -82,19 +82,25 @@ public abstract class DialogTradePassword extends Dialog {
         btn_sure.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
+                int tipId = 0;
                 if (mType == TYPE_INPUTPASSWORD) {
                     MobclickAgent.onEvent(mContext, "1061");
+                    tipId = R.string.tip_password_pc;
                 } else {
+                    tipId = R.string.tip_password;
                     MobclickAgent.onEvent(mContext, "1063");
                 }
                 String text = et_password.getText().toString();
                 if (TextUtils.isEmpty(text)) {
                     Uihelper.showToast(mContext, "密码不能为空");
                 } else {
-                    positionBtnClick(text);
+                    if (text.length() >= 6 && text.length() <= 16) {
+                        positionBtnClick(text);
+                        et_password.setText("");
+                    } else {
+                        Uihelper.showToast(mContext, tipId);
+                    }
                 }
-
-                et_password.setText("");
             }
         });
     }
