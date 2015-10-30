@@ -229,6 +229,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
             public void onSucceed(RegularEarnResult result) {
                 end();
                 if (result != null) {
+                    showContentView();
                     RegularEarn regularEarn = result.getData();
                     downLimit = regularEarn.getFromInvestmentAmount();
                     upLimit = regularEarn.getSubjectMaxBuy();

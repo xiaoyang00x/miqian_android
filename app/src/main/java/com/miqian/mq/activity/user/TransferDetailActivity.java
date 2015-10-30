@@ -55,6 +55,7 @@ public class TransferDetailActivity extends BaseActivity {
                 mWaitingDialog.dismiss();
                 mList = result.getData().getTranslist();
                 if (mList != null && mList.size() > 0) {
+                    showContentView();
                     transferInfo = result.getData().getTransAmt();
                     refreshView();
                 } else {
