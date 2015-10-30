@@ -2,7 +2,6 @@ package com.miqian.mq.net;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -23,7 +22,6 @@ import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OrderLianResult;
-import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
@@ -179,13 +177,8 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                Log.e("", result);
                 OrderLianResult orderLianResult = JsonUtil.parseObject(result, OrderLianResult.class);
                 callback.onSucceed(orderLianResult);
-                //                if (payOrderResult.getCode().equals("000000")) {
-                //                } else {
-                //                    callback.onFail(payOrderResult.getMessage());
-                //                }
             }
 
             @Override
@@ -209,7 +202,6 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                Log.e("", result);
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
                 if (loginResult.getCode().equals("000000")) {
                     callback.onSucceed(loginResult);
@@ -526,9 +518,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                Log.e("result", result);
-                HomePageInfoResult homePageInfoResult =
-                        JSON.parseObject(result, HomePageInfoResult.class);
+                HomePageInfoResult homePageInfoResult = JSON.parseObject(result, HomePageInfoResult.class);
 
                 if (homePageInfoResult.getCode().equals("000000")) {
                     callback.onSucceed(homePageInfoResult);
