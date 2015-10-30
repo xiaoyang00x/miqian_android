@@ -397,31 +397,31 @@ public class RolloutActivity extends BaseActivity {
                 @Override
                 public void positionBtnClick(String password) {
 
-                        if (password.length() >= 6 && password.length() <= 16) {
-                            //设置交易密码
-                            mWaitingDialog.show();
-                            HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
-                                @Override
-                                public void onSucceed(Meta result) {
-                                    mWaitingDialog.dismiss();
-                                    dismiss();//设置状态
-                                    userInfo.setPayPwdStatus("1");
-                                    Uihelper.showToast(mActivity, "设置成功");
-                                    rollOutHttp();
+                    if (password.length() >= 6 && password.length() <= 16) {
+                        //设置交易密码
+                        mWaitingDialog.show();
+                        HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
+                            @Override
+                            public void onSucceed(Meta result) {
+                                mWaitingDialog.dismiss();
+                                dismiss();//设置状态
+                                userInfo.setPayPwdStatus("1");
+                                Uihelper.showToast(mActivity, "设置成功");
+                                rollOutHttp();
 
-                                }
+                            }
 
-                                @Override
-                                public void onFail(String error) {
-                                    mWaitingDialog.dismiss();
-                                    dismiss();
-                                    Uihelper.showToast(mActivity, error);
-                                }
-                            }, password, password);
+                            @Override
+                            public void onFail(String error) {
+                                mWaitingDialog.dismiss();
+                                dismiss();
+                                Uihelper.showToast(mActivity, error);
+                            }
+                        }, password, password);
 
-                        } else {
-                            Uihelper.showToast(mActivity, R.string.tip_password);
-                        }
+                    } else {
+                        Uihelper.showToast(mActivity, R.string.tip_password);
+                    }
 
 
                 }
@@ -434,14 +434,14 @@ public class RolloutActivity extends BaseActivity {
                     @Override
                     public void positionBtnClick(String s) {
                         dismiss();
-                            if (s.length() >= 6 && s.length() <= 16) {
+                        if (s.length() >= 6 && s.length() <= 16) {
 
-                                //提现
-                                rollOut(s);
+                            //提现
+                            rollOut(s);
 
-                            } else {
-                                Uihelper.showToast(mActivity, R.string.tip_password_pc);
-                            }
+                        } else {
+                            Uihelper.showToast(mActivity, R.string.tip_password_pc);
+                        }
 
                     }
                 };
