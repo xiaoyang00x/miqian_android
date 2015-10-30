@@ -52,6 +52,7 @@ public class AnnounceResultActivity extends BaseActivity {
                     end();
                     MessageInfo detailInfo = result.getData();
                     if (detailInfo != null) {
+                        showContentView();
                         setData(detailInfo);
                     } else {
                         showEmptyView();

@@ -54,6 +54,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void obtainData() {
+
         getRegularDetails(subjectId);
     }
 
@@ -228,6 +229,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
             public void onSucceed(RegularPlanResult result) {
                 end();
                 if(result != null) {
+                    showContentView();
                     RegularPlan regularPlan = result.getData();
                     downLimit = regularPlan.getFromInvestmentAmount();
                     upLimit = regularPlan.getSubjectMaxBuy();

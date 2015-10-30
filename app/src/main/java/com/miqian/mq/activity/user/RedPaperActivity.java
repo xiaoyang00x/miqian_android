@@ -53,6 +53,7 @@ public class RedPaperActivity extends BaseActivity {
                 if (redpaper != null) {
                     promList = redpaper.getCustPromotion();
                     if (promList != null && promList.size() > 0) {
+                        showContentView();
                         refreshView();
                     } else {
                         showEmptyView();

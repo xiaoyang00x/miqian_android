@@ -162,8 +162,10 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
 
     @Override
     public void onDestroy() {
-        waterWaveView.stopWave();
-        waterWaveView = null;
+        if (waterWaveView!=null){
+            waterWaveView.stopWave();
+            waterWaveView = null;
+        }
         super.onDestroy();
     }
 

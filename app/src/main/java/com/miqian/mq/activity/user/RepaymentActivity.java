@@ -48,7 +48,7 @@ public class RepaymentActivity extends BaseActivity {
             public void onSucceed(RepaymentResult result) {
                 mList = result.getData().getRepaymentPlan();
                 if (mList != null && mList.size() > 0) {
-
+                   showContentView();
                     refreshView();
                 } else {
                     showEmptyView();
