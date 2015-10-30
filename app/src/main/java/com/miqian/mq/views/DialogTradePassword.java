@@ -87,7 +87,13 @@ public abstract class DialogTradePassword extends Dialog {
                 } else {
                     MobclickAgent.onEvent(mContext, "1063");
                 }
-                positionBtnClick(et_password.getText().toString());
+                String text = et_password.getText().toString();
+                if (!TextUtils.isEmpty(text)) {
+                    Uihelper.showToast(mContext, "密码不能为空");
+                } else {
+                    positionBtnClick(text);
+                }
+
                 et_password.setText("");
             }
         });

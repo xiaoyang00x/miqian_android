@@ -141,7 +141,6 @@ public class ActivityRedeem extends BaseActivity {
                 @Override
                 public void positionBtnClick(String password) {
 
-                    if (!TextUtils.isEmpty(password)) {
                         if (password.length() >= 6 && password.length() <= 16) {
                             //设置交易密码
                             mWaitingDialog.show();
@@ -167,11 +166,6 @@ public class ActivityRedeem extends BaseActivity {
                         } else {
                             Uihelper.showToast(mActivity, R.string.tip_password);
                         }
-                    } else {
-
-                        Uihelper.showToast(mActivity, "密码不能为空");
-
-                    }
 
 
                 }
@@ -184,7 +178,6 @@ public class ActivityRedeem extends BaseActivity {
                     @Override
                     public void positionBtnClick(String s) {
                         dismiss();
-                        if (!TextUtils.isEmpty(s)) {
                             if (s.length() >= 6 && s.length() <= 16) {
 
                                 //赎回
@@ -193,11 +186,6 @@ public class ActivityRedeem extends BaseActivity {
                             } else {
                                 Uihelper.showToast(mActivity, R.string.tip_password_pc);
                             }
-                        } else {
-
-                            Uihelper.showToast(mActivity, "密码不能为空");
-
-                        }
 
 
                     }

@@ -414,7 +414,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void positionBtnClick(String s) {
-                    if (!TextUtils.isEmpty(s)) {
                         if (s.length() >= 6 && s.length() <= 16) {
                             //设置交易密码
                             mWaitingDialog.show();
@@ -436,9 +435,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                         } else {
                             Uihelper.showToast(mActivity, R.string.tip_password);
                         }
-                    } else {
-                        Uihelper.showToast(mActivity, "密码不能为空");
-                    }
                 }
             };
         } else {
@@ -448,7 +444,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     @Override
                     public void positionBtnClick(String payPassword) {
                         dismiss();
-                        if (!TextUtils.isEmpty(payPassword)) {
                             if (payPassword.length() >= 6 && payPassword.length() <= 16) {
                                 //支付
                                 mWaitingDialog.show();
@@ -485,9 +480,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                             } else {
                                 Uihelper.showToast(mActivity, R.string.tip_password_pc);
                             }
-                        } else {
-                            Uihelper.showToast(mActivity, "密码不能为空");
-                        }
                     }
                 };
             }
