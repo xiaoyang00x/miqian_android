@@ -46,6 +46,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
         LogUtil.d(TAG, "----请求服务器----" + mUrl);
         String httpString = HttpUtils.httpPostRequest(mContext, mUrl, mList);
         if (!TextUtils.isEmpty(httpString)) {
+            LogUtil.e("", ": " + httpString);
             return httpString;
         }
 

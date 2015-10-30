@@ -26,15 +26,13 @@ import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.net.Urls;
 import com.miqian.mq.pay.BaseHelper;
 import com.miqian.mq.pay.MobileSecurePayer;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MyTextWatcher;
-import com.miqian.mq.utils.SupportBankMsg;
-import com.miqian.mq.utils.SupportBankMsgResult;
+import com.miqian.mq.entity.SupportBankMsgResult;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
