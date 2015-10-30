@@ -93,7 +93,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     protected void onResume() {
         Config.init(this);
         //设置在主页的状态
-        //设置不在主页
         MyApplication.getInstance().setIsOnMainAcitivity(true);
         MyApplication.setIsBackStage(false);
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
