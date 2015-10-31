@@ -45,8 +45,6 @@ import java.util.List;
  */
 public class HttpRequest {
 
-    private static List<Param> mList;
-
     /**
      * 身份认证
      */
@@ -79,10 +77,7 @@ public class HttpRequest {
      * 活期首页
      */
     public static void getCurrentHome(Context context, final ICallback<CurrentInfoResult> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         new MyAsyncTask(context, Urls.current_home, mList, new ICallback<String>() {
 
             @Override
@@ -165,12 +160,8 @@ public class HttpRequest {
     /**
      * 充值结果查询
      */
-    public static void rollInResult(Context context, final ICallback<OrderLianResult> callback,
-                                    String orderNo) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+    public static void rollInResult(Context context, final ICallback<OrderLianResult> callback, String orderNo) {
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("orderNo", orderNo));
 
         new MyAsyncTask(context, Urls.rollin_result, mList, new ICallback<String>() {
@@ -192,10 +183,7 @@ public class HttpRequest {
      * 获取用户信息
      */
     public static void getUserInfo(Context context, final ICallback<LoginResult> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
         new MyAsyncTask(context, Urls.user_info, mList, new ICallback<String>() {
@@ -222,10 +210,7 @@ public class HttpRequest {
      */
     public static void register(Context context, final ICallback<RegisterResult> callback,
                                 String mobilePhone, String captcha, String password, String invitationCode) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("captcha", captcha));
         mList.add(new Param("invitationCode", invitationCode));
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
@@ -251,12 +236,8 @@ public class HttpRequest {
     }
 
     //登录
-    public static void login(Context context, final ICallback<LoginResult> callback,
-                             String mobilePhone, String password) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+    public static void login(Context context, final ICallback<LoginResult> callback, String mobilePhone, String password) {
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
@@ -285,12 +266,8 @@ public class HttpRequest {
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
      */
-    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone,
-                                    int operationType, String captcha) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+    public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String captcha) {
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
@@ -321,12 +298,8 @@ public class HttpRequest {
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone,
-                                  int operationType) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
@@ -353,10 +326,7 @@ public class HttpRequest {
     //获得推送信息详情
     public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback,
                                      int pushSource, String id, String custId) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("pushSource", "" + pushSource));
         mList.add(new Param("id", id));
         if (pushSource == 1) {
@@ -386,10 +356,7 @@ public class HttpRequest {
     //设置交易密码
     public static void setPayPassword(Context context, final ICallback<Meta> callback,
                                       String payPassword, String confirmPayPassword) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
         mList.add(new Param("confirmPayPassword", RSAUtils.encryptURLEncode(confirmPayPassword)));
@@ -417,10 +384,7 @@ public class HttpRequest {
     public static void changePayPassword(Context context, final ICallback<Meta> callback,
                                          String tradeType, String idCard, String mobilePhone, String captcha, String payPassword,
                                          String confirmPayPassword) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("tradeType", tradeType));
         mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
@@ -451,10 +415,7 @@ public class HttpRequest {
     //修改登录密码
     public static void changePassword(Context context, final ICallback<LoginResult> callback,
                                       String oldPassword, String newPassword, String confirmPassword) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldPassword", RSAUtils.encryptURLEncode(oldPassword)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
@@ -482,10 +443,7 @@ public class HttpRequest {
     //找回登录密码
     public static void getPassword(Context context, final ICallback<Meta> callback,
                                    String mobilePhone, String newPassword, String confirmPassword, String captcha) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
@@ -536,10 +494,7 @@ public class HttpRequest {
 
     //获取用户的银行卡
     public static void getUserBankCard(Context context, final ICallback<BankCardResult> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
         new MyAsyncTask(context, Urls.getUserBankCard, mList, new ICallback<String>() {
@@ -564,10 +519,7 @@ public class HttpRequest {
     //识别银行卡
     public static void autoIdentifyBankCard(Context context, final ICallback<AutoIdentyCardResult> callback,
                                             String bankNo) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
 
         new MyAsyncTask(context, Urls.autoIdentifyBankCard, mList, new ICallback<String>() {
@@ -593,10 +545,7 @@ public class HttpRequest {
     public static void bindBank(Context context, final ICallback<Meta> callback, String bankNo,
                                 String tradeType, String bankCode, String bankName, String branchName, String prov,
                                 String city) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
         mList.add(new Param("tradeType", tradeType));
         mList.add(new Param("bankCode", bankCode));
@@ -736,10 +685,7 @@ public class HttpRequest {
 
     //获取银行列表
     public static void getAllCity(final Context context, final ICallback<CityInfoResult> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
 
         new MyAsyncTask(context, Urls.getAllCity, mList, new ICallback<String>() {
 
@@ -776,10 +722,7 @@ public class HttpRequest {
     //获取支行接口
     public static void getSubBranch(Context context, final ICallback<BankBranchResult> callback,
                                     String provinceName, String city, String bankCode) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("provinceName", provinceName));
         mList.add(new Param("city", city));
         mList.add(new Param("bankCode", bankCode));
@@ -806,10 +749,7 @@ public class HttpRequest {
      * 登出
      */
     public static void loginOut(Context context, final ICallback<Meta> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
         new MyAsyncTask(context, Urls.loginOut, mList, new ICallback<String>() {
@@ -836,10 +776,7 @@ public class HttpRequest {
      */
     public static void withdrawCash(Context context, final ICallback<RollOutResult> callback, String amt,
                                     String bankCode, String bankNo, String payPassword) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
         mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
@@ -869,10 +806,7 @@ public class HttpRequest {
      * 我的活期
      */
     public static void getUserCurrent(Context context, final ICallback<UserCurrentResult> callback) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
         new MyAsyncTask(context, Urls.user_current, mList, new ICallback<String>() {
@@ -1093,10 +1027,7 @@ public class HttpRequest {
      * @param subjectId 0:活期
      */
     public static void subjectIdOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
         mList.add(new Param("prodId", prodId));
@@ -1146,12 +1077,8 @@ public class HttpRequest {
     }
 
     //赎回
-    public static void redeem(Context context, final ICallback<RedeemData> callback,
-                              String amt, String payPassword) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+    public static void redeem(Context context, final ICallback<RedeemData> callback, String amt, String payPassword) {
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
         mList.add(new Param("amt", amt));
@@ -1172,10 +1099,7 @@ public class HttpRequest {
     //getMyCurrentRecord
     public static void getMyCurrentRecord(Context context, final ICallback<CurrentRecordResult> callback,
                                           String pageNo, String pageSize, String isForce) {
-        if (mList == null) {
-            mList = new ArrayList<Param>();
-        }
-        mList.clear();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
@@ -1201,7 +1125,7 @@ public class HttpRequest {
     //修改绑定手机
     public static void changePhone(Context context, final ICallback<Meta> callback,
                                    String oldMobilePhone, String oldCaptcha, String newMobilePhone, String newCaptcha) {
-        List<Param> mList = new ArrayList<Param>();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldCaptcha", oldCaptcha));
         mList.add(new Param("oldMobilePhone", RSAUtils.encryptURLEncode(oldMobilePhone)));
@@ -1229,7 +1153,7 @@ public class HttpRequest {
 
     //赎回预处理
     public static void withdrawPreprocess(Context context, final ICallback<WithDrawResult> callback, String amt) {
-        List<Param> mList = new ArrayList<Param>();
+        List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
 
