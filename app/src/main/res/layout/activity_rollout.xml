@@ -156,6 +156,7 @@
                     android:layout_toLeftOf="@+id/arrow_2"
                     android:layout_toRightOf="@id/text_bank_branch"
                     android:gravity="right"
+                    android:singleLine="true"
                     android:text="请选择"
                     android:textColor="@color/miqian_gray" />
             </RelativeLayout>
