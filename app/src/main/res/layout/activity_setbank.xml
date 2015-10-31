@@ -49,6 +49,7 @@
             style="@style/listItem">
 
             <TextView
+                android:id="@+id/text_bank_branch"
                 style="@style/text_black_item"
                 android:layout_centerVertical="true"
                 android:text="支行名称" />
@@ -67,7 +68,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/text_bank_branch"
                 android:layout_toLeftOf="@+id/arrow_2"
+                android:gravity="right"
                 android:text="请选择"
                 android:textColor="@color/miqian_gray" />
         </RelativeLayout>
