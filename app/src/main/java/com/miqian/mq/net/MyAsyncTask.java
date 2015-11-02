@@ -73,11 +73,11 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                     callback.onSucceed(result);
                 }
             } else {
-                callback.onFail("请求失败");
+                callback.onFail("数据异常，请联系客服");
             }
         } catch (Exception e) {
           e.printStackTrace();
-            callback.onFail("数据解析失败，请重试");
+            callback.onFail("数据异常，请联系客服");
         }
 
         mContext = null;
