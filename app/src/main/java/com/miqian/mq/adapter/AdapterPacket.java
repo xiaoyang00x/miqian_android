@@ -52,7 +52,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Promote promote = promList.get(position);
-        if (promote.getPromType().equals("HB")) {
+        if (promote.getType().equals("HB")) {
             ((ViewHolder) holder).textMoney.setText("￥" + promote.getCanUseAmt());
             ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
             ((ViewHolder) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
@@ -61,7 +61,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
             } else {
                 ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
             }
-        } else if (promote.getPromType().equals("SC")) {
+        } else if (promote.getType().equals("SC")) {
             ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
             ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getToUseRate() + "%】");
             ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
@@ -86,9 +86,9 @@ public class AdapterPacket extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Promote promote = promList.get(position);
-        if (promote.getPromType().equals("HB")) {
+        if (promote.getType().equals("HB")) {
             return VIEW_TYPE_HB;
-        } else if (promote.getPromType().equals("SC")) {
+        } else if (promote.getType().equals("SC")) {
             return VIEW_TYPE_SC;
         }
         return VIEW_TYPE_HB;
