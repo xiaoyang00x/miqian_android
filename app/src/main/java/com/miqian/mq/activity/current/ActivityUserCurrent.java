@@ -170,8 +170,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");
-                dialogPay.show();
-
+                UserUtil.loginPay(mActivity, dialogPay);
                 break;
         }
     }
