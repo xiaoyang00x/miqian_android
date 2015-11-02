@@ -55,13 +55,13 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
 
         if ((holder instanceof ViewHolderTicket)){
             CustPromotion promote = promList.get(position);
-            ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getPromAmt());
-            ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getPrnUsePerc() + "%】");
+            ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getTotalAmt());
+            ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getToUseRate() + "%】");
             ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
             ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             ((ViewHolderTicket) holder).promoteChoosed.setVisibility(View.GONE);
 
-            String state = promote.getSta();
+            String state = promote.getStatus();
             ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
             if (!TextUtils.isEmpty(state)) {
 

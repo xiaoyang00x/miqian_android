@@ -58,12 +58,12 @@ public class AdapterMyRedPaper extends RecyclerView.Adapter {
 
         if ((holder instanceof ViewHolder)){
             CustPromotion promote = promList.get(position);
-            ((ViewHolder) holder).textMoney.setText("￥" + promote.getPromAmt());
+            ((ViewHolder) holder).textMoney.setText("￥" + promote.getTotalAmt());
             ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
             ((ViewHolder) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             ((ViewHolder) holder).promoteChoosed.setVisibility(View.GONE);
 
-            String state = promote.getSta();
+            String state = promote.getStatus();
             ((ViewHolder) holder).imageRedPacket.setBackgroundResource(R.drawable.red_package);
             ((ViewHolder) holder).textMoney.setTextColor(Color.parseColor("#f13e3e"));
             if (!TextUtils.isEmpty(state)) {

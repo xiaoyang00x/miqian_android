@@ -5,47 +5,47 @@ package com.miqian.mq.entity;
  */
 public class CustPromotion {
 
-    private String sta;//促销状态CS 初始状态JH 激活状态YW 用完状态GQ 过期状态ZS  赠送状态
-    private String prnUsePerc;//折让比例
-    private String promAmt;//总额度
-    private String promTypCd;//余额类型SC 拾财券HB 红包 JF 积分LP 礼品卡TY 体验金
+    private String status;//促销状态CS 初始状态JH 激活状态YW 用完状态GQ 过期状态ZS  赠送状态
+    private String toUseRate;//折让比例
+    private String totalAmt;//总额度
+    private String type;//余额类型SC 拾财券HB 红包 JF 积分LP 礼品卡TY 体验金
     private String startTimestamp;//开始日期
-    private String usedPromAmt;//已抵用额度
+    private String usedAmt;//已抵用额度
     private String endTimestamp;//结束时间
     private String canUseAmt;//可用额度
     private String prodPromId;//id
     private String limitMsg;//使用范围
 
-    public String getSta() {
-        return sta;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSta(String sta) {
-        this.sta = sta;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getPrnUsePerc() {
-        return prnUsePerc;
+    public String getToUseRate() {
+        return toUseRate;
     }
 
-    public void setPrnUsePerc(String prnUsePerc) {
-        this.prnUsePerc = prnUsePerc;
+    public void setToUseRate(String toUseRate) {
+        this.toUseRate = toUseRate;
     }
 
-    public String getPromAmt() {
-        return promAmt;
+    public String getTotalAmt() {
+        return totalAmt;
     }
 
-    public void setPromAmt(String promAmt) {
-        this.promAmt = promAmt;
+    public void setTotalAmt(String totalAmt) {
+        this.totalAmt = totalAmt;
     }
 
-    public String getPromTypCd() {
-        return promTypCd;
+    public String getType() {
+        return type;
     }
 
-    public void setPromTypCd(String promTypCd) {
-        this.promTypCd = promTypCd;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getStartTimestamp() {
@@ -56,12 +56,12 @@ public class CustPromotion {
         this.startTimestamp = startTimestamp;
     }
 
-    public String getUsedPromAmt() {
-        return usedPromAmt;
+    public String getUsedAmt() {
+        return usedAmt;
     }
 
-    public void setUsedPromAmt(String usedPromAmt) {
-        this.usedPromAmt = usedPromAmt;
+    public void setUsedAmt(String usedAmt) {
+        this.usedAmt = usedAmt;
     }
 
     public String getEndTimestamp() {
