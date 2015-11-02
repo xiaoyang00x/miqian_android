@@ -52,7 +52,7 @@ import java.math.BigDecimal;
  * @created 2015-3-18
  */
 
-public class FragmentUser extends Fragment implements View.OnClickListener, MainActivity.RefeshDataListener,ExtendOperationController.ExtendOperationListener {
+public class FragmentUser extends Fragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener {
 
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket, tv_Redpackage;
@@ -248,8 +248,8 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
         final View relaTelephone = view.findViewById(R.id.rela_telephone);
         final View relaPassword = view.findViewById(R.id.rela_password);
-         editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
-         editPassword = (EditText) view.findViewById(R.id.edit_password);
+        editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
+        editPassword = (EditText) view.findViewById(R.id.edit_password);
 
         Button btnLogin = (Button) view.findViewById(R.id.btn_login);
         view.findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
@@ -280,7 +280,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
                         if (!TextUtils.isEmpty(password)) {
                             if (password.length() >= 6 && password.length() <= 16) {
                                 login(telephone, password);
-                            }else {
+                            } else {
                                 Uihelper.showToast(getActivity(), R.string.tip_password_login);
                             }
                         } else {
@@ -335,6 +335,9 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
         switch (v.getId()) {
             //充值
             case R.id.btn_rollin:
+                if (userInfo == null) {
+                    return;
+                }
                 MobclickAgent.onEvent(getActivity(), "1017");
                 //未认证
                 if ("0".equals(userInfo.getRealNameStatus())) {
@@ -348,6 +351,10 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
             //取现
             case R.id.btn_rollout:
                 MobclickAgent.onEvent(getActivity(), "1018");
+
+                if (userInfo == null) {
+                    return;
+                }
                 String balance = userInfo.getBalance();
                 if (!TextUtils.isEmpty(balance)) {
                     if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
