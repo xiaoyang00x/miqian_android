@@ -5,6 +5,9 @@ package com.miqian.mq.net;
  */
 public class Urls {
 
+    /**
+     * 测试key
+     */
     public static final String RSA_PUBLICE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCU2DBwdq+RCEL2hmR3c4Cs9Uno" + "\r"
             + "iadyKamYWTPpWSivJfLifXQWTED09z9KjK3nCjnFqquU7j7CmQwuEx9c9SkvjE+P" + "\r"
             + "NpD/23buQ31yIB41bVb0dDDjTLLqVd6aCbC85jJQ34qq6jNoMBs/IFTFBvjO++nE" + "\r"
@@ -25,9 +28,29 @@ public class Urls {
             + "7vhqwHmFAXxnffRtEVZbJk2AsEcE0qJqwoxGbij+O1+OIksDGlxjc/LgnXLlXvvY" + "\r"
             + "ZU0zSqeXVAcdRQ==";
 
+//    /**
+//     * 正式key
+//     */
+//    public static final String RSA_PUBLICE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoawHAwLTLzhF8EJefTvjbZoJV4fh5aGCRu6l1" + "\r"
+//            + "/33SjgmOKSSL44QqoQ0Eef0zr4l/lJTKQEFSg4S/OjyHF6IfsAijF3xT4/wdE8JQ8U2cA9phkkj+" + "\r"
+//            + "u0nxF9m6PEW7OSbUJ8inQCGNHyrAd7oaPScPklGnBDYuQd6tPbWt+KSE2wIDAQAB";
+//
+//    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKhrAcDAtMvOEXwQl59O+NtmglXh" + "\r"
+//            + "+HloYJG7qXX/fdKOCY4pJIvjhCqhDQR5/TOviX+UlMpAQVKDhL86PIcXoh+wCKMXfFPj/B0TwlDx" + "\r"
+//            + "TZwD2mGSSP67SfEX2bo8Rbs5JtQnyKdAIY0fKsB3uho9Jw+SUacENi5B3q09ta34pITbAgMBAAEC" + "\r"
+//            + "gYB4EnJZfgpoEy6cCShQR/lcUqUxnb2MsUHIJMcYfWKzLtjZJbQMl9Sun8usGVzP8KJS9xdtaoon" + "\r"
+//            + "zeRigZ6NoefPDStvKBOEyon04IqDs7IGfDz5In8v77GEzBVPOOsKDgF9Wmrt2ZzyY5NnVDT37+Ew" + "\r"
+//            + "U9tK7tYSYKqptbpIRGKQ4QJBAOwFIMt0Pa+bKZTaUDuedZbvDVrlp7PIUcpqFJtywwcQtjyRLU8r" + "\r"
+//            + "kSynkvrOew5nb2tW6gdBU6e2XLWUru6MbOUCQQC2rNoB2nmVA069b40twIoWM2zD3g5L5eKNv3Ja" + "\r"
+//            + "ylF/UhUWUuRGPgsyrCUCNiKbmUsid4Mj6uAhxH8UPMvwU86/AkEApok7ybN8r0M5xOmCgX7fFCAb" + "\r"
+//            + "eU7g1U98vum5HrKMgJi/Ld92bA2ewzZ+1HALjm9XxBKw0Wu7/nQD2LBP+sylLQJAX8jq1yXzsor1" + "\r"
+//            + "cqdXY7Idtd5pHZsF7A4yaRkFoU2MxjIIFJiKUbqerIdPMIWqR+RtXTlFbkPuGkaqS7ZFSVLoiQJA" + "\r"
+//            + "MILEnPd407qYRozIOYOcX1R6OlgtAjlNx0yo9BZwb8DX3mDJBmkrthDNs36Iwu+5Uc0230HtOc7U" + "\r"
+//            + "qTUeVipahQ==";
+
 //    public static final String base_server = "http://27.154.228.194:30001/";
     public static final String base_server = "https://api.shicaidai.com/";
-    //    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
+//        public static final String base_server = "http://172.20.8.14:8080/miqian-app/";
 //        public static final String base_server = "http://172.20.8.11:8082/miqian-app/";
 
     //测试
