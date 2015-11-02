@@ -7,48 +7,48 @@ package com.miqian.mq.entity;
  */
 public class Promote {
 
-    private String promUsedAmt;//促销已用户金额
-    private String promTotalAmt;//促销总金额
-    private String promSaId;//客户促销余额ID
-    private String sa;//本次认购选择本促销时可抵用的金额
+    private String usedAmt;//促销已用户金额
+    private String totalAmt;//促销总金额
+    private String id;//客户促销余额ID
+    private String willUseAmt;//本次认购选择本促销时可抵用的金额
     private String toUseRate;//抵用比率
     private String startTimestamp;//开始时间
     private String endTimestamp;//到期时间
-    private String promType;//促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
+    private String type;//促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
     private String prodPromId;//促销类型的ID
     private String limitMsg;//限制范围
     private String canUseAmt;//红包余额
 
-    public String getPromUsedAmt() {
-        return promUsedAmt;
+    public String getUsedAmt() {
+        return usedAmt;
     }
 
-    public void setPromUsedAmt(String promUsedAmt) {
-        this.promUsedAmt = promUsedAmt;
+    public void setUsedAmt(String usedAmt) {
+        this.usedAmt = usedAmt;
     }
 
-    public String getPromTotalAmt() {
-        return promTotalAmt;
+    public String getTotalAmt() {
+        return totalAmt;
     }
 
-    public void setPromTotalAmt(String promTotalAmt) {
-        this.promTotalAmt = promTotalAmt;
+    public void setTotalAmt(String totalAmt) {
+        this.totalAmt = totalAmt;
     }
 
-    public String getPromSaId() {
-        return promSaId;
+    public String getId() {
+        return id;
     }
 
-    public void setPromSaId(String promSaId) {
-        this.promSaId = promSaId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getSa() {
-        return sa;
+    public String getWillUseAmt() {
+        return willUseAmt;
     }
 
-    public void setSa(String sa) {
-        this.sa = sa;
+    public void setWillUseAmt(String willUseAmt) {
+        this.willUseAmt = willUseAmt;
     }
 
     public String getToUseRate() {
@@ -75,12 +75,12 @@ public class Promote {
         this.endTimestamp = endTimestamp;
     }
 
-    public String getPromType() {
-        return promType;
+    public String getType() {
+        return type;
     }
 
-    public void setPromType(String promType) {
-        this.promType = promType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getProdPromId() {
