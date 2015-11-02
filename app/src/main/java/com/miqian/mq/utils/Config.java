@@ -15,8 +15,8 @@ public class Config {
 	/**
 	 * 是否调试.
 	 */
-	public final static boolean DEBUG = true;
-	
+	public final static boolean DEBUG = false;
+
 	// 关于手机屏幕的一些属性
 	public static int WIDTH = 480; // 屏幕宽度
 	public static int HEIGHT = 800; // 屏幕高度
