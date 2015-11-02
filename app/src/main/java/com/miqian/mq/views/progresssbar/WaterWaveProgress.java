@@ -18,7 +18,6 @@ import android.os.Message;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -335,7 +334,7 @@ public class WaterWaveProgress extends View {
 	/**
 	 * 是否显示进度条
 	 * 
-	 * @param boolean
+	 * @param b
 	 */
 	public void setShowProgress(boolean b) {
 		mShowProgress = b;
@@ -344,7 +343,7 @@ public class WaterWaveProgress extends View {
 	/**
 	 * 是否显示进度值
 	 * 
-	 * @param boolean
+	 * @param b
 	 */
 	public void setShowNumerical(boolean b) {
 		mShowNumerical = b;
