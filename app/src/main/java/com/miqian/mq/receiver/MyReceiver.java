@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.miqian.mq.MyApplication;
@@ -31,6 +30,7 @@ import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -68,7 +68,6 @@ public class MyReceiver extends BroadcastReceiver {
         String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
 
         if (!TextUtils.isEmpty(extra)) {
-            Log.e("processCustomMessage", extra);
             response = JsonUtil.parseObject(extra, JpushInfo.class);
             // 解析数据
             if (response == null) {
@@ -228,7 +227,7 @@ public class MyReceiver extends BroadcastReceiver {
                 mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
             }
         } else {
-            Log.e("====MessageReceiver==", "==response=nulL=");
+            LogUtil.e("====MessageReceiver==", "==response=nulL=");
         }
 
     }

@@ -45,15 +45,6 @@ public class ViewPagerAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                activity.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                        Toast.makeText(activity, "the pos is " + pos, Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
         return view;

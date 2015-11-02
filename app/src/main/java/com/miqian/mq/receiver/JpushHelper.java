@@ -2,8 +2,8 @@ package com.miqian.mq.receiver;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
+import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.UserUtil;
 
 import java.util.Set;
@@ -33,7 +33,7 @@ public class JpushHelper {
             super.handleMessage(msg);
             switch (msg.what) {
                 case MSG_SET_ALIAS:
-                    Log.d(TAG, "Set alias in handler.");
+                    LogUtil.d(TAG, "Set alias in handler.");
                     // 调用 JPush 接口来设置别名。
                     JPushInterface.setAliasAndTags(context.getApplicationContext(),
                             (String) msg.obj,
@@ -41,7 +41,7 @@ public class JpushHelper {
                             mAliasCallback);
                     break;
                 default:
-                    Log.i(TAG, "Unhandled msg - " + msg.what);
+                    LogUtil.v(TAG, "Unhandled msg - " + msg.what);
             }
         }};
 
@@ -52,20 +52,20 @@ public class JpushHelper {
             switch (code) {
                 case 0:
                     logs = "Set tag and alias success";
-                    Log.e(TAG, logs);
+                    LogUtil.e(TAG, logs);
                     // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
 
 
                     break;
                 case 6002:
                     logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
-                    Log.e(TAG, logs);
+                    LogUtil.e(TAG, logs);
                     // 延迟 60 秒来调用 Handler 设置别名
                     mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
                     break;
                 default:
                     logs = "Failed with errorCode = " + code;
-                    Log.e(TAG, logs);
+                    LogUtil.e(TAG, logs);
             }
         }
     };

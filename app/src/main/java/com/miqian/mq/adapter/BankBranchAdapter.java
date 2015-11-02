@@ -1,8 +1,6 @@
 package com.miqian.mq.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +8,6 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.BankBranch;
-import com.miqian.mq.entity.RegularEarn;
 
 import java.util.List;
 
@@ -42,7 +39,6 @@ public class BankBranchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("jwzhangjie", "当前点击的位置：" + getAdapterPosition());
                     mItemClickListener.onItemClick(v, getPosition());
                 }
             });

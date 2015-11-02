@@ -3,7 +3,6 @@ package com.miqian.mq.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.adapter.RegularListAdapter;
 import com.miqian.mq.entity.GetRegularInfo;
@@ -81,8 +79,6 @@ public class RegularFragment extends BasicFragment implements View.OnClickListen
                     //获取最后一个完全显示的ItemPosition
                     int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
                     int totalItemCount = manager.getItemCount();
-
-                    Log.d("onScrollStateChanged", "lastVisibleItem = " + lastVisibleItem + " ------------- totalItemCount = " + totalItemCount);
 
                     // 判断是否滚动到底部，并且是向右滚动
                     if (lastVisibleItem == (totalItemCount - 1)) {

@@ -6,11 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
 import com.miqian.mq.encrypt.Encrypt;
 import com.miqian.mq.entity.JpushInfo;
-import com.miqian.mq.entity.UserInfo;
-import com.miqian.mq.utils.Uihelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +127,6 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     public void delete(String tableName, JpushInfo jpushInfo) {
         SQLiteDatabase db = getDatabase();
         int id = db.delete(tableName, "notice_id" + "=?", new String[]{jpushInfo.getId()});
-        Uihelper.trace("" + id);
     }
 
     public void detetjpushInfo(JpushInfo jpushInfo) {

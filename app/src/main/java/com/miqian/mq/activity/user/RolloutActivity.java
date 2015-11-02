@@ -376,7 +376,6 @@ public class RolloutActivity extends BaseActivity {
 
                 @Override
                 public void positionBtnClick() {
-                    String moneyString = editMoney.getText().toString().trim();
                     rollOutHttp();
                     dismiss();
                 }

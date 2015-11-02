@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
-import android.util.Log;
 
 import com.yintong.android.app.IPayService;
 import com.yintong.android.app.IRemoteServiceCallback;
@@ -41,7 +40,6 @@ public class MobileSecurePayer {
                     lock.notify();
                 }
             } catch (Exception e) {
-                Log.d(TAG, e.getLocalizedMessage());
             }
         }
 
@@ -141,7 +139,6 @@ public class MobileSecurePayer {
                     // call the MobileSecurePay service.
                     // 调用安全支付服务的pay方法
                     String strRet = payService.pay(payinfo);
-                    Log.e(TAG, "服务端支付结果：" + strRet);
 
                     // set the flag to indicate that we have finished.
                     // unregister the Callback, and unbind the service.

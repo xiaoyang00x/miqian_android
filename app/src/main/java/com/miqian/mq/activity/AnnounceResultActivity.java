@@ -7,13 +7,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.miqian.mq.R;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.entity.MessageInfoResult;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Pref;
@@ -126,7 +124,6 @@ public class AnnounceResultActivity extends BaseActivity {
             }
         }
 
-        Uihelper.trace("xgInfo", "classid==" + noticeId);
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_content = (TextView) findViewById(R.id.tv_content);
         tv_time = (TextView) findViewById(R.id.tv_time);

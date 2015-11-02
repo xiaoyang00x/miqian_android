@@ -1,11 +1,8 @@
 package com.miqian.mq.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
@@ -45,21 +42,6 @@ public class Uihelper {
         initToast(context);
         mToast.setText(id);
         mToast.show();
-    }
-
-    public static void trace(String st) {
-
-        if (Constants.Debug) {
-            Log.e("miqian_trace", st);
-        }
-
-    }
-
-    public static void trace(String tag, String st) {
-        if (Constants.Debug) {
-            Log.e(tag, st);
-        }
-
     }
 
     public static int getMessageCount(int code, Context context) {

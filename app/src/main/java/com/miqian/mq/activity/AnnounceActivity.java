@@ -1,7 +1,6 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -54,7 +53,6 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
         } else {
 
         }
-        Uihelper.trace("" + jpushInfolist.size());
 
         PullToRefreshSwipeMenuListView pullToListView = (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
 

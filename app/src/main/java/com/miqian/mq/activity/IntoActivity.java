@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -195,7 +194,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
                     payOrder = constructPreCardPayOrder(payOrderResult.getData());
                     String content4Pay = JSON.toJSONString(payOrder);
-                    Log.e("", "content4Pay---------- : " + content4Pay);
                     MobileSecurePayer msp = new MobileSecurePayer();
                     msp.pay(content4Pay, mHandler, Constants.RQF_PAY, mActivity, false);
                 } else if ("999991".equals(meta.getCode())) {
@@ -266,7 +264,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
                         String resulPay = objContent.optString("result_pay");
                         if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
-                            Log.e("", "rollInResult ------- " + resulPay);
                             // 支付成功后续处理
                             checkOrder(orderNo);
                         } else {
