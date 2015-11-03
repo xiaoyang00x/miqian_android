@@ -30,7 +30,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 
-public class FragmentCurrent extends Fragment implements View.OnClickListener {
+public class FragmentCurrent extends BasicFragment implements View.OnClickListener {
 
     private View view;
     private WaterWaveView waterWaveView;
@@ -191,5 +191,10 @@ public class FragmentCurrent extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    @Override
+    protected String getPageName() {
+        return "首页-活期";
     }
 }

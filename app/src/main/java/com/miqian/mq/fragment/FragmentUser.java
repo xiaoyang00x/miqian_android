@@ -52,11 +52,10 @@ import java.math.BigDecimal;
  * @created 2015-3-18
  */
 
-public class FragmentUser extends Fragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener {
+public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener {
 
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket, tv_Redpackage;
-    private Dialog mWaitingDialog;
     private UserInfo userInfo;
     private TextView tv_TotalProfit, tv_balance, tv_totalasset;
     private CustomDialog dialogTips;
@@ -107,14 +106,14 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     }
 
     private void obtainData() {
-        if (!swipeRefresh.isRefreshing()) {
-            mWaitingDialog.show();
+        if (!swipeRefresh.isRefreshing() && userInfo == null) {
+            begin();
         }
         HttpRequest.getUserInfo(getActivity(), new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
                 swipeRefresh.setRefreshing(false);
-                mWaitingDialog.dismiss();
+                end();
                 userInfo = result.getData();
                 if (userInfo != null) {
                     setData(userInfo);
@@ -124,7 +123,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
             @Override
             public void onFail(String error) {
                 swipeRefresh.setRefreshing(false);
-                mWaitingDialog.dismiss();
+                end();
                 setData(null);
                 Uihelper.showToast(getActivity(), error);
 //                initLoginView();
@@ -186,6 +185,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     }
 
     @Override
+    protected String getPageName() {
+        return "首页-我的";
+    }
+
+    @Override
     public void onDestroy() {
         ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
         super.onDestroy();
@@ -203,7 +207,6 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
             }
         });
 
-        mWaitingDialog = ProgressDialogView.create(getActivity());
 
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
         tv_Title.setText("我的");
@@ -309,11 +312,11 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
     }
 
     private void login(String telephone, String password) {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.login(getActivity(), new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 UserInfo userInfo = result.getData();
                 UserUtil.saveUserInfo(getActivity(), userInfo);
                 initUserView();
@@ -323,7 +326,7 @@ public class FragmentUser extends Fragment implements View.OnClickListener, Main
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(getActivity(), error);
             }
         }, telephone, password);
