@@ -276,6 +276,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             @Override
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1046");
+                userInfo=null;
                 String telephone = editTelephone.getText().toString();
                 String password = editPassword.getText().toString();
                 if (!TextUtils.isEmpty(telephone)) {

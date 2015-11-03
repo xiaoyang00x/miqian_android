@@ -187,7 +187,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="0.00"
+                                android:text="--.--"
                                 android:textColor="@color/white"
                                 android:textSize="50sp" />
                         </LinearLayout>
@@ -231,7 +231,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="0.00"
+                                    android:text="--.--"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/mq_font2" />
                             </LinearLayout>
@@ -264,7 +264,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="0.00"
+                                    android:text="--.--"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/mq_font2" />
                             </LinearLayout>
@@ -343,7 +343,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
                         android:layout_toLeftOf="@+id/arrow_1"
-                        android:text="0元"
+                        android:text="--"
                         android:textColor="@color/mq_r1" />
                 </RelativeLayout>
 
@@ -386,7 +386,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
                         android:layout_toLeftOf="@+id/arrow_2"
-                        android:text="0笔"
+                        android:text="--"
                         android:textColor="@color/mq_r1" />
                 </RelativeLayout>
 
@@ -463,7 +463,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
                         android:layout_toLeftOf="@+id/arrow_4"
-                        android:text="0张"
+                        android:text="--"
                         android:textColor="@color/mq_r1" />
                 </RelativeLayout>
 
@@ -507,7 +507,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
                         android:layout_toLeftOf="@+id/arrow_5"
-                        android:text="0个"
+                        android:text="--"
                         android:textColor="@color/mq_r1" />
                 </RelativeLayout>
             </LinearLayout>
