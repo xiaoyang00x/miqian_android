@@ -248,7 +248,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 tv_begin_time.setVisibility(View.GONE);
                 tv_status.setVisibility(View.VISIBLE);
             } else {
-                tv_status.setText("售罄");
+                tv_status.setText("已售罄");
                 tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest_unabled);
                 layout_circle.setBackgroundResource(R.drawable.bg_circle_sell_out);
                 lable_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
