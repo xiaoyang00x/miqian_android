@@ -163,9 +163,6 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             case R.id.bt_redeem:
                 MobclickAgent.onEvent(mActivity, "1038");
                 intent = new Intent(mActivity, ActivityRedeem.class);
-                //本金
-                intent.putExtra("capital", userCurrent.getCurAsset());
-                intent.putExtra("totalEaring", userCurrent.getCurAmt());
                 startActivity(intent);
                 break;
             case R.id.bt_subscribe:

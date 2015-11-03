@@ -32,7 +32,6 @@ import java.math.BigDecimal;
 public class ActivityRedeem extends BaseActivity {
     private EditText editMoney;
     private String capital;
-    private String totalEaring;
     private UserInfo userInfo;
     private DialogTradePassword dialogTradePassword_set;
     private DialogTradePassword dialogTradePassword_input;
@@ -40,12 +39,7 @@ public class ActivityRedeem extends BaseActivity {
 
     @Override
     public void obtainData() {
-        Intent intent = getIntent();
-        capital = intent.getStringExtra("capital");
-        totalEaring = intent.getStringExtra("totalEaring");
-        if (!TextUtils.isEmpty(capital)) {
-            editMoney.setHint("可赎回" + capital + "元");
-        }
+
 
         mWaitingDialog.show();
         HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
@@ -53,6 +47,13 @@ public class ActivityRedeem extends BaseActivity {
             public void onSucceed(LoginResult result) {
                 mWaitingDialog.dismiss();
                 userInfo = result.getData();
+                if (userInfo != null) {
+                    capital = userInfo.getCurAmt();
+                    if (!TextUtils.isEmpty(capital)) {
+                        editMoney.setHint("可赎回" + capital + "元");
+                    }
+
+                }
 
             }
 
@@ -104,6 +105,9 @@ public class ActivityRedeem extends BaseActivity {
 
     public void btn_click(View v) {
 
+        if (userInfo==null){
+            return;
+        }
         money = editMoney.getText().toString();
         if (!TextUtils.isEmpty(money)) {
 
