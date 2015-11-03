@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 public class RegularEarnActivity extends BaseActivity implements View.OnClickListener {
     public static final String KEY_SUBJECT_ID = "KEY_SUBJECT_ID";
     private String subjectId; //标的 ID
+    private RegularEarn mData;
 
     private DialogPay dialogPay;
 
@@ -154,48 +155,53 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         return "定期赚";
     }
 
-    private void updateUI(RegularEarn data) {
-        if (data == null) return;
-        if (TextUtils.isEmpty(data.getPromotionDesc())) {
+    private void updateUI() {
+        if (mData == null) return;
+        if (TextUtils.isEmpty(mData.getPromotionDesc())) {
             layout_des.setVisibility(View.GONE);
         } else {
             layout_des.setVisibility(View.VISIBLE);
-            tv_description.setText(data.getPromotionDesc());
+            if(!TextUtils.isEmpty(mData.getPromotionDescUrl())) {
+                tv_description.setOnClickListener(this);
+                tv_description.setText(mData.getPromotionDesc() + " >>");
+            }else {
+                tv_description.setText(mData.getPromotionDesc());
+            }
         }
-        tv_limit.setText("项目期限 " + data.getLimit() + "天");
-        tv_annurate_interest_rate.setText(data.getYearInterest());
-        if ("Y".equalsIgnoreCase(data.getPresentationYesNo())) {
+        tv_limit.setText("项目期限 " + mData.getLimit() + "天");
+        tv_annurate_interest_rate.setText(mData.getYearInterest());
+        if ("Y".equalsIgnoreCase(mData.getPresentationYesNo())) {
             tv_add_interest.setVisibility(View.VISIBLE);
-            tv_add_interest.setText(" +" + data.getPresentationYearInterest() + "% ");
+            tv_add_interest.setText(" +" + mData.getPresentationYearInterest() + "% ");
         } else {
             tv_add_interest.setVisibility(View.GONE);
         }
-        tv_project_name.setText(data.getSubjectName());
-        tv_hkfs.setText(data.getPayMode());
-        progressBar.setProgress((new Float(data.getPurchasePercent())).intValue());
-        tv_fx.setText(data.getDdbzf());
-        tv_bxbz.setText(data.getBxbzf());
+        tv_project_name.setText(mData.getSubjectName());
+        tv_hkfs.setText(mData.getPayMode());
+        progressBar.setProgress((new Float(mData.getPurchasePercent())).intValue());
+        tv_fx.setText(mData.getDdbzf());
+        tv_bxbz.setText(mData.getBxbzf());
 
-        if (data.getSubjectMaxBuy().compareTo(new BigDecimal(999999999999L)) == 0) {
+        if (mData.getSubjectMaxBuy().compareTo(new BigDecimal(999999999999L)) == 0) {
             tv_lable1.setText("");
         } else {
-            tv_lable1.setText("每人限额" + FormatUtil.formatAmount(data.getSubjectMaxBuy()) + "元");
+            tv_lable1.setText("每人限额" + FormatUtil.formatAmount(mData.getSubjectMaxBuy()) + "元");
         }
 
         //待开标
-        if ("00".equals(data.getSubjectStatus())) {
-            tv_lable2.setText(FormatUtil.formatDate(data.getStartTimestamp(), "dd日 hh:mm:ss开售"));
+        if ("00".equals(mData.getSubjectStatus())) {
+            tv_lable2.setText(FormatUtil.formatDate(mData.getStartTimestamp(), "dd日 hh:mm:ss开售"));
         } else {
-            tv_lable2.setText(Float.valueOf(data.getPurchasePercent()).intValue() + "%");
+            tv_lable2.setText(Float.valueOf(mData.getPurchasePercent()).intValue() + "%");
         }
-        tv_lable3.setText("剩余额度" + FormatUtil.formatAmount(data.getSubjectTotalPrice().subtract(data.getPurchasePrice())) + "元");
-        tv_lable4.setText("标的总额" + FormatUtil.formatAmount(data.getSubjectTotalPrice()) + "元");
+        tv_lable3.setText("剩余额度" + FormatUtil.formatAmount(mData.getSubjectTotalPrice().subtract(mData.getPurchasePrice())) + "元");
+        tv_lable4.setText("标的总额" + FormatUtil.formatAmount(mData.getSubjectTotalPrice()) + "元");
 
         //待开标
-        if ("00".equals(data.getSubjectStatus())) {
+        if ("00".equals(mData.getSubjectStatus())) {
             btn_buy.setText("待开标");
             btn_buy.setEnabled(false);
-        } else if ("01".equals(data.getSubjectStatus())) {
+        } else if ("01".equals(mData.getSubjectStatus())) {
             //已开标
             btn_buy.setText("认购");
             btn_buy.setEnabled(true);
@@ -216,6 +222,9 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
             case R.id.btn_des_close:
                 layout_des.setVisibility(View.GONE);
                 break;
+            case R.id.tv_description:
+                WebActivity.startActivity(mActivity, mData.getPromotionDescUrl());
+                break;
             default:
                 break;
         }
@@ -230,13 +239,13 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                 end();
                 if (result != null) {
                     showContentView();
-                    RegularEarn regularEarn = result.getData();
-                    downLimit = regularEarn.getFromInvestmentAmount();
-                    upLimit = regularEarn.getSubjectMaxBuy();
-                    leftLimit = regularEarn.getSubjectTotalPrice().subtract(regularEarn.getPurchasePrice());
-                    BigDecimal tempInterest = new BigDecimal(regularEarn.getYearInterest()).add(new BigDecimal(regularEarn.getPresentationYearInterest()));
-                    interestRateString = "年化收益率：" + tempInterest + "%  期限：" + regularEarn.getLimit() + "天";
-                    updateUI(result.getData());
+                    mData = result.getData();
+                    downLimit = mData.getFromInvestmentAmount();
+                    upLimit = mData.getSubjectMaxBuy();
+                    leftLimit = mData.getSubjectTotalPrice().subtract(mData.getPurchasePrice());
+                    BigDecimal tempInterest = new BigDecimal(mData.getYearInterest()).add(new BigDecimal(mData.getPresentationYearInterest()));
+                    interestRateString = "年化收益率：" + tempInterest + "%  期限：" + mData.getLimit() + "天";
+                    updateUI();
                 }
             }
 

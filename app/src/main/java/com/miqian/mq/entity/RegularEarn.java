@@ -26,6 +26,7 @@ public class RegularEarn implements Serializable {
     private String presentationYearInterest; //赠送年利率
     private BigDecimal fromInvestmentAmount; //起投金额
     private String promotionDesc; //"满1万元送100元红包"//促销描述
+    private String promotionDescUrl;
     private ArrayList<RegularEarnSubInfo> schemeList;
 
     //以下字段只有再取详情的时候才有
@@ -42,6 +43,13 @@ public class RegularEarn implements Serializable {
 
     private BigDecimal subjectMaxBuy; //最大认购金额
 
+    public String getPromotionDescUrl() {
+        return promotionDescUrl;
+    }
+
+    public void setPromotionDescUrl(String promotionDescUrl) {
+        this.promotionDescUrl = promotionDescUrl;
+    }
 
     public void setPayMode(String payMode) {
         this.payMode = payMode;
