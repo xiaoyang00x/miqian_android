@@ -12,6 +12,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.adapter.BankBranchAdapter;
 import com.miqian.mq.entity.BankBranch;
 import com.miqian.mq.entity.BankBranchResult;
+import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
@@ -28,8 +29,12 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
     private EditText et_bankbranch;
     private RecyclerView recyclerView;
     private List<BankBranch> items;
-    private String city,province;
+    private String city, province;
     private int bankcode;
+    private boolean isFromSetting;
+    private String stringBankcode;
+    private String bankName;
+    private String bankCard;
 
     @Override
     public void obtainData() {
@@ -48,7 +53,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
                 mWaitingDialog.dismiss();
 
             }
-        }, province, city, ""+bankcode);
+        }, province, city, "" + bankcode);
     }
 
     @Override
@@ -57,9 +62,14 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
         Intent intent = getIntent();
         city = intent.getStringExtra("city");
         province = intent.getStringExtra("province");
-        String   stringBankcode = intent.getStringExtra("bankcode");
-        if (!TextUtils.isEmpty(stringBankcode)){
-            bankcode=Integer.parseInt(stringBankcode);
+        stringBankcode = intent.getStringExtra("bankcode");
+        bankName = intent.getStringExtra("bankName");
+        bankCard = intent.getStringExtra("bankCard");
+        isFromSetting = intent.getBooleanExtra("fromsetting", false);
+
+
+        if (!TextUtils.isEmpty(stringBankcode)) {
+            bankcode = Integer.parseInt(stringBankcode);
         }
         et_bankbranch = (EditText) findViewById(R.id.et_bankbranch);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -87,23 +97,56 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("选择开户行");
-        mTitle.setRightText("完成");
+        if (isFromSetting) {
+            mTitle.setRightText("完成");
+        } else {
+
+            mTitle.setRightText("确定");
+        }
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String branch = et_bankbranch.getText().toString();
                 if (!TextUtils.isEmpty(branch)) {
-                    Intent data = new Intent();
-                    data.putExtra("branch", branch);
-                    setResult(1, data);
-                    finish();
+                    if (isFromSetting) {
+                        Intent data = new Intent();
+                        data.putExtra("branch", branch);
+                        setResult(1, data);
+                        finish();
+                    } else {//提现进入的，进行网络请求绑定支行
+
+                        bindBranchBank(branch);
+                    }
+
                 } else {
                     Uihelper.showToast(mActivity, "请选择或输入支行");
                 }
 
             }
         });
+    }
+
+    private void bindBranchBank(final String branch) {
+
+        begin();
+        //绑定银行卡
+        HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
+            @Override
+            public void onSucceed(Meta result) {
+                end();
+                Intent data = new Intent();
+                data.putExtra("branchbank",branch);
+                setResult(2, data);
+                finish();
+            }
+
+            @Override
+            public void onFail(String error) {
+                end();
+                Uihelper.showToast(mActivity, error);
+            }
+        }, bankCard, "XG", stringBankcode, bankName, branch, province, city);
     }
 
     @Override

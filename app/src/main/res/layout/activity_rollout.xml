@@ -171,6 +171,11 @@
                 android:id="@+id/tv_arrivetime"
                 style="@style/text_black_item"
                 android:layout_centerVertical="true"
+                android:textColor="@color/mq_r1"
+                android:textSize="@dimen/mq_font5"
+                android:drawableLeft="@drawable/rollout_time"
+                android:drawablePadding="3dp"
+                android:gravity="center_vertical"
                 android:text="预计到账时间:两个工作日内" />
 
         </RelativeLayout>
@@ -182,13 +187,13 @@
             android:layout_marginBottom="@dimen/margin_top"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right"
-            android:paddingTop="@dimen/margin_top">
+            >
 
             <Button
                 android:id="@+id/bt_rollout"
                 style="@style/click_btn"
                 android:onClick="btn_click"
-                android:text="确认转出" />
+                android:text="确定" />
         </LinearLayout>
     </LinearLayout>
 

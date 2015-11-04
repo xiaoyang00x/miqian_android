@@ -110,7 +110,6 @@ public class RolloutActivity extends BaseActivity {
     }
 
     private void initBindBranchView() {
-
         if (TextUtils.isEmpty(bankOpenName)) {
             frame_bindbranch.setVisibility(View.VISIBLE);
             frame_bank_province.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +130,11 @@ public class RolloutActivity extends BaseActivity {
                         intent_branch.putExtra("city", city);
                         intent_branch.putExtra("province", province);
                         intent_branch.putExtra("bankcode", bankCard.getBankCode());
+                        intent_branch.putExtra("fromsetting", false);
+                        intent_branch.putExtra("bankName", userInfo.getBankName());
+                        intent_branch.putExtra("bankCard", cardNum);
+
+
                         startActivityForResult(intent_branch, 0);
 
                     } else {
@@ -151,11 +155,13 @@ public class RolloutActivity extends BaseActivity {
         if (data == null) {
             return;
         }
-        if (resultCode == 1) {
-            branch = data.getStringExtra("branch");
+        if (resultCode == 2) {
+            isSuccessBindBranch = true;
+            String branch = data.getStringExtra("branch");
             if (!TextUtils.isEmpty(branch)) {
                 textBranch.setText(branch);
             }
+
 
         } else if (resultCode == 0) {
             isChooseCity = true;
@@ -165,22 +171,6 @@ public class RolloutActivity extends BaseActivity {
                 tv_bank_province.setText(city);
             }
         }
-        if (branch == null || city == null || province == null || cardNum == null) {
-            return;
-        }
-        //绑定银行卡
-        HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-                isSuccessBindBranch = true;
-            }
-
-            @Override
-            public void onFail(String error) {
-                isSuccessBindBranch = false;
-                Uihelper.showToast(mActivity, error);
-            }
-        }, cardNum, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
 
     }
 
