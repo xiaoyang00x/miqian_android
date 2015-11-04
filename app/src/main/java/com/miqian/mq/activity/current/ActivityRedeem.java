@@ -48,7 +48,7 @@ public class ActivityRedeem extends BaseActivity {
                 mWaitingDialog.dismiss();
                 userInfo = result.getData();
                 if (userInfo != null) {
-                    capital = userInfo.getCurAmt();
+                    capital = userInfo.getCanRedeem();
                     if (!TextUtils.isEmpty(capital)) {
                         editMoney.setHint("可赎回" + capital + "元");
                     }
