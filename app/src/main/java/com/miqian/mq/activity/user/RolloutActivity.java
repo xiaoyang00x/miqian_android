@@ -290,7 +290,7 @@ public class RolloutActivity extends BaseActivity {
             return;
         }
         if (TextUtils.isEmpty(bankOpenName) && !isSuccessBindBranch) {
-            Uihelper.showToast(mActivity, "开户支行未绑定成功,请重试");
+            Uihelper.showToast(mActivity, "未绑定支行");
         } else {
             handleData();
         }
