@@ -31,6 +31,15 @@ public class UserInfo implements Serializable {
     public String bankCode;//绑定银行代码
     public String supportStatus;//是否支持连连绑卡
     public String addRechargeMinValue;//充值最小额度
+    public String canRedeem;//可赎回金额
+
+    public String getCanRedeem() {
+        return canRedeem;
+    }
+
+    public void setCanRedeem(String canRedeem) {
+        this.canRedeem = canRedeem;
+    }
 
     public String getCustId() {
         return custId;
