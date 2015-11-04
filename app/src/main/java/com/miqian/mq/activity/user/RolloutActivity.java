@@ -157,11 +157,10 @@ public class RolloutActivity extends BaseActivity {
         }
         if (resultCode == 2) {
             isSuccessBindBranch = true;
-            String branch = data.getStringExtra("branch");
+            String branch = data.getStringExtra("branchbank");
             if (!TextUtils.isEmpty(branch)) {
                 textBranch.setText(branch);
             }
-
 
         } else if (resultCode == 0) {
             isChooseCity = true;
