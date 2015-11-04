@@ -48,10 +48,19 @@ public class Urls {
 //            + "MILEnPd407qYRozIOYOcX1R6OlgtAjlNx0yo9BZwb8DX3mDJBmkrthDNs36Iwu+5Uc0230HtOc7U" + "\r"
 //            + "qTUeVipahQ==";
 
+    /**
+     * 测试
+     */
+    public static final String base_server = "https://testapi.shicaidai.com:8443/";
+
+//    /**
+//     * 线上
+//     */
+//    public static final String base_server = "https://api.shicaidai.com/";
+
+//    public static final String base_server = "http://172.20.8.14:8080/miqian-app/";
+//    public static final String base_server = "http://172.20.8.11:8082/miqian-app/";
 //    public static final String base_server = "http://27.154.228.194:30001/";
-    public static final String base_server = "https://api.shicaidai.com/";
-//        public static final String base_server = "http://172.20.8.14:8080/miqian-app/";
-//        public static final String base_server = "http://172.20.8.11:8082/miqian-app/";
 
     //测试
     public final static String test = base_server + "userService/register";
