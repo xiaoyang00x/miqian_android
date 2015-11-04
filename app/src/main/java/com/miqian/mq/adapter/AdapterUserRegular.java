@@ -130,7 +130,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
         if (mList != null && mList.size() != 0) {
             return mList.size() + 2;//+2 头部：定期投资的笔数 和 尾部：加载更多
         }
-        return 0;
+        return 1;
     }
 
     public void setMaxItem(int value) {
