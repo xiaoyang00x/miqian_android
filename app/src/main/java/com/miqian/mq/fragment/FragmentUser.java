@@ -305,6 +305,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private void initUserView() {
         swipeRefresh.setVisibility(View.VISIBLE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.GONE);
+
+        if (userInfo != null) {
+            setData(userInfo);
+        }
     }
 
     private void initLoginView() {
