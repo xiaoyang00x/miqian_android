@@ -31,22 +31,25 @@ public class Urls {
 //    /**
 //     * 正式key
 //     */
-//    public static final String RSA_PUBLICE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoawHAwLTLzhF8EJefTvjbZoJV4fh5aGCRu6l1" + "\r"
-//            + "/33SjgmOKSSL44QqoQ0Eef0zr4l/lJTKQEFSg4S/OjyHF6IfsAijF3xT4/wdE8JQ8U2cA9phkkj+" + "\r"
-//            + "u0nxF9m6PEW7OSbUJ8inQCGNHyrAd7oaPScPklGnBDYuQd6tPbWt+KSE2wIDAQAB";
+//    public static final String RSA_PUBLICE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC84iihAQA8kxa4eWiQwZ6qLQpJ" + "\r"
+//            + "wZC0yUpQB5qh3ZKeYbR2Nx8GK8EEmoQg4XMK+HFgrrzji8PTnv69h0MBqN3Jg1Ul" + "\r"
+//            + "bLQLzF0xjicDjgA2YAWYRFQ3JBM5MjsM+kkLme++03dtpBlFLXVXBltTEoxeU41e" + "\r"
+//            + "Pt94rFg+wNta0BNX9QIDAQAB";
 //
-//    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKhrAcDAtMvOEXwQl59O+NtmglXh" + "\r"
-//            + "+HloYJG7qXX/fdKOCY4pJIvjhCqhDQR5/TOviX+UlMpAQVKDhL86PIcXoh+wCKMXfFPj/B0TwlDx" + "\r"
-//            + "TZwD2mGSSP67SfEX2bo8Rbs5JtQnyKdAIY0fKsB3uho9Jw+SUacENi5B3q09ta34pITbAgMBAAEC" + "\r"
-//            + "gYB4EnJZfgpoEy6cCShQR/lcUqUxnb2MsUHIJMcYfWKzLtjZJbQMl9Sun8usGVzP8KJS9xdtaoon" + "\r"
-//            + "zeRigZ6NoefPDStvKBOEyon04IqDs7IGfDz5In8v77GEzBVPOOsKDgF9Wmrt2ZzyY5NnVDT37+Ew" + "\r"
-//            + "U9tK7tYSYKqptbpIRGKQ4QJBAOwFIMt0Pa+bKZTaUDuedZbvDVrlp7PIUcpqFJtywwcQtjyRLU8r" + "\r"
-//            + "kSynkvrOew5nb2tW6gdBU6e2XLWUru6MbOUCQQC2rNoB2nmVA069b40twIoWM2zD3g5L5eKNv3Ja" + "\r"
-//            + "ylF/UhUWUuRGPgsyrCUCNiKbmUsid4Mj6uAhxH8UPMvwU86/AkEApok7ybN8r0M5xOmCgX7fFCAb" + "\r"
-//            + "eU7g1U98vum5HrKMgJi/Ld92bA2ewzZ+1HALjm9XxBKw0Wu7/nQD2LBP+sylLQJAX8jq1yXzsor1" + "\r"
-//            + "cqdXY7Idtd5pHZsF7A4yaRkFoU2MxjIIFJiKUbqerIdPMIWqR+RtXTlFbkPuGkaqS7ZFSVLoiQJA" + "\r"
-//            + "MILEnPd407qYRozIOYOcX1R6OlgtAjlNx0yo9BZwb8DX3mDJBmkrthDNs36Iwu+5Uc0230HtOc7U" + "\r"
-//            + "qTUeVipahQ==";
+//    public static final String RSA_PRIVATE = "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANfUTvSfntVeUkvb" + "\r"
+//            + "U8MLLQnkOPa61ya/IVJj448GO765ul2HxWHIGUVa0ibGIAG/uh0bE5lHHTjSQu8r" + "\r"
+//            + "2RmH++qK1fMZRbRpjjDws+iZ/oSN8un8A99yy6ToDN+9bCVePxDFtGeJDqze+C1W" + "\r"
+//            + "wr7PZMeaxzjeP5oW+6F5iNyi0lcBAgMBAAECgYEAyqV/VNQisDgVkT/nz7RIn4b3" + "\r"
+//            + "rUIVDT5cLR245et2YUfFolf+jibxA1uZAer41muMdhOcPUi2OUnCqwpCl2REtGL3" + "\r"
+//            + "Kfumfngw0YIotN9lFstnB9vFv61WLgUyEvDlsmzId5lk3VSJ8wM++p9GCI6Kh4Mc" + "\r"
+//            + "gF7EViONzLZHIh86i9kCQQD9DOoRU6ezNU8N+L7Fttm/9YhTq8+C6luFw1PIzuLT" + "\r"
+//            + "n5mwStqexybXb4Rc2wdyhjSUCpGbi4jLTC6uYBj36BTTAkEA2lhUKaZ5HluSOFuH" + "\r"
+//            + "yPjv1rGgHfUVKGkqLyxmKMglqsDcy5cJQr8+BJjArjfca5vo0C/e9BIcj+xBGCRg" + "\r"
+//            + "sUtQWwJBAMZrJe5IJisDFeXisdPeOIeoQyk4gxIoKXONYVkHwBwn/R6a0ynFBtPO" + "\r"
+//            + "gX89z20hhoC+eMX6d1zRc5kPiQR6WjkCQQCAEV8MLwDLtZpGRCmYz6qdmwH3kFEg" + "\r"
+//            + "qs57bOde9EZjqUvYfnaIF/QgbhhWF53J4GDl+64iKp1mLYTgzDWKyEoRAkAHCfsc" + "\r"
+//            + "ylevNflC7hVrPjA8nvJtuO5gA1W6u5la3fRIam7xCtHVKkJDZ8cKFttfCvEZJOT5" + "\r"
+//            + "/SNc/6A5aNjEU9y6";
 
     /**
      * 测试
@@ -58,9 +61,8 @@ public class Urls {
 //     */
 //    public static final String base_server = "https://api.shicaidai.com/";
 
-//    public static final String base_server = "http://172.20.8.14:8080/miqian-app/";
+//    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
 //    public static final String base_server = "http://172.20.8.11:8082/miqian-app/";
-//    public static final String base_server = "http://27.154.228.194:30001/";
 
     //测试
     public final static String test = base_server + "userService/register";
