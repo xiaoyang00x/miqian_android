@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -37,6 +38,19 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
     private String bankCard;
 
     @Override
+    public void onCreate(Bundle arg0) {
+        Intent intent = getIntent();
+        city = intent.getStringExtra("city");
+        province = intent.getStringExtra("province");
+        stringBankcode = intent.getStringExtra("bankcode");
+        bankName = intent.getStringExtra("bankName");
+        bankCard = intent.getStringExtra("bankCard");
+        isFromSetting = intent.getBooleanExtra("fromsetting", false);
+
+        super.onCreate(arg0);
+    }
+
+    @Override
     public void obtainData() {
         mWaitingDialog.show();
         HttpRequest.getSubBranch(mActivity, new ICallback<BankBranchResult>() {
@@ -58,15 +72,6 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
 
     @Override
     public void initView() {
-
-        Intent intent = getIntent();
-        city = intent.getStringExtra("city");
-        province = intent.getStringExtra("province");
-        stringBankcode = intent.getStringExtra("bankcode");
-        bankName = intent.getStringExtra("bankName");
-        bankCard = intent.getStringExtra("bankCard");
-        isFromSetting = intent.getBooleanExtra("fromsetting", false);
-
 
         if (!TextUtils.isEmpty(stringBankcode)) {
             bankcode = Integer.parseInt(stringBankcode);
@@ -136,7 +141,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
             public void onSucceed(Meta result) {
                 end();
                 Intent data = new Intent();
-                data.putExtra("branchbank",branch);
+                data.putExtra("branchbank", branch);
                 setResult(2, data);
                 finish();
             }
