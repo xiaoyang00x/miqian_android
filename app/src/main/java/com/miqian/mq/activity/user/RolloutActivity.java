@@ -174,7 +174,7 @@ public class RolloutActivity extends BaseActivity {
     }
 
     private void initBindView() {
-        String bindCardStatus = userInfo.bindCardStatus;
+        String bindCardStatus = userInfo.getBindCardStatus();
         //未绑定
         if ("0".equals(bindCardStatus)) {
             dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {

@@ -5,12 +5,12 @@ package com.miqian.mq.entity;
  */
 public class JpushInfo {
 
-    public String id;
-    public String title;
-    public String  content;
-    public String time;
-    public String url;
-    public String uriType;
+    private String id;
+    private String title;
+    private String  content;
+    private String time;
+    private String url;
+    private String uriType;
     private String state; // 1为未读，2为已读
     private String userId;
     private String pushSource;

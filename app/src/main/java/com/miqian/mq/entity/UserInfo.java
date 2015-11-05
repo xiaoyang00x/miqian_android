@@ -7,31 +7,31 @@ import java.io.Serializable;
  */
 public class UserInfo implements Serializable {
 
-    public String custId;//客户id
-    public String mobilePhone;//手机号
-    public String token;//
-    public String loginName;//登录名
-    public String realName;//真实姓名
-    public String nickName;//昵称
-    public String idCard;//身份证号
-    public String bankNo;//银行卡号
-    public String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
-    public String balance;//可用余额
-    public String curAmt;//活期总额
-    public String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
-    public String totalProfit;//历史收益
-    public String regTotal;//定期认购笔数
-    public String totalAsset;//总资产
-    public String wealthTicket;//拾财券
-    public String realNameStatus;//实名认证状态
-    public String redBag;//红包数
-    public String bankName;//绑定银行名称
-    public String bankUrlSmall;//绑定银行图标url
-    public String bankUrlBig;//绑定银行图标url
-    public String bankCode;//绑定银行代码
-    public String supportStatus;//是否支持连连绑卡
-    public String addRechargeMinValue;//充值最小额度
-    public String canRedeem;//可赎回金额
+    private String custId;//客户id
+    private String mobilePhone;//手机号
+    private String token;//
+    private String loginName;//登录名
+    private String realName;//真实姓名
+    private String nickName;//昵称
+    private String idCard;//身份证号
+    private String bankNo;//银行卡号
+    private String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
+    private String balance;//可用余额
+    private String curAmt;//活期总额
+    private String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
+    private String totalProfit;//历史收益
+    private String regTotal;//定期认购笔数
+    private String totalAsset;//总资产
+    private String wealthTicket;//拾财券
+    private String realNameStatus;//实名认证状态
+    private String redBag;//红包数
+    private String bankName;//绑定银行名称
+    private String bankUrlSmall;//绑定银行图标url
+    private String bankUrlBig;//绑定银行图标url
+    private String bankCode;//绑定银行代码
+    private String supportStatus;//是否支持连连绑卡
+    private String addRechargeMinValue;//充值最小额度
+    private String canRedeem;//可赎回金额
 
     public String getCanRedeem() {
         return canRedeem;

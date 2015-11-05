@@ -5,7 +5,7 @@ package com.miqian.mq.entity;
  */
 public class CurrentInfoResult extends Meta {
 
-    public CurrentInfo data;
+    private CurrentInfo data;
 
     public CurrentInfo getData() {
         return data;

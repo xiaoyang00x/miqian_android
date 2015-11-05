@@ -126,7 +126,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void refreshView() {
-        bindStatus = userInfo.bindCardStatus;
+        bindStatus = userInfo.getBindCardStatus();
         if (bindStatus.equals("0")) {
             frameBank.setVisibility(View.GONE);
             frameBankInput.setVisibility(View.VISIBLE);
