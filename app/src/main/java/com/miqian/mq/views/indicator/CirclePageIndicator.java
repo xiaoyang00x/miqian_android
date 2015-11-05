@@ -398,6 +398,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
         mViewPager = view;
         mViewPager.setOnPageChangeListener(this);
+
+        if(mViewPager != null && mViewPager.getAdapter() != null) {
+            if(mPageCount > mViewPager.getAdapter().getCount()) {
+                mPageCount = mViewPager.getAdapter().getCount();
+            }
+        }
         invalidate();
     }
 
