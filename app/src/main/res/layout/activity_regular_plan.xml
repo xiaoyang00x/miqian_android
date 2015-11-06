@@ -95,38 +95,43 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="68dp"
-                    android:layout_marginTop="45dp">
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="30dp">
 
                     <TextView
                         android:id="@+id/tv_annurate_interest_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="5dp"
                         android:textColor="@color/mq_r1"
-                        android:textSize="@dimen/mq_font9" />
+                        android:textSize="@dimen/mq_font9"
+                        />
 
                     <TextView
                         android:id="@+id/tv_add_interest"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/tv_annurate_interest_rate"
+                        android:layout_alignParentTop="true"
                         android:background="@drawable/bg_add_interest"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mq_font4"
+                        android:layout_marginTop="25dp"
                         android:visibility="gone" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:layout_alignBaseline="@id/tv_annurate_interest_rate"
                         android:layout_toRightOf="@id/tv_annurate_interest_rate"
+                        android:layout_alignBaseline="@id/tv_annurate_interest_rate"
                         android:text="%"
                         android:textColor="@color/mq_r1"
-                        android:textSize="@dimen/mq_font1" />
+                        android:textSize="@dimen/mq_font1"
+                        />
                 </RelativeLayout>
 
                 <LinearLayout
