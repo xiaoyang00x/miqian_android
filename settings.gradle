@@ -1,1 +1,1 @@
-include ':app', ':library_pulltorefesh', ':jpush'
+include ':app', ':library_pulltorefesh'
