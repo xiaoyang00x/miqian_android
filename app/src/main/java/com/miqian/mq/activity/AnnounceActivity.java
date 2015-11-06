@@ -206,7 +206,7 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
                         MyDataBaseHelper.getInstance(mActivity)
                                 .deleteall(Pref.getString(Pref.USERID, mActivity, Pref.VISITOR));
                     }
-                    Uihelper.getMessageCount(0, mActivity);
+                    Uihelper.getMessageCount(-1, mActivity);
                     jpushInfolist.clear();
                     adapter.notifyDataSetChanged();
                     mTitle.setRightText("");
