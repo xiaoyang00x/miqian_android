@@ -74,9 +74,13 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
 
                 JpushInfo jpushInfo = jpushInfolist.get(position);
+                if (jpushInfo.getState().equals("1")) {
+                    Uihelper.getMessageCount(-1, mActivity);
+                    jpushInfo.setState("2");
+                    MyDataBaseHelper.getInstance(mActivity).recordJpush(jpushInfo);
+                }
                 MyDataBaseHelper.getInstance(mActivity).detetjpushInfo(jpushInfo);
                 jpushInfolist.remove(jpushInfo);
-                Uihelper.getMessageCount(0, mActivity);
                 Uihelper.showToast(mActivity, "删除成功");
                 obtainData();
 
@@ -206,7 +210,7 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
                         MyDataBaseHelper.getInstance(mActivity)
                                 .deleteall(Pref.getString(Pref.USERID, mActivity, Pref.VISITOR));
                     }
-                    Uihelper.getMessageCount(-1, mActivity);
+                    Uihelper.getMessageCount(0, mActivity);
                     jpushInfolist.clear();
                     adapter.notifyDataSetChanged();
                     mTitle.setRightText("");
