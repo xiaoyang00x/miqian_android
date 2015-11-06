@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.adapter.BankBranchAdapter;
@@ -87,7 +88,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).build());
         BankBranchAdapter bankBranchAdapter = new BankBranchAdapter(items);
         bankBranchAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(bankBranchAdapter);

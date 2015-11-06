@@ -165,7 +165,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margin_left_right">
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            >
 
             <TextView
                 android:id="@+id/tv_arrivetime"
