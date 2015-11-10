@@ -54,8 +54,8 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         if (savedInstanceState == null || view == null) {
-            view = inflater.inflate(R.layout.frame_current, null);
             Config.init(getActivity());
+            view = inflater.inflate(R.layout.frame_current, null);
         }
         ViewGroup parent = (ViewGroup) view.getParent();
         if (parent != null) {
