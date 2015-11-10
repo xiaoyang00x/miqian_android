@@ -79,7 +79,7 @@ public abstract class Dialog_Login extends Dialog {
                         Uihelper.showToast((Activity)mContext, R.string.phone_noeffect);
                     }
                 } else {
-                    Uihelper.showToast(mContext, "电话号码不能为空");
+                    Uihelper.showToast(mContext, "手机号码不能为空");
                 }
 
             }

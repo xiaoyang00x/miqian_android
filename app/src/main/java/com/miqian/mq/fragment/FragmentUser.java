@@ -294,7 +294,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                         Uihelper.showToast(getActivity(), R.string.phone_noeffect);
                     }
                 } else {
-                    Uihelper.showToast(getActivity(), "电话号码不能为空");
+                    Uihelper.showToast(getActivity(), "手机号码不能为空");
                 }
 
             }
