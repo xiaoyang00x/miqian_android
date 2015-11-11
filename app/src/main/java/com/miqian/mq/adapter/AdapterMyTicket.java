@@ -28,6 +28,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     public AdapterMyTicket(List<CustPromotion> promList) {
         this.promList = promList;
     }
+
     @Override
     public int getItemViewType(int position) {
         if (position + 1 == getItemCount()) {
@@ -36,6 +37,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             return VIEW_ITEM;
         }
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -53,10 +55,10 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if ((holder instanceof ViewHolderTicket)){
+        if ((holder instanceof ViewHolderTicket)) {
             CustPromotion promote = promList.get(position);
             ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getTotalAmt());
-            ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getToUseRate() + "%】");
+            ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例" + promote.getToUseRate() + "%】");
             ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
             ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             ((ViewHolderTicket) holder).promoteChoosed.setVisibility(View.GONE);
@@ -72,20 +74,22 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 } else if ("GQ".equals(state)) {
                     ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.hb_expired);
                     ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg_grey);
+                } else if ("ZS".equals(state)) {
+                    ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.hb_jift);
+                    ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg_grey);
                 } else {
                     ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
                     ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg);
                 }
-            }else {
+            } else {
                 ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
                 ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg);
             }
 
-        }
-        else if (holder instanceof ProgressViewHolder) {
+        } else if (holder instanceof ProgressViewHolder) {
             if (position >= maxValue) {
                 ((ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
-                if (maxValue <=15) {
+                if (maxValue <= 15) {
                     ((ProgressViewHolder) holder).textLoading.setVisibility(View.GONE);
                 } else {
                     ((ProgressViewHolder) holder).textLoading.setText("没有更多");
@@ -106,6 +110,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         }
         return 0;
     }
+
     public void setMaxItem(int value) {
         maxValue = value;
     }
@@ -129,6 +134,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             imageState = (ImageView) itemView.findViewById(R.id.image_state);
         }
     }
+
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
         public TextView textLoading;
