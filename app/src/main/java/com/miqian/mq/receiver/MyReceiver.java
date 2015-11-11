@@ -90,7 +90,9 @@ public class MyReceiver extends BroadcastReceiver {
             response.setUserId(userId);
             // 设为未读状态
             response.setState("1");
-            Uihelper.getMessageCount(1, context);
+            if (UserUtil.hasLogin(context)) {
+                Uihelper.getMessageCount(1, context);
+            }
 
             // 保存到数据库
             MyDataBaseHelper.getInstance(context).recordJpush(response);
