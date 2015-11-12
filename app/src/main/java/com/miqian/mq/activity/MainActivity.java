@@ -81,7 +81,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         //设置别名
         JpushHelper.setAlias(this);
 //        handleJpush();
-
         setExsitFragment(true);
 
         //注册广播
