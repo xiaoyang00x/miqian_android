@@ -81,7 +81,6 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
 
         tv_duration.setText(regularEarn.getLimit() + "天");
         circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
-        circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
         tv_sale_number.setVisibility(View.GONE);
 
         //待开标
@@ -91,23 +90,34 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_bl1));
             tv_progress.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
             circlebar.setUnfinishedStrokeColor(mContext.getResources().getColor(R.color.mq_bl1));
-//            tv_sale_number.setVisibility(View.GONE);
             tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest_unbegin);
 
             tv_progress.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "MM月dd日"));
             tv_buy_now.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "hh:mm"));
-        }else {
+            tv_progress.setVisibility(View.VISIBLE);
+        }else if("01".equals(regularEarn.getSubjectStatus())) {
             tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
             tv_duration.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
             tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
             tv_progress.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
             circlebar.setUnfinishedStrokeColor(mContext.getResources().getColor(R.color.mq_b5));
-//            tv_sale_number.setVisibility(View.VISIBLE);
             tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest);
 
             tv_buy_now.setText(R.string.buy_now);
+            tv_progress.setVisibility(View.VISIBLE);
             tv_progress.setText(Float.valueOf(regularEarn.getPurchasePercent()).intValue() + "%");
-//            tv_sale_number.setText("已认购" + regularEarn.getPersonTime() + "人");
+        }else {
+            tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
+            tv_duration.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
+            tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
+            tv_progress.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
+            circlebar.setUnfinishedStrokeColor(mContext.getResources().getColor(R.color.mq_b2));
+            circlebar.setProgress(0);
+            tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest_unabled);
+
+            tv_buy_now.setText("已售罄");
+            tv_progress.setVisibility(View.GONE);
+            tv_progress.setText(Float.valueOf(regularEarn.getPurchasePercent()).intValue() + "%");
         }
         tv_annurate_interest_rate.setText(regularEarn.getYearInterest() + "%");
         if(TextUtils.isEmpty(regularEarn.getPromotionDesc())) {
