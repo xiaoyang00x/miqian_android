@@ -21,9 +21,7 @@ import android.widget.ProgressBar;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.RegisterActivity;
-import com.miqian.mq.net.MyAsyncTask;
 import com.miqian.mq.utils.MobileOS;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WebChromeClientEx;
 
@@ -188,7 +186,6 @@ public class WebActivity extends BaseFragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             ClipData clipData = ClipData.newPlainText(text, text);
             cmb.setPrimaryClip(clipData);
-            ;
         } else {
             cmb.setText(text);
         }

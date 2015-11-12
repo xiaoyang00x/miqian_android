@@ -13,7 +13,7 @@ public class CustPromotion {
     private String usedAmt;//已抵用额度
     private String endTimestamp;//结束时间
     private String canUseAmt;//可用额度
-    private String prodPromId;//id
+    private String promProdId;//id
     private String limitMsg;//使用范围
 
     public String getStatus() {
@@ -80,12 +80,12 @@ public class CustPromotion {
         this.canUseAmt = canUseAmt;
     }
 
-    public String getProdPromId() {
-        return prodPromId;
+    public String getPromProdId() {
+        return promProdId;
     }
 
-    public void setProdPromId(String prodPromId) {
-        this.prodPromId = prodPromId;
+    public void setPromProdId(String promProdId) {
+        this.promProdId = promProdId;
     }
 
     public String getLimitMsg() {

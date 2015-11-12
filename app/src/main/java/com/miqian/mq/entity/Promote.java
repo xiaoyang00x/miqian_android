@@ -15,7 +15,7 @@ public class Promote {
     private String startTimestamp;//开始时间
     private String endTimestamp;//到期时间
     private String type;//促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
-    private String prodPromId;//促销类型的ID
+    private String promProdId;//促销类型的ID
     private String limitMsg;//限制范围
     private String canUseAmt;//红包余额
 
@@ -83,12 +83,12 @@ public class Promote {
         this.type = type;
     }
 
-    public String getProdPromId() {
-        return prodPromId;
+    public String getPromProdId() {
+        return promProdId;
     }
 
-    public void setProdPromId(String prodPromId) {
-        this.prodPromId = prodPromId;
+    public void setPromProdId(String promProdId) {
+        this.promProdId = promProdId;
     }
 
     public String getLimitMsg() {
