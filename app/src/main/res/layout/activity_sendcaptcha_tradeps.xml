@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/trans"
-            android:src="@drawable/login_password" />
+            android:src="@drawable/identification" />
 
         <EditText
             android:id="@+id/et_realname"
