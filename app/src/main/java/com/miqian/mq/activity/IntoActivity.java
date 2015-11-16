@@ -81,6 +81,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
+                btRollin.setEnabled(false);
                 Uihelper.showToast(mActivity, error);
             }
         });
@@ -126,6 +127,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void refreshView() {
+        btRollin.setEnabled(true);
         bindStatus = userInfo.getBindCardStatus();
         if (bindStatus.equals("0")) {
             frameBank.setVisibility(View.GONE);
