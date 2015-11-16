@@ -190,7 +190,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
 
         //待开标
         if ("00".equals(mData.getSubjectStatus())) {
-            tv_lable2.setText(FormatUtil.formatDate(mData.getStartTimestamp(), "dd日 hh:mm:ss开售"));
+            tv_lable2.setText(FormatUtil.formatDate(mData.getStartTimestamp(), "dd日 HH:mm:ss开售"));
         } else {
             tv_lable2.setText(Float.valueOf(mData.getPurchasePercent()).intValue() + "%");
         }

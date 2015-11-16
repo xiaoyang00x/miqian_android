@@ -235,7 +235,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 layout_circle.setBackgroundResource(R.drawable.bg_circle_unbegin);
                 lable_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b1));
                 tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
-                tv_begin_time.setText(FormatUtil.formatDate(plan.getStartTimestamp(), "dd日 hh:mm开售"));
+                tv_begin_time.setText(FormatUtil.formatDate(plan.getStartTimestamp(), "dd日 HH:mm开售"));
                 tv_begin_time.setVisibility(View.VISIBLE);
                 tv_status.setVisibility(View.GONE);
             } else if ("01".equals(plan.getSubjectStatus())) {
