@@ -32,9 +32,9 @@ public class HttpUtils {
             return MyAsyncTask.NETWORK_ERROR;
         }
         final OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(5, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
+        client.setConnectTimeout(30, TimeUnit.SECONDS);
+        client.setWriteTimeout(30, TimeUnit.SECONDS);
+        client.setReadTimeout(30, TimeUnit.SECONDS);
         FormEncodingBuilder builder = new FormEncodingBuilder();
         if (list == null) {
             list = new ArrayList<>();
