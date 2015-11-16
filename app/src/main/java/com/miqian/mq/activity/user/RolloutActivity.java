@@ -267,7 +267,7 @@ public class RolloutActivity extends BaseActivity {
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("提现");
-        mTitle.setRightText("转出说明");
+        mTitle.setRightText("提现说明");
         mTitle.setOnRightClickListener(new View.OnClickListener() {
 
             @Override
