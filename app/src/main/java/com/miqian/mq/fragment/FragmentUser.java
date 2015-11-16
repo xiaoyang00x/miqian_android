@@ -57,6 +57,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket, tv_Redpackage;
     private UserInfo userInfo;
+    private UserInfo userInfoTemp;
     private TextView tv_TotalProfit, tv_balance, tv_totalasset;
     private CustomDialog dialogTips;
     private MySwipeRefresh swipeRefresh;
@@ -115,6 +116,20 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 swipeRefresh.setRefreshing(false);
                 end();
                 userInfo = result.getData();
+
+                userInfoTemp =new UserInfo();
+                userInfoTemp.setBindCardStatus(userInfo.getBindCardStatus());
+                userInfoTemp.setBankNo(userInfo.getBankNo());
+                userInfoTemp.setBankName(userInfo.getBankName());
+                userInfoTemp.setBankUrlSmall(userInfo.getBankUrlSmall());
+                userInfoTemp.setBankCode(userInfo.getBankCode());
+                userInfoTemp.setBalance(userInfo.getBalance());
+                userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
+                userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
+                userInfoTemp.setPayPwdStatus(userInfo.getPayPwdStatus());
+                userInfoTemp.setMobilePhone(userInfo.getMobilePhone());
+                userInfoTemp.setRealName(userInfo.getRealName());
+
                 if (userInfo != null) {
                     setData(userInfo);
                 }
@@ -368,7 +383,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
                         Intent intent = new Intent(getActivity(), RolloutActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("userInfo", userInfo);
+                        bundle.putSerializable("userInfo", userInfoTemp);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     } else {
@@ -413,7 +428,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 MobclickAgent.onEvent(getActivity(), "1016");
                 Intent intent_setting = new Intent(getActivity(), SettingActivity.class);
                 Bundle extra = new Bundle();
-                extra.putSerializable("userInfo", userInfo);
+                extra.putSerializable("userInfo", userInfoTemp);
                 intent_setting.putExtras(extra);
                 startActivity(intent_setting);
                 break;
