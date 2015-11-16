@@ -93,7 +93,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_add_interest.setBackgroundResource(R.drawable.bg_add_interest_unbegin);
 
             tv_progress.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "MM月dd日"));
-            tv_buy_now.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "hh:mm"));
+            tv_buy_now.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "HH:mm"));
             tv_progress.setVisibility(View.VISIBLE);
         }else if("01".equals(regularEarn.getSubjectStatus())) {
             tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1));

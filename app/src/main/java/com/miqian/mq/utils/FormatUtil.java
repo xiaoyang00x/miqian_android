@@ -37,7 +37,7 @@ public class FormatUtil {
     /**
      * 按照指定格式格式化时间
      * @param time  时间戳
-     * @param formatStr  例如：yyyy-MM-dd hh:mm:ss.SSS   yyyy年MM月dd日 hh时mm分ss秒SSS毫秒
+     * @param formatStr  例如：yyyy-MM-dd HH:mm:ss.SSS   yyyy年MM月dd日 HH时mm分ss秒SSS毫秒
      * @return
      */
     public static String formatDate(long time, String formatStr) {
