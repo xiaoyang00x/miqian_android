@@ -109,6 +109,11 @@ public class MyReceiver extends BroadcastReceiver {
             if (TextUtils.isEmpty(noticeId)) {
                 return;
             }
+
+            if (!UserUtil.hasLogin(context) && "1".equals(response.getPushSource())) {//1为个人信息，未登录则收到，不弹出通知
+                return;
+            }
+
             if (!MyApplication.getInstance().isCurrent()) {
                 notificationIntent = new Intent(context, SplashActivity.class);
                 Pref.saveBoolean(Pref.IsPush, true, context);
