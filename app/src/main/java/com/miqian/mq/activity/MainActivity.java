@@ -108,10 +108,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (Pref.getBoolean(Pref.IsPush, mContext, false)) {
             return;
         }
+
+        if(!UserUtil.hasLogin(mContext)){
+            return;
+        }
+
         HashMap<String, Boolean> jpushList = MyApplication.getInstance().getPushList();
         if (jpushList.size() > 0) {
-
-
             Set set = jpushList.entrySet();
             java.util.Iterator it = jpushList.entrySet().iterator();
             while (it.hasNext()) {
