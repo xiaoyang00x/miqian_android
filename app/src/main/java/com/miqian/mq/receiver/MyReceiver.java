@@ -70,14 +70,12 @@ public class MyReceiver extends BroadcastReceiver {
         if (!TextUtils.isEmpty(extra)) {
             response = JsonUtil.parseObject(extra, JpushInfo.class);
             // 解析数据
-            if (response == null) {
-                return;
-            }
-            if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
+            if (response==null||TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
                 return;
             }
             response.setTitle(title);
             response.setContent(content);
+            String jpushToken=response.getToken();
 
             String userId = "";
 
@@ -113,7 +111,6 @@ public class MyReceiver extends BroadcastReceiver {
             if (!UserUtil.hasLogin(context) && "1".equals(response.getPushSource())) {//1为个人信息，未登录则收到，不弹出通知
                 return;
             }
-
             if (!MyApplication.getInstance().isCurrent()) {
                 notificationIntent = new Intent(context, SplashActivity.class);
                 Pref.saveBoolean(Pref.IsPush, true, context);
@@ -127,7 +124,7 @@ public class MyReceiver extends BroadcastReceiver {
                 switch (uritype) {
 
                     case 0:
-                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, response);
                         return;
                     case 1://交易密码修改，到消息列表页
                         notificationIntent = new Intent(context, AnnounceActivity.class);
@@ -189,7 +186,7 @@ public class MyReceiver extends BroadcastReceiver {
                         break;
                 }
             }
-
+            notificationIntent.putExtra("token",jpushToken);
 
             int requestCode = (int) System.currentTimeMillis();
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -1,8 +1,10 @@
 package com.miqian.mq.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +20,7 @@ import com.miqian.mq.entity.Page;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CircleButton;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -65,10 +68,27 @@ public class CapitalRecordActivity extends BaseActivity {
     private String mType = "";
     private TextView tvTips;
     private View mViewnoresult_data;
+    private boolean isStop;  //activity被finish则停止从网络获取数据的异步操作
+    @Override
+    public void onCreate(Bundle arg0) {
 
+        String jpushToken = getIntent().getStringExtra("token");
+        if (!TextUtils.isEmpty(jpushToken)) {
+            //通知进来的情况下，不是当前用户则退出此界面
+            String token = UserUtil.getToken(this);
+            if (UserUtil.hasLogin(this) && !token.equals(jpushToken)) {
+                isStop=true;
+                finish();
+            }
+        }
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
+        if (isStop){
+            return;
+        }
         pageNo = 1;
         begin();
         //取全部

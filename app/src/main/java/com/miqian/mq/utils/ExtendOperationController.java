@@ -22,8 +22,6 @@ public class ExtendOperationController {
 		 */
 		public static final int EXIT_MAIN = 2001;
 
-		/** 登录成功 */
-		public static final int RERESH_XGPUSH = 3001;
 
 		/** 修改昵称 */
 		public static final int MODIDYNICKNAME = 4001;

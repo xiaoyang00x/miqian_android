@@ -1,8 +1,10 @@
 package com.miqian.mq.activity.user;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +18,7 @@ import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -41,17 +44,37 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     private UserRegular userRegular;
     private List<RegInvest> regInvestList;
+    private boolean isStop;  //activity被finish则停止从网络获取数据的异步操作
+
+    @Override
+    public void onCreate(Bundle arg0) {
+
+        String jpushToken = getIntent().getStringExtra("token");
+        if (!TextUtils.isEmpty(jpushToken)) {
+            //通知进来的情况下，不是当前用户则退出此界面
+            String token = UserUtil.getToken(this);
+            if (UserUtil.hasLogin(this) && !token.equals(jpushToken)) {
+                isStop=true;
+                finish();
+            }
+        }
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
+        if (isStop){
+            return;
+        }
         pageNo = 1;
         isForce = "1";
         if (!swipeRefresh.isRefreshing()) {
-            mWaitingDialog.show();
+            begin();
         }
         HttpRequest.getUserRegular(mActivity, new ICallback<UserRegularResult>() {
             @Override
             public void onSucceed(UserRegularResult result) {
+                end();
                 swipeRefresh.setRefreshing(false);
                 mWaitingDialog.dismiss();
                 userRegular = result.getData();
@@ -62,7 +85,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFail(String error) {
                 swipeRefresh.setRefreshing(false);
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, String.valueOf(pageNo), pageSize, isExpiry, isForce);

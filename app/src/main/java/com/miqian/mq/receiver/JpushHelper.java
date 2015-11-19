@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.miqian.mq.utils.LogUtil;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 
 import java.util.Set;

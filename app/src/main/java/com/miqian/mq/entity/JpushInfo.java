@@ -14,7 +14,15 @@ public class JpushInfo {
     private String state; // 1为未读，2为已读
     private String userId;
     private String pushSource;
+    private String token;
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getPushSource() {
         return pushSource;

@@ -3,6 +3,7 @@ package com.miqian.mq.net;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
@@ -66,7 +67,9 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                 } else {
                     Meta response = JsonUtil.parseObject(result, Meta.class);
                     if (response.getCode().equals("999995")) {
-                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
+                        JpushInfo jpushInfo=new JpushInfo();
+                        jpushInfo.setContent(response.getMessage());//此处套用极光的类 ，统一方法调用
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, jpushInfo);
                     } else if (response.getCode().equals("900000")) {
                         UmengUpdateAgent.forceUpdate(mContext);
                     }

@@ -232,7 +232,7 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
     @Override
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
-            case ExtendOperationController.OperationKey.RERESH_XGPUSH:
+            case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
                 obtainData();
                 break;

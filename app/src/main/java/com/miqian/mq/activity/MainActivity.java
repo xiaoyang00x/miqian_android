@@ -108,11 +108,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (Pref.getBoolean(Pref.IsPush, mContext, false)) {
             return;
         }
-
-        if(!UserUtil.hasLogin(mContext)){
-            return;
-        }
-
         HashMap<String, Boolean> jpushList = MyApplication.getInstance().getPushList();
         if (jpushList.size() > 0) {
             Set set = jpushList.entrySet();
@@ -123,9 +118,20 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 String noticeId = (String) entry.getKey();
                 if (!hasTip) {
                     JpushInfo jpushInfo = MyDataBaseHelper.getInstance(mContext).getJpushInfo(noticeId);
-                    showTipDialog(jpushInfo);
-                    jpushList.put(noticeId, true);
-                    MyApplication.getInstance().setPushList(jpushList);
+
+                    String jpushToken=jpushInfo.getToken();
+                    String uriType=jpushInfo.getUriType();
+                    String token=UserUtil.getToken(context);
+                    if (TextUtils.isEmpty(uriType)){
+                        break;
+                    }
+                    //用户登录或者是系统消息，弹出提示框
+                    String pushSource=jpushInfo.getPushSource();
+                    if ("0".equals(pushSource)||(UserUtil.hasLogin(context)&&token.equals(jpushToken))){
+                        showTipDialog(jpushInfo);
+                        jpushList.put(noticeId, true);
+                        MyApplication.getInstance().setPushList(jpushList);
+                    }
                     break;
                 }
             }
@@ -231,56 +237,63 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             if (jInfo == null) {
                 return;
             }
-            String string_uritype = jInfo.getUriType();
-            int uritype;
-            if (TextUtils.isEmpty(string_uritype)) {
-                return;
-            } else {
-                uritype = Integer.valueOf(string_uritype);
-            }
-            switch (uritype) {
-                case 1://交易密码修改，到消息列表页
-                    startActivity(new Intent(mContext, AnnounceActivity.class));
-                    break;
-                case 2://提现受理，跳到资金记录
-                    startActivity(new Intent(mContext, CapitalRecordActivity.class));
-                    break;
-                case 3://充值成功，到我的
-                    mTabHost.setCurrentTab(3);
-                    break;
-                case 4://认购 ，到资金记录
-                    startActivity(new Intent(mContext, CapitalRecordActivity.class));
-                    break;
-                case 5://定期赚到期，到我的定期列表页
-                    startActivity(new Intent(mContext, UserRegularActivity.class));
-                    break;
-                case 6://定期计划到期，到我的定期列表页
-                    startActivity(new Intent(mContext, UserRegularActivity.class));
-                    break;
-                case 7://活期赎回，到资金记录
-                    startActivity(new Intent(mContext, ActivityCurrentRecord.class));
-                    break;
-                case 8://转让被认购完成,跳到资金记录
-                    startActivity(new Intent(mContext, CapitalRecordActivity.class));
-                    break;
-                case 9:
-                case 10:
-                case 11:
-                case 12://收到红包 弹框
-                    showTipDialog(jInfo);
-                    break;
 
-                case 50://系统升级,系统维护
-                    startActivity(new Intent(mContext, AnnounceActivity.class));
-                    break;
-                case 51://活动利好 首页弹框，webView
-                case 52://平台相关新闻 首页弹框，webView
-                case 53://相关项目 首页弹框，webView
-                    showTipDialog(jInfo);
-                    break;
-                default:
-                    break;
+            //用户登录或者是系统消息，弹出提示框
+            String jpushToken=jInfo.getToken();
+            String pushSource=jInfo.getPushSource();
+            String token=UserUtil.getToken(context);
+            if ("0".equals(pushSource)||(UserUtil.hasLogin(context)&&token.equals(jpushToken))){
+                String string_uritype = jInfo.getUriType();
+                int uritype;
+                if (TextUtils.isEmpty(string_uritype)) {
+                    return;
+                } else {
+                    uritype = Integer.valueOf(string_uritype);
+                }
+                switch (uritype) {
+                    case 1://交易密码修改，到消息列表页
+                        startActivity(new Intent(mContext, AnnounceActivity.class));
+                        break;
+                    case 2://提现受理，跳到资金记录
+                        startActivity(new Intent(mContext, CapitalRecordActivity.class));
+                        break;
+                    case 3://充值成功，到我的
+                        mTabHost.setCurrentTab(3);
+                        break;
+                    case 4://认购 ，到资金记录
+                        startActivity(new Intent(mContext, CapitalRecordActivity.class));
+                        break;
+                    case 5://定期赚到期，到我的定期列表页
+                        startActivity(new Intent(mContext, UserRegularActivity.class));
+                        break;
+                    case 6://定期计划到期，到我的定期列表页
+                        startActivity(new Intent(mContext, UserRegularActivity.class));
+                        break;
+                    case 7://活期赎回，到资金记录
+                        startActivity(new Intent(mContext, ActivityCurrentRecord.class));
+                        break;
+                    case 8://转让被认购完成,跳到资金记录
+                        startActivity(new Intent(mContext, CapitalRecordActivity.class));
+                        break;
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 12://收到红包 弹框
+                        showTipDialog(jInfo);
+                        break;
 
+                    case 50://系统升级,系统维护
+                        startActivity(new Intent(mContext, AnnounceActivity.class));
+                        break;
+                    case 51://活动利好 首页弹框，webView
+                    case 52://平台相关新闻 首页弹框，webView
+                    case 53://相关项目 首页弹框，webView
+                        showTipDialog(jInfo);
+                        break;
+                    default:
+                        break;
+
+                }
             }
         }
     }
@@ -344,7 +357,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     }
 
     public interface RefeshDataListener {
-        void changeData();
+        void changeData(JpushInfo jpushInfo);
     }
 
     public void setReshListener(RefeshDataListener refeshDataListener) {
@@ -365,25 +378,26 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 break;
             case OperationKey.CHANGE_TOKEN:
                 //清除Token
+                JpushInfo jpushInfo= (JpushInfo) data;
                 UserUtil.clearUserInfo(this);
                 ActivityStack.getActivityStack().clearActivity();
                 current_tab = 3;
                 boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
                 if (currentActivity) {
                     if (mTabHost.getCurrentTab() == 3) {
-                        mRefeshDataListener.changeData();
+                        mRefeshDataListener.changeData(jpushInfo);
 
                     } else {
                         mTabHost.setCurrentTab(current_tab);
                     }
-                    showDialog();
+                    showDialog(jpushInfo);
                 } else {
                     if (mTabHost.getCurrentTab() == 3) {
 
                         MyApplication.getInstance().setShowTips(true);
-                        mRefeshDataListener.changeData();
+                        mRefeshDataListener.changeData(jpushInfo);
                     }else {
-                        showDialog();
+                        showDialog(jpushInfo);
                     }
                 }
 
@@ -398,7 +412,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     }
 
-    private void showDialog() {
+    private void showDialog(JpushInfo jpushInfo) {
         if (dialogTips == null) {
             dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
 
@@ -413,8 +427,10 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 }
             };
         }
-        dialogTips.setRemarks("  账户信息已变更，请重新登录");
-        dialogTips.show();
+        if (jpushInfo!=null){
+            dialogTips.setRemarks(jpushInfo.getContent());
+            dialogTips.show();
+        }
     }
 
     public BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {

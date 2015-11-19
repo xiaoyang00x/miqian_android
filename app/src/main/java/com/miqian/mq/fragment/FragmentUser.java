@@ -1,9 +1,7 @@
 package com.miqian.mq.fragment;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +26,7 @@ import com.miqian.mq.activity.user.RedPaperActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
+import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -40,7 +39,6 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
-import com.miqian.mq.views.ProgressDialogView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
@@ -64,6 +62,15 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private ImageButton btn_message;
     private EditText editTelephone;
     private EditText editPassword;
+    private ExtendOperationController extendOperationController;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        extendOperationController = ExtendOperationController.getInstance();
+        extendOperationController.registerExtendOperationListener(this);
+
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,7 +124,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 end();
                 userInfo = result.getData();
 
-                userInfoTemp =new UserInfo();
+                userInfoTemp = new UserInfo();
                 userInfoTemp.setBindCardStatus(userInfo.getBindCardStatus());
                 userInfoTemp.setBankNo(userInfo.getBankNo());
                 userInfoTemp.setBankName(userInfo.getBankName());
@@ -206,13 +213,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void onDestroy() {
-        ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
+        extendOperationController.unRegisterExtendOperationListener(this);
         super.onDestroy();
     }
 
     private void findViewById(View view) {
 
-        ExtendOperationController.getInstance().registerExtendOperationListener(this);
 
         swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -291,7 +297,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             @Override
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1046");
-                userInfo=null;
+                userInfo = null;
                 String telephone = editTelephone.getText().toString();
                 String password = editPassword.getText().toString();
                 if (!TextUtils.isEmpty(telephone)) {
@@ -339,9 +345,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 end();
                 UserInfo userInfo = result.getData();
                 UserUtil.saveUserInfo(getActivity(), userInfo);
-                initUserView();
-                obtainData();
-
+                onStart();
             }
 
             @Override
@@ -438,7 +442,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     }
 
     @Override
-    public void changeData() {
+    public void changeData(JpushInfo jpushInfo) {
         if (MyApplication.getInstance().isShowTips()) {
             MyApplication.getInstance().setShowTips(false);
             if (dialogTips == null) {
@@ -455,8 +459,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     }
                 };
             }
-            dialogTips.setRemarks("  账户信息已变更，请重新登录");
-            dialogTips.show();
+            if (jpushInfo != null) {
+                dialogTips.setRemarks(jpushInfo.getContent());
+                dialogTips.show();
+            }
         }
         onStart();
     }
@@ -464,7 +470,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     @Override
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
-            case ExtendOperationController.OperationKey.RERESH_XGPUSH:
+            case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
                 int message = Uihelper.getMessageCount(4, getActivity());
                 if (message > 0) {
