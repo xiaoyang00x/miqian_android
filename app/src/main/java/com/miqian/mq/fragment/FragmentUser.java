@@ -89,17 +89,14 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void onStart() {
-
         int message = Uihelper.getMessageCount(4, getActivity());
         if (message > 0) {
             btn_message.setImageResource(R.drawable.btn_message);
         } else {
             btn_message.setImageResource(R.drawable.btn_message_none);
         }
-
         //已登录，显示我的界面
         if (UserUtil.hasLogin(getActivity())) {
-
             initUserView();
             obtainData();
         }
@@ -123,21 +120,19 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 swipeRefresh.setRefreshing(false);
                 end();
                 userInfo = result.getData();
-
-                userInfoTemp = new UserInfo();
-                userInfoTemp.setBindCardStatus(userInfo.getBindCardStatus());
-                userInfoTemp.setBankNo(userInfo.getBankNo());
-                userInfoTemp.setBankName(userInfo.getBankName());
-                userInfoTemp.setBankUrlSmall(userInfo.getBankUrlSmall());
-                userInfoTemp.setBankCode(userInfo.getBankCode());
-                userInfoTemp.setBalance(userInfo.getBalance());
-                userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
-                userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
-                userInfoTemp.setPayPwdStatus(userInfo.getPayPwdStatus());
-                userInfoTemp.setMobilePhone(userInfo.getMobilePhone());
-                userInfoTemp.setRealName(userInfo.getRealName());
-
                 if (userInfo != null) {
+                    userInfoTemp = new UserInfo();
+                    userInfoTemp.setBindCardStatus(userInfo.getBindCardStatus());
+                    userInfoTemp.setBankNo(userInfo.getBankNo());
+                    userInfoTemp.setBankName(userInfo.getBankName());
+                    userInfoTemp.setBankUrlSmall(userInfo.getBankUrlSmall());
+                    userInfoTemp.setBankCode(userInfo.getBankCode());
+                    userInfoTemp.setBalance(userInfo.getBalance());
+                    userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
+                    userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
+                    userInfoTemp.setPayPwdStatus(userInfo.getPayPwdStatus());
+                    userInfoTemp.setMobilePhone(userInfo.getMobilePhone());
+                    userInfoTemp.setRealName(userInfo.getRealName());
                     setData(userInfo);
                 }
             }
