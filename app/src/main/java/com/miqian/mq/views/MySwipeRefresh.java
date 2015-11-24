@@ -698,28 +698,32 @@ public class MySwipeRefresh extends ViewGroup {
         return MotionEventCompat.getY(ev, index);
     }
 
-    @Override
-    public void requestDisallowInterceptTouchEvent(boolean b) {
-        // Nope.
-    }
+//    @Override
+//    public void requestDisallowInterceptTouchEvent(boolean b) {
+//        // Nope.
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        final int action = MotionEventCompat.getActionMasked(ev);
+        try {
+            final int action = MotionEventCompat.getActionMasked(ev);
 
-        if (mReturningToStart && action == MotionEvent.ACTION_DOWN) {
-            mReturningToStart = false;
-        }
-        if (!isEnabled() || mReturningToStart
-                || (!isChildScrollToTop() && !isChildScrollToBottom())) {
-            // 如果子View可以滑动，不拦截事件，交给子View处理
+            if (mReturningToStart && action == MotionEvent.ACTION_DOWN) {
+                mReturningToStart = false;
+            }
+            if (!isEnabled() || mReturningToStart
+                    || (!isChildScrollToTop() && !isChildScrollToBottom())) {
+                // 如果子View可以滑动，不拦截事件，交给子View处理
+                return false;
+            }
+
+            if (isChildScrollToBottom()) {// 上拉加载更多
+                return true;
+            } else {// 下拉刷新
+                return handlerPullTouchEvent(ev, action);
+            }
+        } catch (Exception e) {
             return false;
-        }
-
-        if (isChildScrollToBottom()) {// 上拉加载更多
-            return true;
-        } else {// 下拉刷新
-            return handlerPullTouchEvent(ev, action);
         }
     }
 
