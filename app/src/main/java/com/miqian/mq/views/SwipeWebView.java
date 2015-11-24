@@ -165,7 +165,11 @@ public class SwipeWebView extends WebView {
     }
 
     private void loadJavascriptInterfaces() {
-        this.loadUrl(mJsStringCache);
+        try{
+            this.loadUrl(mJsStringCache);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private String genJavascriptInterfacesString() {
