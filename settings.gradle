@@ -1,1 +1,1 @@
-include ':app', ':library_pulltorefesh'
+include ':app', ':library_pulltorefesh', ':ShareSDK', ':onekeyshare'

@@ -21,6 +21,7 @@ import com.miqian.mq.utils.Pref;
 import com.umeng.update.UmengUpdateAgent;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.sharesdk.framework.ShareSDK;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
 
@@ -41,6 +42,9 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         } else {
             UmengUpdateAgent.setChannel(channelId);
         }
+
+        ShareSDK.initSDK(this);
+
         setContentView(R.layout.activity_splash);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         framePages = (LinearLayout) findViewById(R.id.frame_pages);
@@ -188,5 +192,11 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     protected void onPause() {
         super.onPause();
         JPushInterface.onPause(SplashActivity.this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ShareSDK.stopSDK(this);
     }
 }

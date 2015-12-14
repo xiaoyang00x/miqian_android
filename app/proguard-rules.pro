@@ -97,3 +97,20 @@ public static final int *;
 -keep public class com.yintong.** {*;
 }
 ##-------------------Begin proguard configuration for 连连支付-------------------------
+
+
+##-------------------Begin proguard configuration for ShareSdk-------------------------
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class **.R$* {*;}
+-keep class **.R{*;}
+-dontwarn cn.sharesdk.**
+-dontwarn **.R$*
+-keep class m.framework.**{*;}
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+   public *;
+}
+##--------------------End proguard configuration for ShareSdk------------------------

@@ -2,7 +2,6 @@ package com.miqian.mq.pay;
 
 import com.miqian.mq.net.Param;
 
-import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
