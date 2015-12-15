@@ -13,10 +13,10 @@ import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.ProjectInfoResult;
-import com.miqian.mq.entity.PushDataResult;
+//import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.TransferDetailResult;
-import com.miqian.mq.entity.UserMessageResult;
+//import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfoResult;
@@ -358,52 +358,52 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    //获得个人消息
-    public static void getMessageList(Context context, String id, final ICallback<UserMessageResult> callback) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("id", id));
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        new MyAsyncTask(context, Urls.getMessageList, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                UserMessageResult userMessageResult = JsonUtil.parseObject(result, UserMessageResult.class);
-                if (userMessageResult.getCode().equals("000000")) {
-                    callback.onSucceed(userMessageResult);
-                } else {
-                    callback.onFail(userMessageResult.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-    //获得公告列表
-    public static void getPushList(Context context, String id,String page, final ICallback<PushDataResult> callback) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("id", id));
-        mList.add(new Param("page", page));
-        new MyAsyncTask(context, Urls.getPushList, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                PushDataResult pushDataResult = JsonUtil.parseObject(result, PushDataResult.class);
-                if (pushDataResult.getCode().equals("000000")) {
-                    callback.onSucceed(pushDataResult);
-                } else {
-                    callback.onFail(pushDataResult.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
+//    //获得个人消息
+//    public static void getMessageList(Context context, String id, final ICallback<UserMessageResult> callback) {
+//        List<Param> mList = new ArrayList<>();
+//        mList.add(new Param("id", id));
+//        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+//        new MyAsyncTask(context, Urls.getMessageList, mList, new ICallback<String>() {
+//
+//            @Override
+//            public void onSucceed(String result) {
+//                UserMessageResult userMessageResult = JsonUtil.parseObject(result, UserMessageResult.class);
+//                if (userMessageResult.getCode().equals("000000")) {
+//                    callback.onSucceed(userMessageResult);
+//                } else {
+//                    callback.onFail(userMessageResult.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//                callback.onFail(error);
+//            }
+//        }).executeOnExecutor();
+//    }
+//    //获得公告列表
+//    public static void getPushList(Context context, String id,String page, final ICallback<PushDataResult> callback) {
+//        List<Param> mList = new ArrayList<>();
+//        mList.add(new Param("id", id));
+//        mList.add(new Param("page", page));
+//        new MyAsyncTask(context, Urls.getPushList, mList, new ICallback<String>() {
+//
+//            @Override
+//            public void onSucceed(String result) {
+//                PushDataResult pushDataResult = JsonUtil.parseObject(result, PushDataResult.class);
+//                if (pushDataResult.getCode().equals("000000")) {
+//                    callback.onSucceed(pushDataResult);
+//                } else {
+//                    callback.onFail(pushDataResult.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//                callback.onFail(error);
+//            }
+//        }).executeOnExecutor();
+//    }
 
     //设置消息已读
     public static void setPushReaded(Context context, final ICallback<Meta> callback, String id, String custId, int isAll) {
