@@ -132,11 +132,13 @@ public class HttpRequest {
     /**
      * 充值
      */
-    public static void rollIn(Context context, final ICallback<String> callback, String amt, String bankNo) {
+    public static void rollIn(Context context, final ICallback<String> callback, String amt, String bankNo, String realName, String idCard) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
+        mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
+        mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
 
         new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
 
