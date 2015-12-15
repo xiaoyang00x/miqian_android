@@ -28,14 +28,14 @@
             android:textColor="@color/mq_b1"
             android:text="充值成功"/>
 
-        <TextView
-            android:id="@+id/text_processing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="8dp"
-            android:visibility="gone"
-            android:text="请在 “我的” 资金记录中查看充值结果"/>
+        <!--<TextView-->
+            <!--android:id="@+id/text_processing"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:paddingTop="8dp"-->
+            <!--android:visibility="visible"-->
+            <!--android:text="请在 “我的” 资金记录中查看充值结果"/>-->
     </LinearLayout>
 
     <RelativeLayout
@@ -79,59 +79,76 @@
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/frame_fail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:visibility="gone"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/frame_fail"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:visibility="gone"-->
+        <!--android:paddingLeft="@dimen/margin_left_right"-->
+        <!--android:paddingRight="@dimen/margin_left_right">-->
 
-        <TextView
-            style="@style/text_black_item"
-            android:text="可能是网银支付出现问题，建议您稍后重试。如果一直失败，请在官网在线支付，官网地址：www.shicaidai.com"
-            android:paddingBottom="15dp"/>
-    </RelativeLayout>
+        <!--<TextView-->
+            <!--style="@style/text_black_item"-->
+            <!--android:text="可能是网银支付出现问题，建议您稍后重试。如果一直失败，请在官网在线支付，官网地址：www.shicaidai.com"-->
+            <!--android:paddingBottom="15dp"/>-->
+    <!--</RelativeLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:layout_marginTop="15dp">
+
+        <Button
+            android:id="@+id/bt_rollin"
+            style="@style/click_btn"
+            android:text="确认" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/frame_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:orientation="vertical">
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
+            android:id="@+id/text_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="如有问题，请拨打客服电话"
             android:textColor="@color/mq_b2"
             android:textSize="@dimen/mq_font4"/>
 
-        <TextView
-            android:id="@+id/text_tel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="400-6656-191"
-            android:textColor="@color/mq_bl2"
-            android:textSize="@dimen/mq_font4"/>
+        <!--<TextView-->
+            <!--android:id="@+id/text_tel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:text="400-6656-191"-->
+            <!--android:textColor="@color/mq_bl2"-->
+            <!--android:textSize="@dimen/mq_font4"/>-->
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <Button
-            android:id="@+id/bt_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp"
-            android:background="@drawable/btn_order_result"/>
-    </RelativeLayout>
+        <!--<Button-->
+            <!--android:id="@+id/bt_back"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="40dp"-->
+            <!--android:background="@drawable/btn_order_result"/>-->
+    <!--</RelativeLayout>-->
 
 </LinearLayout>

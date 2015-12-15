@@ -16,10 +16,13 @@ import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ShareUtils;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
+
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * Created by guolei_wang on 15/9/16.

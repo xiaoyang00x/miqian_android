@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,16 +24,17 @@ import com.miqian.mq.entity.OrderLian;
 import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.entity.PayOrderResult;
+import com.miqian.mq.entity.SupportBankMsgResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.pay.BaseHelper;
 import com.miqian.mq.pay.MobileSecurePayer;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MyTextWatcher;
-import com.miqian.mq.entity.SupportBankMsgResult;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -46,17 +49,22 @@ import java.math.BigDecimal;
 public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private Button btRollin;
-    private RelativeLayout frameMoney;
-    private RelativeLayout frameBank;
+//    private RelativeLayout frameMoney;
+    private LinearLayout frameBank;
     private RelativeLayout frameBankInput;
-    private RelativeLayout frameTip;
+//    private RelativeLayout frameTip;
     private EditText editMoney;
     private EditText editBankNumber;
     private TextView bindBankName;
     private TextView bindBankNumber;
-    private TextView textLaw;
-    private ImageView iconBank;
-    private TextView textSupportBank;
+//    private TextView textLaw;
+//    private ImageView iconBank;
+//    private TextView textSupportBank;
+    private LinearLayout frameRealName;
+    private EditText editName;
+    private EditText editCardId;
+    private TextView textTip;
+    private TextView textLimit;
 
     private MyHandler mHandler;
     private UserInfo userInfo;
@@ -64,8 +72,12 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private String money;
     private String bankNumber;
+    private String realName;
+    private String idCard;
     private int rollType;
     private String bindStatus;
+    private String bindSupportStatus;
+    private String relaNameStatus;
 
     @Override
     public void obtainData() {
@@ -75,6 +87,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             public void onSucceed(LoginResult result) {
                 mWaitingDialog.dismiss();
                 userInfo = result.getData();
+//                userInfo.setBindCardStatus("0");
+//                userInfo.setSupportStatus("0");
+//                userInfo.setRealNameStatus("0");
                 refreshView();
             }
 
@@ -93,14 +108,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         rollType = intent.getIntExtra("rollType", 0);
         btRollin = (Button) findViewById(R.id.bt_rollin);
         btRollin.setOnClickListener(this);
-        frameMoney = (RelativeLayout) findViewById(R.id.frame_money);
-        if (rollType == 1) {
-            frameMoney.setVisibility(View.GONE);
-            money = intent.getStringExtra("money");
-        }
-        frameBankInput = (RelativeLayout) findViewById(R.id.frame_bank_input);
-        frameBank = (RelativeLayout) findViewById(R.id.frame_bank);
-        frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
+//        frameMoney = (RelativeLayout) findViewById(R.id.frame_money);
         editMoney = (EditText) findViewById(R.id.edit_money);
         editMoney.addTextChangedListener(new MyTextWatcher() {
 
@@ -116,36 +124,71 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         });
+        if (rollType == 1) {
+//            frameMoney.setVisibility(View.GONE);
+            money = intent.getStringExtra("money");
+            editMoney.setText(money);
+            editMoney.setEnabled(false);
+        }
+        frameBankInput = (RelativeLayout) findViewById(R.id.frame_bank_input);
+        frameBank = (LinearLayout) findViewById(R.id.frame_bank);
+//        frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
         editBankNumber = (EditText) findViewById(R.id.edit_bank_number);
+        editBankNumber.addTextChangedListener(textWatcher);
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
-        textSupportBank = (TextView) findViewById(R.id.text_support_bank);
+//        textSupportBank = (TextView) findViewById(R.id.text_support_bank);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
-        iconBank = (ImageView) findViewById(R.id.icon_bank);
-        textLaw = (TextView) findViewById(R.id.text_law);
-        textLaw.setOnClickListener(this);
+        textLimit = (TextView) findViewById(R.id.text_limit);
+//        iconBank = (ImageView) findViewById(R.id.icon_bank);
+//        textLaw = (TextView) findViewById(R.id.text_law);
+//        textLaw.setOnClickListener(this);
+
+        frameRealName = (LinearLayout) findViewById(R.id.frame_real_name);
+        editName = (EditText) frameRealName.findViewById(R.id.edit_name);
+        editCardId = (EditText) frameRealName.findViewById(R.id.edit_card_id);
+        textTip = (TextView) findViewById(R.id.text_tip);
         mHandler = new MyHandler(this);
     }
 
     private void refreshView() {
         btRollin.setEnabled(true);
         bindStatus = userInfo.getBindCardStatus();
+        bindSupportStatus = userInfo.getSupportStatus();
+        relaNameStatus = userInfo.getRealNameStatus();
+        if ("1".equals(relaNameStatus)) {
+            editCardId.setEnabled(false);
+            editName.setEnabled(false);
+            realName = RSAUtils.decryptByPrivate(userInfo.getRealName());
+            idCard = RSAUtils.decryptByPrivate(userInfo.getIdCard());
+            editName.setText(realName);
+            editCardId.setText(idCard);
+        } else {
+            frameRealName.setVisibility(View.VISIBLE);
+        }
         if (bindStatus.equals("0")) {
+            frameRealName.setVisibility(View.VISIBLE);
             frameBank.setVisibility(View.GONE);
             frameBankInput.setVisibility(View.VISIBLE);
-            editBankNumber.requestFocus();
-            frameTip.setVisibility(View.GONE);
+            textTip.setVisibility(View.VISIBLE);
+            showBankLimit();
+//            editBankNumber.requestFocus();
+//            frameTip.setVisibility(View.GONE);
         } else if (bindStatus.equals("1")) {
             if (userInfo.getSupportStatus().equals("1")) {
+                frameBank.setVisibility(View.VISIBLE);
                 frameBankInput.setVisibility(View.GONE);
-                frameTip.setVisibility(View.GONE);
+//                frameTip.setVisibility(View.GONE);
                 if (rollType == 1) {
-                    btRollin.performClick();
+//                    btRollin.performClick();
                 }
             } else {
-                frameBank.setVisibility(View.VISIBLE);
+                frameRealName.setVisibility(View.VISIBLE);
+                frameBank.setVisibility(View.GONE);
                 frameBankInput.setVisibility(View.VISIBLE);
-                frameTip.setVisibility(View.VISIBLE);
-                editBankNumber.requestFocus();
+                textTip.setVisibility(View.VISIBLE);
+                showBankLimit();
+//                frameTip.setVisibility(View.VISIBLE);
+//                editBankNumber.requestFocus();
             }
             bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
             if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
@@ -153,10 +196,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
             bindBankNumber.setText(bankNumber);
             bindBankName.setText(userInfo.getBankName());
+            textLimit.setText("单笔限额 " + userInfo.getSingleAmtLimit()+ "， 单日限额 "+userInfo.getDayAmtLimit());
 
-            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
-                imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
-            }
+//            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
+//                imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
+//            }
         }
     }
 
@@ -175,14 +219,36 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
         }
 
-        if (bindStatus.equals("0")) {
-            bankNumber = editBankNumber.getText().toString();
+        if (bindStatus.equals("0") || bindSupportStatus.equals("0")) {
+            bankNumber = editBankNumber.getText().toString().replaceAll(" ", "");
             if (TextUtils.isEmpty(bankNumber)) {
                 Uihelper.showToast(mActivity, "卡号不能为空");
                 return;
             }
         } else {
             bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
+        }
+
+        if ("0".equals(relaNameStatus)) {
+            realName = editName.getText().toString();
+            idCard = editCardId.getText().toString();
+            if (TextUtils.isEmpty(realName)) {
+                Uihelper.showToast(mActivity, "姓名不能为空");
+                return;
+            }
+            if (realName.length() < 2) {
+                Uihelper.showToast(mActivity, "姓名输入有误");
+                return;
+            }
+            if (TextUtils.isEmpty(idCard)) {
+                Uihelper.showToast(mActivity, "身份证号码不能为空");
+                return;
+            }
+
+            if (!idCard.matches(FormatUtil.PATTERN_IDCARD)) {
+                Uihelper.showToast(mActivity, "身份证号码不正确");
+                return;
+            }
         }
 
         mWaitingDialog.show();
@@ -192,7 +258,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 mWaitingDialog.dismiss();
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
                 if ("000000".equals(meta.getCode())) {
-                    textSupportBank.setText("");
+//                    textSupportBank.setText("");
                     PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
                     payOrder = constructPreCardPayOrder(payOrderResult.getData());
                     String content4Pay = JSON.toJSONString(payOrder);
@@ -200,7 +266,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     msp.pay(content4Pay, mHandler, Constants.RQF_PAY, mActivity, false);
                 } else if ("999991".equals(meta.getCode())) {
                     SupportBankMsgResult supportBankMsgResult = JsonUtil.parseObject(result, SupportBankMsgResult.class);
-                    textSupportBank.setText("支持以下银行储蓄卡：\n" + supportBankMsgResult.getData().getAllSupportBankMsg());
+//                    textSupportBank.setText("支持以下银行储蓄卡：\n" + supportBankMsgResult.getData().getAllSupportBankMsg());
                     Uihelper.showToast(mActivity, supportBankMsgResult.getMessage());
                 }
             }
@@ -210,7 +276,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(mActivity, error);
             }
-        }, money, bankNumber);
+        }, money, bankNumber, realName, idCard);
     }
 
     @Override
@@ -221,6 +287,16 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("充值");
+    }
+
+    private void showBankLimit() {
+        mTitle.setRightText("银行列表");
+        mTitle.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.startActivity(mActivity, Urls.web_promote);
+            }
+        });
     }
 
     @Override
@@ -277,8 +353,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                             checkOrder(orderNo);
                         }
 //                    } else if (Constants.RET_CODE_LIMIT.equals(retCode)) {//签约失败，余额不足，银行各种限制
-//                        //700314
-//                        Uihelper.showToast(mActivity, "单笔限额" + payOrder.getSingleAmtLimit() + "元");
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {
@@ -345,4 +419,84 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     protected String getPageName() {
         return "充值";
     }
+
+//  银行卡4位1空格
+    TextWatcher textWatcher = new TextWatcher() {
+        int beforeTextLength = 0;
+        int onTextLength = 0;
+        boolean isChanged = false;
+
+        int location = 0;// 记录光标的位置
+        private char[] tempChar;
+        private StringBuffer buffer = new StringBuffer();
+        int konggeNumberB = 0;
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            onTextLength = s.length();
+            buffer.append(s.toString());
+            if (onTextLength == beforeTextLength || onTextLength <= 3 || isChanged) {
+                isChanged = false;
+                return;
+            }
+            isChanged = true;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            beforeTextLength = s.length();
+            if (buffer.length() > 0) {
+                buffer.delete(0, buffer.length());
+            }
+            konggeNumberB = 0;
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i) == ' ') {
+                    konggeNumberB++;
+                }
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (isChanged) {
+                location = editBankNumber.getSelectionEnd();
+                int index = 0;
+                while (index < buffer.length()) {
+                    if (buffer.charAt(index) == ' ') {
+                        buffer.deleteCharAt(index);
+                    } else {
+                        index++;
+                    }
+                }
+
+                index = 0;
+                int konggeNumberC = 0;
+                while (index < buffer.length()) {
+                    if ( index % 5 == 4 ) {
+                        buffer.insert(index, ' ');
+                        konggeNumberC++;
+                    }
+                    index++;
+                }
+
+                if (konggeNumberC > konggeNumberB) {
+                    location += (konggeNumberC - konggeNumberB);
+                }
+
+                tempChar = new char[buffer.length()];
+                buffer.getChars(0, buffer.length(), tempChar, 0);
+                String str = buffer.toString();
+                if (location > str.length()) {
+                    location = str.length();
+                } else if (location < 0) {
+                    location = 0;
+                }
+
+                editBankNumber.setText(str);
+                Editable etable = editBankNumber.getText();
+                Selection.setSelection(etable, location);
+                isChanged = false;
+            }
+        }
+    };
 }
