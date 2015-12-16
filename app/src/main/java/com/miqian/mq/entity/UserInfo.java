@@ -32,6 +32,9 @@ public class UserInfo implements Serializable {
     private String supportStatus;//是否支持连连绑卡
     private String addRechargeMinValue;//充值最小额度
     private String canRedeem;//可赎回金额
+    private String singleAmtLimit; //单笔限额
+    private String dayAmtLimit; // 每日限额
+    private String monthAmtLimit ; // 每月限额
 
     public String getCanRedeem() {
         return canRedeem;
@@ -231,5 +234,29 @@ public class UserInfo implements Serializable {
 
     public void setAddRechargeMinValue(String addRechargeMinValue) {
         this.addRechargeMinValue = addRechargeMinValue;
+    }
+
+    public String getSingleAmtLimit() {
+        return singleAmtLimit;
+    }
+
+    public void setSingleAmtLimit(String singleAmtLimit) {
+        this.singleAmtLimit = singleAmtLimit;
+    }
+
+    public String getDayAmtLimit() {
+        return dayAmtLimit;
+    }
+
+    public void setDayAmtLimit(String dayAmtLimit) {
+        this.dayAmtLimit = dayAmtLimit;
+    }
+
+    public String getMonthAmtLimit() {
+        return monthAmtLimit;
+    }
+
+    public void setMonthAmtLimit(String monthAmtLimit) {
+        this.monthAmtLimit = monthAmtLimit;
     }
 }

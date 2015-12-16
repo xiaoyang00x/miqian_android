@@ -1,12 +1,11 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -19,13 +18,15 @@ import com.miqian.mq.views.WFYTitle;
 public class IntoResultActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView imageStatus;
-    private TextView textProcessing;
+//    private TextView textProcessing;
     private TextView textOrderMoney;
     private TextView textOrderNo;
-    private RelativeLayout frameFail;
+//    private RelativeLayout frameFail;
     private TextView textStatus;
-    private TextView textTel;
+//    private TextView textTel;
     private Button btBack;
+    private LinearLayout frameTip;
+    private TextView textTip;
 
     private int status;
     private String money;
@@ -48,14 +49,16 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
     @Override
     public void initView() {
         imageStatus = (ImageView) findViewById(R.id.image_status);
-        textProcessing = (TextView) findViewById(R.id.text_processing);
+//        textProcessing = (TextView) findViewById(R.id.text_processing);
         textOrderMoney = (TextView) findViewById(R.id.text_order_money);
         textOrderNo = (TextView) findViewById(R.id.text_order_no);
-        frameFail = (RelativeLayout) findViewById(R.id.frame_fail);
+//        frameFail = (RelativeLayout) findViewById(R.id.frame_fail);
         textStatus = (TextView) findViewById(R.id.text_status);
-        textTel = (TextView) findViewById(R.id.text_tel);
+//        textTel = (TextView) findViewById(R.id.text_tel);
+        frameTip = (LinearLayout) findViewById(R.id.frame_tip);
+        textTip = (TextView) findViewById(R.id.text_tip);
         btBack = (Button) findViewById(R.id.bt_back);
-        textTel.setOnClickListener(this);
+//        textTel.setOnClickListener(this);
         btBack.setOnClickListener(this);
         refreshView();
     }
@@ -67,12 +70,16 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
             imageStatus.setImageResource(R.drawable.rollin_status_success);
         } else if (status == CurrentInvestment.PROCESSING) {
             textStatus.setText("充值处理中");
-            textProcessing.setVisibility(View.VISIBLE);
+//            textProcessing.setVisibility(View.VISIBLE);
             imageStatus.setImageResource(R.drawable.rollin_status_processing);
+            frameTip.setVisibility(View.VISIBLE);
+            textTip.setText("请在 “我的” 资金记录中查看充值结果");
         } else if (status == CurrentInvestment.FAIL) {
             textStatus.setText("充值失败");
             imageStatus.setImageResource(R.drawable.rollin_status_fail);
-            frameFail.setVisibility(View.VISIBLE);
+//            frameFail.setVisibility(View.VISIBLE);
+            frameTip.setVisibility(View.VISIBLE);
+            textTip.setText("可能是网银支付出现问题，建议您稍后重试。如果一直失败，请在官网在线支付，官网地址：www.shicaidai.com");
         }
     }
 
@@ -93,9 +100,9 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
             case R.id.bt_back:
                 IntoResultActivity.this.finish();
                 break;
-            case R.id.text_tel:
-                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
-                break;
+//            case R.id.text_tel:
+//                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
+//                break;
             default:
                 break;
         }

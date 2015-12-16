@@ -87,8 +87,18 @@ public class Urls {
     public final static String login = base_server + "userService/login";
     //注册
     public final static String register = base_server + "userService/register";
-    //消息详情
-    public final static String getPushDetail = base_server + "pushService/getPushDetail";
+    //个人消息列表
+    public final static String getMessageList = base_server + "pushService/getMessageList";
+    //系统公告列表
+    public final static String getPushList = base_server + "/pushService/getPushList";
+    //系统消息详情
+    public final static String getPushDetail = base_server + "pushService/v2/getPushDetail";
+    //个人消息详情
+    public final static String getMessageDetail = base_server + "pushService/v2/getMessageDetail";
+    //设置消息已读
+    public final static String setPushReaded = base_server + "pushService/setPushReaded";
+    //删除消息
+    public final static String deletePush = base_server + "pushService/deletePush";
     //设置交易密码
     public final static String changePayPassword = base_server + "userService/changePayPassword";
     //修改交易密码

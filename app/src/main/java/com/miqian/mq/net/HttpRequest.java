@@ -13,8 +13,10 @@ import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.ProjectInfoResult;
+//import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.TransferDetailResult;
+//import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfoResult;
@@ -132,11 +134,13 @@ public class HttpRequest {
     /**
      * 充值
      */
-    public static void rollIn(Context context, final ICallback<String> callback, String amt, String bankNo) {
+    public static void rollIn(Context context, final ICallback<String> callback, String amt, String bankNo, String realName, String idCard) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
         mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
+        mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
+        mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
 
         new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
 
@@ -323,18 +327,19 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    //获得推送信息详情
-    public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback,
-                                     int pushSource, String id, String custId) {
+    //获得消息详情
+    public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback, boolean isMessage, String id, String custId) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("pushSource", "" + pushSource));
+        String url = "";
         mList.add(new Param("id", id));
-        if (pushSource == 1) {
+        if (isMessage) {
             mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+            url = Urls.getMessageDetail;
         } else {
-            mList.add(new Param("custId", "" + custId));
+            mList.add(new Param("custId", ""));
+            url = Urls.getPushDetail;
         }
-        new MyAsyncTask(context, Urls.getPushDetail, mList, new ICallback<String>() {
+        new MyAsyncTask(context, url, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -343,6 +348,104 @@ public class HttpRequest {
                     callback.onSucceed(messageInfoResult);
                 } else {
                     callback.onFail(messageInfoResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+//    //获得个人消息
+//    public static void getMessageList(Context context, String id, final ICallback<UserMessageResult> callback) {
+//        List<Param> mList = new ArrayList<>();
+//        mList.add(new Param("id", id));
+//        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+//        new MyAsyncTask(context, Urls.getMessageList, mList, new ICallback<String>() {
+//
+//            @Override
+//            public void onSucceed(String result) {
+//                UserMessageResult userMessageResult = JsonUtil.parseObject(result, UserMessageResult.class);
+//                if (userMessageResult.getCode().equals("000000")) {
+//                    callback.onSucceed(userMessageResult);
+//                } else {
+//                    callback.onFail(userMessageResult.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//                callback.onFail(error);
+//            }
+//        }).executeOnExecutor();
+//    }
+//    //获得公告列表
+//    public static void getPushList(Context context, String id,String page, final ICallback<PushDataResult> callback) {
+//        List<Param> mList = new ArrayList<>();
+//        mList.add(new Param("id", id));
+//        mList.add(new Param("page", page));
+//        new MyAsyncTask(context, Urls.getPushList, mList, new ICallback<String>() {
+//
+//            @Override
+//            public void onSucceed(String result) {
+//                PushDataResult pushDataResult = JsonUtil.parseObject(result, PushDataResult.class);
+//                if (pushDataResult.getCode().equals("000000")) {
+//                    callback.onSucceed(pushDataResult);
+//                } else {
+//                    callback.onFail(pushDataResult.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//                callback.onFail(error);
+//            }
+//        }).executeOnExecutor();
+//    }
+
+    //设置消息已读
+    public static void setPushReaded(Context context, final ICallback<Meta> callback, String id, String custId, int isAll) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("id", id));
+        mList.add(new Param("isAll", isAll + ""));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        new MyAsyncTask(context, Urls.setPushReaded, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //删除消息
+    public static void deletePush(Context context, final ICallback<Meta> callback,
+                                  String id, int isAll) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("id", id));
+        mList.add(new Param("isAll", isAll + ""));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        new MyAsyncTask(context, Urls.deletePush, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
                 }
             }
 
