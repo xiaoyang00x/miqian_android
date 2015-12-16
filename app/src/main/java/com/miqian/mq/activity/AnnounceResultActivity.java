@@ -21,7 +21,7 @@ import com.miqian.mq.views.WFYTitle;
 
 import java.util.List;
 
-public class AnnounceResultActivity extends BaseActivity {
+public class  AnnounceResultActivity extends BaseActivity {
 
     private String noticeId;
     private TextView tv_title;
@@ -30,17 +30,10 @@ public class AnnounceResultActivity extends BaseActivity {
     private View linear_noresult;
     private String userId;
     private String pushSource;
+    private boolean isMessage;
 
     @Override
     public void obtainData() {
-
-        // 是否登录
-        if (!UserUtil.hasLogin(mActivity)) {
-            userId = "";
-        } else {
-            userId = Pref.getString(Pref.USERID, mActivity, Pref.VISITOR);
-        }
-
         if (!TextUtils.isEmpty(noticeId)) {
             begin();
             HttpRequest.getPushDetail(mActivity, new ICallback<MessageInfoResult>() {
@@ -61,8 +54,9 @@ public class AnnounceResultActivity extends BaseActivity {
                 public void onFail(String error) {
                     end();
                     showErrorView();
+                    Uihelper.showToast(mActivity,error);
                 }
-            }, Integer.valueOf(pushSource), noticeId, userId);
+            },isMessage, noticeId, userId);
         }else {
             showEmptyView();
         }
@@ -104,25 +98,7 @@ public class AnnounceResultActivity extends BaseActivity {
 
         Intent intent = getIntent();
         noticeId = intent.getStringExtra("id");
-        pushSource = intent.getStringExtra("pushSource");
-        // 是否登录
-        if (!UserUtil.hasLogin(mActivity)) {
-            userId = Pref.VISITOR;
-        } else {
-            userId = Pref.getString(Pref.USERID, mActivity, Pref.VISITOR);
-        }
-        List<JpushInfo> mList = MyDataBaseHelper.getInstance(mActivity).getjpushInfo(userId);
-        for (JpushInfo jpushInfo : mList) {
-            if (jpushInfo.getId().equals(noticeId)) {
-                jpushInfo.setId(noticeId);
-                if (jpushInfo.getState().equals("1")) {
-                    Uihelper.getMessageCount(-1, mActivity);
-                    jpushInfo.setState("2");
-                    MyDataBaseHelper.getInstance(mActivity).recordJpush(jpushInfo);
-                    break;
-                }
-            }
-        }
+        isMessage= intent.getBooleanExtra("isMessage",true);
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_content = (TextView) findViewById(R.id.tv_content);
