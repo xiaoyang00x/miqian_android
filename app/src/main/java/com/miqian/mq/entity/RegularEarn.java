@@ -8,22 +8,15 @@ import java.util.ArrayList;
  * Created by guolei_wang on 15/9/17.
  * 定期赚
  */
-public class RegularEarn implements Serializable {
+public class RegularEarn extends RegularBaseData {
 
-    private String subjectId;//标的ID
-    private String subjectName;//标的名称
-    private long startTimestamp; //开始时间
-    private long endTimestamp; //结束时间
     private float purchasePercent; //认购进度
     private String personTime; //认购人次
     private String subjectType; //标的类型
-    private String subjectStatus; //标的状态  投标状态编码: 99待开标不显示   00待开标   01已开标   02已满标（已售罄）  03已到期  04已撤销  05已流标   06审批中    07还款中    08正常还完
     private BigDecimal subjectTotalPrice; //标的总额
     private BigDecimal purchasePrice; //已认购金额
     private String bxbzf; //本息保障方
     private String ddbzf; //兜底保障方
-    private String presentationYesNo; // "N",//是否赠送收益
-    private String presentationYearInterest; //赠送年利率
     private BigDecimal fromInvestmentAmount; //起投金额
     private String promotionDesc; //"满1万元送100元红包"//促销描述
     private String promotionDescUrl;
@@ -104,37 +97,6 @@ public class RegularEarn implements Serializable {
     }
 
 
-    public String getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(String subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-
-    public long getStartTimestamp() {
-        return startTimestamp;
-    }
-
-    public void setStartTimestamp(long startTimestamp) {
-        this.startTimestamp = startTimestamp;
-    }
-
-    public long getEndTimestamp() {
-        return endTimestamp;
-    }
-
-    public void setEndTimestamp(long endTimestamp) {
-        this.endTimestamp = endTimestamp;
-    }
 
     public float getPurchasePercent() {
         return purchasePercent;
@@ -160,13 +122,6 @@ public class RegularEarn implements Serializable {
         this.subjectType = subjectType;
     }
 
-    public String getSubjectStatus() {
-        return subjectStatus;
-    }
-
-    public void setSubjectStatus(String subjectStatus) {
-        this.subjectStatus = subjectStatus;
-    }
 
     public BigDecimal getSubjectTotalPrice() {
         return subjectTotalPrice;
@@ -200,21 +155,6 @@ public class RegularEarn implements Serializable {
         this.ddbzf = ddbzf;
     }
 
-    public String getPresentationYesNo() {
-        return presentationYesNo;
-    }
-
-    public void setPresentationYesNo(String presentationYesNo) {
-        this.presentationYesNo = presentationYesNo;
-    }
-
-    public String getPresentationYearInterest() {
-        return presentationYearInterest;
-    }
-
-    public void setPresentationYearInterest(String presentationYearInterest) {
-        this.presentationYearInterest = presentationYearInterest;
-    }
 
     public BigDecimal getFromInvestmentAmount() {
         return fromInvestmentAmount;

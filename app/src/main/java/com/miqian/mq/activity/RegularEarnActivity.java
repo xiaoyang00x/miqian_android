@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.entity.RegularBaseData;
 import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.net.HttpRequest;
@@ -232,7 +233,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
 
     private void getRegularDetails(String subjectId) {
         begin();
-        HttpRequest.getRegularEarnDetails(this, "1", subjectId, new ICallback<RegularEarnResult>() {
+        HttpRequest.getRegularEarnDetails(this, RegularBaseData.PRODID_REGULAR_EARN, subjectId, new ICallback<RegularEarnResult>() {
 
             @Override
             public void onSucceed(RegularEarnResult result) {
