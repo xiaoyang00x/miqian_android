@@ -2,20 +2,17 @@ package com.miqian.mq.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.user.MyTicketInvalidActivity;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.utils.Uihelper;
-import com.yintong.secure.widget.Progress;
 
 import java.util.List;
 
@@ -80,7 +77,12 @@ public class AdapterInvalidMyTicket extends RecyclerView.Adapter {
             ((ViewHolderTicket) holder).textMoney.setText("" + promote.getTotalAmt());
             ((ViewHolderTicket) holder).textName.setText(promote.getPromProdName());
             ((ViewHolderTicket) holder).textPercent.setText("限定使用比例" + promote.getToUseRate() + "%");
-            ((ViewHolderTicket) holder).limitMoney.setText(promote.getMinBuyAmtMsg());
+            String messsage = promote.getMinBuyAmtMsg();
+            if (TextUtils.isEmpty(messsage)) {
+                ((ViewHolderTicket) holder).limitMoney.setVisibility(View.GONE);
+            } else {
+                ((ViewHolderTicket) holder).limitMoney.setText(messsage);
+            }
             ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
             ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
         } else if (holder instanceof ViewHolderPackage) {
@@ -88,7 +90,12 @@ public class AdapterInvalidMyTicket extends RecyclerView.Adapter {
             ((ViewHolderPackage) holder).textMoney.setText("" + promote.getTotalAmt());
             ((ViewHolderPackage) holder).textName.setText(promote.getPromProdName());
             ((ViewHolderPackage) holder).textPercent.setText("限定使用比例" + promote.getToUseRate() + "%");
-            ((ViewHolderPackage) holder).limitMoney.setText(promote.getMinBuyAmtMsg());
+            String messsage = promote.getMinBuyAmtMsg();
+            if (TextUtils.isEmpty(messsage)) {
+                ((ViewHolderPackage) holder).limitMoney.setVisibility(View.GONE);
+            } else {
+                ((ViewHolderPackage) holder).limitMoney.setText(messsage);
+            }
             ((ViewHolderPackage) holder).limitType.setText(promote.getLimitMsg());
             ((ViewHolderPackage) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
 

@@ -18,7 +18,6 @@ import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
@@ -361,12 +360,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 }
                 MobclickAgent.onEvent(getActivity(), "1017");
                 //未认证
-                if ("0".equals(userInfo.getRealNameStatus())) {
-                    Intent intent = new Intent(getActivity(), ActivityRealname.class);
-                    startActivity(intent);
-                } else {
+//                if ("0".equals(userInfo.getRealNameStatus())) {
+//                    Intent intent = new Intent(getActivity(), ActivityRealname.class);
+//                    startActivity(intent);
+//                } else {
                     UserUtil.isLogin(getActivity(), IntoActivity.class);
-                }
+//                }
 
                 break;
             //取现
