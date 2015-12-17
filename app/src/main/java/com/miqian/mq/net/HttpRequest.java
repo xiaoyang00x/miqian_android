@@ -1153,11 +1153,11 @@ public class HttpRequest {
     }
 
     //我的促销接口，包括红包，拾财券等
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String promTypCd, String pageNum, String pageSize) {
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String state, String pageNum, String pageSize) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("promTypCd", promTypCd));
-        mList.add(new Param("sta", ""));
+        mList.add(new Param("promTypCd", ""));
+        mList.add(new Param("sta", state));
         mList.add(new Param("pageNum", pageNum));
         mList.add(new Param("pageSize", pageSize));
         new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {

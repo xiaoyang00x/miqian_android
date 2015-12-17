@@ -5,10 +5,10 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/10/8.
  */
-public class  Redpaper{
+public class Redpaper {
 
     private Page page;
-    private List<CustPromotion> custPromotion;
+    private List<Promote> custPromotion;
 
     public Page getPage() {
         return page;
@@ -18,11 +18,11 @@ public class  Redpaper{
         this.page = page;
     }
 
-    public List<CustPromotion> getCustPromotion() {
+    public List<Promote> getCustPromotion() {
         return custPromotion;
     }
 
-    public void setCustPromotion(List<CustPromotion> custPromotion) {
+    public void setCustPromotion(List<Promote> custPromotion) {
         this.custPromotion = custPromotion;
     }
 }

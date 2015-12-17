@@ -11,8 +11,8 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.adapter.AdapterMyTicket;
-import com.miqian.mq.entity.CustPromotion;
 import com.miqian.mq.entity.Page;
+import com.miqian.mq.entity.Promote;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.Redpaper;
 import com.miqian.mq.net.HttpRequest;
@@ -30,10 +30,9 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 public class MyTicketActivity extends BaseActivity {
-    public List<CustPromotion> promList = new ArrayList<>();
+    public List<Promote> promList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterMyTicket adapterMyTicket;
-
 
     private int pageNo = 1;
     private String pageSize = "20";
@@ -44,7 +43,6 @@ public class MyTicketActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle arg0) {
-
         String jpushToken = getIntent().getStringExtra("token");
         if (!TextUtils.isEmpty(jpushToken)) {
             //通知进来的情况下，不是当前用户则退出此界面
@@ -89,7 +87,7 @@ public class MyTicketActivity extends BaseActivity {
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
             }
-        }, "SC", String.valueOf(pageNo), pageSize);
+        }, "JH", String.valueOf(pageNo), pageSize);
 
     }
 
@@ -100,7 +98,7 @@ public class MyTicketActivity extends BaseActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).build());
+//        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).build());
         recyclerView.setHasFixedSize(true);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -128,7 +126,7 @@ public class MyTicketActivity extends BaseActivity {
 
                 @Override
                 public void onSucceed(RedPaperData result) {
-                    List<CustPromotion> tempList = result.getData().getCustPromotion();
+                    List<Promote> tempList = result.getData().getCustPromotion();
                     if (promList != null && tempList != null && tempList.size() > 0) {
                         promList.addAll(tempList);
                         adapterMyTicket.notifyItemInserted(promList.size());
@@ -141,13 +139,13 @@ public class MyTicketActivity extends BaseActivity {
                     isLoading = false;
 
                 }
-            }, "SC", String.valueOf(pageNo), pageSize);
+            }, "JH", String.valueOf(pageNo), pageSize);
         }
     }
 
 
     private void refreshView() {
-        adapterMyTicket = new AdapterMyTicket(promList);
+        adapterMyTicket = new AdapterMyTicket(mActivity, promList);
         adapterMyTicket.setMaxItem(page.getCount());
         recyclerView.setAdapter(adapterMyTicket);
     }
@@ -159,7 +157,7 @@ public class MyTicketActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("拾财券");
+        mTitle.setTitleText("红包/券");
         mTitle.setRightText("使用规则");
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +171,6 @@ public class MyTicketActivity extends BaseActivity {
 
     @Override
     protected String getPageName() {
-        return "拾财券";
+        return "红包/券";
     }
 }

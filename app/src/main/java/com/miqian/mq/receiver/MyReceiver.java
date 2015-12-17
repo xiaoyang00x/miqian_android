@@ -24,7 +24,6 @@ import com.miqian.mq.activity.SplashActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.RedPaperActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
@@ -150,22 +149,22 @@ public class MyReceiver extends BroadcastReceiver {
                         notificationIntent = new Intent(context, CapitalRecordActivity.class);
                         break;
                     case 9://收到红包
-                        notificationIntent = new Intent(context, RedPaperActivity.class);
-                        MyApplication.getInstance().addJpushList(noticeId, false);
-                        if (MyApplication.isOnMainAcitivity()) {
-                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
-                        }
-                        break;
+//                        notificationIntent = new Intent(context, RedPaperActivity.class);
+//                        MyApplication.getInstance().addJpushList(noticeId, false);
+//                        if (MyApplication.isOnMainAcitivity()) {
+//                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
+//                        }
+//                        break;
                     case 10://收到拾财券
-                        notificationIntent = new Intent(context, MyTicketActivity.class);
-                        MyApplication.getInstance().addJpushList(noticeId, false);
-                        if (MyApplication.isOnMainAcitivity()) {
-                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
-                        }
-                        break;
+//                        notificationIntent = new Intent(context, MyTicketActivity.class);
+//                        MyApplication.getInstance().addJpushList(noticeId, false);
+//                        if (MyApplication.isOnMainAcitivity()) {
+//                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
+//                        }
+//                        break;
                     case 11:
-                        notificationIntent = new Intent(context, RedPaperActivity.class);
-                        break;
+//                        notificationIntent = new Intent(context, RedPaperActivity.class);
+//                        break;
                     case 12:
                         notificationIntent = new Intent(context, MyTicketActivity.class);
                         break;

@@ -1,38 +1,58 @@
 package com.miqian.mq.entity;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Jackie on 2015/9/24.
  *
  * 红包、拾财券
  */
 public class Promote {
+    /** 促销产品类别的ID(核心cs_prom_prod_c表的ID) */
+    private String promProdId;
+    /** 促销产品类别的名称 */
+    private String promProdName;
+    /** 客户促销余额的ID(核心cs_cust_prom_sa_b表的ID) */
+    private String id;
+    /** 促销类型：SC:拾财券 HB:红包 JF:积分 LP:礼品卡 TY:体验金 */
+    private String type;
+    /** 转化比率 */
+    private String transformRate;
+    /** 总额(单位不一定是RMB，有可能是积分什么的，协同转化比率才能算出RMB) */
+    private BigDecimal totalAmt;
+    /** 已用额度 */
+    private BigDecimal usedAmt;
+    /** 可用余额 */
+    private BigDecimal canUseAmt;
+    /** 抵用比率 */
+    private String toUseRate;
+    /** 开始时间 */
+    private String startTimestamp;
+    /** 结束时间 */
+    private String endTimestamp;
+    /** 认购时，如果选择本促销，将抵用的实际金额（根据客户认购金额，促销可用余额等计算出来） */
+    private BigDecimal willUseAmt;
+    /** 促销使用的限制范围信息 */
+    private String limitMsg;
+    /** 适用最小金额信息 */
+    private String minBuyAmtMsg;
+    /**促销状态**/
+    private String status;
 
-    private String usedAmt;//促销已用户金额
-    private String totalAmt;//促销总金额
-    private String id;//客户促销余额ID
-    private String willUseAmt;//本次认购选择本促销时可抵用的金额
-    private String toUseRate;//抵用比率
-    private String startTimestamp;//开始时间
-    private String endTimestamp;//到期时间
-    private String type;//促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
-    private String promProdId;//促销类型的ID
-    private String limitMsg;//限制范围
-    private String canUseAmt;//红包余额
-
-    public String getUsedAmt() {
-        return usedAmt;
+    public String getPromProdId() {
+        return promProdId;
     }
 
-    public void setUsedAmt(String usedAmt) {
-        this.usedAmt = usedAmt;
+    public void setPromProdId(String promProdId) {
+        this.promProdId = promProdId;
     }
 
-    public String getTotalAmt() {
-        return totalAmt;
+    public String getPromProdName() {
+        return promProdName;
     }
 
-    public void setTotalAmt(String totalAmt) {
-        this.totalAmt = totalAmt;
+    public void setPromProdName(String promProdName) {
+        this.promProdName = promProdName;
     }
 
     public String getId() {
@@ -43,12 +63,44 @@ public class Promote {
         this.id = id;
     }
 
-    public String getWillUseAmt() {
-        return willUseAmt;
+    public String getType() {
+        return type;
     }
 
-    public void setWillUseAmt(String willUseAmt) {
-        this.willUseAmt = willUseAmt;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTransformRate() {
+        return transformRate;
+    }
+
+    public void setTransformRate(String transformRate) {
+        this.transformRate = transformRate;
+    }
+
+    public BigDecimal getTotalAmt() {
+        return totalAmt;
+    }
+
+    public void setTotalAmt(BigDecimal totalAmt) {
+        this.totalAmt = totalAmt;
+    }
+
+    public BigDecimal getUsedAmt() {
+        return usedAmt;
+    }
+
+    public void setUsedAmt(BigDecimal usedAmt) {
+        this.usedAmt = usedAmt;
+    }
+
+    public BigDecimal getCanUseAmt() {
+        return canUseAmt;
+    }
+
+    public void setCanUseAmt(BigDecimal canUseAmt) {
+        this.canUseAmt = canUseAmt;
     }
 
     public String getToUseRate() {
@@ -75,20 +127,12 @@ public class Promote {
         this.endTimestamp = endTimestamp;
     }
 
-    public String getType() {
-        return type;
+    public BigDecimal getWillUseAmt() {
+        return willUseAmt;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPromProdId() {
-        return promProdId;
-    }
-
-    public void setPromProdId(String promProdId) {
-        this.promProdId = promProdId;
+    public void setWillUseAmt(BigDecimal willUseAmt) {
+        this.willUseAmt = willUseAmt;
     }
 
     public String getLimitMsg() {
@@ -99,11 +143,19 @@ public class Promote {
         this.limitMsg = limitMsg;
     }
 
-    public String getCanUseAmt() {
-        return canUseAmt;
+    public String getMinBuyAmtMsg() {
+        return minBuyAmtMsg;
     }
 
-    public void setCanUseAmt(String canUseAmt) {
-        this.canUseAmt = canUseAmt;
+    public void setMinBuyAmtMsg(String minBuyAmtMsg) {
+        this.minBuyAmtMsg = minBuyAmtMsg;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

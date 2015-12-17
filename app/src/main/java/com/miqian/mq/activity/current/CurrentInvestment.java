@@ -341,7 +341,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     Promote promote = promList.get(position);
                     List<Promote> promListParam = new ArrayList<>();
                     promListParam.add(promote);
-                    promoteMoney = new BigDecimal(promote.getWillUseAmt());
+                    promoteMoney = promote.getWillUseAmt();
                     promListString = JSON.toJSONString(promListParam, true);
                 } else {
                     promoteMoney = BigDecimal.ZERO;
