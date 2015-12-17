@@ -10,24 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.utils.Uihelper;
 
 import java.util.List;
 
 public class MessageAdapter extends BaseAdapter {
     private Context context;
-    private List<JpushInfo> jpushInfolist;
+    private List<MessageInfo> messageList;
 
-    public MessageAdapter(Context context, List<JpushInfo> jpushInfolist) {
+    public MessageAdapter(Context context, List<MessageInfo> messageList) {
         this.context = context;
-        this.jpushInfolist = jpushInfolist;
+        this.messageList = messageList;
     }
 
     @Override
     public int getCount() {
-        if (jpushInfolist.size() > 0) {
-            return jpushInfolist.size();
+        if (messageList.size() > 0) {
+            return messageList.size();
         } else {
             return 0;
         }
@@ -53,7 +53,6 @@ public class MessageAdapter extends BaseAdapter {
             holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
             holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             holder.iv_isRead = (ImageView) convertView.findViewById(R.id.iv_isRead);
-            holder.iv_state = (ImageView) convertView.findViewById(R.id.iv_state);
 			holder.divider = convertView.findViewById(R.id.divider);
             convertView.setTag(holder);
         } else {
@@ -64,29 +63,19 @@ public class MessageAdapter extends BaseAdapter {
         } else {
             holder.divider.setVisibility(View.VISIBLE);
         }
-        final JpushInfo jpushInfo = jpushInfolist.get(position);
-        holder.tv_title.setText(jpushInfo.getTitle());
-        holder.tv_content.setText(jpushInfo.getContent());
+        final MessageInfo messageInfo = messageList.get(position);
+        holder.tv_title.setText(messageInfo.getTitle());
+        holder.tv_content.setText(messageInfo.getContent());
 
 
         // 判断是否是未读状态
-        if (!TextUtils.isEmpty(jpushInfo.getState())) {
-            if (Integer.valueOf(jpushInfo.getState()) == 2) {
+            if (messageInfo.isRead()) {
                 holder.iv_isRead.setBackgroundResource(R.drawable.message_open);
             } else {
                 holder.iv_isRead.setBackgroundResource(R.drawable.message_close);
             }
-        }
 
-        // 判断消息类型 个人系统
-        if (!TextUtils.isEmpty(jpushInfo.getPushSource())) {
-            if (Integer.valueOf(jpushInfo.getPushSource()) == 0) {
-                holder.iv_state.setBackgroundResource(R.drawable.message_system);
-            } else {
-                holder.iv_state.setBackgroundResource(R.drawable.message_user);
-            }
-        }
-        String dateToChineseStrings = Uihelper.timestampToDateStr_other(Double.parseDouble(jpushInfo.getTime()));
+        String dateToChineseStrings = Uihelper.timestampToDateStr_other(Double.parseDouble(messageInfo.getSendTime()));
         holder.tv_time.setText(dateToChineseStrings);
         return convertView;
     }
@@ -96,7 +85,6 @@ public class MessageAdapter extends BaseAdapter {
         TextView tv_content;
         TextView tv_time;
         ImageView iv_isRead;
-        ImageView iv_state;
         View divider;
     }
 }

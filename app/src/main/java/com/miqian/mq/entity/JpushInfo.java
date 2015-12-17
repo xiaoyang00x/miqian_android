@@ -11,10 +11,18 @@ public class JpushInfo {
     private String time;
     private String url;
     private String uriType;
-    private String state; // 1为未读，2为已读
+    private String state; // 1为未读，2为已读0
     private String userId;
     private String pushSource;
     private String token;
+    private String ext;
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
+    }
 
     public String getToken() {
         return token;

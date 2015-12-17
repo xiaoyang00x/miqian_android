@@ -1,17 +1,126 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.handmark.pulltorefresh.library.PullToRefreshSwipeMenuListView
-        android:id="@+id/listview"
+    <RelativeLayout
+        android:id="@+id/frame_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/mq_r1">
+
+        <ImageButton
+            android:id="@+id/bt_left"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:src="@drawable/btn_back_selector" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <Button
+                android:id="@+id/title_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bt_regualr_tab_left_selected"
+                android:text="消息"
+                android:textColor="@color/mq_r1"
+                android:textSize="@dimen/mq_font3" />
+
+            <Button
+                android:id="@+id/title_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bt_regualr_tab_right"
+                android:text="公告"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font3" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_clearall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/mq_font3" />
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:divider="@null"
-        android:headerDividersEnabled="false"
-        android:scrollbars="none"
-        app:ptrAnimationStyle="flip"/>
+        android:id="@+id/frame_no_messagedata"
+        android:visibility="gone"
+        >
+        <LinearLayout
 
-</RelativeLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:paddingBottom="120dp"
+          >
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/nodata" />
+
+            <TextView
+                android:id="@+id/tv_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:textColor="@color/miqian_gray"
+                android:textSize="@dimen/mq_font2" />
+
+            <TextView
+                android:id="@+id/tv_refresh"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edit_selector"
+                android:gravity="center"
+                android:text="再试一次"
+                android:visibility="gone"
+                android:textSize="@dimen/mq_font2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+    </RelativeLayout>
+    <com.miqian.mq.views.MySwipeRefresh
+        android:id="@+id/swipe_refresh"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.handmark.pulltorefresh.library.PullToRefreshSwipeMenuListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@null"
+            android:headerDividersEnabled="false"
+            android:scrollbars="none"
+            app:ptrAnimationStyle="flip" />
+
+    </com.miqian.mq.views.MySwipeRefresh>
+</LinearLayout>
+
