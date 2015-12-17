@@ -13,10 +13,10 @@ import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.ProjectInfoResult;
-//import com.miqian.mq.entity.PushDataResult;
+import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.TransferDetailResult;
-//import com.miqian.mq.entity.UserMessageResult;
+import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfoResult;
@@ -328,12 +328,12 @@ public class HttpRequest {
     }
 
     //获得消息详情
-    public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback, boolean isMessage, String id, String custId) {
+    public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback, boolean isMessage, String id) {
         List<Param> mList = new ArrayList<>();
         String url = "";
         mList.add(new Param("id", id));
         if (isMessage) {
-            mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+            mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
             url = Urls.getMessageDetail;
         } else {
             mList.add(new Param("custId", ""));
@@ -358,60 +358,62 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-//    //获得个人消息
-//    public static void getMessageList(Context context, String id, final ICallback<UserMessageResult> callback) {
-//        List<Param> mList = new ArrayList<>();
-//        mList.add(new Param("id", id));
-//        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-//        new MyAsyncTask(context, Urls.getMessageList, mList, new ICallback<String>() {
-//
-//            @Override
-//            public void onSucceed(String result) {
-//                UserMessageResult userMessageResult = JsonUtil.parseObject(result, UserMessageResult.class);
-//                if (userMessageResult.getCode().equals("000000")) {
-//                    callback.onSucceed(userMessageResult);
-//                } else {
-//                    callback.onFail(userMessageResult.getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//                callback.onFail(error);
-//            }
-//        }).executeOnExecutor();
-//    }
-//    //获得公告列表
-//    public static void getPushList(Context context, String id,String page, final ICallback<PushDataResult> callback) {
-//        List<Param> mList = new ArrayList<>();
-//        mList.add(new Param("id", id));
-//        mList.add(new Param("page", page));
-//        new MyAsyncTask(context, Urls.getPushList, mList, new ICallback<String>() {
-//
-//            @Override
-//            public void onSucceed(String result) {
-//                PushDataResult pushDataResult = JsonUtil.parseObject(result, PushDataResult.class);
-//                if (pushDataResult.getCode().equals("000000")) {
-//                    callback.onSucceed(pushDataResult);
-//                } else {
-//                    callback.onFail(pushDataResult.getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//                callback.onFail(error);
-//            }
-//        }).executeOnExecutor();
-//    }
-
-    //设置消息已读
-    public static void setPushReaded(Context context, final ICallback<Meta> callback, String id, String custId, int isAll) {
+    //获得个人消息
+    public static void getMessageList(Context context, String id, final ICallback<UserMessageResult> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("id", id));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        new MyAsyncTask(context, Urls.getMessageList, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                UserMessageResult userMessageResult = JsonUtil.parseObject(result, UserMessageResult.class);
+                if (userMessageResult.getCode().equals("000000")) {
+                    callback.onSucceed(userMessageResult);
+                } else {
+                    callback.onFail(userMessageResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //获得公告列表
+    public static void getPushList(Context context, String id, String page, final ICallback<PushDataResult> callback) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("id", id));
+        mList.add(new Param("page", page));
+        new MyAsyncTask(context, Urls.getPushList, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                PushDataResult pushDataResult = JsonUtil.parseObject(result, PushDataResult.class);
+                if (pushDataResult.getCode().equals("000000")) {
+                    callback.onSucceed(pushDataResult);
+                } else {
+                    callback.onFail(pushDataResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    //设置消息已读
+    public static void setMessageReaded(Context context, final ICallback<Meta> callback, int startId, String endId, int isAll) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("startId", startId + ""));
+        mList.add(new Param("endId", endId + ""));
         mList.add(new Param("isAll", isAll + ""));
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
-        new MyAsyncTask(context, Urls.setPushReaded, mList, new ICallback<String>() {
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        new MyAsyncTask(context, Urls.setMessageReaded, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -431,13 +433,13 @@ public class HttpRequest {
     }
 
     //删除消息
-    public static void deletePush(Context context, final ICallback<Meta> callback,
-                                  String id, int isAll) {
+    public static void deleteMessage(Context context, final ICallback<Meta> callback, int startId, String endId, int isAll) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("id", id));
+        mList.add(new Param("startId", startId + ""));
+        mList.add(new Param("endId", endId + ""));
         mList.add(new Param("isAll", isAll + ""));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        new MyAsyncTask(context, Urls.deletePush, mList, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.deleteMessage, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
