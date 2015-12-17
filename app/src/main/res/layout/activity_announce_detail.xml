@@ -16,21 +16,30 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
             android:text=""
+            android:gravity="center"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="#505050"
             android:textSize="@dimen/mq_font1"
              />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/mq_b4"
+            android:layout_marginTop="@dimen/margin_top"
+            ></View>
+
         <TextView
-            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#A0A0A0"
-            android:layout_marginTop="2dp"
-            android:text="" />
-        
+            android:layout_marginTop="@dimen/margin_top"
+            android:text="亲爱的用户:" />
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
@@ -38,6 +47,24 @@
             android:textColor="#A0A0A0"
             android:layout_marginTop="5dp"
             android:text="" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#A0A0A0"
+            android:gravity="right|center"
+            android:layout_marginTop="@dimen/margin_top"
+            android:text="秒钱运营团队" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#A0A0A0"
+            android:layout_marginTop="2dp"
+            android:gravity="right|center"
+            android:text="" />
+        
+
 
     </LinearLayout>
 

@@ -27,25 +27,20 @@
             android:layout_toRightOf="@+id/iv_isRead"
             android:orientation="vertical" >
 
-            <RelativeLayout style="@style/WrapContent" >
+            <RelativeLayout style="@style/f3_R1" >
 
                 <TextView
                     android:id="@+id/tv_title"
                     style="@style/text_black_item"
+                    android:layout_width="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:maxEms="10"
-                    android:singleLine="true"/>
-
-                <ImageView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv_title"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/message_system"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/iv_state" />
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@+id/tv_time"
+                    android:layout_toStartOf="@+id/tv_time" />
 
                 <TextView
                     android:id="@+id/tv_time"

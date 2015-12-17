@@ -6,9 +6,13 @@ package com.miqian.mq.entity;
 public class MessageInfo {
 
 
-    private  String content;  //内容
-    private  String title;
-    private  String sendTime;
+    private String content;  //内容
+    private String title;
+    private String sendTime;
+    private int id;
+    private boolean isRead;
+    private String jumpUrl;
+    private int msgType;
 
     public String getContent() {
         return content;
@@ -26,7 +30,6 @@ public class MessageInfo {
         this.title = title;
     }
 
-
     public String getSendTime() {
         return sendTime;
     }
@@ -35,4 +38,35 @@ public class MessageInfo {
         this.sendTime = sendTime;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setIsRead(boolean isRead) {
+        this.isRead = isRead;
+    }
+
+    public String getJumpUrl() {
+        return jumpUrl;
+    }
+
+    public void setJumpUrl(String jumpUrl) {
+        this.jumpUrl = jumpUrl;
+    }
+
+    public int getMsgType() {
+        return msgType;
+    }
+
+    public void setMsgType(int msgType) {
+        this.msgType = msgType;
+    }
 }

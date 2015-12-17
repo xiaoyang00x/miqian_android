@@ -90,15 +90,15 @@ public class Urls {
     //个人消息列表
     public final static String getMessageList = base_server + "pushService/getMessageList";
     //系统公告列表
-    public final static String getPushList = base_server + "/pushService/getPushList";
+    public final static String getPushList = base_server + "pushService/getPushList";
     //系统消息详情
     public final static String getPushDetail = base_server + "pushService/v2/getPushDetail";
     //个人消息详情
     public final static String getMessageDetail = base_server + "pushService/v2/getMessageDetail";
     //设置消息已读
-    public final static String setPushReaded = base_server + "pushService/setPushReaded";
+    public final static String setMessageReaded = base_server + "pushService/setMessageReaded";
     //删除消息
-    public final static String deletePush = base_server + "pushService/deletePush";
+    public final static String deleteMessage = base_server + "pushService/deleteMessage";
     //设置交易密码
     public final static String changePayPassword = base_server + "userService/changePayPassword";
     //修改交易密码

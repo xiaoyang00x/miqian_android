@@ -1,6 +1,7 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -21,51 +22,48 @@ import com.miqian.mq.views.WFYTitle;
 
 import java.util.List;
 
-public class  AnnounceResultActivity extends BaseActivity {
+public class AnnounceResultActivity extends BaseActivity {
 
-    private String noticeId;
+    private int messsageId;
     private TextView tv_title;
     private TextView tv_content;
     private TextView tv_time;
-    private View linear_noresult;
-    private String userId;
-    private String pushSource;
     private boolean isMessage;
 
     @Override
-    public void obtainData() {
-        if (!TextUtils.isEmpty(noticeId)) {
-            begin();
-            HttpRequest.getPushDetail(mActivity, new ICallback<MessageInfoResult>() {
-
-                @Override
-                public void onSucceed(MessageInfoResult result) {
-                    end();
-                    MessageInfo detailInfo = result.getData();
-                    if (detailInfo != null) {
-                        showContentView();
-                        setData(detailInfo);
-                    } else {
-                        showEmptyView();
-                    }
-                }
-
-                @Override
-                public void onFail(String error) {
-                    end();
-                    showErrorView();
-                    Uihelper.showToast(mActivity,error);
-                }
-            },isMessage, noticeId, userId);
-        }else {
-            showEmptyView();
-        }
-
+    public void onCreate(Bundle arg0) {
+        Intent intent = getIntent();
+        messsageId = intent.getIntExtra("id", 0);
+        isMessage = intent.getBooleanExtra("isMessage", true);
+        super.onCreate(arg0);
 
     }
 
-    protected void setData(MessageInfo detailInfo) {
+    @Override
+    public void obtainData() {
+        begin();
+        HttpRequest.getPushDetail(mActivity, new ICallback<MessageInfoResult>() {
+            @Override
+            public void onSucceed(MessageInfoResult result) {
+                end();
+                MessageInfo detailInfo = result.getData();
+                if (detailInfo != null) {
+                    showContentView();
+                    setData(detailInfo);
+                } else {
+                    showEmptyView();
+                }
+            }
+            @Override
+            public void onFail(String error) {
+                end();
+                showErrorView();
+                Uihelper.showToast(mActivity, error);
+            }
+        }, isMessage, messsageId + "");
+    }
 
+    protected void setData(MessageInfo detailInfo) {
         if (!TextUtils.isEmpty(detailInfo.getTitle())) {
             tv_title.setText(detailInfo.getTitle());
         }
@@ -73,7 +71,7 @@ public class  AnnounceResultActivity extends BaseActivity {
         if (!TextUtils.isEmpty(content)) {
 
             Spanned fromHtml = Html.fromHtml(content);
-            tv_content.setText(fromHtml);
+            tv_content.setText("      " + fromHtml);
         }
 
         String sendTime = detailInfo.getSendTime();
@@ -96,14 +94,9 @@ public class  AnnounceResultActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        Intent intent = getIntent();
-        noticeId = intent.getStringExtra("id");
-        isMessage= intent.getBooleanExtra("isMessage",true);
-
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_content = (TextView) findViewById(R.id.tv_content);
         tv_time = (TextView) findViewById(R.id.tv_time);
-        linear_noresult = findViewById(R.id.linear_noresult);
 
     }
 
@@ -114,12 +107,20 @@ public class  AnnounceResultActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("消息详情");
+        if (isMessage) {
+            mTitle.setTitleText("消息详情");
+        } else {
+            mTitle.setTitleText("公告详情");
+        }
 
     }
 
     @Override
     protected String getPageName() {
-        return "消息详情";
+        if (isMessage) {
+            return "消息详情";
+        } else {
+            return "公告详情";
+        }
     }
 }
