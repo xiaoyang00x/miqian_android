@@ -8,16 +8,7 @@ import java.util.ArrayList;
 public class HomePageInfo {
 
     private ArrayList<AdvertisementImg> adImgs;
-    private ArrayList<RegularEarn> subjectInfo;
-    private ArrayList<RegularEarn> newCustomer;
-
-    public ArrayList<RegularEarn> getSubjectInfo() {
-        return subjectInfo;
-    }
-
-    public void setSubjectInfo(ArrayList<RegularEarn> subjectInfo) {
-        this.subjectInfo = subjectInfo;
-    }
+    private ArrayList<SubjectCategoryData> subjectData;
 
     public ArrayList<AdvertisementImg> getAdImgs() {
         return adImgs;
@@ -27,11 +18,11 @@ public class HomePageInfo {
         this.adImgs = adImgs;
     }
 
-    public ArrayList<RegularEarn> getNewCustomer() {
-        return newCustomer;
+    public ArrayList<SubjectCategoryData> getSubjectData() {
+        return subjectData;
     }
 
-    public void setNewCustomer(ArrayList<RegularEarn> newCustomer) {
-        this.newCustomer = newCustomer;
+    public void setSubjectData(ArrayList<SubjectCategoryData> subjectData) {
+        this.subjectData = subjectData;
     }
 }

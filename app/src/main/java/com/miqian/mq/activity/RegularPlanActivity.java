@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.entity.RegularBaseData;
 import com.miqian.mq.entity.RegularPlan;
 import com.miqian.mq.entity.RegularPlanResult;
 import com.miqian.mq.net.HttpRequest;
@@ -232,7 +233,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
 
     private void getRegularDetails(String subjectId) {
         begin();
-        HttpRequest.getRegularDetails(this, "2", subjectId, new ICallback<RegularPlanResult>() {
+        HttpRequest.getRegularDetails(this, RegularBaseData.PRODID_REGULAR_PLAN, subjectId, new ICallback<RegularPlanResult>() {
 
             @Override
             public void onSucceed(RegularPlanResult result) {

@@ -3,8 +3,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/frame_title" />
-
     <com.miqian.mq.views.MySwipeRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"

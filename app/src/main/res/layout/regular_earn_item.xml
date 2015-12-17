@@ -31,21 +31,21 @@
             android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font3" />
 
-        <TextView
-            android:id="@+id/tv_sub_title"
-            style="@style/WrapContent"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginTop="4dp"
-            android:text="项目总额800,000 按月付息，到期还本"
-            android:textColor="@color/mq_b2"
-            android:textSize="@dimen/mq_font4" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_sub_title"-->
+            <!--style="@style/WrapContent"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_below="@+id/tv_title"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:text="项目总额800,000 按月付息，到期还本"-->
+            <!--android:textColor="@color/mq_b2"-->
+            <!--android:textSize="@dimen/mq_font4" />-->
 
         <RelativeLayout
             android:id="@+id/layout_content"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_below="@id/tv_sub_title">
+            android:layout_below="@id/tv_title">
 
             <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/circlebar"
@@ -155,32 +155,32 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tv_sale_number"
-                android:layout_width="80dp"
-                android:layout_height="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:text="已认购28人"
-                android:textColor="@color/mq_b2"
-                android:textSize="@dimen/mq_font5" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_sale_number"-->
+                <!--android:layout_width="80dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:gravity="center"-->
+                <!--android:text="已认购28人"-->
+                <!--android:textColor="@color/mq_b2"-->
+                <!--android:textSize="@dimen/mq_font5" />-->
 
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginBottom="8dp"
-                android:drawableLeft="@drawable/icon_jiangjin"
-                android:drawablePadding="5dp"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="已认购28人"
-                android:textColor="@color/mq_r1"
-                android:textSize="@dimen/mq_font5" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_description"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:drawableLeft="@drawable/icon_jiangjin"-->
+                <!--android:drawablePadding="5dp"-->
+                <!--android:ellipsize="end"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="已认购28人"-->
+                <!--android:textColor="@color/mq_r1"-->
+                <!--android:textSize="@dimen/mq_font5" />-->
         </RelativeLayout>
 
         <!--<RelativeLayout-->

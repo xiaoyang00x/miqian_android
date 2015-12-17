@@ -22,7 +22,6 @@ import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.RedPaperActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
@@ -407,16 +406,16 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 MobclickAgent.onEvent(getActivity(), "1021");
                 startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
                 break;
-            //拾财券
+            //红包/券
             case R.id.frame_ticket:
                 MobclickAgent.onEvent(getActivity(), "1022");
                 startActivity(new Intent(getActivity(), MyTicketActivity.class));
                 break;
-            //我的红包
-            case R.id.frame_redpackage:
-                MobclickAgent.onEvent(getActivity(), "1023");
-                startActivity(new Intent(getActivity(), RedPaperActivity.class));
-                break;
+//            //我的红包
+//            case R.id.frame_redpackage:
+//                MobclickAgent.onEvent(getActivity(), "1023");
+//                startActivity(new Intent(getActivity(), RedPaperActivity.class));
+//                break;
             //我的消息
             case R.id.bt_left:
                 MobclickAgent.onEvent(getActivity(), "1015");

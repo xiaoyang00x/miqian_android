@@ -686,7 +686,7 @@ public class HttpRequest {
         params.add(new Param("operationType", "0"));
         params.add(new Param("pageNo", "1"));
         params.add(new Param("pageSize", "50"));
-        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.getRegMain_v1, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -708,12 +708,12 @@ public class HttpRequest {
     /**
      * 获取定期详情
      *
-     * @param operationType 0为获取定期赚和定期计划，1为获取定期赚，2为获取定期计划。
+     * @param prodId 3：为获取定期赚 4：为获取定期计划
      * @param subjectId     标的编号，如传入则返回改标的相关信息
      */
-    public static void getRegularDetails(Context context, String operationType, String subjectId, final ICallback<RegularPlanResult> callback) {
+    public static void getRegularDetails(Context context, String prodId, String subjectId, final ICallback<RegularPlanResult> callback) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("operationType", operationType));
+        params.add(new Param("prodId", prodId));
         params.add(new Param("subjectId", subjectId));
         new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
 
@@ -737,13 +737,13 @@ public class HttpRequest {
     /**
      * 获取定期赚详情
      *
-     * @param operationType 0为获取定期赚和定期计划，1为获取定期赚，2为获取定期计划。
+     * @param prodId 3：为获取定期赚 4：为获取定期计划
      * @param subjectId     标的编号，如传入则返回改标的相关信息
      */
-    public static void getRegularEarnDetails(Context context, String operationType, String subjectId,
+    public static void getRegularEarnDetails(Context context, String prodId, String subjectId,
                                              final ICallback<RegularEarnResult> callback) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("operationType", operationType));
+        params.add(new Param("prodId", prodId));
         params.add(new Param("subjectId", subjectId));
         new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
 
@@ -1155,11 +1155,11 @@ public class HttpRequest {
     }
 
     //我的促销接口，包括红包，拾财券等
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String promTypCd, String pageNum, String pageSize) {
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String state, String pageNum, String pageSize) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("promTypCd", promTypCd));
-        mList.add(new Param("sta", ""));
+        mList.add(new Param("promTypCd", ""));
+        mList.add(new Param("sta", state));
         mList.add(new Param("pageNum", pageNum));
         mList.add(new Param("pageSize", pageSize));
         new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {

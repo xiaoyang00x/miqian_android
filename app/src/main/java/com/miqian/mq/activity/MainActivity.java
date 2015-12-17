@@ -20,7 +20,6 @@ import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.RedPaperActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
@@ -309,14 +308,14 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
                     switch (type) {
                         case 9:
-                            startActivity(new Intent(mContext, RedPaperActivity.class));
-                            break;
+//                            startActivity(new Intent(mContext, RedPaperActivity.class));
+//                            break;
                         case 10:
-                            startActivity(new Intent(mContext, MyTicketActivity.class));
-                            break;
+//                            startActivity(new Intent(mContext, MyTicketActivity.class));
+//                            break;
                         case 11:
-                            startActivity(new Intent(mContext, RedPaperActivity.class));
-                            break;
+//                            startActivity(new Intent(mContext, RedPaperActivity.class));
+//                            break;
                         case 12:
                             startActivity(new Intent(mContext, MyTicketActivity.class));
                             break;

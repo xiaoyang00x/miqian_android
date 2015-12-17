@@ -17,33 +17,36 @@
         android:layout_height="30dp"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right">
+        
+        <ImageView
+            android:id="@+id/img_category"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:layout_marginRight="6dp"
+            />
 
         <TextView
             android:id="@+id/tv_lable_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@id/img_category"
             android:layout_centerVertical="true"
             android:text="@string/regular_plan"
             android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font3" />
 
         <TextView
-            android:id="@+id/tv_invest_security"
+            android:id="@+id/tv_category_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="@string/investment_security"
-            android:textColor="@color/mq_bl1"
+            android:textColor="@color/mq_b2"
             android:textSize="@dimen/mq_font4" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/tv_invest_security"
-            android:src="@drawable/icon_security" />
     </RelativeLayout>
 </LinearLayout>
