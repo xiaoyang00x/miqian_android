@@ -13,8 +13,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.current.ActivityRealname;
-import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
@@ -25,8 +23,6 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
-import com.miqian.mq.utils.Pref;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.WFYTitle;
@@ -172,10 +168,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 MobclickAgent.onEvent(mActivity, "1024");
                 if (userInfo != null && !TextUtils.isEmpty(userInfo.getRealNameStatus())) {
                     //未认证
-                    if ("0".equals(userInfo.getRealNameStatus())) {
-                        Intent intent = new Intent(mActivity, ActivityRealname.class);
-                        startActivity(intent);
-                    }
+//                    if ("0".equals(userInfo.getRealNameStatus())) {
+//                        Intent intent = new Intent(mActivity, ActivityRealname.class);
+//                        startActivity(intent);
+//                    }
                 }
 
                 break;

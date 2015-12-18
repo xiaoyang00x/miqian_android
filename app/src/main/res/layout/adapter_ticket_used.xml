@@ -29,7 +29,6 @@
                 android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="拾财券"
                 android:textColor="@color/mq_b1"
                 android:textSize="@dimen/mq_font2" />
 
@@ -38,7 +37,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="限定使用比例1%"
                 android:textColor="@color/mq_b2"
                 android:textSize="@dimen/mq_font5" />
 
