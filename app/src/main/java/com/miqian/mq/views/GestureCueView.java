@@ -89,6 +89,7 @@ public class GestureCueView extends View {
             for (int j = 0; j < points[i].length; j++) {
                 Matrix matrix = new Matrix();
                 float sx = (float) (1.0 * Math.min(screenHeight, screenWidth) / 720);
+                sx = 1.0f;
                 matrix.setScale(sx, sx);
                 matrix.postTranslate(points[i][j].pointX - bitmapR * sx * 0.5f, points[i][j].pointY - bitmapR * sx * 0.5f);
                 if (points[i][j].state == GestureLockPoint.STATE_NOR) {
