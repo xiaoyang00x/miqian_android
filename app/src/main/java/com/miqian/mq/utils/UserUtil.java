@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
@@ -69,8 +70,7 @@ public class UserUtil {
                         public void onSucceed(LoginResult result) {
                             UserInfo userInfo = result.getData();
                             UserUtil.saveUserInfo(context, userInfo);
-                            Intent intent = new Intent(context, cls);
-                            context.startActivity(intent);
+                            GestureLockSetActivity.startActivity(context, cls);
                         }
 
                         @Override
@@ -103,6 +103,7 @@ public class UserUtil {
                             saveUserInfo(context, userInfo);
 
                             dialogPay.show();
+                            GestureLockSetActivity.startActivity(context, null);
                         }
 
                         @Override

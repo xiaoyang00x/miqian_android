@@ -15,6 +15,7 @@ import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
+import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
@@ -334,6 +335,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 UserInfo userInfo = result.getData();
                 UserUtil.saveUserInfo(getActivity(), userInfo);
                 onStart();
+                GestureLockSetActivity.startActivity(getActivity(), null);
             }
 
             @Override

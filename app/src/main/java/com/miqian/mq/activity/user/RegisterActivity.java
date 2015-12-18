@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
@@ -193,6 +194,7 @@ public class RegisterActivity extends BaseActivity {
 //                        Intent intent_identify = new Intent(mActivity, ActivityRealname.class);
 //                        intent_identify.putExtra("isRegistered", true);
 //                        startActivity(intent_identify);
+                        GestureLockSetActivity.startActivity(getBaseContext(), null);
 
                         finish();
                     }
