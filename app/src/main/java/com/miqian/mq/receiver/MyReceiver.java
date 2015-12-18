@@ -140,7 +140,6 @@ public class MyReceiver extends BroadcastReceiver {
                     case 10://收到拾财券
                     case 11://红包即将到期
                     case 12://拾财券即将到期
-                    case 61://跳红包/券列表
                         notificationIntent = new Intent(context, MyTicketActivity.class);
                         break;
                     case 51://活动利好 webView
@@ -163,7 +162,7 @@ public class MyReceiver extends BroadcastReceiver {
                     case 55://产品公告文本
                     case 56://活动公告文本
                         notificationIntent = new Intent(context, AnnounceResultActivity.class);
-                        notificationIntent.putExtra("id", response.getId());
+                        notificationIntent.putExtra("id", Integer.parseInt(response.getId()));
                         notificationIntent.putExtra("isMessage", false);
                         break;
                     case 57://跳首页
