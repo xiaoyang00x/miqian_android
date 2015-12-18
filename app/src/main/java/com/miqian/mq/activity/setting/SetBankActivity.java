@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -25,10 +26,21 @@ public class SetBankActivity extends BaseActivity {
     private View frame_bank_branch, frame_bank_province;
     private String city, branch, province;
     private TextView textBranch, tv_bank_province;
-    private String bankCardNo;
     private UserInfo userInfo;
     private boolean isChooseCity;
     private  BankCard  bankCard;
+    private String bankCardNo;
+
+    @Override
+    public void onCreate(Bundle arg0) {
+
+        Intent intent = getIntent();
+        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
+        if (userInfo!=null){
+            bankCardNo=userInfo.getBankNo();
+        }
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
@@ -68,12 +80,6 @@ public class SetBankActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
-
-        Intent intent = getIntent();
-        bankCardNo =intent.getStringExtra("cardNo");
-        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-
         textBranch = (TextView) findViewById(R.id.tv_bank_branch);
         tv_bank_province = (TextView) findViewById(R.id.tv_bank_province);
         frame_bank_province = findViewById(R.id.frame_bank_province);
@@ -149,7 +155,6 @@ public class SetBankActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(city)) {
             if (!TextUtils.isEmpty(branch)) {
-
                 if ((!TextUtils.isEmpty(bankCardNo))&& userInfo != null) {
                     //绑定银行卡
                     mWaitingDialog.show();

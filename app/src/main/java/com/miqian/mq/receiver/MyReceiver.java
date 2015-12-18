@@ -61,7 +61,10 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-            processCustomMessage(context, bundle);
+            boolean isPush = Pref.getBoolean(Pref.PUSH_STATE, context, true);
+            if (isPush){
+                processCustomMessage(context, bundle);
+            }
         }
     }
 
