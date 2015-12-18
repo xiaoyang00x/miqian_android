@@ -42,6 +42,8 @@ public class ExtendOperationController {
 		public static final int RERESH_JPUSH = 1007;
 		/** 首页弹框 */
 		public static final int ShowTips = 1008;
+		/** 切换tab*/
+		public static final int ChangeTab = 1009;
 
 	}
 

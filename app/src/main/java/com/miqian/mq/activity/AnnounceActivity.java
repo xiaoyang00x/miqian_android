@@ -267,7 +267,6 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                     MessageInfo messageInfo = list.get(position - 1);
                     switch (Integer.valueOf(Integer.valueOf(messageInfo.getMsgType()))) {
                         // 内置浏览器
-                        case 50:
                         case 51:
                         case 52:
                         case 53:
@@ -290,7 +289,6 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
     @Override
     protected void onResume() {
-        obtainData();
         super.onResume();
     }
 

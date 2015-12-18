@@ -88,12 +88,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void onStart() {
-        int message = Uihelper.getMessageCount(4, getActivity());
-        if (message > 0) {
-            btn_message.setImageResource(R.drawable.btn_message);
-        } else {
-            btn_message.setImageResource(R.drawable.btn_message_none);
-        }
         //已登录，显示我的界面
         if (UserUtil.hasLogin(getActivity())) {
             initUserView();
@@ -227,6 +221,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         tv_Title.setText("我的");
 
         btn_message = (ImageButton) view.findViewById(R.id.bt_left);
+        btn_message.setImageResource(R.drawable.btn_message_none);
         btn_message.setOnClickListener(this);
 
         ImageButton btn_setting = (ImageButton) view.findViewById(R.id.bt_right);
@@ -420,6 +415,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             case R.id.bt_left:
                 MobclickAgent.onEvent(getActivity(), "1015");
                 startActivity(new Intent(getActivity(), AnnounceActivity.class));
+                btn_message.setImageResource(R.drawable.btn_message_none);
                 break;
             //我的设置
             case R.id.bt_right:
@@ -466,12 +462,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         switch (operationKey) {
             case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
-                int message = Uihelper.getMessageCount(4, getActivity());
-                if (message > 0) {
                     btn_message.setImageResource(R.drawable.btn_message);
-                } else {
-                    btn_message.setImageResource(R.drawable.btn_message_none);
-                }
                 break;
         }
 
