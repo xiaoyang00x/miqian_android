@@ -22,6 +22,7 @@ import com.miqian.mq.views.GestureLockView;
  */
 public class GestureLockVerifyActivity extends BaseFragmentActivity {
 
+    private TextView tv_user;
     private TextView tv_tip;
     private TextView tv_forgetPsw;
     private GestureLockView lockView;
@@ -45,9 +46,12 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
         fetchGestureLock();
         img_left.setVisibility(View.GONE);
         tv_forgetPsw.setOnClickListener(onClickListener);
+        String telphone = Pref.getString(Pref.TELEPHONE, getBaseContext(), "");
+        tv_user.setText(null == telphone ? "" : telphone);
     }
 
     private void findView() {
+        tv_user = (TextView) findViewById(R.id.tv_user);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
         tv_forgetPsw = (TextView) findViewById(R.id.tv_forgetPsw);
         lockView = (GestureLockView) findViewById(R.id.lockView);
