@@ -2,13 +2,8 @@ package com.miqian.mq.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,9 +73,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         //设置不在主页
         MyApplication.getInstance().setIsOnMainAcitivity(false);
 
-        //注册广播
-        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(
-                Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+
 
     }
 
@@ -114,15 +107,11 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     protected void onDestroy() {
         //推出Activity
         ActivityStack.getActivityStack().popActivity(this);
-        //反注册广播
-        unregisterReceiver(mHomeKeyEventReceiver);
-
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
-        MyApplication.setIsBackStage(false);
         super.onResume();
     }
 
@@ -172,24 +161,6 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         mViewnoresult.setVisibility(View.VISIBLE);
     }
 
-    public BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
-        String SYSTEM_REASON = "reason";
-        String SYSTEM_HOME_KEY = "homekey";
-        String SYSTEM_HOME_KEY_LONG = "recentapps";
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
-                String reason = intent.getStringExtra(SYSTEM_REASON);
-                if (TextUtils.equals(reason, SYSTEM_HOME_KEY)) {
-                    // 设置为在后台运行的标志
-                    // 表示按了home键,程序到了后台
-                    MyApplication.getInstance().setIsBackStage(true);
-
-                }
-            }
-        }
-    };
 
 }

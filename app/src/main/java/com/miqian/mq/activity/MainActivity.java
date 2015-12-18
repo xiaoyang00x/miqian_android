@@ -18,9 +18,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
-import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.fragment.FragmentCurrent;
@@ -43,7 +41,6 @@ import org.json.JSONObject;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -92,6 +89,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     @Override
     protected void onResume() {
+        super.onResume();
         Config.init(this);
         //设置在主页的状态
         MyApplication.getInstance().setIsOnMainAcitivity(true);
@@ -102,7 +100,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
         //app在当前
         showJushTip();
-        super.onResume();
     }
 
     private void showJushTip() {

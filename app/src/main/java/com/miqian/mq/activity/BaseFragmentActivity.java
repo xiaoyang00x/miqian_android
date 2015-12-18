@@ -1,17 +1,24 @@
 package com.miqian.mq.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.receiver.NetBroadReceiver;
 import com.miqian.mq.utils.LogUtil;
+import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.UserUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -28,6 +35,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         mContext = getBaseContext();
         mApplicationContext = getApplicationContext();
+
+        //注册广播
+        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(
+                Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
     }
 
     @Override
@@ -57,7 +68,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         }
     }
 
-    private ImageView img_left;
+    protected ImageView img_left;
+    protected TextView tv_right;
     private ImageView img_right;
     private View layout_left;
     private View layout_right;
@@ -69,6 +81,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         img_right = (ImageView) parent.findViewById(R.id.img_right);
         layout_left = parent.findViewById(R.id.layout_left);
         layout_right = parent.findViewById(R.id.layout_right);
+        tv_right = (TextView) parent.findViewById(R.id.tv_right);
         title = (TextView) parent.findViewById(R.id.lable_title);
 
         setActionLeftListener(new View.OnClickListener() {
@@ -125,6 +138,15 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         if (!exsitFragment) {
             MobclickAgent.onPageStart(getPageName());
         }
+        if (MyApplication.isBackStage()) {
+            MyApplication.setIsBackStage(false);
+            if (UserUtil.hasLogin(getBaseContext()) && Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false)) {
+                long curTime = System.currentTimeMillis();
+                if (curTime - MyApplication.homePressTime > 20 * 1000) {
+                    GestureLockVerifyActivity.startActivity(getBaseContext(), null);
+                }
+            }
+        }
     }
 
     @Override
@@ -136,6 +158,33 @@ public abstract class BaseFragmentActivity extends FragmentActivity
             MobclickAgent.onPageEnd(getPageName());
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //反注册广播
+        unregisterReceiver(mHomeKeyEventReceiver);
+    }
+
+    public BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
+        String SYSTEM_REASON = "reason";
+        String SYSTEM_HOME_KEY = "homekey";
+        String SYSTEM_HOME_KEY_LONG = "recentapps";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
+                String reason = intent.getStringExtra(SYSTEM_REASON);
+                if (TextUtils.equals(reason, SYSTEM_HOME_KEY)) {
+                    // 设置为在后台运行的标志
+                    // 表示按了home键,程序到了后台
+                    MyApplication.getInstance().setIsBackStage(true);
+
+                }
+            }
+        }
+    };
 
     /**
      * 获取页面名称，用于友盟页面统计

@@ -222,6 +222,16 @@
             android:name=".activity.WebActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GestureLockVerifyActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GestureLockSetActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
         <!-- Required SDK核心功能 -->
         <activity

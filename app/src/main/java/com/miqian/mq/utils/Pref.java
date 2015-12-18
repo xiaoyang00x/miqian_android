@@ -50,6 +50,13 @@ public class Pref {
 	public static String CITY="city";
 	public static String PUSH="push";
 
+    // 图案锁 加密后存储
+	public final static String GESTUREPSW = "gesturePsw";
+	// 图案锁 剩余解锁验证次数
+	public final static String UNLOCKCOUNT = "unlockCount";
+	// 手势状态 是否打开
+	public final static String GESTURESTATE = "gestureState";
+
 	private static SharedPreferences getSettings(final Context contex) {
 		SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);
 		return mSharedPreferences;
