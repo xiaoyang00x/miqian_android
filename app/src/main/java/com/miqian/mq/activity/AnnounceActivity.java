@@ -9,6 +9,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -62,6 +63,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     private View mViewnoresult_data;
     private TextView tvTips;
     private TextView view_Refresh;
+    private ImageView ivMessageData;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -73,6 +75,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
         if (messageType==0&&!UserUtil.hasLogin(mActivity)){
             mViewnoresult_data.setVisibility(View.VISIBLE);
+            ivMessageData.setBackgroundResource(R.drawable.nomessage);
             view_Refresh.setVisibility(View.GONE);
             swipeRefresh.setVisibility(View.GONE);
             tvTips.setVisibility(View.VISIBLE);
@@ -190,6 +193,8 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         mViewnoresult_data = findViewById(R.id.frame_no_messagedata);
         view_Refresh = (TextView) findViewById(R.id.tv_refresh);
         tvTips = (TextView) findViewById(R.id.tv_tip);
+        ivMessageData = (ImageView) findViewById(R.id.iv_messagedata);
+
         view_Refresh.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -468,6 +473,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         swipeRefresh.setVisibility(View.GONE);
         tvTips.setVisibility(View.VISIBLE);
         tvTips.setText("暂时没有数据");
+        ivMessageData.setBackgroundResource(R.drawable.nomessage);
     }
 
     /**
@@ -489,6 +495,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         view_Refresh.setVisibility(View.VISIBLE);
         tvTips.setVisibility(View.VISIBLE);
         tvTips.setText("数据获取失败，请重新获取");
+        ivMessageData.setBackgroundResource(R.drawable.error_data);
 
     }
 

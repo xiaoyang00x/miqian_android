@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     public ImageLoader imageLoader;
     public DisplayImageOptions options;
     private TextView tvTips;
+    private ImageView ivData;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -56,6 +58,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
             }
         });
         tvTips = (TextView) findViewById(R.id.tv_tips);
+        ivData = (ImageView) findViewById(R.id.iv_data);
 
         getmTitle().setLeftImage(R.drawable.btn_back_selector);
         getmTitle().setOnLeftClickListener(new View.OnClickListener() {
@@ -141,6 +144,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         mViewnoresult.setVisibility(View.VISIBLE);
         findViewById(R.id.tv_reFresh).setVisibility(View.GONE);
         tvTips.setText("暂时没有数据");
+        ivData.setBackgroundResource(R.drawable.nodata);
     }
 
     /**
@@ -159,6 +163,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
 
         mContentView.setVisibility(View.GONE);
         mViewnoresult.setVisibility(View.VISIBLE);
+        ivData.setBackgroundResource(R.drawable.error_data);
     }
 
 

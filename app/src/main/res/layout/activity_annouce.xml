@@ -70,10 +70,11 @@
 
 
             <ImageView
+                android:id="@+id/iv_messagedata"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/nodata" />
+                android:background="@drawable/nomessage" />
 
             <TextView
                 android:id="@+id/tv_tip"

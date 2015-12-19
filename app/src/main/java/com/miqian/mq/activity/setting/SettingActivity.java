@@ -49,6 +49,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private View frame_login;
     private View frame_loginout;
     private Button btn_loginout;
+    private boolean isPush;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -106,6 +107,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setData() {
+        //推送开关
+        isPush = Pref.getBoolean(Pref.PUSH_STATE, mActivity, true);
+        if (isPush) {
+            ivPushState.setImageResource(R.drawable.gesture_swith_open);
+        } else {
+            ivPushState.setImageResource(R.drawable.gesture_switch_close);
+        }
 
         if (UserUtil.hasLogin(mActivity)) {
             if (userInfo == null) {
@@ -241,7 +249,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             //推送开关
             case R.id.iv_push_state:
-                boolean isPush = Pref.getBoolean(Pref.PUSH_STATE, mActivity, true);
+
                 if (isPush) {
                     Pref.saveBoolean(Pref.PUSH_STATE, false, mActivity);
                     ivPushState.setImageResource(R.drawable.gesture_switch_close);
