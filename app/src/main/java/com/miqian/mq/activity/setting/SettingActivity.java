@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private View frame_setting_bankcard;
     private View frame_login;
     private View frame_loginout;
+    private Button btn_loginout;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -64,7 +66,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void initView() {
 
         frame_setting_name = findViewById(R.id.frame_setting_name);
-        frame_loginout = findViewById(R.id.frame_loginout);
+        btn_loginout = (Button) findViewById(R.id.btn_loginout);
         View frame_setting_bindphone = findViewById(R.id.frame_setting_bindphone);
         View frame_setting_security = findViewById(R.id.frame_setting_security);
         View frame_setting_helpcenter = findViewById(R.id.frame_setting_helpcenter);
@@ -110,7 +112,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 return;
             }
             frame_login.setVisibility(View.VISIBLE);
-            frame_loginout.setVisibility(View.VISIBLE);
+            btn_loginout.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
                 String phone = RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
                 tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
