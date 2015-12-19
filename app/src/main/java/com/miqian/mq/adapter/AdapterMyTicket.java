@@ -71,60 +71,33 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         }
     }
 
+
+    private void setView(TextView view, String text) {
+        if (TextUtils.isEmpty(text)) {
+            view.setVisibility(View.GONE);
+        } else {
+            view.setText(text);
+        }
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolderTicket) {
             Promote promote = promList.get(position);
             ((ViewHolderTicket) holder).textMoney.setText("" + promote.getTotalAmt());
             ((ViewHolderTicket) holder).textName.setText(promote.getPromProdName());
-            ((ViewHolderTicket) holder).textPercent.setText("限定使用比例" + promote.getToUseRate() + "%");
-            String messsage = promote.getMinBuyAmtMsg();
-            if (TextUtils.isEmpty(messsage)) {
-                ((ViewHolderTicket) holder).limitMoney.setVisibility(View.GONE);
-            } else {
-                ((ViewHolderTicket) holder).limitMoney.setText(messsage);
-            }
-            ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
+            ((ViewHolderTicket) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
+            setView(((ViewHolderTicket) holder).limitMoney, promote.getFitBdTermOrYrt());
+            ((ViewHolderTicket) holder).limitType.setText(promote.getFitProdOrBdType());
             ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-//            ((ViewHolderTicket) holder).promoteChoosed.setVisibility(View.GONE);
-
-//            String state = promote.getStatus();
-//            ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
-//            if (!TextUtils.isEmpty(state)) {
-//
-////                ((ViewHolderTicket) holder).imageState.setVisibility(View.VISIBLE);
-//                if ("YW".equals(state)) {
-////                    ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.hb_used);
-////                    ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg_grey);
-//                } else if ("GQ".equals(state)) {
-////                    ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.hb_expired);
-////                    ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg_grey);
-//                } else if ("ZS".equals(state)) {
-////                    ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.drawable.hb_jift);
-////                    ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg_grey);
-//                } else {
-////                    ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
-////                    ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg);
-//                }
-//            } else {
-////                ((ViewHolderTicket) holder).imageState.setBackgroundResource(R.color.transparent);
-////                ((ViewHolderTicket) holder).textMoney.setBackgroundResource(R.drawable.ticket_bg);
-//            }
-
         } else if (holder instanceof ViewHolderPackage) {
             Promote promote = promList.get(position);
             ((ViewHolderPackage) holder).textMoney.setText("" + promote.getTotalAmt());
             ((ViewHolderPackage) holder).textName.setText(promote.getPromProdName());
-            ((ViewHolderPackage) holder).textPercent.setText("限定使用比例" + promote.getToUseRate() + "%");
-            String messsage = promote.getMinBuyAmtMsg();
-            if (TextUtils.isEmpty(messsage)) {
-                ((ViewHolderPackage) holder).limitMoney.setVisibility(View.GONE);
-            } else {
-                ((ViewHolderPackage) holder).limitMoney.setText(messsage);
-            }
-            ((ViewHolderPackage) holder).limitType.setText(promote.getLimitMsg());
+            ((ViewHolderPackage) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
+            setView(((ViewHolderPackage) holder).limitMoney, promote.getFitBdTermOrYrt());
+            ((ViewHolderPackage) holder).limitType.setText(promote.getFitProdOrBdType());
             ((ViewHolderPackage) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-
         } else if (holder instanceof ProgressViewHolder) {
             if (position >= maxValue) {
 //                ((ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);

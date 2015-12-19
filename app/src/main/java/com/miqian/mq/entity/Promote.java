@@ -39,6 +39,10 @@ public class Promote {
     /**促销状态**/
     private String status;
 
+    private String minBuyAmtOrPerc;
+    private String fitBdTermOrYrt;
+    private String fitProdOrBdType;
+
     public String getPromProdId() {
         return promProdId;
     }
@@ -157,5 +161,29 @@ public class Promote {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getMinBuyAmtOrPerc() {
+        return minBuyAmtOrPerc;
+    }
+
+    public void setMinBuyAmtOrPerc(String minBuyAmtOrPerc) {
+        this.minBuyAmtOrPerc = minBuyAmtOrPerc;
+    }
+
+    public String getFitBdTermOrYrt() {
+        return fitBdTermOrYrt;
+    }
+
+    public void setFitBdTermOrYrt(String fitBdTermOrYrt) {
+        this.fitBdTermOrYrt = fitBdTermOrYrt;
+    }
+
+    public String getFitProdOrBdType() {
+        return fitProdOrBdType;
+    }
+
+    public void setFitProdOrBdType(String fitProdOrBdType) {
+        this.fitProdOrBdType = fitProdOrBdType;
     }
 }

@@ -30,6 +30,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
@@ -69,6 +70,16 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
     @Override
     public void obtainData() {
+
+        if (messageType==0&&!UserUtil.hasLogin(mActivity)){
+            mViewnoresult_data.setVisibility(View.VISIBLE);
+            view_Refresh.setVisibility(View.GONE);
+            swipeRefresh.setVisibility(View.GONE);
+            tvTips.setVisibility(View.VISIBLE);
+            tvTips.setText("请登录后查看");
+            return;
+        }
+
         if (!swipeRefresh.isRefreshing()) {
             begin();
         }

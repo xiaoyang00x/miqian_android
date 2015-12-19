@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.miqian.mq.R;
@@ -30,19 +31,18 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+
     public List<Promote> promList = new ArrayList<>();
     private RecyclerView recyclerView;
+    private RadioGroup radioGroup;
+    private LinearLayout frameNone;
+
     private AdapterInvalidMyTicket adapterMyTicket;
-//
     private int pageNo = 1;
     private String pageSize = "20";
     private Page page;
     private boolean isLoading = false;
-//    private boolean isStop;  //activity被finish则停止从网络获取数据的异步操作
     private String type;
-
-    private RadioGroup radioGroup;
-
 
 
     public static void startActivity(Context context) {
@@ -81,12 +81,15 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
                 promList = redpaper.getCustPromotion();
                 page = redpaper.getPage();
                 if (redpaper != null) {
-//                    if (promList != null && promList.size() > 0) {
-//                        showContentView();
+                    if (promList != null && promList.size() > 0) {
+                        showContentView();
+                        recyclerView.setVisibility(View.VISIBLE);
+                        frameNone.setVisibility(View.GONE);
                         refreshView();
-//                    } else {
-//                        showEmptyView();
-//                    }
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        frameNone.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
@@ -103,6 +106,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     public void initView() {
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(this);
+        frameNone = (LinearLayout) findViewById(R.id.frame_none);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 

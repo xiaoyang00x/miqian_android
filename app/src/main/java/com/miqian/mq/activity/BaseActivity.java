@@ -27,7 +27,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     public LinearLayout mContentView;
     public WFYTitle mTitle;
     public Activity mActivity;
-    public View mViewnoresult;
+    public LinearLayout mViewnoresult;
     public Dialog mWaitingDialog;
     public ImageLoader imageLoader;
     public DisplayImageOptions options;
@@ -45,7 +45,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         mTitle = (WFYTitle) findViewById(R.id.wFYTitle);
         mWaitingDialog = ProgressDialogView.create(mActivity);
 
-        mViewnoresult = findViewById(R.id.frame_no_data);
+        mViewnoresult = (LinearLayout) findViewById(R.id.frame_no_data);
 
 
         findViewById(R.id.tv_reFresh).setOnClickListener(new View.OnClickListener() {

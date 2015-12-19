@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
@@ -29,7 +31,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/10/8.
  */
-public class MyTicketActivity extends BaseActivity {
+public class MyTicketActivity extends BaseActivity implements View.OnClickListener {
     public List<Promote> promList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterMyTicket adapterMyTicket;
@@ -92,6 +94,15 @@ public class MyTicketActivity extends BaseActivity {
     }
 
     @Override
+    protected void showEmptyView() {
+        super.showEmptyView();
+        mViewnoresult.findViewById(R.id.tv_tips).setVisibility(View.GONE);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.topMargin = 30;
+        mViewnoresult.addView(getView(), params);
+    }
+
+    @Override
     public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -107,7 +118,6 @@ public class MyTicketActivity extends BaseActivity {
                 int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
                 if (lastVisibleItem >= totalItemCount - 3) {
-
                     loadMore();
                 }
             }
@@ -143,11 +153,18 @@ public class MyTicketActivity extends BaseActivity {
         }
     }
 
-
     private void refreshView() {
         adapterMyTicket = new AdapterMyTicket(mActivity, promList);
         adapterMyTicket.setMaxItem(page.getCount());
         recyclerView.setAdapter(adapterMyTicket);
+    }
+
+    private View getView() {
+        View view = View.inflate(mActivity, R.layout.adapter_loading, null);
+        view.findViewById(R.id.frame_load).setVisibility(View.GONE);
+        view.findViewById(R.id.frame_none).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.bt_overdue).setOnClickListener(this);
+        return view;
     }
 
     @Override
@@ -172,5 +189,14 @@ public class MyTicketActivity extends BaseActivity {
     @Override
     protected String getPageName() {
         return "红包/券";
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_overdue:
+                MyTicketInvalidActivity.startActivity(mActivity);
+                break;
+        }
     }
 }

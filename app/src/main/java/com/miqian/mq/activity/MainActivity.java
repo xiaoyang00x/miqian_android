@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -271,7 +272,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     case 10://收到拾财券
                     case 11://红包即将到期
                     case 12://拾财券即将到期
-                    case 61://跳红包/券列表
                         startActivity(new Intent(context, MyTicketActivity.class));
                         break;
                     case 51://活动利好 webView
@@ -283,7 +283,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                             if (jsonObject != null) {
                                 String url = jsonObject.getString("url");
                                 if (!TextUtils.isEmpty(url)) {
-                                    WebActivity.getIntent(context, url);
+                                    WebActivity.startActivity(context, url);
                                 }
                             }
                         } catch (JSONException e) {
@@ -294,7 +294,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     case 55://产品公告文本
                     case 56://活动公告文本
                         Intent intent = new Intent(context, AnnounceResultActivity.class);
-                        intent.putExtra("id", jInfo.getId());
+                        intent.putExtra("id", Integer.parseInt(jInfo.getId()));
                         intent.putExtra("isMessage", false);
                         startActivity(intent);
                         break;
@@ -311,7 +311,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                         mTabHost.setCurrentTab(3);
                         break;
                     case 62://跳标的详情
-                        showJushTip();
+                        jumpToRegular(jInfo);
                         break;
                     default:
                         break;
@@ -319,32 +319,40 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             }
         }
     }
+
+    private void jumpToRegular(JpushInfo jInfo) {
+        String ext = jInfo.getExt();
+        if (!TextUtils.isEmpty(ext)) {
+            try {
+                JSONObject jsonObject = new JSONObject(ext);
+                if (jsonObject != null) {
+                    String prodId = jsonObject.getString("prodId");
+                    String subjectId = jsonObject.getString("subjectId");
+                    if (!TextUtils.isEmpty(prodId) && !TextUtils.isEmpty(subjectId)) {
+                        if ("3".equals(prodId)) {//定期赚
+                            RegularEarnActivity.startActivity(mContext, subjectId);
+                        } else if ("4".equals(prodId)) {//定期计划
+                            RegularPlanActivity.startActivity(mContext, subjectId);
+                        }
+                        MyApplication.getInstance().getPushList().clear();
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
     private void showTipDialog(final JpushInfo jpush) {
         if (jpushDialog == null) {
             jpushDialog = new CustomDialog(context, CustomDialog.CODE_TIPS) {
                 @Override
                 public void positionBtnClick() {
                     dismiss();
-                    String ext = jpush.getExt();
-                    if (!TextUtils.isEmpty(ext)) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(ext);
-                            if (jsonObject != null) {
-                                String prodId = jsonObject.getString("prodId");
-                                String subjectId = jsonObject.getString("subjectId");
-                                if (!TextUtils.isEmpty(prodId) && !TextUtils.isEmpty(subjectId)) {
-                                    if ("3".equals(prodId)) {//定期赚
-                                        RegularEarnActivity.startActivity(mContext, subjectId);
-                                    } else if ("4".equals(prodId)) {//定期计划
-                                        RegularPlanActivity.startActivity(mContext, subjectId);
-                                    }
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    jumpToRegular(jpush);
                 }
+
                 @Override
                 public void negativeBtnClick() {
                 }
@@ -352,6 +360,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         }
         jpushDialog.setTitle(jpush.getTitle());
         jpushDialog.setRemarks(jpush.getContent());
+        jpushDialog.setNegative(View.VISIBLE);
         jpushDialog.setNegative("取消");
         jpushDialog.show();
 
