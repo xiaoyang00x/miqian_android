@@ -160,6 +160,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
             updateInfoTable(Jpush_INFO_TABLE_NAME, rowId, "time", jpushInfo.getTime());
             updateInfoTable(Jpush_INFO_TABLE_NAME, rowId, "pushSource", jpushInfo.getPushSource());
             updateInfoTable(Jpush_INFO_TABLE_NAME, rowId, "token", jpushInfo.getToken());
+            updateInfoTable(Jpush_INFO_TABLE_NAME, rowId, "ext", jpushInfo.getExt());
         } else {
             ContentValues values = new ContentValues();
             values.put("userId", jpushInfo.getUserId());
@@ -176,6 +177,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 inserInfoTable(Jpush_INFO_TABLE_NAME, rowId, "time", jpushInfo.getTime());
                 inserInfoTable(Jpush_INFO_TABLE_NAME, rowId, "pushSource", jpushInfo.getPushSource());
                 inserInfoTable(Jpush_INFO_TABLE_NAME, rowId, "token", jpushInfo.getToken());
+                inserInfoTable(Jpush_INFO_TABLE_NAME, rowId, "ext", jpushInfo.getExt());
             }
         }
         cursor.close();
@@ -222,6 +224,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                     jpushInfo.setPushSource(value);
                 }else if (key.equals("token")) {
                     jpushInfo.setToken(value);
+                } else if (key.equals("ext")) {
+                    jpushInfo.setExt(value);
                 }
             }
             cursorTemp.close();
@@ -269,6 +273,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                     jpushInfo.setPushSource(value);
                 }else if (key.equals("token")) {
                     jpushInfo.setToken(value);
+                }else if (key.equals("ext")) {
+                    jpushInfo.setExt(value);
                 }
             }
             cursorTemp.close();

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,8 +14,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.current.ActivityRealname;
-import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
@@ -26,7 +25,6 @@ import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.WFYTitle;
@@ -43,57 +41,32 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private UserInfo userInfo;
     private TextView tv_name, tv_card, tv_bindPhone, tv_cardState;
-    private BankCard bankCard;
     private ImageView iconBank;
     private CustomDialog dialogTips;
+    private ImageView ivPushState;
+    private View frame_setting_name;
+    private View frame_setting_bankcard;
+    private View frame_login;
+    private View frame_loginout;
+    private Button btn_loginout;
+
+    @Override
+    public void onCreate(Bundle arg0) {
+        Intent intent = getIntent();
+        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
-        //获取银行信息
-        mWaitingDialog.show();
-        HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
-            @Override
-            public void onSucceed(BankCardResult result) {
-                mWaitingDialog.dismiss();
-                bankCard = result.getData();
-                String bankOpenName = bankCard.getBankOpenName();
-                //未绑定银行卡
-                if (userInfo==null){
-                    return;
-                }
-                if ("0".equals(userInfo.getBindCardStatus())) {
-                    tv_card.setText("银行卡未绑定");
-                    tv_cardState.setText("");
-                } else {
-                    String bankNo = RSAUtils.decryptByPrivate(bankCard.getBankNo());
-                    if (TextUtils.isEmpty(bankNo)) {
-                        return;
-                    }
-
-                    if (!TextUtils.isEmpty(bankCard.getBankUrlSmall())) {
-                        imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
-                    }
-                    tv_card.setText("尾号" + bankNo.substring(bankNo.length() - 4, bankNo.length()));
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                tv_card.setText("银行卡未绑定");
-                tv_cardState.setText("");
-                mWaitingDialog.dismiss();
-            }
-        });
 
     }
 
     @Override
     public void initView() {
 
-        Intent intent = getIntent();
-        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-
-        View frame_setting_name = findViewById(R.id.frame_setting_name);
+        frame_setting_name = findViewById(R.id.frame_setting_name);
+        btn_loginout = (Button) findViewById(R.id.btn_loginout);
         View frame_setting_bindphone = findViewById(R.id.frame_setting_bindphone);
         View frame_setting_security = findViewById(R.id.frame_setting_security);
         View frame_setting_helpcenter = findViewById(R.id.frame_setting_helpcenter);
@@ -101,7 +74,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         View frame_setting_suggest = findViewById(R.id.frame_setting_suggest);
         View frame_setting_about = findViewById(R.id.frame_setting_about);
         View frame_setting_telephone = findViewById(R.id.frame_setting_telephone);
-        View frame_setting_bankcard = findViewById(R.id.frame_setting_bankcard);
+        frame_login = findViewById(R.id.layout_login);
+        frame_setting_bankcard = findViewById(R.id.frame_setting_bankcard);
         View frameUpdate = findViewById(R.id.frame_update);
         TextView textVersion = (TextView) findViewById(R.id.text_version);
         textVersion.setText("V" + MobileOS.getAppVersionName(mActivity));
@@ -112,6 +86,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tv_bindPhone = (TextView) findViewById(R.id.tv_settting_bindphone);
         iconBank = (ImageView) findViewById(R.id.icon_bank);
 
+        //通知开关
+        ivPushState = (ImageView) findViewById(R.id.iv_push_state);
+
+
         frameUpdate.setOnClickListener(this);
         frame_setting_name.setOnClickListener(this);
         frame_setting_bindphone.setOnClickListener(this);
@@ -121,30 +99,52 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_about.setOnClickListener(this);
         frame_setting_telephone.setOnClickListener(this);
         frame_setting_bankcard.setOnClickListener(this);
+        ivPushState.setOnClickListener(this);
+        ExtendOperationController.getInstance().registerExtendOperationListener(this);
 
-        if (userInfo == null) {
-            return;
-        }
-        if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
-            String phone = RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
-            tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
-        }
+        setData();
+    }
 
-        if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
-            //已认证
-            if ("1".equals(userInfo.getRealNameStatus())) {
-                if (!TextUtils.isEmpty(userInfo.getRealName())) {
-                    tv_name.setText(RSAUtils.decryptByPrivate(userInfo.getRealName()));
+    private void setData() {
+
+        if (UserUtil.hasLogin(mActivity)) {
+            if (userInfo == null) {
+                return;
+            }
+            frame_login.setVisibility(View.VISIBLE);
+            btn_loginout.setVisibility(View.VISIBLE);
+            if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
+                String phone = RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
+                tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
+            }
+
+            if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
+                //已认证
+                if ("1".equals(userInfo.getRealNameStatus())) {
+                    if (!TextUtils.isEmpty(userInfo.getRealName())) {
+                        tv_name.setText(RSAUtils.decryptByPrivate(userInfo.getRealName()));
+                    }
+
+                } else {
+                    frame_setting_name.setVisibility(View.GONE);
+                    findViewById(R.id.divider_name).setVisibility(View.GONE);
                 }
-                findViewById(R.id.arrow_1).setVisibility(View.INVISIBLE);
+            }
+
+            if ("1".equals(userInfo.getBindCardStatus())) {
+                frame_setting_bankcard.setVisibility(View.VISIBLE);
+                findViewById(R.id.divider_bank).setVisibility(View.VISIBLE);
+
+                String bankNo = RSAUtils.decryptByPrivate(userInfo.getBankNo());
+                if (TextUtils.isEmpty(bankNo)) {
+                    return;
+                }
+                if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
+                    imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
+                }
+                tv_card.setText("尾号" + bankNo.substring(bankNo.length() - 4, bankNo.length()));
             }
         }
-
-        if ("1".equals(userInfo.getBindCardStatus())) {
-            frame_setting_bankcard.setVisibility(View.VISIBLE);
-            findViewById(R.id.divider_bank).setVisibility(View.VISIBLE);
-        }
-        ExtendOperationController.getInstance().registerExtendOperationListener(this);
 
     }
 
@@ -167,18 +167,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //姓名
-            case R.id.frame_setting_name:
-                MobclickAgent.onEvent(mActivity, "1024");
-                if (userInfo != null && !TextUtils.isEmpty(userInfo.getRealNameStatus())) {
-                    //未认证
-                    if ("0".equals(userInfo.getRealNameStatus())) {
-                        Intent intent = new Intent(mActivity, ActivityRealname.class);
-                        startActivity(intent);
-                    }
-                }
-
-                break;
             //绑定手机
             case R.id.frame_setting_bindphone:
                 MobclickAgent.onEvent(mActivity, "1025");
@@ -204,31 +192,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (userInfo == null) {
                     return;
                 }
-                //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
-                String supportStatus = userInfo.getSupportStatus();
-                if (TextUtils.isEmpty(supportStatus)) {
-                    supportStatus = "0";
-                }
-                if (supportStatus.equals("0")) {
-                    Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
-                    Bundle extra = new Bundle();
-                    extra.putSerializable("userInfo", userInfo);
-                    intent_bind.putExtras(extra);
-                    startActivity(intent_bind);
-                }   //若是绑定的银行卡支持连连支付，则不跳入绑定银行卡页面，直接到选择支行页面
-                else {
-                    Intent intent_bind = new Intent(mActivity, SetBankActivity.class);
-                    Bundle extra = new Bundle();
-                    extra.putSerializable("userInfo", userInfo);
-                    if (bankCard != null) {
-                        if (!TextUtils.isEmpty(bankCard.getBankNo())) {
-                            intent_bind.putExtra("cardNo", RSAUtils.decryptByPrivate(bankCard.getBankNo()));
-                        }
-
-                    }
-                    intent_bind.putExtras(extra);
-                    startActivity(intent_bind);
-                }
+                Intent intent_bind = new Intent(mActivity, SetBankActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("userInfo", userInfo);
+                intent_bind.putExtras(extra);
+                startActivity(intent_bind);
                 break;
             //意见反馈
             case R.id.frame_setting_suggest:
@@ -261,7 +229,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 });
                 UmengUpdateAgent.forceUpdate(mActivity);
                 break;
-            //关于咪钱
+            //了解咪钱
             case R.id.frame_setting_about:
                 MobclickAgent.onEvent(mActivity, "1031");
                 startActivity(new Intent(mActivity, AboutUsActivity.class));
@@ -270,6 +238,19 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.frame_setting_telephone:
                 MobclickAgent.onEvent(mActivity, "1033");
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
+                break;
+            //推送开关
+            case R.id.iv_push_state:
+                boolean isPush = Pref.getBoolean(Pref.PUSH_STATE, mActivity, true);
+                if (isPush) {
+                    Pref.saveBoolean(Pref.PUSH_STATE, false, mActivity);
+                    ivPushState.setImageResource(R.drawable.gesture_switch_close);
+                } else {
+                    Pref.saveBoolean(Pref.PUSH_STATE, true, mActivity);
+                    ivPushState.setImageResource(R.drawable.gesture_swith_open);
+                }
+
+
                 break;
         }
     }

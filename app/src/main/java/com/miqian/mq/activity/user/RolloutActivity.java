@@ -49,10 +49,7 @@ public class RolloutActivity extends BaseActivity {
             bindBankId,
             bindBankName,
             textBranch,
-            textTotalMoney,
-            tv_arrivetime,
             tv_bank_province;
-    private ImageView iconBank;
     private View frame_bindbranch,
             frame_bank_branch,
             frame_bank_province;
@@ -60,18 +57,22 @@ public class RolloutActivity extends BaseActivity {
     private String bankOpenName,
             city,
             province,
-            branch,
             moneyString,
             cardNum,
             totalMoney;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
     private CustomDialog dialogTips, dialogTipsReput;
     private DialogTradePassword dialogTradePassword_set;
     private DialogTradePassword dialogTradePassword_input;
     private boolean isChooseCity;
     private BankCard bankCard;
     private boolean isSuccessBindBranch;
+
+    @Override
+    public void onCreate(Bundle arg0) {
+        Intent intent = getIntent();
+        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
@@ -96,15 +97,7 @@ public class RolloutActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
         findView();
-
-        Intent intent = getIntent();
-        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-        if (userInfo == null) {
-            return;
-        }
-
         initBindView();
 
     }
@@ -133,8 +126,6 @@ public class RolloutActivity extends BaseActivity {
                         intent_branch.putExtra("fromsetting", false);
                         intent_branch.putExtra("bankName", userInfo.getBankName());
                         intent_branch.putExtra("bankCard", cardNum);
-
-
                         startActivityForResult(intent_branch, 0);
 
                     } else {
@@ -146,7 +137,6 @@ public class RolloutActivity extends BaseActivity {
 
         } else {
         }
-
     }
 
     @Override
@@ -174,35 +164,9 @@ public class RolloutActivity extends BaseActivity {
     }
 
     private void initBindView() {
-        String bindCardStatus = userInfo.getBindCardStatus();
-        //未绑定
-        if ("0".equals(bindCardStatus)) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-
-                @Override
-                public void positionBtnClick() {
-                    //跳到绑定银行卡的页面
-                    dismiss();
-                    Intent intent_bind = new Intent(mActivity, BindCardActivity.class);
-                    Bundle extra = new Bundle();
-                    extra.putSerializable("userInfo", userInfo);
-                    intent_bind.putExtras(extra);
-                    startActivity(intent_bind);
-                    finish();
-                }
-
-                @Override
-                public void negativeBtnClick() {
-                    dismiss();
-                    finish();
-                }
-            };
-            dialogTips.setNegative(View.VISIBLE);
-            dialogTips.setRemarks("    您尚未绑定银行卡，请先绑定银行卡");
-            dialogTips.setNegative("取消");
-            dialogTips.show();
-            dialogTips.setCancelable(false);
-        } else {
+        if (userInfo == null) {
+            return;
+        }
             if (!TextUtils.isEmpty(userInfo.getBankNo())) {
                 cardNum = RSAUtils.decryptByPrivate(userInfo.getBankNo());
                 bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
@@ -213,24 +177,16 @@ public class RolloutActivity extends BaseActivity {
 
             if (!TextUtils.isEmpty(userInfo.getBalance())) {
                 totalMoney = userInfo.getBalance();
-                textTotalMoney.setText(totalMoney + "");
-                editMoney.setHint("最多可转" + totalMoney + "元");
+                editMoney.setHint("本次最多可提现" + totalMoney + "元");
             }
-
-            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
-                imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
-            }
-        }
 
     }
 
     private void findView() {
-        bindBankId = (TextView) findViewById(R.id.bind_bank_id);
+        bindBankId = (TextView) findViewById(R.id.bind_bank_number);
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         textBranch = (TextView) findViewById(R.id.tv_bank_branch);
         tv_bank_province = (TextView) findViewById(R.id.tv_bank_province);
-        tv_arrivetime = (TextView) findViewById(R.id.tv_arrivetime);
-        iconBank = (ImageView) findViewById(R.id.icon_bank);
 
 
         frame_bindbranch = findViewById(R.id.frame_bindbranch);
@@ -238,7 +194,6 @@ public class RolloutActivity extends BaseActivity {
         frame_bank_branch = findViewById(R.id.frame_bank_branch);
 
 
-        textTotalMoney = (TextView) findViewById(R.id.total_money);
         editMoney = (EditText) findViewById(R.id.edit_money);
         editMoney.addTextChangedListener(new MyTextWatcher() {
 
@@ -255,8 +210,6 @@ public class RolloutActivity extends BaseActivity {
             }
         });
 
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).displayer(new RoundedBitmapDisplayer(0)).build();
     }
 
     @Override

@@ -23,6 +23,7 @@ public class MyApplication extends Application {
     private static boolean isBackStage;
     private static boolean showTips;
     private static HashMap<String,Boolean>   pushList=new HashMap<>();
+    public static long homePressTime;
 
     public static HashMap<String, Boolean> getPushList() {
         return pushList;
@@ -63,6 +64,9 @@ public class MyApplication extends Application {
     }
 
     public static void setIsBackStage(boolean isBackStage) {
+        if (isBackStage) {
+            homePressTime = System.currentTimeMillis();
+        }
         MyApplication.isBackStage = isBackStage;
     }
     //将消息加入队列中

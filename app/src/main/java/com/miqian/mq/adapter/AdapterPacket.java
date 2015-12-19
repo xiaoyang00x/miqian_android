@@ -38,13 +38,13 @@ public class AdapterPacket extends RecyclerView.Adapter {
         View view;
         switch (viewType) {
             case VIEW_TYPE_HB:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_red_packet, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket_used, parent, false);
                 return new ViewHolder(view);
             case VIEW_TYPE_SC:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket, parent, false);
                 return new ViewHolderTicket(view);
             default:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_red_packet, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket_used, parent, false);
                 return new ViewHolder(view);
         }
     }
@@ -52,26 +52,27 @@ public class AdapterPacket extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Promote promote = promList.get(position);
-        if (promote.getType().equals("HB")) {
-            ((ViewHolder) holder).textMoney.setText("￥" + promote.getCanUseAmt());
-            ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
+//        if (promote.getType().equals("HB")) {
+            ((ViewHolder) holder).textMoney.setText("" + promote.getCanUseAmt());
+            ((ViewHolder) holder).textName.setText(promote.getPromProdName());
+            ((ViewHolder) holder).limitType.setText(promote.getMinBuyAmtOrPerc());
             ((ViewHolder) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             if (mPosition == position) {
                 ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
             } else {
                 ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
             }
-        } else if (promote.getType().equals("SC")) {
-            ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
-            ((ViewHolderTicket) holder).textType.setText("拾财券 【抵用比例"+ promote.getToUseRate() + "%】");
-            ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
-            ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-            if (mPosition == position) {
-                ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
-            } else {
-                ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
-            }
-        }
+//        } else if (promote.getType().equals("SC")) {
+//            ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
+//            ((ViewHolderTicket) holder).textType.setText(promote.getPromProdName());
+//            ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
+//            ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
+//            if (mPosition == position) {
+//                ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
+//            } else {
+//                ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
+//            }
+//        }
     }
 
     @Override
@@ -85,12 +86,12 @@ public class AdapterPacket extends RecyclerView.Adapter {
     //促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
     @Override
     public int getItemViewType(int position) {
-        Promote promote = promList.get(position);
-        if (promote.getType().equals("HB")) {
-            return VIEW_TYPE_HB;
-        } else if (promote.getType().equals("SC")) {
-            return VIEW_TYPE_SC;
-        }
+//        Promote promote = promList.get(position);
+//        if (promote.getType().equals("HB")) {
+//            return VIEW_TYPE_HB;
+//        } else if (promote.getType().equals("SC")) {
+//            return VIEW_TYPE_SC;
+//        }
         return VIEW_TYPE_HB;
     }
 
@@ -99,6 +100,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
         public TextView limitType;
         public TextView limitDate;
         public TextView textMoney;
+        public TextView textName;
         public ImageView promoteChoosed;
 
         public ViewHolder(View itemView) {
@@ -117,6 +119,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
             });
             limitType = (TextView) itemView.findViewById(R.id.limit_type);
             limitDate = (TextView) itemView.findViewById(R.id.limit_date);
+            textName = (TextView) itemView.findViewById(R.id.text_name);
             textMoney = (TextView) itemView.findViewById(R.id.text_money);
             promoteChoosed = (ImageView) itemView.findViewById(R.id.promote_choosed);
         }
@@ -159,6 +162,6 @@ public class AdapterPacket extends RecyclerView.Adapter {
     }
 
     public interface MyItemClickListener {
-        void onItemClick(View view, int postion);
+        void onItemClick(View view, int position);
     }
 }

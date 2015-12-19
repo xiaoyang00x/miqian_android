@@ -15,14 +15,13 @@ import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
+import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.current.ActivityRealname;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.RedPaperActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
@@ -53,7 +52,7 @@ import java.math.BigDecimal;
 public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener {
 
     private View view;
-    private TextView tv_Current, tv_Regular, tv_Ticket, tv_Redpackage;
+    private TextView tv_Current, tv_Regular, tv_Ticket;
     private UserInfo userInfo;
     private UserInfo userInfoTemp;
     private TextView tv_TotalProfit, tv_balance, tv_totalasset;
@@ -89,12 +88,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void onStart() {
-        int message = Uihelper.getMessageCount(4, getActivity());
-        if (message > 0) {
-            btn_message.setImageResource(R.drawable.btn_message);
-        } else {
-            btn_message.setImageResource(R.drawable.btn_message_none);
-        }
         //已登录，显示我的界面
         if (UserUtil.hasLogin(getActivity())) {
             initUserView();
@@ -176,16 +169,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             tv_Regular.setText("--");
         }
         //拾财券
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.getWealthTicket())) {
-            tv_Ticket.setText(userInfo.getWealthTicket() + "张");
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getWealthTicket())&& !TextUtils.isEmpty(userInfo.getRedBag())) {
+            int count=Integer.parseInt(userInfo.getWealthTicket())+Integer.parseInt(userInfo.getRedBag());
+            tv_Ticket.setText( count+ "张");
         } else {
             tv_Ticket.setText("--");
-        }
-        //红包
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.getRedBag())) {
-            tv_Redpackage.setText(userInfo.getRedBag() + "个");
-        } else {
-            tv_Redpackage.setText("--");
         }
         //总资产
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalAsset())) {
@@ -228,6 +216,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         tv_Title.setText("我的");
 
         btn_message = (ImageButton) view.findViewById(R.id.bt_left);
+        btn_message.setImageResource(R.drawable.btn_message_none);
         btn_message.setOnClickListener(this);
 
         ImageButton btn_setting = (ImageButton) view.findViewById(R.id.bt_right);
@@ -244,7 +233,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         tv_Current = (TextView) view.findViewById(R.id.account_current);
         tv_Regular = (TextView) view.findViewById(R.id.account_regular);
         tv_Ticket = (TextView) view.findViewById(R.id.account_ticket);
-        tv_Redpackage = (TextView) view.findViewById(R.id.account_redpackage);
 
         tv_balance = (TextView) view.findViewById(R.id.tv_balance);
         tv_TotalProfit = (TextView) view.findViewById(R.id.tv_totalProfit);
@@ -254,13 +242,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         View frame_regular = view.findViewById(R.id.frame_regular);
         View frame_record = view.findViewById(R.id.frame_record);
         View frame_ticket = view.findViewById(R.id.frame_ticket);
-        View frame_redpackage = view.findViewById(R.id.frame_redpackage);
 
         frame_current.setOnClickListener(this);
         frame_regular.setOnClickListener(this);
         frame_record.setOnClickListener(this);
         frame_ticket.setOnClickListener(this);
-        frame_redpackage.setOnClickListener(this);
 
 
         //*********未登录的的Ui***************
@@ -341,6 +327,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 UserInfo userInfo = result.getData();
                 UserUtil.saveUserInfo(getActivity(), userInfo);
                 onStart();
+                GestureLockSetActivity.startActivity(getActivity(), null);
             }
 
             @Override
@@ -362,12 +349,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 }
                 MobclickAgent.onEvent(getActivity(), "1017");
                 //未认证
-                if ("0".equals(userInfo.getRealNameStatus())) {
-                    Intent intent = new Intent(getActivity(), ActivityRealname.class);
-                    startActivity(intent);
-                } else {
+//                if ("0".equals(userInfo.getRealNameStatus())) {
+//                    Intent intent = new Intent(getActivity(), ActivityRealname.class);
+//                    startActivity(intent);
+//                } else {
                     UserUtil.isLogin(getActivity(), IntoActivity.class);
-                }
+//                }
 
                 break;
             //取现
@@ -407,20 +394,16 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 MobclickAgent.onEvent(getActivity(), "1021");
                 startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
                 break;
-            //拾财券
+            //红包/券
             case R.id.frame_ticket:
                 MobclickAgent.onEvent(getActivity(), "1022");
                 startActivity(new Intent(getActivity(), MyTicketActivity.class));
-                break;
-            //我的红包
-            case R.id.frame_redpackage:
-                MobclickAgent.onEvent(getActivity(), "1023");
-                startActivity(new Intent(getActivity(), RedPaperActivity.class));
                 break;
             //我的消息
             case R.id.bt_left:
                 MobclickAgent.onEvent(getActivity(), "1015");
                 startActivity(new Intent(getActivity(), AnnounceActivity.class));
+                btn_message.setImageResource(R.drawable.btn_message_none);
                 break;
             //我的设置
             case R.id.bt_right:
@@ -467,12 +450,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         switch (operationKey) {
             case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
-                int message = Uihelper.getMessageCount(4, getActivity());
-                if (message > 0) {
                     btn_message.setImageResource(R.drawable.btn_message);
-                } else {
-                    btn_message.setImageResource(R.drawable.btn_message_none);
-                }
                 break;
         }
 

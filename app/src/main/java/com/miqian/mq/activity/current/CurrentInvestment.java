@@ -1,15 +1,12 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.entity.Amt;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.ProducedOrder;
@@ -26,6 +24,8 @@ import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.MySwipeRefresh;
@@ -48,13 +48,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private TextView textBalance;
     private TextView textBest;
     private TextView textBestMoney;
-    private TextView textBankPayMoney;
-    private RelativeLayout frameBankPay;
+    //    private TextView textBankPayMoney;
+    private RelativeLayout frameCurrentPay;
     private RelativeLayout frameRedPackage;
+    private EditText editCurrentBalance;
     private RelativeLayout frameTip;
     private View frameSpace;
     private TextView textTip;
-    private TextView textLaw;
     private MySwipeRefresh swipeRefresh;
 
     private DialogTradePassword dialogTradePasswordSet;
@@ -64,6 +64,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private ProducedOrder producedOrder;
     private List<Promote> promList;
     private String promListString = "";
+    private String prodListString = "";
 
     private String money;
     private String prodId; //0:充值产品 1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
@@ -73,6 +74,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     private BigDecimal orderMoney;//订单金额
     private BigDecimal promoteMoney = BigDecimal.ZERO;//优惠金额： 红包、拾财券
+    private BigDecimal currentMoney = BigDecimal.ZERO;//活转定中使用的活期余额
     private BigDecimal balanceMoney;//账户余额
     private BigDecimal balancePay;//需余额支付额度
     private BigDecimal rollinMoney;//需转入金额
@@ -130,6 +132,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
                 swipeRefresh.setRefreshing(false);
+                btPay.setEnabled(false);
                 Uihelper.showToast(mActivity, error);
             }
         }, money, subjectId, prodId);
@@ -149,14 +152,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     private void refreshView() {
-        if (isNeedRollin()) {
-            frameBankPay.setVisibility(View.VISIBLE);
-            btPay.setText("充值");
-        } else {
-            frameBankPay.setVisibility(View.GONE);
-            btPay.setText("支付");
-        }
+        refreshCurrentView();
+        editCurrentBalance.setHint("最多可支付" + producedOrder.getBalanceCurrent() + "元");
         textOrderMoney.setText(money + "元");
+
         if (promList != null && promList.size() > 0) {
             if (promoteMoney.compareTo(bFlag) > 0) {
                 textBest.setTextColor(getResources().getColor(R.color.mq_b1));
@@ -172,8 +171,16 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             textBest.setText("无可用");
             textBestMoney.setText("");
         }
+    }
+
+    //活期余额
+    private void refreshCurrentView() {
+        if (isNeedRollin()) {
+            btPay.setText("充值" + rollinMoney + " 元");
+        } else {
+            btPay.setText("支付");
+        }
         textBalance.setText(balancePay + "元");
-        textBankPayMoney.setText(rollinMoney + " 元");
     }
 
     @Override
@@ -181,10 +188,32 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         textTip = (TextView) findViewById(R.id.text_tip);
         frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
         frameSpace = (View) findViewById(R.id.frame_space);
+        frameCurrentPay = (RelativeLayout) findViewById(R.id.frame_current_pay);
 
         textProjectType = (TextView) findViewById(R.id.text_project_type);
         textInterestRate = (TextView) findViewById(R.id.text_interest_rate);
+        frameRedPackage = (RelativeLayout) findViewById(R.id.frame_red_package);
+        editCurrentBalance = (EditText) findViewById(R.id.edit_current_balance);
+        editCurrentBalance.addTextChangedListener(new MyTextWatcher() {
+            @Override
+            public void myAfterTextChanged(Editable s) {
+                try {
+                    String temp = s.toString();
+                    if (TextUtils.isEmpty(temp) || temp.matches(FormatUtil.PATTERN_MONEY)) {
+                        refreshCurrentView();
+                        return;
+                    }
+                    s.delete(temp.length() - 1, temp.length());
+                } catch (Exception e) {
+                }
+            }
+        });
+
+
+        frameRedPackage.setOnClickListener(this);
         if (PRODID_CURRENT.equals(prodId)) {
+            frameRedPackage.setVisibility(View.GONE);
+            frameCurrentPay.setVisibility(View.GONE);
             textProjectType.setText("期赚");
             textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_current), null, null, null);
             textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.investment_interest), null);
@@ -206,15 +235,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         textBalance = (TextView) findViewById(R.id.text_balance);
         textBest = (TextView) findViewById(R.id.text_best);
         textBestMoney = (TextView) findViewById(R.id.text_best_money);
-        textBankPayMoney = (TextView) findViewById(R.id.text_bank_pay_money);
-        frameBankPay = (RelativeLayout) findViewById(R.id.frame_bank_pay);
-        frameRedPackage = (RelativeLayout) findViewById(R.id.frame_red_package);
-        frameRedPackage.setOnClickListener(this);
-
-        textLaw = (TextView) findViewById(R.id.text_law);
-        SpannableString span = getAgreementSpan(prodId);
-        textLaw.setText(span);
-        textLaw.setMovementMethod(LinkMovementMethod.getInstance());
+//        textBankPayMoney = (TextView) findViewById(R.id.text_bank_pay_money);
+//        frameBankPay = (RelativeLayout) findViewById(R.id.frame_bank_pay);
 
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -269,59 +291,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private SpannableString getAgreementSpan(String prodId) {
-        SpannableString spanableInfo = null;
-        if (PRODID_CURRENT.equals(prodId)) {
-            spanableInfo = new SpannableString("已同意《活期赚服务协议》");
-            spanableInfo.setSpan(new Clickable(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-//                    WebActivity.startActivity(mActivity, Urls.web_current_law);
-                }
-            }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else if (PRODID_REGULAR.equals(prodId)) {
-            spanableInfo = new SpannableString("已同意《定期赚服务协议》");
-            spanableInfo.setSpan(new Clickable(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-//                    WebActivity.startActivity(mActivity, Urls.web_regular_law);
-                }
-            }), 3, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else {
-            spanableInfo = new SpannableString("已同意《定期计划服务协议》");
-            spanableInfo.setSpan(new Clickable(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-//                    WebActivity.startActivity(mActivity, Urls.web_regplan_law);
-                }
-            }), 3, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        return spanableInfo;
-    }
-
-    class Clickable extends ClickableSpan implements View.OnClickListener {
-        private final View.OnClickListener mListener;
-
-        public Clickable(View.OnClickListener l) {
-            mListener = l;
-        }
-
-        @Override
-        public void onClick(View v) {
-            mListener.onClick(v);
-        }
-
-        @Override
-        public void updateDrawState(TextPaint ds) {
-            super.updateDrawState(ds);
-            ds.setColor(Color.rgb(26, 196, 233));
-            ds.setUnderlineText(false);
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_ROLLIN) {
@@ -341,7 +310,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     Promote promote = promList.get(position);
                     List<Promote> promListParam = new ArrayList<>();
                     promListParam.add(promote);
-                    promoteMoney = new BigDecimal(promote.getWillUseAmt());
+                    promoteMoney = promote.getWillUseAmt();
                     promListString = JSON.toJSONString(promListParam, true);
                 } else {
                     promoteMoney = BigDecimal.ZERO;
@@ -356,18 +325,26 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         if (producedOrder != null) {
             orderMoney = new BigDecimal(money);
             balanceMoney = new BigDecimal(producedOrder.getBalance());
+            String currentString = editCurrentBalance.getText().toString();
+            if (!TextUtils.isEmpty(currentString)) {
+                currentMoney = new BigDecimal(editCurrentBalance.getText().toString());
+            } else {
+                currentMoney = BigDecimal.ZERO;
+            }
 
-            float needPay = orderMoney.subtract(promoteMoney).floatValue();
+            BigDecimal tempPromoteMoney = currentMoney.add(promoteMoney);
+
+            float needPay = orderMoney.subtract(tempPromoteMoney).floatValue();
             if (needPay > 0) {
-                if (promoteMoney.add(balanceMoney).compareTo(orderMoney) > 0) {
-                    balancePay = orderMoney.subtract(promoteMoney);
+                if (tempPromoteMoney.add(balanceMoney).compareTo(orderMoney) > 0) {
+                    balancePay = orderMoney.subtract(tempPromoteMoney);
                 } else {
                     balancePay = balanceMoney;
                 }
             } else {
                 balancePay = new BigDecimal(0);
             }
-            rollinMoney = orderMoney.subtract(promoteMoney).subtract(balancePay);
+            rollinMoney = orderMoney.subtract(tempPromoteMoney).subtract(balancePay);
             if (rollinMoney.compareTo(bFlag) > 0) {
                 return true;
             } else {
@@ -377,7 +354,39 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         return false;
     }
 
+    private boolean isCurrentFit() {
+        BigDecimal tempBig = orderMoney.subtract(promoteMoney);
+        if (tempBig.compareTo(producedOrder.getBalanceCurrent()) > 0) {
+            if (currentMoney.compareTo(producedOrder.getBalanceCurrent()) > 0) {
+                Uihelper.showToast(mActivity, "请确认您的活期支付金额");
+                editCurrentBalance.setText(producedOrder.getBalanceCurrent().toString());
+                return false;
+            }
+        } else {
+            if (currentMoney.compareTo(tempBig) > 0) {
+                Uihelper.showToast(mActivity, "请确认您的活期支付金额");
+                editCurrentBalance.setText(tempBig.toString());
+                return false;
+            }
+        }
+        return true;
+    }
+
+
     private void payOrder() {
+        if (!isCurrentFit()) {
+            return;
+        }
+        if (currentMoney.compareTo(bFlag) > 0) {
+            List<Amt> prodListParam = new ArrayList<>();
+            Amt amt = new Amt();
+            amt.setAmt(currentMoney);
+            prodListParam.add(amt);
+            prodListString = JSON.toJSONString(prodListParam, true);
+        } else {
+            prodListString = "";
+        }
+
         mWaitingDialog.show();
         HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
             @Override
@@ -468,7 +477,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                 mWaitingDialog.dismiss();
                                 Uihelper.showToast(mActivity, error);
                             }
-                        }, money, prodId, payPassword, subjectId, promListString);
+                        }, money, prodId, payPassword, subjectId, promListString, prodListString);
                     }
                 };
             }

@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
-import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
@@ -57,7 +56,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).build());
+//        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).build());
 
         AdapterPacket adapterPacket = new AdapterPacket(promList);
         adapterPacket.setOnItemClickListener(this);
@@ -72,7 +71,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("红包/拾财券");
+        mTitle.setTitleText("红包/券");
         mTitle.setRightText("使用规则");
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +83,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
 
     @Override
     protected String getPageName() {
-        return "红包/拾财券";
+        return "红包/券";
     }
 
     @Override
@@ -102,7 +101,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void onItemClick(View view, int postion) {
-        position = postion;
+    public void onItemClick(View view, int position) {
+        this.position = position;
     }
 }

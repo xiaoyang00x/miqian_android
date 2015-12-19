@@ -1,10 +1,15 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -14,51 +19,193 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshSwipeMenuListView;
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.MessageAdapter;
-import com.miqian.mq.database.MyDataBaseHelper;
-import com.miqian.mq.entity.JpushInfo;
-import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.entity.MessageInfo;
+import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.PushData;
+import com.miqian.mq.entity.PushDataResult;
+import com.miqian.mq.entity.UserMessageData;
+import com.miqian.mq.entity.UserMessageResult;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Administrator Tuliangtan 3.26
  */
-public class AnnounceActivity extends BaseActivity implements ExtendOperationController.ExtendOperationListener {
+public class AnnounceActivity extends BaseActivity implements OnClickListener, AbsListView.OnScrollListener {
+
+    private Button titleLeft;
+    private Button titleRight;
+    private ImageButton btLeft;
+    private MySwipeRefresh swipeRefresh;
+    private TextView textvClear;
+
+    private int messageType = 0; //0为消息，1为公告
 
     private SwipeMenuListView mSwipeMenuListView;
     private MessageAdapter adapter;
-    private List<JpushInfo> jpushInfolist;
     private CustomDialog dialogTips;
+    private int count;
+    private List<MessageInfo> list;
+    private PullToRefreshSwipeMenuListView pullToListView;
+    private SwipeMenuCreator creator;
+    private View footView;
+    private boolean isOver;
+    private View mViewnoresult_data;
+    private TextView tvTips;
+    private TextView view_Refresh;
+
+    @Override
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
 
-        if (!UserUtil.hasLogin(mActivity)) {
-            jpushInfolist = MyDataBaseHelper.getInstance(mActivity).getjpushInfo(Pref.VISITOR);
-        } else {
-            jpushInfolist = MyDataBaseHelper.getInstance(mActivity)
-                    .getjpushInfo(Pref.getString(Pref.USERID, mActivity, Pref.VISITOR));
-        }
-        Collections.reverse(jpushInfolist);
-        if (jpushInfolist == null || jpushInfolist.size() == 0) {
-            showEmptyView();
-            mTitle.setRightText("");
-        } else {
-
+        if (messageType==0&&!UserUtil.hasLogin(mActivity)){
+            mViewnoresult_data.setVisibility(View.VISIBLE);
+            view_Refresh.setVisibility(View.GONE);
+            swipeRefresh.setVisibility(View.GONE);
+            tvTips.setVisibility(View.VISIBLE);
+            tvTips.setText("请登录后查看");
+            return;
         }
 
-        PullToRefreshSwipeMenuListView pullToListView = (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
+        if (!swipeRefresh.isRefreshing()) {
+            begin();
+        }
+        if (messageType == 0) {
+            HttpRequest.getMessageList(mActivity, "", new ICallback<UserMessageResult>() {
+                @Override
+                public void onSucceed(UserMessageResult result) {
+                    end();
+                    swipeRefresh.setRefreshing(false);
+                    UserMessageData userMessageData = result.getData();
+                    count = userMessageData.getCount();
+                    list = userMessageData.getMsgList();
+                    if (list != null && list.size() > 0) {
+                        showContentView();
+                        if (list.size() < count) {
+                            isOver = true;
+                        } else {
+                            isOver = false;
+                        }
+                        textvClear.setText("全部清空");
+                        adapter = new MessageAdapter(mActivity, list);
+                        pullToListView.setAdapter(adapter);
+
+                    } else {
+                        showEmptyView();
+                    }
+                }
+
+                @Override
+                public void onFail(String error) {
+                    end();
+                    showErrorView();
+                    swipeRefresh.setRefreshing(false);
+                    Uihelper.showToast(mActivity, error);
+                }
+            });
+        } else {
+            HttpRequest.getPushList(mActivity, "", 50 + "", new ICallback<PushDataResult>() {
+                @Override
+                public void onSucceed(PushDataResult result) {
+                    end();
+                    swipeRefresh.setRefreshing(false);
+                    PushData pushData = result.getData();
+                    list = pushData.getPushList();
+                    if (list != null && list.size() > 0) {
+                        showContentView();
+                        //和本地匹配是否已读
+                        for (MessageInfo info : list) {
+                            int id = info.getId();
+                            boolean isReaded = Pref.getBoolean(Pref.PUSH + id, mActivity, false);
+                            if (isReaded) {
+                                info.setIsRead(true);
+                            }
+                        }
+                        adapter = new MessageAdapter(mActivity, list);
+                        pullToListView.setAdapter(adapter);
+                    } else {
+                        showEmptyView();
+                    }
+                }
+
+                @Override
+                public void onFail(String error) {
+                    end();
+                    swipeRefresh.setRefreshing(false);
+                    showErrorView();
+                    Uihelper.showToast(mActivity, error);
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    public void initView() {
+        footView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_loading, null);
+
+        btLeft = (ImageButton) findViewById(R.id.bt_left);
+        btLeft.setOnClickListener(this);
+
+        titleLeft = (Button) findViewById(R.id.title_left);
+        titleRight = (Button) findViewById(R.id.title_right);
+
+        textvClear = (TextView) findViewById(R.id.tv_clearall);
+        textvClear.setOnClickListener(this);
+
+        titleLeft.setOnClickListener(this);
+        titleRight.setOnClickListener(this);
+
+        pullToListView = (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
+        pullToListView.setMode(PullToRefreshBase.Mode.DISABLED);
+        pullToListView.setOnScrollListener(this);
+
+        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+            @Override
+            public void onRefresh() {
+                isOver = false;
+                list.clear();
+                adapter.notifyDataSetChanged();
+                obtainData();
+            }
+        });
+
+        mViewnoresult_data = findViewById(R.id.frame_no_messagedata);
+        view_Refresh = (TextView) findViewById(R.id.tv_refresh);
+        tvTips = (TextView) findViewById(R.id.tv_tip);
+        view_Refresh.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showContentView();
+                obtainData();
+            }
+        });
+        initPullToListView();
+
+
+    }
+
+    private void initPullToListView() {
 
         mSwipeMenuListView = (SwipeMenuListView) pullToListView.getRefreshableView();
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-
+        creator = new SwipeMenuCreator() {
             @Override
             public void create(SwipeMenu menu) {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(mActivity);
@@ -71,101 +218,88 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
         mSwipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
 
             @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
+                //删除消息
+                begin();
+                MessageInfo messageInfo = list.get(position);
+                HttpRequest.deleteMessage(mActivity, new ICallback<Meta>() {
+                    @Override
+                    public void onSucceed(Meta result) {
+                        end();
+                        Uihelper.showToast(mActivity, "删除成功");
+                        list.remove(position);
+                        adapter.notifyDataSetChanged();
+                        //没有数据
+                        if (list.size() == 0) {
+                            textvClear.setText("");
+                            showEmptyView();
+                        }
+                    }
 
-                JpushInfo jpushInfo = jpushInfolist.get(position);
-                if (jpushInfo.getState().equals("1")) {
-                    Uihelper.getMessageCount(-1, mActivity);
-                    jpushInfo.setState("2");
-                    MyDataBaseHelper.getInstance(mActivity).recordJpush(jpushInfo);
-                }
-                MyDataBaseHelper.getInstance(mActivity).detetjpushInfo(jpushInfo);
-                jpushInfolist.remove(jpushInfo);
-                Uihelper.showToast(mActivity, "删除成功");
-                obtainData();
+                    @Override
+                    public void onFail(String error) {
+                        end();
+                        Uihelper.showToast(mActivity, error);
+                    }
+                }, messageInfo.getId(), "", 0);
 
                 return false;
             }
         });
         mSwipeMenuListView.setMenuCreator(creator);
         pullToListView.setMode(PullToRefreshBase.Mode.DISABLED);
-        adapter = new MessageAdapter(this, jpushInfolist);
-        pullToListView.setOnItemClickListener(new OnItemClickListener() {
-
+        pullToListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
                 if (position == 0) {
-
                 } else {
-                    JpushInfo jpushInfo = jpushInfolist.get(position - 1);
-                    if (jpushInfo.getState().equals("1")) {
-                        Uihelper.getMessageCount(-1, mActivity);
-                        jpushInfo.setState("2");
-                        MyDataBaseHelper.getInstance(mActivity).recordJpush(jpushInfo);
-                    }
-                    switch (Integer.valueOf(Integer.valueOf(jpushInfo.getUriType()))) {
+                    //消息
+                    if (messageType == 0) {
+                        //设置为已读
+                        HttpRequest.setMessageReaded(mActivity, new ICallback<Meta>() {
+                            @Override
+                            public void onSucceed(Meta result) {
 
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                        case 6:
-                        case 7:
-                        case 8:
-                        case 9:
-                        case 10:
-                        case 11:
-                        case 12:
-                        case 15:
-                            Intent intent = new Intent(mActivity, AnnounceResultActivity.class);
-                            intent.putExtra("id", jpushInfo.getId());
-                            intent.putExtra("pushSource", jpushInfo.getPushSource());
-                            startActivity(intent);
-                            break;
+                                list.get(position-1).setIsRead(true);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onFail(String error) {
+                                Uihelper.showToast(mActivity, error);
+                            }
+                        }, list.get(position - 1).getId(), "", 0);
+                    } else {//公告
+                        Pref.saveBoolean(Pref.PUSH + list.get(position - 1).getId(), true, mActivity);
+                        list.get(position-1).setIsRead(true);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                    MessageInfo messageInfo = list.get(position - 1);
+                    switch (Integer.valueOf(Integer.valueOf(messageInfo.getMsgType()))) {
                         // 内置浏览器
-                        case 50:
                         case 51:
                         case 52:
                         case 53:
-                            WebActivity.startActivity(mContext, jpushInfo.getUrl());
+                            WebActivity.startActivity(mContext, messageInfo.getJumpUrl());
                             break;
                         default:
                             Intent intent_other = new Intent(mActivity, AnnounceResultActivity.class);
-                            intent_other.putExtra("id", jpushInfo.getId());
-                            intent_other.putExtra("pushSource", jpushInfo.getPushSource());
+                            intent_other.putExtra("id", messageInfo.getId());
+                            if (messageType==0){
+                                intent_other.putExtra("isMessage",true);
+                            }else{
+                                intent_other.putExtra("isMessage",false);
+                            }
                             startActivity(intent_other);
-                            break;
                     }
                 }
             }
         });
-        mSwipeMenuListView.setAdapter(adapter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        AnnounceActivity.this.setIntent(intent);
-        initView();
-        obtainData();
-    }
-
-    @Override
-    public void initView() {
-        ExtendOperationController.getInstance().registerExtendOperationListener(this);
     }
 
     @Override
     protected void onResume() {
-        obtainData();
         super.onResume();
     }
 
@@ -176,16 +310,8 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("消息");
-        mTitle.setRightText("清空");
-        mTitle.setOnRightClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                showDialog();
-            }
-        });
+        View parentView = (View) mTitle.getParent();
+        parentView.setVisibility(View.GONE);
     }
 
     @Override
@@ -201,21 +327,28 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
     private void initDialog() {
         if (dialogTips == null) {
             dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-
                 @Override
                 public void positionBtnClick() {
-                    if (!UserUtil.hasLogin(mActivity)) {
-                        MyDataBaseHelper.getInstance(mActivity).deleteall(Pref.VISITOR);
-                    } else {
-                        MyDataBaseHelper.getInstance(mActivity)
-                                .deleteall(Pref.getString(Pref.USERID, mActivity, Pref.VISITOR));
-                    }
-                    Uihelper.getMessageCount(0, mActivity);
-                    jpushInfolist.clear();
-                    adapter.notifyDataSetChanged();
-                    mTitle.setRightText("");
-                    showEmptyView();
                     dismiss();
+                    begin();
+                    //清空消息
+                    HttpRequest.deleteMessage(mActivity, new ICallback<Meta>() {
+                        @Override
+                        public void onSucceed(Meta result) {
+                            end();
+                            Uihelper.showToast(mActivity, "删除成功");
+                            list.clear();
+                            adapter.notifyDataSetChanged();
+                            textvClear.setText("");
+                            showEmptyView();
+                        }
+
+                        @Override
+                        public void onFail(String error) {
+                            end();
+                            Uihelper.showToast(mActivity, error);
+                        }
+                    }, list.get(0).getId(), list.get(list.size() - 1).getId() + "", 1);
                 }
 
                 @Override
@@ -230,13 +363,133 @@ public class AnnounceActivity extends BaseActivity implements ExtendOperationCon
     }
 
     @Override
-    public void excuteExtendOperation(int operationKey, Object data) {
-        switch (operationKey) {
-            case ExtendOperationController.OperationKey.RERESH_JPUSH:
-                // 更新数据
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.title_left:
+                titleLeft.setTextColor(getResources().getColor(R.color.mq_r1));
+                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left_selected);
+                titleRight.setTextColor(getResources().getColor(R.color.white));
+                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right);
+                //消息
+                isOver = false;
+                mSwipeMenuListView.setMenuCreator(creator);
+                messageType = 0;
+                if (list != null && adapter != null) {
+                    list.clear();
+                    adapter.notifyDataSetChanged();
+                }
                 obtainData();
                 break;
+            case R.id.title_right:
+
+                titleLeft.setTextColor(getResources().getColor(R.color.white));
+                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left);
+                titleRight.setTextColor(getResources().getColor(R.color.mq_r1));
+                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right_selected);
+                //公告
+                mSwipeMenuListView.setMenuCreator(null);
+                messageType = 1;
+                if (list != null && adapter != null) {
+                    list.clear();
+
+                    adapter.notifyDataSetChanged();
+                }
+                obtainData();
+                textvClear.setText("");
+                break;
+            case R.id.bt_left:
+                AnnounceActivity.this.finish();
+                break;
+            case R.id.tv_clearall://清空消息
+                showDialog();
+                break;
+            default:
+                break;
         }
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+        View firstView = view.getChildAt(firstVisibleItem);
+        // 当firstVisibleItem是第0位。如果firstView==null说明列表为空，需要刷新;或者top==0说明已经到达列表顶部, 也需要刷新
+        if (firstVisibleItem == 0 && (firstView == null || firstView.getTop() == 0)) {
+            swipeRefresh.setEnabled(true);
+        } else {
+            swipeRefresh.setEnabled(false);
+        }
+        if (messageType == 0) {
+
+            if (visibleItemCount + firstVisibleItem >= totalItemCount - 1 && isOver) {
+                if (list.size() < count) {
+                    pullToListView.getRefreshableView().addFooterView(footView);
+                    isOver = false;
+                    HttpRequest.getMessageList(mActivity, list.get(list.size() - 1).getId() + "", new ICallback<UserMessageResult>() {
+                        @Override
+                        public void onSucceed(UserMessageResult result) {
+                            UserMessageData userMessageData = result.getData();
+                            count = userMessageData.getCount();
+                            List<MessageInfo> tempList = userMessageData.getMsgList();
+                            if (tempList != null && tempList.size() > 0) {
+                                list.addAll(tempList);
+                                adapter.notifyDataSetChanged();
+                            }
+                            if (list.size() < count) {
+                                isOver = true;
+                            } else {
+                                pullToListView.getRefreshableView().removeFooterView(footView);
+                            }
+                        }
+
+                        @Override
+                        public void onFail(String error) {
+                            Uihelper.showToast(mActivity, error);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    /**
+     * 无数据
+     */
+    protected void showEmptyView() {
+        mViewnoresult_data.setVisibility(View.VISIBLE);
+        if (view_Refresh != null) {
+            view_Refresh.setVisibility(View.GONE);
+        }
+        swipeRefresh.setVisibility(View.GONE);
+        tvTips.setVisibility(View.VISIBLE);
+        tvTips.setText("暂时没有数据");
+    }
+
+    /**
+     * 显示数据
+     */
+    protected void showContentView() {
+        mViewnoresult_data.setVisibility(View.GONE);
+        swipeRefresh.setVisibility(View.VISIBLE);
+
+    }
+
+    /**
+     * 获取失败，请重新获取
+     */
+    protected void showErrorView() {
+
+        mViewnoresult_data.setVisibility(View.VISIBLE);
+        swipeRefresh.setVisibility(View.GONE);
+        view_Refresh.setVisibility(View.VISIBLE);
+        tvTips.setVisibility(View.VISIBLE);
+        tvTips.setText("数据获取失败，请重新获取");
+
     }
 
 }

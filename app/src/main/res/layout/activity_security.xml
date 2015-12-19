@@ -2,19 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="@dimen/margin_top"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/password_login"
             android:layout_width="match_parent"
             android:layout_height="@dimen/listitem_height"
-            android:background="@drawable/list_click" >
+            android:background="@drawable/list_click">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,14 +34,13 @@
                 android:src="@drawable/right" />
         </RelativeLayout>
 
-        <View
-          style="@style/item_divider" />
+        <View style="@style/item_divider" />
 
         <RelativeLayout
             android:id="@+id/password_transaction"
             android:layout_width="match_parent"
             android:layout_height="@dimen/listitem_height"
-            android:background="@drawable/list_click" >
+            android:background="@drawable/list_click">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,6 +58,30 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right"
                 android:src="@drawable/right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@drawable/list_click">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="手势密码"
+                android:textColor="@color/mq_b1"
+                android:textSize="@dimen/mq_font2" />
+
+            <ImageView
+                android:id="@+id/iv_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:src="@drawable/gesture_swith_open" />
         </RelativeLayout>
     </LinearLayout>
 

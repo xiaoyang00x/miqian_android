@@ -45,6 +45,7 @@ import java.math.BigDecimal;
 
 /**
  * Created by Joy on 2015/9/10.
+ * 充值页面
  */
 public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
@@ -74,7 +75,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private String bankNumber;
     private String realName;
     private String idCard;
-    private int rollType;
+    private int rollType;//为1时传入充值金额，为0时不传
     private String bindStatus;
     private String bindSupportStatus;
     private String relaNameStatus;

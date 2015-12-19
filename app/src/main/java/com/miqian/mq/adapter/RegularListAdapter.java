@@ -65,7 +65,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (viewType == ITEM_TYPE_HEADER) {
             return new HeaderViewHolder(inflater.inflate(R.layout.fragment_regular_header, parent, false), mContext, swipeRefreshLayout, planList);
         } else {
-            return new RegularEarnViewHoder(inflater.inflate(R.layout.regular_earn_item, parent, false));
+            return    new RegularEarnViewHoder(inflater.inflate(R.layout.regular_earn_item, parent, false));
         }
     }
 

@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F13E3E"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/titlebar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal" />
+
+    <com.miqian.mq.views.GestureCueView
+        android:id="@+id/lockTipView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="68dp"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="请输入密码"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+    <com.miqian.mq.views.GestureLockView
+        android:id="@+id/lockView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
+        android:layout_weight="0.2" />
+
+
+</LinearLayout>

@@ -36,7 +36,7 @@ public class Pref {
 	public static final String SERVER_ERROR_CODE = "ServerErrorCode";
 
 	//用户信息
-	public static final String REALNAME_STATUS = "RealnameStatus";
+//	public static final String REALNAME_STATUS = "RealnameStatus";
 //	渠道id
 	public static final String CHANNEL_ID = "ChannelId";
 
@@ -48,6 +48,16 @@ public class Pref {
 	public static String IsPush="IsPush";
 
 	public static String CITY="city";
+	public static String PUSH="push";
+
+    // 图案锁 加密后存储
+	public final static String GESTUREPSW = "gesturePsw";
+	// 图案锁 剩余解锁验证次数
+	public final static String UNLOCKCOUNT = "unlockCount";
+	// 手势状态 是否打开
+	public final static String GESTURESTATE = "gestureState";
+	// 推送开关
+	public final static String PUSH_STATE = "pushstate";
 
 	private static SharedPreferences getSettings(final Context contex) {
 		SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);

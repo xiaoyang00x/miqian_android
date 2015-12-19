@@ -11,40 +11,57 @@ import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.views.WFYTitle;
 
 
-public class AboutUsActivity extends BaseActivity {
-	private TextView tvVersion;
+public class AboutUsActivity extends BaseActivity implements View.OnClickListener {
+    private TextView tvVersion;
 
-	@Override
-	public void obtainData() {
-		tvVersion.setText("版本号" + MobileOS.getAppVersionName(this));
-	}
+    @Override
+    public void obtainData() {
+        tvVersion.setText("v" + MobileOS.getAppVersionName(this));
+    }
 
-	@Override
-	public void initView() {
-		tvVersion = (TextView) findViewById(R.id.tvVersion);
-		findViewById(R.id.tv_telephone).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:4006656191")));
-			}
-		});
+    @Override
+    public void initView() {
+        tvVersion = (TextView) findViewById(R.id.tvVersion);
 
-	}
+        View frame_introduce = findViewById(R.id.frame_aboutus_introduce);
+        View frame_team = findViewById(R.id.frame_aboutus_team);
+        View frame_cooperation = findViewById(R.id.frame_aboutus_cooperation);
 
-	@Override
-	public int getLayoutId() {
-		return R.layout.activity_aboutus;
-	}
+        frame_introduce.setOnClickListener(this);
+        frame_team.setOnClickListener(this);
+        frame_cooperation.setOnClickListener(this);
 
-	@Override
-	public void initTitle(WFYTitle mTitle) {
+    }
 
-		mTitle.setTitleText("关于秒钱");
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_aboutus;
+    }
 
-	}
+    @Override
+    public void initTitle(WFYTitle mTitle) {
+        mTitle.setTitleText("关于秒钱");
 
-	@Override
-	protected String getPageName() {
-		return "关于秒钱";
-	}
+    }
+
+    @Override
+    protected String getPageName() {
+        return "关于秒钱";
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.frame_aboutus_introduce://简介
+
+                break;
+            case R.id.frame_aboutus_team://管理团队
+
+                break;
+            case R.id.frame_aboutus_cooperation://合作伙伴
+
+                break;
+        }
+
+    }
 }

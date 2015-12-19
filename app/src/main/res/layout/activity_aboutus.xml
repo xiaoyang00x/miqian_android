@@ -26,39 +26,71 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#A0A0A0" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_top"
-            android:orientation="horizontal">
 
 
-            <TextView
-                style="@style/WrapContent"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="客服电话："
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#A0A0A0" />
+        <RelativeLayout
+            android:id="@+id/frame_aboutus_introduce"
+            style="@style/listItem"
+            android:layout_marginTop="@dimen/margin_top">
 
             <TextView
-                style="@style/WrapContent"
-                android:id="@+id/tv_telephone"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="400-6656-191"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/mq_bl2" />
+                style="@style/text_black_item"
+                android:layout_centerVertical="true"
+                android:text="秒钱简介" />
 
-        </LinearLayout>
-        <TextView
-            style="@style/WrapContent"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="公司地址：北京市朝阳区望京大厦A座10层"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right" />
 
-            android:textColor="#A0A0A0" />
+        </RelativeLayout>
+
+        <View
+            style="@style/item_divider"
+            android:layout_marginRight="0dp" />
+
+        <RelativeLayout
+            android:id="@+id/frame_aboutus_team"
+            style="@style/listItem">
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_centerVertical="true"
+                android:text="管理团队" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right" />
+
+        </RelativeLayout>
+
+        <View
+            style="@style/item_divider"
+            android:layout_marginRight="0dp" />
+
+        <RelativeLayout
+            android:id="@+id/frame_aboutus_cooperation"
+            style="@style/listItem">
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_centerVertical="true"
+                android:text="合作伙伴" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -66,6 +98,13 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/margin_top"
         android:orientation="vertical">
+        <TextView
+            style="@style/WrapContent"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="公司地址：北京市朝阳区望京大厦A座10层"
+            android:layout_marginBottom="5dp"
+            android:textColor="#A0A0A0" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,6 +112,7 @@
             android:layout_gravity="center"
             android:text="Copyright @2015 shicaidai All Rights Reserved"
             android:textSize="@dimen/mq_font5" />
+
     </LinearLayout>
 
 </RelativeLayout>
