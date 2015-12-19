@@ -187,4 +187,9 @@ public class Urls {
     public final static String web_current = base_server + "webView/currentDetail";
     //帮助中心
     public final static String web_help = base_server + "webView/helpCenter";
+
+
+    //首页运营活动
+    public final static String get_home_activity = base_server + "activityService/getHomeActivity";
+    public final static String get_activity_feedback = base_server + "activityService/getActivityFeedback";
 }

@@ -19,9 +19,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.alibaba.fastjson.JSONObject;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.ShareUtils;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WebChromeClientEx;
 
@@ -74,9 +78,8 @@ public class WebActivity extends BaseFragmentActivity {
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
         String defaultAgent = settings.getUserAgentString();
-        if (TextUtils.isEmpty(defaultAgent)) {
-            settings.setUserAgentString("MiaoQian");
-        }
+        settings.setUserAgentString(defaultAgent + " miaoqian_json: " + generateUserAgent());
+
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
 
         settings.setAppCacheEnabled(true);
@@ -173,6 +176,36 @@ public class WebActivity extends BaseFragmentActivity {
         startActivity(intent);
     }
 
+    //分享接口
+    @JavascriptInterface
+    public void share(String jsonStr) {
+        ShareUtils.share(this, jsonStr);
+    }
+
+    //充值页面
+    @JavascriptInterface
+    public void startIntoActivity() {
+        Intent intent = new Intent(this, IntoActivity.class);
+        startActivity(intent);
+    }
+
+    //红包、券列表页面
+    @JavascriptInterface
+    public void startTicketActivity() {
+        startActivity(new Intent(mContext, MyTicketActivity.class));
+    }
+
+    //定期赚详情页面
+    @JavascriptInterface
+    public void startRegularEarn(String subjectId) {
+        RegularEarnActivity.startActivity(this, subjectId);
+    }
+    //定期计划详情页面
+    @JavascriptInterface
+    public void startRegularPlan(String subjectId) {
+        RegularPlanActivity.startActivity(this, subjectId);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -203,5 +236,21 @@ public class WebActivity extends BaseFragmentActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private String generateUserAgent() {
+        String ua = "";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", UserUtil.getToken(mContext));
+        jsonObject.put("userid", UserUtil.getUserId(mContext));
+        jsonObject.put("deviceId", MobileOS.getIMEI(mContext));
+        jsonObject.put("cType", "android");
+        jsonObject.put("appName", "miqian");
+        jsonObject.put("appVersion", MobileOS.getClientVersion(mContext));
+        jsonObject.put("osVersion", MobileOS.getOsVersion());
+        jsonObject.put("deviceModel", MobileOS.getDeviceModel());
+
+        ua = jsonObject.toString();
+        return ua;
     }
 }

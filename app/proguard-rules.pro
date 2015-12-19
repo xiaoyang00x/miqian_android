@@ -82,6 +82,39 @@ public static final int *;
 -dontwarn com.squareup.okhttp.*
 -dontwarn retrofit.appengine.UrlFetchClient
 
+-keep class com.umeng.message.* {#友盟推送
+            public <fields>;
+            public <methods>;
+    }
+
+    -keep class com.umeng.message.protobuffer.* {
+            public <fields>;
+            public <methods>;
+    }
+
+    -keep class com.squareup.wire.* {
+            public <fields>;
+            public <methods>;
+    }
+
+    -keep class com.umeng.message.local.* {
+            public <fields>;
+            public <methods>;
+    }
+    -keep class org.android.agoo.impl.*{
+            public <fields>;
+            public <methods>;
+    }
+
+    -keep class org.android.agoo.service.* {*;}
+
+    -keep class org.android.spdy.**{*;}
+
+    -keep public class [com.xiaobai.mizar].R$*{
+        public static final int *;
+    }
+    #友盟分享
+-dontwarn com.tencent.weibo.sdk -dontwarn com.tencent.**
 
 ##-------------------Begin proguard configuration for 连连支付-------------------------
 -keep public class com.yintong.pay.utils.** {
@@ -94,6 +127,7 @@ public static final int *;
     <fields>;
     <methods>;
 }
+-dontwarn com.yintong.**
 -keep public class com.yintong.** {*;
 }
 ##-------------------Begin proguard configuration for 连连支付-------------------------
@@ -114,3 +148,6 @@ public static final int *;
    public *;
 }
 ##--------------------End proguard configuration for ShareSdk------------------------
+
+-dontwarn com.mob.tools.**
+-keep class com.mob.tools.**{*;}

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class RegularBaseData implements Serializable {
 
     public static final String PRODID_REGULAR_EARN = "3";   //定期赚
-    public static final String PRODID_REGULAR_PLAN = "4";   //定期计划
+    public static final String PRODID_REGULAR_PLAN = "5";   //定期计划
     protected String subjectId;//标的ID
     protected String prodId;//产品类型：定期赚 3、定期计划4
     protected String subjectName;//标的名称

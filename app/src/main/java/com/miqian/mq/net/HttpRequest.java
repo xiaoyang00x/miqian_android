@@ -12,6 +12,7 @@ import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
+import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.entity.ProjectInfoResult;
 //import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RepaymentResult;
@@ -706,7 +707,7 @@ public class HttpRequest {
     /**
      * 获取定期详情
      *
-     * @param prodId 3：为获取定期赚 4：为获取定期计划
+     * @param prodId 3：为获取定期赚 5：为获取定期计划
      * @param subjectId     标的编号，如传入则返回改标的相关信息
      */
     public static void getRegularDetails(Context context, String prodId, String subjectId, final ICallback<RegularPlanResult> callback) {
@@ -735,7 +736,7 @@ public class HttpRequest {
     /**
      * 获取定期赚详情
      *
-     * @param prodId 3：为获取定期赚 4：为获取定期计划
+     * @param prodId 3：为获取定期赚 5：为获取定期计划
      * @param subjectId     标的编号，如传入则返回改标的相关信息
      */
     public static void getRegularEarnDetails(Context context, String prodId, String subjectId,
@@ -1269,6 +1270,36 @@ public class HttpRequest {
                     callback.onSucceed(drawResult);
                 } else {
                     callback.onFail(drawResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+
+    /**
+     * 获取首页运营活动列表
+     *
+     * @param custId
+     */
+    public static void  getHomeActivity(Context context, String custId, final ICallback<GetHomeActivityResult> callback) {
+        ArrayList params = new ArrayList<>();
+        if(!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", custId));
+        }
+        new MyAsyncTask(context, Urls.get_home_activity, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                GetHomeActivityResult meta = JsonUtil.parseObject(result, GetHomeActivityResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
                 }
             }
 
