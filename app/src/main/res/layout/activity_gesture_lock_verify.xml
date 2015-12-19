@@ -19,7 +19,7 @@
         android:layout_marginTop="68dp"
         android:layout_weight="0.2"
         android:gravity="bottom"
-        android:text="18801023565"
+        android:text=""
         android:textColor="#FFFFFF"
         android:textSize="17sp" />
 

@@ -72,8 +72,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             } else {
                 startActivity(new Intent(getBaseContext(), MainActivity.class));
             }
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            startActivity(intent);
             SplashActivity.this.finish();
         } else {
             imageSplash.setVisibility(View.GONE);

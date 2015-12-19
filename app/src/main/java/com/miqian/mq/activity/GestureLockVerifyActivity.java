@@ -3,6 +3,7 @@ package com.miqian.mq.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
@@ -44,10 +45,30 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
     private void init() {
         findView();
         fetchGestureLock();
+        showUserPhoneNum();
         img_left.setVisibility(View.GONE);
         tv_forgetPsw.setOnClickListener(onClickListener);
+    }
+
+    private void showUserPhoneNum() {
         String telphone = Pref.getString(Pref.TELEPHONE, getBaseContext(), "");
-        tv_user.setText(null == telphone ? "" : telphone);
+        StringBuilder sb = new StringBuilder();
+        if (!TextUtils.isEmpty(telphone)) {
+            for (int index = 0; index < telphone.length(); index++) {
+                char temp = telphone.charAt(index);
+                if (index > 2 && index < 7) {
+                    sb.append("*");
+                } else {
+                    sb.append(temp);
+                }
+            }
+        }
+        tv_user.setText(sb.toString());
+    }
+
+    public static void main(String[] args) {
+        String phoneNum = "18801023565";
+        System.out.println(phoneNum.substring(3, 7));
     }
 
     private void findView() {
@@ -94,7 +115,7 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
                 tv_tip.setText("验证成功");
                 Pref.saveInt(Pref.UNLOCKCOUNT, Constants.MAXCOUNT, getBaseContext());
                 if (null != desClass) {
-                    startActivity(getBaseContext(), desClass);
+                    startActivity(new Intent(getBaseContext(), desClass));
                 }
                 GestureLockVerifyActivity.this.finish();
             } else {
@@ -121,7 +142,9 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
     private void logout() {
         Pref.saveInt(Pref.UNLOCKCOUNT, 0, getBaseContext());
         UserUtil.clearUserInfo(getBaseContext());
-        startActivity(new Intent(getBaseContext(), MainActivity.class));
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Constants.VERIFYFAILED, true);
+        startActivity(intent);
         finish();
     }
 

@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.miqian.mq.fragment.RegularFragment;
 import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.Config;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
@@ -85,6 +87,10 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         //注册广播
         registerReceiver(mHomeKeyEventReceiver, new IntentFilter(
                 Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+
+        if (getIntent().getBooleanExtra(Constants.VERIFYFAILED, false)) {
+            mTabHost.setCurrentTab(3);
+        }
     }
 
     @Override
