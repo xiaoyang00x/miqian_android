@@ -56,6 +56,8 @@ public class Pref {
 	public final static String UNLOCKCOUNT = "unlockCount";
 	// 手势状态 是否打开
 	public final static String GESTURESTATE = "gestureState";
+	// 推送开关
+	public final static String PUSH_STATE = "pushstate";
 
 	private static SharedPreferences getSettings(final Context contex) {
 		SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);
