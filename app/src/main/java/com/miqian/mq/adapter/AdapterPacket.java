@@ -55,7 +55,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
 //        if (promote.getType().equals("HB")) {
             ((ViewHolder) holder).textMoney.setText("" + promote.getCanUseAmt());
             ((ViewHolder) holder).textName.setText(promote.getPromProdName());
-            ((ViewHolder) holder).limitType.setText(promote.getLimitMsg());
+            ((ViewHolder) holder).limitType.setText(promote.getMinBuyAmtOrPerc());
             ((ViewHolder) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
             if (mPosition == position) {
                 ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
