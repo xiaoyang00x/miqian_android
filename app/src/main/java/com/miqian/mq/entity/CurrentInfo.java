@@ -10,6 +10,7 @@ public class CurrentInfo {
     private String currentBuyUpLimit;
     private String currentBuyDownLimit;
     private String currentSwitch;
+    private String currentYearRate;
 
     public String getBuyItemCount() {
         return buyItemCount;
@@ -49,5 +50,13 @@ public class CurrentInfo {
 
     public void setCurrentSwitch(String currentSwitch) {
         this.currentSwitch = currentSwitch;
+    }
+
+    public String getCurrentYearRate() {
+        return currentYearRate;
+    }
+
+    public void setCurrentYearRate(String currentYearRate) {
+        this.currentYearRate = currentYearRate;
     }
 }

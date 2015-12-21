@@ -2,18 +2,17 @@ package com.miqian.mq.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
@@ -36,11 +35,13 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     private WaterWaveView waterWaveView;
     private Button btInvestment;
     private TextView titleText;
-    private TextView totalMoneyText;
-    private TextView totalCountText;
-    private TextView textDetail;
-    private ImageButton btRight;
+    private RelativeLayout frameImage;
+    private ImageView imageInterest;
+    private TextView textInterest;
     private MySwipeRefresh swipeRefresh;
+    private RelativeLayout frameEarning;
+    private RelativeLayout frameSafe;
+    private RelativeLayout frameBack;
 
     private Activity mContext;
     private DialogPay dialogPay;
@@ -68,20 +69,22 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
     private void findViewById(View view) {
         waterWaveView = (WaterWaveView) view.findViewById(R.id.wave_view);
-        waterWaveView.setmWaterLevel(0.16F);
         waterWaveView.startWave();
 
         titleText = (TextView) view.findViewById(R.id.title);
         titleText.setText("活期");
 
-        btRight = (ImageButton) view.findViewById(R.id.bt_right);
-        btRight.setImageResource(R.drawable.btn_current_right);
-        btRight.setOnClickListener(this);
+        frameImage = (RelativeLayout) view.findViewById(R.id.frame_image);
+        frameImage.setOnClickListener(this);
+        imageInterest = (ImageView) view.findViewById(R.id.image_interest);
+        textInterest = (TextView) view.findViewById(R.id.text_interest);
 
-        totalCountText = (TextView) view.findViewById(R.id.total_count);
-        totalMoneyText = (TextView) view.findViewById(R.id.total_money);
-        textDetail = (TextView) view.findViewById(R.id.text_detail);
-        textDetail.setOnClickListener(this);
+        frameEarning = (RelativeLayout) view.findViewById(R.id.frame_earning);
+        frameSafe = (RelativeLayout) view.findViewById(R.id.frame_safe);
+        frameBack = (RelativeLayout) view.findViewById(R.id.frame_back);
+        frameEarning.setOnClickListener(this);
+        frameSafe.setOnClickListener(this);
+        frameBack.setOnClickListener(this);
 
         btInvestment = (Button) view.findViewById(R.id.bt_investment);
         btInvestment.setOnClickListener(this);
@@ -132,8 +135,15 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         if (currentInfo != null) {
             downLimit = new BigDecimal(currentInfo.getCurrentBuyDownLimit());
             upLimit = new BigDecimal(currentInfo.getCurrentBuyUpLimit());
-            totalCountText.setText(currentInfo.getBuyItemCount());
-            totalMoneyText.setText(currentInfo.getBuyTotalSum());
+            String tempInterest = currentInfo.getCurrentYearRate();
+            if (TextUtils.isEmpty(tempInterest)) {
+                imageInterest.setVisibility(View.VISIBLE);
+                textInterest.setVisibility(View.GONE);
+            } else {
+                imageInterest.setVisibility(View.GONE);
+                textInterest.setVisibility(View.VISIBLE);
+                textInterest.setText(tempInterest);
+            }
             if (currentInfo.getCurrentSwitch().equals("0")) {
                 btInvestment.setText("已售罄");
                 btInvestment.setEnabled(false);
@@ -178,15 +188,21 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 MobclickAgent.onEvent(mContext,"1007");
                 UserUtil.loginPay(mContext, dialogPay);
                 break;
-            case R.id.bt_right:
-                MobclickAgent.onEvent(mContext, "1005");
-                UserUtil.isLogin(mContext, ActivityUserCurrent.class);
-                break;
-            case R.id.text_detail:
+            case R.id.frame_image:
                 MobclickAgent.onEvent(mContext, "1006");
-                if (currentInfo != null) {
-                    WebActivity.startActivity(mContext, Urls.web_current);
-                }
+                WebActivity.startActivity(mContext, Urls.web_current);
+                break;
+            case R.id.frame_earning:
+                MobclickAgent.onEvent(mContext, "1006");
+                WebActivity.startActivity(mContext, Urls.web_current_earning);
+                break;
+            case R.id.frame_safe:
+                MobclickAgent.onEvent(mContext, "1006");
+                WebActivity.startActivity(mContext, Urls.web_current_safe);
+                break;
+            case R.id.frame_back:
+                MobclickAgent.onEvent(mContext, "1006");
+                WebActivity.startActivity(mContext, Urls.web_current_back);
                 break;
             default:
                 break;
