@@ -245,7 +245,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                     upLimit = mData.getSubjectMaxBuy();
                     leftLimit = mData.getSubjectTotalPrice().subtract(mData.getPurchasePrice());
                     BigDecimal tempInterest = new BigDecimal(mData.getYearInterest()).add(new BigDecimal(mData.getPresentationYearInterest()));
-                    interestRateString = "年化收益率：" + tempInterest + "%  期限：" + mData.getLimit() + "天";
+                    interestRateString = tempInterest + "%  期限：" + mData.getLimit() + "天";
                     updateUI();
                 }
             }

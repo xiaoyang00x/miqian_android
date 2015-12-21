@@ -10,6 +10,7 @@ public class UserCurrent {
     private String curAmt;//活期待收收益
     private String curYesterDayAmt;//活期昨日新增收益
     private String curAsset;//活期待收本金
+    private String currentYearRate;//活期待收本金
 
     private BigDecimal currentBuyUpLimit;//活期赚认购上限
 
@@ -63,5 +64,13 @@ public class UserCurrent {
 
     public void setCurrentBuyDownLimit(BigDecimal currentBuyDownLimit) {
         this.currentBuyDownLimit = currentBuyDownLimit;
+    }
+
+    public String getCurrentYearRate() {
+        return currentYearRate;
+    }
+
+    public void setCurrentYearRate(String currentYearRate) {
+        this.currentYearRate = currentYearRate;
     }
 }

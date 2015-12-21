@@ -46,6 +46,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     private DialogPay dialogPay;
 
     private CurrentInfo currentInfo;
+    private String interestRateString;
 
     private BigDecimal downLimit = BigDecimal.ONE;
     private BigDecimal upLimit = new BigDecimal(9999999999L);
@@ -100,7 +101,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                         this.setTitle("提示：请输入小于等于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
-                        UserUtil.currenPay(mContext, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, "");
+                        UserUtil.currenPay(mContext, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, interestRateString);
                         this.setEditMoney("");
                         this.setTitle("认购金额");
                         this.setTitleColor(getResources().getColor(R.color.mq_b1));
@@ -158,6 +159,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
             public void onSucceed(CurrentInfoResult result) {
                 swipeRefresh.setRefreshing(false);
                 currentInfo = result.getData();
+                interestRateString = currentInfo.getCurrentYearRate() + "%";
                 refreshView();
             }
 

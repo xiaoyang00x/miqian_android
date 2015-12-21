@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,12 +35,15 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private RelativeLayout frameProjectMatch;
     private Button btRedeem;//赎回
     private Button btSubscribe;//认购
+    private ImageView imageInterest;
+    private TextView textInterest;
 
     private UserCurrent userCurrent;
     private BigDecimal downLimit = BigDecimal.ONE;
     private BigDecimal upLimit = new BigDecimal(9999999999L);
     private DialogPay dialogPay;
 
+    private String interestRateString = "";
 
     @Override
     public void obtainData() {
@@ -49,6 +53,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             public void onSucceed(UserCurrentResult result) {
                 mWaitingDialog.dismiss();
                 userCurrent = result.getData();
+                interestRateString = userCurrent.getCurrentYearRate() + "%";
                 refreshView();
             }
 
@@ -77,6 +82,15 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 btSubscribe.setEnabled(false);
                 btSubscribe.setTextColor(getResources().getColor(R.color.mq_b5));
             }
+            String tempInterest = userCurrent.getCurrentYearRate();
+            if (TextUtils.isEmpty(tempInterest)) {
+                imageInterest.setVisibility(View.VISIBLE);
+                textInterest.setVisibility(View.GONE);
+            } else {
+                imageInterest.setVisibility(View.GONE);
+                textInterest.setVisibility(View.VISIBLE);
+                textInterest.setText(tempInterest);
+            }
         } else {
             btRedeem.setEnabled(false);
             btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
@@ -95,6 +109,9 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         btRedeem = (Button) findViewById(R.id.bt_redeem);
         btSubscribe = (Button) findViewById(R.id.bt_subscribe);
 
+        imageInterest = (ImageView) findViewById(R.id.image_interest);
+        textInterest = (TextView) findViewById(R.id.text_interest);
+
         frameCurrentRecord.setOnClickListener(this);
         frameProjectMatch.setOnClickListener(this);
         btRedeem.setOnClickListener(this);
@@ -112,7 +129,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                         this.setTitle("提示：请输入小于等于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
-                        UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, "");
+                        UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, interestRateString);
                         this.setEditMoney("");
                         this.setTitle("认购金额");
                         this.setTitleColor(getResources().getColor(R.color.mq_b1));

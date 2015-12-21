@@ -216,17 +216,21 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             frameCurrentPay.setVisibility(View.GONE);
             textProjectType.setText("期赚");
             textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_current), null, null, null);
-            textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.investment_interest), null);
+            if (TextUtils.isEmpty(interestRateString)) {
+                textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.investment_interest), null);
+            } else {
+                textInterestRate.setText("年化收益：" + interestRateString);
+            }
         } else if (PRODID_REGULAR.equals(prodId)) {
             textProjectType.setText("期赚");
             textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_regular), null, null, null);
             textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-            textInterestRate.setText(interestRateString);
+            textInterestRate.setText("年化收益：" + interestRateString);
         } else if (PRODID_REGULAR_PLAN.equals(prodId)) {
             textProjectType.setText("期计划");
             textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_regular), null, null, null);
             textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-            textInterestRate.setText(interestRateString);
+            textInterestRate.setText("年化收益：" + interestRateString);
         }
 
         btPay = (Button) findViewById(R.id.bt_pay);

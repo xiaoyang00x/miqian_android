@@ -65,8 +65,7 @@
                         android:id="@+id/text_interest_rate"
                         style="@style/f3_B1"
                         android:layout_alignParentRight="true"
-                        android:drawableRight="@drawable/investment_interest"
-                        android:text="年化收益率：" />
+                        android:text="年化收益：" />
 
                 </RelativeLayout>
 

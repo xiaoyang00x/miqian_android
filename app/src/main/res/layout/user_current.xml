@@ -32,12 +32,24 @@
             android:textColor="@color/mq_r1"
             android:textSize="44sp" />
 
+        <TextView
+            android:id="@+id/text_interest"
+            style="@style/WrapContent"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/text_earning"
+            android:layout_marginTop="8dp"
+            android:textSize="44sp"
+            android:textColor="@color/mq_r1"
+            android:drawableRight="@drawable/user_current_interest_percent" />
+
         <ImageView
+            android:id="@+id/image_interest"
             style="@style/WrapContent"
             android:layout_alignParentRight="true"
             android:layout_below="@id/text_earning"
             android:layout_marginTop="15dp"
-            android:src="@drawable/user_current_interest" />
+            android:src="@drawable/user_current_interest"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <View style="@style/item_divider" />
