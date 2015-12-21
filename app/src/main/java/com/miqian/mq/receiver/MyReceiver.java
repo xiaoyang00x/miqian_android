@@ -200,7 +200,7 @@ public class MyReceiver extends BroadcastReceiver {
                                         if ("3".equals(prodId)){//定期赚
                                             notificationIntent = new Intent(context, RegularEarnActivity.class);
                                             notificationIntent.putExtra("KEY_SUBJECT_ID",subjectId);
-                                        }else if("4".equals(prodId)){
+                                        }else if("5".equals(prodId)){
                                             notificationIntent = new Intent(context, RegularPlanActivity.class);
                                             notificationIntent.putExtra("KEY_SUBJECT_ID",subjectId);
                                         }

@@ -333,7 +333,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     if (!TextUtils.isEmpty(prodId) && !TextUtils.isEmpty(subjectId)) {
                         if ("3".equals(prodId)) {//定期赚
                             RegularEarnActivity.startActivity(mContext, subjectId);
-                        } else if ("4".equals(prodId)) {//定期计划
+                        } else if ("5".equals(prodId)) {//定期计划
                             RegularPlanActivity.startActivity(mContext, subjectId);
                         }
                         MyApplication.getInstance().getPushList().clear();
