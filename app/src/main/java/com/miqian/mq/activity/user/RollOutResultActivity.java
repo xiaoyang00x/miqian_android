@@ -57,7 +57,7 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
             }
         } else {
             imageStatus.setImageResource(R.drawable.rollin_status_fail);
-            tvTip.setText("可能是网银支付出现问题，建议您稍后重试。如果一直失败，请在官网在线支付，官网地址：www.shicaidai.com");
+            tvTip.setText("");
             textState.setText("提现失败");
             findViewById(R.id.divider1).setVisibility(View.GONE);
             findViewById(R.id.frame_ordernum).setVisibility(View.GONE);
