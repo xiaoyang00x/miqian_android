@@ -153,10 +153,6 @@ public static final int *;
 -keep class com.mob.tools.**{*;}
 
 ##------------------- for 友盟在线参数-------------------------
--keepclassmembers class * {
-        public (org.json.JSONObject);
-}
-
 -keep class com.umeng.onlineconfig.OnlineConfigAgent {
         public <fields>;
         public <methods>;
