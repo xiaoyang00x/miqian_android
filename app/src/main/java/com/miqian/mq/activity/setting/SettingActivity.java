@@ -251,9 +251,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.iv_push_state:
 
                 if (isPush) {
+                    isPush = false;
                     Pref.saveBoolean(Pref.PUSH_STATE, false, mActivity);
                     ivPushState.setImageResource(R.drawable.gesture_switch_close);
                 } else {
+                    isPush = true;
                     Pref.saveBoolean(Pref.PUSH_STATE, true, mActivity);
                     ivPushState.setImageResource(R.drawable.gesture_swith_open);
                 }

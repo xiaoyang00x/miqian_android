@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.RollOut;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -20,7 +21,7 @@ import com.miqian.mq.views.WFYTitle;
 
 public class RollOutResultActivity extends BaseActivity implements View.OnClickListener {
 
-//    private TextView textTel;
+    //    private TextView textTel;
     private Button btBack;
     private TextView tvMoney, tvOrderNum, tvCardNum;
     private RollOut rollOut;
@@ -38,7 +39,7 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
     @Override
     public void obtainData() {
 
-        state=rollOut.getState();
+        state = rollOut.getState();
         if (rollOut == null) {
             return;
         }
@@ -50,11 +51,11 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
             tvCardNum.setText(rollOut.getBankName() + "（****" + cardNum.substring(cardNum.length() - 4, cardNum.length()) + ")");
         }
 
-        if("1".equals(state)){
+        if ("1".equals(state)) {
             if (!TextUtils.isEmpty(rollOut.getOrderNo())) {
                 tvOrderNum.setText("资金编号：" + rollOut.getOrderNo());
             }
-        }else {
+        } else {
             imageStatus.setImageResource(R.drawable.rollin_status_fail);
             tvTip.setText("可能是网银支付出现问题，建议您稍后重试。如果一直失败，请在官网在线支付，官网地址：www.shicaidai.com");
             textState.setText("提现失败");
@@ -73,8 +74,8 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
 
         btBack = (Button) findViewById(R.id.bt_back);
         btBack.setOnClickListener(this);
-        imageStatus= (ImageView) findViewById(R.id.image_status);
-        tvTip=(TextView)findViewById(R.id.text_tip);
+        imageStatus = (ImageView) findViewById(R.id.image_status);
+        tvTip = (TextView) findViewById(R.id.text_tip);
     }
 
     @Override
@@ -99,6 +100,8 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.bt_back:
                 finish();
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
+
                 break;
         }
     }
