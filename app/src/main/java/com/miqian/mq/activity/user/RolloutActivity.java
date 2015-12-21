@@ -412,7 +412,7 @@ public class RolloutActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(cardNum)) {
                         rollOut.setCardNum(cardNum);
                     }
-                    rollOut.setState("0");//成功
+                    rollOut.setState("1");//成功
                     Intent intent = new Intent(mActivity, RollOutResultActivity.class);
                     Bundle extra = new Bundle();
                     extra.putSerializable("rollOutResult", rollOut);
