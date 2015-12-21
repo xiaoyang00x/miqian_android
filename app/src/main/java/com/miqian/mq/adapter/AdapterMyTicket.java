@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.MyTicketInvalidActivity;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.utils.Uihelper;
@@ -25,9 +27,10 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     private List<Promote> promList;
     private int maxValue = 999;//最大的值
 
-    private static final int VIEW_TYPE_HB = 0;
-    private static final int VIEW_TYPE_SC = 1;
-    private final int VIEW_FOOTER = 2;
+    private final int VIEW_FOOTER = 0;
+    private static final int VIEW_TYPE_HB = 1;
+    private static final int VIEW_TYPE_SC = 2;
+    private static final int VIEW_TYPE_FXQ = 3;
 
     private Context mContext;
 
@@ -47,6 +50,8 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 return VIEW_TYPE_HB;
             } else if (promote.getType().equals("SC")) {
                 return VIEW_TYPE_SC;
+            } else if (promote.getType().equals("FXQ")) {
+                return VIEW_TYPE_FXQ;
             }
             return VIEW_TYPE_HB;
         }
@@ -62,6 +67,9 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             case VIEW_TYPE_SC:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket, parent, false);
                 return new ViewHolderTicket(view);
+            case VIEW_TYPE_FXQ:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket, parent, false);
+                return new ViewHolderShare(view);
             case VIEW_FOOTER:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
                 return new ProgressViewHolder(view);
@@ -90,6 +98,20 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             setView(((ViewHolderTicket) holder).limitMoney, promote.getFitBdTermOrYrt());
             ((ViewHolderTicket) holder).limitType.setText(promote.getFitProdOrBdType());
             ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
+        } else if (holder instanceof ViewHolderShare) {
+            final Promote promote = promList.get(position);
+            ((ViewHolderShare) holder).textMoney.setText("" + promote.getTotalAmt());
+            ((ViewHolderShare) holder).textName.setText(promote.getPromProdName());
+            ((ViewHolderShare) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
+            setView(((ViewHolderShare) holder).limitMoney, promote.getFitBdTermOrYrt());
+            ((ViewHolderShare) holder).limitType.setText(promote.getFitProdOrBdType());
+            ((ViewHolderShare) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
+            ((ViewHolderShare) holder).frameTicket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebActivity.startActivity(mContext, promote.getShareUrl());
+                }
+            });
         } else if (holder instanceof ViewHolderPackage) {
             Promote promote = promList.get(position);
             ((ViewHolderPackage) holder).textMoney.setText("" + promote.getTotalAmt());
@@ -139,20 +161,39 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         public TextView limitMoney;
         public TextView limitType;
         public TextView limitDate;
-//        public ImageView promoteChoosed;
-//        public ImageView imageState;
 
         public ViewHolderTicket(View itemView) {
             super(itemView);
-//            textType = (TextView) itemView.findViewById(R.id.text_type);
             limitType = (TextView) itemView.findViewById(R.id.limit_type);
             limitDate = (TextView) itemView.findViewById(R.id.limit_date);
             textName = (TextView) itemView.findViewById(R.id.text_name);
             textMoney = (TextView) itemView.findViewById(R.id.text_money);
             textPercent = (TextView) itemView.findViewById(R.id.text_percent);
             limitMoney = (TextView) itemView.findViewById(R.id.limit_money);
-//            promoteChoosed = (ImageView) itemView.findViewById(R.id.promote_choosed);
-//            imageState = (ImageView) itemView.findViewById(R.id.image_state);
+        }
+    }
+
+    class ViewHolderShare extends RecyclerView.ViewHolder {
+
+        public TextView textMoney;
+        private TextView textName;
+        public TextView textPercent;
+        public TextView limitMoney;
+        public TextView limitType;
+        public TextView limitDate;
+        private RelativeLayout frameTicket;
+
+
+        public ViewHolderShare(View itemView) {
+            super(itemView);
+            limitType = (TextView) itemView.findViewById(R.id.limit_type);
+            limitDate = (TextView) itemView.findViewById(R.id.limit_date);
+            textName = (TextView) itemView.findViewById(R.id.text_name);
+            textMoney = (TextView) itemView.findViewById(R.id.text_money);
+            textPercent = (TextView) itemView.findViewById(R.id.text_percent);
+            limitMoney = (TextView) itemView.findViewById(R.id.limit_money);
+            frameTicket = (RelativeLayout) itemView.findViewById(R.id.frame_ticket);
+            frameTicket.setBackgroundResource(R.drawable.ticket_share_bg);
         }
     }
 

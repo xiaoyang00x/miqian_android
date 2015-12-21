@@ -139,7 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -159,8 +159,7 @@
             <RelativeLayout
                 android:id="@+id/frame_name"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_item"
-                android:visibility="visible">
+                android:layout_height="@dimen/edit_item">
 
                 <EditText
                     android:id="@+id/edit_name"

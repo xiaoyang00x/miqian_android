@@ -42,6 +42,7 @@ public class Promote {
     private String minBuyAmtOrPerc;
     private String fitBdTermOrYrt;
     private String fitProdOrBdType;
+    private String shareUrl;
 
     public String getPromProdId() {
         return promProdId;
@@ -185,5 +186,13 @@ public class Promote {
 
     public void setFitProdOrBdType(String fitProdOrBdType) {
         this.fitProdOrBdType = fitProdOrBdType;
+    }
+
+    public String getShareUrl() {
+        return shareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl;
     }
 }

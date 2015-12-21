@@ -18,12 +18,9 @@ import com.miqian.mq.views.WFYTitle;
 public class IntoResultActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView imageStatus;
-//    private TextView textProcessing;
     private TextView textOrderMoney;
     private TextView textOrderNo;
-//    private RelativeLayout frameFail;
     private TextView textStatus;
-//    private TextView textTel;
     private Button btBack;
     private LinearLayout frameTip;
     private TextView textTip;
@@ -49,16 +46,12 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
     @Override
     public void initView() {
         imageStatus = (ImageView) findViewById(R.id.image_status);
-//        textProcessing = (TextView) findViewById(R.id.text_processing);
         textOrderMoney = (TextView) findViewById(R.id.text_order_money);
         textOrderNo = (TextView) findViewById(R.id.text_order_no);
-//        frameFail = (RelativeLayout) findViewById(R.id.frame_fail);
         textStatus = (TextView) findViewById(R.id.text_status);
-//        textTel = (TextView) findViewById(R.id.text_tel);
         frameTip = (LinearLayout) findViewById(R.id.frame_tip);
         textTip = (TextView) findViewById(R.id.text_tip);
         btBack = (Button) findViewById(R.id.bt_back);
-//        textTel.setOnClickListener(this);
         btBack.setOnClickListener(this);
         refreshView();
     }
@@ -100,9 +93,6 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
             case R.id.bt_back:
                 IntoResultActivity.this.finish();
                 break;
-//            case R.id.text_tel:
-//                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
-//                break;
             default:
                 break;
         }
