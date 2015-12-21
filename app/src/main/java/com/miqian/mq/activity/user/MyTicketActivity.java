@@ -6,9 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
@@ -32,6 +30,7 @@ import java.util.List;
  * Created by Administrator on 2015/10/8.
  */
 public class MyTicketActivity extends BaseActivity implements View.OnClickListener {
+
     public List<Promote> promList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterMyTicket adapterMyTicket;
@@ -41,7 +40,6 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
     private Page page;
     private boolean isLoading = false;
     private boolean isStop;  //activity被finish则停止从网络获取数据的异步操作
-
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -66,14 +64,13 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
         mWaitingDialog.show();
         HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
 
-
             @Override
             public void onSucceed(RedPaperData result) {
                 mWaitingDialog.dismiss();
                 Redpaper redpaper = result.getData();
-                promList = redpaper.getCustPromotion();
-                page = redpaper.getPage();
                 if (redpaper != null) {
+                    promList = redpaper.getCustPromotion();
+                    page = redpaper.getPage();
                     if (promList != null && promList.size() > 0) {
                         showContentView();
                         refreshView();
