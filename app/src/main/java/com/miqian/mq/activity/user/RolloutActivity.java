@@ -167,18 +167,18 @@ public class RolloutActivity extends BaseActivity {
         if (userInfo == null) {
             return;
         }
-            if (!TextUtils.isEmpty(userInfo.getBankNo())) {
-                cardNum = RSAUtils.decryptByPrivate(userInfo.getBankNo());
-                bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
-            }
-            if (!TextUtils.isEmpty(userInfo.getBankName())) {
-                bindBankName.setText(userInfo.getBankName());
-            }
+        if (!TextUtils.isEmpty(userInfo.getBankNo())) {
+            cardNum = RSAUtils.decryptByPrivate(userInfo.getBankNo());
+            bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
+        }
+        if (!TextUtils.isEmpty(userInfo.getBankName())) {
+            bindBankName.setText(userInfo.getBankName());
+        }
 
-            if (!TextUtils.isEmpty(userInfo.getBalance())) {
-                totalMoney = userInfo.getBalance();
-                editMoney.setHint("本次最多可提现" + totalMoney + "元");
-            }
+        if (!TextUtils.isEmpty(userInfo.getBalance())) {
+            totalMoney = userInfo.getBalance();
+            editMoney.setHint("本次最多可提现" + totalMoney + "元");
+        }
 
     }
 
@@ -387,20 +387,43 @@ public class RolloutActivity extends BaseActivity {
             @Override
             public void onSucceed(RollOutResult result) {
                 mWaitingDialog.dismiss();
-                RollOut rollOut = result.getData();
-                if (rollOut == null) {
-                    return;
+                String resultCode = result.getCode();
+                //999999为失败
+                if (resultCode.equals("999999")) {
+                    RollOut rollOut = new RollOut();
+                    rollOut.setBankName(userInfo.getBankName());
+                    if (!TextUtils.isEmpty(cardNum)) {
+                        rollOut.setCardNum(cardNum);
+                    }
+                    rollOut.setMoneyOrder(moneyString);
+                    rollOut.setState("0");//失败
+                    Intent intent = new Intent(mActivity, RollOutResultActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putSerializable("rollOutResult", rollOut);
+                    intent.putExtras(extra);
+                    startActivity(intent);
+                    finish();
+                } else if (resultCode.equals("000000")) {
+                    RollOut rollOut = result.getData();
+                    if (rollOut == null) {
+                        return;
+                    }
+                    rollOut.setBankName(userInfo.getBankName());
+                    if (!TextUtils.isEmpty(cardNum)) {
+                        rollOut.setCardNum(cardNum);
+                    }
+                    rollOut.setState("0");//成功
+                    Intent intent = new Intent(mActivity, RollOutResultActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putSerializable("rollOutResult", rollOut);
+                    intent.putExtras(extra);
+                    startActivity(intent);
+                    finish();
+                } else if (resultCode.equals("101006") || resultCode.equals("101005")
+                        || resultCode.equals("101002") || resultCode.equals("101001")
+                        || resultCode.equals("999993") || resultCode.equals("999988")) {
+                    Uihelper.showToast(mActivity, result.getMessage());
                 }
-                rollOut.setBankName(userInfo.getBankName());
-                if (!TextUtils.isEmpty(cardNum)) {
-                    rollOut.setCardNum(cardNum);
-                }
-                Intent intent = new Intent(mActivity, RollOutResultActivity.class);
-                Bundle extra = new Bundle();
-                extra.putSerializable("rollOutResult", rollOut);
-                intent.putExtras(extra);
-                startActivity(intent);
-                finish();
             }
 
             @Override

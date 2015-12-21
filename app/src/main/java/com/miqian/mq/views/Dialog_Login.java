@@ -18,6 +18,7 @@ import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 /**
  * Created by Administrator on 2015/9/1.
@@ -52,7 +53,7 @@ public abstract class Dialog_Login extends Dialog {
             @Override
             public void onClick(View v) {
                 MobclickAgent.onEvent(mContext, "1047");
-                SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW,false);
+                SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW, false);
             }
         });
 
@@ -68,15 +69,15 @@ public abstract class Dialog_Login extends Dialog {
                             if (password.length() >= 6 && password.length() <= 16) {
                                 dismiss();
                                 login(telephone, password);
-                            }else {
-                                Uihelper.showToast((Activity)mContext, R.string.tip_password_login);
+                            } else {
+                                Uihelper.showToast((Activity) mContext, R.string.tip_password_login);
                             }
 
                         } else {
-                           Uihelper.showToast(mContext, "密码不能为空");
+                            Uihelper.showToast(mContext, "密码不能为空");
                         }
                     } else {
-                        Uihelper.showToast((Activity)mContext, R.string.phone_noeffect);
+                        Uihelper.showToast((Activity) mContext, R.string.phone_noeffect);
                     }
                 } else {
                     Uihelper.showToast(mContext, "手机号码不能为空");
@@ -84,6 +85,15 @@ public abstract class Dialog_Login extends Dialog {
 
             }
         });
+        View view_QQredBag = findViewById(R.id.layout_qq_redbag);
+        //在线参数
+        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
+        OnlineConfigAgent.getInstance().setDebugMode(false);
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "ShowQQRedBag");
+        if ("YES".equals(value)) {
+            view_QQredBag.setVisibility(View.VISIBLE);
+        }
+
     }
 
     public abstract void login(String telephone, String password);

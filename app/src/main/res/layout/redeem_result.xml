@@ -4,6 +4,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/image_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/rollin_status_success"/>
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="15dp"
+            android:textSize="@dimen/mq_font2"
+            android:textColor="@color/mq_b1"
+            android:text="赎回成功"/>
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
@@ -15,21 +41,18 @@
 
         <TextView
             style="@style/f3_B1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="赎回本金"
-            android:id="@+id/tv_1" />
+            android:text="赎回本金" />
 
         <TextView
             android:id="@+id/text_capital"
             style="@style/f3_B1"
             android:layout_alignParentRight="true"
-            android:text="--.--" />
+            android:text="--" />
 
     </RelativeLayout>
 
     <View
-        android:id="@+id/view_divider1"
+        android:id="@+id/view_divider3"
         style="@style/item_divider" />
 
     <RelativeLayout
@@ -38,24 +61,21 @@
         android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:minHeight="40dp"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
             style="@style/f3_B1"
-            android:text="对应利息"
-            android:id="@+id/tv_2" />
+            android:text="对应利息" />
 
         <TextView
             android:id="@+id/text_interest"
             style="@style/f3_B1"
-            android:layout_alignParentRight="true"
-            android:text="--.--" />
-
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
+
     <View
-        android:id="@+id/view_divider2"
+        android:id="@+id/view_divider1"
         style="@style/item_divider" />
 
     <RelativeLayout
@@ -64,143 +84,76 @@
         android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:minHeight="40dp"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
             style="@style/f3_B1"
-            android:text="已到余额"
-            android:id="@+id/tv_3" />
+            android:text="已到余额" />
 
         <TextView
             android:id="@+id/text_balance"
             style="@style/f3_B1"
-            android:layout_alignParentRight="true"
-            android:text="--.--" />
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <View
+        android:id="@+id/view_divider2"
+        style="@style/item_divider" />
 
+    <RelativeLayout
+        android:id="@+id/frame_casecode"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right">
+
+        <TextView
+            style="@style/f3_B1"
+            android:text="业务编号" />
+
+        <TextView
+            android:id="@+id/trade_number"
+            style="@style/f3_B1"
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
 
     <LinearLayout
-        android:id="@+id/frame_success"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:layout_marginTop="15dp">
+
+        <Button
+            android:id="@+id/bt_back"
+            style="@style/click_btn"
+            android:text="确认" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/frame_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
         android:orientation="vertical"
         android:visibility="visible">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/tv_tip"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_item"
-            android:layout_marginTop="@dimen/margin_top"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/margin_left_right"
-            android:paddingRight="@dimen/margin_left_right">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/mq_b2"
+            android:text=""
+            android:textSize="@dimen/mq_font4"/>
 
-            <TextView
-                style="@style/f3_B1"
-                android:layout_centerVertical="true"
-                android:text="交易编号" />
 
-            <TextView
-                android:id="@+id/trade_number"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="--.--"
-                style="@style/f3_B1"/>
-        </RelativeLayout>
-
-        <View style="@style/item_divider" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_item"
-            android:background="@color/white"
-            android:minHeight="40dp"
-            android:paddingLeft="@dimen/margin_left_right"
-            android:paddingRight="@dimen/margin_left_right">
-
-            <TextView
-                style="@style/f3_B1"
-                android:layout_centerVertical="true"
-                android:text="创建时间" />
-
-            <TextView
-                android:id="@+id/text_time"
-                style="@style/f3_B1"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="--.--"/>
-        </RelativeLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/frame_fail"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="@dimen/margin_top"
-        android:background="@color/white"
-        android:visibility="visible">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_tip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="交易失败"
-                android:textColor="@color/mq_r1"
-                android:textSize="@dimen/mq_font3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="如有问题，请拨打客服电话"
-                android:textColor="@color/mq_b2"
-                android:textSize="@dimen/mq_font4" />
-
-            <TextView
-                android:id="@+id/text_tel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="400-6656-191"
-                android:textColor="@color/mq_bl2"
-                android:textSize="@dimen/mq_font4" />
-        </LinearLayout>
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp">
-
-            <Button
-                android:id="@+id/bt_back_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_subscribe_back_home" />
-
-            <Button
-                android:id="@+id/bt_back_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:background="@drawable/btn_subscribe_back_user" />
-        </LinearLayout>
-    </RelativeLayout>
 </LinearLayout>

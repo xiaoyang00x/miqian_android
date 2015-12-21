@@ -191,7 +191,6 @@ public class ActivityRedeem extends BaseActivity {
         HttpRequest.redeem(mActivity, new ICallback<RedeemData>() {
             @Override
             public void onSucceed(RedeemData result) {
-
                 mWaitingDialog.dismiss();
                 String code = result.getCode();
 

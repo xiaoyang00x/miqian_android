@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.views.WFYTitle;
 
@@ -54,12 +56,17 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.frame_aboutus_introduce://简介
 
+                WebActivity.startActivity(mActivity, Urls.web_aboutus_introduce);
+
                 break;
             case R.id.frame_aboutus_team://管理团队
+
+                WebActivity.startActivity(mActivity, Urls.web_aboutus_team);
 
                 break;
             case R.id.frame_aboutus_cooperation://合作伙伴
 
+                WebActivity.startActivity(mActivity, Urls.web_aboutus_cooperation);
                 break;
         }
 

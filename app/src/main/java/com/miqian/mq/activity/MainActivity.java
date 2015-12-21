@@ -37,6 +37,7 @@ import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.json.JSONException;
@@ -92,6 +93,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (getIntent().getBooleanExtra(Constants.VERIFYFAILED, false)) {
             mTabHost.setCurrentTab(3);
         }
+
     }
 
     @Override

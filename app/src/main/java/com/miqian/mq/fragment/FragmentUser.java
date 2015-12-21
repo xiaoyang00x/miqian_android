@@ -39,6 +39,7 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
 
@@ -62,6 +63,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private EditText editTelephone;
     private EditText editPassword;
     private ExtendOperationController extendOperationController;
+    private View view_QQredBag;
+    private CustomDialog tipDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -169,9 +172,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             tv_Regular.setText("--");
         }
         //拾财券
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.getWealthTicket())&& !TextUtils.isEmpty(userInfo.getRedBag())) {
-            int count=Integer.parseInt(userInfo.getWealthTicket())+Integer.parseInt(userInfo.getRedBag());
-            tv_Ticket.setText( count+ "张");
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getWealthTicket()) && !TextUtils.isEmpty(userInfo.getRedBag())) {
+            int count = Integer.parseInt(userInfo.getWealthTicket()) + Integer.parseInt(userInfo.getRedBag());
+            tv_Ticket.setText(count + "张");
         } else {
             tv_Ticket.setText("--");
         }
@@ -256,6 +259,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
         editPassword = (EditText) view.findViewById(R.id.edit_password);
 
+        view_QQredBag = view.findViewById(R.id.layout_qq_redbag);
+
         Button btnLogin = (Button) view.findViewById(R.id.btn_login);
         view.findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,6 +321,13 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private void initLoginView() {
         swipeRefresh.setVisibility(View.GONE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
+        //在线参数
+        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
+        OnlineConfigAgent.getInstance().setDebugMode(false);
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "ShowQQRedBag");
+        if ("YES".equals(value)) {
+            view_QQredBag.setVisibility(View.VISIBLE);
+        }
     }
 
     private void login(String telephone, String password) {
@@ -353,7 +365,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 //                    Intent intent = new Intent(getActivity(), ActivityRealname.class);
 //                    startActivity(intent);
 //                } else {
-                    UserUtil.isLogin(getActivity(), IntoActivity.class);
+                UserUtil.isLogin(getActivity(), IntoActivity.class);
 //                }
 
                 break;
@@ -367,11 +379,32 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 String balance = userInfo.getBalance();
                 if (!TextUtils.isEmpty(balance)) {
                     if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
-                        Intent intent = new Intent(getActivity(), RolloutActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("userInfo", userInfoTemp);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+
+                        if ("1".equals(userInfo.getBindCardStatus())) {
+                            Intent intent = new Intent(getActivity(), RolloutActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("userInfo", userInfoTemp);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        } else {//提示绑卡
+                            if (tipDialog == null) {
+                                tipDialog = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
+                                    @Override
+                                    public void positionBtnClick() {
+                                        dismiss();
+                                    }
+
+                                    @Override
+                                    public void negativeBtnClick() {
+                                    }
+                                };
+                                tipDialog.setTitle("提示");
+                                tipDialog.setRemarks("请先充值完成绑卡流程");
+                            }
+                            tipDialog.show();
+                        }
+
+
                     } else {
                         Uihelper.showToast(getActivity(), "账户无余额，无法提现");
                     }
@@ -450,7 +483,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         switch (operationKey) {
             case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
-                    btn_message.setImageResource(R.drawable.btn_message);
+                btn_message.setImageResource(R.drawable.btn_message);
                 break;
         }
 

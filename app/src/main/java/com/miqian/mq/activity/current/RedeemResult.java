@@ -23,17 +23,12 @@ import com.miqian.mq.views.WFYTitle;
  */
 public class RedeemResult extends BaseActivity implements View.OnClickListener {
 
-    private ImageView imageSuccess;
     private TextView textInterest;
     private TextView textBalance;
     private TextView textCapital;
     private TextView tradeNumber;
-    private TextView textTime;
-    private TextView textTel;
-    private Button btBackHome;
-    private Button btBackUser;
-    private LinearLayout frameSuccess;
-    private RelativeLayout frameFail;
+    private TextView textState;
+    private Button btBack;
 
     private int status;
     private String title;
@@ -41,6 +36,7 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
     private String capital;
     private String errormessage;
     private TextView tvTip;
+    private ImageView imageStatus;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -65,33 +61,22 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
+        textState = (TextView) findViewById(R.id.text_status);
         textBalance = (TextView) findViewById(R.id.text_balance);
         textCapital = (TextView) findViewById(R.id.text_capital);
         textInterest = (TextView) findViewById(R.id.text_interest);
         tradeNumber = (TextView) findViewById(R.id.trade_number);
-        textTime = (TextView) findViewById(R.id.text_time);
-        textTel = (TextView) findViewById(R.id.text_tel);
-        btBackHome = (Button) findViewById(R.id.bt_back_home);
-        btBackUser = (Button) findViewById(R.id.bt_back_user);
-        textTel.setOnClickListener(this);
-        btBackHome.setOnClickListener(this);
-        btBackUser.setOnClickListener(this);
+        btBack = (Button) findViewById(R.id.bt_back);
+        btBack.setOnClickListener(this);
+        imageStatus = (ImageView) findViewById(R.id.image_status);
+        tvTip = (TextView) findViewById(R.id.tv_tip);
 
-         tvTip= (TextView)findViewById(R.id.tv_tip);
-
-        frameSuccess = (LinearLayout) findViewById(R.id.frame_success);
-        frameFail = (RelativeLayout) findViewById(R.id.frame_fail);
     }
 
     private void refreshView() {
         if (status == 1) {
-            frameSuccess.setVisibility(View.VISIBLE);
-            frameFail.setVisibility(View.GONE);
             if (!TextUtils.isEmpty(redeem.getOrderNo())) {
                 tradeNumber.setText(redeem.getOrderNo());
-            }
-            if (!TextUtils.isEmpty(redeem.getAddTime())) {
-                textTime.setText(Uihelper.timeToString((redeem.getAddTime())));
             }
             if (!TextUtils.isEmpty(redeem.getArriAmt())) {
                 textBalance.setText(redeem.getArriAmt() + "元");
@@ -102,18 +87,19 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
             if (!TextUtils.isEmpty(redeem.getAmt())) {
                 textCapital.setText(redeem.getAmt() + "元");
             }
+            imageStatus.setImageResource(R.drawable.rollin_status_success);
 
         } else {
+            findViewById(R.id.view_divider3).setVisibility(View.GONE);
+            findViewById(R.id.frame_interest).setVisibility(View.GONE);
             findViewById(R.id.view_divider1).setVisibility(View.GONE);
             findViewById(R.id.frame_arriveAmt).setVisibility(View.GONE);
             findViewById(R.id.view_divider2).setVisibility(View.GONE);
-            findViewById(R.id.frame_interest).setVisibility(View.GONE);
-            tvTip.setText(errormessage);
-            frameSuccess.setVisibility(View.GONE);
-            frameFail.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(capital)) {
-                textCapital.setText(capital + "元");
-            }
+            findViewById(R.id.frame_casecode).setVisibility(View.GONE);
+            tvTip.setText("如果多次失败，请联系客服400-6656-191");
+            imageStatus.setImageResource(R.drawable.rollin_status_fail);
+            textState.setText("赎回失败");
+            textCapital.setText(capital + "元");
         }
     }
 
@@ -134,13 +120,8 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
             case R.id.text_tel:
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
                 break;
-            case R.id.bt_back_home:
+            case R.id.bt_back:
                 mActivity.finish();
-                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_HOME,null);
-                break;
-            case R.id.bt_back_user:
-                RedeemResult.this.finish();
-                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER,null);
                 break;
             default:
                 break;

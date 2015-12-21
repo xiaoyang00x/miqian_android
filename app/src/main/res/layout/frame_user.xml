@@ -11,7 +11,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/mohu"
         android:clickable="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -150,7 +150,7 @@
 
                 <RelativeLayout
                     android:id="@+id/layout_qq_redbag"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:paddingRight="5dp"
                     android:layout_height="wrap_content">

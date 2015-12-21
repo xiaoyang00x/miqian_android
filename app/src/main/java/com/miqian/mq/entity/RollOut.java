@@ -11,6 +11,15 @@ public class RollOut  implements Serializable{
     private String addTime;
     private String cardNum;
     private String bankName;
+    private String state; //0为失败，1为成功
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public String getOrderNo() {
         return orderNo;
