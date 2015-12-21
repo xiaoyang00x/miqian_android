@@ -192,4 +192,21 @@ public class Urls {
     //首页运营活动
     public final static String get_home_activity = base_server + "activityService/getHomeActivity";
     public final static String get_activity_feedback = base_server + "activityService/getActivityFeedback";
+
+    //每日计息
+    public final static String web_current_earning ="https://res.shicaidai.com/miaoqian/current/meirijixi.html";
+    //本息保障
+    public final static String web_current_safe ="https://res.shicaidai.com/miaoqian/current/benxibaozhang.html";
+    //活存活取
+    public final static String web_current_back ="https://res.shicaidai.com/miaoqian/current/huocunhuoqu.html";
+
+
+    //管理团队
+    public final static String web_aboutus_team ="https://res.shicaidai.com/miaoqian/about/guanlituandui.html";
+    //合作伙伴
+    public final static String web_aboutus_cooperation ="https://res.shicaidai.com/miaoqian/about/hezuohuoban.html";
+    //关于秒钱
+    public final static String web_aboutus_introduce ="https://res.shicaidai.com/miaoqian/about/miaoqianjianjie.html";
+    //战略团队
+    public final static String web_aboutus_zhanlue ="https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
 }
