@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -122,7 +121,7 @@ public class ActivityRedeem extends BaseActivity {
             } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
                 Uihelper.showToast(mActivity, "金额不能小于0.01");
             } else {
-                if (userInfo.getPayPwdStatus() != null) {
+                if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
                     int state = Integer.parseInt(userInfo.getPayPwdStatus());
                     initDialogTradePassword(state);
                     if (state == DialogTradePassword.TYPE_SETPASSWORD) {

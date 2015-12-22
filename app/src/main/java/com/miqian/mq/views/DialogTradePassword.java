@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.view.View;
@@ -13,9 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.CityInfo;
-import com.miqian.mq.utils.FormatUtil;
-import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Uihelper;
 import com.umeng.analytics.MobclickAgent;
 

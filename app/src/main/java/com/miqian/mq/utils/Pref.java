@@ -37,6 +37,7 @@ public class Pref {
 
 	//用户信息
 //	public static final String REALNAME_STATUS = "RealnameStatus";
+	public static final String PAY_STATUS = "PayStatus";
 //	渠道id
 	public static final String CHANNEL_ID = "ChannelId";
 

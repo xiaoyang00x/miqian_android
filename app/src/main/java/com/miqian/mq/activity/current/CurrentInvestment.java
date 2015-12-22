@@ -26,7 +26,9 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
@@ -391,21 +393,26 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             prodListString = "";
         }
 
-        mWaitingDialog.show();
-        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
-            @Override
-            public void onSucceed(LoginResult result) {
-                mWaitingDialog.dismiss();
-                int status = Integer.parseInt(result.getData().getPayPwdStatus());
-                showTradeDialog(status);
-            }
+        int status = Pref.getInt(UserUtil.getPrefKey(mActivity, Pref.PAY_STATUS), mActivity, 0);
+        if (status == 0) {
+            mWaitingDialog.show();
+            HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+                @Override
+                public void onSucceed(LoginResult result) {
+                    mWaitingDialog.dismiss();
+                    int status = Integer.parseInt(result.getData().getPayPwdStatus());
+                    showTradeDialog(status);
+                }
 
-            @Override
-            public void onFail(String error) {
-                mWaitingDialog.dismiss();
-                Uihelper.showToast(mActivity, error);
-            }
-        });
+                @Override
+                public void onFail(String error) {
+                    mWaitingDialog.dismiss();
+                    Uihelper.showToast(mActivity, error);
+                }
+            });
+        } else {
+            showTradeDialog(status);
+        }
     }
 
     private void showTradeDialog(int type) {

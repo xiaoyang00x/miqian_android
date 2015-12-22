@@ -6,14 +6,12 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.BankBranchActivity;
-import com.miqian.mq.activity.setting.BindCardActivity;
 import com.miqian.mq.activity.setting.CityListActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
@@ -33,9 +31,6 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.WFYTitle;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.math.BigDecimal;
 import java.util.List;
