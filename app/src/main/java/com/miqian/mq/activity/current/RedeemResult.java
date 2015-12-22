@@ -110,7 +110,7 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText(title);
+        mTitle.setTitleText("赎回");
         mTitle.setIvLeftVisiable(View.GONE);
     }
 
