@@ -93,7 +93,7 @@ public class ActivityCurrentRecord extends BaseActivity {
     private void refreshView() {
         adapterCurrrentRecord = new AdapterCurrrentRecord(dataList);
         adapterCurrrentRecord.setMaxItem(page.getCount());
-        textHistory.setText("历史收益（元）");
+        textHistory.setText("历史赎回收益(元)");
         recyclerView.setAdapter(adapterCurrrentRecord);
     }
 
