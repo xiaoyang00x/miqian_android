@@ -48,7 +48,7 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected String getPageName() {
-        return "关于秒钱";
+        return "了解秒钱";
     }
 
     @Override

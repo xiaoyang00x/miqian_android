@@ -404,8 +404,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 current_tab = 3;
                 boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
                 if (currentActivity) {
-                    mTabHost.setCurrentTab(current_tab);
-                    showDialog(jpushInfo);
+                    if (mTabHost.getCurrentTab() == 3) {
+                        MyApplication.getInstance().setShowTips(true);
+                        mRefeshDataListener.changeData(jpushInfo);
+                    }else {
+                        mTabHost.setCurrentTab(current_tab);
+                        showDialog(jpushInfo);
+                    }
                 } else {
                     if (mTabHost.getCurrentTab() == 3) {
                         MyApplication.getInstance().setShowTips(true);

@@ -53,7 +53,7 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
 
         if ("1".equals(state)) {
             if (!TextUtils.isEmpty(rollOut.getOrderNo())) {
-                tvOrderNum.setText("资金编号：" + rollOut.getOrderNo());
+                tvOrderNum.setText(rollOut.getOrderNo());
             }
         } else {
             imageStatus.setImageResource(R.drawable.rollin_status_fail);

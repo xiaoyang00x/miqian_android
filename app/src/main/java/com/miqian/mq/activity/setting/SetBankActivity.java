@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.encrypt.Encrypt;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
@@ -172,7 +173,7 @@ public class SetBankActivity extends BaseActivity {
                             Uihelper.showToast(mActivity, error);
 
                         }
-                    }, bankCardNo, "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
+                    }, RSAUtils.decryptByPrivate(bankCardNo), "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
                 } else {
                     Uihelper.showToast(mActivity, "信息不全");
                 }

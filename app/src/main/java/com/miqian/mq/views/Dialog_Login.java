@@ -92,6 +92,12 @@ public abstract class Dialog_Login extends Dialog {
         String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "ShowQQRedBag");
         if ("YES".equals(value)) {
             view_QQredBag.setVisibility(View.VISIBLE);
+            view_QQredBag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(new Intent(mContext, RegisterActivity.class));
+                }
+            });
         }
 
     }
