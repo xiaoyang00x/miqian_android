@@ -88,9 +88,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             public void onSucceed(LoginResult result) {
                 mWaitingDialog.dismiss();
                 userInfo = result.getData();
-//                userInfo.setBindCardStatus("0");
-//                userInfo.setSupportStatus("0");
-//                userInfo.setRealNameStatus("0");
                 refreshView();
             }
 
@@ -133,16 +130,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         }
         frameBankInput = (RelativeLayout) findViewById(R.id.frame_bank_input);
         frameBank = (LinearLayout) findViewById(R.id.frame_bank);
-//        frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
         editBankNumber = (EditText) findViewById(R.id.edit_bank_number);
         editBankNumber.addTextChangedListener(textWatcher);
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
-//        textSupportBank = (TextView) findViewById(R.id.text_support_bank);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
         textLimit = (TextView) findViewById(R.id.text_limit);
-//        iconBank = (ImageView) findViewById(R.id.icon_bank);
-//        textLaw = (TextView) findViewById(R.id.text_law);
-//        textLaw.setOnClickListener(this);
 
         frameRealName = (LinearLayout) findViewById(R.id.frame_real_name);
         editName = (EditText) frameRealName.findViewById(R.id.edit_name);
@@ -172,15 +164,12 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             frameBankInput.setVisibility(View.VISIBLE);
             textTip.setVisibility(View.VISIBLE);
             showBankLimit();
-//            editBankNumber.requestFocus();
-//            frameTip.setVisibility(View.GONE);
         } else if (bindStatus.equals("1")) {
             if (userInfo.getSupportStatus().equals("1")) {
                 frameBank.setVisibility(View.VISIBLE);
                 frameBankInput.setVisibility(View.GONE);
-//                frameTip.setVisibility(View.GONE);
                 if (rollType == 1) {
-//                    btRollin.performClick();
+                    btRollin.performClick();
                 }
             } else {
                 frameRealName.setVisibility(View.VISIBLE);
@@ -188,8 +177,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 frameBankInput.setVisibility(View.VISIBLE);
                 textTip.setVisibility(View.VISIBLE);
                 showBankLimit();
-//                frameTip.setVisibility(View.VISIBLE);
-//                editBankNumber.requestFocus();
             }
             bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
             if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
@@ -198,10 +185,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             bindBankNumber.setText(bankNumber);
             bindBankName.setText(userInfo.getBankName());
             textLimit.setText("单笔限额 " + userInfo.getSingleAmtLimit()+ "， 单日限额 "+userInfo.getDayAmtLimit());
-
-//            if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
-//                imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
-//            }
         }
     }
 
@@ -259,7 +242,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 mWaitingDialog.dismiss();
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
                 if ("000000".equals(meta.getCode())) {
-//                    textSupportBank.setText("");
                     PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
                     payOrder = constructPreCardPayOrder(payOrderResult.getData());
                     String content4Pay = JSON.toJSONString(payOrder);
@@ -267,7 +249,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     msp.pay(content4Pay, mHandler, Constants.RQF_PAY, mActivity, false);
                 } else if ("999991".equals(meta.getCode())) {
                     SupportBankMsgResult supportBankMsgResult = JsonUtil.parseObject(result, SupportBankMsgResult.class);
-//                    textSupportBank.setText("支持以下银行储蓄卡：\n" + supportBankMsgResult.getData().getAllSupportBankMsg());
                     Uihelper.showToast(mActivity, supportBankMsgResult.getMessage());
                 }
             }
@@ -305,9 +286,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.bt_rollin:
                 rollIn();
-                break;
-            case R.id.text_law:
-//                WebActivity.startActivity(mActivity, Urls.web_recharge_law);
                 break;
             default:
                 break;
