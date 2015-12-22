@@ -207,7 +207,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
             btn_buy.setText("认购");
             btn_buy.setEnabled(true);
         } else {
-            btn_buy.setText("已售罄");
+            btn_buy.setText("已满额");
             btn_buy.setEnabled(false);
         }
     }

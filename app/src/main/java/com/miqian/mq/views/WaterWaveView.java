@@ -75,7 +75,7 @@ public class WaterWaveView extends View {
                 if (msg.what == 0) {
                     invalidate();
                     if (mStarted) {
-                        mHandler.sendEmptyMessageDelayed(0, 60L);
+                        mHandler.sendEmptyMessageDelayed(0, 100L);
                     }
                 }
             }

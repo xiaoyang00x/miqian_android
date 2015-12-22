@@ -64,14 +64,14 @@
         <TextView
             android:id="@+id/text_capital"
             style="@style/text_black_item"
-            android:layout_marginTop="25dp"
-            android:text="本金(元)" />
+            android:layout_marginTop="15dp"
+            android:text="在投本金(元)" />
 
         <TextView
             style="@style/text_black_item"
             android:layout_alignParentRight="true"
             android:layout_marginTop="15dp"
-            android:text="收益(元)" />
+            android:text="在投收益(元)" />
 
         <TextView
             android:id="@+id/captial"
@@ -105,7 +105,7 @@
         <TextView
             style="@style/text_black_item"
             android:layout_centerVertical="true"
-            android:text="资金记录" />
+            android:text="认购赎回记录" />
 
         <ImageView
             style="@style/WrapContent"

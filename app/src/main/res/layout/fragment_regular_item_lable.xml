@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/layout_regular_earn_head"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <View
-        android:id="@+id/divider_view"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/divider_line_color_gray"
-        />
+        android:background="#fafafa" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/layout_regular_earn_head"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
-        
-        <ImageView
-            android:id="@+id/img_category"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:scaleType="fitXY"
-            android:layout_marginRight="6dp"
-            />
+        android:layout_height="wrap_content"
+        android:background="#fafafa"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_lable_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/img_category"
-            android:layout_centerVertical="true"
-            android:text="@string/regular_plan"
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
 
-        <TextView
-            android:id="@+id/tv_category_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="@string/investment_security"
-            android:textColor="@color/mq_b2"
-            android:textSize="@dimen/mq_font4" />
+            <ImageView
+                android:id="@+id/img_category"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+                android:scaleType="fitXY" />
 
-    </RelativeLayout>
-</LinearLayout>
+            <TextView
+                android:id="@+id/tv_lable_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/img_category"
+                android:text="@string/regular_plan"
+                android:textColor="@color/mq_b1"
+                android:textSize="@dimen/mq_font3" />
+
+            <TextView
+                android:id="@+id/tv_category_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/investment_security"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font4" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

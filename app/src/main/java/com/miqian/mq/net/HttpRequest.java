@@ -687,7 +687,7 @@ public class HttpRequest {
         params.add(new Param("operationType", "0"));
         params.add(new Param("pageNo", "1"));
         params.add(new Param("pageSize", "50"));
-        new MyAsyncTask(context, Urls.getRegMain_v1, params, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {

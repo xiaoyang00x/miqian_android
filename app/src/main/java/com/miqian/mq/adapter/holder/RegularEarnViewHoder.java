@@ -13,11 +13,9 @@ import com.miqian.mq.activity.RegularEarnActivity;
 import com.miqian.mq.activity.RegularPlanActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.RegularBaseData;
-import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.utils.FormatUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by guolei_wang on 15/10/13.
@@ -33,18 +31,19 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
     private TextView tv_duration;
     private TextView tv_progress;
     private TextView tv_buy_now;
-//    private TextView tv_sale_number;
-    private TextView tv_description;
     private TextView tv_add_interest;
     private DonutProgress circlebar;
-    private View divider_view;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
 
     public RegularEarnViewHoder(View itemView) {
         super(itemView);
         imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
+        options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true)
+                .considerExifParams(true).showImageOnLoading(R.drawable.icon_category_default)
+                .showImageForEmptyUri(R.drawable.icon_category_default).showImageOnFail(R.drawable.icon_category_default)
+                .build();
 
         layout_item = itemView.findViewById(R.id.layout_item);
         layout_regular_earn_head = itemView.findViewById(R.id.layout_regular_earn_head);
@@ -57,10 +56,8 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
         tv_progress = (TextView) itemView.findViewById(R.id.tv_progress);
 //        tv_sale_number = (TextView) itemView.findViewById(R.id.tv_sale_number);
         tv_buy_now = (TextView) itemView.findViewById(R.id.tv_buy_now);
-        tv_description = (TextView) itemView.findViewById(R.id.tv_description);
         tv_add_interest = (TextView) itemView.findViewById(R.id.tv_add_interest);
         circlebar = (DonutProgress) itemView.findViewById(R.id.circlebar);
-        divider_view = itemView.findViewById(R.id.divider_view);
 
         tv_lable_name.setText(R.string.regular_earn);
         tv_category_description.setText(R.string.principal_interest_security);
@@ -68,20 +65,12 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
 
     /**
      * 设置 lable
+     *
      * @param name
      */
     public void setLableName(String name) {
         tv_lable_name.setText(name);
     }
-
-    /**
-     * 是否显示 divider
-     * @param show
-     */
-    public void showDiverView(boolean show) {
-        divider_view.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
 
     public void bindView(final Context mContext, final RegularBaseData regularEarn, boolean showLable) {
 
@@ -91,7 +80,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
         circlebar.setProgress((new Float(regularEarn.getPurchasePercent()).intValue()));
 
         //待开标
-        if("00".equals(regularEarn.getSubjectStatus())) {
+        if ("00".equals(regularEarn.getSubjectStatus())) {
             tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_bl1));
             tv_duration.setTextColor(mContext.getResources().getColor(R.color.mq_bl1));
             tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_bl1));
@@ -102,7 +91,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_progress.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "MM月dd日"));
             tv_buy_now.setText(FormatUtil.formatDate(regularEarn.getStartTimestamp(), "HH:mm"));
             tv_progress.setVisibility(View.VISIBLE);
-        }else if("01".equals(regularEarn.getSubjectStatus())) {
+        } else if ("01".equals(regularEarn.getSubjectStatus())) {
             tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
             tv_duration.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
             tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_r1));
@@ -113,7 +102,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_buy_now.setText(R.string.buy_now);
             tv_progress.setVisibility(View.VISIBLE);
             tv_progress.setText(Float.valueOf(regularEarn.getPurchasePercent()).intValue() + "%");
-        }else {
+        } else {
             tv_annurate_interest_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
             tv_duration.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
             tv_buy_now.setTextColor(mContext.getResources().getColor(R.color.mq_b2));
@@ -134,22 +123,23 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
 //            tv_description.setText(regularEarn.getPromotionDesc());
 //        }
 
-        if("Y".equalsIgnoreCase(regularEarn.getPresentationYesNo())) {
+        if ("Y".equalsIgnoreCase(regularEarn.getPresentationYesNo())) {
             tv_add_interest.setVisibility(View.VISIBLE);
             tv_add_interest.setText(" +" + regularEarn.getPresentationYearInterest() + "% ");
-        }else {
+        } else {
             tv_add_interest.setVisibility(View.GONE);
         }
 
         if (!showLable) {
             layout_regular_earn_head.setVisibility(View.GONE);
         } else {
+            setLableName(regularEarn.getSubjectCategoryName());
             layout_regular_earn_head.setVisibility(View.VISIBLE);
 
             tv_category_description.setText(regularEarn.getSubjectCategoryDesc());
-            if(TextUtils.isEmpty(regularEarn.getSubjectCategoryDescUrl())) {
+            if (TextUtils.isEmpty(regularEarn.getSubjectCategoryDescUrl())) {
                 tv_category_description.setText(regularEarn.getSubjectCategoryDesc());
-            }else {
+            } else {
                 tv_category_description.setText(regularEarn.getSubjectCategoryDesc() + ">>");
                 tv_category_description.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -159,9 +149,9 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
                 });
             }
 
-            if(TextUtils.isEmpty(regularEarn.getSubjectCategoryIconUrl())) {
+            if (TextUtils.isEmpty(regularEarn.getSubjectCategoryIconUrl())) {
                 img_category.setVisibility(View.GONE);
-            }else {
+            } else {
                 imageLoader.displayImage(regularEarn.getSubjectCategoryIconUrl(), img_category, options);
                 img_category.setVisibility(View.VISIBLE);
             }
@@ -173,7 +163,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 if (RegularBaseData.PRODID_REGULAR_PLAN.equals(regularEarn.getProdId())) {
                     RegularPlanActivity.startActivity(mContext, regularEarn.getSubjectId());
-                } else  {
+                } else {
                     RegularEarnActivity.startActivity(mContext, regularEarn.getSubjectId());
                 }
             }

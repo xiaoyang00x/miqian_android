@@ -6,41 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="@string/regular_plan"
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
-
-        <TextView
-            android:id="@+id/tv_invest_security"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="@string/investment_security"
-            android:textColor="@color/mq_bl1"
-            android:textSize="@dimen/mq_font4" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/tv_invest_security"
-            android:src="@drawable/icon_security" />
-    </RelativeLayout>
-
-    <View style="@style/item_divider" />
+    <include layout="@layout/fragment_regular_item_lable" />
 
     <com.miqian.mq.views.PagerContainer
         android:id="@+id/pager_container"

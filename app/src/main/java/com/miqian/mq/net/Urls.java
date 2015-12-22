@@ -69,7 +69,7 @@ public class Urls {
     //身份认证
     public final static String idcard_check = base_server + "commonService/idCardAuth";
     //充值转入接口
-    public final static String roll_in = base_server + "assetService/addRecharge";
+    public final static String roll_in = base_server + "assetService/v2/recharge";
     //充值转入结果查询接口
     public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
     //活期首页
@@ -137,7 +137,6 @@ public class Urls {
     public final static String repayment_detail = base_server + "commonService/getRepaymentList";
 
     //定期首页
-    public final static String getRegMain_v1 = base_server + "subjectService/getRegMain";
     public final static String getRegMain = base_server + "subjectService/v2/getRegMain";
 
     //home

@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.adapter.typeadapter.AdapterCurrrentRecord;
 import com.miqian.mq.entity.CurSubRecord;
 import com.miqian.mq.entity.CurrentRecordResult;
@@ -31,6 +29,7 @@ public class ActivityCurrentRecord extends BaseActivity {
     private TextView tvInterest;
     private RecyclerView recyclerView;
     private List<CurSubRecord> dataList;
+    private TextView textHistory;
 
     private int pageNo = 1;
     private String pageSize = "20";
@@ -94,6 +93,7 @@ public class ActivityCurrentRecord extends BaseActivity {
     private void refreshView() {
         adapterCurrrentRecord = new AdapterCurrrentRecord(dataList);
         adapterCurrrentRecord.setMaxItem(page.getCount());
+        textHistory.setText("历史赎回收益(元)");
         recyclerView.setAdapter(adapterCurrrentRecord);
     }
 
@@ -107,9 +107,8 @@ public class ActivityCurrentRecord extends BaseActivity {
 
     @Override
     public void initView() {
-
-
         tvInterest = (TextView) findViewById(R.id.tv_interest);
+        textHistory = (TextView) findViewById(R.id.text_history);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 

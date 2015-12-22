@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.umeng.analytics.MobclickAgent;
@@ -49,9 +51,19 @@ public abstract class Dialog_Login extends Dialog {
 
             }
         });
+        editTelephone.addTextChangedListener(new MyTextWatcher() {
+            @Override
+            public void myAfterTextChanged(Editable arg0) {
+                String phone = editTelephone.getText().toString();
+                if (TextUtils.isEmpty(phone)) {
+                    editPassword.setText("");
+                }
+            }
+        });
         findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 MobclickAgent.onEvent(mContext, "1047");
                 SendCaptchaActivity.enterActivity(mContext, TypeUtil.SENDCAPTCHA_FORGETPSW, false);
             }
@@ -95,6 +107,8 @@ public abstract class Dialog_Login extends Dialog {
             view_QQredBag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //跳到注册页
+                    dismiss();
                     mContext.startActivity(new Intent(mContext, RegisterActivity.class));
                 }
             });

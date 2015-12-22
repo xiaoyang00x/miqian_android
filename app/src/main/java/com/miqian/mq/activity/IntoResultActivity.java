@@ -83,7 +83,7 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("充值结果");
+        mTitle.setTitleText("充值");
         mTitle.setIvLeftVisiable(View.GONE);
     }
 
