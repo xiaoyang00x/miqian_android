@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.encrypt.Encrypt;
@@ -117,7 +118,7 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
                 if (null != desClass) {
                     startActivity(new Intent(getBaseContext(), desClass));
                 }
-                GestureLockVerifyActivity.this.finish();
+                finish();
             } else {
                 lockView.showErrorState();
                 unlockCount--;
@@ -140,6 +141,7 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
 
     // 验证失败 退出登录
     private void logout() {
+        Toast.makeText(getBaseContext(), "已退出登录", Toast.LENGTH_LONG).show();
         Pref.saveInt(Pref.UNLOCKCOUNT, 0, getBaseContext());
         UserUtil.clearUserInfo(getBaseContext());
         Intent intent = new Intent(this, MainActivity.class);

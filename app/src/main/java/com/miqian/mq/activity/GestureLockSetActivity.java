@@ -66,6 +66,7 @@ public class GestureLockSetActivity extends BaseFragmentActivity {
         isFirstSet = true;
         firstEnterPsw = null;
         setTitle("设置手势密码");
+        showLeftAction(false);
         tv_right.setVisibility(View.VISIBLE);
         tv_right.setText("跳过");
         showRightAction(true);

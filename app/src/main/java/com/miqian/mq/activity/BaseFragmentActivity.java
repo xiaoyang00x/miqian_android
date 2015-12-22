@@ -93,6 +93,12 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         });
     }
 
+    protected void showLeftAction(boolean show) {
+        if (img_left != null) {
+            img_left.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        }
+    }
+
     public void showRightAction(boolean show) {
         if (layout_right != null) {
             layout_right.setVisibility(show ? View.VISIBLE : View.INVISIBLE);

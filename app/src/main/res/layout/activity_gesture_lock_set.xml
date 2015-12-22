@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="请输入密码"
+        android:text="请绘制您的手势密码"
         android:textColor="#FFFFFF"
         android:textSize="15sp" />
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.MobileOS;
@@ -45,6 +46,8 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         }
 
         ShareSDK.initSDK(this);
+
+        MyApplication.setIsBackStage(false);
 
         setContentView(R.layout.activity_splash);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
