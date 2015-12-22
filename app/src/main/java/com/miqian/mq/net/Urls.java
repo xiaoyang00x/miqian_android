@@ -183,6 +183,10 @@ public class Urls {
     //红包、拾财券使用规则(认购页面)
     public final static String web_promote = base_server + "webView/preferServiceRegulations";
 
+
+    //连连支付支持绑定的银行界面
+    public final static String web_support_bank = base_server + "webView/querySupportBankLianLian";
+
     //活期详情
     public final static String web_current = base_server + "webView/currentDetail";
     //帮助中心

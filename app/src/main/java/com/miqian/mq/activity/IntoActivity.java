@@ -295,7 +295,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebActivity.startActivity(mActivity, Urls.web_promote);
+                WebActivity.startActivity(mActivity, Urls.web_support_bank);
             }
         });
     }
