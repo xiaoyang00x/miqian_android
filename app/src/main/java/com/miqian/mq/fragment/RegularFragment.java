@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -16,13 +15,10 @@ import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.utils.ShareUtils;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
-
-import cn.sharesdk.framework.ShareSDK;
 
 /**
  * Created by guolei_wang on 15/9/16.
@@ -31,7 +27,6 @@ public class RegularFragment extends BasicFragment implements View.OnClickListen
 
     RegularListAdapter mAdapter;
     private GetRegularInfo mData;
-    private ImageButton btRight;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,10 +45,6 @@ public class RegularFragment extends BasicFragment implements View.OnClickListen
     private TextView titleText;
 
     private void findView(View view) {
-        btRight = (ImageButton) view.findViewById(R.id.bt_right);
-        btRight.setImageResource(R.drawable.btn_regular_right);
-        btRight.setOnClickListener(this);
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         titleText = (TextView) view.findViewById(R.id.title);
         swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);

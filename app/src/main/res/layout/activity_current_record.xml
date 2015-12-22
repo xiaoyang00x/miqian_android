@@ -10,12 +10,11 @@
         android:layout_height="100dp">
 
         <TextView
-            android:id="@+id/tv_1"
+            android:id="@+id/text_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginTop="15dp"
-            android:text="历史收益（元）"
             android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font3" />
 
@@ -23,7 +22,7 @@
             android:id="@+id/tv_interest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_1"
+            android:layout_below="@+id/text_history"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:textColor="@color/mq_r1"
             android:textSize="@dimen/mq_font11" />
