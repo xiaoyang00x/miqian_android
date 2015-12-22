@@ -144,7 +144,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 textInterest.setText(tempInterest);
             }
             if (currentInfo.getCurrentSwitch().equals("0")) {
-                btInvestment.setText("已售罄");
+                btInvestment.setText("已满额");
                 btInvestment.setEnabled(false);
             } else {
                 btInvestment.setText("马上认购");

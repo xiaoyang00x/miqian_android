@@ -7,22 +7,14 @@ import java.util.ArrayList;
  */
 public class GetRegularInfo {
 
-    private ArrayList<RegularPlan> planList;
-    private ArrayList<RegularEarn> regList;
+    private ArrayList<SubjectCategoryData> subjectData;
 
-    public ArrayList<RegularPlan> getPlanList() {
-        return planList;
+    public ArrayList<SubjectCategoryData> getSubjectData() {
+        return subjectData;
     }
 
-    public void setPlanList(ArrayList<RegularPlan> planList) {
-        this.planList = planList;
+    public void setSubjectData(ArrayList<SubjectCategoryData> subjectData) {
+        this.subjectData = subjectData;
     }
 
-    public ArrayList<RegularEarn> getRegList() {
-        return regList;
-    }
-
-    public void setRegList(ArrayList<RegularEarn> regList) {
-        this.regList = regList;
-    }
 }

@@ -137,7 +137,6 @@ public class Urls {
     public final static String repayment_detail = base_server + "commonService/getRepaymentList";
 
     //定期首页
-    public final static String getRegMain_v1 = base_server + "subjectService/getRegMain";
     public final static String getRegMain = base_server + "subjectService/v2/getRegMain";
 
     //home
