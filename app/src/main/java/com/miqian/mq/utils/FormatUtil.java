@@ -13,10 +13,8 @@ import java.util.Date;
  */
 public class FormatUtil {
 
-    public static final String PATTERN_BANK = "^[1-9]\\d*$"; // 银行卡号
     public static final String PATTERN_IDCARD = "^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|[Xx])$"; // 身份证匹配
-    public static final String PATTERN_MONEY = "^\\d{1,7}(\\.\\d{0,2})?$";// 金额匹配、格式为"#####.##"
-
+    public static final String PATTERN_MONEY = "^(([1-9]{1}\\d{0,6})|([0]{1}))(\\.\\d{0,2})?$";
     /**
      * 保留两位float小数
      *
