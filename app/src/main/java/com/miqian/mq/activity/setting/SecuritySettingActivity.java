@@ -82,10 +82,16 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
 
                 break;
             case R.id.password_transaction:
-                MobclickAgent.onEvent(mActivity, "1028");
-                Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                intent.putExtra("payPwdStatus", payPwdStatus);
-                startActivity(intent);
+                if ("0".equals(payPwdStatus)) {//未设置
+
+                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+                    intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
+                    startActivity(intent);
+                } else {
+                    MobclickAgent.onEvent(mActivity, "1028");
+                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.iv_switch:
                 if (isGestureLockOpen()) {

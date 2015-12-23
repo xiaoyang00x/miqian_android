@@ -69,12 +69,12 @@ public class TradePsCaptchaActivity extends BaseActivity {
                 mTitle.setTitleText("更换手机号");
             }
 
-             String  payPwdStatus=intent.getStringExtra("payPwdStatus");
-            if (!TextUtils.isEmpty(payPwdStatus)){
-                if ("0".equals(payPwdStatus)){
-                    mTitle.setTitleText("设置交易密码");
-                }
-            }
+//             String  payPwdStatus=intent.getStringExtra("payPwdStatus");
+//            if (!TextUtils.isEmpty(payPwdStatus)){
+//                if ("0".equals(payPwdStatus)){
+//                    mTitle.setTitleText("设置交易密码");
+//                }
+//            }
         }
 
 
@@ -194,6 +194,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
                 Intent intent = new Intent(mActivity, SetPasswordActivity.class);
                 intent.putExtra("captcha", captcha);
                 intent.putExtra("idCard", idCard);
+                intent.putExtra("telephone", telephone);
                 intent.putExtra("type", TypeUtil.PASSWORD_TRADE);
                 startActivity(intent);
                 finish();

@@ -152,7 +152,7 @@
         <Button
             android:id="@+id/bt_back"
             style="@style/click_btn"
-            android:text="确认" />
+            android:text="确定" />
     </LinearLayout>
 
     <LinearLayout
