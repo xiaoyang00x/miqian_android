@@ -478,6 +478,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                     intent.putExtra("money", orderMoney.toString());
                                     intent.putExtra("balance", balancePay.toString());
                                     intent.putExtra("promoteMoney", promoteMoney.toString());
+                                    intent.putExtra("currentMoney", currentMoney.toString());
                                     startActivity(intent);
                                     CurrentInvestment.this.finish();
                                 }
