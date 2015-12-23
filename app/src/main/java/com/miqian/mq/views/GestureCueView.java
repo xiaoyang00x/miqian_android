@@ -74,7 +74,23 @@ public class GestureCueView extends View {
                 points[i][j].index = i * 3 + j;
             }
         }
+        resize();
         isInit = true;
+    }
+
+    // 重新丈量 小圆圈的大小 --- 以720p下切图为标准
+    private void resize() {
+        int screenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
+        final int SIZE = 720;
+        if (screenWidth != SIZE) {
+            bitmapR = bitmap_circle_nor.getWidth();
+            Matrix matrix = new Matrix();
+            float scaleX = (float) (1.0 * screenWidth / SIZE);
+            matrix.postScale(scaleX, scaleX);
+            bitmap_circle_nor = Bitmap.createBitmap(bitmap_circle_nor, 0, 0, bitmapR, bitmapR, matrix, true);
+            bitmap_circle_press = Bitmap.createBitmap(bitmap_circle_press, 0, 0, bitmapR, bitmapR, matrix, true);
+            bitmapR = bitmap_circle_nor.getWidth();
+        }
     }
 
     /**

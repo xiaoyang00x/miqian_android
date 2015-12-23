@@ -47,7 +47,6 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
         findView();
         fetchGestureLock();
         showUserPhoneNum();
-        img_left.setVisibility(View.GONE);
         tv_forgetPsw.setOnClickListener(onClickListener);
     }
 

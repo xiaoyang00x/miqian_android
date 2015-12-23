@@ -166,8 +166,10 @@ public class GestureLockView extends View {
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 Matrix matrix = new Matrix();
-                float sx = (float) (1.0 * width / 720);
-                sx = 1.0f;
+                float sx = 1.0f;
+//                if (screenWidth > 720) {
+//                    sx = (float) (1.0 * screenWidth / 720);
+//                }
                 matrix.setScale(sx, sx);
                 matrix.postTranslate(points[i][j].pointX - bitmapR * sx * 0.5f, points[i][j].pointY - bitmapR * sx * 0.5f);
                 if (points[i][j].state == GestureLockPoint.STATE_NOR) {
@@ -277,7 +279,24 @@ public class GestureLockView extends View {
                 points[i][j].index = i * 3 + j;
             }
         }
+        resize();
         isInit = true;
+    }
+
+    // 重新丈量 九宫格圈的大小 --- 以720p下切图为标准
+    private void resize() {
+        int screenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
+        final int SIZE = 720;
+        if (screenWidth != SIZE) {
+            bitmapR = bitmap_circle_nor.getWidth();
+            Matrix matrix = new Matrix();
+            float scaleX = (float) (1.0 * screenWidth / SIZE);
+            matrix.postScale(scaleX, scaleX);
+            bitmap_circle_nor = Bitmap.createBitmap(bitmap_circle_nor, 0, 0, bitmapR, bitmapR, matrix, true);
+            bitmap_circle_press = Bitmap.createBitmap(bitmap_circle_press, 0, 0, bitmapR, bitmapR, matrix, true);
+            bitmap_circle_error = Bitmap.createBitmap(bitmap_circle_error, 0, 0, bitmapR, bitmapR, matrix, true);
+            bitmapR = bitmap_circle_nor.getWidth();
+        }
     }
 
     // 手势绘制有误

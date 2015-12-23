@@ -68,7 +68,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         }
     }
 
-    protected ImageView img_left;
+    private ImageView img_left;
     protected TextView tv_right;
     private ImageView img_right;
     private View layout_left;
