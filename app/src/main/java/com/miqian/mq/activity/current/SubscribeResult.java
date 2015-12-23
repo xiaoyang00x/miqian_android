@@ -29,6 +29,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private TextView textPromote;
     private TextView tradeNumber;
     private TextView textTime;
+    private TextView tvTip;
     private TextView textTel;
     private Button btBackHome;
     private Button btBackUser;
@@ -42,6 +43,8 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private String promoteMoney;
     private String orderNo;
     private String timeString;
+    private Button btBack;
+    private TextView tvStatus;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -78,32 +81,47 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         textPromote = (TextView) findViewById(R.id.text_promote);
         tradeNumber = (TextView) findViewById(R.id.trade_number);
         textTime = (TextView) findViewById(R.id.text_time);
-        btBackHome = (Button) findViewById(R.id.bt_back_home);
-        btBackUser = (Button) findViewById(R.id.bt_back_user);
-        textTel = (TextView) findViewById(R.id.text_tel);
-        textTel.setOnClickListener(this);
-        btBackHome.setOnClickListener(this);
-        btBackUser.setOnClickListener(this);
+//        btBackHome = (Button) findViewById(R.id.bt_back_home);
+//        btBackUser = (Button) findViewById(R.id.bt_back_user);
+//        textTel = (TextView) findViewById(R.id.text_tel);
+//        textTel.setOnClickListener(this);
+//        btBackHome.setOnClickListener(this);
+//        btBackUser.setOnClickListener(this);
 
-        frameSuccess = (LinearLayout) findViewById(R.id.frame_success);
-        frameFail = (RelativeLayout) findViewById(R.id.frame_fail);
+//        frameSuccess = (LinearLayout) findViewById(R.id.frame_success);
+//        frameFail = (RelativeLayout) findViewById(R.id.frame_fail);
+
+        btBack = (Button) findViewById(R.id.bt_back);
+        btBack.setOnClickListener(this);
+        tvTip = (TextView) findViewById(R.id.tv_tip);
+        tvStatus = (TextView) findViewById(R.id.text_status);
     }
 
     private void refreshView() {
         if (status == 1) {
-            imageSuccess.setVisibility(View.VISIBLE);
-            frameSuccess.setVisibility(View.VISIBLE);
-            frameFail.setVisibility(View.GONE);
+//            imageSuccess.setVisibility(View.VISIBLE);
+//            frameSuccess.setVisibility(View.VISIBLE);
+//            frameFail.setVisibility(View.GONE);
+            imageSuccess.setImageResource(R.drawable.rollin_status_success);
             tradeNumber.setText(orderNo);
             textTime.setText(timeString);
+            tvStatus.setText("认购成功");
         } else {
-            imageSuccess.setVisibility(View.GONE);
-            frameSuccess.setVisibility(View.GONE);
-            frameFail.setVisibility(View.VISIBLE);
+//            imageSuccess.setVisibility(View.GONE);
+//            frameSuccess.setVisibility(View.GONE);
+//            frameFail.setVisibility(View.VISIBLE);
+            findViewById(R.id.view_divider3).setVisibility(View.GONE);
+            findViewById(R.id.frame_trade_number).setVisibility(View.GONE);
+            findViewById(R.id.view_divider4).setVisibility(View.GONE);
+            findViewById(R.id.frame_time).setVisibility(View.GONE);
+            tvTip.setText("如果多次失败，请联系客服400-6656-191");
+            imageSuccess.setImageResource(R.drawable.rollin_status_fail);
+            tvStatus.setText("认购失败");
         }
         textMoney.setText(money + "元");
         textBalance.setText(balance + "元");
         textPromote.setText(promoteMoney + "元");
+
     }
 
     @Override
@@ -113,26 +131,30 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText(title);
+        mTitle.setTitleText("认购");
         mTitle.setIvLeftVisiable(View.GONE);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.text_tel:
-                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
-                break;
-            case R.id.bt_back_home:
-                MobclickAgent.onEvent(mContext, "1064");
-                SubscribeResult.this.finish();
-                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_HOME, null);
-                break;
-            case R.id.bt_back_user:
+//            case R.id.text_tel:
+//                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
+//                break;
+//            case R.id.bt_back_home:
+//                MobclickAgent.onEvent(mContext, "1064");
+//                SubscribeResult.this.finish();
+//                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_HOME, null);
+//                break;
+//            case R.id.bt_back_user:
+//                MobclickAgent.onEvent(mContext, "1065");
+//                SubscribeResult.this.finish();
+//                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
+//                break;
+            case R.id.bt_back:
                 MobclickAgent.onEvent(mContext, "1065");
                 SubscribeResult.this.finish();
-                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
-                break;
+                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_HOME, null);
             default:
                 break;
         }
