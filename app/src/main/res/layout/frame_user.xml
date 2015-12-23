@@ -529,6 +529,10 @@
                         android:text="--"
                         android:textColor="@color/mq_r1" />
                 </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"></RelativeLayout>
 
             </LinearLayout>
         </ScrollView>
