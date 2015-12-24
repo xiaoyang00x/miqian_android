@@ -1,6 +1,7 @@
 package com.miqian.mq.net;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.UserUtil;
@@ -43,7 +44,9 @@ public class HttpUtils {
         sortParam(list);
         if (list != null && list.size() > 0) {
             for (Param param : list) {
-                builder.add(param.key, param.value);
+                if(!TextUtils.isEmpty(param.value)) {
+                    builder.add(param.key, param.value);
+                }
             }
         }
         RequestBody requestBody = null;

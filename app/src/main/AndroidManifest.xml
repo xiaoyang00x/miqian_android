@@ -232,7 +232,13 @@
             android:launchMode="singleInstance"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-
+        <receiver
+            android:name=".receiver.HomeDialogReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.miqian.mq.receiver.show_dialog" />
+            </intent-filter>
+        </receiver>
         <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

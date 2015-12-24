@@ -1283,10 +1283,10 @@ public class HttpRequest {
     /**
      * 获取首页运营活动列表
      *
-     * @param custId
      */
-    public static void getHomeActivity(Context context, String custId, final ICallback<GetHomeActivityResult> callback) {
+    public static void getHomeActivity(Context context, final ICallback<GetHomeActivityResult> callback) {
         ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
         if (!TextUtils.isEmpty(custId)) {
             params.add(new Param("custId", custId));
         }
@@ -1305,6 +1305,31 @@ public class HttpRequest {
             @Override
             public void onFail(String error) {
                 callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+    /**
+     * 获取首页运营活动已读反馈
+     *
+     * @param activityId 活动 ID
+     * @param activityPlanId   计划 ID
+     */
+    public static void getActivityFeedback(Context context, String activityId, String activityPlanId, final ICallback<Meta> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", custId));
+        }
+        params.add(new Param("activityId", activityId));
+        params.add(new Param("activityPlanId", activityPlanId));
+        new MyAsyncTask(context, Urls.get_activity_feedback, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+            }
+
+            @Override
+            public void onFail(String error) {
             }
         }).executeOnExecutor();
     }

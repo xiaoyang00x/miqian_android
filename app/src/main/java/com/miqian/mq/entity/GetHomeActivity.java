@@ -7,22 +7,19 @@ import java.util.ArrayList;
  * 首页运营活动返回数据
  */
 public class GetHomeActivity {
-    private String backgroundUrl;             //背景图
-    private String activityId;                //活动 ID
+
+    public static final String FLAG_UNSHOW = "0";   //常量 不弹窗
+    public static final String FLAG_SHOW = "1";    //常量 弹窗
+    private String activityId = "";                //活动 ID
+    private String activityPlanId = "";            //活动计划 ID
+    private String backgroundCase;            //文本描述
     private String jumpUrl;                   //活动跳转链接
-    private int showFlag;                     //
-    private String enterUrl;                  //参加活动按钮图片
-    private String closeUrl;                  //关闭按钮
-
-    private ArrayList<HomeActivityTime> activityTime;
-
-    public String getBackgroundUrl() {
-        return backgroundUrl;
-    }
-
-    public void setBackgroundUrl(String backgroundUrl) {
-        this.backgroundUrl = backgroundUrl;
-    }
+    private String showFlag;                     //是否弹窗标示0:不弹窗 1：弹窗
+    private String enterCase;                  //参加活动按钮文本
+    private String titleCase;                  //对话框标题
+    private long sysDate;                      //系统当前时间
+    private long beginTime;                      //活动开始时间
+    private long endTime;                      //活动结束时间
 
     public String getActivityId() {
         return activityId;
@@ -30,6 +27,22 @@ public class GetHomeActivity {
 
     public void setActivityId(String activityId) {
         this.activityId = activityId;
+    }
+
+    public String getActivityPlanId() {
+        return activityPlanId;
+    }
+
+    public void setActivityPlanId(String activityPlanId) {
+        this.activityPlanId = activityPlanId;
+    }
+
+    public String getBackgroundCase() {
+        return backgroundCase;
+    }
+
+    public void setBackgroundCase(String backgroundCase) {
+        this.backgroundCase = backgroundCase;
     }
 
     public String getJumpUrl() {
@@ -40,35 +53,51 @@ public class GetHomeActivity {
         this.jumpUrl = jumpUrl;
     }
 
-    public int getShowFlag() {
+    public String getShowFlag() {
         return showFlag;
     }
 
-    public void setShowFlag(int showFlag) {
+    public void setShowFlag(String showFlag) {
         this.showFlag = showFlag;
     }
 
-    public String getEnterUrl() {
-        return enterUrl;
+    public String getEnterCase() {
+        return enterCase;
     }
 
-    public void setEnterUrl(String enterUrl) {
-        this.enterUrl = enterUrl;
+    public void setEnterCase(String enterCase) {
+        this.enterCase = enterCase;
     }
 
-    public String getCloseUrl() {
-        return closeUrl;
+    public String getTitleCase() {
+        return titleCase;
     }
 
-    public void setCloseUrl(String closeUrl) {
-        this.closeUrl = closeUrl;
+    public void setTitleCase(String titleCase) {
+        this.titleCase = titleCase;
     }
 
-    public ArrayList<HomeActivityTime> getActivityTime() {
-        return activityTime;
+    public long getSysDate() {
+        return sysDate;
     }
 
-    public void setActivityTime(ArrayList<HomeActivityTime> activityTime) {
-        this.activityTime = activityTime;
+    public void setSysDate(long sysDate) {
+        this.sysDate = sysDate;
+    }
+
+    public long getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(long beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 }

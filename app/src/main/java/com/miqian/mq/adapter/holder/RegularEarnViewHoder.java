@@ -123,7 +123,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
 //            tv_description.setText(regularEarn.getPromotionDesc());
 //        }
 
-        if ("Y".equalsIgnoreCase(regularEarn.getPresentationYesNo())) {
+        if (regularEarn.getPresentationYesNo() == 1) {
             tv_add_interest.setVisibility(View.VISIBLE);
             tv_add_interest.setText(" +" + regularEarn.getPresentationYearInterest() + "% ");
         } else {

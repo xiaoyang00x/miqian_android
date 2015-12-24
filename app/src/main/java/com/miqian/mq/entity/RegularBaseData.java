@@ -18,7 +18,7 @@ public class RegularBaseData implements Serializable {
     protected long endTimestamp; //结束时间
     protected float purchasePercent; //认购进度
     protected String subjectStatus; //标的状态  投标状态编码: 99待开标不显示   00待开标   01已开标   02已满标（已售罄）  03已到期  04已撤销  05已流标   06审批中    07还款中    08正常还完
-    protected String presentationYesNo; // "N",//是否赠送收益
+    protected int presentationYesNo; // "0",//是否赠送收益  1 赠送
     protected String presentationYearInterest; //赠送年利率
 
     protected String yearInterest; //年化收益
@@ -88,11 +88,11 @@ public class RegularBaseData implements Serializable {
         this.subjectStatus = subjectStatus;
     }
 
-    public String getPresentationYesNo() {
+    public int getPresentationYesNo() {
         return presentationYesNo;
     }
 
-    public void setPresentationYesNo(String presentationYesNo) {
+    public void setPresentationYesNo(int presentationYesNo) {
         this.presentationYesNo = presentationYesNo;
     }
 

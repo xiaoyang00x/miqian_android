@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.HomeAdPageAdapter;
 import com.miqian.mq.entity.AdvertisementImg;
+import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.PageIndicator;
 
@@ -23,19 +25,22 @@ import java.util.ArrayList;
 public class HomeHeaderViewHolder extends RecyclerView.ViewHolder {
 
     private ViewPager mHomeViewpager;
-    private LinearLayout indicatorContainer;
+    private LinearLayout layout_indicator;
     private ImageView[] imageViews;
     private ArrayList<AdvertisementImg> mDataList;
     private HomeAdPageAdapter mAdpagerAdapter;
-    private PageIndicator mHomeViewpagerIndictor;
     private int currentPageState = ViewPager.SCROLL_STATE_IDLE;// Viewpager状态
 
     public HomeHeaderViewHolder(View itemView, ArrayList<AdvertisementImg> mDataList) {
         super(itemView);
         this.mDataList = mDataList;
         mHomeViewpager = (ViewPager) itemView.findViewById(R.id.vp_home_viewpager);
-        indicatorContainer = (LinearLayout) itemView.findViewById(R.id.viewGroup);
-        setIndicators(mDataList.size(), indicatorContainer.getContext());
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)mHomeViewpager.getLayoutParams();
+        int width = itemView.getResources().getDisplayMetrics().widthPixels;
+        params.height = width * 440 /720;
+        mHomeViewpager.setLayoutParams(params);
+        layout_indicator = (LinearLayout) itemView.findViewById(R.id.layout_indicator);
+        setIndicators(mDataList.size(), layout_indicator.getContext());
         initAdapter(itemView);
     }
 
@@ -44,17 +49,17 @@ public class HomeHeaderViewHolder extends RecyclerView.ViewHolder {
         for (int i = 0; i < amount; i++) {
             ImageView imageView = new ImageView(ctx);
             final LinearLayout.LayoutParams lp =
-                    new LinearLayout.LayoutParams(Uihelper.dip2px(ctx, 20), Uihelper.dip2px(ctx, 4));
-            lp.setMargins(0, 0, 18, 0);
+                    new LinearLayout.LayoutParams(Uihelper.dip2px(ctx, 8), Uihelper.dip2px(ctx, 8));
+            lp.setMargins(0, 0, Uihelper.dip2px(ctx, 8), 0);
             imageView.setLayoutParams(lp);
             imageViews[i] = imageView;
 
             if (i == 0) {
-                imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+                imageViews[i].setBackgroundResource(R.drawable.home_indicator_selected);
             } else {
-                imageViews[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
+                imageViews[i].setBackgroundResource(R.drawable.home_indicator_normal);
             }
-            indicatorContainer.addView(imageView);
+            layout_indicator.addView(imageView);
         }
     }
 
@@ -62,19 +67,12 @@ public class HomeHeaderViewHolder extends RecyclerView.ViewHolder {
         mAdpagerAdapter = new HomeAdPageAdapter(view.getContext(), mDataList);
         mHomeViewpager = (ViewPager) view.findViewById(R.id.vp_home_viewpager);
         mHomeViewpager.setAdapter(mAdpagerAdapter);
-        initPagerIndicator(view);//pagerindicator  todo
         if (mDataList.size() != 0) {
             int maxSize = 65535;
             int pos = (maxSize / 2) - (maxSize / 2) % mDataList.size(); // 计算初始位置
             mHomeViewpager.setOnPageChangeListener(new MyOnPageChangeListener());
             mHomeViewpager.setCurrentItem(pos, true);
         }
-    }
-
-    public void initPagerIndicator(View view) {
-        mHomeViewpagerIndictor = (PageIndicator) view.findViewById(R.id.pi_home_page_indictor);
-        mHomeViewpagerIndictor.setPageOrginal(true);
-        mHomeViewpagerIndictor.setTotalPageSize(mDataList.size());
     }
 
     /**
@@ -94,10 +92,6 @@ public class HomeHeaderViewHolder extends RecyclerView.ViewHolder {
 
         @Override
         public void onPageSelected(int index) {
-
-            mHomeViewpagerIndictor.setCurrentPage(index % mAdpagerAdapter.getItemCount());
-
-            //在这里设置具体的indicator   // TODO: 9/25/15
             setImageBackground(index % mAdpagerAdapter.getItemCount());
         }
     }
@@ -112,9 +106,9 @@ public class HomeHeaderViewHolder extends RecyclerView.ViewHolder {
             }
 
             if (i == selectItems) {
-                imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+                imageViews[i].setBackgroundResource(R.drawable.home_indicator_selected);
             } else {
-                imageViews[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
+                imageViews[i].setBackgroundResource(R.drawable.home_indicator_normal);
             }
         }
     }

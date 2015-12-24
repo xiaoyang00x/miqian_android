@@ -124,6 +124,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private ImageView img_category;
         private ImageLoader imageLoader;
         private DisplayImageOptions options;
+        private int defalutIndicatorPosition = 0;  //viewpager 默认显示的页面
 
         public HeaderViewHolder(View itemView, final Context mContext, final View swipeRefreshLayout, List<RegularBaseData> planList) {
             super(itemView);
@@ -137,7 +138,13 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             view_pager = (DecoratorViewPager) itemView.findViewById(R.id.view_pager);
             layout_limit_container = (LinearLayout) itemView.findViewById(R.id.layout_limit_container);
-            view_pager.setAdapter(new MyPagerAdapter(mContext, planList));
+            if(planList.size() > 1) {
+                defalutIndicatorPosition = 1;
+            }else {
+                defalutIndicatorPosition = 0;
+            }
+            view_pager.setAdapter(new MyPagerAdapter(mContext, planList, defalutIndicatorPosition));
+            view_pager.setCurrentItem(defalutIndicatorPosition);
 
 
             layout_regular_earn_head = itemView.findViewById(R.id.layout_regular_earn_head);
@@ -261,10 +268,12 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     static class MyPagerAdapter extends PagerAdapter {
         Context mContext;
         List<RegularBaseData> planList;
+        int defalutIndicatorPosition;
 
-        public MyPagerAdapter(Context mContext, List<RegularBaseData> planList) {
+        public MyPagerAdapter(Context mContext, List<RegularBaseData> planList, int defalutIndicatorPosition) {
             this.mContext = mContext;
             this.planList = planList;
+            this.defalutIndicatorPosition = defalutIndicatorPosition;
         }
 
         @Override
@@ -281,7 +290,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             final RegularBaseData plan = planList.get(position);
             tv_annurate_interest_rate.setText(plan.getYearInterest() + "%");
-            if ("Y".equalsIgnoreCase(plan.getPresentationYesNo())) {
+            if (plan.getPresentationYesNo() == 1) {
                 tv_add_interest.setText(" +" + plan.getPresentationYearInterest() + "% ");
                 tv_add_interest.setVisibility(View.VISIBLE);
             } else {
@@ -323,7 +332,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     RegularPlanActivity.startActivity(mContext, plan.getSubjectId());
                 }
             });
-            if (position == 0) {
+            if (position == defalutIndicatorPosition) {
                 view.setAlpha(1f);
             } else {
                 view.setAlpha(0.3f);

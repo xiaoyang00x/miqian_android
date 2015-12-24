@@ -171,7 +171,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         }
         tv_limit.setText("项目期限 " + mData.getLimit() + "天");
         tv_annurate_interest_rate.setText(mData.getYearInterest());
-        if ("Y".equalsIgnoreCase(mData.getPresentationYesNo())) {
+        if (mData.getPresentationYesNo() == 1) {
             tv_add_interest.setVisibility(View.VISIBLE);
             tv_add_interest.setText(" +" + mData.getPresentationYearInterest() + "% ");
         } else {

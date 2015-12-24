@@ -1,14 +1,17 @@
 package com.miqian.mq.fragment;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.HomeAdapter;
@@ -16,8 +19,12 @@ import com.miqian.mq.entity.GetHomeActivity;
 import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomePageInfoResult;
+import com.miqian.mq.listener.HomeDialogListener;
+import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.receiver.HomeDialogReceiver;
+import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.HomeDialog;
 import com.miqian.mq.views.MySwipeRefresh;
@@ -29,8 +36,8 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FragmentHome extends BasicFragment implements ImageLoadingListener{
-
+public class FragmentHome extends BasicFragment implements ImageLoadingListener, HomeDialogListener {
+    public static final int REQ_SHOW_DIALOG = 0x1000;
     private View view;
     private RecyclerView recyclerView;
     private MySwipeRefresh swipeRefresh;
@@ -40,6 +47,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private HomeDialog homeDialog;
+    private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,10 +56,9 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         findView(view);
         setView();
-//        getHomeActivity();
-        if (mData == null) {
-            getHomePageInfo();
-        }
+        ListenerManager.registerHomeDialogListener(FragmentHome.class.getSimpleName(), this);
+        getHomeActivity();
+        getHomePageInfo();
         return view;
     }
 
@@ -89,6 +96,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
 
     }
 
+
     private class AutoScrollTimerTask extends TimerTask {
         @Override
         public void run() {
@@ -105,6 +113,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
             timer.schedule(timerTask, 5000, 5000);
         }
     }
+
 
     @Override
     protected String getPageName() {
@@ -124,6 +133,8 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
+                isFirstLoading = true;
+                getHomeActivity();
                 getHomePageInfo();
             }
         });
@@ -139,7 +150,10 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
         synchronized (mLock) {
             inProcess = true;
         }
-        begin();
+        if (isFirstLoading) {
+            begin();
+            isFirstLoading = false;
+        }
         swipeRefresh.setRefreshing(true);
         HttpRequest.getHomePageInfo(getActivity(), new ICallback<HomePageInfoResult>() {
 
@@ -159,6 +173,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
 //                } else {
 //                    adapter.notifyDataSetChanged(info);
 //                }
+
             }
 
             @Override
@@ -183,7 +198,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
         synchronized (mActivityLock) {
             inActivityProcess = true;
         }
-        HttpRequest.getHomeActivity(getActivity(), "", new ICallback<GetHomeActivityResult>() {
+        HttpRequest.getHomeActivity(getActivity(), new ICallback<GetHomeActivityResult>() {
 
             @Override
             public void onSucceed(GetHomeActivityResult result) {
@@ -193,9 +208,20 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
                 if (result == null) return;
                 mHomeActivityData = result.getData();
 
-                if(mHomeActivityData != null) {
+//                if (Config.DEBUG) {
+//                    if (mHomeActivityData == null)
+//                        mHomeActivityData = new GetHomeActivity();
+//                    mHomeActivityData.setBeginTime(SystemClock.currentThreadTimeMillis() + 30 * 1000);
+//                    mHomeActivityData.setEndTime(SystemClock.currentThreadTimeMillis() + 60 * 1000);
+//                    mHomeActivityData.setShowFlag("1");
+//                    mHomeActivityData.setBackgroundCase("拾财贷的元旦活动，满一百送一万现金，信不信由你。走过路过不要错过，今年最后一次活动，如此给力，快去参加吧！");
+//                    mHomeActivityData.setJumpUrl("http://www.miaoqian.com");
+//                    mHomeActivityData.setEnterCase("我要发财");
+//                    mHomeActivityData.setTitleCase("双旦跳楼大甩卖");
+//                }
+
+                if (mHomeActivityData != null && GetHomeActivity.FLAG_SHOW.equals(mHomeActivityData.getShowFlag())) {
                     showActivityDialog();
-//                    imageLoader.loadImage(mHomeActivityData.getBackgroundUrl(), options);
                 }
             }
 
@@ -208,7 +234,27 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener{
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ListenerManager.unregisterHomeDialogListener(FragmentHome.class.getSimpleName());
+    }
+
     private void showActivityDialog() {
+        long currentTime = SystemClock.currentThreadTimeMillis();
+        if (currentTime >= mHomeActivityData.getBeginTime() && currentTime < mHomeActivityData.getEndTime()) {
+            show();
+        } else if (currentTime < mHomeActivityData.getBeginTime()) {
+            Intent intent = new Intent(getActivity(), HomeDialogReceiver.class);
+            intent.setAction(HomeDialogReceiver.ACTION_SHOW_DIALOG);
+            PendingIntent dialogPendingIntent = PendingIntent.getBroadcast(mContext, REQ_SHOW_DIALOG, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, mHomeActivityData.getBeginTime(), dialogPendingIntent);
+        }
+    }
+
+    @Override
+    public void show() {
         homeDialog = new HomeDialog(mActivity, mHomeActivityData);
         homeDialog.show();
     }
