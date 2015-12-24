@@ -58,7 +58,6 @@ public class MyApplication extends Application {
     }
 
     //isCurrent为true时，判断是否在前台
-
     public static boolean isBackStage() {
         return isBackStage;
     }

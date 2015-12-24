@@ -4,22 +4,14 @@
     android:background="#F13E3E"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/titlebar_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal" />
-
     <TextView
         android:id="@+id/tv_user"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="68dp"
-        android:layout_weight="0.2"
+        android:layout_marginTop="100dp"
         android:gravity="bottom"
-        android:text=""
+        android:text="18801023565"
         android:textColor="#FFFFFF"
         android:textSize="17sp" />
 
@@ -27,26 +19,24 @@
         android:id="@+id/tv_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="请输入密码"
+        android:text="请绘制您的手势密码"
         android:textColor="#FFFFFF"
         android:textSize="15sp" />
 
     <com.miqian.mq.views.GestureLockView
         android:id="@+id/lockView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tv_forgetPsw"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:layout_weight="0.2"
-        android:text="忘记密码"
+        android:text="忘记手势密码"
         android:textColor="#FFFFFF"
         android:textSize="15sp" />
 

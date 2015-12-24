@@ -35,5 +35,8 @@ public class TypeUtil {
     //修改绑定手机
     public static final int MODIFY_PHONE =30002 ;
 
+    //设置交易密码
+    public static final int TRADEPASSWORD_FIRST_SETTING =40001 ;
+
 
 }

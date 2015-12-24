@@ -7,7 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/frame_red_bg"
         android:orientation="vertical">
 
@@ -39,8 +41,6 @@
                     android:hint="请输入充值金额"
                     android:inputType="numberDecimal"
                     android:singleLine="true" />
-
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -137,7 +137,9 @@
         android:id="@+id/frame_real_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -145,7 +147,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="为了保证您的资金安全，首次充值需要填写实名信息"
-            android:paddingTop="5dp"
             android:paddingBottom="10dp"
             android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font3" />
@@ -218,7 +219,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:layout_marginTop="15dp"
             android:text="温馨提示：\n为了保证您的资金安全使用连连支付成功充值后，您的充值银行卡和提现银行卡将自动绑定为首次使用连连支付充值的银行卡，不可解除绑定。"
             android:textColor="@color/mq_b2"
             android:textSize="@dimen/mq_font4" />

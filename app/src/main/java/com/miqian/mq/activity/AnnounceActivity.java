@@ -47,7 +47,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     private Button titleRight;
     private ImageButton btLeft;
     private MySwipeRefresh swipeRefresh;
-    private TextView textvClear;
+    private TextView textRight;
 
     private int messageType = 0; //0为消息，1为公告
 
@@ -64,6 +64,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     private TextView tvTips;
     private TextView view_Refresh;
     private ImageView ivMessageData;
+    private boolean hasUnread;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -73,7 +74,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     @Override
     public void obtainData() {
 
-        if (messageType==0&&!UserUtil.hasLogin(mActivity)){
+        if (messageType == 0 && !UserUtil.hasLogin(mActivity)) {
             mViewnoresult_data.setVisibility(View.VISIBLE);
             ivMessageData.setBackgroundResource(R.drawable.nomessage);
             view_Refresh.setVisibility(View.GONE);
@@ -96,13 +97,13 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                     count = userMessageData.getCount();
                     list = userMessageData.getMsgList();
                     if (list != null && list.size() > 0) {
+                        checkReadStatus(list);
                         showContentView();
                         if (list.size() < count) {
                             isOver = true;
                         } else {
                             isOver = false;
                         }
-                        textvClear.setText("全部清空");
                         adapter = new MessageAdapter(mActivity, list);
                         pullToListView.setAdapter(adapter);
 
@@ -155,6 +156,26 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         }
     }
 
+    private void checkReadStatus(List<MessageInfo> list) {
+        if (list.size() == 0) {
+            textRight.setText("");
+            return;
+        }
+        for (MessageInfo messageInfo : list) {
+            if (!messageInfo.isRead()) {
+                hasUnread = true;
+                break;
+            }else {
+                hasUnread=false;
+            }
+        }
+        if (hasUnread) {
+            textRight.setText("全部已读");
+        } else {
+            textRight.setText("全部清空");
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -169,8 +190,8 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         titleLeft = (Button) findViewById(R.id.title_left);
         titleRight = (Button) findViewById(R.id.title_right);
 
-        textvClear = (TextView) findViewById(R.id.tv_clearall);
-        textvClear.setOnClickListener(this);
+        textRight = (TextView) findViewById(R.id.tv_clearall);
+        textRight.setOnClickListener(this);
 
         titleLeft.setOnClickListener(this);
         titleRight.setOnClickListener(this);
@@ -233,10 +254,10 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         end();
                         Uihelper.showToast(mActivity, "删除成功");
                         list.remove(position);
+                        checkReadStatus(list);
                         adapter.notifyDataSetChanged();
                         //没有数据
                         if (list.size() == 0) {
-                            textvClear.setText("");
                             showEmptyView();
                         }
                     }
@@ -265,7 +286,8 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             @Override
                             public void onSucceed(Meta result) {
 
-                                list.get(position-1).setIsRead(true);
+                                list.get(position - 1).setIsRead(true);
+                                checkReadStatus(list);
                                 adapter.notifyDataSetChanged();
                             }
 
@@ -273,10 +295,10 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             public void onFail(String error) {
                                 Uihelper.showToast(mActivity, error);
                             }
-                        }, list.get(position - 1).getId(), "", 0);
+                        }, list.get(position - 1).getId() + "", "", 0);
                     } else {//公告
                         Pref.saveBoolean(Pref.PUSH + list.get(position - 1).getId(), true, mActivity);
-                        list.get(position-1).setIsRead(true);
+                        list.get(position - 1).setIsRead(true);
                         adapter.notifyDataSetChanged();
 
                     }
@@ -291,10 +313,10 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         default:
                             Intent intent_other = new Intent(mActivity, AnnounceResultActivity.class);
                             intent_other.putExtra("id", messageInfo.getId());
-                            if (messageType==0){
-                                intent_other.putExtra("isMessage",true);
-                            }else{
-                                intent_other.putExtra("isMessage",false);
+                            if (messageType == 0) {
+                                intent_other.putExtra("isMessage", true);
+                            } else {
+                                intent_other.putExtra("isMessage", false);
                             }
                             startActivity(intent_other);
                     }
@@ -344,7 +366,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             Uihelper.showToast(mActivity, "删除成功");
                             list.clear();
                             adapter.notifyDataSetChanged();
-                            textvClear.setText("");
+                            textRight.setText("");
                             showEmptyView();
                         }
 
@@ -353,7 +375,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             end();
                             Uihelper.showToast(mActivity, error);
                         }
-                    }, list.get(0).getId(), list.get(list.size() - 1).getId() + "", 1);
+                    }, list.get(list.size() - 1).getId(), list.get(0).getId() + "", 1);
                 }
 
                 @Override
@@ -385,6 +407,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                     adapter.notifyDataSetChanged();
                 }
                 obtainData();
+                textRight.setText("");
                 break;
             case R.id.title_right:
 
@@ -401,13 +424,37 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                     adapter.notifyDataSetChanged();
                 }
                 obtainData();
-                textvClear.setText("");
+                textRight.setText("");
                 break;
             case R.id.bt_left:
                 AnnounceActivity.this.finish();
                 break;
             case R.id.tv_clearall://清空消息
-                showDialog();
+                if (hasUnread) {
+                    //设置全部已读
+                    begin();
+                    HttpRequest.setMessageReaded(mActivity, new ICallback<Meta>() {
+                        @Override
+                        public void onSucceed(Meta result) {
+                            end();
+                            for (MessageInfo messageInfo : list) {
+                                messageInfo.setIsRead(true);
+                            }
+                            checkReadStatus(list);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFail(String error) {
+                            end();
+                            Uihelper.showToast(mActivity, error);
+                        }
+                    }, list.get(0).getId() + "", list.get(list.size()-1).getId() + "", 1);
+
+
+                } else {
+                    showDialog();
+                }
                 break;
             default:
                 break;
@@ -443,6 +490,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             List<MessageInfo> tempList = userMessageData.getMsgList();
                             if (tempList != null && tempList.size() > 0) {
                                 list.addAll(tempList);
+                                checkReadStatus(list);
                                 adapter.notifyDataSetChanged();
                             }
                             if (list.size() < count) {

@@ -2,6 +2,7 @@ package com.miqian.mq.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -278,7 +280,15 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 SendCaptchaActivity.enterActivity(getActivity(), TypeUtil.SENDCAPTCHA_FORGETPSW, false);
             }
         });
-
+        editTelephone.addTextChangedListener(new MyTextWatcher() {
+            @Override
+            public void myAfterTextChanged(Editable arg0) {
+                String phone = editTelephone.getText().toString();
+                if (TextUtils.isEmpty(phone)) {
+                    editPassword.setText("");
+                }
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -68,7 +68,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         }
     }
 
-    protected ImageView img_left;
+    private ImageView img_left;
     protected TextView tv_right;
     private ImageView img_right;
     private View layout_left;
@@ -91,6 +91,12 @@ public abstract class BaseFragmentActivity extends FragmentActivity
                 finish();
             }
         });
+    }
+
+    protected void showLeftAction(boolean show) {
+        if (img_left != null) {
+            img_left.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 
     public void showRightAction(boolean show) {

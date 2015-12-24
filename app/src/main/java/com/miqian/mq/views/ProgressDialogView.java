@@ -39,7 +39,7 @@ public class ProgressDialogView {
 		dialogWindow.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 //		lp.width = Uihelper.px2dip(context, 80); // 宽度
 //		lp.height = Uihelper.px2dip(context, 80); // 高度
-		lp.alpha = 0.8f; // 透明度
+		lp.alpha = 1f; // 透明度
 		dialogWindow.setAttributes(lp);
 		dialogWindow.setContentView(view, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		return dialog;

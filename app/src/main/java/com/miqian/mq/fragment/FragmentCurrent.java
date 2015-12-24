@@ -147,7 +147,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 btInvestment.setText("已满额");
                 btInvestment.setEnabled(false);
             } else {
-                btInvestment.setText("马上认购");
+                btInvestment.setText("立即认购");
                 btInvestment.setEnabled(true);
             }
         }

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.MobileOS;
@@ -26,15 +27,14 @@ import cn.sharesdk.framework.ShareSDK;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
 
-    private ViewPager mViewPager;
     private LinearLayout framePages;
-    private ImageView imageSplash;
 
     private static final int pageCount = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
         Config.init(this);
         //      设置友盟渠道号
         String channelId = Pref.getString(Pref.CHANNEL_ID, this, "");
@@ -43,50 +43,47 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         } else {
             UmengUpdateAgent.setChannel(channelId);
         }
-
         ShareSDK.initSDK(this);
-
-        setContentView(R.layout.activity_splash);
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        framePages = (LinearLayout) findViewById(R.id.frame_pages);
-        imageSplash = (ImageView) findViewById(R.id.image_splash);
-
+        MyApplication.setIsBackStage(false);
+        start();
     }
 
-    @Override
-    protected void onStart() {
+    private void start() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 loadFinish();
             }
         }, 1500);
-        super.onStart();
     }
 
-    public void loadFinish() {
+    private void loadFinish() {
         boolean first_use = Pref.getBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), this, true);
         if (!first_use) {
-            if (UserUtil.hasLogin(getBaseContext()) && Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
+            if (UserUtil.hasLogin(getBaseContext()) && Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false)) {
                 GestureLockVerifyActivity.startActivity(getBaseContext(), MainActivity.class);
             } else {
                 startActivity(new Intent(getBaseContext(), MainActivity.class));
             }
             SplashActivity.this.finish();
         } else {
+            ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
+            ImageView imageSplash = (ImageView) findViewById(R.id.image_splash);
+            framePages = (LinearLayout) findViewById(R.id.frame_pages);
             imageSplash.setVisibility(View.GONE);
-            for (int i = 0; i < pageCount; i++) {
-                LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                ImageView imagePage = new ImageView(SplashActivity.this);
-                if (i == 0) {
-                    imagePage.setBackgroundResource(R.drawable.guide_page_on);
-                } else {
-                    params.leftMargin = (int) (10 * Config.DENSITY);
-                    imagePage.setBackgroundResource(R.drawable.guide_page);
+            if (framePages.getChildCount() < pageCount) {
+                for (int i = 0; i < pageCount; i++) {
+                    LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    ImageView imagePage = new ImageView(SplashActivity.this);
+                    if (i == 0) {
+                        imagePage.setBackgroundResource(R.drawable.guide_page_on);
+                    } else {
+                        params.leftMargin = (int) (10 * Config.DENSITY);
+                        imagePage.setBackgroundResource(R.drawable.guide_page);
+                    }
+                    framePages.addView(imagePage, params);
                 }
-                framePages.addView(imagePage, params);
             }
-
             mViewPager.setAdapter(mPagerAdapter);
             mViewPager.addOnPageChangeListener(new MyOnPageChangeListener());
             mViewPager.setVisibility(View.VISIBLE);

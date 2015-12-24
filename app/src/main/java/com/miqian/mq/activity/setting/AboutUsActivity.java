@@ -42,7 +42,7 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("关于秒钱");
+        mTitle.setTitleText("了解秒钱");
 
     }
 

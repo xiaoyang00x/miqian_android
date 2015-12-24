@@ -408,10 +408,10 @@ public class HttpRequest {
     }
 
     //设置消息已读
-    public static void setMessageReaded(Context context, final ICallback<Meta> callback, int startId, String endId, int isAll) {
+    public static void setMessageReaded(Context context, final ICallback<Meta> callback, String startId, String endId, int isAll) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("startId", startId + ""));
-        mList.add(new Param("endId", endId + ""));
+        mList.add(new Param("startId", startId ));
+        mList.add(new Param("endId", endId ));
         mList.add(new Param("isAll", isAll + ""));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         new MyAsyncTask(context, Urls.setMessageReaded, mList, new ICallback<String>() {

@@ -90,7 +90,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         //通知开关
         ivPushState = (ImageView) findViewById(R.id.iv_push_state);
 
-
         frameUpdate.setOnClickListener(this);
         frame_setting_name.setOnClickListener(this);
         frame_setting_bindphone.setOnClickListener(this);
@@ -116,11 +115,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
 
         if (UserUtil.hasLogin(mActivity)) {
+            btn_loginout.setVisibility(View.VISIBLE);
             if (userInfo == null) {
                 return;
             }
             frame_login.setVisibility(View.VISIBLE);
-            btn_loginout.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
                 String phone = RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
                 tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
@@ -186,6 +185,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (userInfo != null && !TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
                     Intent intent = new Intent(mActivity, SecuritySettingActivity.class);
                     intent.putExtra("payPwdStatus", userInfo.getPayPwdStatus());
+                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
                     startActivity(intent);
                 }
 

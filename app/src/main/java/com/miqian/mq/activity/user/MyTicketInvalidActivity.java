@@ -172,15 +172,6 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("红包/券");
-        mTitle.setRightText("使用规则");
-        mTitle.setOnRightClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MobclickAgent.onEvent(mActivity, "1042");
-                WebActivity.startActivity(mActivity, Urls.web_ticket);
-            }
-        });
-
     }
 
     @Override

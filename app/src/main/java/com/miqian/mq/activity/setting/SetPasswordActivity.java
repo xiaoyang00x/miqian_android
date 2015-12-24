@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.WFYTitle;
 
 
@@ -32,6 +34,19 @@ public class SetPasswordActivity extends BaseActivity {
     private String style;
     private TextView tv_newpassword, tv_comfirmpassword;
     private int mType;
+    private String telephone;
+
+    @Override
+    public void onCreate(Bundle arg0) {
+        // getIntent
+        Intent intent = getIntent();
+        captcha = intent.getStringExtra("captcha");
+        phone = intent.getStringExtra("phone");
+        idCard = intent.getStringExtra("idCard");
+        telephone = intent.getStringExtra("telephone");
+        mType = intent.getIntExtra("type", 0);
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
@@ -45,15 +60,7 @@ public class SetPasswordActivity extends BaseActivity {
         et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
         tv_comfirmpassword = (TextView) findViewById(R.id.tv_comfirmpassword);
         tv_newpassword = (TextView) findViewById(R.id.tv_newpassword);
-        // getIntent
-        Intent intent = getIntent();
-        captcha = intent.getStringExtra("captcha");
-        phone = intent.getStringExtra("phone");
-        idCard = intent.getStringExtra("idCard");
-        mType = intent.getIntExtra("type", 0);
-
-        if (mType == TypeUtil.PASSWORD_TRADE) {
-
+        if (mType == TypeUtil.PASSWORD_TRADE || mType == TypeUtil.TRADEPASSWORD_FIRST_SETTING) {
             mTitle.setTitleText("设置交易密码");
             tv_newpassword.setText("设置交易密码");
             tv_comfirmpassword.setText("确定交易密码");
@@ -92,45 +99,64 @@ public class SetPasswordActivity extends BaseActivity {
     }
 
     private void forget_summit(String password_confirm) {
-//		mWaitingDialog.show();
         //设置登录密码
         if (mType == TypeUtil.PASSWORD_LOGIN) {
+            begin();
             HttpRequest.getPassword(this, new ICallback<Meta>() {
-
                 @Override
                 public void onSucceed(Meta result) {
+                    end();
                     Uihelper.showToast(mActivity, "设置密码成功");
                     SetPasswordActivity.this.finish();
-
                 }
 
                 @Override
                 public void onFail(String error) {
-//				mWaitingDialog.dismiss();
+                    end();
                     Uihelper.showToast(mActivity, error);
                 }
             }, phone, password_confirm, password_confirm, captcha);
         }
-        //设置交易密码
-        else {
-            HttpRequest.setPayPassword(this, new ICallback<Meta>() {
+        //修改交易密码
 
+        else if (mType == TypeUtil.PASSWORD_TRADE) {
+            if (TextUtils.isEmpty(idCard)) {
+                idCard = "";
+            }
+            begin();
+            HttpRequest.changePayPassword(this, new ICallback<Meta>() {
                 @Override
                 public void onSucceed(Meta result) {
+                    end();
                     Uihelper.showToast(mActivity, "设置密码成功");
                     SetPasswordActivity.this.finish();
-
                 }
 
                 @Override
                 public void onFail(String error) {
-//				mWaitingDialog.dismiss();
+                    end();
+                    Uihelper.showToast(mActivity, error);
+                }
+            }, "SXJ1", idCard, telephone, captcha, password_confirm, password_confirm);
+        }
+        //设置交易密码
+        else if (mType == TypeUtil.TRADEPASSWORD_FIRST_SETTING) {
+            begin();
+            HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
+                @Override
+                public void onSucceed(Meta result) {
+                    end();
+                    Uihelper.showToast(mActivity, "设置成功");
+                    SetPasswordActivity.this.finish();
+                }
+
+                @Override
+                public void onFail(String error) {
+                    end();
                     Uihelper.showToast(mActivity, error);
                 }
             }, password_confirm, password_confirm);
         }
-
-
     }
 
 

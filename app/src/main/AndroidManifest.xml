@@ -224,13 +224,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.GestureLockVerifyActivity"
-            android:launchMode="singleInstance"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
             android:name=".activity.GestureLockSetActivity"
-            android:launchMode="singleInstance"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <receiver
             android:name=".receiver.HomeDialogReceiver"

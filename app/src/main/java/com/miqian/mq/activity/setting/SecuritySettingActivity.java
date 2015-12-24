@@ -21,6 +21,7 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
     private String payPwdStatus;
 
     private ImageView iv_switch;
+    private String realNameStatus;
 
     @Override
     public void obtainData() {
@@ -33,6 +34,7 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
 
         Intent intent = getIntent();
         payPwdStatus = intent.getStringExtra("payPwdStatus");
+        realNameStatus = intent.getStringExtra("realNameStatus");
 
         iv_switch = (ImageView) findViewById(R.id.iv_switch);
         findViewById(R.id.password_login).setOnClickListener(this);
@@ -82,10 +84,16 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
 
                 break;
             case R.id.password_transaction:
-                MobclickAgent.onEvent(mActivity, "1028");
-                Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                intent.putExtra("payPwdStatus", payPwdStatus);
-                startActivity(intent);
+                if ("0".equals(payPwdStatus)) {//未设置
+                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+                    intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
+                    startActivity(intent);
+                } else {
+                    MobclickAgent.onEvent(mActivity, "1028");
+                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
+                    intent.putExtra("realNameStatus", realNameStatus);
+                    startActivity(intent);
+                }
                 break;
             case R.id.iv_switch:
                 if (isGestureLockOpen()) {

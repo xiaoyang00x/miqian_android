@@ -1,5 +1,6 @@
 package com.miqian.mq.encrypt;
 
+import android.text.TextUtils;
 import android.util.Base64;
 
 import com.miqian.mq.net.Urls;
@@ -61,6 +62,9 @@ public class RSAUtils {
     }
 
     public static String encryptURLEncode(String content) {
+        if (TextUtils.isEmpty(content)){
+            return "";
+        }
         try {
             return URLEncoder.encode(encryptByPublic(content), "UTF-8");
         } catch (UnsupportedEncodingException e) {

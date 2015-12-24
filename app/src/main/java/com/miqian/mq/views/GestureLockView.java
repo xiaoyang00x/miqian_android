@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -37,6 +38,11 @@ public class GestureLockView extends View {
 
     private boolean isInit; // 初始化九宫格一次
 
+    private static final int PADIN = 35; // 九宫格距离父控件左右间距
+    private static final int PADOUT = 45; // 九宫格圈之间间距
+    private int paddingIn; // 九宫格距离父控件左右间距
+    private int paddingOut; // 九宫格圈之间间距
+
 //    private int radius;
 
     public GestureLockView(Context context, AttributeSet attrs) {
@@ -54,6 +60,16 @@ public class GestureLockView extends View {
         bitmap_circle_error = BitmapFactory.decodeResource(getResources(), R.drawable.gesture_circle_great_error);
         bitmap_line_pressed = BitmapFactory.decodeResource(getResources(), R.drawable.gesture_line_press);
         bitmap_line_error = BitmapFactory.decodeResource(getResources(), R.drawable.gesture_line_error);
+        paddingIn = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PADIN, getResources().getDisplayMetrics());
+        paddingOut = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PADOUT, getResources().getDisplayMetrics());
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        width = getMeasuredWidth();
+        height = width;
+        setMeasuredDimension(width, height);
     }
 
     @Override
@@ -166,8 +182,7 @@ public class GestureLockView extends View {
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 Matrix matrix = new Matrix();
-                float sx = (float) (1.0 * width / 720);
-                sx = 1.0f;
+                float sx = 1.0f;
                 matrix.setScale(sx, sx);
                 matrix.postTranslate(points[i][j].pointX - bitmapR * sx * 0.5f, points[i][j].pointY - bitmapR * sx * 0.5f);
                 if (points[i][j].state == GestureLockPoint.STATE_NOR) {
@@ -180,21 +195,6 @@ public class GestureLockView extends View {
 //                    canvas.drawBitmap(bitmap_circle_error, points[i][j].pointX - bitmapR / 2, points[i][j].pointY - bitmapR / 2, mPaint);
                     canvas.drawBitmap(bitmap_circle_error, matrix, mPaint);
                 }
-//                if (points[i][j].state == GestureLockPoint.STATE_NOR) {
-//                    canvas.drawBitmap(bitmap_circle_nor, points[i][j].pointX - bitmapR / 2, points[i][j].pointY - bitmapR / 2, mPaint);
-//                } else if (points[i][j].state == GestureLockPoint.STATE_PRESS) {
-//                    canvas.drawBitmap(bitmap_circle_nor, points[i][j].pointX - bitmapR / 2, points[i][j].pointY - bitmapR / 2, mPaint);
-//                    Paint aPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//                    aPaint.setColor(Color.WHITE);
-//                    aPaint.setAlpha(100);
-//                    canvas.drawCircle(points[i][j].pointX, points[i][j].pointY, UtilPhone.dip2px(getContext(), 8), aPaint);
-//                } else if (points[i][j].state == GestureLockPoint.STATE_ERROR) {
-//                    canvas.drawBitmap(bitmap_circle_nor, points[i][j].pointX - bitmapR / 2, points[i][j].pointY - bitmapR / 2, mPaint);
-//                    Paint aPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//                    aPaint.setColor(Color.BLUE);
-//                    aPaint.setAlpha(100);
-//                    canvas.drawCircle(points[i][j].pointX, points[i][j].pointY, UtilPhone.dip2px(getContext(), 8), aPaint);
-//                }
             }
         }
     }
@@ -235,7 +235,7 @@ public class GestureLockView extends View {
         float degree = GestureLockPoint.degree(pStart, pEnd);
         canvas.rotate(degree, pStart.pointX, pStart.pointY);
         Matrix matrix = new Matrix();
-        matrix.setScale(1f + GestureLockPoint.distance(pStart, pEnd) / bitmap_line_pressed.getWidth(), 1);
+        matrix.setScale(1f + GestureLockPoint.distance(pStart, pEnd) / bitmap_line_pressed.getWidth(), 2);
 //        if (isTwoNode) {
 //            matrix.setScale(1f + Math.abs((GestureLockPoint.distance(pStart, pEnd) - 2 * radius)) / bitmap_line_pressed.getWidth(), 1);
 //        } else {
@@ -258,26 +258,32 @@ public class GestureLockView extends View {
         if (isInit) {
             return;
         }
-        width = getWidth();
-        height = getHeight();
-        bitmapR = bitmap_circle_nor.getWidth();
-        if (height > width) {
-            offsetY = (height - width) / 2;
-            height = width;
-        } else {
-            offsetX = (width - height) / 2;
-            width = height;
-        }
+        offsetX = paddingOut;
+        offsetY = paddingOut;
+        resize();
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 points[i][j] = new GestureLockPoint();
-                points[i][j].pointX = offsetX + (j + 1) * width / 4;
-                points[i][j].pointY = offsetY + (i + 1) * width / 4;
+                points[i][j].pointX = (int) (offsetX + (j + 0.5) * bitmapR + j * paddingIn);
+                points[i][j].pointY = (int) (offsetY + (i + 0.5) * bitmapR + i * paddingIn);
                 points[i][j].state = GestureLockPoint.STATE_NOR;
                 points[i][j].index = i * 3 + j;
             }
         }
         isInit = true;
+    }
+
+    // 丈量九宫格中每个圈的大小 －－ 根据左右间距和圈之间间距来决定
+    private void resize() {
+        float desiredBitmapR = (width - paddingIn * 2 - paddingOut * 2) / 3;
+        bitmapR = bitmap_circle_nor.getWidth();
+        Matrix matrix = new Matrix();
+        float scaleX = (float) (1.0 * desiredBitmapR / bitmapR);
+        matrix.postScale(scaleX, scaleX);
+        bitmap_circle_nor = Bitmap.createBitmap(bitmap_circle_nor, 0, 0, bitmapR, bitmapR, matrix, true);
+        bitmap_circle_press = Bitmap.createBitmap(bitmap_circle_press, 0, 0, bitmapR, bitmapR, matrix, true);
+        bitmap_circle_error = Bitmap.createBitmap(bitmap_circle_error, 0, 0, bitmapR, bitmapR, matrix, true);
+        bitmapR = bitmap_circle_nor.getWidth();
     }
 
     // 手势绘制有误

@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.encrypt.Encrypt;
@@ -46,12 +47,15 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
         findView();
         fetchGestureLock();
         showUserPhoneNum();
-        img_left.setVisibility(View.GONE);
         tv_forgetPsw.setOnClickListener(onClickListener);
     }
 
     private void showUserPhoneNum() {
         String telphone = Pref.getString(Pref.TELEPHONE, getBaseContext(), "");
+        tv_user.setText(hideMiddle4ofPhoneNum(telphone));
+    }
+
+    private final String hideMiddle4ofPhoneNum(String telphone) {
         StringBuilder sb = new StringBuilder();
         if (!TextUtils.isEmpty(telphone)) {
             for (int index = 0; index < telphone.length(); index++) {
@@ -63,12 +67,7 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
                 }
             }
         }
-        tv_user.setText(sb.toString());
-    }
-
-    public static void main(String[] args) {
-        String phoneNum = "18801023565";
-        System.out.println(phoneNum.substring(3, 7));
+        return sb.toString();
     }
 
     private void findView() {
@@ -117,7 +116,7 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
                 if (null != desClass) {
                     startActivity(new Intent(getBaseContext(), desClass));
                 }
-                GestureLockVerifyActivity.this.finish();
+                finish();
             } else {
                 lockView.showErrorState();
                 unlockCount--;
@@ -140,6 +139,7 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
 
     // 验证失败 退出登录
     private void logout() {
+        Toast.makeText(getBaseContext(), "已退出登录", Toast.LENGTH_LONG).show();
         Pref.saveInt(Pref.UNLOCKCOUNT, 0, getBaseContext());
         UserUtil.clearUserInfo(getBaseContext());
         Intent intent = new Intent(this, MainActivity.class);
