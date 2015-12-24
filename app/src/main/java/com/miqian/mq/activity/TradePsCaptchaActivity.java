@@ -19,6 +19,7 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
@@ -38,7 +39,15 @@ public class TradePsCaptchaActivity extends BaseActivity {
     private TextView tv_phone;
     private String telephone;
     private boolean isModifyPhone;
+    private String realNameStatus;
 
+    @Override
+    public void onCreate(Bundle arg0) {
+        Intent intent = getIntent();
+        isModifyPhone = intent.getBooleanExtra("isModifyPhone", false);
+        realNameStatus = intent.getStringExtra("realNameStatus");
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
@@ -55,28 +64,11 @@ public class TradePsCaptchaActivity extends BaseActivity {
                 super.handleMessage(msg);
             }
         };
+
     }
 
     @Override
     public void initView() {
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            if (intent.getBooleanExtra("isModifyPhone", false)) {
-                isModifyPhone = true;
-                findViewById(R.id.frament_modifytradepassword).setVisibility(View.GONE);
-                findViewById(R.id.view_1).setVisibility(View.GONE);
-                mTitle.setTitleText("更换手机号");
-            }
-
-//             String  payPwdStatus=intent.getStringExtra("payPwdStatus");
-//            if (!TextUtils.isEmpty(payPwdStatus)){
-//                if ("0".equals(payPwdStatus)){
-//                    mTitle.setTitleText("设置交易密码");
-//                }
-//            }
-        }
-
 
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
         telephone = Pref.getString(Pref.TELEPHONE, mActivity, "");
@@ -97,8 +89,24 @@ public class TradePsCaptchaActivity extends BaseActivity {
                 sendMessage();
             }
         });
+        reFreshView();
 
+    }
 
+    private void reFreshView() {
+
+        if (isModifyPhone) {
+            findViewById(R.id.frament_modifytradepassword).setVisibility(View.GONE);
+            findViewById(R.id.view_1).setVisibility(View.GONE);
+            mTitle.setTitleText("更换手机号");
+        }
+        if (!TextUtils.isEmpty(realNameStatus)) {
+            //未实名认证
+            if ("0".equals(realNameStatus)) {
+                findViewById(R.id.frament_modifytradepassword).setVisibility(View.GONE);
+                findViewById(R.id.view_1).setVisibility(View.GONE);
+            }
+        }
     }
 
     private void sendMessage() {
@@ -141,9 +149,11 @@ public class TradePsCaptchaActivity extends BaseActivity {
                     Uihelper.showToast(mActivity, R.string.capthcha_num);
                     return;
                 }
+                begin();
                 HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
                     @Override
                     public void onSucceed(Meta result) {
+                        end();
                         Intent intent = new Intent(mActivity, SendCaptchaActivity.class);
                         intent.putExtra("type", TypeUtil.MODIFY_PHONE);
                         intent.putExtra("captcha", captcha);
@@ -153,35 +163,43 @@ public class TradePsCaptchaActivity extends BaseActivity {
 
                     @Override
                     public void onFail(String error) {
+                        end();
                         Uihelper.showToast(mActivity, error);
                     }
                 }, telephone, TypeUtil.CAPTCHA_BINDTEL_FIRST, captcha);
             }
-
-
         } else {
 
-            String idCard = mEtRealname.getText().toString();
-
-            if (!TextUtils.isEmpty(idCard)) {
-                if (idCard.matches(FormatUtil.PATTERN_IDCARD)) {
-                    if (TextUtils.isEmpty(captcha)) {
-                        Uihelper.showToast(this, R.string.tip_captcha);
-                    } else {
-                        if (captcha.length() < 6) {
-                            Uihelper.showToast(mActivity, R.string.capthcha_num);
-                        } else {
-                            summit(idCard, captcha);
-                        }
-                    }
+            if (!TextUtils.isEmpty(realNameStatus)) {
+                //未实名认证
+                if ("0".equals(realNameStatus)) {
+                    summit("", captcha);
                 } else {
-                    Uihelper.showToast(mActivity, "身份证号码不正确");
+                    String idCard = mEtRealname.getText().toString();
+                    if (!TextUtils.isEmpty(idCard)) {
+                        if (idCard.matches(FormatUtil.PATTERN_IDCARD)) {
+                            String identity = Pref.getString(UserUtil.getPrefKey(mActivity, Pref.IDENTITY), mActivity, "");
+                            if (idCard.equals(identity)) {
+                                if (TextUtils.isEmpty(captcha)) {
+                                    Uihelper.showToast(this, R.string.tip_captcha);
+                                } else {
+                                    if (captcha.length() < 6) {
+                                        Uihelper.showToast(mActivity, R.string.capthcha_num);
+                                    } else {
+                                        summit(idCard, captcha);
+                                    }
+                                }
+                            } else {
+                                Uihelper.showToast(mActivity, "身份证号码不符");
+                            }
+                        } else {
+                            Uihelper.showToast(mActivity, "身份证号码不正确");
+                        }
+                    } else {
+                        Uihelper.showToast(mActivity, "身份证号码不能为空");
+                    }
                 }
-            } else {
-                Uihelper.showToast(mActivity, "身份证号码不能为空");
             }
-
-
         }
 
     }

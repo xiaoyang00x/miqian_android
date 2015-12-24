@@ -185,6 +185,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (userInfo != null && !TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
                     Intent intent = new Intent(mActivity, SecuritySettingActivity.class);
                     intent.putExtra("payPwdStatus", userInfo.getPayPwdStatus());
+                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
                     startActivity(intent);
                 }
 

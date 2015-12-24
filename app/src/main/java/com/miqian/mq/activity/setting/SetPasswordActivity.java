@@ -118,7 +118,11 @@ public class SetPasswordActivity extends BaseActivity {
             }, phone, password_confirm, password_confirm, captcha);
         }
         //修改交易密码
+
         else if (mType == TypeUtil.PASSWORD_TRADE) {
+            if (TextUtils.isEmpty(idCard)) {
+                idCard = "";
+            }
             begin();
             HttpRequest.changePayPassword(this, new ICallback<Meta>() {
                 @Override
@@ -135,7 +139,7 @@ public class SetPasswordActivity extends BaseActivity {
                 }
             }, "SXJ1", idCard, telephone, captcha, password_confirm, password_confirm);
         }
-        //未设置过交易密码
+        //设置交易密码
         else if (mType == TypeUtil.TRADEPASSWORD_FIRST_SETTING) {
             begin();
             HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
@@ -152,10 +156,7 @@ public class SetPasswordActivity extends BaseActivity {
                     Uihelper.showToast(mActivity, error);
                 }
             }, password_confirm, password_confirm);
-
         }
-
-
     }
 
 
