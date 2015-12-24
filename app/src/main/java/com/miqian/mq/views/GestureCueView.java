@@ -7,10 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.miqian.mq.R;
-import com.miqian.mq.utils.MobileDeviceUtil;
 
 
 /**
@@ -24,9 +24,11 @@ public class GestureCueView extends View {
     private Bitmap bitmap_circle_nor, bitmap_circle_press;
     private int width, height;
     private int bitmapR;
-    private int offsetX, offsetY;
 
     private GestureLockPoint[][] points;
+
+    private static final int PADIN = 5;
+    private int paddingIn; // 九宫格距离父控件左右间距
 
     private boolean isInit; // 初始化九宫格一次
 
@@ -40,6 +42,16 @@ public class GestureCueView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bitmap_circle_nor = BitmapFactory.decodeResource(getResources(), R.drawable.gesture_circle_small_nor);
         bitmap_circle_press = BitmapFactory.decodeResource(getResources(), R.drawable.gesture_circle_small_press);
+        paddingIn = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PADIN, getResources().getDisplayMetrics());
+        bitmapR = bitmap_circle_nor.getWidth();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        width = bitmapR + paddingIn * 2 + bitmapR * 3;
+        height = width;
+        setMeasuredDimension(width, height);
     }
 
     @Override
@@ -57,40 +69,16 @@ public class GestureCueView extends View {
         }
         width = getWidth();
         height = getHeight();
-        bitmapR = bitmap_circle_nor.getWidth();
-        if (height > width) {
-            offsetY = (height - width) / 2;
-            height = width;
-        } else {
-            offsetX = (width - height) / 2;
-            width = height;
-        }
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 points[i][j] = new GestureLockPoint();
-                points[i][j].pointX = offsetX + (j + 1) * width / 4;
-                points[i][j].pointY = offsetY + (i + 1) * width / 4;
+                points[i][j].pointX = (int) ((j + 0.5) * bitmapR + j * paddingIn);
+                points[i][j].pointY = (int) ((i + 0.5) * bitmapR + i * paddingIn);
                 points[i][j].state = GestureLockPoint.STATE_NOR;
                 points[i][j].index = i * 3 + j;
             }
         }
-        resize();
         isInit = true;
-    }
-
-    // 重新丈量 小圆圈的大小 --- 以720p下切图为标准
-    private void resize() {
-        int screenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
-        final int SIZE = 720;
-        if (screenWidth != SIZE) {
-            bitmapR = bitmap_circle_nor.getWidth();
-            Matrix matrix = new Matrix();
-            float scaleX = (float) (1.0 * screenWidth / SIZE);
-            matrix.postScale(scaleX, scaleX);
-            bitmap_circle_nor = Bitmap.createBitmap(bitmap_circle_nor, 0, 0, bitmapR, bitmapR, matrix, true);
-            bitmap_circle_press = Bitmap.createBitmap(bitmap_circle_press, 0, 0, bitmapR, bitmapR, matrix, true);
-            bitmapR = bitmap_circle_nor.getWidth();
-        }
     }
 
     /**
@@ -99,13 +87,11 @@ public class GestureCueView extends View {
      * @param canvas 画布
      */
     private void point2Canvas(Canvas canvas) {
-        int screenWidth = MobileDeviceUtil.getInstance(getContext()).getScreenWidth();
-        int screenHeight = MobileDeviceUtil.getInstance(getContext()).getScreenHeight();
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 Matrix matrix = new Matrix();
-                float sx = (float) (1.0 * Math.min(screenHeight, screenWidth) / 720);
-                sx = 1.0f;
+//                float sx = (float) (1.0 * Math.min(screenHeight, screenWidth) / 720);
+                float sx = 1.0f;
                 matrix.setScale(sx, sx);
                 matrix.postTranslate(points[i][j].pointX - bitmapR * sx * 0.5f, points[i][j].pointY - bitmapR * sx * 0.5f);
                 if (points[i][j].state == GestureLockPoint.STATE_NOR) {

@@ -52,6 +52,10 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
 
     private void showUserPhoneNum() {
         String telphone = Pref.getString(Pref.TELEPHONE, getBaseContext(), "");
+        tv_user.setText(hideMiddle4ofPhoneNum(telphone));
+    }
+
+    private final String hideMiddle4ofPhoneNum(String telphone) {
         StringBuilder sb = new StringBuilder();
         if (!TextUtils.isEmpty(telphone)) {
             for (int index = 0; index < telphone.length(); index++) {
@@ -63,12 +67,7 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
                 }
             }
         }
-        tv_user.setText(sb.toString());
-    }
-
-    public static void main(String[] args) {
-        String phoneNum = "18801023565";
-        System.out.println(phoneNum.substring(3, 7));
+        return sb.toString();
     }
 
     private void findView() {

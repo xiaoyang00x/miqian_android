@@ -60,7 +60,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     private void loadFinish() {
         boolean first_use = Pref.getBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), this, true);
         if (!first_use) {
-            if (UserUtil.hasLogin(getBaseContext()) && Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
+            if (UserUtil.hasLogin(getBaseContext()) && Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false)) {
                 GestureLockVerifyActivity.startActivity(getBaseContext(), MainActivity.class);
             } else {
                 startActivity(new Intent(getBaseContext(), MainActivity.class));

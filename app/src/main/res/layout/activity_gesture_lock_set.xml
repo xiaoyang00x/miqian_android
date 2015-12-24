@@ -14,9 +14,9 @@
     <com.miqian.mq.views.GestureCueView
         android:id="@+id/lockTipView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="68dp"
-        android:layout_weight="0.2" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="58dp" />
 
     <TextView
         android:id="@+id/tv_tip"
@@ -31,14 +31,7 @@
     <com.miqian.mq.views.GestureLockView
         android:id="@+id/lockView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="30dp"
-        android:layout_weight="0.2" />
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>
