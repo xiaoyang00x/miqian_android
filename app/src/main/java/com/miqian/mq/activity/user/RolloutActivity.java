@@ -61,6 +61,7 @@ public class RolloutActivity extends BaseActivity {
     private boolean isChooseCity;
     private BankCard bankCard;
     private boolean isSuccessBindBranch;
+    private View btnRollout;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -71,10 +72,12 @@ public class RolloutActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
-
+        begin();
         HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
             @Override
             public void onSucceed(BankCardResult result) {
+                end();
+                btnRollout.setEnabled(true);
                 bankCard = result.getData();
                 if (bankCard != null) {
                     bankOpenName = bankCard.getBankOpenName();
@@ -84,7 +87,8 @@ public class RolloutActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-
+                end();
+                Uihelper.showToast(mActivity,error);
             }
         });
 
@@ -188,6 +192,7 @@ public class RolloutActivity extends BaseActivity {
         frame_bank_province = findViewById(R.id.frame_bank_province);
         frame_bank_branch = findViewById(R.id.frame_bank_branch);
 
+        btnRollout = findViewById(R.id.bt_rollout);
 
         editMoney = (EditText) findViewById(R.id.edit_money);
         editMoney.addTextChangedListener(new MyTextWatcher() {

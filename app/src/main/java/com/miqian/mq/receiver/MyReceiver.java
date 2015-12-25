@@ -62,7 +62,7 @@ public class MyReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             boolean isPush = Pref.getBoolean(Pref.PUSH_STATE, context, true);
-            if (isPush){
+            if (isPush) {
                 processCustomMessage(context, bundle);
             }
         }
@@ -77,12 +77,12 @@ public class MyReceiver extends BroadcastReceiver {
         if (!TextUtils.isEmpty(extra)) {
             response = JsonUtil.parseObject(extra, JpushInfo.class);
             // 解析数据
-            if (response==null||TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
+            if (response == null || TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
                 return;
             }
             response.setTitle(title);
             response.setContent(content);
-            String jpushToken=response.getToken();
+            String jpushToken = response.getToken();
 
             String userId = "";
 
@@ -103,6 +103,7 @@ public class MyReceiver extends BroadcastReceiver {
             String contentText = response.getContent();
             String string_uritype = response.getUriType();
             String noticeId = response.getId();
+            String ext = response.getExt();
             if (TextUtils.isEmpty(noticeId)) {
                 return;
             }
@@ -114,7 +115,6 @@ public class MyReceiver extends BroadcastReceiver {
                 notificationIntent = new Intent(context, SplashActivity.class);
                 Pref.saveBoolean(Pref.IsPush, true, context);
             } else {
-
                 if (TextUtils.isEmpty(string_uritype)) {
                     return;
                 } else {
@@ -124,7 +124,7 @@ public class MyReceiver extends BroadcastReceiver {
                     case 16://找回登录密码
                     case 17://修改登录密码
                     case 18://其他设备登录
-                    case  0://手机号修改
+                    case 0://手机号修改
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, response);
                         return;
                     case 1://交易密码修改，到消息列表页
@@ -148,17 +148,20 @@ public class MyReceiver extends BroadcastReceiver {
                     case 51://活动利好 webView
                     case 52://平台相关新闻 webView
                     case 53://相关项目 webView
-                        try {
-                            String ext= response.getExt();
-                            JSONObject jsonObject =new JSONObject(ext);
-                            if (jsonObject!=null){
-                                String url= jsonObject.getString("url");
-                                if (!TextUtils.isEmpty(url)){
+                        if (TextUtils.isEmpty(ext)){
+                            notificationIntent = new Intent(context, MainActivity.class);
+                        }else {
+                            try {
+                                JSONObject jsonObject = new JSONObject(ext);
+                                if (jsonObject != null) {
+                                    String url = jsonObject.getString("url");
                                     notificationIntent = WebActivity.getIntent(context, url);
+                                } else {
+                                    notificationIntent = new Intent(context, MainActivity.class);
                                 }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                         break;
                     case 54://运营公告文本
@@ -189,76 +192,84 @@ public class MyReceiver extends BroadcastReceiver {
                         if (MyApplication.isOnMainAcitivity()) {
                             ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
                         }
-                         String ext= response.getExt();
-                        if (!TextUtils.isEmpty(ext)){
+                        if (!TextUtils.isEmpty(ext)) {
                             try {
-                                JSONObject jsonObject =new JSONObject(ext);
-                                if (jsonObject!=null){
-                                   String prodId= jsonObject.getString("prodId");
-                                   String subjectId= jsonObject.getString("subjectId");
-                                    if (!TextUtils.isEmpty(prodId)&&!TextUtils.isEmpty(subjectId)){
-                                        if ("3".equals(prodId)){//定期赚
+                                JSONObject jsonObject = new JSONObject(ext);
+                                if (jsonObject != null) {
+                                    String prodId = jsonObject.getString("prodId");
+                                    String subjectId = jsonObject.getString("subjectId");
+                                    if (!TextUtils.isEmpty(prodId) && !TextUtils.isEmpty(subjectId)) {
+                                        if ("3".equals(prodId)) {//定期赚
                                             notificationIntent = new Intent(context, RegularEarnActivity.class);
-                                            notificationIntent.putExtra("KEY_SUBJECT_ID",subjectId);
-                                        }else if("5".equals(prodId)){
+                                            notificationIntent.putExtra("KEY_SUBJECT_ID", subjectId);
+                                        } else if ("5".equals(prodId)) {
                                             notificationIntent = new Intent(context, RegularPlanActivity.class);
-                                            notificationIntent.putExtra("KEY_SUBJECT_ID",subjectId);
+                                            notificationIntent.putExtra("KEY_SUBJECT_ID", subjectId);
                                         }
+                                    } else {
+                                        notificationIntent = new Intent(context, MainActivity.class);
                                     }
-
+                                } else {
+                                    notificationIntent = new Intent(context, MainActivity.class);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                        }else {
+                            notificationIntent = new Intent(context, MainActivity.class);
                         }
                         break;
                     default:
                         break;
                 }
             }
-            notificationIntent.putExtra("token",jpushToken);
+            if (notificationIntent != null) {
+                if (!TextUtils.isEmpty(jpushToken)) {
+                    notificationIntent.putExtra("token", jpushToken);
+                }
+                int requestCode = (int) System.currentTimeMillis();
+                notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent contentIntent = PendingIntent.getActivity(context, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                RemoteViews contentViews = new RemoteViews("com.miqian.mq", R.layout.layout_jpush);
 
-            int requestCode = (int) System.currentTimeMillis();
-            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent contentIntent = PendingIntent.getActivity(context, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            RemoteViews contentViews = new RemoteViews("com.miqian.mq", R.layout.layout_jpush);
+                final Calendar mCalendar = Calendar.getInstance();
+                int mHour;
+                boolean is24HourFormat = android.text.format.DateFormat.is24HourFormat(context);
+                if (is24HourFormat) {
+                    mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+                } else {
+                    mHour = mCalendar.get(Calendar.HOUR);
+                }
+                int mMinuts = mCalendar.get(Calendar.MINUTE);
 
-            final Calendar mCalendar = Calendar.getInstance();
-            int mHour;
-            boolean is24HourFormat = android.text.format.DateFormat.is24HourFormat(context);
-            if (is24HourFormat) {
-                mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
-            } else {
-                mHour = mCalendar.get(Calendar.HOUR);
+                // 通过控件的Id设置属性
+                contentViews.setTextViewText(R.id.titleNo, contentTitle);
+                contentViews.setTextViewText(R.id.textNo, contentText);
+                String string_Minutes = "" + mMinuts;
+                if (mMinuts < 10) {
+                    string_Minutes = "0" + mMinuts;
+                }
+                contentViews.setTextViewText(R.id.timeNo, mHour + ":" + string_Minutes);
+                String tickerText = context.getResources().getString(R.string.app_name);
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.icon_jpush).setTicker(tickerText);
+                mBuilder.setAutoCancel(true);
+                mBuilder.setContentIntent(contentIntent);
+                mBuilder.setContent(contentViews);
+                mBuilder.setAutoCancel(true);
+                mBuilder.setDefaults(Notification.DEFAULT_ALL);
+
+                // 定义NotificationManager
+                String ns = Context.NOTIFICATION_SERVICE;
+                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
+                //判断是否在后台,在后台则发送通知
+                boolean isBackStage = MyApplication.getInstance().isBackStage();
+                boolean isCurrent = MyApplication.getInstance().isCurrent();
+                if (!isBackStage && isCurrent) {
+                } else {
+                    mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
+                }
             }
-            int mMinuts = mCalendar.get(Calendar.MINUTE);
 
-            // 通过控件的Id设置属性
-            contentViews.setTextViewText(R.id.titleNo, contentTitle);
-            contentViews.setTextViewText(R.id.textNo, contentText);
-            String string_Minutes = "" + mMinuts;
-            if (mMinuts < 10) {
-                string_Minutes = "0" + mMinuts;
-            }
-            contentViews.setTextViewText(R.id.timeNo, mHour + ":" + string_Minutes);
-            String tickerText = context.getResources().getString(R.string.app_name);
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.icon_jpush).setTicker(tickerText);
-            mBuilder.setAutoCancel(true);
-            mBuilder.setContentIntent(contentIntent);
-            mBuilder.setContent(contentViews);
-            mBuilder.setAutoCancel(true);
-            mBuilder.setDefaults(Notification.DEFAULT_ALL);
-
-            // 定义NotificationManager
-            String ns = Context.NOTIFICATION_SERVICE;
-            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
-            //判断是否在后台,在后台则发送通知
-            boolean isBackStage = MyApplication.getInstance().isBackStage();
-            boolean isCurrent = MyApplication.getInstance().isCurrent();
-            if (!isBackStage && isCurrent) {
-            } else {
-                mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
-            }
         } else {
             LogUtil.e("====MessageReceiver==", "==response=nulL=");
         }

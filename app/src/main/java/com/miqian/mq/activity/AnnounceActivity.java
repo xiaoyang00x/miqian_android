@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -60,11 +61,14 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     private SwipeMenuCreator creator;
     private View footView;
     private boolean isOver;
+    private boolean isLoading;
     private View mViewnoresult_data;
     private TextView tvTips;
     private TextView view_Refresh;
     private ImageView ivMessageData;
     private boolean hasUnread;
+    private ProgressBar progressBarLoading;
+    private TextView textLoading;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -73,7 +77,8 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
     @Override
     public void obtainData() {
-
+        progressBarLoading.setVisibility(View.GONE);
+        textLoading.setText("");
         if (messageType == 0 && !UserUtil.hasLogin(mActivity)) {
             mViewnoresult_data.setVisibility(View.VISIBLE);
             ivMessageData.setBackgroundResource(R.drawable.nomessage);
@@ -83,14 +88,15 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             tvTips.setText("请登录后查看");
             return;
         }
-
         if (!swipeRefresh.isRefreshing()) {
             begin();
         }
         if (messageType == 0) {
+            isLoading=true;
             HttpRequest.getMessageList(mActivity, "", new ICallback<UserMessageResult>() {
                 @Override
                 public void onSucceed(UserMessageResult result) {
+                    isLoading=false;
                     end();
                     swipeRefresh.setRefreshing(false);
                     UserMessageData userMessageData = result.getData();
@@ -100,9 +106,13 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         checkReadStatus(list);
                         showContentView();
                         if (list.size() < count) {
-                            isOver = true;
-                        } else {
                             isOver = false;
+                            progressBarLoading.setVisibility(View.VISIBLE);
+                            textLoading.setText("加载更多");
+                        } else {
+                            isOver = true;
+                            progressBarLoading.setVisibility(View.GONE);
+                            textLoading.setText("");
                         }
                         adapter = new MessageAdapter(mActivity, list);
                         pullToListView.setAdapter(adapter);
@@ -114,6 +124,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
                 @Override
                 public void onFail(String error) {
+                    isLoading=false;
                     end();
                     showErrorView();
                     swipeRefresh.setRefreshing(false);
@@ -182,7 +193,11 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     }
 
     public void initView() {
+
         footView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_loading, null);
+        progressBarLoading=(ProgressBar)footView.findViewById(R.id.progressBar);
+        textLoading=(TextView)footView.findViewById(R.id.text_loading);
+
 
         btLeft = (ImageButton) findViewById(R.id.bt_left);
         btLeft.setOnClickListener(this);
@@ -199,6 +214,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         pullToListView = (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
         pullToListView.setMode(PullToRefreshBase.Mode.DISABLED);
         pullToListView.setOnScrollListener(this);
+        pullToListView.getRefreshableView().addFooterView(footView);
 
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -221,11 +237,11 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             public void onClick(View v) {
                 showContentView();
                 obtainData();
+
+
             }
         });
         initPullToListView();
-
-
     }
 
     private void initPullToListView() {
@@ -375,7 +391,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             end();
                             Uihelper.showToast(mActivity, error);
                         }
-                    }, list.get(list.size() - 1).getId(), list.get(0).getId() + "", 1);
+                    }, list.get(0).getId(), list.get(list.size()-1).getId() + "", 1);
                 }
 
                 @Override
@@ -477,14 +493,14 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             swipeRefresh.setEnabled(false);
         }
         if (messageType == 0) {
-
-            if (visibleItemCount + firstVisibleItem >= totalItemCount - 1 && isOver) {
+            if (visibleItemCount + firstVisibleItem >= totalItemCount - 1 && !isOver&&!isLoading) {
                 if (list.size() < count) {
-                    pullToListView.getRefreshableView().addFooterView(footView);
-                    isOver = false;
+                    isOver = true;
+                    isLoading=true;
                     HttpRequest.getMessageList(mActivity, list.get(list.size() - 1).getId() + "", new ICallback<UserMessageResult>() {
                         @Override
                         public void onSucceed(UserMessageResult result) {
+                            isLoading=false;
                             UserMessageData userMessageData = result.getData();
                             count = userMessageData.getCount();
                             List<MessageInfo> tempList = userMessageData.getMsgList();
@@ -494,14 +510,16 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                                 adapter.notifyDataSetChanged();
                             }
                             if (list.size() < count) {
-                                isOver = true;
+                                isOver = false;
                             } else {
-                                pullToListView.getRefreshableView().removeFooterView(footView);
+                                progressBarLoading.setVisibility(View.GONE);
+                                textLoading.setText("没有更多");
                             }
                         }
 
                         @Override
                         public void onFail(String error) {
+                            isLoading=false;
                             Uihelper.showToast(mActivity, error);
                         }
                     });

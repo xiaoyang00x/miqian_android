@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
@@ -35,30 +36,29 @@ public class ActivityRedeem extends BaseActivity {
     private DialogTradePassword dialogTradePassword_set;
     private DialogTradePassword dialogTradePassword_input;
     private String money;
+    private Button btnRollout;
 
     @Override
     public void obtainData() {
-
-
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 userInfo = result.getData();
                 if (userInfo != null) {
                     capital = userInfo.getCanRedeem();
                     if (!TextUtils.isEmpty(capital)) {
                         editMoney.setHint("可赎回" + capital + "元");
+                        btnRollout.setEnabled(true);
                     }
-
                 }
-
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
+                Uihelper.showToast(mActivity, error);
             }
         });
     }
@@ -67,6 +67,7 @@ public class ActivityRedeem extends BaseActivity {
     public void initView() {
 
         editMoney = (EditText) findViewById(R.id.edit_money);
+        btnRollout = (Button) findViewById(R.id.bt_redeem);
         editMoney.addTextChangedListener(new MyTextWatcher() {
 
             @Override
@@ -104,7 +105,7 @@ public class ActivityRedeem extends BaseActivity {
 
     public void btn_click(View v) {
 
-        if (userInfo==null){
+        if (userInfo == null) {
             return;
         }
         money = editMoney.getText().toString();

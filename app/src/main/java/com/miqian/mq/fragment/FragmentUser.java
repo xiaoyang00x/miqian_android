@@ -354,7 +354,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 end();
                 UserInfo userInfo = result.getData();
                 UserUtil.saveUserInfo(getActivity(), userInfo);
-                onStart();
+//                onStart();
                 GestureLockSetActivity.startActivity(getActivity(), null);
             }
 

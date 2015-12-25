@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
         android:background="@drawable/mohu"
-        android:clickable="true"
         android:visibility="gone">
 
         <RelativeLayout

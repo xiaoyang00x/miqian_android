@@ -206,9 +206,10 @@
                 android:layout_marginTop="15dp">
 
                 <Button
-                    android:id="@+id/bt_rollin"
+                    android:id="@+id/bt_rollout"
                     style="@style/click_btn"
                     android:onClick="btn_click"
+                    android:enabled="false"
                     android:text="确定" />
             </LinearLayout>
 
