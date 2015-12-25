@@ -46,6 +46,8 @@ public class HttpUtils {
             for (Param param : list) {
                 if(!TextUtils.isEmpty(param.value)) {
                     builder.add(param.key, param.value);
+                }else{
+                    builder.add(param.key, "");
                 }
             }
         }
