@@ -66,7 +66,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/text_interest_rate"
                         android:singleLine="true"
-                        android:text="年化收益率：" />
+                        android:text="年化收益：" />
                 </RelativeLayout>
             </RelativeLayout>
 

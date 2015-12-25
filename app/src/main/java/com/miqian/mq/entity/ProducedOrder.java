@@ -11,7 +11,7 @@ public class ProducedOrder {
     private List<Promote> promList;
     private String balance;     //余额
     private String best;        //优惠金额
-    private String currentYearRate;     //年化利率
+    private String currentYearRate;     //年化收益
     private BigDecimal balanceCurrent;      //活期余额
 
     public List<Promote> getPromList() {

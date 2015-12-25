@@ -71,7 +71,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private String money;
     private String prodId; //0:充值产品 1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
     private String subjectId; //标的id，活期默认为0
-    private String interestRateString; //年化利率和期限
+    private String interestRateString; //年化收益和期限
     private int position = -1;//使用的红包位置，用于获取list
 
     private BigDecimal orderMoney;//订单金额

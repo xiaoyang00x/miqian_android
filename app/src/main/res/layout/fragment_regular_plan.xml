@@ -17,7 +17,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="26dp"
-            android:text="年化利率"
+            android:text="年化收益"
             android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font3" />
 
