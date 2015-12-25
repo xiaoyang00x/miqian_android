@@ -17,7 +17,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="26dp"
-            android:text="年化收益"
+            android:text="年化利率"
             android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font3" />
 
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/tv_annurate_interest_rate"
         android:layout_marginBottom="-10dp"
-        android:layout_marginLeft="-5dp"
+        android:layout_marginLeft="6dp"
         android:layout_toRightOf="@id/tv_annurate_interest_rate"
         android:background="@drawable/bg_add_interest"
         android:paddingLeft="5dp"

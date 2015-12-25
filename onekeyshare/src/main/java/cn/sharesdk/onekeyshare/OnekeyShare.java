@@ -591,9 +591,9 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 					case 3: {
 						// 取消
 						int resId = getStringRes(context, "ssdk_oks_share_canceled");
-						if (resId > 0) {
-							showNotification(context.getString(resId));
-						}
+//						if (resId > 0) {
+//							showNotification(context.getString(resId));
+//						}
 					}
 					break;
 				}
