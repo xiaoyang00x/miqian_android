@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.utils.Constants;
@@ -63,6 +64,11 @@ public class GestureLockSetActivity extends BaseFragmentActivity {
     }
 
     private void initData() {
+        setActionLeftListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
         isFirstSet = true;
         firstEnterPsw = null;
         setTitle("设置手势密码");
@@ -71,7 +77,6 @@ public class GestureLockSetActivity extends BaseFragmentActivity {
         tv_right.setText("跳过");
         showRightAction(true);
         setActionRightListener(onClickListener);
-        setActionLeftListener(onClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -116,6 +121,7 @@ public class GestureLockSetActivity extends BaseFragmentActivity {
                     if (null != desClass) {
                         startActivity(getBaseContext(), desClass);
                     }
+                    Toast.makeText(getBaseContext(), "手势密码设置成功", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     lockView.showErrorState();

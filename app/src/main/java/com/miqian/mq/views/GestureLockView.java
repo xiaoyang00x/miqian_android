@@ -39,7 +39,7 @@ public class GestureLockView extends View {
     private boolean isInit; // 初始化九宫格一次
 
     private static final int PADIN = 35; // 九宫格圈之间间距
-    private static final int PADOUT = 45; // 九宫格距离父控件左右间距
+    private static final int PADOUT = 50; // 九宫格距离父控件左右间距
     private int paddingIn; // 九宫格距离父控件左右间距
     private int paddingOut; // 九宫格圈之间间距
 

@@ -36,9 +36,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         mContext = getBaseContext();
         mApplicationContext = getApplicationContext();
 
-        //注册广播
-        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(
-                Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+        //注册监听home键被按下广播
+        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+        //注册监听锁屏广播
+        registerReceiver(mScreenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
     }
 
     @Override
@@ -68,7 +69,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         }
     }
 
-    private ImageView img_left;
+    protected ImageView img_left;
     protected TextView tv_right;
     private ImageView img_right;
     private View layout_left;
@@ -189,6 +190,17 @@ public abstract class BaseFragmentActivity extends FragmentActivity
 
                 }
             }
+        }
+    };
+
+    public BroadcastReceiver mScreenOffReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 设置为在后台运行的标志
+            // 表示按了home键,程序到了后台
+            MyApplication.getInstance().setIsBackStage(true);
+
         }
     };
 
