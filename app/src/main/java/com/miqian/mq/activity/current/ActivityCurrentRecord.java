@@ -166,7 +166,7 @@ public class ActivityCurrentRecord extends BaseActivity {
     @Override
     public void initTitle(WFYTitle mTitle) {
 
-        mTitle.setTitleText("活期资金记录");
+        mTitle.setTitleText("认购赎回记录");
 //        mTitle.setRightText("查看合同");
 //        mTitle.setOnRightClickListener(new View.OnClickListener() {
 //            @Override

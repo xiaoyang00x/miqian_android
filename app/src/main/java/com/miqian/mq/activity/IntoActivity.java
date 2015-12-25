@@ -50,17 +50,12 @@ import java.math.BigDecimal;
 public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private Button btRollin;
-//    private RelativeLayout frameMoney;
     private LinearLayout frameBank;
     private RelativeLayout frameBankInput;
-//    private RelativeLayout frameTip;
     private EditText editMoney;
     private EditText editBankNumber;
     private TextView bindBankName;
     private TextView bindBankNumber;
-//    private TextView textLaw;
-//    private ImageView iconBank;
-//    private TextView textSupportBank;
     private LinearLayout frameRealName;
     private EditText editName;
     private EditText editCardId;
@@ -106,7 +101,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         rollType = intent.getIntExtra("rollType", 0);
         btRollin = (Button) findViewById(R.id.bt_rollin);
         btRollin.setOnClickListener(this);
-//        frameMoney = (RelativeLayout) findViewById(R.id.frame_money);
         editMoney = (EditText) findViewById(R.id.edit_money);
         editMoney.addTextChangedListener(new MyTextWatcher() {
 
@@ -123,7 +117,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         if (rollType == 1) {
-//            frameMoney.setVisibility(View.GONE);
             money = intent.getStringExtra("money");
             editMoney.setText(money);
             editMoney.setEnabled(false);
@@ -184,7 +177,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
             bindBankNumber.setText(bankNumber);
             bindBankName.setText(userInfo.getBankName());
-            textLimit.setText("单笔限额 " + userInfo.getSingleAmtLimit()+ "， 单日限额 "+userInfo.getDayAmtLimit());
+            textLimit.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
         }
     }
 
@@ -331,7 +324,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                         if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
                             checkOrder(orderNo);
                         }
-//                    } else if (Constants.RET_CODE_LIMIT.equals(retCode)) {//签约失败，余额不足，银行各种限制
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {
@@ -399,7 +391,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         return "充值";
     }
 
-//  银行卡4位1空格
+    //  银行卡4位1空格
     TextWatcher textWatcher = new TextWatcher() {
         int beforeTextLength = 0;
         int onTextLength = 0;
@@ -451,7 +443,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 index = 0;
                 int konggeNumberC = 0;
                 while (index < buffer.length()) {
-                    if ( index % 5 == 4 ) {
+                    if (index % 5 == 4) {
                         buffer.insert(index, ' ');
                         konggeNumberC++;
                     }

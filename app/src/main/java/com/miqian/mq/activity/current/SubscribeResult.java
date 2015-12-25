@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -135,8 +134,10 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.bt_back:
                 MobclickAgent.onEvent(mContext, "1065");
+                if (status == 1) {
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
+                }
                 SubscribeResult.this.finish();
-                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
                 break;
             default:
                 break;

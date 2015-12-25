@@ -123,7 +123,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 if (!TextUtils.isEmpty(moneyString)) {
                     BigDecimal money = new BigDecimal(moneyString);
                     if (money.compareTo(downLimit) < 0) {
-                        this.setTitle("提示：请输入大于等于" + downLimit + "元");
+                        this.setTitle("提示：" + downLimit + "元起投");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else if (money.compareTo(upLimit) > 0) {
                         this.setTitle("提示：请输入小于等于" + upLimit + "元");
