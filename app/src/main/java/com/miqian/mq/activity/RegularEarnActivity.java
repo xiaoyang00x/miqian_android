@@ -101,7 +101,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                     BigDecimal money = new BigDecimal(moneyString);
                     BigDecimal remainder = money.remainder(downLimit);
                     if (money.compareTo(downLimit) == -1) {
-                        this.setTitle("提示：请输入大于等于" + downLimit + "元");
+                        this.setTitle("提示：" + downLimit + "元起投");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else if (money.compareTo(upLimit) == 1) {
                         this.setTitle("提示：请输入小于等于" + upLimit + "元");

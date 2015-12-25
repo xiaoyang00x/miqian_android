@@ -42,10 +42,10 @@
 
         <Button
             android:id="@+id/bt_overdue"
-            android:layout_width="80dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
-            android:text="  查看过往红包/券>>"
+            android:text="查看过往红包/券>>"
             android:textColor="@color/mq_bl2"
             android:textSize="@dimen/mq_font5" />
     </LinearLayout>

@@ -468,6 +468,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                 if (result.getCode().equals("996633")) {
                                     Uihelper.showToast(mActivity, result.getMessage());
                                 } else {
+                                    intent.putExtra("money", orderMoney.toString());
+                                    intent.putExtra("balance", balancePay.toString());
+                                    intent.putExtra("promoteMoney", promoteMoney.toString());
+                                    intent.putExtra("currentMoney", currentMoney.toString());
                                     if (result.getCode().equals("000000")) {
                                         intent.putExtra("status", 1);
                                         intent.putExtra("orderNo", subscribeOrder.getOrderNo());
@@ -475,12 +479,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                     } else {
                                         intent.putExtra("status", 0);
                                     }
-                                    intent.putExtra("money", orderMoney.toString());
-                                    intent.putExtra("balance", balancePay.toString());
-                                    intent.putExtra("promoteMoney", promoteMoney.toString());
-                                    intent.putExtra("currentMoney", currentMoney.toString());
                                     startActivity(intent);
-                                    CurrentInvestment.this.finish();
+                                    if (result.getCode().equals("000000")) {
+                                        CurrentInvestment.this.finish();
+                                    }
                                 }
                             }
 
