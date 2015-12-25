@@ -292,18 +292,18 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     //退出账号
     public void btn_click(View view) {
         MobclickAgent.onEvent(mActivity, "1034");
-        mWaitingDialog.show();
+        begin();
         HttpRequest.loginOut(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                mWaitingDialog.dismiss();
+                end();
                 UserUtil.clearUserInfo(mActivity);
                 finish();
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 UserUtil.clearUserInfo(mActivity);
                 finish();
             }

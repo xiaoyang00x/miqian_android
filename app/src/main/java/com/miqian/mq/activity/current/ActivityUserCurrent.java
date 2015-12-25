@@ -47,11 +47,11 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
 
     @Override
     public void obtainData() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getUserCurrent(mActivity, new ICallback<UserCurrentResult>() {
             @Override
             public void onSucceed(UserCurrentResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 userCurrent = result.getData();
                 interestRateString = userCurrent.getCurrentYearRate() + "%";
                 refreshView();
@@ -59,7 +59,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 refreshView();
                 Uihelper.showToast(mActivity, error);
             }

@@ -48,11 +48,11 @@ public class TransferDetailActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getTransferDeatil(mActivity, new ICallback<TransferDetailResult>() {
             @Override
             public void onSucceed(TransferDetailResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 mList = result.getData().getTranslist();
                 if (mList != null && mList.size() > 0) {
                     showContentView();
@@ -65,7 +65,7 @@ public class TransferDetailActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
             }

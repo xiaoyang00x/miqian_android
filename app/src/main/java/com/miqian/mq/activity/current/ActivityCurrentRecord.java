@@ -38,11 +38,11 @@ public class ActivityCurrentRecord extends BaseActivity {
     @Override
     public void obtainData() {
         pageNo = 1;
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getMyCurrentRecord(mActivity, new ICallback<CurrentRecordResult>() {
             @Override
             public void onSucceed(CurrentRecordResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 RecordCurrent data = result.getData();
                 setData(result);
                 page = data.getPage();
@@ -59,7 +59,7 @@ public class ActivityCurrentRecord extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
             }

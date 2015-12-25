@@ -102,13 +102,12 @@ public class BindCardActivity extends BaseActivity {
 
         final String cardNum = etCardNum.getText().toString();
         if (!TextUtils.isEmpty(cardNum)) {
-            mWaitingDialog.show();
+            begin();
             HttpRequest.autoIdentifyBankCard(mActivity, new ICallback<AutoIdentyCardResult>() {
                 @Override
                 public void onSucceed(AutoIdentyCardResult result) {
-                    mWaitingDialog.dismiss();
+                    end();
                     //绑定银行卡
-
                     AutoIdentyCard autoIdentyCard = result.getData();
                     String type = autoIdentyCard.getCardType();
                     String status = autoIdentyCard.getSupportStatus();
@@ -133,7 +132,7 @@ public class BindCardActivity extends BaseActivity {
 
                 @Override
                 public void onFail(String error) {
-                    mWaitingDialog.dismiss();
+                    end();
                     Uihelper.showToast(mActivity, error);
                 }
             }, cardNum);

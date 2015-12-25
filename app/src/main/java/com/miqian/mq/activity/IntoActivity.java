@@ -77,18 +77,18 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void obtainData() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 userInfo = result.getData();
                 refreshView();
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 btRollin.setEnabled(false);
                 Uihelper.showToast(mActivity, error);
             }
@@ -227,12 +227,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 return;
             }
         }
-
-        mWaitingDialog.show();
+        begin();
         HttpRequest.rollIn(mActivity, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
-                mWaitingDialog.dismiss();
+                end();
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
                 if ("000000".equals(meta.getCode())) {
                     PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
@@ -248,7 +247,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, money, bankNumber, realName, idCard);
@@ -337,11 +336,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void checkOrder(String orderNo) {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
             @Override
             public void onSucceed(OrderLianResult orderLianResult) {
-                mWaitingDialog.dismiss();
+                end();
                 OrderLian orderLian = orderLianResult.getData();
                 if (orderLianResult.getCode().equals("000000")) {
                     if (rollType == 1) {
@@ -379,7 +378,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, orderNo);

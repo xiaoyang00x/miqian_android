@@ -143,11 +143,11 @@ public class SendCaptchaActivity extends BaseActivity {
             default:
                 break;
         }
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                mWaitingDialog.dismiss();
+                end();
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -158,7 +158,7 @@ public class SendCaptchaActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, phone, summitType);
@@ -218,12 +218,11 @@ public class SendCaptchaActivity extends BaseActivity {
             //绑定新手机号码
             String oldPhone = Pref.getString(Pref.TELEPHONE, mActivity, "");
             if (!TextUtils.isEmpty(oldPhone) && !TextUtils.isEmpty(captcha)) {
-
-                mWaitingDialog.show();
+                begin();
                 HttpRequest.changePhone(mActivity, new ICallback<Meta>() {
                     @Override
                     public void onSucceed(Meta result) {
-                        mWaitingDialog.dismiss();
+                        end();
                         Uihelper.showToast(mActivity, "绑定成功");
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.MODIFYPHONE, phone);
                         finish();
@@ -231,7 +230,7 @@ public class SendCaptchaActivity extends BaseActivity {
 
                     @Override
                     public void onFail(String error) {
-                        mWaitingDialog.dismiss();
+                        end();
                         Uihelper.showToast(mActivity, error);
 
                     }

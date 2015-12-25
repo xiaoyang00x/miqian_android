@@ -29,7 +29,7 @@ public class SetBankActivity extends BaseActivity {
     private TextView textBranch, tv_bank_province;
     private UserInfo userInfo;
     private boolean isChooseCity;
-    private  BankCard  bankCard;
+    private BankCard bankCard;
     private String bankCardNo;
 
     @Override
@@ -37,8 +37,8 @@ public class SetBankActivity extends BaseActivity {
 
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-        if (userInfo!=null){
-            bankCardNo=userInfo.getBankNo();
+        if (userInfo != null) {
+            bankCardNo = userInfo.getBankNo();
         }
         super.onCreate(arg0);
     }
@@ -46,19 +46,19 @@ public class SetBankActivity extends BaseActivity {
     @Override
     public void obtainData() {
 
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
             @Override
-           public void onSucceed(BankCardResult result) {
-                mWaitingDialog.dismiss();
+            public void onSucceed(BankCardResult result) {
+                end();
                 bankCard = result.getData();
                 setData(bankCard);
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
-                Uihelper.showToast(mActivity,error);
+                end();
+                Uihelper.showToast(mActivity, error);
             }
         });
 
@@ -66,14 +66,14 @@ public class SetBankActivity extends BaseActivity {
 
     private void setData(BankCard bankCard) {
 
-        if (!TextUtils.isEmpty(bankCard.getCity())){
+        if (!TextUtils.isEmpty(bankCard.getCity())) {
             tv_bank_province.setText(bankCard.getCity());
             isChooseCity = true;
             city = bankCard.getCity();
             province = bankCard.getProvince();
             branch = bankCard.getBankOpenName();
         }
-        if (!TextUtils.isEmpty(bankCard.getBankOpenName())){
+        if (!TextUtils.isEmpty(bankCard.getBankOpenName())) {
             textBranch.setText(bankCard.getBankOpenName());
         }
 
@@ -92,7 +92,7 @@ public class SetBankActivity extends BaseActivity {
 
                 Intent intent_city = new Intent(mActivity, CityListActivity.class);
                 startActivityForResult(intent_city, 0);
-                branch="";
+                branch = "";
                 textBranch.setText("请选择");
             }
         });
@@ -105,7 +105,7 @@ public class SetBankActivity extends BaseActivity {
                     Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
                     intent_branch.putExtra("city", city);
                     intent_branch.putExtra("province", province);
-                    intent_branch.putExtra("bankcode",userInfo.getBankCode());
+                    intent_branch.putExtra("bankcode", userInfo.getBankCode());
                     intent_branch.putExtra("fromsetting", true);
                     startActivityForResult(intent_branch, 0);
 
@@ -156,20 +156,20 @@ public class SetBankActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(city)) {
             if (!TextUtils.isEmpty(branch)) {
-                if ((!TextUtils.isEmpty(bankCardNo))&& userInfo != null) {
+                if ((!TextUtils.isEmpty(bankCardNo)) && userInfo != null) {
                     //绑定银行卡
-                    mWaitingDialog.show();
+                    begin();
                     HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
                         @Override
                         public void onSucceed(Meta result) {
-                            mWaitingDialog.dismiss();
+                            end();
                             Uihelper.showToast(mActivity, "设置成功");
                             finish();
                         }
 
                         @Override
                         public void onFail(String error) {
-                            mWaitingDialog.dismiss();
+                            end();
                             Uihelper.showToast(mActivity, error);
 
                         }
