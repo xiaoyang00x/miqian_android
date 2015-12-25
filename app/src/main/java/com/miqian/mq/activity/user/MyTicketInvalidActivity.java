@@ -70,13 +70,13 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 //            return;
 //        }
         pageNo = 1;
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
 
 
             @Override
             public void onSucceed(RedPaperData result) {
-                mWaitingDialog.dismiss();
+                end();
                 Redpaper redpaper = result.getData();
                 promList = redpaper.getCustPromotion();
                 page = redpaper.getPage();
@@ -95,7 +95,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
             }

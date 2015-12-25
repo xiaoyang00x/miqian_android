@@ -117,11 +117,11 @@ public class TradePsCaptchaActivity extends BaseActivity {
             captchaType = TypeUtil.CAPTCHA_TRADEPASSWORD;
 
         }
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                mWaitingDialog.dismiss();
+                end();
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -131,7 +131,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
 
             }

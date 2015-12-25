@@ -29,148 +29,159 @@ import java.util.List;
 
 public class CityListActivity extends BaseActivity {
 
-  private ListView sortListView;
-  private SideBar sideBar;
-  private TextView dialog;
-  private SortAdapter adapter;
-  private ClearEditText mClearEditText;
+    private ListView sortListView;
+    private SideBar sideBar;
+    private TextView dialog;
+    private SortAdapter adapter;
+    private ClearEditText mClearEditText;
 
-  // private List<CityInfo> mList;
-  /**
-   * 汉字转换成拼音的类
-   */
-  private CharacterParser characterParser;
-  private List<CityInfo> sourceDateList;
+    // private List<CityInfo> mList;
+    /**
+     * 汉字转换成拼音的类
+     */
+    private CharacterParser characterParser;
+    private List<CityInfo> sourceDateList;
 
-  /**
-   * 根据拼音来排列ListView里面的数据类
-   */
-  private PinyinComparator pinyinComparator;
+    /**
+     * 根据拼音来排列ListView里面的数据类
+     */
+    private PinyinComparator pinyinComparator;
 
-  private String bankId = "";
-  private String bankName = "";
+    private String bankId = "";
+    private String bankName = "";
 
-  private String branch;
-  private String province;
-  private String city;
+    private String branch;
+    private String province;
+    private String city;
 
-  /**
-   * 根据输入框中的值来过滤数据并更新ListView
-   */
-  private void filterData(String filterStr) {
-    List<CityInfo> filterDateList = new ArrayList<CityInfo>();
+    /**
+     * 根据输入框中的值来过滤数据并更新ListView
+     */
+    private void filterData(String filterStr) {
+        List<CityInfo> filterDateList = new ArrayList<CityInfo>();
 
-    if (TextUtils.isEmpty(filterStr)) {
-      if (sourceDateList != null) {
-        filterDateList = sourceDateList;
-      }
-    } else {
-      filterDateList.clear();
-      if (sourceDateList == null || sourceDateList.size() == 0) {
-        return;
-      }
-      for (CityInfo sortModel : sourceDateList) {
-        String name = sortModel.getCity();
-        if (name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name)
-            .startsWith(filterStr.toString())) {
-          filterDateList.add(sortModel);
+        if (TextUtils.isEmpty(filterStr)) {
+            if (sourceDateList != null) {
+                filterDateList = sourceDateList;
+            }
+        } else {
+            filterDateList.clear();
+            if (sourceDateList == null || sourceDateList.size() == 0) {
+                return;
+            }
+            for (CityInfo sortModel : sourceDateList) {
+                String name = sortModel.getCity();
+                if (name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name)
+                        .startsWith(filterStr.toString())) {
+                    filterDateList.add(sortModel);
+                }
+            }
         }
-      }
+
+        // 根据a-z进行排序
+        Collections.sort(filterDateList, pinyinComparator);
+        adapter.updateListView(filterDateList);
     }
 
-    // 根据a-z进行排序
-    Collections.sort(filterDateList, pinyinComparator);
-    adapter.updateListView(filterDateList);
-  }
+    @Override
+    public void obtainData() {
+        begin();
+        HttpRequest.getAllCity(CityListActivity.this, new ICallback<CityInfoResult>() {
 
-  @Override public void obtainData() {
-    mWaitingDialog.show();
-    HttpRequest.getAllCity(CityListActivity.this, new ICallback<CityInfoResult>() {
+            @Override
+            public void onSucceed(CityInfoResult result) {
+                end();
+                sourceDateList = result.getData();
+                initListView();
+            }
 
-      @Override public void onSucceed(CityInfoResult result) {
-        mWaitingDialog.dismiss();
-        sourceDateList = result.getData();
-        initListView();
-      }
+            @Override
+            public void onFail(String error) {
+                end();
+            }
+        });
+    }
 
-      @Override public void onFail(String error) {
-        mWaitingDialog.dismiss();
-      }
-    });
-  }
+    @Override
+    public void initView() {
+        // 实例化汉字转拼音类
+        characterParser = CharacterParser.getInstance();
 
-  @Override public void initView() {
-    // 实例化汉字转拼音类
-    characterParser = CharacterParser.getInstance();
+        pinyinComparator = new PinyinComparator();
 
-    pinyinComparator = new PinyinComparator();
+        sideBar = (SideBar) findViewById(R.id.sidrbar);
+        dialog = (TextView) findViewById(R.id.dialog);
+        sideBar.setTextView(dialog);
 
-    sideBar = (SideBar) findViewById(R.id.sidrbar);
-    dialog = (TextView) findViewById(R.id.dialog);
-    sideBar.setTextView(dialog);
+        sortListView = (ListView) findViewById(R.id.country_lvcountry);
+        sortListView.setOnItemClickListener(new OnItemClickListener() {
 
-    sortListView = (ListView) findViewById(R.id.country_lvcountry);
-    sortListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // 这里要利用adapter.getItem(position)来获取当前position所对应的对象
+                CityInfo cityInfo = (CityInfo) parent.getAdapter().getItem(position);
+                Intent data = new Intent();
+                data.putExtra("city", cityInfo.getCity());
+                data.putExtra("province", cityInfo.getProv());
+                setResult(0, data);
+                finish();
+            }
+        });
 
-      @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // 这里要利用adapter.getItem(position)来获取当前position所对应的对象
-        CityInfo cityInfo = (CityInfo) parent.getAdapter().getItem(position);
-        Intent data = new Intent();
-        data.putExtra("city", cityInfo.getCity());
-        data.putExtra("province", cityInfo.getProv());
-        setResult(0, data);
-        finish();
-      }
-    });
+        mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
 
-    mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
+        // 根据输入框输入值的改变来过滤搜索
+        mClearEditText.addTextChangedListener(new TextWatcher() {
 
-    // 根据输入框输入值的改变来过滤搜索
-    mClearEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+                filterData(s.toString().toLowerCase());
+            }
 
-      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-        // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-        filterData(s.toString().toLowerCase());
-      }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-      }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
 
-      @Override public void afterTextChanged(Editable s) {
-      }
-    });
-  }
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_city_list;
+    }
 
-  @Override public int getLayoutId() {
-    return R.layout.activity_city_list;
-  }
+    @Override
+    public void initTitle(WFYTitle mTitle) {
+        mTitle.setTitleText("选择城市");
+    }
 
-  @Override public void initTitle(WFYTitle mTitle) {
-    mTitle.setTitleText("选择城市");
-  }
+    private void initListView() {
+        // 根据a-z进行排序源数据
+        Collections.sort(sourceDateList, pinyinComparator);
+        adapter = new SortAdapter(this, sourceDateList);
+        sortListView.setAdapter(adapter);
 
-  private void initListView() {
-    // 根据a-z进行排序源数据
-    Collections.sort(sourceDateList, pinyinComparator);
-    adapter = new SortAdapter(this, sourceDateList);
-    sortListView.setAdapter(adapter);
+        // 设置右侧触摸监听
+        sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
 
-    // 设置右侧触摸监听
-    sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+            @Override
+            public void onTouchingLetterChanged(String s) {
+                // 该字母首次出现的位置
+                int position = adapter.getPositionForSection(s.charAt(0));
+                if (position != -1) {
+                    sortListView.setSelection(position);
+                }
+            }
+        });
+    }
 
-      @Override public void onTouchingLetterChanged(String s) {
-        // 该字母首次出现的位置
-        int position = adapter.getPositionForSection(s.charAt(0));
-        if (position != -1) {
-          sortListView.setSelection(position);
-        }
-      }
-    });
-  }
-
-  @Override
-  protected String getPageName() {
-    return "选择城市";
-  }
+    @Override
+    protected String getPageName() {
+        return "选择城市";
+    }
 }

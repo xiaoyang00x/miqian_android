@@ -58,11 +58,11 @@ public class ProjectMatchActivity extends BaseActivity {
     @Override
     public void obtainData() {
         pageNo = 1;
-        mWaitingDialog.show();
+        begin();
         HttpRequest.projectMatch(mActivity, new ICallback<ProjectInfoResult>() {
             @Override
             public void onSucceed(ProjectInfoResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 mList = result.getData().getMatchsubList();
                 if (mList != null && mList.size() > 0) {
                     showContentView();
@@ -75,7 +75,7 @@ public class ProjectMatchActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
             }
