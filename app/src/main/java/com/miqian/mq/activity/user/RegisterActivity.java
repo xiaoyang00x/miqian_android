@@ -107,11 +107,11 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void sendMessage() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
-                mWaitingDialog.dismiss();
+                end();
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -121,7 +121,7 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
 
             }
@@ -181,12 +181,12 @@ public class RegisterActivity extends BaseActivity {
             if (password.length() < 6 || password.length() > 16) {
                 Uihelper.showToast(this, R.string.tip_password);
             } else {
-                mWaitingDialog.show();
+                begin();
                 HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
                     @Override
                     public void onSucceed(RegisterResult result) {
                         MobclickAgent.onEvent(mContext, "1053");
-                        mWaitingDialog.dismiss();
+                        end();
                         Uihelper.showToast(mActivity, "注册成功");
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mActivity, userInfo);
@@ -201,7 +201,7 @@ public class RegisterActivity extends BaseActivity {
 
                     @Override
                     public void onFail(String error) {
-                        mWaitingDialog.dismiss();
+                        end();
                         Uihelper.showToast(mActivity, error);
                     }
                 }, phone, captcha, password, invite);

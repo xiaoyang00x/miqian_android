@@ -73,18 +73,18 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     }
 
     public void obtainData() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getUserRegularDetail(mActivity, new ICallback<UserRegularDetailResult>() {
             @Override
             public void onSucceed(UserRegularDetailResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 userRegularDetail = result.getData();
                 refreshView();
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, investId, clearYn);

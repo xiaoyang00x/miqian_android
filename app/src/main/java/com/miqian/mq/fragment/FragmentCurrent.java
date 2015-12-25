@@ -19,6 +19,7 @@ import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
@@ -61,8 +62,10 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         if (parent != null) {
             parent.removeView(view);
         }
+        interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "");
         findViewById(view);
         obtainData();
+        initInterestView();
         return view;
     }
 
@@ -101,7 +104,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                         this.setTitle("提示：请输入小于等于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
-                        UserUtil.currenPay(mContext, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, interestRateString);
+                        UserUtil.currenPay(mContext, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, TextUtils.isEmpty(interestRateString) ? "" : interestRateString + "%");
                         this.setEditMoney("");
                         this.setTitle("认购金额");
                         this.setTitleColor(getResources().getColor(R.color.mq_b1));
@@ -134,15 +137,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         if (currentInfo != null) {
             downLimit = new BigDecimal(currentInfo.getCurrentBuyDownLimit());
             upLimit = new BigDecimal(currentInfo.getCurrentBuyUpLimit());
-            String tempInterest = currentInfo.getCurrentYearRate();
-            if (TextUtils.isEmpty(tempInterest)) {
-                imageInterest.setVisibility(View.VISIBLE);
-                textInterest.setVisibility(View.GONE);
-            } else {
-                imageInterest.setVisibility(View.GONE);
-                textInterest.setVisibility(View.VISIBLE);
-                textInterest.setText(tempInterest);
-            }
+            initInterestView();
             if (currentInfo.getCurrentSwitch().equals("0")) {
                 btInvestment.setText("已满额");
                 btInvestment.setEnabled(false);
@@ -153,13 +148,25 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         }
     }
 
+    private void initInterestView() {
+        if (TextUtils.isEmpty(interestRateString)) {
+            imageInterest.setVisibility(View.VISIBLE);
+            textInterest.setVisibility(View.GONE);
+        } else {
+            imageInterest.setVisibility(View.GONE);
+            textInterest.setVisibility(View.VISIBLE);
+            textInterest.setText(interestRateString);
+        }
+    }
+
     public void obtainData() {
         HttpRequest.getCurrentHome(mContext, new ICallback<CurrentInfoResult>() {
             @Override
             public void onSucceed(CurrentInfoResult result) {
                 swipeRefresh.setRefreshing(false);
                 currentInfo = result.getData();
-                interestRateString = currentInfo.getCurrentYearRate() + "%";
+                interestRateString = currentInfo.getCurrentYearRate();
+                Pref.saveString(Pref.CURRENT_RATE, interestRateString, mContext);
                 refreshView();
             }
 

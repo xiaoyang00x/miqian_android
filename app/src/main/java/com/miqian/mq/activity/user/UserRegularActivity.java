@@ -76,7 +76,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             public void onSucceed(UserRegularResult result) {
                 end();
                 swipeRefresh.setRefreshing(false);
-                mWaitingDialog.dismiss();
                 userRegular = result.getData();
                 regInvestList = userRegular.getRegInvest();
                 refreshView();

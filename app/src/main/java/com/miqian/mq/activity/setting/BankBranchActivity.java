@@ -53,11 +53,11 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
 
     @Override
     public void obtainData() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getSubBranch(mActivity, new ICallback<BankBranchResult>() {
             @Override
             public void onSucceed(BankBranchResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 items = result.getData();
                 setView();
 
@@ -65,7 +65,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
 
             }
         }, province, city, "" + bankcode);

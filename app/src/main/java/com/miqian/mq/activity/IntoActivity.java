@@ -77,18 +77,18 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void obtainData() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 userInfo = result.getData();
                 refreshView();
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 btRollin.setEnabled(false);
                 Uihelper.showToast(mActivity, error);
             }
@@ -227,12 +227,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 return;
             }
         }
-
-        mWaitingDialog.show();
+        begin();
         HttpRequest.rollIn(mActivity, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
-                mWaitingDialog.dismiss();
+                end();
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
                 if ("000000".equals(meta.getCode())) {
                     PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
@@ -248,7 +247,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, money, bankNumber, realName, idCard);
@@ -308,7 +307,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     JSONObject objContent = BaseHelper.string2JSON(strRet);
                     String retCode = objContent.optString("ret_code");
                     String retMsg = objContent.optString("ret_msg");
-                    //                    String money = objContent.optString("money_order");
                     String orderNo = objContent.optString("no_order");
                     // //先判断状态码，状态码为 成功或处理中 的需要 验签
                     if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
@@ -327,7 +325,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {
-                        Uihelper.showToast(mActivity, "您的银行卡号有误");
+                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")) + "有误");
                     } else {
                         Uihelper.showToast(mActivity, retMsg);
                     }
@@ -338,11 +336,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void checkOrder(String orderNo) {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
             @Override
             public void onSucceed(OrderLianResult orderLianResult) {
-                mWaitingDialog.dismiss();
+                end();
                 OrderLian orderLian = orderLianResult.getData();
                 if (orderLianResult.getCode().equals("000000")) {
                     if (rollType == 1) {
@@ -380,7 +378,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, orderNo);
