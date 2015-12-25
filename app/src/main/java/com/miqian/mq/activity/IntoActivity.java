@@ -308,7 +308,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     JSONObject objContent = BaseHelper.string2JSON(strRet);
                     String retCode = objContent.optString("ret_code");
                     String retMsg = objContent.optString("ret_msg");
-                    //                    String money = objContent.optString("money_order");
                     String orderNo = objContent.optString("no_order");
                     // //先判断状态码，状态码为 成功或处理中 的需要 验签
                     if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
@@ -327,7 +326,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {
-                        Uihelper.showToast(mActivity, "您的银行卡号有误");
+                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")) + "有误");
                     } else {
                         Uihelper.showToast(mActivity, retMsg);
                     }
