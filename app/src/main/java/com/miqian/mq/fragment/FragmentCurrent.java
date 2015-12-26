@@ -193,6 +193,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.bt_investment:
                 MobclickAgent.onEvent(mContext,"1007");
+                dialogPay.setEditMoneyHint(downLimit + "元起投");
                 UserUtil.loginPay(mContext, dialogPay);
                 break;
             case R.id.frame_image:

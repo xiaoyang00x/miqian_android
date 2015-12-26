@@ -325,7 +325,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {
-                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")) + "有误");
+                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
                     } else {
                         Uihelper.showToast(mActivity, retMsg);
                     }
