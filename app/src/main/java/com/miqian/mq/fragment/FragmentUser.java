@@ -455,6 +455,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             case R.id.bt_left:
                 MobclickAgent.onEvent(getActivity(), "1015");
                 startActivity(new Intent(getActivity(), AnnounceActivity.class));
+                hasMessage=false;
                 btn_message.setImageResource(R.drawable.btn_message_none);
                 break;
             //我的设置
