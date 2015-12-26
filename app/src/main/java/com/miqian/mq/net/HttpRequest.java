@@ -148,7 +148,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if ("999991".equals(meta.getCode()) || "000000".equals(meta.getCode())) {
+                if ("999991".equals(meta.getCode()) || "000000".equals(meta.getCode()) || "996633".equals(meta.getCode()) ) {
                     callback.onSucceed(result);
                 } else {
                     callback.onFail(meta.getMessage());

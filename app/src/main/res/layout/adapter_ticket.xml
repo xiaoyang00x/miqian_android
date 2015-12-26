@@ -50,7 +50,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="拾财券"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mq_font2" />
 
@@ -58,7 +57,7 @@
                 android:id="@+id/text_percent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="5dp"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mq_font5" />
@@ -83,7 +82,7 @@
                 android:id="@+id/limit_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/mq_font5" />

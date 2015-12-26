@@ -242,6 +242,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 } else if ("999991".equals(meta.getCode())) {
                     SupportBankMsgResult supportBankMsgResult = JsonUtil.parseObject(result, SupportBankMsgResult.class);
                     Uihelper.showToast(mActivity, supportBankMsgResult.getMessage());
+                } else if ("996633".equals(meta.getCode())) {
+                    Uihelper.showToast(mActivity, meta.getMessage());
                 }
             }
 
