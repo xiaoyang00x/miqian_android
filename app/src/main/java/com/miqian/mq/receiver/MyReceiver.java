@@ -188,7 +188,9 @@ public class MyReceiver extends BroadcastReceiver {
                         notificationIntent = new Intent(context, MainActivity.class);
                         break;
                     case 62://跳标的详情
-                        MyApplication.getInstance().addJpushList(noticeId, false);
+                        if (!MyApplication.getInstance().isBackStage()) {
+                            MyApplication.getInstance().addJpushList(noticeId, false);
+                        }
                         if (MyApplication.isOnMainAcitivity()) {
                             ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ShowTips, null);
                         }

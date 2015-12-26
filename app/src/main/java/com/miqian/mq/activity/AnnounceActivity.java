@@ -124,6 +124,10 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
                 @Override
                 public void onFail(String error) {
+                    if (list!=null&&adapter!=null){
+                        list.clear();
+                        adapter.notifyDataSetChanged();
+                    }
                     isLoading=false;
                     end();
                     showErrorView();
@@ -158,6 +162,10 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
                 @Override
                 public void onFail(String error) {
+                    if (list!=null&&adapter!=null){
+                        list.clear();
+                        adapter.notifyDataSetChanged();
+                    }
                     end();
                     swipeRefresh.setRefreshing(false);
                     showErrorView();
@@ -221,8 +229,6 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             @Override
             public void onRefresh() {
                 isOver = false;
-                list.clear();
-                adapter.notifyDataSetChanged();
                 obtainData();
             }
         });

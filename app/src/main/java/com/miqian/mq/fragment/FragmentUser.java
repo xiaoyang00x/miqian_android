@@ -67,6 +67,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private ExtendOperationController extendOperationController;
     private View view_QQredBag;
     private CustomDialog tipDialog;
+    private boolean hasMessage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -207,7 +208,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     private void findViewById(View view) {
 
-
         swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
@@ -216,12 +216,15 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             }
         });
 
-
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
         tv_Title.setText("我的");
 
         btn_message = (ImageButton) view.findViewById(R.id.bt_left);
-        btn_message.setImageResource(R.drawable.btn_message_none);
+        if (hasMessage){
+            btn_message.setImageResource(R.drawable.btn_message);
+        }else {
+            btn_message.setImageResource(R.drawable.btn_message_none);
+        }
         btn_message.setOnClickListener(this);
 
         ImageButton btn_setting = (ImageButton) view.findViewById(R.id.bt_right);
@@ -338,11 +341,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if ("YES".equals(value)) {
             view_QQredBag.setVisibility(View.VISIBLE);
             view.findViewById(R.id.frame_redbag).setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     startActivity(new Intent(mContext, RegisterActivity.class));
-                 }
-             });
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(mContext, RegisterActivity.class));
+                }
+            });
         }
     }
 
@@ -499,6 +502,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         switch (operationKey) {
             case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
+                hasMessage=true;
                 btn_message.setImageResource(R.drawable.btn_message);
                 break;
         }

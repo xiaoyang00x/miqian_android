@@ -427,6 +427,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             case OperationKey.ChangeTab:
                 ActivityStack.getActivityStack().clearActivity();
                 current_tab = (int) data;
+                mTabHost.setCurrentTab(current_tab);
                 break;
             default:
                 break;
