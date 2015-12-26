@@ -171,6 +171,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         super.onDestroy();
         //反注册广播
         unregisterReceiver(mHomeKeyEventReceiver);
+        unregisterReceiver(mScreenOffReceiver);
     }
 
     public BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
@@ -200,7 +201,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity
             // 设置为在后台运行的标志
             // 表示按了home键,程序到了后台
             MyApplication.getInstance().setIsBackStage(true);
-
         }
     };
 
