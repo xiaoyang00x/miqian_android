@@ -155,6 +155,7 @@
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
+                        android:id="@+id/frame_redbag"
                         android:layout_width="200dp"
                         android:layout_height="48dp"
                         android:paddingTop="11dp"
