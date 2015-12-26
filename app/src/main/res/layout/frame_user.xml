@@ -8,8 +8,8 @@
         android:id="@+id/layout_nologin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
         android:background="@drawable/mohu"
+        android:layout_below="@+id/frame_title"
         android:visibility="gone">
 
         <RelativeLayout
@@ -532,7 +532,7 @@
                 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"></RelativeLayout>
+                    android:layout_height="20dp"/>
 
             </LinearLayout>
         </ScrollView>

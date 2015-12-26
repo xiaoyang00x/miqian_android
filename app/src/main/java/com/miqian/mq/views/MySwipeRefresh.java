@@ -1460,13 +1460,12 @@ public class MySwipeRefresh extends ViewGroup {
     class Yscroll extends GestureDetector.SimpleOnGestureListener {
 
         @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                float distanceX, float distanceY) {
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 //控制手指滑动的距离
-            if (Math.abs(distanceY)>=Math.abs(distanceX)) {
-                return true;
-            }
-            return false;
+//            if (Math.abs(distanceY)>=Math.abs(distanceX)) {
+//                return true;
+//            }
+            return true;
         }
 
     }
