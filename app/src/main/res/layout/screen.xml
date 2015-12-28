@@ -16,9 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="70dp"
         android:background="@drawable/btn_start_splash"
-        android:text="马上秒钱"
         android:textColor="@color/white"
         android:textSize="@dimen/mq_font6"
         android:visibility="gone" />
