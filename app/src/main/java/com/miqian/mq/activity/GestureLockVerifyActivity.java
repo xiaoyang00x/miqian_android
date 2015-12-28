@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
-import com.miqian.mq.encrypt.Encrypt;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
@@ -83,9 +82,6 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
         try {
             gesturePsw = Pref.getString(Pref.GESTUREPSW, getBaseContext(), null);
             unlockCount = Pref.getInt(Pref.UNLOCKCOUNT, getBaseContext(), 0);
-            if (null != gesturePsw) {
-                gesturePsw = Encrypt.decrypt(gesturePsw);
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

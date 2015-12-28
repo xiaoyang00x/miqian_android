@@ -92,12 +92,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             mTabHost.setCurrentTab(3);
         }
 
+        // app每次重新打开都需打开手势密码界面－如果有手势密码
         if (UserUtil.hasLogin(getBaseContext()) &&
                 Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false) &&
                 !TextUtils.isEmpty(Pref.getString(Pref.GESTUREPSW, getBaseContext(), ""))) {
-            MyApplication.setIsBackStage(false);
             GestureLockVerifyActivity.startActivity(getBaseContext(), MainActivity.class);
         }
+        MyApplication.setIsBackStage(false);
     }
 
     @Override
