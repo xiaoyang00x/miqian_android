@@ -56,7 +56,8 @@ public class UserUtil {
     }
 
     public static void clearUserInfo(Context context) {
-        // 清空token 和UseId
+        // 清空 手势密码 和 token 和 UseId
+        Pref.saveString(Pref.GESTUREPSW, null, context);
         Pref.saveString(Pref.TOKEN, "", context);
         Pref.saveString(Pref.USERID, "", context);
     }

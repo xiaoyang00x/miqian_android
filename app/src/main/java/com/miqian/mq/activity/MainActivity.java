@@ -92,6 +92,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             mTabHost.setCurrentTab(3);
         }
 
+        if (UserUtil.hasLogin(getBaseContext()) &&
+                Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false) &&
+                !TextUtils.isEmpty(Pref.getString(Pref.GESTUREPSW, getBaseContext(), ""))) {
+            MyApplication.setIsBackStage(false);
+            GestureLockVerifyActivity.startActivity(getBaseContext(), MainActivity.class);
+        }
     }
 
     @Override
@@ -405,7 +411,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     if (mTabHost.getCurrentTab() == 3) {
                         MyApplication.getInstance().setShowTips(true);
                         mRefeshDataListener.changeData(jpushInfo);
-                    }else {
+                    } else {
                         mTabHost.setCurrentTab(current_tab);
                         showDialog(jpushInfo);
                     }

@@ -14,12 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
-import com.miqian.mq.utils.UserUtil;
 import com.umeng.update.UmengUpdateAgent;
 
 import cn.jpush.android.api.JPushInterface;
@@ -44,7 +42,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             UmengUpdateAgent.setChannel(channelId);
         }
         ShareSDK.initSDK(this);
-        MyApplication.setIsBackStage(false);
         start();
     }
 
@@ -60,11 +57,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     private void loadFinish() {
         boolean first_use = Pref.getBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), this, true);
         if (!first_use) {
-            if (UserUtil.hasLogin(getBaseContext()) && Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false)) {
-                GestureLockVerifyActivity.startActivity(getBaseContext(), MainActivity.class);
-            } else {
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
-            }
+            startActivity(new Intent(getBaseContext(), MainActivity.class));
             SplashActivity.this.finish();
         } else {
             ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
