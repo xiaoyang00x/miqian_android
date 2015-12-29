@@ -120,6 +120,7 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
                     logout();
                     return;
                 }
+                Pref.saveInt(Pref.UNLOCKCOUNT, unlockCount, getBaseContext());
                 StringBuilder sb = new StringBuilder();
                 sb.append("密码错误，还可以再输入").append(unlockCount).append("次");
                 tv_tip.setText(sb.toString());

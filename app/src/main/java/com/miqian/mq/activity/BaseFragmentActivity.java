@@ -147,7 +147,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity
         }
         if (MyApplication.isBackStage()) {
             MyApplication.setIsBackStage(false);
-            if (UserUtil.hasLogin(getBaseContext()) && Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false)) {
+            if (UserUtil.hasLogin(getBaseContext()) &&
+                    Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false) &&
+                    !TextUtils.isEmpty(Pref.getString(Pref.GESTUREPSW, getBaseContext(), null))) {
                 long curTime = System.currentTimeMillis();
                 if (curTime - MyApplication.homePressTime > 20 * 1000) {
                     GestureLockVerifyActivity.startActivity(getBaseContext(), null);

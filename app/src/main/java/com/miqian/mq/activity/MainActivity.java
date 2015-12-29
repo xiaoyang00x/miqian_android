@@ -88,10 +88,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         registerReceiver(mHomeKeyEventReceiver, new IntentFilter(
                 Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
-        if (getIntent().getBooleanExtra(Constants.VERIFYFAILED, false)) {
-            mTabHost.setCurrentTab(3);
-        }
-
         // app每次重新打开都需打开手势密码界面－如果有手势密码
         if (UserUtil.hasLogin(getBaseContext()) &&
                 Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false) &&
@@ -114,6 +110,14 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
         //app在当前
         showJushTip();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getBooleanExtra(Constants.VERIFYFAILED, false)) {
+            mTabHost.setCurrentTab(3);
+        }
     }
 
     private void showJushTip() {
