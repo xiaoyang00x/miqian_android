@@ -10,7 +10,6 @@ import com.miqian.mq.adapter.holder.HomeHeaderViewHolder;
 import com.miqian.mq.adapter.holder.RegularEarnViewHoder;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.RegularBaseData;
-import com.miqian.mq.entity.RegularEarn;
 import com.miqian.mq.entity.SubjectCategoryData;
 
 import java.util.ArrayList;

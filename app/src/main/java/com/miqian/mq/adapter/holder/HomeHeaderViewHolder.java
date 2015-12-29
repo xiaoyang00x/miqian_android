@@ -13,9 +13,7 @@ import android.widget.RelativeLayout;
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.HomeAdPageAdapter;
 import com.miqian.mq.entity.AdvertisementImg;
-import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.PageIndicator;
 
 import java.util.ArrayList;
 
@@ -35,9 +33,9 @@ public class HomeHeaderViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.mDataList = mDataList;
         mHomeViewpager = (ViewPager) itemView.findViewById(R.id.vp_home_viewpager);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)mHomeViewpager.getLayoutParams();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mHomeViewpager.getLayoutParams();
         int width = itemView.getResources().getDisplayMetrics().widthPixels;
-        params.height = width * 440 /720;
+        params.height = width * 440 / 720;
         mHomeViewpager.setLayoutParams(params);
         layout_indicator = (LinearLayout) itemView.findViewById(R.id.layout_indicator);
         setIndicators(mDataList.size(), layout_indicator.getContext());
@@ -122,9 +120,9 @@ public class HomeHeaderViewHolder extends RecyclerView.ViewHolder {
                     if (currentPageState == ViewPager.SCROLL_STATE_IDLE) {
                         //Fixed by keen: NullPointerException
                         if (null != mHomeViewpager && mHomeViewpager.getAdapter() != null && mHomeViewpager.getAdapter().getCount() > 1) {
-                                int current = mHomeViewpager.getCurrentItem();
-                                // 获取当前的索引加一，以滑动到下一项
-                                mHomeViewpager.setCurrentItem((current + 1), true);
+                            int current = mHomeViewpager.getCurrentItem();
+                            // 获取当前的索引加一，以滑动到下一项
+                            mHomeViewpager.setCurrentItem((current + 1), true);
                         }
                     }
                     break;
