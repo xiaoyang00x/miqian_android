@@ -63,7 +63,10 @@ public class HttpUtils {
         try {
             response = client.newCall(request).execute();
             if (response.isSuccessful()) {
-                return response.body().string();
+                String body = response.body().string();
+                response.body().close();
+                response = null;
+                return body;
             }
             return null;
         } catch (IOException e) {
@@ -114,6 +117,7 @@ public class HttpUtils {
         headerBuilder.add("sign", sign);
         headerBuilder.add("token", UserUtil.getToken(context));
         headerBuilder.add("osVersion", MobileOS.getOsVersion());
+        headerBuilder.add("Connection", "close");
         return headerBuilder;
     }
 }
