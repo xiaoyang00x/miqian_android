@@ -24,7 +24,6 @@ import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.receiver.HomeDialogReceiver;
-import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.HomeDialog;
 import com.miqian.mq.views.MySwipeRefresh;
