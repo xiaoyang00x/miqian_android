@@ -178,8 +178,6 @@ public class TradePsCaptchaActivity extends BaseActivity {
                     String idCard = mEtRealname.getText().toString();
                     if (!TextUtils.isEmpty(idCard)) {
                         if (idCard.matches(FormatUtil.PATTERN_IDCARD)) {
-                            String identity = Pref.getString(UserUtil.getPrefKey(mActivity, Pref.IDENTITY), mActivity, "");
-                            if (idCard.equals(identity)) {
                                 if (TextUtils.isEmpty(captcha)) {
                                     Uihelper.showToast(this, R.string.tip_captcha);
                                 } else {
@@ -189,9 +187,6 @@ public class TradePsCaptchaActivity extends BaseActivity {
                                         summit(idCard, captcha);
                                     }
                                 }
-                            } else {
-                                Uihelper.showToast(mActivity, "身份证号码不符");
-                            }
                         } else {
                             Uihelper.showToast(mActivity, "身份证号码不正确");
                         }

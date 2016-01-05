@@ -506,6 +506,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 hasMessage=true;
                 btn_message.setImageResource(R.drawable.btn_message);
                 break;
+            case ExtendOperationController.OperationKey.MessageState:
+                // 更新数据
+                hasMessage=false;
+                btn_message.setImageResource(R.drawable.btn_message_none);
+                break;
         }
 
     }

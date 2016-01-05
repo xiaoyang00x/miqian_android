@@ -29,6 +29,7 @@ import com.miqian.mq.entity.UserMessageData;
 import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
@@ -42,7 +43,7 @@ import java.util.List;
 /**
  * @author Administrator Tuliangtan 3.26
  */
-public class AnnounceActivity extends BaseActivity implements OnClickListener, AbsListView.OnScrollListener {
+public class AnnounceActivity extends BaseActivity implements OnClickListener, AbsListView.OnScrollListener, ExtendOperationController.ExtendOperationListener {
 
     private Button titleLeft;
     private Button titleRight;
@@ -69,9 +70,12 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     private boolean hasUnread;
     private ProgressBar progressBarLoading;
     private TextView textLoading;
+    private ExtendOperationController extendOperationController;
 
     @Override
     public void onCreate(Bundle arg0) {
+        extendOperationController = ExtendOperationController.getInstance();
+        extendOperationController.registerExtendOperationListener(this);
         super.onCreate(arg0);
     }
 
@@ -92,11 +96,11 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             begin();
         }
         if (messageType == 0) {
-            isLoading=true;
+            isLoading = true;
             HttpRequest.getMessageList(mActivity, "", new ICallback<UserMessageResult>() {
                 @Override
                 public void onSucceed(UserMessageResult result) {
-                    isLoading=false;
+                    isLoading = false;
                     end();
                     swipeRefresh.setRefreshing(false);
                     UserMessageData userMessageData = result.getData();
@@ -124,11 +128,11 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
                 @Override
                 public void onFail(String error) {
-                    if (list!=null&&adapter!=null){
+                    if (list != null && adapter != null) {
                         list.clear();
                         adapter.notifyDataSetChanged();
                     }
-                    isLoading=false;
+                    isLoading = false;
                     end();
                     showErrorView();
                     swipeRefresh.setRefreshing(false);
@@ -162,7 +166,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
                 @Override
                 public void onFail(String error) {
-                    if (list!=null&&adapter!=null){
+                    if (list != null && adapter != null) {
                         list.clear();
                         adapter.notifyDataSetChanged();
                     }
@@ -184,8 +188,8 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             if (!messageInfo.isRead()) {
                 hasUnread = true;
                 break;
-            }else {
-                hasUnread=false;
+            } else {
+                hasUnread = false;
             }
         }
         if (hasUnread) {
@@ -197,14 +201,16 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
     @Override
     protected void onDestroy() {
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.MessageState,null);
+        extendOperationController.unRegisterExtendOperationListener(this);
         super.onDestroy();
     }
 
     public void initView() {
 
         footView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_loading, null);
-        progressBarLoading=(ProgressBar)footView.findViewById(R.id.progressBar);
-        textLoading=(TextView)footView.findViewById(R.id.text_loading);
+        progressBarLoading = (ProgressBar) footView.findViewById(R.id.progressBar);
+        textLoading = (TextView) footView.findViewById(R.id.text_loading);
 
 
         btLeft = (ImageButton) findViewById(R.id.bt_left);
@@ -302,30 +308,18 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                 if (position == 0) {
                 } else {
                     //消息
-                    if (messageType == 0) {
-                        //设置为已读
-                        HttpRequest.setMessageReaded(mActivity, new ICallback<Meta>() {
-                            @Override
-                            public void onSucceed(Meta result) {
-
-                                list.get(position - 1).setIsRead(true);
-                                checkReadStatus(list);
-                                adapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onFail(String error) {
-                                Uihelper.showToast(mActivity, error);
-                            }
-                        }, list.get(position - 1).getId() + "", "", 0);
-                    } else {//公告
-                        Pref.saveBoolean(Pref.PUSH + list.get(position - 1).getId(), true, mActivity);
-                        list.get(position - 1).setIsRead(true);
-                        adapter.notifyDataSetChanged();
-
-                    }
                     MessageInfo messageInfo = list.get(position - 1);
-                    switch (Integer.valueOf(Integer.valueOf(messageInfo.getMsgType()))) {
+                    int msgType = messageInfo.getMsgType();
+                    if (messageType == 1) {
+                        //公告
+                        boolean isReaded = Pref.getBoolean(Pref.PUSH + list.get(position - 1).getId(), mActivity, false);
+                        if (!isReaded) {
+                            Pref.saveBoolean(Pref.PUSH + list.get(position - 1).getId(), true, mActivity);
+                            list.get(position - 1).setIsRead(true);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                    switch (msgType) {
                         // 内置浏览器
                         case 51:
                         case 52:
@@ -335,6 +329,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         default:
                             Intent intent_other = new Intent(mActivity, AnnounceResultActivity.class);
                             intent_other.putExtra("id", messageInfo.getId());
+                            intent_other.putExtra("position", position - 1);
                             if (messageType == 0) {
                                 intent_other.putExtra("isMessage", true);
                             } else {
@@ -397,7 +392,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             end();
                             Uihelper.showToast(mActivity, error);
                         }
-                    }, list.get(0).getId(), list.get(list.size()-1).getId() + "", 1);
+                    }, list.get(0).getId(), list.get(list.size() - 1).getId() + "", 1);
                 }
 
                 @Override
@@ -471,7 +466,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             end();
                             Uihelper.showToast(mActivity, error);
                         }
-                    }, list.get(0).getId() + "", list.get(list.size()-1).getId() + "", 1);
+                    }, list.get(0).getId() + "", list.get(list.size() - 1).getId() + "", 1);
 
 
                 } else {
@@ -499,14 +494,14 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             swipeRefresh.setEnabled(false);
         }
         if (messageType == 0) {
-            if (visibleItemCount + firstVisibleItem >= totalItemCount - 1 && !isOver&&!isLoading) {
+            if (visibleItemCount + firstVisibleItem >= totalItemCount - 1 && !isOver && !isLoading) {
                 if (list.size() < count) {
                     isOver = true;
-                    isLoading=true;
+                    isLoading = true;
                     HttpRequest.getMessageList(mActivity, list.get(list.size() - 1).getId() + "", new ICallback<UserMessageResult>() {
                         @Override
                         public void onSucceed(UserMessageResult result) {
-                            isLoading=false;
+                            isLoading = false;
                             UserMessageData userMessageData = result.getData();
                             count = userMessageData.getCount();
                             List<MessageInfo> tempList = userMessageData.getMsgList();
@@ -525,7 +520,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
                         @Override
                         public void onFail(String error) {
-                            isLoading=false;
+                            isLoading = false;
                             Uihelper.showToast(mActivity, error);
                         }
                     });
@@ -569,6 +564,19 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         tvTips.setText("数据获取失败，请重新获取");
         ivMessageData.setBackgroundResource(R.drawable.error_data);
 
+    }
+
+    @Override
+    public void excuteExtendOperation(int operationKey, Object data) {
+        if (operationKey == ExtendOperationController.OperationKey.RefeshMessage) {
+            int position = (int) data;
+            MessageInfo messageInfo = list.get(position);
+            if (!messageInfo.isRead()) {
+                list.get(position).setIsRead(true);
+                adapter.notifyDataSetChanged();
+                checkReadStatus(list);
+            }
+        }
     }
 
 }

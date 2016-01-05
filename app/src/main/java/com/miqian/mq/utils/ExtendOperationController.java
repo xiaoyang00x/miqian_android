@@ -44,6 +44,10 @@ public class ExtendOperationController {
 		public static final int ShowTips = 1008;
 		/** 切换tab*/
 		public static final int ChangeTab = 1009;
+		/** 更新消息*/
+		public static final int RefeshMessage = 1010;
+		/** 消息状态*/
+		public static final int MessageState = 1011;
 
 	}
 

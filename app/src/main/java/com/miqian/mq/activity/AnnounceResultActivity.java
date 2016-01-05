@@ -15,6 +15,7 @@ import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -29,11 +30,13 @@ public class AnnounceResultActivity extends BaseActivity {
     private TextView tv_content;
     private TextView tv_time;
     private boolean isMessage;
+    private int position;
 
     @Override
     public void onCreate(Bundle arg0) {
         Intent intent = getIntent();
         messsageId = intent.getIntExtra("id", 0);
+        position = intent.getIntExtra("position", 0);
         isMessage = intent.getBooleanExtra("isMessage", true);
         super.onCreate(arg0);
 
@@ -53,7 +56,11 @@ public class AnnounceResultActivity extends BaseActivity {
                 } else {
                     showEmptyView();
                 }
+                //更新消息列表
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.RefeshMessage, position);
+
             }
+
             @Override
             public void onFail(String error) {
                 end();
