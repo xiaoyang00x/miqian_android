@@ -145,11 +145,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             frameTip.setVisibility(View.VISIBLE);
             frameSpace.setVisibility(View.GONE);
             btPay.setEnabled(false);
+            editCurrentBalance.setEnabled(false);
             textTip.setText(result.getMessage());
         } else {
             frameTip.setVisibility(View.GONE);
             frameSpace.setVisibility(View.VISIBLE);
             btPay.setEnabled(true);
+            editCurrentBalance.setEnabled(true);
         }
     }
 
