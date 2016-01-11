@@ -472,9 +472,11 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 showJushTip();
                 break;
             case OperationKey.ChangeTab:
-                ActivityStack.getActivityStack().clearActivity();
-                current_tab = (int) data;
-                mTabHost.setCurrentTab(current_tab);
+                if (MyApplication.getInstance().isBackStage()){
+                    ActivityStack.getActivityStack().clearActivity();
+                    current_tab = (int) data;
+                    mTabHost.setCurrentTab(current_tab);
+                }
                 break;
             default:
                 break;

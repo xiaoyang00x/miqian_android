@@ -1,6 +1,8 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -259,14 +261,16 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     private void initPullToListView() {
 
         mSwipeMenuListView = (SwipeMenuListView) pullToListView.getRefreshableView();
-        creator = new SwipeMenuCreator() {
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
             @Override
             public void create(SwipeMenu menu) {
-                SwipeMenuItem deleteItem = new SwipeMenuItem(mActivity);
-                deleteItem.setBackground(getResources().getDrawable(R.drawable.shape_swip_red));
-                deleteItem.setIcon(getResources().getDrawable(R.drawable.messsagedelete_selector));
-                deleteItem.setWidth(Uihelper.px2dip(mActivity, MobileOS.getScreenWidth(mActivity) / 2));
-                menu.addMenuItem(deleteItem);
+                // TODO Auto-generated method stub
+                switch (menu.getViewType()) {
+                    case 0:
+                        createMenu1(menu);
+                        break;
+                }
             }
         };
         mSwipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -340,6 +344,14 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                 }
             }
         });
+    }
+
+    private void createMenu1(SwipeMenu menu) {
+        SwipeMenuItem item1 = new SwipeMenuItem(getApplicationContext());
+        item1.setBackground(getResources().getDrawable(R.drawable.shape_swip_red));
+        item1.setWidth(Uihelper.dip2px(mActivity, 90));
+        item1.setIcon(getResources().getDrawable(R.drawable.messsagedelete_selector));
+        menu.addMenuItem(item1);
     }
 
     @Override
