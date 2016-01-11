@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
@@ -22,10 +23,14 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.entity.UpdateInfo;
+import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.fragment.FragmentCurrent;
 import com.miqian.mq.fragment.FragmentHome;
 import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.fragment.RegularFragment;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.Config;
@@ -34,8 +39,10 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.DialogUpdate;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.json.JSONException;
@@ -71,8 +78,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UmengUpdateAgent.update(this);
         context = this;
+        checkVersion();
         ExtendOperationController.getInstance().registerExtendOperationListener(this);
         setContentView(R.layout.activity_main);
         findTabView();
@@ -85,8 +92,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         setExsitFragment(true);
 
         //注册广播
-        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(
-                Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
         // app每次重新打开都需打开手势密码界面－如果有手势密码
         if (UserUtil.hasLogin(getBaseContext()) &&
@@ -110,6 +116,38 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
         //app在当前
         showJushTip();
+    }
+
+    //  版本是否强制更新
+    private void checkVersion() {
+        HttpRequest.forceUpdate(this, new ICallback<UpdateResult>() {
+            @Override
+            public void onSucceed(UpdateResult result) {
+                UpdateInfo updateInfo = result.getData();
+                if ("2".equals(updateInfo.getUpgradeSign())) {
+                    DialogUpdate dialogUpdate = new DialogUpdate(context, updateInfo) {
+                        @Override
+                        public void updateClick(String url) {
+//                        // 跳转到外部浏览器下载
+                            Uri uri = Uri.parse(url);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+                    };
+                    dialogUpdate.setCancelable(false);
+                    dialogUpdate.setCanceledOnTouchOutside(false);
+                    dialogUpdate.show();
+                } else if ("1".equals(updateInfo.getUpgradeSign())) {
+                    UmengUpdateAgent.update(context);
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                Uihelper.showToast(context, error);
+            }
+        });
+
     }
 
     @Override

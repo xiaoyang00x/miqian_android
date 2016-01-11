@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.RegisterActivity;

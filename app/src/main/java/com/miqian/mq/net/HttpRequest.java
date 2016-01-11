@@ -13,12 +13,6 @@ import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.GetHomeActivityResult;
-import com.miqian.mq.entity.ProjectInfoResult;
-import com.miqian.mq.entity.PushDataResult;
-import com.miqian.mq.entity.RepaymentResult;
-import com.miqian.mq.entity.TransferDetailResult;
-import com.miqian.mq.entity.UserMessageResult;
-import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.LoginResult;
@@ -26,17 +20,26 @@ import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.ProducedOrderResult;
+import com.miqian.mq.entity.ProjectInfoResult;
+import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.entity.RegularPlanResult;
+import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.SubscribeOrderResult;
+import com.miqian.mq.entity.TransferDetailResult;
+import com.miqian.mq.entity.UpdateInfo;
+import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserCurrentResult;
+import com.miqian.mq.entity.UserMessageResult;
+import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 
@@ -1330,6 +1333,33 @@ public class HttpRequest {
 
             @Override
             public void onFail(String error) {
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 版本是否强制更新(正常更新为友盟更新)
+     */
+    public static void forceUpdate(final Context context, final ICallback<UpdateResult> callback) {
+        new MyAsyncTask(context, Urls.forceUpdate, null, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                UpdateResult updateResult = JsonUtil.parseObject(result, UpdateResult.class);
+                if ("000000".equals(updateResult.getCode())) {
+                    callback.onSucceed(updateResult);
+//                    UpdateInfo updateInfo = updateResult.getData();
+//                    if ("2".equals(updateInfo.getUpgradeSign())) {
+//                        Pref.saveString(Pref.FORCE_UPDATE, MobileOS.getClientVersion(context), context);
+//                    }
+                 } else {
+                    callback.onFail(updateResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
             }
         }).executeOnExecutor();
     }

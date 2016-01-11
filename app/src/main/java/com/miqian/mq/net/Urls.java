@@ -154,6 +154,8 @@ public class Urls {
     public final static String changePhone = base_server + "userService/changePhone";
     //提现预处理
     public final static String withdrawPreprocess = base_server + "assetService/withdrawPreprocess";
+    //版本更新
+    public final static String forceUpdate = base_server + "commonService/v2/forceUpdate";
 
     /**
      *网页的URL
