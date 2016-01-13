@@ -2,68 +2,77 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_background"
+    android:background="@color/mq_r1"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="match_parent"
+        android:background="@color/base_background"
+        android:orientation="vertical">
 
-        <com.miqian.mq.views.WFYTitle
-            android:id="@+id/wFYTitle"
-            style="@style/wfy_title_default"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/frame_no_data"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical"
-            android:paddingBottom="120dp"
-            android:visibility="gone">
+            android:layout_height="@dimen/title_height">
 
+            <com.miqian.mq.views.WFYTitle
+                android:id="@+id/wFYTitle"
+                style="@style/wfy_title_default" />
+        </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/iv_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/nodata" />
-
-            <TextView
-                android:id="@+id/tv_tips"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:text="数据获取失败，点击重新获取"
-                android:textColor="@color/miqian_gray"
-                android:textSize="@dimen/mq_font2" />
-
-            <TextView
-                android:id="@+id/tv_reFresh"
-                android:layout_width="200dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/edit_selector"
-                android:gravity="center"
-                android:text="再试一次"
-                android:textSize="@dimen/mq_font2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/content"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"/>
-    </RelativeLayout>
+            android:layout_height="match_parent">
 
+            <LinearLayout
+                android:id="@+id/frame_no_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:paddingBottom="120dp"
+                android:visibility="gone">
+
+
+                <ImageView
+                    android:id="@+id/iv_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/nodata" />
+
+                <TextView
+                    android:id="@+id/tv_tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="数据获取失败，点击重新获取"
+                    android:textColor="@color/miqian_gray"
+                    android:textSize="@dimen/mq_font2" />
+
+                <TextView
+                    android:id="@+id/tv_reFresh"
+                    android:layout_width="200dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/edit_selector"
+                    android:gravity="center"
+                    android:text="再试一次"
+                    android:textSize="@dimen/mq_font2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+        </RelativeLayout>
+
+    </LinearLayout>
 </LinearLayout>

@@ -144,7 +144,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
             @Override
             public void onFail(String error) {
-                Uihelper.showToast(context, error);
             }
         });
 

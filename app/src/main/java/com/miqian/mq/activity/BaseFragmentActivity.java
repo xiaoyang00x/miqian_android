@@ -7,16 +7,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
-import com.miqian.mq.R;
 import com.miqian.mq.receiver.NetBroadReceiver;
-import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -50,91 +43,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        final View parent = getWindow().getDecorView();
-        setTitleResource(parent, R.layout.title_bar_layout);
-    }
-
-    protected LinearLayout title_container;
-
-    protected void setTitleResource(View parent, int resId) {
-        title_container = (LinearLayout) parent.findViewById(R.id.titlebar_container);
-        if (title_container != null) {
-            View content = LayoutInflater.from(this).inflate(resId, null);
-            int head_title_size = getResources().getDimensionPixelSize(R.dimen.title_height);
-            content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, head_title_size));
-            title_container.addView(content);
-            initHeadViews(parent);
-        } else {
-            LogUtil.e(TAG, "why I am null, *****************");
-        }
-    }
-
-    protected ImageView img_left;
-    protected TextView tv_right;
-    private ImageView img_right;
-    private View layout_left;
-    private View layout_right;
-    private TextView title;
-
-    protected void initHeadViews(View parent) {
-
-        img_left = (ImageView) parent.findViewById(R.id.img_left);
-        img_right = (ImageView) parent.findViewById(R.id.img_right);
-        layout_left = parent.findViewById(R.id.layout_left);
-        layout_right = parent.findViewById(R.id.layout_right);
-        tv_right = (TextView) parent.findViewById(R.id.tv_right);
-        title = (TextView) parent.findViewById(R.id.lable_title);
-
-        setActionLeftListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
-    protected void showLeftAction(boolean show) {
-        if (img_left != null) {
-            img_left.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
-        }
-    }
-
-    public void showRightAction(boolean show) {
-        if (layout_right != null) {
-            layout_right.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
-        }
-    }
-
-    public void showRightAction(int resId, boolean show) {
-        if (layout_right != null && img_right != null) {
-            img_right.setImageResource(resId);
-            layout_right.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
-        }
-    }
-
-    public void setActionLeftListener(View.OnClickListener listener) {
-        if (layout_left != null) {
-            layout_left.setOnClickListener(listener);
-        }
-    }
-
-    public void setActionRightListener(View.OnClickListener listener) {
-        if (layout_right != null) {
-            layout_right.setOnClickListener(listener);
-        }
-    }
-
-    public void setTitle(int resId) {
-        if (title != null) {
-            title.setText(resId);
-        }
-    }
-
-    public void setTitle(String str) {
-        if (title != null) {
-            title.setText(str);
-        }
     }
 
     @Override

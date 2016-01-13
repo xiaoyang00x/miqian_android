@@ -2,7 +2,6 @@ package com.miqian.mq.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
@@ -15,12 +14,13 @@ import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.views.GestureCueView;
 import com.miqian.mq.views.GestureLockView;
+import com.miqian.mq.views.WFYTitle;
 
 /**
  * 手势锁设置
  * Created by wangduo on 15/12/8.
  */
-public class GestureLockSetActivity extends BaseFragmentActivity {
+public class GestureLockSetActivity extends BaseActivity {
 
     private TextView tv_tip;
     private GestureCueView lockTipView;
@@ -30,11 +30,16 @@ public class GestureLockSetActivity extends BaseFragmentActivity {
 
     private static final int MINLENGTH_PSW = 4; // 密码最小长度
 
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_gesture_lock_set);
+//        initView();
+//        initData();
+//    }
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gesture_lock_set);
-        initView();
+    public void obtainData() {
         initData();
     }
 
@@ -49,43 +54,63 @@ public class GestureLockSetActivity extends BaseFragmentActivity {
 
     @Override
     protected String getPageName() {
-        return null;
+        return "设置手势密码";
     }
+
+//    @Override
+//    public void onBackPressed() {
+//    }
 
     @Override
-    public void onBackPressed() {
-    }
-
-    private void initView() {
+    public void initView() {
         tv_tip = (TextView) findViewById(R.id.tv_tip);
         lockTipView = (GestureCueView) findViewById(R.id.lockTipView);
         lockView = (GestureLockView) findViewById(R.id.lockView);
         lockView.setOnPatterChangeListener(onPatterChangeListener);
     }
 
-    private void initData() {
-        setActionLeftListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        isFirstSet = true;
-        firstEnterPsw = null;
-        setTitle("设置手势密码");
-        showLeftAction(false);
-        tv_right.setVisibility(View.VISIBLE);
-        tv_right.setText("跳过");
-        showRightAction(true);
-        setActionRightListener(onClickListener);
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_gesture_lock_set;
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Pref.saveBoolean(Pref.GESTURESTATE, false, getBaseContext());
-            finish();
-        }
-    };
+    @Override
+    public void initTitle(WFYTitle mTitle) {
+        mTitle.setTitleText("设置手势密码");
+        mTitle.setRightText("跳过");
+        mTitle.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Pref.saveBoolean(Pref.GESTURESTATE, false, getBaseContext());
+                finish();
+            }
+        });
+        mTitle.setIvLeftVisiable(View.GONE);
+    }
+
+    private void initData() {
+//        setActionLeftListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
+        isFirstSet = true;
+        firstEnterPsw = null;
+//        setTitle("设置手势密码");
+//        showLeftAction(false);
+//        tv_right.setVisibility(View.VISIBLE);
+//        tv_right.setText("跳过");
+//        showRightAction(true);
+//        setActionRightListener(onClickListener);
+    }
+
+//    private View.OnClickListener onClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            Pref.saveBoolean(Pref.GESTURESTATE, false, getBaseContext());
+//            finish();
+//        }
+//    };
 
     private void startShake() {
         TranslateAnimation animation = new TranslateAnimation(0, -5, 0, 0);

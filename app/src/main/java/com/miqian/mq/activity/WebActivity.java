@@ -22,16 +22,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.ShareUtils;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.SwipeWebView;
+import com.miqian.mq.views.WFYTitle;
 import com.miqian.mq.views.WebChromeClientEx;
 
 /**
  * Created by guolei_wang on 15/9/25.
  */
-public class WebActivity extends BaseFragmentActivity {
+public class WebActivity extends BaseActivity {
     public static final String KEY_URL = "KEY_URL";
     public static final String JS_INTERFACE_NAME = "MIAOQIAN";
 
@@ -51,13 +53,19 @@ public class WebActivity extends BaseFragmentActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
         url = getIntent().getStringExtra(KEY_URL);
-        findView();
-        initView();
+        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_web);
+//        findView();
+//        initView();
+    }
+
+    @Override
+    public void obtainData() {
+
     }
 
     @Override
@@ -65,14 +73,19 @@ public class WebActivity extends BaseFragmentActivity {
         return "内置浏览器";
     }
 
-    private void findView() {
-        progressBar = (ProgressBar)findViewById(R.id.progressbar);
-        webview = (SwipeWebView)findViewById(R.id.webview);
+//    private void findView() {
+//        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+//        webview = (SwipeWebView) findViewById(R.id.webview);
+//        load_webview_error = findViewById(R.id.load_webview_error);
+//        tv_refresh = findViewById(R.id.tv_refresh);
+//    }
+
+    @Override
+    public void initView() {
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        webview = (SwipeWebView) findViewById(R.id.webview);
         load_webview_error = findViewById(R.id.load_webview_error);
         tv_refresh = findViewById(R.id.tv_refresh);
-    }
-
-    private void initView() {
 
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -88,7 +101,7 @@ public class WebActivity extends BaseFragmentActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                setTitle(title);
+                mTitle.setTitleText(title);
             }
 
             @Override
@@ -151,28 +164,46 @@ public class WebActivity extends BaseFragmentActivity {
         loadUrl(url);
 
     }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_web;
+    }
+
+    @Override
+    public void initTitle(WFYTitle mTitle) {
+
+    }
+
     private void loadUrl(String url) {
         if (MobileOS.getNetworkType(this) == -1) {
             webview.setVisibility(View.GONE);
             load_webview_error.setVisibility(View.VISIBLE);
-            setTitle("无网络");
-        }else {
+            mTitle.setTitleText("无网络");
+        } else {
             webview.setVisibility(View.VISIBLE);
             load_webview_error.setVisibility(View.GONE);
             webview.loadUrl(url);
         }
     }
+
     @JavascriptInterface
     public void call(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
         startActivity(intent);
     }
 
-
     @JavascriptInterface
     public void register() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+    }
+
+    //登录窗口
+    @JavascriptInterface
+    public void login() {
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
+        WebActivity.this.finish();
     }
 
     //分享接口
@@ -199,6 +230,7 @@ public class WebActivity extends BaseFragmentActivity {
     public void startRegularEarn(String subjectId) {
         RegularEarnActivity.startActivity(this, subjectId);
     }
+
     //定期计划详情页面
     @JavascriptInterface
     public void startRegularPlan(String subjectId) {
@@ -214,7 +246,7 @@ public class WebActivity extends BaseFragmentActivity {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void copyText(String text) {
-        ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             ClipData clipData = ClipData.newPlainText(text, text);
             cmb.setPrimaryClip(clipData);
@@ -225,11 +257,10 @@ public class WebActivity extends BaseFragmentActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            if(webview != null && webview.canGoBack()) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (webview != null && webview.canGoBack()) {
                 webview.goBack();
-            }else {
+            } else {
                 finish();
             }
             return true;
