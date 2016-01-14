@@ -5,8 +5,13 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:buttonStyle">@style/MQ_Button</item>
+        <item name="android:editTextStyle">@style/MQ_Edit</item>
         <item name="theme_background">@color/base_background</item>
         <item name="title_bar_bg">@color/mq_r1</item>
+    </style>
+
+    <style name="MQ_Edit" parent="android:Widget.EditText">
+        <item name="android:textCursorDrawable">@null</item>
     </style>
 
     <style name="MQ_Button" parent="android:Widget.Button">
