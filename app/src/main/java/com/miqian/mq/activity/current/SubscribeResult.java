@@ -137,7 +137,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
                 if (status == 1) {
                     ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
                 }
-                SubscribeResult.this.finish();
+//                SubscribeResult.this.finish();
                 break;
             default:
                 break;

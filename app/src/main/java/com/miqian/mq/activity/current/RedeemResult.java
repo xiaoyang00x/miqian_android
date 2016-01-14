@@ -7,15 +7,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.Redeem;
-import com.miqian.mq.utils.ExtendOperationController;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 /**

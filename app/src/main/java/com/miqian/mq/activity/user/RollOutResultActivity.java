@@ -1,7 +1,5 @@
 package com.miqian.mq.activity.user;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -99,9 +97,7 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
 
         switch (v.getId()) {
             case R.id.bt_back:
-                finish();
                 ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
-
                 break;
         }
     }

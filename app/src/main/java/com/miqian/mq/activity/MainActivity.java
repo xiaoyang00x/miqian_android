@@ -39,7 +39,6 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.Pref;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogUpdate;
@@ -430,32 +429,31 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         mRefeshDataListener = refeshDataListener;
     }
 
-
     @Override
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
             case OperationKey.BACK_HOME:
-                ActivityStack.getActivityStack().clearActivity();
                 current_tab = 0;
+                ActivityStack.getActivityStack().clearActivity();
                 break;
             case OperationKey.BACK_CURRENT:
-                ActivityStack.getActivityStack().clearActivity();
                 current_tab = 1;
+                ActivityStack.getActivityStack().clearActivity();
                 break;
             case OperationKey.BACK_REGULAR:
-                ActivityStack.getActivityStack().clearActivity();
                 current_tab = 2;
+                ActivityStack.getActivityStack().clearActivity();
                 break;
             case OperationKey.BACK_USER:
-                ActivityStack.getActivityStack().clearActivity();
                 current_tab = 3;
+                ActivityStack.getActivityStack().clearActivity();
                 break;
             case OperationKey.CHANGE_TOKEN:
                 //清除Token
                 JpushInfo jpushInfo = (JpushInfo) data;
                 UserUtil.clearUserInfo(this);
-                ActivityStack.getActivityStack().clearActivity();
                 current_tab = 3;
+                ActivityStack.getActivityStack().clearActivity();
                 boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
                 if (currentActivity) {
                     if (mTabHost.getCurrentTab() == 3) {
@@ -480,8 +478,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 break;
             case OperationKey.ChangeTab:
                 if (MyApplication.getInstance().isBackStage()){
-                    ActivityStack.getActivityStack().clearActivity();
                     current_tab = (int) data;
+                    ActivityStack.getActivityStack().clearActivity();
                     mTabHost.setCurrentTab(current_tab);
                 }
                 break;

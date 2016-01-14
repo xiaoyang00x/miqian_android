@@ -239,21 +239,19 @@ public class WebActivity extends BaseActivity {
     @JavascriptInterface
     public void startCurrent() {
         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_CURRENT, null);
-        WebActivity.this.finish();
     }
 
     //定期首页
     @JavascriptInterface
     public void startRegular() {
         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_REGULAR, null);
-        WebActivity.this.finish();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         webview.removeAllViews();
         webview.destroy();
+        super.onDestroy();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
