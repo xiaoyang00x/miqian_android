@@ -31,6 +31,10 @@ public class ExtendOperationController {
 
 		/** 返回首页 */
 		public static final int BACK_HOME = 1001;
+		/** 返回活期首页 */
+		public static final int BACK_CURRENT = 1002;
+		/** 返回定期首页 */
+		public static final int BACK_REGULAR = 1003;
 		/** 返回我的 */
 		public static final int BACK_USER = 1004;
 		/** 实名认证 */

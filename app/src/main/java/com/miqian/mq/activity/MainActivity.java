@@ -438,6 +438,14 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 ActivityStack.getActivityStack().clearActivity();
                 current_tab = 0;
                 break;
+            case OperationKey.BACK_CURRENT:
+                ActivityStack.getActivityStack().clearActivity();
+                current_tab = 1;
+                break;
+            case OperationKey.BACK_REGULAR:
+                ActivityStack.getActivityStack().clearActivity();
+                current_tab = 2;
+                break;
             case OperationKey.BACK_USER:
                 ActivityStack.getActivityStack().clearActivity();
                 current_tab = 3;

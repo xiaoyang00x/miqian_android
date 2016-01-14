@@ -86,9 +86,34 @@ public class UserUtil {
             dialog_login.show();
             return false;
         } else {
-            Intent intent = new Intent(context, cls);
-            context.startActivity(intent);
+            context.startActivity(new Intent(context, cls));
             return true;
+        }
+    }
+
+    public static void loginWebView(final Activity context, final Class<?> cls, final String url) {
+        if (!hasLogin(context)) {
+            Dialog_Login dialog_login = new Dialog_Login(context) {
+                @Override
+                public void login(String telephone, String password) {
+                    // TODO: 2015/10/10 Loading
+                    HttpRequest.login(context, new ICallback<LoginResult>() {
+                        @Override
+                        public void onSucceed(LoginResult result) {
+                            context.finish();
+                            UserInfo userInfo = result.getData();
+                            UserUtil.saveUserInfo(context, userInfo);
+                            GestureLockSetActivity.startWebActivity(context, cls, url);
+                        }
+
+                        @Override
+                        public void onFail(String error) {
+                            Uihelper.showToast(context, error);
+                        }
+                    }, telephone, password);
+                }
+            };
+            dialog_login.show();
         }
     }
 

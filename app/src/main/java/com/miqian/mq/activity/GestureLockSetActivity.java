@@ -27,6 +27,7 @@ public class GestureLockSetActivity extends BaseActivity {
     private GestureLockView lockView;
     private String firstEnterPsw; // 缓存第一次设置的密码
     private boolean isFirstSet; // 是否第一次设置密码
+    private static String webUrl;
 
     private static final int MINLENGTH_PSW = 4; // 密码最小长度
 
@@ -52,14 +53,29 @@ public class GestureLockSetActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    public static void startWebActivity(Context context, Class cl, String url) {
+        webUrl = url;
+        desClass = cl;
+        Intent intent = new Intent(context, GestureLockSetActivity.class);
+        context.startActivity(intent);
+    }
+
+    public void startActivity(Class cls) {
+        if (cls.getName() == WebActivity.class.getName()) {
+            WebActivity.startActivity(mContext, webUrl);
+        } else {
+            startActivity(new Intent(mContext, cls));
+        }
+    }
+
     @Override
     protected String getPageName() {
         return "设置手势密码";
     }
 
-//    @Override
-//    public void onBackPressed() {
-//    }
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     public void initView() {
@@ -82,6 +98,9 @@ public class GestureLockSetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Pref.saveBoolean(Pref.GESTURESTATE, false, getBaseContext());
+                if (null != desClass) {
+                    startActivity(desClass);
+                }
                 finish();
             }
         });
@@ -144,7 +163,7 @@ public class GestureLockSetActivity extends BaseActivity {
                     Pref.saveString(Pref.GESTUREPSW, firstEnterPsw, getBaseContext());
                     Pref.saveInt(Pref.UNLOCKCOUNT, Constants.MAXCOUNT, getBaseContext());
                     if (null != desClass) {
-                        startActivity(getBaseContext(), desClass);
+                        startActivity(desClass);
                     }
                     Toast.makeText(getBaseContext(), "手势密码设置成功", Toast.LENGTH_SHORT).show();
                     finish();

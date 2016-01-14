@@ -202,8 +202,7 @@ public class WebActivity extends BaseActivity {
     //登录窗口
     @JavascriptInterface
     public void login() {
-        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
-        WebActivity.this.finish();
+        UserUtil.loginWebView(this, WebActivity.class, url);
     }
 
     //分享接口
@@ -212,17 +211,16 @@ public class WebActivity extends BaseActivity {
         ShareUtils.share(this, jsonStr);
     }
 
-    //充值页面
+    //充值页面(需要登录)
     @JavascriptInterface
     public void startIntoActivity() {
-        Intent intent = new Intent(this, IntoActivity.class);
-        startActivity(intent);
+       UserUtil.isLogin(this, IntoActivity.class);
     }
 
-    //红包、券列表页面
+    //红包、券列表页面(需要登录)
     @JavascriptInterface
     public void startTicketActivity() {
-        startActivity(new Intent(mContext, MyTicketActivity.class));
+        UserUtil.isLogin(this, MyTicketActivity.class);
     }
 
     //定期赚详情页面
@@ -235,6 +233,20 @@ public class WebActivity extends BaseActivity {
     @JavascriptInterface
     public void startRegularPlan(String subjectId) {
         RegularPlanActivity.startActivity(this, subjectId);
+    }
+
+    //活期首页
+    @JavascriptInterface
+    public void startCurrent() {
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_CURRENT, null);
+        WebActivity.this.finish();
+    }
+
+    //定期首页
+    @JavascriptInterface
+    public void startRegular() {
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_REGULAR, null);
+        WebActivity.this.finish();
     }
 
     @Override

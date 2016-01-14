@@ -9,21 +9,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.adapter.RegularListAdapter;
 import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by guolei_wang on 15/9/16.
  */
-public class RegularFragment extends BasicFragment implements View.OnClickListener {
+public class RegularFragment extends BasicFragment {
 
     RegularListAdapter mAdapter;
     private GetRegularInfo mData;
@@ -132,15 +129,5 @@ public class RegularFragment extends BasicFragment implements View.OnClickListen
     @Override
     protected String getPageName() {
         return "定期首页";
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_right:
-                MobclickAgent.onEvent(mContext, "1008");
-                UserUtil.isLogin(getActivity(), UserRegularActivity.class);
-                break;
-        }
     }
 }

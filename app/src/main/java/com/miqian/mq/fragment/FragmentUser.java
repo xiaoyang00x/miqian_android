@@ -379,14 +379,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     return;
                 }
                 MobclickAgent.onEvent(getActivity(), "1017");
-                //未认证
-//                if ("0".equals(userInfo.getRealNameStatus())) {
-//                    Intent intent = new Intent(getActivity(), ActivityRealname.class);
-//                    startActivity(intent);
-//                } else {
-                UserUtil.isLogin(getActivity(), IntoActivity.class);
-//                }
-
+                startActivity(new Intent(getActivity(), IntoActivity.class));
                 break;
             //取现
             case R.id.btn_rollout:
