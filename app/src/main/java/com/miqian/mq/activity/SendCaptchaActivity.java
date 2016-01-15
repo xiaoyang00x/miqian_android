@@ -75,7 +75,7 @@ public class SendCaptchaActivity extends BaseActivity {
             }
 
         } else if (type == TypeUtil.MODIFY_PHONE) {
-            mTitle.setTitleText("绑定手机号");
+            mTitle.setTitleText("绑定手机号码");
             isModifyPhone = true;
             oldCaptcha = intent.getStringExtra("captcha");
         }
