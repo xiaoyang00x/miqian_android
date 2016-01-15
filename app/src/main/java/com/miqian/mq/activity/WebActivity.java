@@ -37,7 +37,7 @@ import com.miqian.mq.views.WebChromeClientEx;
 /**
  * Created by guolei_wang on 15/9/25.
  */
-public class WebActivity extends BaseActivity implements LoginListener{
+public class WebActivity extends BaseActivity implements LoginListener {
     public static final String KEY_URL = "KEY_URL";
     public static final String JS_INTERFACE_NAME = "MIAOQIAN";
 
@@ -198,7 +198,7 @@ public class WebActivity extends BaseActivity implements LoginListener{
     //登录窗口
     @JavascriptInterface
     public void login() {
-        UserUtil.loginWebView(this, null);
+        UserUtil.loginActivity(this, null);
     }
 
     //分享接口
@@ -210,13 +210,13 @@ public class WebActivity extends BaseActivity implements LoginListener{
     //充值页面(需要登录)
     @JavascriptInterface
     public void startIntoActivity() {
-       UserUtil.isLogin(this, IntoActivity.class);
+        UserUtil.loginActivity(this, IntoActivity.class);
     }
 
     //红包、券列表页面(需要登录)
     @JavascriptInterface
     public void startTicketActivity() {
-        UserUtil.isLogin(this, MyTicketActivity.class);
+        UserUtil.loginActivity(this, MyTicketActivity.class);
     }
 
     //定期赚详情页面
@@ -277,10 +277,11 @@ public class WebActivity extends BaseActivity implements LoginListener{
 
     /**
      * 设置 UserAgent
+     *
      * @param settings
      */
     private void setUserAgent(WebSettings settings) {
-        if(TextUtils.isEmpty(defaultAgent)) {
+        if (TextUtils.isEmpty(defaultAgent)) {
             defaultAgent = settings.getUserAgentString();
         }
         String ua = "";
@@ -301,7 +302,7 @@ public class WebActivity extends BaseActivity implements LoginListener{
 
     @Override
     public void loginSuccess() {
-        if(webview != null && !TextUtils.isEmpty(url)) {
+        if (webview != null && !TextUtils.isEmpty(url)) {
             setUserAgent(webview.getSettings());
             webview.reload();
         }
@@ -309,7 +310,7 @@ public class WebActivity extends BaseActivity implements LoginListener{
 
     @Override
     public void logout() {
-        if(webview != null && !TextUtils.isEmpty(url)) {
+        if (webview != null && !TextUtils.isEmpty(url)) {
             setUserAgent(webview.getSettings());
             webview.reload();
         }

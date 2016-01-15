@@ -10,7 +10,6 @@ import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
-import com.miqian.mq.listener.HomeDialogListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
@@ -61,7 +60,7 @@ public class UserUtil {
         }
     }
     /**
-     * 登录成功通知监听
+     * 退出成功通知监听
      */
     public static void logout() {
         synchronized (ListenerManager.loginListeners) {
@@ -111,7 +110,7 @@ public class UserUtil {
         logout();
     }
 
-    public static boolean isLogin(final Activity context, final Class<?> cls) {
+    public static void loginActivity(final Activity context, final Class<?> cls) {
         if (!hasLogin(context)) {
             Dialog_Login dialog_login = new Dialog_Login(context) {
                 @Override
@@ -133,36 +132,8 @@ public class UserUtil {
                 }
             };
             dialog_login.show();
-            return false;
         } else {
             context.startActivity(new Intent(context, cls));
-            return true;
-        }
-    }
-
-    public static void loginWebView(final Activity context, final Class<?> cls) {
-        if (!hasLogin(context)) {
-            Dialog_Login dialog_login = new Dialog_Login(context) {
-                @Override
-                public void login(String telephone, String password) {
-                    // TODO: 2015/10/10 Loading
-                    HttpRequest.login(context, new ICallback<LoginResult>() {
-                        @Override
-                        public void onSucceed(LoginResult result) {
-//                            context.finish();
-                            UserInfo userInfo = result.getData();
-                            UserUtil.saveUserInfo(context, userInfo);
-                            GestureLockSetActivity.startActivity(context, cls);
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            Uihelper.showToast(context, error);
-                        }
-                    }, telephone, password);
-                }
-            };
-            dialog_login.show();
         }
     }
 
