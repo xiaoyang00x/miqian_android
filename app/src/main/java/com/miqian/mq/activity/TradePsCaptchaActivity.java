@@ -73,7 +73,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
         telephone = Pref.getString(Pref.TELEPHONE, mActivity, "");
         if (!TextUtils.isEmpty(telephone)) {
-            tv_phone.setText("验证码发送至 ****" + telephone.substring(telephone.length() - 4, telephone.length()));
+            tv_phone.setText("验证码发送至"+telephone.substring(0, 3)+"****" + telephone.substring(telephone.length() - 4, telephone.length()));
         }
 
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
@@ -98,7 +98,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
         if (isModifyPhone) {
             findViewById(R.id.frament_modifytradepassword).setVisibility(View.GONE);
             findViewById(R.id.view_1).setVisibility(View.GONE);
-            mTitle.setTitleText("更换手机号");
+            mTitle.setTitleText("修改手机号");
         }
         if (!TextUtils.isEmpty(realNameStatus)) {
             //未实名认证
