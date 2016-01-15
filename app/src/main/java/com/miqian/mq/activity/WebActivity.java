@@ -42,6 +42,7 @@ public class WebActivity extends BaseActivity {
     private ProgressBar progressBar;
     private View load_webview_error;
     private View tv_refresh;
+    private boolean isGoLogin = false;     //登录或注册成功后要重新设置 agent
 
     public static void startActivity(Context context, String url) {
         context.startActivity(getIntent(context, url));
@@ -89,8 +90,7 @@ public class WebActivity extends BaseActivity {
 
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
-        String defaultAgent = settings.getUserAgentString();
-        settings.setUserAgentString(defaultAgent + " miaoqian_json: " + generateUserAgent());
+        setUserAgent(settings);
 
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
 
@@ -197,12 +197,14 @@ public class WebActivity extends BaseActivity {
     public void register() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        isGoLogin = true;
     }
 
     //登录窗口
     @JavascriptInterface
     public void login() {
         UserUtil.loginWebView(this, WebActivity.class, url);
+        isGoLogin = true;
     }
 
     //分享接口
@@ -280,7 +282,12 @@ public class WebActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private String generateUserAgent() {
+    /**
+     * 设置 UserAgent
+     * @param settings
+     */
+    private void setUserAgent(WebSettings settings) {
+        String defaultAgent = settings.getUserAgentString();
         String ua = "";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", UserUtil.getToken(mContext));
@@ -293,6 +300,18 @@ public class WebActivity extends BaseActivity {
         jsonObject.put("deviceModel", MobileOS.getDeviceModel());
 
         ua = jsonObject.toString();
-        return ua;
+        settings.setUserAgentString(defaultAgent + " miaoqian_json: " + ua);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isGoLogin) {
+            if(webview != null) {
+                setUserAgent(webview.getSettings());
+                webview.reload();
+            }
+            isGoLogin = false;
+        }
     }
 }
