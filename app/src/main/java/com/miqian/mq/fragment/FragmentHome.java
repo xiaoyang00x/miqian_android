@@ -229,6 +229,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 synchronized (mActivityLock) {
                     inActivityProcess = false;
                 }
+                Uihelper.showToast(getActivity(), error);
             }
         });
     }

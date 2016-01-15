@@ -1291,7 +1291,7 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
         if (!TextUtils.isEmpty(custId)) {
-            params.add(new Param("custId", custId));
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
         }
         new MyAsyncTask(context, Urls.get_home_activity, params, new ICallback<String>() {
 
@@ -1321,7 +1321,7 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
         if (!TextUtils.isEmpty(custId)) {
-            params.add(new Param("custId", custId));
+            params.add(new Param("custId",  RSAUtils.encryptURLEncode(custId)));
         }
         params.add(new Param("activityId", activityId));
         params.add(new Param("activityPlanId", activityPlanId));
