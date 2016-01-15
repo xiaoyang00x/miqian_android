@@ -122,7 +122,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             frame_login.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
                 String phone = RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
-                tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
+                tv_bindPhone.setText(phone.substring(0, 3)+"****" + phone.substring(phone.length() - 4, phone.length()));
             }
 
             if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
@@ -177,7 +177,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             //绑定手机
             case R.id.frame_setting_bindphone:
                 MobclickAgent.onEvent(mActivity, "1025");
-                initTipDialog();
+                Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
+                intent_phone.putExtra("isModifyPhone", true);
+                startActivity(intent_phone);
+//                initTipDialog();
                 break;
             //安全设置
             case R.id.frame_setting_security:
@@ -265,29 +268,29 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    private void initTipDialog() {
-
-        if (dialogTips == null) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-                @Override
-                public void positionBtnClick() {
-                    Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent_phone.putExtra("isModifyPhone", true);
-                    startActivity(intent_phone);
-                    dismiss();
-                }
-
-                @Override
-                public void negativeBtnClick() {
-
-                }
-            };
-            dialogTips.setNegative(View.VISIBLE);
-            dialogTips.setRemarks("     是否修改手机号码？");
-            dialogTips.setNegative("取消");
-        }
-        dialogTips.show();
-    }
+//    private void initTipDialog() {
+//
+//        if (dialogTips == null) {
+//            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
+//                @Override
+//                public void positionBtnClick() {
+//                    Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
+//                    intent_phone.putExtra("isModifyPhone", true);
+//                    startActivity(intent_phone);
+//                    dismiss();
+//                }
+//
+//                @Override
+//                public void negativeBtnClick() {
+//
+//                }
+//            };
+//            dialogTips.setNegative(View.VISIBLE);
+//            dialogTips.setRemarks("     是否修改手机号码？");
+//            dialogTips.setNegative("取消");
+//        }
+//        dialogTips.show();
+//    }
 
     //退出账号
     public void btn_click(View view) {
@@ -317,7 +320,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case ExtendOperationController.OperationKey.MODIFYPHONE:
                 String phone = (String) data;
                 if (!TextUtils.isEmpty(phone)) {
-                    tv_bindPhone.setText("****" + phone.substring(phone.length() - 4, phone.length()));
+                    tv_bindPhone.setText(phone.substring(0, 3)+"****" + phone.substring(phone.length() - 4, phone.length()));
                 }
                 break;
             case ExtendOperationController.OperationKey.REAL_NAME:

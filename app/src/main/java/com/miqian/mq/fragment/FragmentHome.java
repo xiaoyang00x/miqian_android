@@ -240,7 +240,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     }
 
     private void showActivityDialog() {
-        long currentTime = SystemClock.currentThreadTimeMillis();
+        long currentTime = System.currentTimeMillis();
         if (currentTime >= mHomeActivityData.getBeginTime() && currentTime < mHomeActivityData.getEndTime()) {
             show();
         } else if (currentTime < mHomeActivityData.getBeginTime()) {
