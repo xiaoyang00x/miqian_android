@@ -41,7 +41,7 @@ public class SendCaptchaActivity extends BaseActivity {
     private static final int NUM_TYPE_SUMMIT = 2;
     private static final int NUM_TYPE_TOAST = 3;
     private TextView tv_phone;
-    private int type;   //忘记密码，修改绑定手机
+    private int type;   //忘记密码，绑定手机号
     private boolean isModifyPhone;
     private String oldCaptcha;
 
@@ -75,7 +75,7 @@ public class SendCaptchaActivity extends BaseActivity {
             }
 
         } else if (type == TypeUtil.MODIFY_PHONE) {
-            mTitle.setTitleText("修改绑定手机号");
+            mTitle.setTitleText("绑定手机号");
             isModifyPhone = true;
             oldCaptcha = intent.getStringExtra("captcha");
         }
