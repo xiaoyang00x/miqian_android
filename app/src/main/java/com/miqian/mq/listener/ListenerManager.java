@@ -11,6 +11,8 @@ import java.util.HashMap;
 public class ListenerManager {
 
     public static final HashMap<String, WeakReference<HomeDialogListener>> homeDialogListeners = new HashMap<String, WeakReference<HomeDialogListener>>();
+    public static final HashMap<String, WeakReference< LoginListener>> loginListeners = new HashMap<String, WeakReference<LoginListener>>();
+
 
     public static void registerHomeDialogListener(String key, HomeDialogListener listener) {
         synchronized (homeDialogListeners) {
@@ -29,6 +31,26 @@ public class ListenerManager {
                 ref.clear();
             }
             homeDialogListeners.remove(key);
+        }
+    }
+
+    public static void registerLoginListener(String key, LoginListener listener) {
+        synchronized (loginListeners) {
+            WeakReference<LoginListener> ref = loginListeners.get(key);
+            if (ref != null && ref.get() != null) {
+                ref.clear();
+            }
+            loginListeners.put(key, new WeakReference<LoginListener>(listener));
+        }
+    }
+
+    public static void unregisterLoginListener(String key) {
+        synchronized (loginListeners) {
+            WeakReference<LoginListener> ref = loginListeners.get(key);
+            if (ref != null && ref.get() != null) {
+                ref.clear();
+            }
+            loginListeners.remove(key);
         }
     }
 }

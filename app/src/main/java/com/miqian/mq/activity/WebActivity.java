@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.DownloadListener;
@@ -22,7 +23,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
+import com.miqian.mq.listener.ListenerManager;
+import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.ShareUtils;
 import com.miqian.mq.utils.UserUtil;
@@ -33,7 +37,7 @@ import com.miqian.mq.views.WebChromeClientEx;
 /**
  * Created by guolei_wang on 15/9/25.
  */
-public class WebActivity extends BaseActivity {
+public class WebActivity extends BaseActivity implements LoginListener{
     public static final String KEY_URL = "KEY_URL";
     public static final String JS_INTERFACE_NAME = "MIAOQIAN";
 
@@ -42,7 +46,7 @@ public class WebActivity extends BaseActivity {
     private ProgressBar progressBar;
     private View load_webview_error;
     private View tv_refresh;
-    private boolean isGoLogin = false;     //登录或注册成功后要重新设置 agent
+    private String defaultAgent;     //默认 UA
 
     public static void startActivity(Context context, String url) {
         context.startActivity(getIntent(context, url));
@@ -59,9 +63,8 @@ public class WebActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         url = getIntent().getStringExtra(KEY_URL);
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_web);
-//        findView();
-//        initView();
+
+        ListenerManager.registerLoginListener(WebActivity.class.getSimpleName(), this);
     }
 
     @Override
@@ -73,13 +76,6 @@ public class WebActivity extends BaseActivity {
     protected String getPageName() {
         return "内置浏览器";
     }
-
-//    private void findView() {
-//        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-//        webview = (SwipeWebView) findViewById(R.id.webview);
-//        load_webview_error = findViewById(R.id.load_webview_error);
-//        tv_refresh = findViewById(R.id.tv_refresh);
-//    }
 
     @Override
     public void initView() {
@@ -93,8 +89,8 @@ public class WebActivity extends BaseActivity {
         setUserAgent(settings);
 
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setAppCacheEnabled(false);
 
-        settings.setAppCacheEnabled(true);
         settings.setSupportZoom(true);
         settings.setSavePassword(false);
         webview.setWebChromeClient(new WebChromeClientEx() {
@@ -197,14 +193,12 @@ public class WebActivity extends BaseActivity {
     public void register() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
-        isGoLogin = true;
     }
 
     //登录窗口
     @JavascriptInterface
     public void login() {
-        UserUtil.loginWebView(this, WebActivity.class, url);
-        isGoLogin = true;
+        UserUtil.loginWebView(this, null);
     }
 
     //分享接口
@@ -251,6 +245,7 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public void onDestroy() {
+        ListenerManager.unregisterLoginListener(WebActivity.class.getSimpleName());
         webview.removeAllViews();
         webview.destroy();
         super.onDestroy();
@@ -285,7 +280,9 @@ public class WebActivity extends BaseActivity {
      * @param settings
      */
     private void setUserAgent(WebSettings settings) {
-        String defaultAgent = settings.getUserAgentString();
+        if(TextUtils.isEmpty(defaultAgent)) {
+            defaultAgent = settings.getUserAgentString();
+        }
         String ua = "";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", UserUtil.getToken(mContext));
@@ -299,17 +296,22 @@ public class WebActivity extends BaseActivity {
 
         ua = jsonObject.toString();
         settings.setUserAgentString(defaultAgent + " miaoqian_json: " + ua);
+        LogUtil.d("webactivity3333", defaultAgent + " miaoqian_json: " + ua);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if(isGoLogin) {
-            if(webview != null) {
-                setUserAgent(webview.getSettings());
-                webview.reload();
-            }
-            isGoLogin = false;
+    public void loginSuccess() {
+        if(webview != null && !TextUtils.isEmpty(url)) {
+            setUserAgent(webview.getSettings());
+            webview.reload();
+        }
+    }
+
+    @Override
+    public void logout() {
+        if(webview != null && !TextUtils.isEmpty(url)) {
+            setUserAgent(webview.getSettings());
+            webview.reload();
         }
     }
 }

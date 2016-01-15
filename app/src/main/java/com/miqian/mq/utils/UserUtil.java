@@ -10,11 +10,18 @@ import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.listener.HomeDialogListener;
+import com.miqian.mq.listener.ListenerManager;
+import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
+
+import java.lang.ref.WeakReference;
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class UserUtil {
@@ -31,6 +38,46 @@ public class UserUtil {
         Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getPayPwdStatus()), context);
         //设置极光别名
         JpushHelper.setAlias(context);
+        loginSuccess();
+    }
+
+    /**
+     * 登录成功通知监听
+     */
+    public static void loginSuccess() {
+        synchronized (ListenerManager.loginListeners) {
+            Set<String> set = ListenerManager.loginListeners.keySet();
+            Iterator<String> it = set.iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                WeakReference<LoginListener> ref = ListenerManager.loginListeners.get(key);
+                if (ref != null && ref.get() != null) {
+                    LoginListener listener = ref.get();
+                    if (listener != null) {
+                        listener.loginSuccess();
+                    }
+                }
+            }
+        }
+    }
+    /**
+     * 登录成功通知监听
+     */
+    public static void logout() {
+        synchronized (ListenerManager.loginListeners) {
+            Set<String> set = ListenerManager.loginListeners.keySet();
+            Iterator<String> it = set.iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                WeakReference<LoginListener> ref = ListenerManager.loginListeners.get(key);
+                if (ref != null && ref.get() != null) {
+                    LoginListener listener = ref.get();
+                    if (listener != null) {
+                        listener.logout();
+                    }
+                }
+            }
+        }
     }
 
     public static String getToken(Context context) {
@@ -60,6 +107,8 @@ public class UserUtil {
         Pref.saveString(Pref.GESTUREPSW, null, context);
         Pref.saveString(Pref.TOKEN, "", context);
         Pref.saveString(Pref.USERID, "", context);
+
+        logout();
     }
 
     public static boolean isLogin(final Activity context, final Class<?> cls) {
@@ -91,7 +140,7 @@ public class UserUtil {
         }
     }
 
-    public static void loginWebView(final Activity context, final Class<?> cls, final String url) {
+    public static void loginWebView(final Activity context, final Class<?> cls) {
         if (!hasLogin(context)) {
             Dialog_Login dialog_login = new Dialog_Login(context) {
                 @Override
@@ -100,10 +149,10 @@ public class UserUtil {
                     HttpRequest.login(context, new ICallback<LoginResult>() {
                         @Override
                         public void onSucceed(LoginResult result) {
-                            context.finish();
+//                            context.finish();
                             UserInfo userInfo = result.getData();
                             UserUtil.saveUserInfo(context, userInfo);
-                            GestureLockSetActivity.startWebActivity(context, cls, url);
+                            GestureLockSetActivity.startActivity(context, cls);
                         }
 
                         @Override
