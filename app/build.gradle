@@ -7,8 +7,8 @@ android {
         applicationId "com.miqian.mq"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 3
-        versionName '1.1.1'
+        versionCode 4
+        versionName '1.2.0'
     }
 
     packagingOptions {
@@ -53,6 +53,11 @@ android {
 //        "1028" {}
 //        "1029" {}
 //        "1030" {}
+//        "1031" {}
+//        "1032" {}
+//        "1033" {}
+//        "1034" {}
+//        "1035" {}
 //        "baishou" {}
 //        "360" {}
 //        "yingyongbao" {}

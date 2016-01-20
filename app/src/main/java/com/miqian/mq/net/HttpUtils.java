@@ -117,6 +117,7 @@ public class HttpUtils {
         headerBuilder.add("sign", sign);
         headerBuilder.add("token", UserUtil.getToken(context));
         headerBuilder.add("osVersion", MobileOS.getOsVersion());
+        headerBuilder.add("netWorkStandard", MobileOS.getNetworkString(context));
         headerBuilder.add("Connection", "close");
         return headerBuilder;
     }
