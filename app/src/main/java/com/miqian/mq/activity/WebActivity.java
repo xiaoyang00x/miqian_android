@@ -254,12 +254,8 @@ public class WebActivity extends BaseActivity implements LoginListener {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void copyText(String text) {
         ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            ClipData clipData = ClipData.newPlainText(text, text);
-            cmb.setPrimaryClip(clipData);
-        } else {
-            cmb.setText(text);
-        }
+        ClipData clipData = ClipData.newPlainText(text, text);
+        cmb.setPrimaryClip(clipData);
     }
 
     @Override

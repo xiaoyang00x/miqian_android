@@ -145,8 +145,8 @@ public class MySwipeRefresh extends ViewGroup {
     private boolean isProgressEnable = true;
 
     private ProgressBar progressBar;
-	private TextView textView;
-	private ImageView imageView;
+    private TextView textView;
+    private ImageView imageView;
 
     private boolean isFirstLoad = true;
 
@@ -231,7 +231,7 @@ public class MySwipeRefresh extends ViewGroup {
     public MySwipeRefresh(Context context, AttributeSet attrs) {
         super(context, attrs);
         // 添加了一个手势选择器
-        gestureDetector=new GestureDetector(new Yscroll() );
+        gestureDetector = new GestureDetector(new Yscroll());
 
         /**
          * getScaledTouchSlop是一个距离，表示滑动的时候，手的移动要大于这个距离才开始移动控件。如果小于这个距离就不触发移动控件
@@ -544,18 +544,7 @@ public class MySwipeRefresh extends ViewGroup {
      * @return
      */
     public boolean isChildScrollToTop() {
-        if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (mTarget instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) mTarget;
-                return !(absListView.getChildCount() > 0 && (absListView
-                        .getFirstVisiblePosition() > 0 || absListView
-                        .getChildAt(0).getTop() < absListView.getPaddingTop()));
-            } else {
-                return !(mTarget.getScrollY() > 0);
-            }
-        } else {
-            return !ViewCompat.canScrollVertically(mTarget, -1);
-        }
+        return !ViewCompat.canScrollVertically(mTarget, -1);
     }
 
     /**
@@ -856,81 +845,6 @@ public class MySwipeRefresh extends ViewGroup {
     }
 
     /**
-     * 处理上拉加载更多的Touch事件
-     *
-     * @param ev
-     * @param action
-     * @return
-     */
-//    private boolean handlerPushTouchEvent(MotionEvent ev, int action) {
-//        switch (action) {
-//            case MotionEvent.ACTION_DOWN:
-//                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
-//                mIsBeingDragged = false;
-//                break;
-//            case MotionEvent.ACTION_MOVE: {
-//                final int pointerIndex = MotionEventCompat.findPointerIndex(ev,
-//                        mActivePointerId);
-//                if (pointerIndex < 0) {
-//                    return false;
-//                }
-//                final float y = MotionEventCompat.getY(ev, pointerIndex);
-//                final float overscrollBottom = (mInitialMotionY - y) * DRAG_RATE;
-//                if (mIsBeingDragged) {
-//                    pushDistance = (int) overscrollBottom;
-//                    updateFooterViewPosition();
-////                    if (mOnPushLoadMoreListener != null) {
-////                        mOnPushLoadMoreListener.onPushEnable(pushDistance >= mFooterViewHeight);
-////                    }
-//                }
-//                break;
-//            }
-//            case MotionEventCompat.ACTION_POINTER_DOWN: {
-//                final int index = MotionEventCompat.getActionIndex(ev);
-//                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
-//                break;
-//            }
-//
-//            case MotionEventCompat.ACTION_POINTER_UP:
-//                onSecondaryPointerUp(ev);
-//                break;
-//
-//            case MotionEvent.ACTION_UP:
-//            case MotionEvent.ACTION_CANCEL: {
-//                if (mActivePointerId == INVALID_POINTER) {
-//                    if (action == MotionEvent.ACTION_UP) {
-//                    }
-//                    return false;
-//                }
-//                final int pointerIndex = MotionEventCompat.findPointerIndex(ev,
-//                        mActivePointerId);
-//                final float y = MotionEventCompat.getY(ev, pointerIndex);
-//                final float overscrollBottom = (mInitialMotionY - y) * DRAG_RATE;// 松手是下拉的距离
-//                mIsBeingDragged = false;
-//                mActivePointerId = INVALID_POINTER;
-//                if (overscrollBottom < mFooterViewHeight
-//                        || mOnPushLoadMoreListener == null) {// 直接取消
-//                    pushDistance = 0;
-//                } else {// 下拉到mFooterViewHeight
-//                    pushDistance = mFooterViewHeight;
-//                }
-//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-//                    updateFooterViewPosition();
-//                    if (pushDistance == mFooterViewHeight
-//                            && mOnPushLoadMoreListener != null) {
-//                        mLoadMore = true;
-//                        mOnPushLoadMoreListener.onLoadMore();
-//                    }
-//                } else {
-//                    animatorFooterToBottom((int) overscrollBottom, pushDistance);
-//                }
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
-    /**
      * 松手之后，使用动画将Footer从距离start变化到end
      *
      * @param start
@@ -957,8 +871,8 @@ public class MySwipeRefresh extends ViewGroup {
 //                    mLoadMore = true;
 //                    mOnPushLoadMoreListener.onLoadMore();
 //                } else {
-                    resetTargetLayout();
-                    mLoadMore = false;
+                resetTargetLayout();
+                mLoadMore = false;
 //                }
             }
         });
@@ -973,13 +887,7 @@ public class MySwipeRefresh extends ViewGroup {
      */
     public void setLoadMore(boolean loadMore) {
         if (!loadMore && mLoadMore) {// 停止加载
-            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                mLoadMore = false;
-                pushDistance = 0;
-                updateFooterViewPosition();
-            } else {
-                animatorFooterToBottom(mFooterViewHeight, 0);
-            }
+            animatorFooterToBottom(mFooterViewHeight, 0);
         }
     }
 
@@ -1116,9 +1024,6 @@ public class MySwipeRefresh extends ViewGroup {
         mHeadViewContainer.bringToFront();
         mHeadViewContainer.offsetTopAndBottom(offset);
         mCurrentTargetOffsetTop = mHeadViewContainer.getTop();
-        if (requiresUpdate && android.os.Build.VERSION.SDK_INT < 11) {
-            invalidate();
-        }
         updateListenerCallBack();
     }
 
@@ -1399,9 +1304,7 @@ public class MySwipeRefresh extends ViewGroup {
                 bgPaint.setColor(circleBackgroundColor);
                 bgPaint.setStyle(Paint.Style.FILL);
                 bgPaint.setAntiAlias(true);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    this.setLayerType(LAYER_TYPE_SOFTWARE, bgPaint);
-                }
+                this.setLayerType(LAYER_TYPE_SOFTWARE, bgPaint);
                 bgPaint.setShadowLayer(4.0f, 0.0f, 2.0f, shadowColor);
             }
             return bgPaint;
@@ -1457,6 +1360,7 @@ public class MySwipeRefresh extends ViewGroup {
 
     GestureDetector gestureDetector;
     View.OnTouchListener onTouchListener;
+
     class Yscroll extends GestureDetector.SimpleOnGestureListener {
 
         @Override
