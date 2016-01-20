@@ -106,6 +106,8 @@ public class UserUtil {
         Pref.saveString(Pref.GESTUREPSW, null, context);
         Pref.saveString(Pref.TOKEN, "", context);
         Pref.saveString(Pref.USERID, "", context);
+        //token值为"",表示取消之前设置的别名
+        JpushHelper.setAlias(context);
 
         logout();
     }

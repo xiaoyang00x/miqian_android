@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <!-- <ImageView -->
     <!-- style="@style/FillContent" -->
@@ -13,15 +13,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/icon_splash"/>
+        android:src="@drawable/icon_splash" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:text="© 2013-2015 拾财贷 All rights reserved"
+            android:textSize="@dimen/mq_font4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:text="拾财贷(厦门)金融信息技术服务有限公司"
+            android:textSize="@dimen/mq_font4" />
+
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="invisible" >
-    </android.support.v4.view.ViewPager>
+        android:visibility="invisible"></android.support.v4.view.ViewPager>
 
     <LinearLayout
         android:id="@+id/frame_pages"
@@ -31,7 +55,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
         android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-    </LinearLayout>
+        android:orientation="horizontal"></LinearLayout>
 
 </RelativeLayout>
