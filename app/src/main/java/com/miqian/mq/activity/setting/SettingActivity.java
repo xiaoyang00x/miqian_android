@@ -40,16 +40,11 @@ import com.umeng.update.UpdateStatus;
 public class SettingActivity extends BaseActivity implements View.OnClickListener, ExtendOperationController.ExtendOperationListener {
 
     private UserInfo userInfo;
-    private TextView tv_name, tv_card, tv_bindPhone, tv_cardState;
-    private ImageView iconBank;
-    private CustomDialog dialogTips;
     private ImageView ivPushState;
-    private View frame_setting_name;
-    private View frame_setting_bankcard;
     private View frame_login;
-    private View frame_loginout;
     private Button btn_loginout;
     private boolean isPush;
+    private ExtendOperationController extendOperationController;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -66,43 +61,39 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void initView() {
 
-        frame_setting_name = findViewById(R.id.frame_setting_name);
         btn_loginout = (Button) findViewById(R.id.btn_loginout);
-        View frame_setting_bindphone = findViewById(R.id.frame_setting_bindphone);
         View frame_setting_security = findViewById(R.id.frame_setting_security);
         View frame_setting_helpcenter = findViewById(R.id.frame_setting_helpcenter);
+        View frame_setting_accountinfo = findViewById(R.id.frame_setting_accountinfo);
 
         View frame_setting_suggest = findViewById(R.id.frame_setting_suggest);
         View frame_setting_about = findViewById(R.id.frame_setting_about);
-        View frame_setting_telephone = findViewById(R.id.frame_setting_telephone);
         frame_login = findViewById(R.id.layout_login);
-        frame_setting_bankcard = findViewById(R.id.frame_setting_bankcard);
         View frameUpdate = findViewById(R.id.frame_update);
         TextView textVersion = (TextView) findViewById(R.id.text_version);
         textVersion.setText("V" + MobileOS.getAppVersionName(mActivity));
-
-        tv_name = (TextView) findViewById(R.id.tv_setting_name);
-        tv_card = (TextView) findViewById(R.id.tv_setting_bankcard);
-        tv_cardState = (TextView) findViewById(R.id.tv_setting_bankcardstate);
-        tv_bindPhone = (TextView) findViewById(R.id.tv_settting_bindphone);
-        iconBank = (ImageView) findViewById(R.id.icon_bank);
-
         //通知开关
         ivPushState = (ImageView) findViewById(R.id.iv_push_state);
 
         frameUpdate.setOnClickListener(this);
-        frame_setting_name.setOnClickListener(this);
-        frame_setting_bindphone.setOnClickListener(this);
+        frame_setting_accountinfo.setOnClickListener(this);
         frame_setting_security.setOnClickListener(this);
         frame_setting_helpcenter.setOnClickListener(this);
         frame_setting_suggest.setOnClickListener(this);
         frame_setting_about.setOnClickListener(this);
-        frame_setting_telephone.setOnClickListener(this);
-        frame_setting_bankcard.setOnClickListener(this);
         ivPushState.setOnClickListener(this);
-        ExtendOperationController.getInstance().registerExtendOperationListener(this);
 
+        extendOperationController = ExtendOperationController.getInstance();
+        extendOperationController.registerExtendOperationListener(this);
         setData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (extendOperationController != null) {
+            extendOperationController.unRegisterExtendOperationListener(this);
+        }
+        super.onDestroy();
     }
 
     private void setData() {
@@ -120,45 +111,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 return;
             }
             frame_login.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
-                String phone = RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
-                tv_bindPhone.setText(phone.substring(0, 3)+"****" + phone.substring(phone.length() - 4, phone.length()));
-            }
-
-            if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
-                //已认证
-                if ("1".equals(userInfo.getRealNameStatus())) {
-                    if (!TextUtils.isEmpty(userInfo.getRealName())) {
-                        tv_name.setText(RSAUtils.decryptByPrivate(userInfo.getRealName()));
-                    }
-
-                } else {
-                    frame_setting_name.setVisibility(View.GONE);
-                    findViewById(R.id.divider_name).setVisibility(View.GONE);
-                }
-            }
-
-            if ("1".equals(userInfo.getBindCardStatus())) {
-                frame_setting_bankcard.setVisibility(View.VISIBLE);
-                findViewById(R.id.divider_bank).setVisibility(View.VISIBLE);
-
-                String bankNo = RSAUtils.decryptByPrivate(userInfo.getBankNo());
-                if (TextUtils.isEmpty(bankNo)) {
-                    return;
-                }
-                if (!TextUtils.isEmpty(userInfo.getBankUrlSmall())) {
-                    imageLoader.displayImage(userInfo.getBankUrlSmall(), iconBank, options);
-                }
-                tv_card.setText("尾号" + bankNo.substring(bankNo.length() - 4, bankNo.length()));
-            }
         }
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
     }
 
     @Override
@@ -174,13 +128,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //绑定手机
-            case R.id.frame_setting_bindphone:
-                MobclickAgent.onEvent(mActivity, "1025");
-                Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
-                intent_phone.putExtra("isModifyPhone", true);
-                startActivity(intent_phone);
-//                initTipDialog();
+            //账户信息
+            case R.id.frame_setting_accountinfo:
+                if (userInfo == null) {
+                    return;
+                }
+                Intent intent_bind = new Intent(mActivity, AccountInfoActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("userInfo", userInfo);
+                intent_bind.putExtras(extra);
+                startActivity(intent_bind);
                 break;
             //安全设置
             case R.id.frame_setting_security:
@@ -197,17 +154,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.frame_setting_helpcenter:
                 MobclickAgent.onEvent(mActivity, "1030");
                 WebActivity.startActivity(mActivity, Urls.web_help);
-                break;
-            //银行卡号
-            case R.id.frame_setting_bankcard:
-                if (userInfo == null) {
-                    return;
-                }
-                Intent intent_bind = new Intent(mActivity, SetBankActivity.class);
-                Bundle extra = new Bundle();
-                extra.putSerializable("userInfo", userInfo);
-                intent_bind.putExtras(extra);
-                startActivity(intent_bind);
                 break;
             //意见反馈
             case R.id.frame_setting_suggest:
@@ -244,11 +190,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.frame_setting_about:
                 MobclickAgent.onEvent(mActivity, "1031");
                 startActivity(new Intent(mActivity, AboutUsActivity.class));
-                break;
-            //联系客服
-            case R.id.frame_setting_telephone:
-                MobclickAgent.onEvent(mActivity, "1033");
-                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
                 break;
             //推送开关
             case R.id.iv_push_state:
@@ -314,30 +255,20 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    protected String getPageName() {
+        return "设置";
+    }
+
+    @Override
     public void excuteExtendOperation(int operationKey, Object data) {
 
         switch (operationKey) {
-            case ExtendOperationController.OperationKey.MODIFYPHONE:
-                String phone = (String) data;
-                if (!TextUtils.isEmpty(phone)) {
-                    tv_bindPhone.setText(phone.substring(0, 3)+"****" + phone.substring(phone.length() - 4, phone.length()));
-                }
-                break;
-            case ExtendOperationController.OperationKey.REAL_NAME:
-                String name = (String) data;
-                if (!TextUtils.isEmpty(name)) {
-                    userInfo.setRealNameStatus("1");
-                    tv_name.setText(name);
-                }
+            case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
+                userInfo.setPayPwdStatus("1");
                 break;
             default:
                 break;
         }
 
-    }
-
-    @Override
-    protected String getPageName() {
-        return "设置";
     }
 }

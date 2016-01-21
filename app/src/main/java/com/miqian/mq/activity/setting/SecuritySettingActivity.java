@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -10,18 +11,20 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.TradePsCaptchaActivity;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
 
-public class SecuritySettingActivity extends BaseActivity implements OnClickListener {
+public class SecuritySettingActivity extends BaseActivity implements OnClickListener, ExtendOperationController.ExtendOperationListener {
 
     private String payPwdStatus;
 
     private ImageView iv_switch;
     private String realNameStatus;
+    private ExtendOperationController extendOperationController;
 
     @Override
     public void obtainData() {
@@ -40,6 +43,17 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
         findViewById(R.id.password_login).setOnClickListener(this);
         findViewById(R.id.password_transaction).setOnClickListener(this);
         iv_switch.setOnClickListener(this);
+
+        extendOperationController = ExtendOperationController.getInstance();
+        extendOperationController.registerExtendOperationListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (extendOperationController != null) {
+            extendOperationController.unRegisterExtendOperationListener(this);
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -113,5 +127,18 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
     @Override
     protected String getPageName() {
         return "安全设置";
+    }
+
+    @Override
+    public void excuteExtendOperation(int operationKey, Object data) {
+
+        switch (operationKey) {
+            case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
+                payPwdStatus = "1";
+                break;
+            default:
+                break;
+        }
+
     }
 }

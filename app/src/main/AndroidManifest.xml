@@ -140,6 +140,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.PaymodeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.IntoResultActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
@@ -179,6 +183,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.setting.SetBankActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.setting.AccountInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
@@ -376,7 +384,7 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="8e7e3b5b32b4603e8aa757c6" />
+            android:value="1efad7e3915accc3bfb9f801" />
         <!--  </>值来自开发者平台取得的AppKey-->
         <activity
             android:name=".activity.CapitalRecordActivity"

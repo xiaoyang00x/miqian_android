@@ -52,6 +52,8 @@ public class ExtendOperationController {
 		public static final int RefeshMessage = 1010;
 		/** 消息状态*/
 		public static final int MessageState = 1011;
+		/** 设置交易密码成功*/
+		public static final int SETTRADPASSWORD_SUCCESS = 1012;
 
 	}
 

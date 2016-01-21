@@ -6,16 +6,16 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top"
             android:layout_marginBottom="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_top"
             android:orientation="vertical">
 
             <LinearLayout
@@ -26,105 +26,29 @@
                 android:visibility="gone">
 
                 <RelativeLayout
-                    android:id="@+id/frame_setting_name"
+                    android:id="@+id/frame_setting_accountinfo"
                     style="@style/listItem">
 
                     <TextView
                         style="@style/text_black_item"
                         android:layout_centerVertical="true"
-                        android:text="姓名" />
-
-                    <TextView
-                        android:id="@+id/tv_setting_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
-                        android:layout_alignParentRight="true"
-                        android:text=""
-                        android:textColor="@color/mq_r1" />
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/divider_name"
-                    style="@style/item_divider" />
-
-                <RelativeLayout
-                    android:id="@+id/frame_setting_bindphone"
-                    style="@style/listItem">
-
-                    <TextView
-                        style="@style/text_black_item"
-                        android:layout_centerVertical="true"
-                        android:text="手机号码" />
+                        android:text="账户信息" />
 
                     <ImageView
-                        android:id="@+id/arrow_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/right" />
-
-                    <TextView
-                        android:id="@+id/tv_settting_bindphone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
-                        android:layout_toLeftOf="@+id/arrow_2"
-                        android:textColor="@color/miqian_gray" />
                 </RelativeLayout>
 
                 <View style="@style/item_divider" />
 
-                <RelativeLayout
-                    android:id="@+id/frame_setting_bankcard"
-                    style="@style/listItem"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/icon_bank"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/icon_bank" />
-
-                    <TextView
-                        android:id="@+id/tv_setting_bankcard"
-                        style="@style/text_black_item"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="3dp"
-                        android:layout_toRightOf="@+id/icon_bank"
-                        android:text="银行卡" />
-
-                    <ImageView
-                        android:id="@+id/arrow_11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/right" />
-
-                    <TextView
-                        android:id="@+id/tv_setting_bankcardstate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
-                        android:layout_toLeftOf="@+id/arrow_11"
-                        android:textColor="@color/mq_r1" />
-                </RelativeLayout>
-
-
-                <View
-                    android:id="@+id/divider_bank"
-                    style="@style/item_divider"
-                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/frame_setting_security"
-                    style="@style/listItem">
+                    style="@style/listItem"
+                    android:layout_marginBottom="10dp">
 
                     <TextView
                         style="@style/text_black_item"
@@ -132,7 +56,6 @@
                         android:text="安全设置" />
 
                     <ImageView
-                        android:id="@+id/arrow_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -141,44 +64,18 @@
 
                 </RelativeLayout>
 
-                <View
-                    android:id="@+id/divider_push"
-                    style="@style/item_divider"
-                    android:visibility="visible" />
             </LinearLayout>
 
-
             <RelativeLayout
-                android:id="@+id/frame_setting_push_state"
+                android:id="@+id/frame_setting_about"
                 style="@style/listItem">
 
                 <TextView
                     style="@style/text_black_item"
                     android:layout_centerVertical="true"
-                    android:text="推送消息" />
+                    android:text="了解秒钱" />
 
                 <ImageView
-                    android:id="@+id/iv_push_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/gesture_swith_open" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/frame_setting_suggest"
-                style="@style/listItem"
-                android:layout_marginTop="@dimen/margin_top">
-
-                <TextView
-                    style="@style/text_black_item"
-                    android:layout_centerVertical="true"
-                    android:text="意见反馈" />
-
-                <ImageView
-                    android:id="@+id/arrow_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -199,7 +96,6 @@
                     android:text="帮助中心" />
 
                 <ImageView
-                    android:id="@+id/arrow_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -210,26 +106,6 @@
 
             <View style="@style/item_divider" />
 
-            <RelativeLayout
-                android:id="@+id/frame_setting_about"
-                style="@style/listItem">
-
-                <TextView
-                    style="@style/text_black_item"
-                    android:layout_centerVertical="true"
-                    android:text="了解秒钱" />
-
-                <ImageView
-                    android:id="@+id/arrow_6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/right" />
-
-            </RelativeLayout>
-
-            <View style="@style/item_divider" />
 
             <RelativeLayout
                 android:id="@+id/frame_update"
@@ -249,35 +125,55 @@
                     android:layout_marginRight="@dimen/margin_left_right"
                     android:textColor="@color/mq_b2"
                     android:textSize="@dimen/mq_font3" />
-            </RelativeLayout>
-
-            <View style="@style/item_divider" />
-
-            <RelativeLayout
-                android:id="@+id/frame_setting_telephone"
-                style="@style/listItem">
-
-                <TextView
-                    style="@style/text_black_item"
-                    android:layout_centerVertical="true"
-                    android:text="拨打客服电话" />
 
                 <ImageView
-                    android:id="@+id/arrow_7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/right" />
 
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                android:id="@+id/frame_setting_suggest"
+                style="@style/listItem">
+
                 <TextView
+                    style="@style/text_black_item"
+                    android:layout_centerVertical="true"
+                    android:text="意见反馈" />
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@+id/arrow_7"
-                    android:text="400-6656-191"
-                    android:textColor="@color/mq_bl1" />
+                    android:src="@drawable/right" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/frame_setting_push_state"
+                style="@style/listItem"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/text_black_item"
+                    android:layout_centerVertical="true"
+                    android:text="推送消息" />
+
+                <ImageView
+                    android:id="@+id/iv_push_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/gesture_swith_open" />
+
             </RelativeLayout>
 
             <LinearLayout
@@ -289,10 +185,10 @@
 
                 <Button
                     android:id="@+id/btn_loginout"
-                    android:visibility="gone"
                     style="@style/click_btn"
                     android:onClick="btn_click"
-                    android:text="退出登录" />
+                    android:text="退出登录"
+                    android:visibility="gone" />
             </LinearLayout>
 
 

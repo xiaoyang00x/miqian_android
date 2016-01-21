@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:text="代付款3333元"
+            android:textColor="@color/mq_r1"
+            android:textSize="@dimen/mq_font2" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/list_click"
+        android:paddingLeft="@dimen/margin_left_right">
+
+        <ImageView
+            android:id="@+id/iv_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/icon_bank" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toLeftOf="@+id/iv_choose_bank"
+            android:layout_toRightOf="@+id/iv_bank"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_bankname"
+                style="@style/text_black_item"
+                android:layout_width="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:gravity="left|center"
+                android:maxEms="10"
+                android:text="招商银行" />
+
+            <TextView
+                android:id="@+id/tv_tip"
+                style="@style/text_gray_item"
+                android:layout_marginTop="3dp"
+                android:text="单日限额"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_choose_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@drawable/icon_choose" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/list_click"
+        android:paddingLeft="@dimen/margin_left_right">
+
+        <ImageView
+            android:id="@+id/iv_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/current_state" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toLeftOf="@+id/iv_choose_current"
+            android:layout_toRightOf="@+id/iv_current"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_current_state"
+                style="@style/text_black_item"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:drawablePadding="9dp"
+                android:drawableRight="@drawable/icon_explaint"
+                android:gravity="left|center"
+                android:maxEms="10"
+                android:text="活期余额" />
+
+            <TextView
+                android:id="@+id/tv_curernt"
+                style="@style/text_gray_item"
+                android:layout_marginTop="3dp"
+                android:text="单日限额"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_choose_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@drawable/icon_choose" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/list_click"
+        android:paddingLeft="@dimen/margin_left_right">
+
+        <ImageView
+            android:id="@+id/iv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/balance_state" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toLeftOf="@+id/iv_choose_balance"
+            android:layout_toRightOf="@+id/iv_balance"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_balance_state"
+                style="@style/text_black_item"
+                android:layout_width="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:gravity="left|center"
+                android:maxEms="10"
+                android:text="账户余额" />
+
+            <TextView
+                android:id="@+id/tv_balance_money"
+                style="@style/text_gray_item"
+                android:layout_marginTop="3dp"
+                android:text="单日限额3万,单月限额30万"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_choose_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@drawable/icon_choose" />
+    </RelativeLayout>
+
+
+</LinearLayout>

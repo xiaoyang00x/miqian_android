@@ -19,6 +19,7 @@ import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
+import com.miqian.mq.activity.PaymodeActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
@@ -438,6 +439,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             case R.id.frame_record:
                 MobclickAgent.onEvent(getActivity(), "1021");
                 startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
+
                 break;
             //红包/券
             case R.id.frame_ticket:
@@ -503,6 +505,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 // 更新数据
                 hasMessage=false;
                 btn_message.setImageResource(R.drawable.btn_message_none);
+                break;
+            case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
+                userInfoTemp.setPayPwdStatus("1");
+                break;
+            default:
                 break;
         }
 

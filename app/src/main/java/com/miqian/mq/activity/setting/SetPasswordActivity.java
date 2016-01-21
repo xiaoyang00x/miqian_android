@@ -12,6 +12,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTradePassword;
@@ -147,6 +148,7 @@ public class SetPasswordActivity extends BaseActivity {
                 public void onSucceed(Meta result) {
                     end();
                     Uihelper.showToast(mActivity, "设置成功");
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS, null);
                     SetPasswordActivity.this.finish();
                 }
 
