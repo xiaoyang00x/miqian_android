@@ -78,6 +78,8 @@ public class Urls {
     public final static String order_produced = base_server + "assetService/subscribePreprocess";
     //认购
     public final static String subscribe_order = base_server + "assetService/subscribe";
+    //认购快捷支付
+    public final static String quick_subscribe_order = base_server + "assetService/quickPayment";
     //获取用户信息
     public final static String user_info = base_server + "userService/getUserInfo";
 
