@@ -135,12 +135,12 @@ public class ActivityRedeem extends BaseActivity {
 
     private void initDialogTradePassword(int type) {
 
-        if ( type == DialogTradePassword.TYPE_SETPASSWORD) {
+        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
 
-            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+            Intent intent = new Intent(ActivityRedeem.this, SetPasswordActivity.class);
             intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
             startActivityForResult(intent, 0);
-            
+
         } else {
             if (dialogTradePassword_input == null) {
                 dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
@@ -161,9 +161,10 @@ public class ActivityRedeem extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //设置交易密码成功
         if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
             userInfo.setPayPwdStatus("1");
+            initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
         }
     }
 
