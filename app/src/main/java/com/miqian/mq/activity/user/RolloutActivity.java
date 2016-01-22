@@ -13,6 +13,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.BankBranchActivity;
 import com.miqian.mq.activity.setting.CityListActivity;
+import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.BankCard;
 import com.miqian.mq.entity.BankCardResult;
@@ -27,6 +28,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTradePassword;
@@ -56,7 +58,6 @@ public class RolloutActivity extends BaseActivity {
             cardNum,
             totalMoney;
     private CustomDialog dialogTips, dialogTipsReput;
-    private DialogTradePassword dialogTradePassword_set;
     private DialogTradePassword dialogTradePassword_input;
     private boolean isChooseCity;
     private BankCard bankCard;
@@ -88,7 +89,7 @@ public class RolloutActivity extends BaseActivity {
             @Override
             public void onFail(String error) {
                 end();
-                Uihelper.showToast(mActivity,error);
+                Uihelper.showToast(mActivity, error);
             }
         });
 
@@ -158,8 +159,10 @@ public class RolloutActivity extends BaseActivity {
             if (!TextUtils.isEmpty(city)) {
                 tv_bank_province.setText(city);
             }
+            //设置交易成功
+        }else if(resultCode==TypeUtil.TRADEPASSWORD_SETTING_SUCCESS){
+            userInfo.setPayPwdStatus("1");
         }
-
     }
 
     private void initBindView() {
@@ -332,52 +335,24 @@ public class RolloutActivity extends BaseActivity {
 
     private void initDialogTradePassword(int type) {
 
-        if (dialogTradePassword_set == null && type == DialogTradePassword.TYPE_SETPASSWORD) {
-            dialogTradePassword_set = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_SETPASSWORD) {
+        if ( type == DialogTradePassword.TYPE_SETPASSWORD) {
 
-                @Override
-                public void positionBtnClick(String password) {
+            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+            intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
+            startActivityForResult(intent, 0);
 
-                    //设置交易密码
-                    mWaitingDialog.show();
-                    HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
-                        @Override
-                        public void onSucceed(Meta result) {
-                            mWaitingDialog.dismiss();
-                            dismiss();//设置状态
-                            userInfo.setPayPwdStatus("1");
-                            Uihelper.showToast(mActivity, "设置成功");
-                            rollOutHttp();
-
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            mWaitingDialog.dismiss();
-                            dismiss();
-                            Uihelper.showToast(mActivity, error);
-                        }
-                    }, password, password);
-
-
-                }
-            };
         } else {
             if (dialogTradePassword_input == null) {
-
                 dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
-
                     @Override
                     public void positionBtnClick(String s) {
                         dismiss();
-
                         //提现
                         rollOut(s);
-
-
                     }
                 };
             }
+            dialogTradePassword_input.show();
         }
     }
 
@@ -441,12 +416,6 @@ public class RolloutActivity extends BaseActivity {
         if (userInfo.getPayPwdStatus() != null) {
             int state = Integer.parseInt(userInfo.getPayPwdStatus());
             initDialogTradePassword(state);
-            if (state == DialogTradePassword.TYPE_SETPASSWORD) {
-                dialogTradePassword_set.show();
-            } else {
-                dialogTradePassword_input.show();
-            }
-
         }
 
     }

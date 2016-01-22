@@ -65,7 +65,7 @@ public class SetPasswordActivity extends BaseActivity {
             mTitle.setTitleText("设置交易密码");
             tv_newpassword.setText("设置交易密码");
             tv_comfirmpassword.setText("确定交易密码");
-            et_password.setHint("请输入交易密码");
+            et_password.setHint("输入6-16位数字字母组合");
         }
     }
 
@@ -149,7 +149,10 @@ public class SetPasswordActivity extends BaseActivity {
                     end();
                     Uihelper.showToast(mActivity, "设置成功");
                     ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS, null);
+                    Intent intent = new Intent();
+                    setResult(TypeUtil.TRADEPASSWORD_SETTING_SUCCESS, intent);
                     SetPasswordActivity.this.finish();
+
                 }
 
                 @Override

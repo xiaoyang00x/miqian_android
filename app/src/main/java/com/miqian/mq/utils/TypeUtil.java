@@ -37,6 +37,8 @@ public class TypeUtil {
 
     //设置交易密码
     public static final int TRADEPASSWORD_FIRST_SETTING =40001 ;
+    //设置交易密密码成功
+    public static final int TRADEPASSWORD_SETTING_SUCCESS =40002 ;
 
 
 }

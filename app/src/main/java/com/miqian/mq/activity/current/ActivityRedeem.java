@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.Redeem;
@@ -19,6 +20,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.WFYTitle;
@@ -33,7 +35,6 @@ public class ActivityRedeem extends BaseActivity {
     private EditText editMoney;
     private String capital;
     private UserInfo userInfo;
-    private DialogTradePassword dialogTradePassword_set;
     private DialogTradePassword dialogTradePassword_input;
     private String money;
     private Button btnRollout;
@@ -125,11 +126,6 @@ public class ActivityRedeem extends BaseActivity {
                 if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
                     int state = Integer.parseInt(userInfo.getPayPwdStatus());
                     initDialogTradePassword(state);
-                    if (state == DialogTradePassword.TYPE_SETPASSWORD) {
-                        dialogTradePassword_set.show();
-                    } else {
-                        dialogTradePassword_input.show();
-                    }
                 }
             }
         } else {
@@ -139,36 +135,12 @@ public class ActivityRedeem extends BaseActivity {
 
     private void initDialogTradePassword(int type) {
 
-        if (dialogTradePassword_set == null && type == DialogTradePassword.TYPE_SETPASSWORD) {
-            dialogTradePassword_set = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_SETPASSWORD) {
+        if ( type == DialogTradePassword.TYPE_SETPASSWORD) {
 
-                @Override
-                public void positionBtnClick(String password) {
-
-                    //设置交易密码
-                    mWaitingDialog.show();
-                    HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
-                        @Override
-                        public void onSucceed(Meta result) {
-                            dismiss();
-                            mWaitingDialog.show();
-                            Uihelper.showToast(mActivity, "设置成功");
-                            initDialogTradePassword(1);
-                            dialogTradePassword_input.show();
-
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            dismiss();
-                            mWaitingDialog.show();
-                            Uihelper.showToast(mActivity, error);
-                        }
-                    }, password, password);
-
-
-                }
-            };
+            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+            intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
+            startActivityForResult(intent, 0);
+            
         } else {
             if (dialogTradePassword_input == null) {
                 dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
@@ -183,6 +155,15 @@ public class ActivityRedeem extends BaseActivity {
                     }
                 };
             }
+            dialogTradePassword_input.show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
+            userInfo.setPayPwdStatus("1");
         }
     }
 
