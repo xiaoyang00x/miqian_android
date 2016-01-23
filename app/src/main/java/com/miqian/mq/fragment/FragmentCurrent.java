@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,7 +35,6 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     private Button btInvestment;
     private TextView titleText;
     private RelativeLayout frameImage;
-    private ImageView imageInterest;
     private TextView textInterest;
     private MySwipeRefresh swipeRefresh;
     private RelativeLayout frameEarning;
@@ -62,7 +60,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         if (parent != null) {
             parent.removeView(view);
         }
-        interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "");
+        interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "8");
         findViewById(view);
         obtainData();
         initInterestView();
@@ -78,7 +76,6 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
         frameImage = (RelativeLayout) view.findViewById(R.id.frame_image);
         frameImage.setOnClickListener(this);
-        imageInterest = (ImageView) view.findViewById(R.id.image_interest);
         textInterest = (TextView) view.findViewById(R.id.text_interest);
 
         frameEarning = (RelativeLayout) view.findViewById(R.id.frame_earning);
@@ -149,14 +146,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     }
 
     private void initInterestView() {
-        if (TextUtils.isEmpty(interestRateString)) {
-            imageInterest.setVisibility(View.VISIBLE);
-            textInterest.setVisibility(View.GONE);
-        } else {
-            imageInterest.setVisibility(View.GONE);
-            textInterest.setVisibility(View.VISIBLE);
-            textInterest.setText(interestRateString);
-        }
+        textInterest.setText(interestRateString);
     }
 
     public void obtainData() {
@@ -181,7 +171,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
     @Override
     public void onDestroy() {
-        if (waterWaveView!=null){
+        if (waterWaveView != null) {
             waterWaveView.stopWave();
             waterWaveView = null;
         }
@@ -192,7 +182,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_investment:
-                MobclickAgent.onEvent(mContext,"1007");
+                MobclickAgent.onEvent(mContext, "1007");
                 dialogPay.setEditMoneyHint(downLimit + "元起投");
                 UserUtil.loginPay(mContext, dialogPay);
                 break;

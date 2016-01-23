@@ -161,9 +161,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             if (userInfo.getSupportStatus().equals("1")) {
                 frameBank.setVisibility(View.VISIBLE);
                 frameBankInput.setVisibility(View.GONE);
-                if (rollType == 1) {
-                    btRollin.performClick();
-                }
             } else {
                 frameRealName.setVisibility(View.VISIBLE);
                 frameBank.setVisibility(View.GONE);
@@ -286,7 +283,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private PayOrder constructPreCardPayOrder(PayOrder payOrder) {
+    public static PayOrder constructPreCardPayOrder(PayOrder payOrder) {
         payOrder.setAcct_name(RSAUtils.decryptByPrivate(payOrder.getAcct_name()));
         payOrder.setCard_no(RSAUtils.decryptByPrivate(payOrder.getCard_no()));
         payOrder.setUser_id(RSAUtils.decryptByPrivate(payOrder.getUser_id()));
@@ -309,20 +306,29 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     JSONObject objContent = BaseHelper.string2JSON(strRet);
                     String retCode = objContent.optString("ret_code");
                     String retMsg = objContent.optString("ret_msg");
-                    String orderNo = objContent.optString("no_order");
+                    String orderNo = payOrder.getNo_order();
                     // //先判断状态码，状态码为 成功或处理中 的需要 验签
                     if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
                         String resulPay = objContent.optString("result_pay");
                         if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
                             // 支付成功后续处理
-                            checkOrder(orderNo);
+                            if (rollType == 1) {
+                                backSubscribePage(orderNo);
+                            } else {
+                                checkOrder(orderNo);
+                            }
                         } else {
                             Uihelper.showToast(mActivity, retMsg);
                         }
                     } else if (Constants.RET_CODE_PROCESS.equals(retCode)) {
                         String resulPay = objContent.optString("result_pay");
                         if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
-                            checkOrder(orderNo);
+                            if (rollType == 1) {
+                                setResult(CurrentInvestment.PROCESSING);
+                                jumpToResult(CurrentInvestment.PROCESSING, money, orderNo);
+                            } else {
+                                checkOrder(orderNo);
+                            }
                         }
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
@@ -345,37 +351,12 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 end();
                 OrderLian orderLian = orderLianResult.getData();
                 if (orderLianResult.getCode().equals("000000")) {
-                    if (rollType == 1) {
-                        setResult(CurrentInvestment.SUCCESS);
-                    } else {
-                        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-                        intent.putExtra("status", CurrentInvestment.SUCCESS);
-                        intent.putExtra("money", orderLian.getAmt());
-                        intent.putExtra("orderNo", orderLian.getOrderNo());
-                        startActivity(intent);
-                    }
+                    jumpToResult(CurrentInvestment.SUCCESS, orderLian.getAmt(), orderLian.getOrderNo());
                 } else if (orderLianResult.getCode().equals("100096")) {
-                    if (rollType == 1) {
-                        setResult(CurrentInvestment.FAIL);
-                    } else {
-                        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-                        intent.putExtra("status", CurrentInvestment.FAIL);
-                        intent.putExtra("money", orderLian.getAmt());
-                        intent.putExtra("orderNo", orderLian.getOrderNo());
-                        startActivity(intent);
-                    }
+                    jumpToResult(CurrentInvestment.FAIL, orderLian.getAmt(), orderLian.getOrderNo());
                 } else if (orderLianResult.getCode().equals("100097")) {
-                    if (rollType == 1) {
-                        setResult(CurrentInvestment.PROCESSING);
-                    } else {
-                        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-                        intent.putExtra("status", CurrentInvestment.PROCESSING);
-                        intent.putExtra("money", orderLian.getAmt());
-                        intent.putExtra("orderNo", orderLian.getOrderNo());
-                        startActivity(intent);
-                    }
+                    jumpToResult(CurrentInvestment.PROCESSING, orderLian.getAmt(), orderLian.getOrderNo());
                 }
-                IntoActivity.this.finish();
             }
 
             @Override
@@ -384,6 +365,32 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 Uihelper.showToast(mActivity, error);
             }
         }, orderNo);
+    }
+
+    /**
+     * 返回订单页面认购
+     *
+     * @param orderNo
+     */
+    private void backSubscribePage(String orderNo) {
+        Intent intent = new Intent();
+        intent.putExtra("orderNo", orderNo);
+        setResult(CurrentInvestment.SUCCESS, intent);
+        IntoActivity.this.finish();
+    }
+
+    /**
+     * 跳转充值结果
+     *
+     * @param orderNo
+     */
+    private void jumpToResult(int status, String money, String orderNo) {
+        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
+        intent.putExtra("status", status);
+        intent.putExtra("money", money);
+        intent.putExtra("orderNo", orderNo);
+        startActivity(intent);
+        IntoActivity.this.finish();
     }
 
     @Override

@@ -112,18 +112,24 @@
                             android:text="红包/券" />
 
                         <TextView
-                            android:id="@+id/text_best_money"
-                            style="@style/f3_R1"
+                            android:id="@+id/text_promote_unit"
+                            style="@style/f3_B1"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="15dp" />
+                            android:layout_marginRight="15dp"/>
 
                         <TextView
-                            android:id="@+id/text_best"
-                            style="@style/f3_B2"
+                            android:id="@+id/text_promote_money"
+                            style="@style/f3_R1"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/text_promote_unit"/>
+
+                        <TextView
+                            android:id="@+id/text_promote"
+                            style="@style/f3_B1"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="2dp"
-                            android:layout_toLeftOf="@id/text_best_money" />
+                            android:layout_toLeftOf="@id/text_promote_money" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -132,63 +138,87 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/right" />
 
-                        <View style="@style/item_divider"
-                            android:layout_alignParentBottom="true"/>
+                        <View
+                            style="@style/item_divider"
+                            android:layout_alignParentBottom="true" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/frame_current_pay"
+                        android:id="@+id/frame_lian_pay"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/edit_item"
                         android:background="@color/white"
                         android:paddingLeft="@dimen/margin_left_right"
-                        android:paddingRight="@dimen/margin_left_right">
+                        android:paddingRight="@dimen/margin_left_right"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/f3_B1"
                             android:layout_centerVertical="true"
-                            android:text="活期支付" />
+                            android:text="连连支付" />
 
-                        <EditText
-                            android:id="@+id/edit_current_balance"
-                            style="@style/edittext_item"
+                        <TextView
+                            android:id="@+id/text_unit"
+                            style="@style/f3_B1"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_width="200dp"
-                            android:background="@null"
-                            android:paddingRight="5dp"
-                            android:gravity="right|center_vertical"
-                            android:inputType="numberDecimal"
-                            android:singleLine="true" />
-
-                        <View style="@style/item_divider"
-                            android:layout_alignParentBottom="true"/>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/edit_item"
-
-                        android:background="@color/white"
-                        android:paddingLeft="@dimen/margin_left_right"
-                        android:paddingRight="@dimen/margin_left_right">
+                            android:singleLine="true"
+                            android:text="元" />
 
                         <TextView
-                            style="@style/f3_B1"
-                            android:layout_centerVertical="true"
-                            android:text="余额支付" />
-
-                        <TextView
-                            android:id="@+id/text_balance"
+                            android:id="@+id/text_lian"
                             style="@style/f1_R1"
-                            android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/text_unit"
+                            android:singleLine="true"
                             android:text="--.--" />
+
+                        <View
+                            style="@style/item_divider"
+                            android:layout_alignParentBottom="true" />
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/frame_pay_choose"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edit_item"
+                        android:background="@color/white"
+                        android:paddingLeft="@dimen/margin_left_right"
+                        android:paddingRight="@dimen/margin_left_right">
 
+                        <TextView
+                            android:id="@+id/text_pay_type"
+                            style="@style/f3_B1"
+                            android:layout_centerVertical="true"
+                            android:text="账户余额" />
+
+                        <TextView
+                            android:id="@+id/text_pay_money_unit"
+                            style="@style/f3_B1"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dp"
+                            android:singleLine="true"
+                            android:text="元" />
+
+                        <TextView
+                            android:id="@+id/text_pay_money"
+                            style="@style/f1_R1"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/text_pay_money_unit"
+                            android:singleLine="true"
+                            android:text="--.--" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/right" />
+                    </RelativeLayout>
 
                 </LinearLayout>
-
 
 
                 <!--<RelativeLayout-->
@@ -223,7 +253,7 @@
                     <Button
                         android:id="@+id/bt_pay"
                         style="@style/click_btn"
-                        android:text="支付" />
+                        android:text="确定认购" />
                 </LinearLayout>
 
                 <LinearLayout

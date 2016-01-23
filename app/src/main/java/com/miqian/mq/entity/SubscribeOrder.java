@@ -7,7 +7,6 @@ public class SubscribeOrder {
 
     private String orderNo;
     private String addTime;
-    private long leftCnt;
 
     public String getOrderNo() {
         return orderNo;
@@ -23,13 +22,5 @@ public class SubscribeOrder {
 
     public void setAddTime(String addTime) {
         this.addTime = addTime;
-    }
-
-    public long getLeftCnt() {
-        return leftCnt;
-    }
-
-    public void setLeftCnt(long leftCnt) {
-        this.leftCnt = leftCnt;
     }
 }

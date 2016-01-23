@@ -1131,7 +1131,7 @@ public class HttpRequest {
      * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      * @param subjectId 0:活期
      */
-    public static void subjectIdOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList, String prodList) {
+    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList, String prodList) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
@@ -1141,6 +1141,38 @@ public class HttpRequest {
         mList.add(new Param("promList", promList));
         mList.add(new Param("prodList", prodList));
         new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
+                callback.onSucceed(subscribeOrderResult);
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 活期、定期赚、定期计划
+     * 快捷认购接口
+     *
+     * @param amt       金额
+     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param subjectId 0:活期
+     */
+    public static void subscribeQuickOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String orderNo, String subjectId, String promList, String prodList) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("amt", amt));
+        mList.add(new Param("prodId", prodId));
+        mList.add(new Param("orderNo", orderNo));
+        mList.add(new Param("subjectId", subjectId));
+        mList.add(new Param("promList", promList));
+        mList.add(new Param("prodList", prodList));
+        new MyAsyncTask(context, Urls.quick_subscribe_order, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {

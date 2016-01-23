@@ -24,7 +24,7 @@
 
         <View
             style="@style/item_divider"
-            android:layout_marginTop="10dp"></View>
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
             android:layout_marginTop="15dp"
             android:text="• 在购买定期理财产品时可用账户里的活期额度进行认购。"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font2" />
+            android:textSize="@dimen/mq_font3" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
 
         <View
             style="@style/item_divider"
-            android:layout_marginTop="10dp"></View>
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
             android:layout_marginTop="15dp"
             android:text="1.方便用户快速认购定期产品。用户可先投活期，有合适的定期产品时，再进行活期转定期。"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font2" />
+            android:textSize="@dimen/mq_font3" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
             android:layout_marginTop="5dp"
             android:text="2.活期赎回有限额，用户通过购买定期产品再转让从而赎回自己的活期产品。"
             android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font2" />
+            android:textSize="@dimen/mq_font3" />
 
 
         <ImageView
