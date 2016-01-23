@@ -17,6 +17,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
@@ -41,7 +42,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -144,9 +144,10 @@ public class MySwipeRefresh extends ViewGroup {
 
     private boolean isProgressEnable = true;
 
-    private ProgressBar progressBar;
     private TextView textView;
     private ImageView imageView;
+    private ImageView imageProgress;
+    private AnimationDrawable animationDrawable;
 
     private boolean isFirstLoad = true;
 
@@ -179,7 +180,7 @@ public class MySwipeRefresh extends ViewGroup {
                         if (textView != null) {
                             textView.setText("正在刷新");
                             imageView.setVisibility(View.GONE);
-                            progressBar.setVisibility(View.VISIBLE);
+                            showAnimation(true);
                         }
                     }
                 }
@@ -196,6 +197,20 @@ public class MySwipeRefresh extends ViewGroup {
             updateListenerCallBack();
         }
     };
+
+    private void showAnimation(boolean flag) {
+        if (animationDrawable == null) {
+            animationDrawable = (AnimationDrawable) imageProgress.getDrawable();
+        }
+
+        if (flag) {
+            imageProgress.setVisibility(View.VISIBLE);
+            animationDrawable.start();
+        } else {
+            imageProgress.setVisibility(View.GONE);
+            animationDrawable.stop();
+        }
+    }
 
     /**
      * 更新回调
@@ -305,12 +320,11 @@ public class MySwipeRefresh extends ViewGroup {
     private void createHeaderViewContainer() {
         mHeadViewContainer = new HeadViewContainer(getContext());
         View child = LayoutInflater.from(this.getContext()).inflate(R.layout.layout_head, null);
-        progressBar = (ProgressBar) child.findViewById(R.id.progress_bar);
         textView = (TextView) child.findViewById(R.id.text_view);
         imageView = (ImageView) child.findViewById(R.id.image_view);
         imageView.setVisibility(View.VISIBLE);
         imageView.setImageResource(R.drawable.down_arrow);
-        progressBar.setVisibility(View.GONE);
+        imageProgress = (ImageView) child.findViewById(R.id.image_progress);
         usingDefaultHeader = false;
         mHeadViewContainer.removeAllViews();
         RelativeLayout.LayoutParams layoutParamsChild = new RelativeLayout.LayoutParams(mHeaderViewWidth, mHeaderViewHeight);
@@ -358,7 +372,6 @@ public class MySwipeRefresh extends ViewGroup {
      * @param refreshing Whether or not the view should show refresh progress.
      */
     public void setRefreshing(boolean refreshing) {
-//        progressBar.setVisibility(View.GONE);
         if (refreshing && mRefreshing != refreshing) {
             // scale and show
             mRefreshing = refreshing;
@@ -373,7 +386,7 @@ public class MySwipeRefresh extends ViewGroup {
             mNotify = false;
             startScaleUpAnimation(mRefreshListener);
         } else {
-            progressBar.setVisibility(View.GONE);
+            showAnimation(false);
             setRefreshing(refreshing, false /* notify */);
             if (usingDefaultHeader) {
                 defaultProgressView.setOnDraw(false);
