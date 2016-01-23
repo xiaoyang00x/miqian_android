@@ -28,7 +28,6 @@ public class RegularListActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private MySwipeRefresh swipeRefresh;
-    private TextView titleText;
     private TextView tv_description;
     @Override
     public void obtainData() {
@@ -51,7 +50,6 @@ public class RegularListActivity extends BaseActivity {
     @Override
     public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        titleText = (TextView) findViewById(R.id.title);
         tv_description = (TextView) findViewById(R.id.tv_description);
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -61,7 +59,6 @@ public class RegularListActivity extends BaseActivity {
             }
         });
 
-        titleText.setText("定期");
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
