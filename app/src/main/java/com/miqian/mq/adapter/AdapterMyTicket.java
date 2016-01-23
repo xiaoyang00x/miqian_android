@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.RegularListActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.MyTicketInvalidActivity;
 import com.miqian.mq.entity.Promote;
@@ -98,6 +99,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             setView(((ViewHolderTicket) holder).limitMoney, promote.getFitBdTermOrYrt());
             ((ViewHolderTicket) holder).limitType.setText(promote.getFitProdOrBdType());
             ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
+            toUseTicket(holder, promote.getPromProdId());
         } else if (holder instanceof ViewHolderShare) {
             final Promote promote = promList.get(position);
             ((ViewHolderShare) holder).textMoney.setText("" + promote.getTotalAmt());
@@ -112,6 +114,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                     WebActivity.startActivity(mContext, promote.getShareUrl());
                 }
             });
+            toUseTicket(holder, promote.getPromProdId());
         } else if (holder instanceof ViewHolderPackage) {
             Promote promote = promList.get(position);
             ((ViewHolderPackage) holder).textMoney.setText("" + promote.getTotalAmt());
@@ -120,6 +123,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             setView(((ViewHolderPackage) holder).limitMoney, promote.getFitBdTermOrYrt());
             ((ViewHolderPackage) holder).limitType.setText(promote.getFitProdOrBdType());
             ((ViewHolderPackage) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
+            toUseTicket(holder, promote.getPromProdId());
         } else if (holder instanceof ProgressViewHolder) {
             if (position >= maxValue) {
 //                ((ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
@@ -139,6 +143,15 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         }
 
 
+    }
+
+    private void toUseTicket(RecyclerView.ViewHolder holder, final String promProdId) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegularListActivity.startActivity(mContext, promProdId);
+            }
+        });
     }
 
     @Override
