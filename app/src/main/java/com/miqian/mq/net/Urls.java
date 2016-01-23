@@ -167,14 +167,14 @@ public class Urls {
      */
     //注册页：《秒钱用户注册协议》
     public final static String web_register_law = base_server + "webView/service-items";
-//    //充值页面：《资金管理协议》
-//    public final static String web_recharge_law = base_server + "webView/recharge";
-//    //活期认购页：《活期赚服务协议》
-//    public final static String web_current_law = base_server + "webView/current-buy";
-//    //定期赚认购页面：《定期赚服务协议》
-//    public final static String web_regular_law = base_server + "webView/regular-buy";
-//    //定期计划认购页面：《定期计划服务协议》
-//    public final static String web_regplan_law = base_server + "webView/regplan-buy";
+    //充值页面：《资金管理协议》
+    public final static String web_recharge_law ="https://res.shicaidai.com/miaoqian/webView/zjglxy.html";
+    //活期认购页：《活期赚服务协议》
+    public final static String web_current_law ="https://res.shicaidai.com/miaoqian/webView/hqzfwxy.html";
+    //定期赚认购页面：《定期赚服务协议》
+    public final static String web_regular_law ="https://res.shicaidai.com/miaoqian/webView/dqzfwxy.html";
+    //定期计划认购页面：《定期计划服务协议》
+    public final static String web_regplan_law ="https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //定期赚详情
     public final static String web_regular_earn_detail = base_server + "webView/getRegDetail/";
     //定期计划详情
