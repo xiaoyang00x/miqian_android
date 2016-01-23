@@ -41,6 +41,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private UserCurrent userCurrent;
     private BigDecimal downLimit = BigDecimal.ONE;
     private BigDecimal upLimit = new BigDecimal(9999999999L);
+    private BigDecimal balance;
     private DialogPay dialogPay;
 
     private String interestRateString = "";
@@ -74,6 +75,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             BigDecimal money = new BigDecimal(userCurrent.getCurAsset());
             downLimit = userCurrent.getCurrentBuyDownLimit();
             upLimit = userCurrent.getCurrentBuyUpLimit();
+            balance = userCurrent.getBalance();
             if (money.compareTo(BigDecimal.ZERO) <= 0) {
                 btRedeem.setEnabled(false);
                 btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
@@ -184,7 +186,11 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");
-                dialogPay.setEditMoneyHint(downLimit + "元起投");
+                if (balance != null) {
+                    dialogPay.setEditMoneyHint("可用余额" + balance + "元");
+                } else {
+                    dialogPay.setEditMoneyHint(downLimit + "元起投");
+                }
                 UserUtil.loginPay(mActivity, dialogPay);
                 break;
         }

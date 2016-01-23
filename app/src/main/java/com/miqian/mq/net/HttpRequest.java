@@ -84,6 +84,7 @@ public class HttpRequest {
      */
     public static void getCurrentHome(Context context, final ICallback<CurrentInfoResult> callback) {
         List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         new MyAsyncTask(context, Urls.current_home, mList, new ICallback<String>() {
 
             @Override

@@ -49,6 +49,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
     private BigDecimal downLimit = BigDecimal.ONE;
     private BigDecimal upLimit = new BigDecimal(9999999999L);
+    private BigDecimal balance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -132,8 +133,9 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
     private void refreshView() {
         if (currentInfo != null) {
-            downLimit = new BigDecimal(currentInfo.getCurrentBuyDownLimit());
-            upLimit = new BigDecimal(currentInfo.getCurrentBuyUpLimit());
+            downLimit = currentInfo.getCurrentBuyDownLimit();
+            upLimit = currentInfo.getCurrentBuyUpLimit();
+            balance = currentInfo.getBalance();
             initInterestView();
             if (currentInfo.getCurrentSwitch().equals("0")) {
                 btInvestment.setText("已满额");
@@ -183,7 +185,12 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.bt_investment:
                 MobclickAgent.onEvent(mContext, "1007");
-                dialogPay.setEditMoneyHint(downLimit + "元起投");
+                if (balance != null) {
+                    dialogPay.setEditMoneyHint("可用余额" + balance + "元");
+                } else {
+                    dialogPay.setEditMoneyHint(downLimit + "元起投");
+
+                }
                 UserUtil.loginPay(mContext, dialogPay);
                 break;
             case R.id.frame_image:

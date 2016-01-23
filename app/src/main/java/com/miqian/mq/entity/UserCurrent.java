@@ -10,13 +10,11 @@ public class UserCurrent {
     private String curAmt;//活期待收收益
     private String curYesterDayAmt;//活期昨日新增收益
     private String curAsset;//活期待收本金
-    private String currentYearRate;//活期待收本金
-
-    private BigDecimal currentBuyUpLimit;//活期赚认购上限
-
-    private BigDecimal currentBuyDownLimit;//活期赚认购下限
-
     private String currentSwitch;//活期赚认购开关
+    private String currentYearRate;//活期待收本金
+    private BigDecimal currentBuyUpLimit;//活期赚认购上限
+    private BigDecimal currentBuyDownLimit;//活期赚认购下限
+    private BigDecimal balance;//可用余额
 
     public String getCurrentSwitch() {
         return currentSwitch;
@@ -72,5 +70,13 @@ public class UserCurrent {
 
     public void setCurrentYearRate(String currentYearRate) {
         this.currentYearRate = currentYearRate;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }

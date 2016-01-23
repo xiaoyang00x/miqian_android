@@ -1,5 +1,7 @@
 package com.miqian.mq.entity;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Jackie on 2015/9/15.
  */
@@ -7,10 +9,11 @@ public class CurrentInfo {
 
     private String buyItemCount;
     private String buyTotalSum;
-    private String currentBuyUpLimit;
-    private String currentBuyDownLimit;
+    private BigDecimal currentBuyUpLimit;
+    private BigDecimal currentBuyDownLimit;
     private String currentSwitch;
     private String currentYearRate;
+    private BigDecimal balance;//可用余额;
 
     public String getBuyItemCount() {
         return buyItemCount;
@@ -28,19 +31,19 @@ public class CurrentInfo {
         this.buyTotalSum = buyTotalSum;
     }
 
-    public String getCurrentBuyUpLimit() {
+    public BigDecimal getCurrentBuyUpLimit() {
         return currentBuyUpLimit;
     }
 
-    public void setCurrentBuyUpLimit(String currentBuyUpLimit) {
+    public void setCurrentBuyUpLimit(BigDecimal currentBuyUpLimit) {
         this.currentBuyUpLimit = currentBuyUpLimit;
     }
 
-    public String getCurrentBuyDownLimit() {
+    public BigDecimal getCurrentBuyDownLimit() {
         return currentBuyDownLimit;
     }
 
-    public void setCurrentBuyDownLimit(String currentBuyDownLimit) {
+    public void setCurrentBuyDownLimit(BigDecimal currentBuyDownLimit) {
         this.currentBuyDownLimit = currentBuyDownLimit;
     }
 
@@ -58,5 +61,13 @@ public class CurrentInfo {
 
     public void setCurrentYearRate(String currentYearRate) {
         this.currentYearRate = currentYearRate;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }

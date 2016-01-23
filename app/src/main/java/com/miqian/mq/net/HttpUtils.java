@@ -33,9 +33,15 @@ public class HttpUtils {
             return MyAsyncTask.NETWORK_ERROR;
         }
         final OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(30, TimeUnit.SECONDS);
-        client.setWriteTimeout(30, TimeUnit.SECONDS);
-        client.setReadTimeout(30, TimeUnit.SECONDS);
+        if (url == Urls.getRegMain || url == Urls.homeInfo) {
+            client.setConnectTimeout(10, TimeUnit.SECONDS);
+            client.setWriteTimeout(10, TimeUnit.SECONDS);
+            client.setReadTimeout(10, TimeUnit.SECONDS);
+        } else {
+            client.setConnectTimeout(30, TimeUnit.SECONDS);
+            client.setWriteTimeout(30, TimeUnit.SECONDS);
+            client.setReadTimeout(30, TimeUnit.SECONDS);
+        }
         FormEncodingBuilder builder = new FormEncodingBuilder();
         if (list == null) {
             list = new ArrayList<>();
@@ -44,9 +50,9 @@ public class HttpUtils {
         sortParam(list);
         if (list != null && list.size() > 0) {
             for (Param param : list) {
-                if(!TextUtils.isEmpty(param.value)) {
+                if (!TextUtils.isEmpty(param.value)) {
                     builder.add(param.key, param.value);
-                }else{
+                } else {
                     builder.add(param.key, "");
                 }
             }
