@@ -1,11 +1,10 @@
-package com.miqian.mq.fragment;
+package com.miqian.mq.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -16,42 +15,52 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.WFYTitle;
 
 /**
- * Created by guolei_wang on 15/9/16.
+ * Created by guolei_wang on 16/1/23.
  */
-public class RegularFragment extends BasicFragment {
-
+public class RegularListActivity extends BaseActivity {
+    public static final String KEY_PROMID = "KEY_PROMID";
     RegularListAdapter mAdapter;
     private GetRegularInfo mData;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_regular, container, false);
-        findView(view);
-        setView();
-        getMainRegular();
-        return view;
-    }
+    private String promId; //促销 ID
 
     private RecyclerView recyclerView;
     private MySwipeRefresh swipeRefresh;
     private TextView titleText;
+    private TextView tv_description;
+    @Override
+    public void obtainData() {
+        getFitSubject();
+    }
 
-    private void findView(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        titleText = (TextView) view.findViewById(R.id.title);
-        swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
+    public static void startActivity(Context context, String subjectId) {
+        Intent intent = new Intent(context, RegularListActivity.class);
+        intent.putExtra(KEY_PROMID, subjectId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        promId = getIntent().getStringExtra(KEY_PROMID);
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void initView() {
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        titleText = (TextView) findViewById(R.id.title);
+        tv_description = (TextView) findViewById(R.id.tv_description);
+        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
-                getMainRegular();
+                getFitSubject();
             }
         });
-    }
 
-    private void setView() {
         titleText.setText("定期");
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -81,13 +90,14 @@ public class RegularFragment extends BasicFragment {
         if (mData != null) {
             mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
             recyclerView.setAdapter(mAdapter);
+            tv_description.setText(mData.getFitSubjectDesc());
         }
     }
 
     private boolean inProcess = false;
     private final Object mLock = new Object();
 
-    private void getMainRegular() {
+    private void getFitSubject() {
         if (inProcess) {
             return;
         }
@@ -96,7 +106,7 @@ public class RegularFragment extends BasicFragment {
         }
         begin();
         swipeRefresh.setRefreshing(true);
-        HttpRequest.getMainRegular(getActivity(), new ICallback<GetRegularResult>() {
+        HttpRequest.getFitSubject(RegularListActivity.this, promId, new ICallback<GetRegularResult>() {
 
             @Override
             public void onSucceed(GetRegularResult result) {
@@ -110,6 +120,7 @@ public class RegularFragment extends BasicFragment {
                 if (mData == null) return;
                 mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
                 recyclerView.setAdapter(mAdapter);
+                tv_description.setText(mData.getFitSubjectDesc());
             }
 
             @Override
@@ -119,13 +130,23 @@ public class RegularFragment extends BasicFragment {
                 }
                 end();
                 swipeRefresh.setRefreshing(false);
-                Uihelper.showToast(getActivity(), error);
+                Uihelper.showToast(RegularListActivity.this, error);
             }
         });
     }
 
     @Override
+    public int getLayoutId() {
+        return R.layout.regular_list_activity;
+    }
+
+    @Override
+    public void initTitle(WFYTitle mTitle) {
+        mTitle.getTitle().setText("红包/券使用");
+    }
+
+    @Override
     protected String getPageName() {
-        return "定期首页";
+        return "红包/券使用";
     }
 }

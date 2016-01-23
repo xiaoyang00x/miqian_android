@@ -31,6 +31,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -257,5 +258,6 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     public void show() {
         homeDialog = new HomeDialog(mActivity, mHomeActivityData);
         homeDialog.show();
+        MobclickAgent.onEvent(getContext(), "home_pop_active");
     }
 }

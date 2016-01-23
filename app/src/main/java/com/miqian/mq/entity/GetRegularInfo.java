@@ -9,6 +9,16 @@ public class GetRegularInfo {
 
     private ArrayList<SubjectCategoryData> subjectData;
 
+    private String fitSubjectDesc;  //红包规则描述
+
+    public String getFitSubjectDesc() {
+        return fitSubjectDesc;
+    }
+
+    public void setFitSubjectDesc(String fitSubjectDesc) {
+        this.fitSubjectDesc = fitSubjectDesc;
+    }
+
     public ArrayList<SubjectCategoryData> getSubjectData() {
         return subjectData;
     }

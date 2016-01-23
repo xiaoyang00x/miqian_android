@@ -141,6 +141,9 @@ public class Urls {
     //定期首页
     public final static String getRegMain = base_server + "subjectService/v2/getRegMain";
 
+    //红包定期列表
+    public final static String getFitSubject = base_server + "subjectService/getFitSubject";
+
     //home
     public final static String homeInfo = base_server + "commonService/v2/getHome";
     //records of capital
