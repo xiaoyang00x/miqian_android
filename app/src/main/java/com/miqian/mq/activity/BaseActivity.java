@@ -49,11 +49,9 @@ public abstract class BaseActivity extends BaseFragmentActivity {
 
         mViewnoresult = (LinearLayout) findViewById(R.id.frame_no_data);
 
-
         findViewById(R.id.tv_reFresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 obtainData();
             }
         });

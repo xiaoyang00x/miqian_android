@@ -52,6 +52,7 @@
     <dimen name="mq_font9">70sp</dimen>
     <dimen name="mq_font10">9sp</dimen>
     <dimen name="mq_font11">44sp</dimen>
+    <dimen name="mq_font12">30sp</dimen>
 
     <dimen name="divider_height">4dp</dimen>
 </resources>

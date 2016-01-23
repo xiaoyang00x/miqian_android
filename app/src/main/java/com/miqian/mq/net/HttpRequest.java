@@ -711,6 +711,31 @@ public class HttpRequest {
     }
 
     /**
+     * 获取红包定期列表
+     */
+    public static void getFitSubject(Context context, String promId, final ICallback<GetRegularResult> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("promId", promId));
+        new MyAsyncTask(context, Urls.getFitSubject, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                GetRegularResult meta = JsonUtil.parseObject(result, GetRegularResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
      * 获取定期详情
      *
      * @param prodId    3：为获取定期赚 5：为获取定期计划

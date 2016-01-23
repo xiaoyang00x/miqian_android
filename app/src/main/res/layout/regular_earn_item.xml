@@ -27,7 +27,7 @@
             android:layout_marginTop="10dp"
             android:text="永兴医院医疗设备项目－9"
             android:textColor="@color/mq_b2"
-            android:textSize="@dimen/mq_font3" />
+            android:textSize="@dimen/mq_font2" />
 
 
         <RelativeLayout
@@ -101,7 +101,7 @@
                             android:layout_height="wrap_content"
                             android:text="12%"
                             android:textColor="@color/mq_r1"
-                            android:textSize="@dimen/mq_font6" />
+                            android:textSize="@dimen/mq_font12" />
 
                         <TextView
                             android:id="@+id/tv_add_interest"
@@ -124,7 +124,7 @@
                         android:layout_weight="1"
                         android:text="220天"
                         android:textColor="@color/mq_r1"
-                        android:textSize="@dimen/mq_font6" />
+                        android:textSize="@dimen/mq_font12" />
                 </LinearLayout>
 
                 <LinearLayout

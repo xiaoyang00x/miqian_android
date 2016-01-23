@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_background"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/iv_houzi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/page_server_busy" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="5px"
+        android:text="抱歉，当前访问人数太多，\n服务器有点忙，请稍后再试•••"
+        android:textColor="@color/mq_b2"
+        android:textSize="@dimen/mq_font3" />
+
+    <Button
+        android:id="@+id/btn_refresh"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_refresh_selector"
+        android:gravity="center"
+        android:text="点击刷新"
+        android:textColor="#1A98FF"
+        android:textSize="@dimen/mq_font2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:text="您可以了解:"
+        android:textColor="@color/mq_b1"
+        android:textSize="@dimen/mq_font3" />
+
+    <TextView
+        android:id="@+id/tv_lookAround1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="• 秒钱如何安全的帮您高收益赚钱"
+        android:textColor="#1A98FF"
+        android:textSize="@dimen/mq_font3" />
+
+    <TextView
+        android:id="@+id/tv_lookAround2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="• 秒钱2015年运营年报"
+        android:textColor="#1A98FF"
+        android:textSize="@dimen/mq_font3" />
+
+    <TextView
+        android:id="@+id/tv_lookAround3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="• 母公司喜获福建省互联网金融协会副会长"
+        android:textColor="#1A98FF"
+        android:textSize="@dimen/mq_font3" />
+
+    <TextView
+        android:id="@+id/tv_lookAround4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="• 更多秒钱信息"
+        android:textColor="#1A98FF"
+        android:textSize="@dimen/mq_font3" />
+
+</LinearLayout>

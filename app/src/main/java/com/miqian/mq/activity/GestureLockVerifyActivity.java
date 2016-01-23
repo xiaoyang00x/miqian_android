@@ -2,7 +2,6 @@ package com.miqian.mq.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,12 +15,13 @@ import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.GestureLockView;
+import com.miqian.mq.views.WFYTitle;
 
 /**
  * 手势锁验证
  * Created by wangduo on 15/12/8.
  */
-public class GestureLockVerifyActivity extends BaseFragmentActivity {
+public class GestureLockVerifyActivity extends BaseActivity {
 
     private TextView tv_user;
     private TextView tv_tip;
@@ -31,27 +31,32 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
     private int unlockCount; // 图案锁 剩余解锁验证次数
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gesture_lock_verify);
-        init();
+    public void obtainData() {
+        // 获取手势锁相关信息
+        gesturePsw = Pref.getString(Pref.GESTUREPSW, getBaseContext(), null);
+        unlockCount = Pref.getInt(Pref.UNLOCKCOUNT, getBaseContext(), 0);
+        String telphone = Pref.getString(Pref.TELEPHONE, getBaseContext(), "");
+        tv_user.setText(hideMiddle4ofPhoneNum(telphone));
+    }
+
+    @Override
+    public void initView() {
+        findView();
+        tv_forgetPsw.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_gesture_lock_verify;
+    }
+
+    @Override
+    public void initTitle(WFYTitle mTitle) {
     }
 
     @Override
     protected String getPageName() {
         return null;
-    }
-
-    private void init() {
-        findView();
-        fetchGestureLock();
-        showUserPhoneNum();
-        tv_forgetPsw.setOnClickListener(onClickListener);
-    }
-
-    private void showUserPhoneNum() {
-        String telphone = Pref.getString(Pref.TELEPHONE, getBaseContext(), "");
-        tv_user.setText(hideMiddle4ofPhoneNum(telphone));
     }
 
     private final String hideMiddle4ofPhoneNum(String telphone) {
@@ -75,16 +80,6 @@ public class GestureLockVerifyActivity extends BaseFragmentActivity {
         tv_forgetPsw = (TextView) findViewById(R.id.tv_forgetPsw);
         lockView = (GestureLockView) findViewById(R.id.lockView);
         lockView.setOnPatterChangeListener(onPatterChangeListener);
-    }
-
-    // 获取手势锁相关信息
-    private void fetchGestureLock() {
-        try {
-            gesturePsw = Pref.getString(Pref.GESTUREPSW, getBaseContext(), null);
-            unlockCount = Pref.getInt(Pref.UNLOCKCOUNT, getBaseContext(), 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {

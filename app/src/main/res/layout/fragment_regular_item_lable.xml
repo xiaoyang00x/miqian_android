@@ -6,18 +6,18 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#fafafa" />
+        android:background="#f0f0f0" />
 
     <LinearLayout
         android:id="@+id/layout_regular_earn_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fafafa"
+        android:background="#f0f0f0"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="45dp"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right">
 
@@ -38,7 +38,7 @@
                 android:layout_toRightOf="@id/img_category"
                 android:text="@string/regular_plan"
                 android:textColor="@color/mq_b1"
-                android:textSize="@dimen/mq_font3" />
+                android:textSize="@dimen/mq_font2" />
 
             <TextView
                 android:id="@+id/tv_category_description"

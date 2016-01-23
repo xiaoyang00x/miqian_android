@@ -17,6 +17,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Config;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 首页运动活动对话框
@@ -57,6 +58,7 @@ public class HomeDialog extends Dialog {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
+                MobclickAgent.onEvent(getContext(), "home_pop_conform");
                 WebActivity.startActivity(getContext(), mData.getJumpUrl());
                 getActivityFeedback();
                 dismiss();

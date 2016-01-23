@@ -42,7 +42,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final int ITEM_TYPE_NORMAL = 1;
 
 
-    private ArrayList<RegularBaseData> planList = new ArrayList<>();    //定期计划header
+//    private ArrayList<RegularBaseData> planList = new ArrayList<>();    //定期计划header
     private ArrayList<RegularBaseData> regularBaseDatas = new ArrayList<>();
     private Context mContext;
     private View swipeRefreshLayout;
@@ -63,31 +63,31 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     categoryData.getSubjectInfo().get(0).setSubjectCategoryIconUrl(categoryData.getSubjectCategoryIconUrl());
                     categoryData.getSubjectInfo().get(0).setSubjectCategoryDesc(categoryData.getSubjectCategoryDesc());
                     categoryData.getSubjectInfo().get(0).setSubjectCategoryDescUrl(categoryData.getSubjectCategoryDescUrl());
-                    if (i == 0) {
-                        planList.addAll(categoryData.getSubjectInfo());   //Api 接口默认第一个为 header的数据
-                    } else {
+//                    if (i == 0) {
+//                        planList.addAll(categoryData.getSubjectInfo());   //Api 接口默认第一个为 header的数据
+//                    } else {
                         subjectInfoSize += categoryData.getSubjectInfo().size();
                         regularBaseDatas.addAll(categoryData.getSubjectInfo());
-                    }
+//                    }
                 }
             }
         }
-        if (planList != null && planList.size() > 0) {
-            isHasHeader = true;
-        } else {
-            isHasHeader = false;
-        }
+//        if (planList != null && planList.size() > 0) {
+//            isHasHeader = true;
+//        } else {
+//            isHasHeader = false;
+//        }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        if (viewType == ITEM_TYPE_HEADER) {
-            return new HeaderViewHolder(inflater.inflate(R.layout.fragment_regular_header, parent, false), mContext, swipeRefreshLayout, planList);
-        } else {
+//        if (viewType == ITEM_TYPE_HEADER) {
+//            return new HeaderViewHolder(inflater.inflate(R.layout.fragment_regular_header, parent, false), mContext, swipeRefreshLayout, planList);
+//        } else {
             return new RegularEarnViewHoder(inflater.inflate(R.layout.regular_earn_item, parent, false));
-        }
+//        }
     }
 
     @Override

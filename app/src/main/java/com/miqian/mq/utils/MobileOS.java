@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Display;
 
 import java.security.MessageDigest;
@@ -383,18 +384,17 @@ public class MobileOS {
      *
      * @return
      */
-    public static int getScreenWidth(Activity context) {
-        Display display = context.getWindowManager().getDefaultDisplay();
-        return display.getWidth();
-
+    public static int getScreenWidth(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.widthPixels;
     }
 
     /**
      * 获取屏幕高度
      */
-    public static int getScreenHeight(Activity context) {
-        Display display = context.getWindowManager().getDefaultDisplay();
-        return display.getHeight();
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.heightPixels;
     }
 
 }
