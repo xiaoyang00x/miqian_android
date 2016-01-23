@@ -16,6 +16,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.IntoResultActivity;
 import com.miqian.mq.activity.PaymodeActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Amt;
@@ -31,6 +32,7 @@ import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.SupportBankMsgResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.pay.BaseHelper;
 import com.miqian.mq.pay.MobileSecurePayer;
 import com.miqian.mq.utils.Constants;
@@ -325,6 +327,28 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     @Override
     public int getLayoutId() {
         return R.layout.current_investment;
+    }
+
+    //产品协议
+    public void textLawCickProduct(View v) {
+        //活期
+        if (PRODID_CURRENT.equals(prodId)) {
+            WebActivity.startActivity(mActivity, Urls.web_current_law);
+
+        }//定期
+        else if (PRODID_REGULAR.equals(prodId)) {
+            WebActivity.startActivity(mActivity, Urls.web_regular_law);
+
+        } //定期计划
+        else if (PRODID_REGULAR_PLAN.equals(prodId)) {
+            WebActivity.startActivity(mActivity, Urls.web_regplan_law);
+
+        }
+    }
+
+    //资金管理协议
+    public void textLawCickMoney(View v) {
+        WebActivity.startActivity(mActivity, Urls.web_recharge_law);
     }
 
     @Override

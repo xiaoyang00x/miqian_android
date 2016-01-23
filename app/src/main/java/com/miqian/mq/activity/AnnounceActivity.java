@@ -1,8 +1,6 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +30,6 @@ import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
-import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;

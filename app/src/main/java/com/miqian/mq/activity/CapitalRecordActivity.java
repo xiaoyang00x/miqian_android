@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -69,6 +70,8 @@ public class CapitalRecordActivity extends BaseActivity {
     private TextView tvTips;
     private View mViewnoresult_data;
     private boolean isStop;  //activity被finish则停止从网络获取数据的异步操作
+    private ImageView ivData;
+
     @Override
     public void onCreate(Bundle arg0) {
 
@@ -204,6 +207,7 @@ public class CapitalRecordActivity extends BaseActivity {
             }
         });
         tvTips = (TextView) findViewById(R.id.tv_recordtip);
+        ivData = (ImageView) findViewById(R.id.iv_record_data);
     }
 
     private void loadMore() {
@@ -412,6 +416,7 @@ public class CapitalRecordActivity extends BaseActivity {
         findViewById(R.id.tv_refreshdata).setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         tvTips.setText("暂时没有数据");
+        ivData.setBackgroundResource(R.drawable.nodata);
     }
 
     /**
@@ -434,6 +439,7 @@ public class CapitalRecordActivity extends BaseActivity {
         recyclerView.setVisibility(View.GONE);
         findViewById(R.id.tv_refreshdata).setVisibility(View.VISIBLE);
         tvTips.setText("数据获取失败，请重新获取");
+        ivData.setBackgroundResource(R.drawable.error_data);
     }
 
 }

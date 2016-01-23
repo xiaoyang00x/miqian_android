@@ -15,31 +15,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/icon_splash" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:text="© 2013-2015 拾财贷 All rights reserved"
-            android:textSize="@dimen/mq_font4" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:text="拾财贷(厦门)金融信息技术服务有限公司"
-            android:textSize="@dimen/mq_font4" />
-
-    </LinearLayout>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

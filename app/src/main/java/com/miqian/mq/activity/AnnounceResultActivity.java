@@ -5,23 +5,16 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.database.MyDataBaseHelper;
-import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
-import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
-
-import java.util.List;
 
 public class AnnounceResultActivity extends BaseActivity {
 

@@ -207,6 +207,32 @@
             android:text="确认" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bt_under_text"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="确认代表您同意"
+            android:textColor="@color/mq_b2"
+            android:textSize="@dimen/mq_font4" />
+
+        <Button
+            android:id="@+id/text_law"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/transparent"
+            android:onClick="textLawCick"
+            android:text="《资金管理协议》"
+            android:textColor="@color/mq_bl2"
+            android:textSize="@dimen/mq_font4" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
