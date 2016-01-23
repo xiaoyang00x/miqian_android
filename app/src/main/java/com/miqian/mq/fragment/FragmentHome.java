@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,10 +22,11 @@ import com.miqian.mq.listener.HomeDialogListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.MyAsyncTask;
 import com.miqian.mq.receiver.HomeDialogReceiver;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.HomeDialog;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.ServerBusyView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -49,6 +49,9 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     private HomeDialog homeDialog;
     private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
 
+    private ServerBusyView serverBusyView;
+    private boolean isServerBusyPageShow = false; // 默认不显示服务器繁忙页面
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frame_home, null);
@@ -56,6 +59,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         findView(view);
         setView();
+
         ListenerManager.registerHomeDialogListener(FragmentHome.class.getSimpleName(), this);
         getHomeActivity();
         getHomePageInfo();
@@ -71,6 +75,13 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
             adapter = new HomeAdapter(mActivity, mData);
             recyclerView.setAdapter(adapter);
         }
+
+        if (isServerBusyPageShow) {
+            serverBusyView.show();
+        } else {
+            serverBusyView.hide();
+        }
+        serverBusyView.setListener(requestAgain);
     }
 
     private Timer timer;// 首页焦点图自动滑动timer
@@ -78,12 +89,10 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
 
     @Override
     public void onLoadingStarted(String s, View view) {
-
     }
 
     @Override
     public void onLoadingFailed(String s, View view, FailReason failReason) {
-
     }
 
     @Override
@@ -93,9 +102,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
 
     @Override
     public void onLoadingCancelled(String s, View view) {
-
     }
-
 
     private class AutoScrollTimerTask extends TimerTask {
         @Override
@@ -114,7 +121,6 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         }
     }
 
-
     @Override
     protected String getPageName() {
         return "首页";
@@ -128,6 +134,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     }
 
     private void findView(View view) {
+        serverBusyView = (ServerBusyView) view.findViewById(R.id.serverBusyView);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -173,7 +180,8 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
 //                } else {
 //                    adapter.notifyDataSetChanged(info);
 //                }
-
+                serverBusyView.hide();
+                isServerBusyPageShow = false;
             }
 
             @Override
@@ -183,7 +191,11 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 }
                 end();
                 swipeRefresh.setRefreshing(false);
-                Uihelper.showToast(getActivity(), error);
+//                Uihelper.showToast(getActivity(), error);
+                if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
+                    serverBusyView.show();
+                    isServerBusyPageShow = true;
+                }
             }
         });
     }
@@ -230,7 +242,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 synchronized (mActivityLock) {
                     inActivityProcess = false;
                 }
-                Uihelper.showToast(getActivity(), error);
+//                Uihelper.showToast(getActivity(), error);
             }
         });
     }
@@ -260,4 +272,13 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         homeDialog.show();
         MobclickAgent.onEvent(getContext(), "home_pop_active");
     }
+
+    // 服务器繁忙页面 - 再次请求 - 刷新
+    private ServerBusyView.IRequestAgain requestAgain = new ServerBusyView.IRequestAgain() {
+        @Override
+        public void execute() {
+            getHomePageInfo();
+        }
+    };
+
 }

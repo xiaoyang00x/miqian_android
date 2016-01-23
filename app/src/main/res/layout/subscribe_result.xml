@@ -60,12 +60,13 @@
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
+            android:id="@+id/text_pay_type"
             style="@style/f3_B1"
             android:layout_centerVertical="true"
             android:text="余额支付" />
 
         <TextView
-            android:id="@+id/text_balance"
+            android:id="@+id/text_pay_money"
             style="@style/f3_B1"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -102,33 +103,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp" />
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/frame_current"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
-
-        <TextView
-            style="@style/f3_B1"
-            android:layout_centerVertical="true"
-            android:text="活期支付" />
-
-        <TextView
-            android:id="@+id/text_current"
-            style="@style/f3_B1"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
-
-        <View
-            style="@style/item_divider"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp" />
-    </RelativeLayout>
-
-
+    
     <RelativeLayout
         android:id="@+id/frame_trade_number"
         android:layout_width="match_parent"

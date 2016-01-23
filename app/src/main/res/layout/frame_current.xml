@@ -44,15 +44,6 @@
                                 android:clickable="true"
                                 android:background="@drawable/current_circle_bg">
 
-                                <ImageView
-                                    android:id="@+id/image_interest"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="100dp"
-                                    android:src="@drawable/current_interest"
-                                    android:visibility="gone"/>
-
                                 <TextView
                                     android:id="@+id/text_interest"
                                     android:layout_width="wrap_content"

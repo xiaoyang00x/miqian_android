@@ -14,8 +14,9 @@ import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.net.MyAsyncTask;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.ServerBusyView;
 
 /**
  * Created by guolei_wang on 15/9/16.
@@ -24,6 +25,9 @@ public class RegularFragment extends BasicFragment {
 
     RegularListAdapter mAdapter;
     private GetRegularInfo mData;
+
+    private ServerBusyView serverBusyView;
+    private boolean isServerBusyPageShow = false; // 默认不显示服务器繁忙页面
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class RegularFragment extends BasicFragment {
     private TextView titleText;
 
     private void findView(View view) {
+        serverBusyView = (ServerBusyView) view.findViewById(R.id.serverBusyView);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         titleText = (TextView) view.findViewById(R.id.title);
         swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
@@ -82,6 +87,13 @@ public class RegularFragment extends BasicFragment {
             mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
             recyclerView.setAdapter(mAdapter);
         }
+
+        if (isServerBusyPageShow) {
+            serverBusyView.show();
+        } else {
+            serverBusyView.hide();
+        }
+        serverBusyView.setListener(requestAgain);
     }
 
     private boolean inProcess = false;
@@ -110,6 +122,9 @@ public class RegularFragment extends BasicFragment {
                 if (mData == null) return;
                 mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
                 recyclerView.setAdapter(mAdapter);
+
+                serverBusyView.hide();
+                isServerBusyPageShow = false;
             }
 
             @Override
@@ -119,10 +134,22 @@ public class RegularFragment extends BasicFragment {
                 }
                 end();
                 swipeRefresh.setRefreshing(false);
-                Uihelper.showToast(getActivity(), error);
+//                Uihelper.showToast(getActivity(), error);
+                if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
+                serverBusyView.show();
+                isServerBusyPageShow = true;
+            }
             }
         });
     }
+
+    // 服务器繁忙页面 - 再次请求 - 刷新
+    private ServerBusyView.IRequestAgain requestAgain = new ServerBusyView.IRequestAgain() {
+        @Override
+        public void execute() {
+            getMainRegular();
+        }
+    };
 
     @Override
     protected String getPageName() {

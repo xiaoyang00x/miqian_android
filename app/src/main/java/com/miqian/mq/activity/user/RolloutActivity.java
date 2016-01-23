@@ -159,9 +159,10 @@ public class RolloutActivity extends BaseActivity {
             if (!TextUtils.isEmpty(city)) {
                 tv_bank_province.setText(city);
             }
-            //设置交易成功
+            //设置交易密码成功
         }else if(resultCode==TypeUtil.TRADEPASSWORD_SETTING_SUCCESS){
             userInfo.setPayPwdStatus("1");
+            rollOutHttp();
         }
     }
 
