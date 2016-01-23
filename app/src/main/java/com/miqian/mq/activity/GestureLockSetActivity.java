@@ -30,14 +30,6 @@ public class GestureLockSetActivity extends BaseActivity {
 
     private static final int MINLENGTH_PSW = 4; // 密码最小长度
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_gesture_lock_set);
-//        initView();
-//        initData();
-//    }
-
     @Override
     public void obtainData() {
         initData();
@@ -96,28 +88,9 @@ public class GestureLockSetActivity extends BaseActivity {
     }
 
     private void initData() {
-//        setActionLeftListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            }
-//        });
         isFirstSet = true;
         firstEnterPsw = null;
-//        setTitle("设置手势密码");
-//        showLeftAction(false);
-//        tv_right.setVisibility(View.VISIBLE);
-//        tv_right.setText("跳过");
-//        showRightAction(true);
-//        setActionRightListener(onClickListener);
     }
-
-//    private View.OnClickListener onClickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            Pref.saveBoolean(Pref.GESTURESTATE, false, getBaseContext());
-//            finish();
-//        }
-//    };
 
     private void startShake() {
         TranslateAnimation animation = new TranslateAnimation(0, -5, 0, 0);
