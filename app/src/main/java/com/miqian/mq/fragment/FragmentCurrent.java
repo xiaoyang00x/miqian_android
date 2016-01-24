@@ -170,7 +170,6 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         });
     }
 
-
     @Override
     public void onDestroy() {
         if (waterWaveView != null) {
@@ -185,11 +184,10 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.bt_investment:
                 MobclickAgent.onEvent(mContext, "1007");
-                if (balance != null) {
+                if (balance != null && balance.compareTo(downLimit) == 1) {
                     dialogPay.setEditMoneyHint("可用余额" + balance + "元");
                 } else {
                     dialogPay.setEditMoneyHint(downLimit + "元起投");
-
                 }
                 UserUtil.loginPay(mContext, dialogPay);
                 break;
