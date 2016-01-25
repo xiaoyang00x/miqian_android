@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.BankBranchActivity;
 import com.miqian.mq.activity.setting.CityListActivity;
@@ -33,6 +34,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -160,7 +162,7 @@ public class RolloutActivity extends BaseActivity {
                 tv_bank_province.setText(city);
             }
             //设置交易密码成功
-        }else if(resultCode==TypeUtil.TRADEPASSWORD_SETTING_SUCCESS){
+        } else if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
             userInfo.setPayPwdStatus("1");
             rollOutHttp();
         }
@@ -336,12 +338,12 @@ public class RolloutActivity extends BaseActivity {
 
     private void initDialogTradePassword(int type) {
 
-        if ( type == DialogTradePassword.TYPE_SETPASSWORD) {
+        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
 
             Intent intent = new Intent(mActivity, SetPasswordActivity.class);
             intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
             startActivityForResult(intent, 0);
-            Uihelper.showToast(mActivity,"保障交易安全，请先设置交易密码”");
+            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码”");
 
         } else {
             if (dialogTradePassword_input == null) {
@@ -396,10 +398,11 @@ public class RolloutActivity extends BaseActivity {
                     intent.putExtras(extra);
                     startActivity(intent);
                     finish();
-                } else if (resultCode.equals("101006") || resultCode.equals("101005")
-                        || resultCode.equals("101002") || resultCode.equals("101001")
-                        || resultCode.equals("999993") || resultCode.equals("999988")) {
-                    Uihelper.showToast(mActivity, result.getMessage());
+                }//交易密码错误4次提示框
+                else if (resultCode.equals("999992")) {
+                    showPwdError4Dialog(result.getMessage());
+                }else {
+                    Uihelper.showToast(mActivity,result.getMessage());
                 }
             }
 
@@ -413,6 +416,30 @@ public class RolloutActivity extends BaseActivity {
 
     }
 
+    private void showPwdError4Dialog(String message) {
+
+        if (dialogTips == null) {
+            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
+                @Override
+                public void positionBtnClick() {
+                    MobclickAgent.onEvent(mContext, "1047");
+                    SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, false);
+                    dismiss();
+                }
+                @Override
+                public void negativeBtnClick() {
+                    rollOutHttp();
+                }
+            };
+            dialogTips.setNegative(View.VISIBLE);
+            dialogTips.setRemarks(message);
+            dialogTips.setNegative("继续尝试");
+            dialogTips.setPositive("找回密码");
+            dialogTips.setTitle("交易密码错误");
+        }
+        dialogTips.show();
+
+    }
 
     private void rollOutHttp() {
         if (userInfo.getPayPwdStatus() != null) {

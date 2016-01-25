@@ -16,6 +16,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.IntoResultActivity;
 import com.miqian.mq.activity.PaymodeActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -41,6 +42,7 @@ import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
@@ -118,6 +120,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public static final String SUBJECTID_CURRENT = "0";
 
     public int payModeState = 0;
+    private CustomDialog dialogTips;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -500,6 +503,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                             SubscribeOrder subscribeOrder = result.getData();
                             if (result.getCode().equals("996633")) {
                                 Uihelper.showToast(mActivity, result.getMessage());
+                            } else if (result.getCode().equals("999992")) {
+                                showPwdError4Dialog(result.getMessage());
                             } else {
                                 intent.putExtra("money", orderMoney.toString());
                                 intent.putExtra("payMoney", payMoney.toString());
@@ -528,6 +533,31 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 }
             };
         }
+    }
+
+    private void showPwdError4Dialog(String message) {
+
+        if (dialogTips == null) {
+            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
+                @Override
+                public void positionBtnClick() {
+                    MobclickAgent.onEvent(mContext, "1047");
+                    SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, false);
+                    dismiss();
+                }
+                @Override
+                public void negativeBtnClick() {
+                    showTradeDialog(DialogTradePassword.TYPE_INPUTPASSWORD);
+                }
+            };
+            dialogTips.setNegative(View.VISIBLE);
+            dialogTips.setRemarks(message);
+            dialogTips.setNegative("继续尝试");
+            dialogTips.setPositive("找回密码");
+            dialogTips.setTitle("交易密码错误");
+        }
+        dialogTips.show();
+
     }
 
     private void payQuickOrder(String orderNo) {

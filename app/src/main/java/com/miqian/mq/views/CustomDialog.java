@@ -27,6 +27,7 @@ public abstract class CustomDialog extends Dialog {
 	private TextView titleText;
 	private TextView remarksText;
 	private Button btNegative;
+	private Button btn_sure;
 
 	/**
 	 * @author Tuliangtan
@@ -65,7 +66,7 @@ public abstract class CustomDialog extends Dialog {
 			}
 		});
 
-		Button btn_sure = (Button) findViewById(R.id.btn_sure);
+	    btn_sure = (Button) findViewById(R.id.btn_sure);
 		btn_sure.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View arg0) {
@@ -150,6 +151,17 @@ public abstract class CustomDialog extends Dialog {
 	public void setNegative(String text) {
 		if (btNegative != null) {
 			btNegative.setText(text);
+		}
+	}
+	public void setPositive(int viewCode) {
+		if (btn_sure != null) {
+			btn_sure.setVisibility(viewCode);
+		}
+	}
+
+	public void setPositive(String text) {
+		if (btn_sure != null) {
+			btn_sure.setText(text);
 		}
 	}
 }

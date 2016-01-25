@@ -10,9 +10,9 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.UserInfo;
@@ -22,8 +22,10 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.WFYTitle;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 
@@ -38,6 +40,7 @@ public class ActivityRedeem extends BaseActivity {
     private DialogTradePassword dialogTradePassword_input;
     private String money;
     private Button btnRollout;
+    private CustomDialog dialogTips;
 
     @Override
     public void obtainData() {
@@ -181,6 +184,9 @@ public class ActivityRedeem extends BaseActivity {
 
                 if (code.equals("999993") || code.equals("999988") || code.equals("996633")) {
                     Uihelper.showToast(mActivity, result.getMessage());
+                }//交易密码错误4次提示框
+                else if (code.equals("999992")) {
+                    showPwdError4Dialog(result.getMessage());
                 } else {
                     if (code.equals("000000")) {
                         intent.putExtra("state", 1);
@@ -203,6 +209,31 @@ public class ActivityRedeem extends BaseActivity {
                 mWaitingDialog.dismiss();
             }
         }, money, password);
+
+    }
+
+    private void showPwdError4Dialog(String message) {
+
+        if (dialogTips == null) {
+            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
+                @Override
+                public void positionBtnClick() {
+                    MobclickAgent.onEvent(mContext, "1047");
+                    SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, false);
+                    dismiss();
+                }
+                @Override
+                public void negativeBtnClick() {
+                    initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
+                }
+            };
+            dialogTips.setNegative(View.VISIBLE);
+            dialogTips.setRemarks(message);
+            dialogTips.setNegative("继续尝试");
+            dialogTips.setPositive("找回密码");
+            dialogTips.setTitle("交易密码错误");
+        }
+        dialogTips.show();
 
     }
 

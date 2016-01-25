@@ -1,7 +1,6 @@
 package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,11 +11,7 @@ import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.BankCard;
-import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -26,7 +21,6 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
-import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
