@@ -65,6 +65,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
         if (!exsitFragment) {
             MobclickAgent.onPageStart(getPageName());
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         if (MyApplication.isBackStage()) {
             MyApplication.setIsBackStage(false);
             if (UserUtil.hasLogin(getBaseContext()) &&
@@ -110,7 +115,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
                     // 设置为在后台运行的标志
                     // 表示按了home键,程序到了后台
                     MyApplication.getInstance().setIsBackStage(true);
-
                 }
             }
         }
