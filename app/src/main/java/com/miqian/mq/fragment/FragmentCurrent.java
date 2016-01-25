@@ -184,7 +184,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.bt_investment:
                 MobclickAgent.onEvent(mContext, "1007");
-                if (balance != null && balance.compareTo(downLimit) == 1) {
+                if (balance != null && balance.compareTo(downLimit) >= 0) {
                     dialogPay.setEditMoneyHint("可用余额" + balance + "元");
                 } else {
                     dialogPay.setEditMoneyHint(downLimit + "元起投");

@@ -186,7 +186,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");
-                if (balance != null) {
+                if (balance != null && balance.compareTo(downLimit) >= 0) {
                     dialogPay.setEditMoneyHint("可用余额" + balance + "元");
                 } else {
                     dialogPay.setEditMoneyHint(downLimit + "元起投");
