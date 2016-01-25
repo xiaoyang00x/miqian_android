@@ -14,7 +14,6 @@ import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -27,7 +26,6 @@ public class RegularListActivity extends BaseActivity {
     private String promId; //促销 ID
 
     private RecyclerView recyclerView;
-    private MySwipeRefresh swipeRefresh;
     private TextView tv_description;
     @Override
     public void obtainData() {
@@ -51,13 +49,6 @@ public class RegularListActivity extends BaseActivity {
     public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         tv_description = (TextView) findViewById(R.id.tv_description);
-        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
-        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getFitSubject();
-            }
-        });
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -85,7 +76,7 @@ public class RegularListActivity extends BaseActivity {
         });
 
         if (mData != null) {
-            mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
+            mAdapter = new RegularListAdapter(mData, mApplicationContext);
             recyclerView.setAdapter(mAdapter);
             tv_description.setText(mData.getFitSubjectDesc());
         }
@@ -102,7 +93,6 @@ public class RegularListActivity extends BaseActivity {
             inProcess = true;
         }
         begin();
-        swipeRefresh.setRefreshing(true);
         HttpRequest.getFitSubject(RegularListActivity.this, promId, new ICallback<GetRegularResult>() {
 
             @Override
@@ -111,11 +101,10 @@ public class RegularListActivity extends BaseActivity {
                     inProcess = false;
                 }
                 end();
-                swipeRefresh.setRefreshing(false);
                 if (result == null) return;
                 mData = result.getData();
                 if (mData == null) return;
-                mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
+                mAdapter = new RegularListAdapter(mData, mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 tv_description.setText(mData.getFitSubjectDesc());
             }
@@ -126,7 +115,6 @@ public class RegularListActivity extends BaseActivity {
                     inProcess = false;
                 }
                 end();
-                swipeRefresh.setRefreshing(false);
                 Uihelper.showToast(RegularListActivity.this, error);
             }
         });

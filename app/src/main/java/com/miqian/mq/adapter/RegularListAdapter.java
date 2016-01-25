@@ -45,13 +45,12 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //    private ArrayList<RegularBaseData> planList = new ArrayList<>();    //定期计划header
     private ArrayList<RegularBaseData> regularBaseDatas = new ArrayList<>();
     private Context mContext;
-    private View swipeRefreshLayout;
+//    private View swipeRefreshLayout;
     private boolean isHasHeader = false;
     private int subjectInfoSize = 0;     //定期项目的数量，不包括圆形的定期计划
 
-    public RegularListAdapter(GetRegularInfo info, Context mContext, View swipeRefreshLayout) {
+    public RegularListAdapter(GetRegularInfo info, Context mContext) {
         this.mContext = mContext;
-        this.swipeRefreshLayout = swipeRefreshLayout;
 
         subjectInfoSize = 0;
         if (info.getSubjectData() != null) {

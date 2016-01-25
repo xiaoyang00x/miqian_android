@@ -87,7 +87,7 @@ public class RegularFragment extends BasicFragment {
         });
 
         if (mData != null) {
-            mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
+            mAdapter = new RegularListAdapter(mData, mApplicationContext);
             recyclerView.setAdapter(mAdapter);
         }
 
@@ -126,7 +126,7 @@ public class RegularFragment extends BasicFragment {
                 if (result == null) return;
                 mData = result.getData();
                 if (mData == null) return;
-                mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
+                mAdapter = new RegularListAdapter(mData, mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
 
                 serverBusyView.hide();

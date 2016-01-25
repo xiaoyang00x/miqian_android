@@ -48,6 +48,8 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     private DisplayImageOptions options;
     private HomeDialog homeDialog;
     private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
+    private PendingIntent dialogPendingIntent;
+    private AlarmManager alarmManager;
 
     private ServerBusyView serverBusyView;
     private boolean isServerBusyPageShow = false; // 默认不显示服务器繁忙页面
@@ -60,6 +62,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         findView(view);
         setView();
 
+        alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         ListenerManager.registerHomeDialogListener(FragmentHome.class.getSimpleName(), this);
         getHomeActivity();
         getHomePageInfo();
@@ -251,6 +254,10 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     public void onDestroyView() {
         super.onDestroyView();
         ListenerManager.unregisterHomeDialogListener(FragmentHome.class.getSimpleName());
+
+        if(dialogPendingIntent != null) {
+            alarmManager.cancel(dialogPendingIntent);
+        }
     }
 
     private void showActivityDialog() {
@@ -258,10 +265,12 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         if (currentTime >= mHomeActivityData.getBeginTime() && currentTime < mHomeActivityData.getEndTime()) {
             show();
         } else if (currentTime < mHomeActivityData.getBeginTime()) {
-            Intent intent = new Intent(getActivity(), HomeDialogReceiver.class);
-            intent.setAction(HomeDialogReceiver.ACTION_SHOW_DIALOG);
-            PendingIntent dialogPendingIntent = PendingIntent.getBroadcast(mContext, REQ_SHOW_DIALOG, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            if(dialogPendingIntent == null) {
+                Intent intent = new Intent(getActivity(), HomeDialogReceiver.class);
+                intent.setAction(HomeDialogReceiver.ACTION_SHOW_DIALOG);
+                dialogPendingIntent = PendingIntent.getBroadcast(mContext, REQ_SHOW_DIALOG, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
+
             alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, mHomeActivityData.getBeginTime(), dialogPendingIntent);
         }
     }
