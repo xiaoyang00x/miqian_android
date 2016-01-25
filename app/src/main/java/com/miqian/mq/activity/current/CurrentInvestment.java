@@ -513,7 +513,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                 if (result.getCode().equals("000000")) {
                                     intent.putExtra("status", 1);
                                     intent.putExtra("orderNo", subscribeOrder.getOrderNo());
-                                    intent.putExtra("addTime", subscribeOrder.getAddTime());
                                 } else {
                                     intent.putExtra("status", 0);
                                 }
@@ -578,7 +577,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     if (result.getCode().equals("000000")) {
                         intent.putExtra("status", 1);
                         intent.putExtra("orderNo", subscribeOrder.getOrderNo());
-                        intent.putExtra("addTime", subscribeOrder.getAddTime());
                     } else {
                         intent.putExtra("status", 0);
                     }

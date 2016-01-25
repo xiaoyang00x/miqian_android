@@ -6,7 +6,6 @@ package com.miqian.mq.entity;
 public class SubscribeOrder {
 
     private String orderNo;
-    private String addTime;
 
     public String getOrderNo() {
         return orderNo;
@@ -14,13 +13,5 @@ public class SubscribeOrder {
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
-    }
-
-    public String getAddTime() {
-        return addTime;
-    }
-
-    public void setAddTime(String addTime) {
-        this.addTime = addTime;
     }
 }
