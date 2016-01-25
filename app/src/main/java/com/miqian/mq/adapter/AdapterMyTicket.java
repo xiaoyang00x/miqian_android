@@ -114,7 +114,8 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                     WebActivity.startActivity(mContext, promote.getShareUrl());
                 }
             });
-            toUseTicket(holder, promote.getPromProdId());
+//          分享券 这个不跳红包使用界面
+//            toUseTicket(holder, promote.getPromProdId());
         } else if (holder instanceof ViewHolderPackage) {
             Promote promote = promList.get(position);
             ((ViewHolderPackage) holder).textMoney.setText("" + promote.getTotalAmt());
