@@ -7,12 +7,14 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.receiver.NetBroadReceiver;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.SystemBarTintManager;
 import com.umeng.analytics.MobclickAgent;
@@ -138,4 +140,14 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
     }
 
     private boolean exsitFragment = false;//当前Activity是否存在Fragment
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            if (Uihelper.isFastDoubleClick()) {
+                return true;
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 }
