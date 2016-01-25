@@ -20,6 +20,7 @@ import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.Page;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CircleButton;
@@ -438,8 +439,13 @@ public class CapitalRecordActivity extends BaseActivity {
         mViewnoresult_data.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         findViewById(R.id.tv_refreshdata).setVisibility(View.VISIBLE);
-        tvTips.setText("数据获取失败，请重新获取");
-        ivData.setBackgroundResource(R.drawable.error_data);
+        if (MobileOS.getNetworkType(mContext) == -1) {
+            tvTips.setText("暂时没有网络");
+            ivData.setBackgroundResource(R.drawable.nonetwork);
+        }else {
+            tvTips.setText("数据获取失败，请重新获取");
+            ivData.setBackgroundResource(R.drawable.error_data);
+        }
     }
 
 }

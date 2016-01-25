@@ -26,6 +26,8 @@ public class RegularFragment extends BasicFragment {
     RegularListAdapter mAdapter;
     private GetRegularInfo mData;
 
+    private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
+
     private ServerBusyView serverBusyView;
     private boolean isServerBusyPageShow = false; // 默认不显示服务器繁忙页面
 
@@ -51,6 +53,7 @@ public class RegularFragment extends BasicFragment {
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
+                isFirstLoading = true;
                 getMainRegular();
             }
         });
@@ -106,7 +109,10 @@ public class RegularFragment extends BasicFragment {
         synchronized (mLock) {
             inProcess = true;
         }
-        begin();
+        if (isFirstLoading) {
+            begin();
+            isFirstLoading = false;
+        }
         swipeRefresh.setRefreshing(true);
         HttpRequest.getMainRegular(getActivity(), new ICallback<GetRegularResult>() {
 
