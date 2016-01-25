@@ -39,6 +39,9 @@ public class Uihelper {
     }
 
     public static void showToast(final Context context, int id) {
+        if (context == null) {
+            return;
+        }
         initToast(context);
         mToast.setText(id);
         mToast.show();

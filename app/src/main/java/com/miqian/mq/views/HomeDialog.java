@@ -29,8 +29,6 @@ public class HomeDialog extends Dialog {
     private TextView tv_content;
 
     private GetHomeActivity mData;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
 
     public HomeDialog(Context context, GetHomeActivity data) {
         super(context, R.style.Dialog);

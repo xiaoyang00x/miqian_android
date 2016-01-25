@@ -112,35 +112,8 @@ public class UserUtil {
         logout();
     }
 
-    private static Dialog_Login dialog_login = null;
-
-    private static void initDialogLogin(final Activity context, final Class<?> cls) {
-        if (dialog_login == null) {
-            dialog_login = new Dialog_Login(context) {
-                @Override
-                public void login(String telephone, String password) {
-                    // TODO: 2015/10/10 Loading
-                    HttpRequest.login(context, new ICallback<LoginResult>() {
-                        @Override
-                        public void onSucceed(LoginResult result) {
-                            UserInfo userInfo = result.getData();
-                            UserUtil.saveUserInfo(context, userInfo);
-                            GestureLockSetActivity.startActivity(context, cls);
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            Uihelper.showToast(context, error);
-                        }
-                    }, telephone, password);
-                }
-            };
-        }
-    }
-
-    public static void loginActivity(final Activity context, final Class<?> cls) {
+    public static void loginActivity(final Activity context, final Class<?> cls, Dialog_Login dialog_login ) {
         if (!hasLogin(context)) {
-            initDialogLogin(context, cls);
             dialog_login.show();
         } else {
             context.startActivity(new Intent(context, cls));
