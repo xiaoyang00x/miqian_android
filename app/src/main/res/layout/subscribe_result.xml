@@ -129,33 +129,6 @@
             android:layout_marginRight="0dp" />
     </RelativeLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/frame_time"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
-
-        <TextView
-            style="@style/f3_B1"
-            android:layout_centerVertical="true"
-            android:text="创建时间" />
-
-        <TextView
-            android:id="@+id/text_time"
-            style="@style/f3_B1"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
-
-        <View
-            style="@style/item_divider"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp" />
-    </RelativeLayout>
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -140,7 +140,9 @@
 
                         <View
                             style="@style/item_divider"
-                            android:layout_alignParentBottom="true" />
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"/>
                     </RelativeLayout>
 
                     <RelativeLayout

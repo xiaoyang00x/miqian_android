@@ -27,7 +27,6 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private TextView textMoney;
     private TextView textPromote;
     private TextView tradeNumber;
-    private TextView textTime;
     private TextView textPayType;
     private TextView textPayMoney;
     private TextView tvTip;
@@ -39,9 +38,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private String money;
     private String payMoney;
     private String promoteMoney;
-    private String currentMoney;
     private String orderNo;
-    private String timeString;
     private Button btBack;
     private TextView tvStatus;
 
@@ -58,10 +55,8 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         payMoney = intent.getStringExtra("payMoney");
         payModeState = intent.getIntExtra("payModeState", 0);
         promoteMoney = intent.getStringExtra("promoteMoney");
-        currentMoney = intent.getStringExtra("currentMoney");
 
         orderNo = intent.getStringExtra("orderNo");
-        timeString = Uihelper.timeToString(intent.getStringExtra("addTime"));
         super.onCreate(bundle);
     }
 
@@ -83,7 +78,6 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         textPayMoney = (TextView) findViewById(R.id.text_pay_money);
         textPromote = (TextView) findViewById(R.id.text_promote);
         tradeNumber = (TextView) findViewById(R.id.trade_number);
-        textTime = (TextView) findViewById(R.id.text_time);
         framePromote = (RelativeLayout) findViewById(R.id.frame_promote);
 
         btBack = (Button) findViewById(R.id.bt_back);
@@ -96,11 +90,9 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         if (status == 1) {
             imageSuccess.setImageResource(R.drawable.rollin_status_success);
             tradeNumber.setText(orderNo);
-            textTime.setText(timeString);
             tvStatus.setText("认购成功");
         } else {
             findViewById(R.id.frame_trade_number).setVisibility(View.GONE);
-            findViewById(R.id.frame_time).setVisibility(View.GONE);
             tvTip.setText("如果多次失败，请联系客服400-6656-191");
             imageSuccess.setImageResource(R.drawable.rollin_status_fail);
             tvStatus.setText("认购失败");

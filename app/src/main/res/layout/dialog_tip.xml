@@ -14,9 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginTop="@dimen/margin_top"
             android:text="活期转定期"
             android:textColor="@color/mq_r1"
@@ -29,7 +27,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
@@ -41,9 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginTop="28dp"
             android:text="活期转定期的优点"
             android:textColor="@color/mq_r1"
@@ -56,7 +51,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
@@ -68,7 +62,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
