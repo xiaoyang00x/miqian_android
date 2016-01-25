@@ -476,6 +476,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             Intent intent = new Intent(CurrentInvestment.this, SetPasswordActivity.class);
             intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
             startActivityForResult(intent, REQUEST_CODE_PASSWORD);
+            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码”");
         } else {
             initDialogTradePassword();
             dialogTradePasswordInput.show();
