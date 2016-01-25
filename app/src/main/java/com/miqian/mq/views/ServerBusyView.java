@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -14,14 +15,18 @@ import com.miqian.mq.utils.MobileOS;
 
 /**
  * Created by wangduo on 16/1/23.
- * 服务器繁忙显示页面
+ * 服务器繁忙显示页面－新增了无网络显示页面
  */
 public class ServerBusyView extends ScrollView {
 
     private Context mContext;
     private IRequestAgain requestAgain;
 
-    private View iv_houzi;
+    private ImageView iv_houzi;
+    private TextView tv_tip;
+
+    public static final String SERVERBUSY = "抱歉，当前访问人数太多，\n服务器有点忙，请稍后再试•••";
+    public static final String NONETWORK = "当前网络不可用，\n请检查你的网络设置•••";
 
     public ServerBusyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,7 +42,8 @@ public class ServerBusyView extends ScrollView {
 
     public void init() {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.server_busy, null);
-        iv_houzi = mView.findViewById(R.id.iv_houzi);
+        iv_houzi = (ImageView) mView.findViewById(R.id.iv_houzi);
+        tv_tip = (TextView) mView.findViewById(R.id.tv_tip);
         btn_refresh = (Button) mView.findViewById(R.id.btn_refresh);
         tv_lookAround1 = (TextView) mView.findViewById(R.id.tv_lookAround1);
         tv_lookAround2 = (TextView) mView.findViewById(R.id.tv_lookAround2);
@@ -56,7 +62,16 @@ public class ServerBusyView extends ScrollView {
     }
 
     // 服务器繁忙页面 - 显示
-    public void show() {
+    public void showServerBusy() {
+        tv_tip.setText(SERVERBUSY);
+        iv_houzi.setImageResource(R.drawable.page_server_busy);
+        setVisibility(View.VISIBLE);
+    }
+
+    // 无网络页面 - 显示
+    public void showNoNetwork() {
+        tv_tip.setText(NONETWORK);
+        iv_houzi.setImageResource(R.drawable.page_no_network);
         setVisibility(View.VISIBLE);
     }
 
