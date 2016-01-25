@@ -632,8 +632,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {
+                        IntoActivity.rollInError(mActivity, orderNo, strRet);
                         Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
                     } else {
+                        IntoActivity.rollInError(mActivity, orderNo, strRet);
                         Uihelper.showToast(mActivity, retMsg);
                     }
                     break;
