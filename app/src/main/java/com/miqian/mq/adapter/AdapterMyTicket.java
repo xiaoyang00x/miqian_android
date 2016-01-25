@@ -93,7 +93,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolderTicket) {
             Promote promote = promList.get(position);
-            ((ViewHolderTicket) holder).textMoney.setText("" + promote.getTotalAmt());
+            ((ViewHolderTicket) holder).textMoney.setText("" + promote.getCanUseAmt());
             ((ViewHolderTicket) holder).textName.setText(promote.getPromProdName());
             ((ViewHolderTicket) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
             setView(((ViewHolderTicket) holder).limitMoney, promote.getFitBdTermOrYrt());
@@ -102,7 +102,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             toUseTicket(holder, promote.getPromProdId());
         } else if (holder instanceof ViewHolderShare) {
             final Promote promote = promList.get(position);
-            ((ViewHolderShare) holder).textMoney.setText("" + promote.getTotalAmt());
+            ((ViewHolderShare) holder).textMoney.setText("" + promote.getCanUseAmt());
             ((ViewHolderShare) holder).textName.setText(promote.getPromProdName());
             ((ViewHolderShare) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
             setView(((ViewHolderShare) holder).limitMoney, promote.getFitBdTermOrYrt());
@@ -118,7 +118,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
 //            toUseTicket(holder, promote.getPromProdId());
         } else if (holder instanceof ViewHolderPackage) {
             Promote promote = promList.get(position);
-            ((ViewHolderPackage) holder).textMoney.setText("" + promote.getTotalAmt());
+            ((ViewHolderPackage) holder).textMoney.setText("" + promote.getCanUseAmt());
             ((ViewHolderPackage) holder).textName.setText(promote.getPromProdName());
             ((ViewHolderPackage) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
             setView(((ViewHolderPackage) holder).limitMoney, promote.getFitBdTermOrYrt());
