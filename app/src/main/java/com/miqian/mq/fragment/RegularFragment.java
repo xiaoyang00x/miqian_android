@@ -30,6 +30,7 @@ public class RegularFragment extends BasicFragment {
 
     private ServerBusyView serverBusyView;
     private boolean isServerBusyPageShow = false; // 默认不显示服务器繁忙页面
+    private boolean isNoNetworkPageShow = false; // 默认不显示无网络页面
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,12 +88,12 @@ public class RegularFragment extends BasicFragment {
         });
 
         if (mData != null) {
-            mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
+            mAdapter = new RegularListAdapter(mData, mApplicationContext);
             recyclerView.setAdapter(mAdapter);
-        }
-
-        if (isServerBusyPageShow) {
-            serverBusyView.show();
+        } else if (isServerBusyPageShow) {
+            serverBusyView.showServerBusy();
+        } else if (isNoNetworkPageShow) {
+            serverBusyView.showNoNetwork();
         } else {
             serverBusyView.hide();
         }
@@ -109,7 +110,7 @@ public class RegularFragment extends BasicFragment {
         synchronized (mLock) {
             inProcess = true;
         }
-        if (isFirstLoading) {
+        if (isFirstLoading || isNoNetworkPageShow || isServerBusyPageShow) {
             begin();
             isFirstLoading = false;
         }
@@ -126,11 +127,12 @@ public class RegularFragment extends BasicFragment {
                 if (result == null) return;
                 mData = result.getData();
                 if (mData == null) return;
-                mAdapter = new RegularListAdapter(mData, mApplicationContext, swipeRefresh);
+                mAdapter = new RegularListAdapter(mData, mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
 
                 serverBusyView.hide();
                 isServerBusyPageShow = false;
+                isNoNetworkPageShow = false;
             }
 
             @Override
@@ -142,9 +144,14 @@ public class RegularFragment extends BasicFragment {
                 swipeRefresh.setRefreshing(false);
 //                Uihelper.showToast(getActivity(), error);
                 if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
-                serverBusyView.show();
-                isServerBusyPageShow = true;
-            }
+                    serverBusyView.showServerBusy();
+                    isServerBusyPageShow = true;
+                    isNoNetworkPageShow = false;
+                } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {
+                    serverBusyView.showNoNetwork();
+                    isNoNetworkPageShow = true;
+                    isServerBusyPageShow = false;
+                }
             }
         });
     }

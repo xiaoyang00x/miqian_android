@@ -14,12 +14,12 @@
         android:src="@drawable/page_server_busy" />
 
     <TextView
+        android:id="@+id/tv_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="5px"
-        android:text="抱歉，当前访问人数太多，\n服务器有点忙，请稍后再试•••"
         android:textColor="@color/mq_b2"
         android:textSize="@dimen/mq_font3" />
 

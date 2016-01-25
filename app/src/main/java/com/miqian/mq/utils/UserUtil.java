@@ -112,12 +112,14 @@ public class UserUtil {
         logout();
     }
 
-    public static void loginActivity(final Activity context, final Class<?> cls) {
-        if (!hasLogin(context)) {
-            Dialog_Login dialog_login = new Dialog_Login(context) {
+    private static Dialog_Login dialog_login = null;
+
+    private static void initDialogLogin(final Activity context, final Class<?> cls) {
+        if (dialog_login == null) {
+            dialog_login = new Dialog_Login(context) {
                 @Override
                 public void login(String telephone, String password) {
-                    // TODO: 2015/10/10 Loading 
+                    // TODO: 2015/10/10 Loading
                     HttpRequest.login(context, new ICallback<LoginResult>() {
                         @Override
                         public void onSucceed(LoginResult result) {
@@ -133,6 +135,12 @@ public class UserUtil {
                     }, telephone, password);
                 }
             };
+        }
+    }
+
+    public static void loginActivity(final Activity context, final Class<?> cls) {
+        if (!hasLogin(context)) {
+            initDialogLogin(context, cls);
             dialog_login.show();
         } else {
             context.startActivity(new Intent(context, cls));

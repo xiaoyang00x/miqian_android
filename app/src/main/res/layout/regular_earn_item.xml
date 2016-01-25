@@ -26,7 +26,7 @@
             android:layout_below="@+id/divider_line"
             android:layout_marginTop="10dp"
             android:text="永兴医院医疗设备项目－9"
-            android:textColor="@color/mq_b2"
+            android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font2" />
 
 

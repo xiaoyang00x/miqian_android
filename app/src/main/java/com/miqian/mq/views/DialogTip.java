@@ -4,12 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.UpdateInfo;
 
 /**
  * Created by TuLiangtan on 2016/1/21.

@@ -140,7 +140,9 @@
 
                         <View
                             style="@style/item_divider"
-                            android:layout_alignParentBottom="true" />
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"/>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -155,7 +157,7 @@
                         <TextView
                             style="@style/f3_B1"
                             android:layout_centerVertical="true"
-                            android:text="连连支付" />
+                            android:text="连连快捷支付" />
 
                         <TextView
                             android:id="@+id/text_unit"
