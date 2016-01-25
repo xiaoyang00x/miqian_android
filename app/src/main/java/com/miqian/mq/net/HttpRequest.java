@@ -189,6 +189,26 @@ public class HttpRequest {
     }
 
     /**
+     * 充值失败原因上传
+     */
+    public static void rollInError(Context context, String orderNo, String error) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("orderNo", orderNo));
+        mList.add(new Param("llJson", error));
+
+        new MyAsyncTask(context, Urls.rollin_result, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+            }
+
+            @Override
+            public void onFail(String error) {
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
      * 获取用户信息
      */
     public static void getUserInfo(Context context, final ICallback<LoginResult> callback) {

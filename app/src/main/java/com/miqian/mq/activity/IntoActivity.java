@@ -1,5 +1,6 @@
 package com.miqian.mq.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -337,14 +338,20 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {
+                        rollInError(mActivity, orderNo, strRet);
                         Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
                     } else {
+                        rollInError(mActivity, orderNo, strRet);
                         Uihelper.showToast(mActivity, retMsg);
                     }
                     break;
             }
             super.handleMessage(msg);
         }
+    }
+
+    public static void rollInError(Context context, String orderNo, String error) {
+        HttpRequest.rollInError(context, orderNo, error);
     }
 
     private void checkOrder(String orderNo) {

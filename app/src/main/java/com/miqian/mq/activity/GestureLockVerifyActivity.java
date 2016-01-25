@@ -52,6 +52,8 @@ public class GestureLockVerifyActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
+        mTitle.setIvLeftVisiable(View.GONE);
+        mTitle.setOnLeftClickListener(null);
     }
 
     @Override

@@ -140,6 +140,7 @@ public class ActivityRedeem extends BaseActivity {
             Intent intent = new Intent(ActivityRedeem.this, SetPasswordActivity.class);
             intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
             startActivityForResult(intent, 0);
+            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码”");
 
         } else {
             if (dialogTradePassword_input == null) {

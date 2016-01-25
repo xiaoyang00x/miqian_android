@@ -30,6 +30,7 @@ import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -570,8 +571,13 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         swipeRefresh.setVisibility(View.GONE);
         view_Refresh.setVisibility(View.VISIBLE);
         tvTips.setVisibility(View.VISIBLE);
-        tvTips.setText("数据获取失败，请重新获取");
-        ivMessageData.setBackgroundResource(R.drawable.error_data);
+        if (MobileOS.getNetworkType(mContext) == -1) {
+            tvTips.setText("暂时没有网络");
+            ivMessageData.setBackgroundResource(R.drawable.nonetwork);
+        }else {
+            tvTips.setText("数据获取失败，请重新获取");
+            ivMessageData.setBackgroundResource(R.drawable.error_data);
+        }
 
     }
 

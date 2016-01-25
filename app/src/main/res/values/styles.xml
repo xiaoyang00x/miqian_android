@@ -10,6 +10,12 @@
         <item name="title_bar_bg">@color/mq_r1</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="AppThemeSplash" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/icon_splash</item>
+    </style>
+
     <style name="MQ_Edit" parent="android:Widget.EditText">
         <item name="android:textCursorDrawable">@null</item>
     </style>

@@ -476,6 +476,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             Intent intent = new Intent(CurrentInvestment.this, SetPasswordActivity.class);
             intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
             startActivityForResult(intent, REQUEST_CODE_PASSWORD);
+            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码”");
         } else {
             initDialogTradePassword();
             dialogTradePasswordInput.show();
@@ -631,8 +632,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
                     } else if (retCode.equals("1004")) {
+                        IntoActivity.rollInError(mActivity, orderNo, strRet);
                         Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
                     } else {
+                        IntoActivity.rollInError(mActivity, orderNo, strRet);
                         Uihelper.showToast(mActivity, retMsg);
                     }
                     break;

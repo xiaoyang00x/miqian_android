@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.utils.ActivityStack;
+import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.views.ProgressDialogView;
 import com.miqian.mq.views.WFYTitle;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -158,7 +159,13 @@ public abstract class BaseActivity extends BaseFragmentActivity {
 
         mContentView.setVisibility(View.GONE);
         mViewnoresult.setVisibility(View.VISIBLE);
-        ivData.setBackgroundResource(R.drawable.error_data);
+        if (MobileOS.getNetworkType(mContext) == -1) {
+            tvTips.setText("暂时没有网络");
+            ivData.setBackgroundResource(R.drawable.nonetwork);
+        }else {
+            tvTips.setText("数据获取失败，请重新获取");
+            ivData.setBackgroundResource(R.drawable.error_data);
+        }
     }
 
 

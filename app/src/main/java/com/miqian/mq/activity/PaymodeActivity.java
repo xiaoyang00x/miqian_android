@@ -2,7 +2,6 @@ package com.miqian.mq.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -126,6 +125,7 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
             frameBalance.setOnClickListener(this);
         } else {
             textBalance.setTextColor(getResources().getColor(R.color.mq_b3));
+            textBalance.setText("余额不足");
             imageBalance.setEnabled(false);
         }
     }
