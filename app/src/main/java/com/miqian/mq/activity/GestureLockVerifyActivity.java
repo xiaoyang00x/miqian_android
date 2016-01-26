@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -52,8 +53,9 @@ public class GestureLockVerifyActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setIvLeftVisiable(View.GONE);
-        mTitle.setOnLeftClickListener(null);
+        ViewGroup.LayoutParams params = mTitle.getLayoutParams();
+        params.height = 0;
+        mTitle.setLayoutParams(params);
     }
 
     @Override

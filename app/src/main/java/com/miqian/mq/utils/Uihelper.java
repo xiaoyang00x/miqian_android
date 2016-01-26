@@ -229,4 +229,14 @@ public class Uihelper {
         return addTime;
     }
 
+    private static long lastClickTime;
+
+    public static boolean isFastDoubleClick() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastClickTime > 500) {
+            lastClickTime = currentTime;
+            return false;
+        }
+        return true;
+    }
 }
