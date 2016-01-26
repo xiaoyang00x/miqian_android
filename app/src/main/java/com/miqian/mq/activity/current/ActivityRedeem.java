@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Redeem;
@@ -143,7 +143,7 @@ public class ActivityRedeem extends BaseActivity {
             Intent intent = new Intent(ActivityRedeem.this, SetPasswordActivity.class);
             intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
             startActivityForResult(intent, 0);
-            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码”");
+            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码");
 
         } else {
             if (dialogTradePassword_input == null) {
@@ -218,8 +218,10 @@ public class ActivityRedeem extends BaseActivity {
             dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
                 @Override
                 public void positionBtnClick() {
-                    MobclickAgent.onEvent(mContext, "1047");
-                    SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, false);
+                    MobclickAgent.onEvent(mActivity, "1028");
+                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
+                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
+                    startActivity(intent);
                     dismiss();
                 }
                 @Override
@@ -232,6 +234,7 @@ public class ActivityRedeem extends BaseActivity {
             dialogTips.setNegative("继续尝试");
             dialogTips.setPositive("找回密码");
             dialogTips.setTitle("交易密码错误");
+            dialogTips.setCanceledOnTouchOutside(false);
         }
         dialogTips.show();
 
