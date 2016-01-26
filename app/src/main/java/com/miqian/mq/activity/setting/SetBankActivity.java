@@ -92,8 +92,6 @@ public class SetBankActivity extends BaseActivity {
 
                 Intent intent_city = new Intent(mActivity, CityListActivity.class);
                 startActivityForResult(intent_city, 0);
-                branch = "";
-                textBranch.setText("请选择");
             }
         });
 
@@ -137,6 +135,8 @@ public class SetBankActivity extends BaseActivity {
             if (!TextUtils.isEmpty(city)) {
                 tv_bank_province.setText(city);
             }
+            textBranch.setText("请选择");
+            branch="";
         }
 
     }
