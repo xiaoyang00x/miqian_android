@@ -44,8 +44,6 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     HomeAdapter adapter;
     HomePageInfo mData;
     GetHomeActivity mHomeActivityData;
-//    private ImageLoader imageLoader;
-//    private DisplayImageOptions options;
     private HomeDialog homeDialog;
     private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
     private PendingIntent dialogPendingIntent;
@@ -58,8 +56,6 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frame_home, null);
-//        imageLoader = ImageLoader.getInstance();
-//        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         findView(view);
         setView();
 
