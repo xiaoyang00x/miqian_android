@@ -51,7 +51,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 秒钱如何安全的帮您高收益赚钱"
+        android:text="• 秒钱如何帮您高收益赚钱"
         android:textColor="#1A98FF"
         android:textSize="@dimen/mq_font3" />
 
@@ -63,7 +63,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 秒钱2015年运营年报"
+        android:text="• 新手指引"
         android:textColor="#1A98FF"
         android:textSize="@dimen/mq_font3" />
 
@@ -75,7 +75,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 母公司喜获福建省互联网金融协会副会长"
+        android:text="• 常见问题"
         android:textColor="#1A98FF"
         android:textSize="@dimen/mq_font3" />
 
@@ -87,7 +87,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 更多秒钱信息"
+        android:text="• 用户体验反馈"
         android:textColor="#1A98FF"
         android:textSize="@dimen/mq_font3" />
 
