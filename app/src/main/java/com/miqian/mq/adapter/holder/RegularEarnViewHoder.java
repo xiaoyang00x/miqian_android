@@ -130,7 +130,7 @@ public class RegularEarnViewHoder extends RecyclerView.ViewHolder {
             tv_add_interest.setVisibility(View.GONE);
         }
 
-        if (!showLable) {
+        if (!showLable || TextUtils.isEmpty(regularEarn.getSubjectCategoryName())) {
             layout_regular_earn_head.setVisibility(View.GONE);
         } else {
             setLableName(regularEarn.getSubjectCategoryName());
