@@ -39,6 +39,9 @@ public class Uihelper {
     }
 
     public static void showToast(final Context context, int id) {
+        if (context == null) {
+            return;
+        }
         initToast(context);
         mToast.setText(id);
         mToast.show();
@@ -226,4 +229,14 @@ public class Uihelper {
         return addTime;
     }
 
+    private static long lastClickTime;
+
+    public static boolean isFastDoubleClick() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastClickTime > 500) {
+            lastClickTime = currentTime;
+            return false;
+        }
+        return true;
+    }
 }

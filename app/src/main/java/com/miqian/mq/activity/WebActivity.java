@@ -23,13 +23,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
+import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.ShareUtils;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.Dialog_Login;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WFYTitle;
 import com.miqian.mq.views.WebChromeClientEx;
@@ -183,6 +189,33 @@ public class WebActivity extends BaseActivity implements LoginListener {
         }
     }
 
+    Dialog_Login dialog_login = null;
+
+    private Dialog_Login initDialogLogin(final Context context, final Class<?> cls, int type) {
+        if (dialog_login == null || dialog_login.type != type) {
+            dialog_login = new Dialog_Login(context, type) {
+                @Override
+                public void login(String telephone, String password) {
+                    // TODO: 2015/10/10 Loading
+                    HttpRequest.login(context, new ICallback<LoginResult>() {
+                        @Override
+                        public void onSucceed(LoginResult result) {
+                            UserInfo userInfo = result.getData();
+                            UserUtil.saveUserInfo(context, userInfo);
+                            GestureLockSetActivity.startActivity(context, cls);
+                        }
+
+                        @Override
+                        public void onFail(String error) {
+                            Uihelper.showToast(context, error);
+                        }
+                    }, telephone, password);
+                }
+            };
+        }
+        return dialog_login;
+    }
+
     @JavascriptInterface
     public void call(String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
@@ -198,7 +231,7 @@ public class WebActivity extends BaseActivity implements LoginListener {
     //登录窗口
     @JavascriptInterface
     public void login() {
-        UserUtil.loginActivity(this, null);
+        UserUtil.loginActivity(this, null, initDialogLogin(this, null, 0));
     }
 
     //分享接口
@@ -210,13 +243,13 @@ public class WebActivity extends BaseActivity implements LoginListener {
     //充值页面(需要登录)
     @JavascriptInterface
     public void startIntoActivity() {
-        UserUtil.loginActivity(this, IntoActivity.class);
+        UserUtil.loginActivity(this, IntoActivity.class, initDialogLogin(this, IntoActivity.class, 1));
     }
 
     //红包、券列表页面(需要登录)
     @JavascriptInterface
     public void startTicketActivity() {
-        UserUtil.loginActivity(this, MyTicketActivity.class);
+        UserUtil.loginActivity(this, MyTicketActivity.class, initDialogLogin(this, MyTicketActivity.class, 2));
     }
 
     //定期赚详情页面
@@ -248,6 +281,7 @@ public class WebActivity extends BaseActivity implements LoginListener {
         ListenerManager.unregisterLoginListener(WebActivity.class.getSimpleName());
         webview.removeAllViews();
         webview.destroy();
+        dialog_login = null;
         super.onDestroy();
     }
 

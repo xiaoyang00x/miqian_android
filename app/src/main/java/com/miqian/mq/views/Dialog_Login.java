@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
@@ -25,11 +25,21 @@ import com.umeng.onlineconfig.OnlineConfigAgent;
  * Created by Administrator on 2015/9/1.
  */
 public abstract class Dialog_Login extends Dialog {
+
     private final Context mContext;
+    public int type;
 
     public Dialog_Login(Context context) {
         super(context, R.style.Dialog);
         mContext = context;
+        this.setContentView(R.layout.dialog_login);
+        initView();
+    }
+
+    public Dialog_Login(Context context, int type) {
+        super(context, R.style.Dialog);
+        mContext = context;
+        this.type = type;
         this.setContentView(R.layout.dialog_login);
         initView();
     }

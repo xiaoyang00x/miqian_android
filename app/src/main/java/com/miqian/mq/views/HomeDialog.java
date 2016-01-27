@@ -3,7 +3,6 @@ package com.miqian.mq.views;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,12 +10,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.GetHomeActivity;
-import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.net.ICallback;
-import com.miqian.mq.utils.Config;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -29,8 +23,6 @@ public class HomeDialog extends Dialog {
     private TextView tv_content;
 
     private GetHomeActivity mData;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
 
     public HomeDialog(Context context, GetHomeActivity data) {
         super(context, R.style.Dialog);

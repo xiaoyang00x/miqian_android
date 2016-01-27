@@ -16,7 +16,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.IntoResultActivity;
 import com.miqian.mq.activity.PaymodeActivity;
-import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -479,7 +479,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             Intent intent = new Intent(CurrentInvestment.this, SetPasswordActivity.class);
             intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
             startActivityForResult(intent, REQUEST_CODE_PASSWORD);
-            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码”");
+            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码");
         } else {
             initDialogTradePassword();
             dialogTradePasswordInput.show();
@@ -513,7 +513,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                 if (result.getCode().equals("000000")) {
                                     intent.putExtra("status", 1);
                                     intent.putExtra("orderNo", subscribeOrder.getOrderNo());
-                                    intent.putExtra("addTime", subscribeOrder.getAddTime());
                                 } else {
                                     intent.putExtra("status", 0);
                                 }
@@ -541,8 +540,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
                 @Override
                 public void positionBtnClick() {
-                    MobclickAgent.onEvent(mContext, "1047");
-                    SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, false);
+                    MobclickAgent.onEvent(mActivity, "1028");
+                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
+                    intent.putExtra("realNameStatus", "1");
+                    startActivity(intent);
                     dismiss();
                 }
                 @Override
@@ -555,6 +556,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             dialogTips.setNegative("继续尝试");
             dialogTips.setPositive("找回密码");
             dialogTips.setTitle("交易密码错误");
+            dialogTips.setCanceledOnTouchOutside(false);
         }
         dialogTips.show();
 
@@ -578,7 +580,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     if (result.getCode().equals("000000")) {
                         intent.putExtra("status", 1);
                         intent.putExtra("orderNo", subscribeOrder.getOrderNo());
-                        intent.putExtra("addTime", subscribeOrder.getAddTime());
                     } else {
                         intent.putExtra("status", 0);
                     }

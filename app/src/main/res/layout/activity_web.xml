@@ -22,7 +22,7 @@
             android:layout_height="133dp"
             android:layout_gravity="center"
             android:layout_marginTop="135dp"
-            android:src="@drawable/img_no_network" />
+            android:src="@drawable/nonetwork" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -67,7 +67,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                 } else {
                     Meta response = JsonUtil.parseObject(result, Meta.class);
                     if (response.getCode().equals("999995")) {
-                        JpushInfo jpushInfo=new JpushInfo();
+                        JpushInfo jpushInfo = new JpushInfo();
                         jpushInfo.setContent(response.getMessage());//此处套用极光的类 ，统一方法调用
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, jpushInfo);
                     } else if (response.getCode().equals("900000")) {
@@ -79,7 +79,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                 callback.onFail("数据异常，请联系客服");
             }
         } catch (Exception e) {
-          e.printStackTrace();
+            e.printStackTrace();
             callback.onFail("数据异常，请联系客服");
         }
 
