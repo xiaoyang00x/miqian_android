@@ -56,6 +56,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <data android:scheme="miaoqian" android:host="splash"></data>
+            </intent-filter>
         </activity>
 
         <!-- LLYT SDK START -->
