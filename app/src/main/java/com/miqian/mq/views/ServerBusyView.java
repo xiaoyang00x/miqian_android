@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.utils.MobileOS;
 
 /**
@@ -97,16 +98,16 @@ public class ServerBusyView extends ScrollView {
                     requestAgain.execute();
                     break;
                 case R.id.tv_lookAround1:
-
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
                     break;
                 case R.id.tv_lookAround2:
-
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround2.html");
                     break;
                 case R.id.tv_lookAround3:
-
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
                     break;
                 case R.id.tv_lookAround4:
-
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
                     break;
             }
         }

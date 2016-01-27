@@ -178,7 +178,8 @@ public class WebActivity extends BaseActivity implements LoginListener {
     }
 
     private void loadUrl(String url) {
-        if (MobileOS.getNetworkType(this) == -1) {
+        // 无网络且不加载本包内asset目录下的url
+        if (MobileOS.getNetworkType(this) == -1 && !url.startsWith("file:///android_asset/")) {
             webview.setVisibility(View.GONE);
             load_webview_error.setVisibility(View.VISIBLE);
             mTitle.setTitleText("无网络");
