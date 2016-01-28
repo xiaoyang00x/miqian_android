@@ -31,7 +31,7 @@ import com.umeng.analytics.MobclickAgent;
 public class RegisterActivity extends BaseActivity {
 
 
-    private EditText mEt_Telephone, mEt_Captcha, mEt_Invite, mEt_Password;
+    private EditText mEt_Telephone, mEt_Captcha, mEt_Password;
     private Button mBtn_sendCaptcha;
     private String phone;
     private boolean isTimer;// 是否可以计时
@@ -64,7 +64,7 @@ public class RegisterActivity extends BaseActivity {
 
         mEt_Telephone = (EditText) findViewById(R.id.et_account_telephone);
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
-        mEt_Invite = (EditText) findViewById(R.id.et_account_invite);
+//        mEt_Invite = (EditText) findViewById(R.id.et_account_invite);
         mEt_Password = (EditText) findViewById(R.id.et_account_password);
         mBtn_sendCaptcha = (Button) findViewById(R.id.btn_send);
 
@@ -132,7 +132,7 @@ public class RegisterActivity extends BaseActivity {
     public void btn_click(View v) {
 
         String captcha = mEt_Captcha.getText().toString();
-        String invite = mEt_Invite.getText().toString();
+//        String invite = mEt_Invite.getText().toString();
         String password = mEt_Password.getText().toString();
         phone = mEt_Telephone.getText().toString();
 
@@ -143,15 +143,15 @@ public class RegisterActivity extends BaseActivity {
 
                         Uihelper.showToast(mActivity, R.string.capthcha_num);
                     } else {
-                              if (TextUtils.isEmpty(invite)){
-                                  summit(captcha, invite, password);
-                              }else {
-                                  if (invite.length()<4){
-                                      Uihelper.showToast(mActivity,R.string.invite_num);
-                                  }else {
-                                      summit(captcha, invite, password);
-                                  }
-                              }
+                        summit(captcha, password);
+//                        if (TextUtils.isEmpty(invite)){
+//                              }else {
+//                                  if (invite.length()<4){
+//                                      Uihelper.showToast(mActivity,R.string.invite_num);
+//                                  }else {
+//                                      summit(captcha, invite, password);
+//                                  }
+//                              }
                     }
 
                 } else {
@@ -173,7 +173,7 @@ public class RegisterActivity extends BaseActivity {
         WebActivity.startActivity(mActivity, Urls.web_register_law);
     }
 
-    private void summit(final String captcha, final String invite, final String password) {
+    private void summit(final String captcha, final String password) {
 
 
         if (!TextUtils.isEmpty(password)) {
@@ -204,7 +204,7 @@ public class RegisterActivity extends BaseActivity {
                         end();
                         Uihelper.showToast(mActivity, error);
                     }
-                }, phone, captcha, password, invite);
+                }, phone, captcha, password, "");
             }
 
         } else {
