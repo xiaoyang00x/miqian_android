@@ -66,7 +66,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                     callback.onFail(SERVER_ERROR);
                 } else {
                     Meta response = JsonUtil.parseObject(result, Meta.class);
-                    if (response.getCode().equals("999995")) {//
+                    if (response.getCode().equals("999995")) {//token失效
                         JpushInfo jpushInfo = new JpushInfo();
                         jpushInfo.setContent(response.getMessage());//此处套用极光的类 ，统一方法调用
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, jpushInfo);
