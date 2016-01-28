@@ -104,10 +104,10 @@ public class ServerBusyView extends ScrollView {
                     WebActivity.startActivity(getContext(), "file:///android_asset/lookaround2.html");
                     break;
                 case R.id.tv_lookAround3:
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround3.html");
                     break;
                 case R.id.tv_lookAround4:
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround4.html");
                     break;
             }
         }

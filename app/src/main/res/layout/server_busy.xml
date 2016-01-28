@@ -87,7 +87,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 用户体验反馈"
+        android:text="• 项目安全透明--人行征信中心可查询"
         android:textColor="#1A98FF"
         android:textSize="@dimen/mq_font3" />
 
