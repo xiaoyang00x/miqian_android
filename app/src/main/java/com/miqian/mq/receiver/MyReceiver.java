@@ -125,8 +125,9 @@ public class MyReceiver extends BroadcastReceiver {
                     case 17://修改登录密码
                     case 18://其他设备登录
                     case 0://手机号修改
+                        notificationIntent = new Intent(context, MainActivity.class);
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, response);
-                        return;
+                        break;
                     case 1://交易密码修改，到消息列表页
                     case 2://提现受理，跳到资金记录
                     case 3://充值成功，到我的

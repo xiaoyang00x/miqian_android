@@ -303,6 +303,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     uritype = Integer.valueOf(string_uritype);
                 }
                 switch (uritype) {
+                    case 16://找回登录密码
+                    case 17://修改登录密码
+                    case 18://其他设备登录
+                    case 0://手机号修改
+                        mTabHost.setCurrentTab(3);
+                        break;
                     case 1://交易密码修改，到消息列表页
                     case 2://提现受理，跳到资金记录
                     case 3://充值成功，到我的
@@ -477,7 +483,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 showJushTip();
                 break;
             case OperationKey.ChangeTab:
-                if (MyApplication.getInstance().isBackStage()){
+                if (MyApplication.getInstance().isBackStage()) {
                     current_tab = (int) data;
                     ActivityStack.getActivityStack().clearActivity();
                     mTabHost.setCurrentTab(current_tab);
