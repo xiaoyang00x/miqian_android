@@ -78,7 +78,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
         tv_description = (TextView)findViewById(R.id.tv_description);
         tv_limit = (TextView)findViewById(R.id.tv_limit);
         textSafe = (TextView)findViewById(R.id.text_safe);
-        textSafe.setText("安全保障");
+        textSafe.setText("不良资产处置");
         tv_annurate_interest_rate = (TextView)findViewById(R.id.tv_annurate_interest_rate);
         tv_add_interest = (TextView)findViewById(R.id.tv_add_interest);
         tv_lable1 = (TextView)findViewById(R.id.tv_lable1);
