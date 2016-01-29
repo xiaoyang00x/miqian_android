@@ -198,7 +198,7 @@ public class Urls {
     //活期详情
     public final static String web_current = base_server + "webView/currentDetail";
     //帮助中心
-    public final static String web_help = base_server + "webView/helpCenter";
+    public final static String web_help = "https://tower.im/projects/6bbf19046a2f4c0385bd59039d7fb61a/docs/7affa0c5f87347e497155a8d37eb1cf8/";
 
 
     //首页运营活动
