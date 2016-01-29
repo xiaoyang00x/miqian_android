@@ -177,7 +177,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 MobclickAgent.onEvent(mActivity, "1042");
-                WebActivity.startActivity(mActivity, Urls.web_ticket);
+                WebActivity.startActivity(mActivity, Urls.web_promote);
             }
         });
 

@@ -184,12 +184,8 @@ public class Urls {
 
     //提现说明
     public final static String web_rollout = base_server + "webView/presentDescription";
-    //红包使用规则
-    public final static String web_red_paper = base_server + "webView/hbServiceRegulations";
-    //拾财券使用规则
-    public final static String web_ticket = base_server + "webView/scServiceRegulations";
     //红包、拾财券使用规则(认购页面)
-    public final static String web_promote = base_server + "webView/preferServiceRegulations";
+    public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
 
 
     //连连支付支持绑定的银行界面
@@ -198,7 +194,7 @@ public class Urls {
     //活期详情
     public final static String web_current = base_server + "webView/currentDetail";
     //帮助中心
-    public final static String web_help = "https://tower.im/projects/6bbf19046a2f4c0385bd59039d7fb61a/docs/7affa0c5f87347e497155a8d37eb1cf8/";
+    public final static String web_help = "https://res.shicaidai.com/miaoqian/webView/helpCenter.html";
 
 
     //首页运营活动
