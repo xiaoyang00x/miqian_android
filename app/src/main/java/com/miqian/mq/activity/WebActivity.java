@@ -219,7 +219,7 @@ public class WebActivity extends BaseActivity implements LoginListener {
 
     @JavascriptInterface
     public void call(String phoneNumber) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
         startActivity(intent);
     }
 
