@@ -196,7 +196,7 @@ public class HttpRequest {
         mList.add(new Param("orderNo", orderNo));
         mList.add(new Param("llJson", error));
 
-        new MyAsyncTask(context, Urls.rollin_result, mList, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
