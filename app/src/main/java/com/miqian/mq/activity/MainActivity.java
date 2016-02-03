@@ -305,8 +305,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 switch (uritype) {
                     case 16://找回登录密码
                     case 17://修改登录密码
-                    case 18://其他设备登录
-                    case 0://手机号修改
+                    case 0://其他设备登录
+                    case 18://手机号修改
                         mTabHost.setCurrentTab(3);
                         break;
                     case 1://交易密码修改，到消息列表页
