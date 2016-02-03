@@ -20,6 +20,7 @@ public class Pref {
 
     public static final String USERID = "UseId";
 
+    public static final String DEVICE_ID = "DeviceId";
 
     // 首次开启
     public static final String FIRST_LOAD = "FirstLoad";

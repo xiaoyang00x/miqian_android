@@ -1,8 +1,5 @@
 package com.miqian.mq.utils;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -17,13 +14,12 @@ import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.Display;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.TimeZone;
 
 /**
@@ -149,7 +145,32 @@ public class MobileOS {
     public static String getIMSI(Context context) { // gsm -- imsi
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String imsi = telephonyManager.getSubscriberId();
-        return !TextUtils.isEmpty(imsi) ? imsi : UserUtil.getPrefKey(context, "000000");
+        if (TextUtils.isEmpty(imsi)) {
+            String tempId = Pref.getString(Pref.DEVICE_ID, context, "");
+            if (TextUtils.isEmpty(tempId)) {
+                tempId = getRandomString();
+                Pref.saveString(Pref.DEVICE_ID, tempId, context);
+            }
+            imsi = tempId;
+        }
+        return imsi;
+    }
+
+    /**
+     * 获取不到设备IMEI IMSI等
+     * 随机生成一个串作为DeviceId
+     * Visitor_0000 + 随机数
+     */
+    public static String getRandomString() {
+        String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        sb.append(Pref.VISITOR);
+        for (int i = 0; i < 10; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
     }
 
     /**
@@ -361,23 +382,23 @@ public class MobileOS {
         return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN;
     }
 
-    /**
-     * 判断指定包名的进程是否运行
-     *
-     * @param context
-     * @param packageName 指定包名
-     * @return 是否运行
-     */
-    public static boolean isRunning(Context context, String packageName) {
-        ActivityManager am = (ActivityManager) context.getSystemService("miqian");
-        List<RunningAppProcessInfo> infos = am.getRunningAppProcesses();
-        for (RunningAppProcessInfo rapi : infos) {
-            if (rapi.processName.equals(packageName)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    /**
+//     * 判断指定包名的进程是否运行
+//     *
+//     * @param context
+//     * @param packageName 指定包名
+//     * @return 是否运行
+//     */
+//    public static boolean isRunning(Context context, String packageName) {
+//        ActivityManager am = (ActivityManager) context.getSystemService("miqian");
+//        List<RunningAppProcessInfo> infos = am.getRunningAppProcesses();
+//        for (RunningAppProcessInfo rapi : infos) {
+//            if (rapi.processName.equals(packageName)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * 获取屏幕宽度
