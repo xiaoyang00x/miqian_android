@@ -1,9 +1,5 @@
 package com.miqian.mq.receiver;
 
-/**
- * Created by Administrator on 2015/8/27.
- */
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,34 +9,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
-import android.widget.RemoteViews;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.AnnounceResultActivity;
-import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.RegularEarnActivity;
 import com.miqian.mq.activity.RegularPlanActivity;
 import com.miqian.mq.activity.SplashActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.Pref;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Calendar;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -52,7 +41,6 @@ import cn.jpush.android.api.JPushInterface;
  * 2) 接收不到自定义消息
  */
 public class MyReceiver extends BroadcastReceiver {
-    private static final String TAG = "JPush";
     private JpushInfo response;
     private Intent notificationIntent;
     private int uritype;
@@ -99,15 +87,12 @@ public class MyReceiver extends BroadcastReceiver {
             ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.RERESH_JPUSH, null);
 
             // 解析数据
-            String contentTitle = response.getTitle();
-            String contentText = response.getContent();
             String string_uritype = response.getUriType();
             String noticeId = response.getId();
             String ext = response.getExt();
             if (TextUtils.isEmpty(noticeId)) {
                 return;
             }
-
             if (!UserUtil.hasLogin(context) && "1".equals(response.getPushSource())) {//1为个人信息，未登录则收到，不弹出通知
                 return;
             }
@@ -123,8 +108,8 @@ public class MyReceiver extends BroadcastReceiver {
                 switch (uritype) {
                     case 16://找回登录密码
                     case 17://修改登录密码
-                    case 18://其他设备登录
-                    case 0://手机号修改
+                    case 18://手机号修改
+                    case 0://其他设备登录
                         notificationIntent = new Intent(context, MainActivity.class);
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, response);
                         break;
@@ -149,9 +134,9 @@ public class MyReceiver extends BroadcastReceiver {
                     case 51://活动利好 webView
                     case 52://平台相关新闻 webView
                     case 53://相关项目 webView
-                        if (TextUtils.isEmpty(ext)){
+                        if (TextUtils.isEmpty(ext)) {
                             notificationIntent = new Intent(context, MainActivity.class);
-                        }else {
+                        } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(ext);
                                 if (jsonObject != null) {
@@ -205,7 +190,7 @@ public class MyReceiver extends BroadcastReceiver {
                                         if ("3".equals(prodId)) {//定期赚
                                             notificationIntent = new Intent(context, RegularEarnActivity.class);
                                             notificationIntent.putExtra("KEY_SUBJECT_ID", subjectId);
-                                        } else if ("5".equals(prodId)) {
+                                        } else if ("5".equals(prodId)) {//定期计划
                                             notificationIntent = new Intent(context, RegularPlanActivity.class);
                                             notificationIntent.putExtra("KEY_SUBJECT_ID", subjectId);
                                         }
@@ -218,7 +203,7 @@ public class MyReceiver extends BroadcastReceiver {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }else {
+                        } else {
                             notificationIntent = new Intent(context, MainActivity.class);
                         }
                         break;
@@ -233,37 +218,22 @@ public class MyReceiver extends BroadcastReceiver {
                 int requestCode = (int) System.currentTimeMillis();
                 notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 PendingIntent contentIntent = PendingIntent.getActivity(context, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                RemoteViews contentViews = new RemoteViews("com.miqian.mq", R.layout.layout_jpush);
 
-                final Calendar mCalendar = Calendar.getInstance();
-                int mHour;
-                boolean is24HourFormat = android.text.format.DateFormat.is24HourFormat(context);
-                if (is24HourFormat) {
-                    mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
-                } else {
-                    mHour = mCalendar.get(Calendar.HOUR);
-                }
-                int mMinuts = mCalendar.get(Calendar.MINUTE);
-
-                // 通过控件的Id设置属性
-                contentViews.setTextViewText(R.id.titleNo, contentTitle);
-                contentViews.setTextViewText(R.id.textNo, contentText);
-                String string_Minutes = "" + mMinuts;
-                if (mMinuts < 10) {
-                    string_Minutes = "0" + mMinuts;
-                }
-                contentViews.setTextViewText(R.id.timeNo, mHour + ":" + string_Minutes);
-                String tickerText = context.getResources().getString(R.string.app_name);
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.icon_jpush).setTicker(tickerText);
-                mBuilder.setAutoCancel(true);
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+                //设置通知栏标题,内容，通知栏点击意图
+                mBuilder.setContentTitle(title);
+                mBuilder.setContentText(content);
                 mBuilder.setContentIntent(contentIntent);
-                mBuilder.setContent(contentViews);
+                mBuilder.setTicker("秒钱有新通知"); //通知首次出现在通知栏，带上升动画效果的
+                mBuilder.setWhen(System.currentTimeMillis());
+                mBuilder.setPriority(Notification.PRIORITY_DEFAULT); //设置该通知优先级
+                mBuilder.setSmallIcon(R.drawable.icon_jpush);//设置通知小ICON
+                mBuilder.setContentIntent(contentIntent);
                 mBuilder.setAutoCancel(true);
                 mBuilder.setDefaults(Notification.DEFAULT_ALL);
 
                 // 定义NotificationManager
-                String ns = Context.NOTIFICATION_SERVICE;
-                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
+                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 //判断是否在后台,在后台则发送通知
                 boolean isBackStage = MyApplication.getInstance().isBackStage();
                 boolean isCurrent = MyApplication.getInstance().isCurrent();
