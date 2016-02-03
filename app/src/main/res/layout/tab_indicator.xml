@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.miqian.mq.views.MyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="1">
@@ -32,4 +32,4 @@
             android:textColor="@drawable/main_tab_text_color"
             android:textSize="@dimen/mq_font10" />
     </LinearLayout>
-</RelativeLayout>
+</com.miqian.mq.views.MyRelativeLayout>

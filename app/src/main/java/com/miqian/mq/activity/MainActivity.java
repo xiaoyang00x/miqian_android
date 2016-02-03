@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -42,6 +41,7 @@ import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogUpdate;
+import com.miqian.mq.views.MyRelativeLayout;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.json.JSONException;
@@ -67,7 +67,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     FragmentTabHost mTabHost;
     Context context;
     TabWidget tabWidget;
-    ViewGroup tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
+    MyRelativeLayout tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
     private List<JpushInfo> jpushInfolist;
     private int current_tab = 0;
     private RefeshDataListener mRefeshDataListener;
@@ -230,8 +230,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         });
     }
 
-    private ViewGroup initTabView(TabWidget tw, int drawbleId, int nameResId) {
-        ViewGroup tabIndicator = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.tab_indicator, tw, false);
+    private MyRelativeLayout initTabView(TabWidget tw, int drawbleId, int nameResId) {
+        MyRelativeLayout tabIndicator = (MyRelativeLayout) LayoutInflater.from(this).inflate(R.layout.tab_indicator, tw, false);
         ImageView ivTab1 = (ImageView) tabIndicator.findViewById(R.id.img_tab);
         TextView tv_name = (TextView) tabIndicator.findViewById(R.id.tv_name);
         ivTab1.setImageResource(drawbleId);
