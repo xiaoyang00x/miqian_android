@@ -11,6 +11,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -136,24 +137,22 @@ public class MobileOS {
         WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         String address = info.getMacAddress();
-        return !TextUtils.isEmpty(address) ? address : getIMSI(context);
+        return !TextUtils.isEmpty(address) ? address : getAndroidId(context);
     }
 
     /**
-     * 获取手机串号IMSI
+     * 获取AndroidId
      */
-    public static String getIMSI(Context context) { // gsm -- imsi
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String imsi = telephonyManager.getSubscriberId();
-        if (TextUtils.isEmpty(imsi)) {
-            String tempId = Pref.getString(Pref.DEVICE_ID, context, "");
-            if (TextUtils.isEmpty(tempId)) {
-                tempId = getRandomString();
-                Pref.saveString(Pref.DEVICE_ID, tempId, context);
+    public static String getAndroidId(Context context) {
+        String androidId = Settings.System.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        if (TextUtils.isEmpty(androidId)) {
+            androidId = Pref.getString(Pref.DEVICE_ID, context, "");
+            if (TextUtils.isEmpty(androidId)) {
+                androidId = getRandomString();
+                Pref.saveString(Pref.DEVICE_ID, androidId, context);
             }
-            imsi = tempId;
         }
-        return imsi;
+        return androidId;
     }
 
     /**
@@ -171,17 +170,6 @@ public class MobileOS {
             sb.append(base.charAt(number));
         }
         return sb.toString();
-    }
-
-    /**
-     * 获取Squid统计的id(用IMSI 或者 IMEI)
-     */
-    public static String getMatoId(Context context) {
-        String matoId = getIMSI(context);
-        if (TextUtils.isEmpty(matoId)) {
-            matoId = getIMEI(context);
-        }
-        return matoId;
     }
 
     /**
