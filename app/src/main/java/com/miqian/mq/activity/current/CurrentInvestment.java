@@ -627,7 +627,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 end();
                 Uihelper.showToast(mActivity, error);
             }
-        }, money, bankNumber, "", "");
+        }, payMoney.toString(), bankNumber, "", "");
     }
 
     class MyHandler extends Handler {
