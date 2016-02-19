@@ -3,6 +3,6 @@
 
     <item android:color="@color/mq_r1" android:state_selected="true"/>
     <item android:color="@color/mq_r1" android:state_pressed="true"/>
-    <item android:color="#787878"/>
+    <item android:color="@color/mq_b1"/>
 
 </selector>
