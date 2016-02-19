@@ -16,6 +16,7 @@ import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.umeng.analytics.MobclickAgent;
@@ -49,6 +50,11 @@ public abstract class Dialog_Login extends Dialog {
         final View relaPassword = findViewById(R.id.rela_password);
         final EditText editTelephone = (EditText) findViewById(R.id.edit_telephone);
         final EditText editPassword = (EditText) findViewById(R.id.edit_password);
+
+        String telphone = Pref.getString(Pref.TELEPHONE, mContext, "");
+        editTelephone.setText(telphone);
+        editTelephone.setSelection(telphone.length());
+
         Button btnLogin = (Button) findViewById(R.id.btn_login);
         findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override

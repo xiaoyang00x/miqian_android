@@ -36,6 +36,7 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -104,7 +105,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         else {
             initLoginView();
             editPassword.setText("");
-            editTelephone.setText("");
+            String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");
+            editTelephone.setText(telphone);
+            editTelephone.setSelection(telphone.length());
         }
 
         super.onStart();

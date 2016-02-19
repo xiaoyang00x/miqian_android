@@ -116,7 +116,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         } else {
                             isOver = true;
                             progressBarLoading.setVisibility(View.GONE);
-                            textLoading.setText("");
+                            textLoading.setText("没有更多");
                         }
                         adapter = new MessageAdapter(mActivity, list);
                         pullToListView.setAdapter(adapter);
@@ -159,6 +159,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         }
                         adapter = new MessageAdapter(mActivity, list);
                         pullToListView.setAdapter(adapter);
+                        textLoading.setText("没有更多");
                     } else {
                         showEmptyView();
                     }
@@ -307,7 +308,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         pullToListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
-                if (position == 0) {
+                if (position == 0||position==list.size()+1) {
                 } else {
                     //消息
                     MessageInfo messageInfo = list.get(position - 1);
@@ -369,7 +370,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     }
 
     @Override
-    protected String getPageName() {
+    protected String getPageName()  {
         return "消息";
     }
 
