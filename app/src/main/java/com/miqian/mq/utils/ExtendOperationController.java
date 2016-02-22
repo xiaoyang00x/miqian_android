@@ -54,6 +54,8 @@ public class ExtendOperationController {
 		public static final int MessageState = 1011;
 		/** 设置交易密码成功*/
 		public static final int SETTRADPASSWORD_SUCCESS = 1012;
+		/**刷新活期数据*/
+		public static final int REFRESH_CURRENTINFO = 1013;
 
 	}
 

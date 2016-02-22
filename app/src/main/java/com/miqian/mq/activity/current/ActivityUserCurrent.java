@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.miqian.mq.entity.UserCurrent;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
@@ -26,7 +28,7 @@ import java.math.BigDecimal;
 /**
  * Created by Jackie on 2015/9/30.
  */
-public class ActivityUserCurrent extends BaseActivity implements View.OnClickListener {
+public class ActivityUserCurrent extends BaseActivity implements View.OnClickListener, ExtendOperationController.ExtendOperationListener {
 
     private TextView textEarning;
     private TextView textCaptial;
@@ -45,6 +47,22 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private DialogPay dialogPay;
 
     private String interestRateString = "";
+    private ExtendOperationController operationController;
+
+    @Override
+    public void onCreate(Bundle arg0) {
+        operationController = ExtendOperationController.getInstance();
+        operationController.registerExtendOperationListener(this);
+        super.onCreate(arg0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (operationController != null) {
+            operationController.unRegisterExtendOperationListener(this);
+        }
+        super.onDestroy();
+    }
 
     @Override
     public void obtainData() {
@@ -194,5 +212,14 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 UserUtil.loginPay(mActivity, dialogPay);
                 break;
         }
+    }
+
+    @Override
+    public void excuteExtendOperation(int operationKey, Object data) {
+
+        if (operationKey == ExtendOperationController.OperationKey.REFRESH_CURRENTINFO) {
+            obtainData();
+        }
+
     }
 }

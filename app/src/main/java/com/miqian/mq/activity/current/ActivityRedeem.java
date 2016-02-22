@@ -18,6 +18,7 @@ import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
@@ -189,6 +190,9 @@ public class ActivityRedeem extends BaseActivity {
                     showPwdError4Dialog(result.getMessage());
                 } else {
                     if (code.equals("000000")) {
+                        //刷新我的活期数据
+                        ExtendOperationController.getInstance().
+                                doNotificationExtendOperation(ExtendOperationController.OperationKey.REFRESH_CURRENTINFO, null);
                         intent.putExtra("state", 1);
                         Redeem redeem = result.getData();
                         Bundle bundle = new Bundle();
@@ -224,6 +228,7 @@ public class ActivityRedeem extends BaseActivity {
                     startActivity(intent);
                     dismiss();
                 }
+
                 @Override
                 public void negativeBtnClick() {
                     initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
