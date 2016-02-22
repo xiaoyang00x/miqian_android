@@ -5,38 +5,38 @@ package com.miqian.mq.net;
  */
 public class Urls {
 
-//    /**
-//     * 测试key
-//     */
-//    public static final String RSA_PUBLICE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCU2DBwdq+RCEL2hmR3c4Cs9Uno" + "\r"
-//            + "iadyKamYWTPpWSivJfLifXQWTED09z9KjK3nCjnFqquU7j7CmQwuEx9c9SkvjE+P" + "\r"
-//            + "NpD/23buQ31yIB41bVb0dDDjTLLqVd6aCbC85jJQ34qq6jNoMBs/IFTFBvjO++nE" + "\r"
-//            + "dRnBiq4YHLVtD/qbhwIDAQAB";
-//
-//    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAM+59Lcccqp9r3yk" + "\r"
-//            + "CRP2pSB6o9EP+igdwxTXFnVIwTg7N9cbIcsCZmfnZGm2OF4G3fx8dVSl5LfQo7sr" + "\r"
-//            + "TZ2iaDayq0pcqMr/pzft1KxOqV2JF966uJf+dINO2T7gIimG1XGg4NNQQC2AUeQQ" + "\r"
-//            + "cBpfqwa6uUUMLzus/Q7JfQ/5Idt7AgMBAAECgYB1pW7Iai8zCf3ijJCroswAqhSv" + "\r"
-//            + "aeoW4ExFOE/62tq7uyY0CKTJ8jEHddCz4kToU+FThzV4XIA97sdcUPkjZwC3vBm0" + "\r"
-//            + "GQHAqxnpBJxQ85Z8YmJIhvpg2KU3TKtYn9p7M/jEQDxV7jw5lCbfnbiC34EXyJ7C" + "\r"
-//            + "PE31u3pSc3LiMl1JOQJBAPXH7NSSb7srinHwnaApEDms3AVbSn4Ucftd/dGFALgT" + "\r"
-//            + "9yDE7zYe/8T5yftQ5ivxxbVHJmS6dNGDLVnHRe3YdNUCQQDYXPsQRZOMhr1kWUUU" + "\r"
-//            + "bjfMjfc62ElLR+hREeYVNPGWFRq76qiHHdzHIND2T8ayUDyTGg0ydYrHzh9VJaRg" + "\r"
-//            + "lHcPAkEA7FtGtWXdbPGCQfBSpSLYJ57EN6KDEJw4wLKy1DpDZsJMdYbtQ+6rqJFO" + "\r"
-//            + "XBCASOJIbvvtQBDPJmwvwJaR+RifwQJAd+WGpyy3KA9ekmY5tqmhODSPhUdnzlTJ" + "\r"
-//            + "s2skwim1moKVbv8JZt6wgpR315a7uAJonue32ndycWiSyl9yqKZ9FwJAFDNB7i0w" + "\r"
-//            + "7vhqwHmFAXxnffRtEVZbJk2AsEcE0qJqwoxGbij+O1+OIksDGlxjc/LgnXLlXvvY" + "\r"
-//            + "ZU0zSqeXVAcdRQ==";
+    /**
+     * 测试key
+     */
+    public static final String RSA_PUBLICE_TEST = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCU2DBwdq+RCEL2hmR3c4Cs9Uno" + "\r"
+            + "iadyKamYWTPpWSivJfLifXQWTED09z9KjK3nCjnFqquU7j7CmQwuEx9c9SkvjE+P" + "\r"
+            + "NpD/23buQ31yIB41bVb0dDDjTLLqVd6aCbC85jJQ34qq6jNoMBs/IFTFBvjO++nE" + "\r"
+            + "dRnBiq4YHLVtD/qbhwIDAQAB";
+
+    public static final String RSA_PRIVATE_TEST = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAM+59Lcccqp9r3yk" + "\r"
+            + "CRP2pSB6o9EP+igdwxTXFnVIwTg7N9cbIcsCZmfnZGm2OF4G3fx8dVSl5LfQo7sr" + "\r"
+            + "TZ2iaDayq0pcqMr/pzft1KxOqV2JF966uJf+dINO2T7gIimG1XGg4NNQQC2AUeQQ" + "\r"
+            + "cBpfqwa6uUUMLzus/Q7JfQ/5Idt7AgMBAAECgYB1pW7Iai8zCf3ijJCroswAqhSv" + "\r"
+            + "aeoW4ExFOE/62tq7uyY0CKTJ8jEHddCz4kToU+FThzV4XIA97sdcUPkjZwC3vBm0" + "\r"
+            + "GQHAqxnpBJxQ85Z8YmJIhvpg2KU3TKtYn9p7M/jEQDxV7jw5lCbfnbiC34EXyJ7C" + "\r"
+            + "PE31u3pSc3LiMl1JOQJBAPXH7NSSb7srinHwnaApEDms3AVbSn4Ucftd/dGFALgT" + "\r"
+            + "9yDE7zYe/8T5yftQ5ivxxbVHJmS6dNGDLVnHRe3YdNUCQQDYXPsQRZOMhr1kWUUU" + "\r"
+            + "bjfMjfc62ElLR+hREeYVNPGWFRq76qiHHdzHIND2T8ayUDyTGg0ydYrHzh9VJaRg" + "\r"
+            + "lHcPAkEA7FtGtWXdbPGCQfBSpSLYJ57EN6KDEJw4wLKy1DpDZsJMdYbtQ+6rqJFO" + "\r"
+            + "XBCASOJIbvvtQBDPJmwvwJaR+RifwQJAd+WGpyy3KA9ekmY5tqmhODSPhUdnzlTJ" + "\r"
+            + "s2skwim1moKVbv8JZt6wgpR315a7uAJonue32ndycWiSyl9yqKZ9FwJAFDNB7i0w" + "\r"
+            + "7vhqwHmFAXxnffRtEVZbJk2AsEcE0qJqwoxGbij+O1+OIksDGlxjc/LgnXLlXvvY" + "\r"
+            + "ZU0zSqeXVAcdRQ==";
 
     /**
      * 正式key
      */
-    public static final String RSA_PUBLICE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC84iihAQA8kxa4eWiQwZ6qLQpJ" + "\r"
+    public static final String RSA_PUBLICE_ONLINE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC84iihAQA8kxa4eWiQwZ6qLQpJ" + "\r"
             + "wZC0yUpQB5qh3ZKeYbR2Nx8GK8EEmoQg4XMK+HFgrrzji8PTnv69h0MBqN3Jg1Ul" + "\r"
             + "bLQLzF0xjicDjgA2YAWYRFQ3JBM5MjsM+kkLme++03dtpBlFLXVXBltTEoxeU41e" + "\r"
             + "Pt94rFg+wNta0BNX9QIDAQAB";
 
-    public static final String RSA_PRIVATE = "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANfUTvSfntVeUkvb" + "\r"
+    public static final String RSA_PRIVATE_ONLINE = "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANfUTvSfntVeUkvb" + "\r"
             + "U8MLLQnkOPa61ya/IVJj448GO765ul2HxWHIGUVa0ibGIAG/uh0bE5lHHTjSQu8r" + "\r"
             + "2RmH++qK1fMZRbRpjjDws+iZ/oSN8un8A99yy6ToDN+9bCVePxDFtGeJDqze+C1W" + "\r"
             + "wr7PZMeaxzjeP5oW+6F5iNyi0lcBAgMBAAECgYEAyqV/VNQisDgVkT/nz7RIn4b3" + "\r"
@@ -51,21 +51,25 @@ public class Urls {
             + "ylevNflC7hVrPjA8nvJtuO5gA1W6u5la3fRIam7xCtHVKkJDZ8cKFttfCvEZJOT5" + "\r"
             + "/SNc/6A5aNjEU9y6";
 
-//    /**
-//     * 测试
-//     */
-//    public static final String base_server = "https://testapi.shicaidai.com:8443/";
+    //测试
+    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+    //线上
+    public static final String SERVER_ONLINE = "https://api.shicaidai.com/";
 
     /**
-     * 线上
+     * 打包时，修改以下环境
+     * 以 "_TEST"结尾为测试环境
+     * 以 "_ONLINE"结尾为线上环境
      */
-    public static final String base_server = "https://api.shicaidai.com/";
-
-//    public static final String base_server = "http://172.20.8.143:8080/miqian-app/";
-//    public static final String base_server = "http://172.20.8.11:8082/miqian-app/";
-
     //测试
-    public final static String test = base_server + "userService/register";
+    public static final String base_server = SERVER_TEST;
+    public static final String RSA_PUBLICE = RSA_PUBLICE_TEST;
+    public static final String RSA_PRIVATE = RSA_PRIVATE_TEST;
+//    //线上
+//    public static final String base_server = SERVER_ONLINE;
+//    public static final String RSA_PUBLICE = RSA_PUBLICE_ONLINE;
+//    public static final String RSA_PRIVATE = RSA_PRIVATE_ONLINE;
+
     //身份认证
     public final static String idcard_check = base_server + "commonService/idCardAuth";
     //充值转入接口
@@ -165,18 +169,18 @@ public class Urls {
     public final static String forceUpdate = base_server + "commonService/v2/forceUpdate";
 
     /**
-     *网页的URL
+     * 网页的URL
      */
     //注册页：《秒钱用户注册协议》
     public final static String web_register_law = "https://res.shicaidai.com/miaoqian/webView/service-items.html";
     //充值页面：《资金管理协议》
-    public final static String web_recharge_law ="https://res.shicaidai.com/miaoqian/webView/zjglxy.html";
+    public final static String web_recharge_law = "https://res.shicaidai.com/miaoqian/webView/zjglxy.html";
     //活期认购页：《活期赚服务协议》
-    public final static String web_current_law ="https://res.shicaidai.com/miaoqian/webView/hqzfwxy.html";
+    public final static String web_current_law = "https://res.shicaidai.com/miaoqian/webView/hqzfwxy.html";
     //定期赚认购页面：《定期赚服务协议》
-    public final static String web_regular_law ="https://res.shicaidai.com/miaoqian/webView/dqzfwxy.html";
+    public final static String web_regular_law = "https://res.shicaidai.com/miaoqian/webView/dqzfwxy.html";
     //定期计划认购页面：《定期计划服务协议》
-    public final static String web_regplan_law ="https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
+    public final static String web_regplan_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //定期赚详情
     public final static String web_regular_earn_detail = base_server + "webView/getRegDetail/";
     //定期计划详情
@@ -202,19 +206,19 @@ public class Urls {
     public final static String get_activity_feedback = base_server + "activityService/getActivityFeedback";
 
     //每日计息
-    public final static String web_current_earning ="https://res.shicaidai.com/miaoqian/current/meirijixi.html";
+    public final static String web_current_earning = "https://res.shicaidai.com/miaoqian/current/meirijixi.html";
     //本息保障
-    public final static String web_current_safe ="https://res.shicaidai.com/miaoqian/current/benxibaozhang.html";
+    public final static String web_current_safe = "https://res.shicaidai.com/miaoqian/current/benxibaozhang.html";
     //活存活取
-    public final static String web_current_back ="https://res.shicaidai.com/miaoqian/current/huocunhuoqu.html";
+    public final static String web_current_back = "https://res.shicaidai.com/miaoqian/current/huocunhuoqu.html";
 
 
     //管理团队
-    public final static String web_aboutus_team ="https://res.shicaidai.com/miaoqian/about/guanlituandui.html";
+    public final static String web_aboutus_team = "https://res.shicaidai.com/miaoqian/about/guanlituandui.html";
     //合作伙伴
-    public final static String web_aboutus_cooperation ="https://res.shicaidai.com/miaoqian/about/hezuohuoban.html";
+    public final static String web_aboutus_cooperation = "https://res.shicaidai.com/miaoqian/about/hezuohuoban.html";
     //关于秒钱
-    public final static String web_aboutus_introduce ="https://res.shicaidai.com/miaoqian/about/miaoqianjianjie.html";
+    public final static String web_aboutus_introduce = "https://res.shicaidai.com/miaoqian/about/miaoqianjianjie.html";
     //战略团队
-    public final static String web_aboutus_zhanlue ="https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
+    public final static String web_aboutus_zhanlue = "https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
 }
