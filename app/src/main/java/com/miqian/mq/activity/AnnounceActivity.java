@@ -550,7 +550,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         }
         swipeRefresh.setVisibility(View.GONE);
         tvTips.setVisibility(View.VISIBLE);
-        tvTips.setText("暂时没有数据");
+        tvTips.setText("暂时没有消息");
         ivMessageData.setBackgroundResource(R.drawable.nomessage);
     }
 
