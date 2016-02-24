@@ -62,13 +62,13 @@ public class Urls {
      * 以 "_ONLINE"结尾为线上环境
      */
 //    //测试
-//    public static final String base_server = SERVER_TEST;
-//    public static final String RSA_PUBLICE = RSA_PUBLICE_TEST;
-//    public static final String RSA_PRIVATE = RSA_PRIVATE_TEST;
+    public static final String base_server = SERVER_TEST;
+    public static final String RSA_PUBLICE = RSA_PUBLICE_TEST;
+    public static final String RSA_PRIVATE = RSA_PRIVATE_TEST;
     //线上
-    public static final String base_server = SERVER_ONLINE;
-    public static final String RSA_PUBLICE = RSA_PUBLICE_ONLINE;
-    public static final String RSA_PRIVATE = RSA_PRIVATE_ONLINE;
+//    public static final String base_server = SERVER_ONLINE;
+//    public static final String RSA_PUBLICE = RSA_PUBLICE_ONLINE;
+//    public static final String RSA_PRIVATE = RSA_PRIVATE_ONLINE;
 
     //身份认证
     public final static String idcard_check = base_server + "commonService/idCardAuth";
