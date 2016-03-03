@@ -167,3 +167,9 @@ public static final int *;
 -keep interface com.umeng.onlineconfig.UmengOnlineConfigureListener {
         public <methods>;
 }
+
+##-------------------Begin proguard configuration for MAA-------------------------
+-keep class com.mato.** { *; }
+-dontwarn com.mato.**
+-keepattributes Exceptions, Signature, InnerClasses
+##--------------------End proguard configuration for MAA------------------------

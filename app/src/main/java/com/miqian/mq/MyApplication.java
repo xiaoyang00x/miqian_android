@@ -3,6 +3,7 @@ package com.miqian.mq;
 import android.app.Application;
 import android.content.Context;
 
+import com.mato.sdk.proxy.Proxy;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -76,6 +77,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Proxy.start(this);
         try {
             Class.forName("android.os.AsyncTask");
         } catch (ClassNotFoundException e) {
