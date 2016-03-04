@@ -152,7 +152,18 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getBooleanExtra(Constants.VERIFYFAILED, false)) {
+            dialogPayDismiss();
             mTabHost.setCurrentTab(3);
+        }
+    }
+
+    /**
+     * 用户退出登录时将认购弹窗隐藏
+     */
+    private void dialogPayDismiss () {
+        if (mTabHost.getCurrentTab() == 1) {
+            FragmentCurrent fragmentCurrent = (FragmentCurrent) getSupportFragmentManager().findFragmentByTag(TAG_CURRENT);
+            fragmentCurrent.dialogPayDismiss();
         }
     }
 
@@ -458,6 +469,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 //清除Token
                 JpushInfo jpushInfo = (JpushInfo) data;
                 UserUtil.clearUserInfo(this);
+                dialogPayDismiss();
                 current_tab = 3;
                 ActivityStack.getActivityStack().clearActivity();
                 boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
@@ -492,7 +504,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             default:
                 break;
         }
-
     }
 
     private void showDialog(JpushInfo jpushInfo) {

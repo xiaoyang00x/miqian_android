@@ -176,7 +176,16 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
             waterWaveView.stopWave();
             waterWaveView = null;
         }
+        if (dialogPay != null) {
+            dialogPay = null;
+        }
         super.onDestroy();
+    }
+
+    public void dialogPayDismiss() {
+        if (dialogPay != null && dialogPay.isShowing()) {
+            dialogPay.dismiss();
+        }
     }
 
     @Override
