@@ -163,5 +163,5 @@ dependencies {
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile project(':onekeyshare')
     compile files('libs/umeng-onlineconfig_v1.0.0.jar')
-    compile fileTree(dir:'maa\\sdk',include:['*.jar'])
+    compile fileTree(dir:'maa/sdk',include:['*.jar'])
 }
