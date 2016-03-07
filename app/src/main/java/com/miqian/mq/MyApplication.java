@@ -64,7 +64,7 @@ public class MyApplication extends Application {
     }
 
     public static void setIsBackStage(boolean isBackStage) {
-        if (isBackStage) {
+        if (!isBackStage() && isBackStage) {
             homePressTime = System.currentTimeMillis();
         }
         MyApplication.isBackStage = isBackStage;
