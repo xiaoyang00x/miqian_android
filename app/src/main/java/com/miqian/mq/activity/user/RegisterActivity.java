@@ -147,6 +147,7 @@ public class RegisterActivity extends BaseActivity {
                         Uihelper.showToast(mActivity, R.string.capthcha_num);
                     } else {
                         if (TextUtils.isEmpty(invite)) {
+                            summit(captcha, invite, password);
                         } else {
                             if (invite.length() < 4) {
                                 Uihelper.showToast(mActivity, R.string.invite_num);
