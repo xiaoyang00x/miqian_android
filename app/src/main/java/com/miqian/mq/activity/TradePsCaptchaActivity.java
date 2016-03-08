@@ -73,7 +73,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
         tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
         telephone = Pref.getString(Pref.TELEPHONE, mActivity, "");
         if (!TextUtils.isEmpty(telephone)) {
-            tv_phone.setText("验证码发送至"+telephone.substring(0, 3)+"****" + telephone.substring(telephone.length() - 4, telephone.length()));
+            tv_phone.setText("验证码发送至" + telephone.substring(0, 3) + "****" + telephone.substring(telephone.length() - 4, telephone.length()));
         }
 
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
@@ -178,15 +178,15 @@ public class TradePsCaptchaActivity extends BaseActivity {
                     String idCard = mEtRealname.getText().toString();
                     if (!TextUtils.isEmpty(idCard)) {
                         if (idCard.matches(FormatUtil.PATTERN_IDCARD)) {
-                                if (TextUtils.isEmpty(captcha)) {
-                                    Uihelper.showToast(this, R.string.tip_captcha);
+                            if (TextUtils.isEmpty(captcha)) {
+                                Uihelper.showToast(this, R.string.tip_captcha);
+                            } else {
+                                if (captcha.length() < 6) {
+                                    Uihelper.showToast(mActivity, R.string.capthcha_num);
                                 } else {
-                                    if (captcha.length() < 6) {
-                                        Uihelper.showToast(mActivity, R.string.capthcha_num);
-                                    } else {
-                                        summit(idCard, captcha);
-                                    }
+                                    summit(idCard, captcha);
                                 }
+                            }
                         } else {
                             Uihelper.showToast(mActivity, "身份证号码不正确");
                         }

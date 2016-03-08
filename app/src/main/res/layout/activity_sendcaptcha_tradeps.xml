@@ -33,8 +33,9 @@
             android:layout_toRightOf="@+id/tv_register"
             android:digits="0123456789Xx"
             android:hint="请输入身份证号码"
-            android:inputType="number"
-            android:maxLength="18" />
+            android:inputType="text"
+            android:maxLength="18"
+            android:singleLine="true" />
 
     </LinearLayout>
 
