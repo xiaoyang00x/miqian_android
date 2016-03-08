@@ -113,9 +113,6 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.text_tel:
-                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006656191")));
-                break;
             case R.id.bt_back:
                 mActivity.finish();
                 break;
