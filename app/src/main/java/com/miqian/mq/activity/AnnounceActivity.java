@@ -116,7 +116,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         } else {
                             isOver = true;
                             progressBarLoading.setVisibility(View.GONE);
-                            textLoading.setText("没有更多");
+                            textLoading.setText("");
                         }
                         adapter = new MessageAdapter(mActivity, list);
                         pullToListView.setAdapter(adapter);
@@ -159,7 +159,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         }
                         adapter = new MessageAdapter(mActivity, list);
                         pullToListView.setAdapter(adapter);
-                        textLoading.setText("没有更多");
+                        textLoading.setText("");
                     } else {
                         showEmptyView();
                     }
