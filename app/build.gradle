@@ -96,6 +96,7 @@ android {
 //        "huisuoping" {}
 //        "kuhua" {}
 //        "qq" {}
+//        "mumayi" {}
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [CHANNEL_VALUE: name]
         }
