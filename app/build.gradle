@@ -7,8 +7,8 @@ android {
         applicationId "com.miqian.mq"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 6
-        versionName '1.2.2'
+        versionCode 7
+        versionName '1.2.3'
     }
 
     packagingOptions {
