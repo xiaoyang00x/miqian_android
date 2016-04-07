@@ -52,16 +52,20 @@ public class AdapterPacket extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Promote promote = promList.get(position);
-//        if (promote.getType().equals("HB")) {
+        if (promote.getType().equals("JX")) {
+            ((ViewHolder) holder).textMoney.setText("" + promote.getGiveYrt());
+            ((ViewHolder) holder).textMoneyUnit.setVisibility(View.GONE);
+        } else {
             ((ViewHolder) holder).textMoney.setText("" + promote.getCanUseAmt());
-            ((ViewHolder) holder).textName.setText(promote.getPromProdName());
-            ((ViewHolder) holder).limitType.setText(promote.getMinBuyAmtOrPerc());
-            ((ViewHolder) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-            if (mPosition == position) {
-                ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
-            } else {
-                ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
-            }
+        }
+        ((ViewHolder) holder).textName.setText(promote.getPromProdName());
+        ((ViewHolder) holder).limitType.setText(promote.getMinBuyAmtOrPerc());
+        ((ViewHolder) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
+        if (mPosition == position) {
+            ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
+        } else {
+            ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
+        }
 //        } else if (promote.getType().equals("SC")) {
 //            ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
 //            ((ViewHolderTicket) holder).textType.setText(promote.getPromProdName());
@@ -100,6 +104,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
         public TextView limitType;
         public TextView limitDate;
         public TextView textMoney;
+        public TextView textMoneyUnit;
         public TextView textName;
         public ImageView promoteChoosed;
 
@@ -121,6 +126,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
             limitDate = (TextView) itemView.findViewById(R.id.limit_date);
             textName = (TextView) itemView.findViewById(R.id.text_name);
             textMoney = (TextView) itemView.findViewById(R.id.text_money);
+            textMoneyUnit = (TextView) itemView.findViewById(R.id.text_money_unit);
             promoteChoosed = (ImageView) itemView.findViewById(R.id.promote_choosed);
         }
     }

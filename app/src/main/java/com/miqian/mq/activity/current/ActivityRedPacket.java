@@ -71,7 +71,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("红包/券");
+        mTitle.setTitleText("优惠券");
         mTitle.setRightText("使用规则");
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
