@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 /**
  * Created by Jackie on 2015/9/24.
- * <p/>
+ * <p>
  * 红包、拾财券
  */
 public class Promote {
@@ -12,8 +12,6 @@ public class Promote {
     public enum TYPE { // 促销类型
         SC("SC"), // 拾财券
         HB("HB"), //红包
-        JF("JF"), //积分
-        LP("LP"), //礼品卡
         TY("TY"), //体验金
         JX("JX"), //加息券
         FXQ("FXQ"), //分享券
@@ -103,6 +101,14 @@ public class Promote {
     private String fitBdTermOrYrt;
     private String fitProdOrBdType;
     private String shareUrl;
+    /**
+     * 是否跳转状态:到h5
+     */
+    private String promState;
+    /**
+     * 跳转地址
+     **/
+    private String promUrl;
 
     public String getPromProdId() {
         return promProdId;
@@ -270,5 +276,21 @@ public class Promote {
 
     public void setShareUrl(String shareUrl) {
         this.shareUrl = shareUrl;
+    }
+
+    public String getPromUrl() {
+        return promUrl;
+    }
+
+    public void setPromUrl(String promUrl) {
+        this.promUrl = promUrl;
+    }
+
+    public String getPromState() {
+        return promState;
+    }
+
+    public void setPromState(String promState) {
+        this.promState = promState;
     }
 }

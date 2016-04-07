@@ -54,16 +54,16 @@ public class AdapterInvalidMyTicket extends RecyclerView.Adapter {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
                 return new ProgressViewHolder(view);
             default:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
-                return new ProgressViewHolder(view);
+                return null;
         }
     }
 
-    private void setView(TextView view, String text) {
+    // 检查TextView将要填充内容的有效性,如果内容为空(无效)则隐藏该TextView
+    private void setText(TextView textView, String text) {
         if (TextUtils.isEmpty(text)) {
-            view.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
         } else {
-            view.setText(text);
+            textView.setText(text);
         }
     }
 
@@ -72,17 +72,17 @@ public class AdapterInvalidMyTicket extends RecyclerView.Adapter {
         if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             final Promote promote = promList.get(position);
-            tempViewHoleder.tv_name.setText(promote.getPromProdName());
-            tempViewHoleder.tv_validate_date.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-            tempViewHoleder.tv_percent_limit.setText(promote.getMinBuyAmtOrPerc());
-            setView(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
-            tempViewHoleder.tv_use_limit.setText(promote.getLimitMsg());
-            tempViewHoleder.tv_amount.setText(String.valueOf(promote.getTotalAmt()));
+            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
+            setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
+            setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
+            setText(tempViewHoleder.tv_use_limit, promote.getLimitMsg());
             if (Promote.TYPE.JX.getValue().equals(promote.getType())) { // 加息券
                 tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_quan);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
-                tempViewHoleder.tv_amount.setText("+" + promote.getGiveYrt());
+                setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
             } else {
+                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 if (Promote.TYPE.SC.getValue().equals(promote.getType())) { // 拾财券 可点击跳转
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_miaoqian);
@@ -92,14 +92,10 @@ public class AdapterInvalidMyTicket extends RecyclerView.Adapter {
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_tiyanjin);
                 } else if (Promote.TYPE.FXQ.getValue().equals(promote.getType())) { // 分享券
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_fenxiang);
-                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            WebActivity.startActivity(mContext, promote.getShareUrl());
-                        }
-                    });
                 } else if (Promote.TYPE.DK.getValue().equals(promote.getType())) { // 抵扣券
+                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_diyong);
                 } else {
+                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_default);
                 }
             }
         }

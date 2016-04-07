@@ -19,6 +19,7 @@ import com.miqian.mq.activity.user.MyTicketInvalidActivity;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.utils.Uihelper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -56,17 +57,16 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
                 return new ProgressViewHolder(view);
             default:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
-                return new ProgressViewHolder(view);
+                return null;
         }
     }
 
-
-    private void setView(TextView view, String text) {
+    // 检查TextView将要填充内容的有效性,如果内容为空(无效)则隐藏该TextView
+    private void setText(TextView textView, String text) {
         if (TextUtils.isEmpty(text)) {
-            view.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
         } else {
-            view.setText(text);
+            textView.setText(text);
         }
     }
 
@@ -75,43 +75,35 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             final Promote promote = promList.get(position);
-            tempViewHoleder.tv_name.setText(promote.getPromProdName());
-            tempViewHoleder.tv_validate_date.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-            tempViewHoleder.tv_percent_limit.setText(promote.getMinBuyAmtOrPerc());
-            setView(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
-            tempViewHoleder.tv_use_limit.setText(promote.getLimitMsg());
-            tempViewHoleder.tv_amount.setText(String.valueOf(promote.getCanUseAmt()));
+            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
+            setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
+            setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
+            setText(tempViewHoleder.tv_use_limit, promote.getLimitMsg());
+            String desUrl = promote.getPromUrl();
             if (Promote.TYPE.JX.getValue().equals(promote.getType())) { // 加息券
                 tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_quan);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
-                tempViewHoleder.tv_amount.setText("+" + promote.getGiveYrt());
+                setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
             } else {
+                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
-                if (Promote.TYPE.SC.getValue().equals(promote.getType())) { // 拾财券 可点击跳转
+                if (Promote.TYPE.SC.getValue().equals(promote.getType())) { // 拾财券
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_miaoqian);
-                    toUseTicket(holder, promote.getPromProdId());
-                } else if (Promote.TYPE.HB.getValue().equals(promote.getType())) { // 红包 可点击跳转
+                } else if (Promote.TYPE.HB.getValue().equals(promote.getType())) { // 红包
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_hongbao);
-                    toUseTicket(holder, promote.getPromProdId());
                 } else if (Promote.TYPE.TY.getValue().equals(promote.getType())) { // 体验金
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_tiyanjin);
-                    toUseTicket(holder, promote.getPromProdId());
                 } else if (Promote.TYPE.FXQ.getValue().equals(promote.getType())) { // 分享券
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_fenxiang);
-                    toUseTicket(holder, promote.getPromProdId());
-                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            WebActivity.startActivity(mContext, promote.getShareUrl());
-                        }
-                    });
+                    desUrl = promote.getShareUrl();
                 } else if (Promote.TYPE.DK.getValue().equals(promote.getType())) { // 抵扣券
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_diyong);
-                    toUseTicket(holder, promote.getPromProdId());
-                } else if (Promote.TYPE.JF.getValue().equals(promote.getType())) { // 积分 暂时没有
-                } else if (Promote.TYPE.LP.getValue().equals(promote.getType())) { // 礼品卡 暂时没有
+                } else {
+                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_default);
                 }
             }
+            clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
         }
 //        if (holder instanceof ViewHolderTicket) { // 拾财券
 //            Promote promote = promList.get(position);
@@ -167,11 +159,25 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         }
     }
 
-    private void toUseTicket(RecyclerView.ViewHolder holder, final String promProdId) {
+    // 使用券:(体验金 分享券)只能跳转h5,(其他券)优先跳h5,无h5跳转到定期列表使用页面
+    private void clickEvent(RecyclerView.ViewHolder holder, final String type, final String promProdId, final String promState, final String promUrl) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegularListActivity.startActivity(mContext, promProdId);
+                if (null != promUrl) {
+                    if (Promote.TYPE.FXQ.getValue().equals(type) || Promote.TYPE.TY.getValue().equals(type)) {
+                        WebActivity.startActivity(mContext, promUrl);
+                    } else if ("1".equals(promState)) { // 可跳转
+                        WebActivity.startActivity(mContext, promUrl);
+                    } else {
+                        RegularListActivity.startActivity(mContext, promProdId);
+                    }
+                } else {
+                    if (!Promote.TYPE.FXQ.getValue().equals(type) &&
+                            !Promote.TYPE.TY.getValue().equals(type)) {
+                        RegularListActivity.startActivity(mContext, promProdId);
+                    }
+                }
             }
         });
     }
@@ -179,7 +185,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         if (promList != null && promList.size() != 0) {
-            return promList.size() + 1;//+1 尾部：加载更多
+            return promList.size() + 1; // +1 尾部：加载更多
         }
         return 0;
     }
@@ -197,7 +203,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         protected TextView tv_use_limit;
         protected TextView tv_amount_unit;
         protected TextView tv_amount;
-        protected LinearLayout frame_ticket;
+        protected RelativeLayout frame_ticket;
         protected ImageView iv_icon;
 
         public BaseViewHoleder(View itemView) {
@@ -209,7 +215,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             tv_use_limit = (TextView) itemView.findViewById(R.id.tv_use_limit);
             tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
             tv_amount_unit = (TextView) itemView.findViewById(R.id.tv_amount_unit);
-            frame_ticket = (LinearLayout) itemView.findViewById(R.id.frame_ticket);
+            frame_ticket = (RelativeLayout) itemView.findViewById(R.id.frame_ticket);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
         }
     }
