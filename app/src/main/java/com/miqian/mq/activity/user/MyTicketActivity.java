@@ -172,7 +172,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("红包/券");
-        mTitle.setRightText("使用规则");
+        mTitle.setRightImage(R.drawable.ic_ticket_rule);
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,7 +180,6 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
                 WebActivity.startActivity(mActivity, Urls.web_promote);
             }
         });
-
     }
 
     @Override

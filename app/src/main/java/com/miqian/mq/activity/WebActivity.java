@@ -32,6 +32,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.ShareUtils;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -203,7 +204,11 @@ public class WebActivity extends BaseActivity implements LoginListener {
                         public void onSucceed(LoginResult result) {
                             UserInfo userInfo = result.getData();
                             UserUtil.saveUserInfo(context, userInfo);
-                            GestureLockSetActivity.startActivity(context, cls);
+                            if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
+                                GestureLockSetActivity.startActivity(context, cls);
+                            } else if (null != cls) {
+                                startActivity(new Intent(context, cls));
+                            }
                         }
 
                         @Override

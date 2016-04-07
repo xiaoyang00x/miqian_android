@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp">
+
+    <LinearLayout
+        android:id="@+id/frame_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:background="@drawable/ticket_bg_temp"
+        android:orientation="horizontal"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp">
+
+        <LinearLayout
+            android:id="@+id/frame_money"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="17dp">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@color/mq_b1"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_validate_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:singleLine="true"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font5" />
+
+            <TextView
+                android:id="@+id/tv_percent_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:singleLine="true"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font5" />
+
+            <TextView
+                android:id="@+id/tv_date_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:singleLine="true"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font5" />
+
+            <TextView
+                android:id="@+id/tv_use_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:singleLine="true"
+                android:textColor="#588094"
+                android:textSize="@dimen/mq_font4" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_weight="4">
+
+            <TextView
+                android:id="@+id/tv_amount_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_amount"
+                android:layout_toLeftOf="@+id/tv_amount"
+                android:paddingRight="3dp"
+                android:text="¥"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font1" />
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/iv_icon"
+                android:layout_alignParentRight="true"
+                android:paddingRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/mq_r1"
+                android:textSize="@dimen/mq_font8" />
+
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:scaleType="matrix"
+                android:src="@drawable/ticket_icon_default" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

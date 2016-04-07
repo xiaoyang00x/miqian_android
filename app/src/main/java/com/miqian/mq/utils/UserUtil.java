@@ -102,7 +102,6 @@ public class UserUtil {
 
     public static void clearUserInfo(Context context) {
         // 清空 手势密码 和 token 和 UseId
-        Pref.saveBoolean(Pref.GESTURESTATE, false, context);
         Pref.saveString(Pref.GESTUREPSW, null, context);
         Pref.saveString(Pref.TOKEN, "", context);
         Pref.saveString(Pref.USERID, "", context);
@@ -134,7 +133,9 @@ public class UserUtil {
                             saveUserInfo(context, userInfo);
 
                             dialogPay.show();
-                            GestureLockSetActivity.startActivity(context, null);
+                            if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                                GestureLockSetActivity.startActivity(context, null);
+                            }
                         }
 
                         @Override
