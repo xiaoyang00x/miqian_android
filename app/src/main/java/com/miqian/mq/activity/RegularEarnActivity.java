@@ -36,6 +36,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
 
     private DialogPay dialogPay;
 
+    private BigDecimal remainderLimit = new BigDecimal(100);//续投金额
     private BigDecimal downLimit = new BigDecimal(100);//下限
     private BigDecimal upLimit = new BigDecimal(9999999999L);//上限
     private BigDecimal leftLimit = new BigDecimal(9999999999L);//标的剩余额度
@@ -99,7 +100,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                 if (!TextUtils.isEmpty(moneyString)) {
                     upLimit = leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
                     BigDecimal money = new BigDecimal(moneyString);
-                    BigDecimal remainder = money.remainder(downLimit);
+                    BigDecimal remainder = money.remainder(remainderLimit);
                     if (money.compareTo(downLimit) == -1) {
                         this.setTitle("提示：" + downLimit + "元起投");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
@@ -107,7 +108,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                         this.setTitle("提示：请输入小于等于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
-                        this.setTitle("提示：请输入" + downLimit + "的整数倍");
+                        this.setTitle("提示：请输入" + remainderLimit + "的整数倍");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
                         UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_REGULAR, subjectId, interestRateString);
@@ -217,7 +218,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.btn_buy:
                 MobclickAgent.onEvent(mContext, "1014");
-                dialogPay.setEditMoneyHint(downLimit + "起，" + downLimit + "整数倍");
+                dialogPay.setEditMoneyHint(downLimit + "起，" + remainderLimit + "整数倍");
                 UserUtil.loginPay(mActivity, dialogPay);
                 break;
             case R.id.btn_des_close:
@@ -242,6 +243,7 @@ public class RegularEarnActivity extends BaseActivity implements View.OnClickLis
                     showContentView();
                     mData = result.getData();
                     downLimit = mData.getFromInvestmentAmount();
+                    remainderLimit = mData.getContinueInvestmentLimit();
                     upLimit = mData.getSubjectMaxBuy();
                     leftLimit = mData.getSubjectTotalPrice().subtract(mData.getPurchasePrice());
                     BigDecimal tempInterest = new BigDecimal(mData.getYearInterest()).add(new BigDecimal(mData.getPresentationYearInterest()));
