@@ -68,6 +68,7 @@
                 android:textSize="@dimen/mq_font7" />
 
             <TextView
+                android:id="@+id/text_money_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"

@@ -96,6 +96,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     private BigDecimal orderMoney;//订单金额
     private BigDecimal promoteMoney = BigDecimal.ZERO;//优惠金额： 红包、拾财券
+    private BigDecimal increaseMoney = BigDecimal.ZERO;//加息金额
     private BigDecimal payMoney;//需支付的金额
     private BigDecimal bFlag = BigDecimal.ZERO;
 
@@ -142,6 +143,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         promListString = "";
         prodListString = "";
         promoteMoney = BigDecimal.ZERO;
+        increaseMoney = BigDecimal.ZERO;
         if (!swipeRefresh.isRefreshing()) {
             mWaitingDialog.show();
         }
@@ -198,6 +200,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
                 textPromote.setText("已抵用");
                 textPromoteMoney.setText("" + promoteMoney);
+                textPromoteUnit.setText("元");
+            } else if (increaseMoney.compareTo(bFlag) > 0) {
+                textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
+                textPromote.setText("收益加");
+                textPromoteMoney.setText("" + increaseMoney);
                 textPromoteUnit.setText("元");
             } else {
                 textPromote.setText("");
@@ -427,15 +434,19 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //          红包、拾财券选择
             if (resultCode == SUCCESS) {
                 position = data.getIntExtra("position", -1);
+                promoteMoney = BigDecimal.ZERO;
+                increaseMoney = BigDecimal.ZERO;
+                promListString = "";
                 if (position >= 0) {
                     Promote promote = promList.get(position);
+                    if ("JX".equals(promote.getType())) {
+                        increaseMoney = promote.getExtraIncome();
+                    } else {
+                        promoteMoney = promote.getWillUseAmt();
+                    }
                     List<Promote> promListParam = new ArrayList<>();
                     promListParam.add(promote);
-                    promoteMoney = promote.getWillUseAmt();
                     promListString = JSON.toJSONString(promListParam, true);
-                } else {
-                    promoteMoney = BigDecimal.ZERO;
-                    promListString = "";
                 }
                 refreshView();
             }
