@@ -1,6 +1,5 @@
 package com.miqian.mq.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -18,6 +17,7 @@ public class RegularEarn extends RegularBaseData {
     private String bxbzf; //本息保障方
     private String ddbzf; //兜底保障方
     private BigDecimal fromInvestmentAmount; //起投金额
+    private BigDecimal continueInvestmentLimit; //续投金额
     private String promotionDesc; //"满1万元送100元红包"//促销描述
     private String promotionDescUrl;
     private ArrayList<RegularEarnSubInfo> schemeList;
@@ -162,6 +162,14 @@ public class RegularEarn extends RegularBaseData {
 
     public void setFromInvestmentAmount(BigDecimal fromInvestmentAmount) {
         this.fromInvestmentAmount = fromInvestmentAmount;
+    }
+
+    public BigDecimal getContinueInvestmentLimit() {
+        return continueInvestmentLimit;
+    }
+
+    public void setContinueInvestmentLimit(BigDecimal continueInvestmentLimit) {
+        this.continueInvestmentLimit = continueInvestmentLimit;
     }
 
     public String getPromotionDesc() {

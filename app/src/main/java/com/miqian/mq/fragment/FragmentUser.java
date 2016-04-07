@@ -178,9 +178,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         } else {
             tv_Regular.setText("--");
         }
-        //拾财券
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.getWealthTicket()) && !TextUtils.isEmpty(userInfo.getRedBag())) {
-            int count = Integer.parseInt(userInfo.getWealthTicket()) + Integer.parseInt(userInfo.getRedBag());
+        //优惠券
+        if (userInfo != null) {
+            int count = userInfo.getTotalPromotion();
             tv_Ticket.setText(count + "张");
         } else {
             tv_Ticket.setText("--");

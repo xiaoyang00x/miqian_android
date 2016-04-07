@@ -25,6 +25,7 @@ public class UserInfo implements Serializable {
     private String wealthTicket;//拾财券
     private String realNameStatus;//实名认证状态
     private String redBag;//红包数
+    private int totalPromotion;//优惠券总数
     private String bankName;//绑定银行名称
     private String bankUrlSmall;//绑定银行图标url
     private String bankUrlBig;//绑定银行图标url
@@ -186,6 +187,14 @@ public class UserInfo implements Serializable {
 
     public void setRedBag(String redBag) {
         this.redBag = redBag;
+    }
+
+    public int getTotalPromotion() {
+        return totalPromotion;
+    }
+
+    public void setTotalPromotion(int totalPromotion) {
+        this.totalPromotion = totalPromotion;
     }
 
     public String getBankName() {
