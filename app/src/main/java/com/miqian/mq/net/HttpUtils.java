@@ -68,7 +68,7 @@ public class HttpUtils {
         Response response = null;
         try {
             response = client.newCall(request).execute();
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() || response.code() == 503) {
                 String body = response.body().string();
                 response.body().close();
                 response = null;

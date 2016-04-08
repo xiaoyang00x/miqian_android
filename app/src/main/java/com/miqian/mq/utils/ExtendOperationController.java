@@ -56,7 +56,8 @@ public class ExtendOperationController {
 		public static final int SETTRADPASSWORD_SUCCESS = 1012;
 		/**刷新活期数据*/
 		public static final int REFRESH_CURRENTINFO = 1013;
-
+		/**系统维护*/
+		public static final int SYSTEM_MAINTENANCE = 1014;
 	}
 
 	/**
