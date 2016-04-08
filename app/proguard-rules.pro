@@ -173,3 +173,23 @@ public static final int *;
 -dontwarn com.mato.**
 -keepattributes Exceptions, Signature, InnerClasses
 ##--------------------End proguard configuration for MAA------------------------
+
+##-------------------Begin proguard configuration for GrowingIO-------------------------
+-keep class com.growingio.android.sdk.** {
+    public *;
+}
+##--------------------End proguard configuration for GrowingIO------------------------
+
+##-------------------Begin proguard configuration for udesk-------------------------
+-libraryjars libs/asmack-android-8-4.0.6.jar
+-libraryjars libs/android-async-http.jar
+-libraryjars libs/android-support-v4.jar
+-libraryjars libs/qiniu-android-sdk-7.0.1.jar
+-libraryjars libs/udesk_sdkui.2.3.0.jar
+-libraryjars libs/universal-image-loader-1.9.4.jar
+
+-keep class com.kenai.jbosh.** {*; }
+-keep class com.novell.sasl.client.** {*; }
+-keep class de.measite.smack.** {*; }
+-keep class org.** {*; }
+##--------------------End proguard configuration for udesk------------------------
