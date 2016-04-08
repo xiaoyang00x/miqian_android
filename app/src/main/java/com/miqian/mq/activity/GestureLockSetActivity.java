@@ -73,7 +73,7 @@ public class GestureLockSetActivity extends BaseActivity {
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("设置手势密码");
-        mTitle.setRightText("跳过");
+        mTitle.setRightText("忽略");
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

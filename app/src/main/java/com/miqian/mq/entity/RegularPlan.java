@@ -1,6 +1,5 @@
 package com.miqian.mq.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -10,6 +9,7 @@ import java.math.BigDecimal;
 public class RegularPlan extends RegularBaseData {
 
     private BigDecimal fromInvestmentAmount; //起投金额
+    private BigDecimal continueInvestmentLimit; //续投金额
     private String payMode; //还款方式
     private BigDecimal subjectTotalPrice; //标的总额
     private BigDecimal purchasePrice; //已认购金额
@@ -61,6 +61,14 @@ public class RegularPlan extends RegularBaseData {
 
     public void setFromInvestmentAmount(BigDecimal fromInvestmentAmount) {
         this.fromInvestmentAmount = fromInvestmentAmount;
+    }
+
+    public BigDecimal getContinueInvestmentLimit() {
+        return continueInvestmentLimit;
+    }
+
+    public void setContinueInvestmentLimit(BigDecimal continueInvestmentLimit) {
+        this.continueInvestmentLimit = continueInvestmentLimit;
     }
 
     public String getPayMode() {

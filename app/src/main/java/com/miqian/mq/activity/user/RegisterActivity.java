@@ -19,6 +19,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -194,8 +195,9 @@ public class RegisterActivity extends BaseActivity {
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mActivity, userInfo);
 
-                        GestureLockSetActivity.startActivity(getBaseContext(), null);
-
+                        if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
+                            GestureLockSetActivity.startActivity(getBaseContext(), null);
+                        }
                         finish();
                     }
 
