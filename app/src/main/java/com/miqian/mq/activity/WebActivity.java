@@ -166,6 +166,13 @@ public class WebActivity extends BaseActivity implements LoginListener {
         });
         loadUrl(url);
 
+        getmTitle().setOnLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack();
+            }
+        });
+
     }
 
     @Override
@@ -301,14 +308,21 @@ public class WebActivity extends BaseActivity implements LoginListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if (webview != null && webview.canGoBack()) {
-                webview.goBack();
-            } else {
-                finish();
-            }
+            goBack();
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 判断当前网页是否有前一页，如果有则返回，否则 finish()
+     */
+    private void goBack() {
+        if (webview != null && webview.canGoBack()) {
+            webview.goBack();
+        } else {
+            finish();
+        }
     }
 
     /**

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.R;
 import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.MobileOS;
@@ -32,6 +33,10 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        GrowingIO.startTracing(this, "b3aa061603e9427dacf180c923cffbea");
+        GrowingIO.setScheme("growing.b82cc4beb7662e94");
+
         setContentView(R.layout.activity_splash);
         Config.init(this);
         //      设置友盟渠道号
@@ -60,7 +65,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             startActivity(new Intent(getBaseContext(), MainActivity.class));
             SplashActivity.this.finish();
         } else {
-            ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
+            final ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
             ImageView imageSplash = (ImageView) findViewById(R.id.image_splash);
             framePages = (LinearLayout) findViewById(R.id.frame_pages);
             imageSplash.setVisibility(View.GONE);

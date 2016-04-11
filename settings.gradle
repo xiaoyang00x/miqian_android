@@ -1,1 +1,1 @@
-include ':app', ':library_pulltorefesh', ':ShareSDK', ':onekeyshare'
+include ':app', ':library_pulltorefesh', ':ShareSDK', ':onekeyshare', ':Udesk_Separate_UI'

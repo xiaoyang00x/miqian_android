@@ -60,8 +60,10 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <action android:name="android.intent.action.VIEW"/>
-                <data android:scheme="miaoqian" android:host="splash"></data>
+                <data android:scheme="growing.b82cc4beb7662e94"/>
+                <data android:scheme="miaoqian" android:host="splash"/>
             </intent-filter>
+
         </activity>
 
         <!-- LLYT SDK START -->

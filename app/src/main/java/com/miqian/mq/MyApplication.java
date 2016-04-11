@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.mato.sdk.proxy.Proxy;
+import com.miqian.mq.utils.Config;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -13,6 +14,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.udesk.UdeskSDKManager;
 
 /**
  * Created by Joy on 2015/8/31.
@@ -89,6 +91,10 @@ public class MyApplication extends Application {
 
         //友盟  禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.openActivityDurationTrack(false);
+
+        //Udesk 初始化
+        UdeskSDKManager.getInstance().initApiKey(this, Config.UDESK_DOMAIN, Config.UDESK_SECRETKEY);
+
     }
     public static void initImageLoader(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
