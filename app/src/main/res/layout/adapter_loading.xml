@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="没有更多可用的红包/券了  "
+            android:text="没有更多可用的优惠券了  "
             android:textColor="@color/mq_b2"
             android:textSize="@dimen/mq_font5" />
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
-            android:text="查看过往红包/券>>"
+            android:text="查看过往优惠券>>"
             android:textColor="@color/mq_bl2"
             android:textSize="@dimen/mq_font5" />
     </LinearLayout>

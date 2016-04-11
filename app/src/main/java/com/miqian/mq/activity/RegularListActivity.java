@@ -127,7 +127,7 @@ public class RegularListActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("红包/券使用");
+        mTitle.setTitleText("优惠券使用");
     }
 
     @Override
