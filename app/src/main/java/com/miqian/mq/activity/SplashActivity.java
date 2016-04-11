@@ -65,7 +65,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             startActivity(new Intent(getBaseContext(), MainActivity.class));
             SplashActivity.this.finish();
         } else {
-            ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
+            final ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
             ImageView imageSplash = (ImageView) findViewById(R.id.image_splash);
             framePages = (LinearLayout) findViewById(R.id.frame_pages);
             imageSplash.setVisibility(View.GONE);
