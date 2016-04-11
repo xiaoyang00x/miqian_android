@@ -36,4 +36,47 @@
                 android:layout_weight="0" />
         </LinearLayout>
     </android.support.v4.app.FragmentTabHost>
+
+    <RelativeLayout
+        android:id="@+id/maintenance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/server_maintenance_bg"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:singleLine="true"
+            android:textColor="@color/mq_r1"
+            android:textSize="@dimen/mq_font1" />
+
+        <com.miqian.mq.views.TextViewEx
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
+
+        <TextView
+            android:id="@+id/inscription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/content"
+            android:layout_marginRight="30dp"
+            android:singleLine="true"
+            android:textColor="@color/mq_b1"
+            android:textSize="@dimen/mq_font3" />
+    </RelativeLayout>
 </LinearLayout>

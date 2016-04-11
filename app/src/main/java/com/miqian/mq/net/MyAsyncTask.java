@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.entity.MaintenanceResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
@@ -70,6 +71,11 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                         JpushInfo jpushInfo = new JpushInfo();
                         jpushInfo.setContent(response.getMessage());//此处套用极光的类 ，统一方法调用
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, jpushInfo);
+                        callback.onFail("");
+                        return;
+                    } else if (response.getCode().equals("899999")) {
+                        MaintenanceResult maintenanceResult = JsonUtil.parseObject(result, MaintenanceResult.class);
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.SYSTEM_MAINTENANCE, maintenanceResult);
                         callback.onFail("");
                         return;
                     } else if (response.getCode().equals("900000")) {

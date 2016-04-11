@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.entity.MaintenanceResult;
 import com.miqian.mq.entity.UpdateInfo;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.fragment.FragmentCurrent;
@@ -42,6 +44,7 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.MyRelativeLayout;
+import com.miqian.mq.views.TextViewEx;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.json.JSONException;
@@ -68,6 +71,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     Context context;
     TabWidget tabWidget;
     MyRelativeLayout tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
+    private RelativeLayout maintenance;
     private List<JpushInfo> jpushInfolist;
     private int current_tab = 0;
     private RefeshDataListener mRefeshDataListener;
@@ -239,6 +243,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 current_tab = mTabHost.getCurrentTab();
             }
         });
+        maintenance = (RelativeLayout) findViewById(R.id.maintenance);
     }
 
     private MyRelativeLayout initTabView(TabWidget tw, int drawbleId, int nameResId) {
@@ -489,7 +494,14 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                         showDialog(jpushInfo);
                     }
                 }
-
+                break;
+            case OperationKey.SYSTEM_MAINTENANCE:
+                ActivityStack.getActivityStack().clearActivity();
+                mTabHost.setVisibility(View.GONE);
+                maintenance.setVisibility(View.VISIBLE);
+                ((TextView)maintenance.findViewById(R.id.title)).setText(((MaintenanceResult) data).getTitle());
+                ((TextViewEx)maintenance.findViewById(R.id.content)).setText(((MaintenanceResult) data).getContent(), true);
+                ((TextView)maintenance.findViewById(R.id.inscription)).setText(((MaintenanceResult) data).getInscription());
                 break;
             case OperationKey.ShowTips:
                 showJushTip();
