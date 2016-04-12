@@ -29,7 +29,8 @@ public class Pref {
 
     public static final String NICKNAME = "Nickname";
 
-    public static final String USERICON = "Usericon";
+    public static final String ERROR_LIAN = "ErrorLian";
+    public static final String ERROR_LIAN_VERSION = "ErrorLianVersion";
 
     public static final String TELEPHONE = "Telephone";
 
