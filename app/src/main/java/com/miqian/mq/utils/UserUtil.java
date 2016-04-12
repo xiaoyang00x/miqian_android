@@ -34,11 +34,16 @@ public class UserUtil {
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
         Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobilePhone()), context);
+        Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getRealName()), context);
         Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getPayPwdStatus()), context);
+
+        //设置Udesk用户信息
+
         //设置极光别名
         JpushHelper.setAlias(context);
         loginSuccess();
     }
+
 
     /**
      * 登录成功通知监听
@@ -105,6 +110,7 @@ public class UserUtil {
         Pref.saveString(Pref.GESTUREPSW, null, context);
         Pref.saveString(Pref.TOKEN, "", context);
         Pref.saveString(Pref.USERID, "", context);
+        Pref.saveString(Pref.REAL_NAME, "", context);
         //token值为"",表示取消之前设置的别名
         JpushHelper.setAlias(context);
 

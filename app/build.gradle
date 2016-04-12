@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+    buildToolsVersion '23.0.2'
     defaultConfig {
         applicationId "com.miqian.mq"
         minSdkVersion 14
@@ -14,6 +14,8 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
     }
 
     lintOptions {
@@ -158,11 +160,14 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.17'
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
-    compile files('libs/image_loader_1.9.2.jar')
     compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
     compile 'com.umeng:fb:5.4.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile project(':onekeyshare')
     compile files('libs/umeng-onlineconfig_v1.0.0.jar')
-    compile fileTree(dir:'maa/sdk',include:['*.jar'])
+//    compile fileTree(dir:'maa/sdk',include:['*.jar'])
+
+    compile fileTree(include: ['*.jar'], dir: 'maa/sdk')
+    compile 'com.growingio.android:vds-android:latest.release@aar'
+    compile project(path: ':Udesk_Separate_UI')
 }

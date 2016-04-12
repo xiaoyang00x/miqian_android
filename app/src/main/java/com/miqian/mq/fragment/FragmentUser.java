@@ -447,7 +447,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
 
                 break;
-            //红包/券
+            //优惠券
             case R.id.frame_ticket:
                 MobclickAgent.onEvent(getActivity(), "1022");
                 startActivity(new Intent(getActivity(), MyTicketActivity.class));

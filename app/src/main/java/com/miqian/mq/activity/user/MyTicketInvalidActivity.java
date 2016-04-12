@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 过往(已过期 已使用 已赠送)优惠券列表
  * Created by Administrator on 2015/10/8.
  */
 public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
@@ -134,7 +135,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
                 return;
             }
             isLoading = true;
-            pageNo += 1;
+            ++pageNo;
             HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
 
 
@@ -151,7 +152,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
                 @Override
                 public void onFail(String error) {
                     isLoading = false;
-
+                    --pageNo;
                 }
             }, type, String.valueOf(pageNo), pageSize);
         }

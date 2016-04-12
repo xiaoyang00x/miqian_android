@@ -282,7 +282,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     public void show() {
         homeDialog = new HomeDialog(mActivity, mHomeActivityData);
         homeDialog.show();
-        MobclickAgent.onEvent(getContext(), "home_pop_active");
+        MobclickAgent.onEvent(mApplicationContext, "home_pop_active");
     }
 
     // 服务器繁忙页面 - 再次请求 - 刷新

@@ -34,6 +34,9 @@ public class Pref {
 
     public static final String TELEPHONE = "Telephone";
 
+    //真实姓名
+    public static final String REAL_NAME = "REAL_NAME";
+
     public static final String SERVER_ERROR_CODE = "ServerErrorCode";
 
     public static final String CURRENT_RATE = "CurrentRate";
