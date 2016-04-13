@@ -9,6 +9,7 @@ android {
         targetSdkVersion 22
         versionCode 7
         versionName '1.2.3'
+        multiDexEnabled true
     }
 
     packagingOptions {
@@ -16,6 +17,10 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
         exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
+    }
+
+    dexOptions {
+        javaMaxHeapSize "2g"
     }
 
     lintOptions {
@@ -112,7 +117,7 @@ android {
             keyAlias "miaoqian"
             keyPassword "mqApp^scd!"
         }
-        debug{
+        debug {
             storeFile file("mq.jks")
             storePassword "mqApp^scd!"
             keyAlias "miaoqian"
@@ -140,12 +145,14 @@ android {
     }
 
 
-  sourceSets.main {
-    jniLibs.srcDir 'src/jniLibs' // <-- Set your folder here!
-  }
+    sourceSets.main {
+        jniLibs.srcDir 'src/jniLibs' // <-- Set your folder here!
+    }
 }
+
 apply plugin: 'maa'
 dependencies {
+    compile 'com.android.support:multidex:1.0.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'

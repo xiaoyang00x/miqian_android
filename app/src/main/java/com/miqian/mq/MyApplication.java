@@ -1,7 +1,7 @@
 package com.miqian.mq;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.mato.sdk.proxy.Proxy;
 import com.miqian.mq.utils.Config;
@@ -19,7 +19,7 @@ import cn.udesk.UdeskSDKManager;
 /**
  * Created by Joy on 2015/8/31.
  */
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
     private static MyApplication myApplication;
     private static boolean isCurrent;
     private static boolean isOnMainAcitivity;
