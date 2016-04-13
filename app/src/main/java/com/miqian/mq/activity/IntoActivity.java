@@ -113,6 +113,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void myAfterTextChanged(Editable s) {
                 try {
+                    textErrorLian.setVisibility(View.GONE);
                     String temp = s.toString();
                     if (temp.matches(FormatUtil.PATTERN_MONEY)) {
                         return;
@@ -139,6 +140,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         frameRealName = (LinearLayout) findViewById(R.id.frame_real_name);
         editName = (EditText) frameRealName.findViewById(R.id.edit_name);
         editCardId = (EditText) frameRealName.findViewById(R.id.edit_card_id);
+        editName.addTextChangedListener(textWatcherLian);
+        editCardId.addTextChangedListener(textWatcherLian);
         textTip = (TextView) findViewById(R.id.text_tip);
         mHandler = new MyHandler(this);
     }
@@ -344,12 +347,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                         }
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
-//                    } else if (retCode.equals("1004")) {
-//                        rollInError(mActivity, orderNo, strRet);
-//                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
                     } else {
                         rollInError(mActivity, orderNo, strRet);
-//                        Uihelper.showToast(mActivity, retMsg);
                         textErrorLian.setVisibility(View.VISIBLE);
                         String errorString = showErrorString(mActivity, retCode);
                         if (TextUtils.isEmpty(errorString)) {
@@ -432,6 +431,13 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         return "充值";
     }
 
+    MyTextWatcher textWatcherLian = new MyTextWatcher() {
+        @Override
+        public void myAfterTextChanged(Editable arg0) {
+            textErrorLian.setVisibility(View.GONE);
+        }
+    };
+
     //  银行卡4位1空格
     TextWatcher textWatcher = new TextWatcher() {
         int beforeTextLength = 0;
@@ -471,6 +477,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void afterTextChanged(Editable s) {
             if (isChanged) {
+                textErrorLian.setVisibility(View.GONE);
                 location = editBankNumber.getSelectionEnd();
                 int index = 0;
                 while (index < buffer.length()) {
