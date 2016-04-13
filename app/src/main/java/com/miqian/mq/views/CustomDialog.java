@@ -142,6 +142,12 @@ public abstract class CustomDialog extends Dialog {
 		}
 	}
 
+	public void setRemarksVisibility(int visibility) {
+		if (remarksText != null) {
+			remarksText.setVisibility(visibility);
+		}
+	}
+
 	public void setNegative(int viewCode) {
 		if (btNegative != null) {
 			btNegative.setVisibility(viewCode);

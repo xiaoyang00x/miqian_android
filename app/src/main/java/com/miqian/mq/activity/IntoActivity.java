@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -36,13 +37,16 @@ import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * Created by Joy on 2015/9/10.
@@ -62,6 +66,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private EditText editCardId;
     private TextView textTip;
     private TextView textLimit;
+    private TextView textErrorLian;
 
     private MyHandler mHandler;
     private UserInfo userInfo;
@@ -129,6 +134,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
         textLimit = (TextView) findViewById(R.id.text_limit);
+        textErrorLian = (TextView) findViewById(R.id.text_error_lian);
 
         frameRealName = (LinearLayout) findViewById(R.id.frame_real_name);
         editName = (EditText) frameRealName.findViewById(R.id.edit_name);
@@ -306,6 +312,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void handleMessage(Message msg) {
             String strRet = (String) msg.obj;
+            textErrorLian.setVisibility(View.GONE);
             switch (msg.what) {
                 case Constants.RQF_PAY:
                     JSONObject objContent = BaseHelper.string2JSON(strRet);
@@ -337,12 +344,18 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                         }
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
-                    } else if (retCode.equals("1004")) {
-                        rollInError(mActivity, orderNo, strRet);
-                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
+//                    } else if (retCode.equals("1004")) {
+//                        rollInError(mActivity, orderNo, strRet);
+//                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
                     } else {
                         rollInError(mActivity, orderNo, strRet);
-                        Uihelper.showToast(mActivity, retMsg);
+//                        Uihelper.showToast(mActivity, retMsg);
+                        textErrorLian.setVisibility(View.VISIBLE);
+                        String errorString = showErrorString(mActivity, retCode);
+                        if (TextUtils.isEmpty(errorString)) {
+                            errorString = retMsg;
+                        }
+                        textErrorLian.setText(errorString);
                     }
                     break;
             }
@@ -352,6 +365,16 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     public static void rollInError(Context context, String orderNo, String error) {
         HttpRequest.rollInError(context, orderNo, error);
+    }
+
+    public static String showErrorString(Context context, String key) {
+        String errorData = Pref.getString(Pref.ERROR_LIAN, context, Constants.ERROR_LIAN_DEFAULT);
+        if (!TextUtils.isEmpty(errorData)) {
+            Map<String, String> userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
+            });
+            return userMap.get(key);
+        }
+        return null;
     }
 
     private void checkOrder(String orderNo) {

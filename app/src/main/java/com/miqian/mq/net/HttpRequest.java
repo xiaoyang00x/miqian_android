@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -12,6 +13,7 @@ import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
+import com.miqian.mq.entity.ErrorLianResult;
 import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfoResult;
@@ -31,7 +33,6 @@ import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TransferDetailResult;
-import com.miqian.mq.entity.UpdateInfo;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.entity.UserMessageResult;
@@ -39,12 +40,13 @@ import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
-import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jackie on 2015/9/4.
@@ -191,15 +193,25 @@ public class HttpRequest {
     /**
      * 充值失败原因上传
      */
-    public static void rollInError(Context context, String orderNo, String error) {
+    public static void rollInError(final Context context, String orderNo, String error) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("orderNo", orderNo));
         mList.add(new Param("llJson", error));
+        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, "1.0")));
 
         new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
+                ErrorLianResult errorLianResult = JsonUtil.parseObject(result, ErrorLianResult.class);
+                String errorData = errorLianResult.getData();
+                Map<String, String> userMap = null;
+                if (!TextUtils.isEmpty(errorData)) {
+                    userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
+                    });
+                    Pref.saveString(Pref.ERROR_LIAN, errorData, context);
+                    Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
+                }
             }
 
             @Override

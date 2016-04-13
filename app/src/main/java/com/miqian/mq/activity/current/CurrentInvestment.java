@@ -73,6 +73,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private RelativeLayout framePayChoose;
     private TextView textPayType;
     private TextView textPayMoney;
+    private TextView textErrorLian;
 
     private RelativeLayout frameTip;
     private View frameSpace;
@@ -122,6 +123,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     public int payModeState = 0;
     private CustomDialog dialogTips;
+    private CustomDialog packageTips;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -324,6 +326,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         textPromote = (TextView) findViewById(R.id.text_promote);
         textPromoteMoney = (TextView) findViewById(R.id.text_promote_money);
         textPromoteUnit = (TextView) findViewById(R.id.text_promote_unit);
+        textErrorLian = (TextView) findViewById(R.id.text_error_lian);
 
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -371,28 +374,36 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         return "确认订单";
     }
 
+    private void clickToPayOrder() {
+        if (payModeState == PAY_MODE_LIAN && payMoney != BigDecimal.ZERO) {
+            MobclickAgent.onEvent(mContext, "1067");
+            Intent intent = new Intent(CurrentInvestment.this, IntoActivity.class);
+            intent.putExtra("rollType", 1);
+            intent.putExtra("money", payMoney.toString());
+            startActivityForResult(intent, REQUEST_CODE_ROLLIN);
+        } else if (payModeState == PAY_MODE_BANK) {
+            rollIn();
+        } else if (payModeState == PAY_MODE_CURRENT) {
+            List<Amt> prodListParam = new ArrayList<>();
+            Amt amt = new Amt();
+            amt.setAmt(payMoney);
+            prodListParam.add(amt);
+            prodListString = JSON.toJSONString(prodListParam, true);
+            payOrder();
+        } else {
+            MobclickAgent.onEvent(mContext, "1068");
+            payOrder();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                if (payModeState == PAY_MODE_LIAN && payMoney != BigDecimal.ZERO) {
-                    MobclickAgent.onEvent(mContext, "1067");
-                    Intent intent = new Intent(CurrentInvestment.this, IntoActivity.class);
-                    intent.putExtra("rollType", 1);
-                    intent.putExtra("money", payMoney.toString());
-                    startActivityForResult(intent, REQUEST_CODE_ROLLIN);
-                } else if (payModeState == PAY_MODE_BANK) {
-                    rollIn();
-                } else if (payModeState == PAY_MODE_CURRENT) {
-                    List<Amt> prodListParam = new ArrayList<>();
-                    Amt amt = new Amt();
-                    amt.setAmt(payMoney);
-                    prodListParam.add(amt);
-                    prodListString = JSON.toJSONString(prodListParam, true);
-                    payOrder();
+                if (promList != null && promList.size() > 0 && position < 0) {
+                    showPackageTips();
                 } else {
-                    MobclickAgent.onEvent(mContext, "1068");
-                    payOrder();
+                    clickToPayOrder();
                 }
                 break;
             case R.id.frame_red_package:
@@ -460,6 +471,30 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 showTradeDialog(DialogTradePassword.TYPE_INPUTPASSWORD);
             }
         }
+    }
+
+    private void showPackageTips() {
+        if (packageTips == null) {
+            packageTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
+                @Override
+                public void positionBtnClick() {
+                    clickToPayOrder();
+                    dismiss();
+                }
+
+                @Override
+                public void negativeBtnClick() {
+                    frameRedPackage.performClick();
+                }
+            };
+            packageTips.setNegative(View.VISIBLE);
+            packageTips.setRemarksVisibility(View.GONE);
+            packageTips.setNegative("选择优惠券");
+            packageTips.setPositive("认购");
+            packageTips.setTitle("您有未使用的优惠券");
+            packageTips.setCanceledOnTouchOutside(false);
+        }
+        packageTips.show();
     }
 
     private void payOrder() {
@@ -557,6 +592,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     startActivity(intent);
                     dismiss();
                 }
+
                 @Override
                 public void negativeBtnClick() {
                     showTradeDialog(DialogTradePassword.TYPE_INPUTPASSWORD);
@@ -650,6 +686,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
         @Override
         public void handleMessage(Message msg) {
+            textErrorLian.setVisibility(View.GONE);
             String strRet = (String) msg.obj;
             switch (msg.what) {
                 case Constants.RQF_PAY:
@@ -673,12 +710,18 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                         }
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
-                    } else if (retCode.equals("1004")) {
-                        IntoActivity.rollInError(mActivity, orderNo, strRet);
-                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
+//                    } else if (retCode.equals("1004")) {
+//                        IntoActivity.rollInError(mActivity, orderNo, strRet);
+//                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
                     } else {
                         IntoActivity.rollInError(mActivity, orderNo, strRet);
-                        Uihelper.showToast(mActivity, retMsg);
+                        textErrorLian.setVisibility(View.VISIBLE);
+                        String errorString = IntoActivity.showErrorString(mActivity, retCode);
+                        if (TextUtils.isEmpty(errorString)) {
+                            errorString = retMsg;
+                        }
+                        textErrorLian.setText(errorString);
+//                        Uihelper.showToast(mActivity, retMsg);
                     }
                     break;
             }
