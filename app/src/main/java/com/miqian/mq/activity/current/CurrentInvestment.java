@@ -225,7 +225,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
      * 根据支付状态刷新view
      */
     private void refreshPayView() {
-        textErrorLian.setVisibility(View.GONE);
         if (payModeState == PAY_MODE_LIAN) {
             showLianView(true);
             textLian.setText("" + payMoney);
@@ -401,7 +400,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                if (!PRODID_CURRENT.equals(prodId) && promList != null && promList.size() > 0 && position < 0) {
+                if (promList != null && promList.size() > 0 && position < 0) {
                     showPackageTips();
                 } else {
                     clickToPayOrder();
@@ -711,6 +710,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                         }
                     } else if (retCode.equals("1006")) {
                         Uihelper.showToast(mActivity, "您已取消当前交易");
+//                    } else if (retCode.equals("1004")) {
+//                        IntoActivity.rollInError(mActivity, orderNo, strRet);
+//                        Uihelper.showToast(mActivity, retMsg.substring(retMsg.indexOf("[") + 1, retMsg.indexOf("]")).trim() + "有误");
                     } else {
                         IntoActivity.rollInError(mActivity, orderNo, strRet);
                         textErrorLian.setVisibility(View.VISIBLE);
@@ -719,6 +721,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                             errorString = retMsg;
                         }
                         textErrorLian.setText(errorString);
+//                        Uihelper.showToast(mActivity, retMsg);
                     }
                     break;
             }
