@@ -15,6 +15,25 @@ public class BankCard implements Serializable{
     private  String city;
     private  String bankCode;
 
+    private String withdrawLimitLowestAmt;
+    private String withdrawLimitPrompt;
+
+    public String getWithdrawLimitLowestAmt() {
+        return withdrawLimitLowestAmt;
+    }
+
+    public void setWithdrawLimitLowestAmt(String withdrawLimitLowestAmt) {
+        this.withdrawLimitLowestAmt = withdrawLimitLowestAmt;
+    }
+
+    public String getWithdrawLimitPrompt() {
+        return withdrawLimitPrompt;
+    }
+
+    public void setWithdrawLimitPrompt(String withdrawLimitPrompt) {
+        this.withdrawLimitPrompt = withdrawLimitPrompt;
+    }
+
     public String getBankCode() {
         return bankCode;
     }
