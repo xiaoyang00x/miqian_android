@@ -1,6 +1,7 @@
 package com.miqian.mq.fragment;
 
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,8 @@ import com.miqian.mq.net.MyAsyncTask;
 import com.miqian.mq.receiver.HomeDialogReceiver;
 import com.miqian.mq.views.HomeDialog;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.PromotionDialog;
+import com.miqian.mq.views.PromotionDialogOverdue;
 import com.miqian.mq.views.ServerBusyView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -44,7 +47,6 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     HomeAdapter adapter;
     HomePageInfo mData;
     GetHomeActivity mHomeActivityData;
-    private HomeDialog homeDialog;
     private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
     private PendingIntent dialogPendingIntent;
     private AlarmManager alarmManager;
@@ -239,7 +241,15 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
 //                }
 
                 if (mHomeActivityData != null && GetHomeActivity.FLAG_SHOW.equals(mHomeActivityData.getShowFlag())) {
-                    showActivityDialog();
+                    if(GetHomeActivity.ACTIVITY_TYPE_HOME.equals(mHomeActivityData.getActivityType())) {
+                        showActivityDialog();
+                    }else if(GetHomeActivity.ACTIVITY_TYPE_PROMOTION.equals(mHomeActivityData.getActivityType())) {
+                        Dialog dialogPromotion = new PromotionDialog(mActivity, mHomeActivityData);
+                        dialogPromotion.show();
+                    }else if(GetHomeActivity.ACTIVITY_TYPE_PROMOTION_OVERDUE.equals(mHomeActivityData.getActivityType())) {
+                        Dialog dialogPromotionOverdue = new PromotionDialogOverdue(mActivity, mHomeActivityData);
+                        dialogPromotionOverdue.show();
+                    }
                 }
             }
 
@@ -280,7 +290,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
 
     @Override
     public void show() {
-        homeDialog = new HomeDialog(mActivity, mHomeActivityData);
+        HomeDialog homeDialog = new HomeDialog(mActivity, mHomeActivityData);
         homeDialog.show();
         MobclickAgent.onEvent(mApplicationContext, "home_pop_active");
     }

@@ -34,8 +34,8 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GrowingIO.startTracing(this, "b3aa061603e9427dacf180c923cffbea");
-        GrowingIO.setScheme("growing.b82cc4beb7662e94");
+        GrowingIO.startTracing(this, "aabcdf9bad412e4f");
+        GrowingIO.setScheme("growing.f20b1d4a79b7e6e4");
 
         setContentView(R.layout.activity_splash);
         Config.init(this);

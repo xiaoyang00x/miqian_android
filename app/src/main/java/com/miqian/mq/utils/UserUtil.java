@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -37,7 +38,9 @@ public class UserUtil {
         Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getRealName()), context);
         Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getPayPwdStatus()), context);
 
-        //设置Udesk用户信息
+        //设置GrowingIO用户信息
+        GrowingIO growingIO = GrowingIO.getInstance();
+        growingIO.setCS1("user_id", RSAUtils.decryptByPrivate(userInfo.getCustId()));
 
         //设置极光别名
         JpushHelper.setAlias(context);
@@ -113,6 +116,10 @@ public class UserUtil {
         Pref.saveString(Pref.REAL_NAME, "", context);
         //token值为"",表示取消之前设置的别名
         JpushHelper.setAlias(context);
+
+        //设置GrowingIO用户信息
+        GrowingIO growingIO = GrowingIO.getInstance();
+        growingIO.setCS1("user_id", "");
 
         logout();
     }
