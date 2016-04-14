@@ -172,9 +172,7 @@ dependencies {
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile project(':onekeyshare')
     compile files('libs/umeng-onlineconfig_v1.0.0.jar')
-//    compile fileTree(dir:'maa/sdk',include:['*.jar'])
-
-    compile fileTree(include: ['*.jar'], dir: 'maa/sdk')
+    compile fileTree(dir: 'maa/sdk', include: ['*.jar'])
     compile 'com.growingio.android:vds-android:latest.release@aar'
     compile project(path: ':Udesk_Separate_UI')
 }
