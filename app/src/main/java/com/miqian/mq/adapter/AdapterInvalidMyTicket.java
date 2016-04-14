@@ -83,7 +83,7 @@ public class AdapterInvalidMyTicket extends RecyclerView.Adapter {
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
                 setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
             } else {
-                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getTotalAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 if (Promote.TYPE.SC.getValue().equals(promote.getType())) { // 拾财券 可点击跳转
                     tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_miaoqian);
