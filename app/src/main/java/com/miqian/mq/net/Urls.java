@@ -187,7 +187,7 @@ public class Urls {
     public final static String web_regular_plan_detail = base_server + "webView/regPlanDetail";
 
     //提现说明
-    public final static String web_rollout = base_server + "webView/presentDescription";
+    public final static String web_rollout = "https://res.shicaidai.com/miaoqian/webView/presentDescription.html";
     //红包、拾财券使用规则(认购页面)
     public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
 
