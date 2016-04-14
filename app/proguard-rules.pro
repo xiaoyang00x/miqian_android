@@ -181,15 +181,36 @@ public static final int *;
 ##--------------------End proguard configuration for GrowingIO------------------------
 
 ##-------------------Begin proguard configuration for udesk-------------------------
--libraryjars libs/asmack-android-8-4.0.6.jar
--libraryjars libs/android-async-http.jar
--libraryjars libs/android-support-v4.jar
--libraryjars libs/qiniu-android-sdk-7.0.1.jar
--libraryjars libs/udesk_sdkui.2.3.0.jar
--libraryjars libs/universal-image-loader-1.9.4.jar
+-libraryjars ../Udesk_Separate_UI/libs/asmack-android-8-4.0.6.jar
+-libraryjars ../Udesk_Separate_UI/libs/android-async-http-1.4.6.jar
+-libraryjars ../Udesk_Separate_UI/libs/qiniu-android-sdk-7.0.1.jar
+-libraryjars ../Udesk_Separate_UI/libs/udesk_sdk_3.1.jar
+-libraryjars ../Udesk_Separate_UI/libs/universal-image-loader-1.9.4.jar
 
 -keep class com.kenai.jbosh.** {*; }
 -keep class com.novell.sasl.client.** {*; }
 -keep class de.measite.smack.** {*; }
 -keep class org.** {*; }
+
+
+-keep class de.measite.smack.AndroidDebugger { *; }
+-keep class * implements org.jivesoftware.smack.initializer.SmackInitializer
+-keep class * implements org.jivesoftware.smack.provider.IQProvider
+-keep class * implements org.jivesoftware.smack.provider.PacketExtensionProvider
+-keep class * extends org.jivesoftware.smack.packet.Packet
+-keep class org.jivesoftware.smack.XMPPConnection
+-keep class org.jivesoftware.smack.ReconnectionManager
+-keep class org.jivesoftware.smack.CustomSmackConfiguration
+-keep class org.jivesoftware.smackx.disco.ServiceDiscoveryManager
+-keep class org.jivesoftware.smackx.xhtmlim.XHTMLManager
+-keep class org.jivesoftware.smackx.muc.MultiUserChat
+-keep class org.jivesoftware.smackx.bytestreams.ibb.InBandBytestreamManager
+-keep class org.jivesoftware.smackx.bytestreams.socks5.Socks5BytestreamManager
+-keep class org.jivesoftware.smackx.filetransfer.FileTransferManager
+-keep class org.jivesoftware.smackx.iqlast.LastActivityManager
+-keep class org.jivesoftware.smackx.commands.AdHocCommandManager
+-keep class org.jivesoftware.smackx.ping.PingManager
+-keep class org.jivesoftware.smackx.privacy.PrivacyListManager
+-keep class org.jivesoftware.smackx.time.EntityTimeManager
+-keep class org.jivesoftware.smackx.vcardtemp.VCardManager
 ##--------------------End proguard configuration for udesk------------------------
