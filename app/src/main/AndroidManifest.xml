@@ -412,6 +412,13 @@
             android:value="${CHANNEL_VALUE}"
             android:name="UMENG_CHANNEL"/>
         <!--Umeng End-->
+        <!--GrowingIO Begin-->
+
+        <meta-data
+            android:value="${CHANNEL_VALUE}"
+            android:name="com.growingio.android.GConfig.Channel"/>
+        <!--GrowingIO End-->
+
     </application>
 
 </manifest>
