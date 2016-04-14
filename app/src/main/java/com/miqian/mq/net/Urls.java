@@ -221,4 +221,9 @@ public class Urls {
     public final static String web_aboutus_introduce = "https://res.shicaidai.com/miaoqian/about/miaoqianjianjie.html";
     //战略团队
     public final static String web_aboutus_zhanlue = "https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
+
+    //我的邀请
+    public final static String web_my_invite = "https://testapi.shicaidai.com:8443/activityService/inviteMain";
+
+
 }

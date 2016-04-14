@@ -64,6 +64,8 @@ public class RolloutActivity extends BaseActivity {
     private BankCard bankCard;
     private boolean isSuccessBindBranch;
     private View btnRollout;
+    private BigDecimal mLimitLowestMoney = BigDecimal.TEN;  //最低提现金额，默认10元
+    private TextView tvTips;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -83,6 +85,13 @@ public class RolloutActivity extends BaseActivity {
                 bankCard = result.getData();
                 if (bankCard != null) {
                     bankOpenName = bankCard.getBankOpenName();
+                    String limitLowestMoney = bankCard.getWithdrawLimitLowestAmt();
+                    if (!TextUtils.isEmpty(limitLowestMoney)) {
+                        mLimitLowestMoney = new BigDecimal(limitLowestMoney);
+                    }
+                    String limitTips = bankCard.getWithdrawLimitPrompt();
+                    limitTips = limitTips.replace("|n", "\n");
+                    tvTips.setText(limitTips);
                 }
                 initBindBranchView();
             }
@@ -191,6 +200,7 @@ public class RolloutActivity extends BaseActivity {
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         textBranch = (TextView) findViewById(R.id.tv_bank_branch);
         tv_bank_province = (TextView) findViewById(R.id.tv_bank_province);
+        tvTips = (TextView) findViewById(R.id.tv_rollout_tip);
 
 
         frame_bindbranch = findViewById(R.id.frame_bindbranch);
@@ -262,9 +272,9 @@ public class RolloutActivity extends BaseActivity {
             dialogTips.setRemarks("转出金额超限");
             dialogTips.show();
             return;
-        } else if (moneyCurrent.compareTo(BigDecimal.TEN) < 0) {
+        } else if (moneyCurrent.compareTo(mLimitLowestMoney) < 0) {
             initTipDialog(0);
-            dialogTips.setRemarks("转出金额不能小于10元");
+            dialogTips.setRemarks("转出金额不能小于" + mLimitLowestMoney + "元");
             dialogTips.show();
             return;
         } else {
@@ -400,8 +410,8 @@ public class RolloutActivity extends BaseActivity {
                 }//交易密码错误4次提示框
                 else if (resultCode.equals("999992")) {
                     showPwdError4Dialog(result.getMessage());
-                }else {
-                    Uihelper.showToast(mActivity,result.getMessage());
+                } else {
+                    Uihelper.showToast(mActivity, result.getMessage());
                 }
             }
 
@@ -427,6 +437,7 @@ public class RolloutActivity extends BaseActivity {
                     startActivity(intent);
                     dismiss();
                 }
+
                 @Override
                 public void negativeBtnClick() {
                     rollOutHttp();

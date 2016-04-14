@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -197,7 +198,7 @@ public class HttpRequest {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("orderNo", orderNo));
         mList.add(new Param("llJson", error));
-        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, "1.0")));
+        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, IntoActivity.showErrorString(context, "llErrorCodeVersion"))));
 
         new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
 
@@ -209,8 +210,10 @@ public class HttpRequest {
                 if (!TextUtils.isEmpty(errorData)) {
                     userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
                     });
-                    Pref.saveString(Pref.ERROR_LIAN, errorData, context);
-                    Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
+                    if (userMap.size() > 0) {
+                        Pref.saveString(Pref.ERROR_LIAN, errorData, context);
+                        Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
+                    }
                 }
             }
 

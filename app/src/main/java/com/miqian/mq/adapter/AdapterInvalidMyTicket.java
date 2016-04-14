@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -159,7 +160,7 @@ public class AdapterInvalidMyTicket extends RecyclerView.Adapter {
         protected TextView tv_use_limit;
         protected TextView tv_amount_unit;
         protected TextView tv_amount;
-        protected LinearLayout frame_ticket;
+        protected RelativeLayout frame_ticket;
         protected ImageView iv_icon;
 
         public BaseViewHoleder(View itemView) {
@@ -171,7 +172,7 @@ public class AdapterInvalidMyTicket extends RecyclerView.Adapter {
             tv_use_limit = (TextView) itemView.findViewById(R.id.tv_use_limit);
             tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
             tv_amount_unit = (TextView) itemView.findViewById(R.id.tv_amount_unit);
-            frame_ticket = (LinearLayout) itemView.findViewById(R.id.frame_ticket);
+            frame_ticket = (RelativeLayout) itemView.findViewById(R.id.frame_ticket);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
 
             tv_name.setTextColor(mContext.getResources().getColor(R.color.mq_b5));

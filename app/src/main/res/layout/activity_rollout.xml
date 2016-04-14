@@ -219,7 +219,9 @@
                 android:layout_marginTop="10dp"
                 android:visibility="visible">
 
-                <TextView
+                <com.miqian.mq.views.TextViewEx
+                    android:id="@+id/tv_rollout_tip"
+                    android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -227,8 +229,6 @@
                     android:layout_marginRight="@dimen/margin_left_right"
                     android:layout_marginTop="5dp"
                     android:paddingBottom="30dp"
-                    android:text="温馨提示：\n周一至周六：17:00前申请提现，当日处理;17:00后申请提现，下一个工作日处理\n周日：全天申请提现，下一个工作日处理\n国家法定节假日顺延处理\n处理后以下银行最快当天到账，其它银行下2个工作日内到账：
-工商银行、农业银行、招商银行、建设银行、交通银行、中国银行、平安银行、浦发银行 （工作日是指周一至周五）"
                     android:textColor="@color/mq_b2"
                     android:textSize="@dimen/mq_font4" />
             </RelativeLayout>
