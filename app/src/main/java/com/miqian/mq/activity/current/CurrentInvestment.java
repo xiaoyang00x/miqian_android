@@ -382,7 +382,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             intent.putExtra("rollType", 1);
             intent.putExtra("money", payMoney.toString());
             startActivityForResult(intent, REQUEST_CODE_ROLLIN);
-        } else if (payModeState == PAY_MODE_BANK) {
+        } else if (payModeState == PAY_MODE_BANK && payMoney != BigDecimal.ZERO) {
             rollIn();
         } else if (payModeState == PAY_MODE_CURRENT) {
             List<Amt> prodListParam = new ArrayList<>();
