@@ -57,6 +57,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
             ((ViewHolder) holder).textMoneyUnit.setVisibility(View.GONE);
         } else {
             ((ViewHolder) holder).textMoney.setText("" + promote.getCanUseAmt());
+            ((ViewHolder) holder).textMoneyUnit.setVisibility(View.VISIBLE);
         }
         ((ViewHolder) holder).textName.setText(promote.getPromProdName());
         ((ViewHolder) holder).limitType.setText(promote.getMinBuyAmtOrPerc());
@@ -66,17 +67,6 @@ public class AdapterPacket extends RecyclerView.Adapter {
         } else {
             ((ViewHolder) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
         }
-//        } else if (promote.getType().equals("SC")) {
-//            ((ViewHolderTicket) holder).textMoney.setText("￥" + promote.getCanUseAmt());
-//            ((ViewHolderTicket) holder).textType.setText(promote.getPromProdName());
-//            ((ViewHolderTicket) holder).limitType.setText(promote.getLimitMsg());
-//            ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-//            if (mPosition == position) {
-//                ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_choosed);
-//            } else {
-//                ((ViewHolderTicket) holder).promoteChoosed.setImageResource(R.drawable.promote_no_choosed);
-//            }
-//        }
     }
 
     @Override
