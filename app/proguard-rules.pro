@@ -191,7 +191,10 @@ public static final int *;
 -keep class com.novell.sasl.client.** {*; }
 -keep class de.measite.smack.** {*; }
 -keep class org.** {*; }
-
+-keep class udesk.core.** {*; }
+-keep class cn.udesk.** {*; }
+-keepclasseswithmembernames class udesk.core.**  {*; }
+-keepclasseswithmembernames class cn.udesk.**  {*; }
 
 -keep class de.measite.smack.AndroidDebugger { *; }
 -keep class * implements org.jivesoftware.smack.initializer.SmackInitializer

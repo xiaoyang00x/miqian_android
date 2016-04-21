@@ -86,6 +86,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private List<Promote> promList;
     private String promListString = "";
     private String prodListString = "";
+    private String promoteType = "";
 
     private String money;
     private String prodId; //0:充值产品 1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
@@ -203,7 +204,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textPromote.setText("已抵用");
                 textPromoteMoney.setText("" + promoteMoney);
                 textPromoteUnit.setText("元");
-            } else if (increaseMoney.compareTo(bFlag) > 0) {
+            } else if ("JX".equals(promoteType)) {
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
                 textPromote.setText("收益加");
                 textPromoteMoney.setText("" + increaseMoney);
@@ -449,8 +450,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 promoteMoney = BigDecimal.ZERO;
                 increaseMoney = BigDecimal.ZERO;
                 promListString = "";
+                promoteType = "";
                 if (position >= 0) {
                     Promote promote = promList.get(position);
+                    promoteType = promote.getType();
                     if ("JX".equals(promote.getType())) {
                         increaseMoney = promote.getExtraIncome();
                     } else {
