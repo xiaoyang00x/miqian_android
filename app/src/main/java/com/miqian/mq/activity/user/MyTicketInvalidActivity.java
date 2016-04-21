@@ -172,7 +172,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("优惠券");
+        mTitle.setTitleText("我的优惠券");
     }
 
     @Override
