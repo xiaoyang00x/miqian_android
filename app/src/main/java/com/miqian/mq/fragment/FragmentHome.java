@@ -30,8 +30,6 @@ import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.PromotionDialog;
 import com.miqian.mq.views.PromotionDialogOverdue;
 import com.miqian.mq.views.ServerBusyView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.analytics.MobclickAgent;

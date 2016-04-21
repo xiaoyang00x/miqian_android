@@ -18,6 +18,7 @@
             android:src="@drawable/promote_no_choosed" />
 
         <LinearLayout
+            android:id="@+id/frame_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -52,7 +53,8 @@
 
         <RelativeLayout
             android:id="@+id/frame_money"
-            android:layout_width="130dp"
+            android:layout_toRightOf="@id/frame_name"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true">
 
