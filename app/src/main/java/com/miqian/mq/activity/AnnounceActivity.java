@@ -13,12 +13,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshSwipeMenuListView;
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.MessageAdapter;
 import com.miqian.mq.entity.MessageInfo;
@@ -37,6 +31,10 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
+import com.miqian.mq.views.swipemenulistview.SwipeMenu;
+import com.miqian.mq.views.swipemenulistview.SwipeMenuCreator;
+import com.miqian.mq.views.swipemenulistview.SwipeMenuItem;
+import com.miqian.mq.views.swipemenulistview.SwipeMenuListView;
 
 import java.util.List;
 
@@ -53,12 +51,11 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
     private int messageType = 0; //0为消息，1为公告
 
-    private SwipeMenuListView mSwipeMenuListView;
     private MessageAdapter adapter;
     private CustomDialog dialogTips;
     private int count;
     private List<MessageInfo> list;
-    private PullToRefreshSwipeMenuListView pullToListView;
+    private SwipeMenuListView mSwipeMenuListView;
     private SwipeMenuCreator creator;
     private View footView;
     private boolean isOver;
@@ -119,7 +116,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             textLoading.setText("");
                         }
                         adapter = new MessageAdapter(mActivity, list);
-                        pullToListView.setAdapter(adapter);
+                        mSwipeMenuListView.setAdapter(adapter);
 
                     } else {
                         showEmptyView();
@@ -158,7 +155,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             }
                         }
                         adapter = new MessageAdapter(mActivity, list);
-                        pullToListView.setAdapter(adapter);
+                        mSwipeMenuListView.setAdapter(adapter);
                         textLoading.setText("");
                     } else {
                         showEmptyView();
@@ -202,7 +199,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
     @Override
     protected void onDestroy() {
-        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.MessageState,null);
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.MessageState, null);
         extendOperationController.unRegisterExtendOperationListener(this);
         super.onDestroy();
     }
@@ -212,26 +209,20 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         footView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_loading, null);
         progressBarLoading = (ProgressBar) footView.findViewById(R.id.progressBar);
         textLoading = (TextView) footView.findViewById(R.id.text_loading);
-
-
         btLeft = (ImageButton) findViewById(R.id.bt_left);
         btLeft.setOnClickListener(this);
 
         titleLeft = (Button) findViewById(R.id.title_left);
         titleRight = (Button) findViewById(R.id.title_right);
-
         textRight = (TextView) findViewById(R.id.tv_clearall);
-        textRight.setOnClickListener(this);
 
+        textRight.setOnClickListener(this);
         titleLeft.setOnClickListener(this);
         titleRight.setOnClickListener(this);
-
-        pullToListView = (PullToRefreshSwipeMenuListView) findViewById(R.id.listview);
-        pullToListView.setMode(PullToRefreshBase.Mode.DISABLED);
-        pullToListView.setOnScrollListener(this);
-        pullToListView.getRefreshableView().addFooterView(footView);
-
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
+        mSwipeMenuListView = (SwipeMenuListView) findViewById(R.id.listview);
+        mSwipeMenuListView.setOnScrollListener(this);
+        mSwipeMenuListView.addFooterView(footView);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
@@ -244,38 +235,30 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         view_Refresh = (TextView) findViewById(R.id.tv_refresh);
         tvTips = (TextView) findViewById(R.id.tv_tip);
         ivMessageData = (ImageView) findViewById(R.id.iv_messagedata);
-
         view_Refresh.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 showContentView();
                 obtainData();
-
-
             }
         });
         initPullToListView();
     }
 
     private void initPullToListView() {
-
-        mSwipeMenuListView = (SwipeMenuListView) pullToListView.getRefreshableView();
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-
+        creator = new SwipeMenuCreator() {
             @Override
             public void create(SwipeMenu menu) {
-                // TODO Auto-generated method stub
-                switch (menu.getViewType()) {
-                    case 0:
-                        createMenu1(menu);
-                        break;
-                }
+                SwipeMenuItem item1 = new SwipeMenuItem(getApplicationContext());
+                item1.setBackground(getResources().getDrawable(R.drawable.shape_swip_red));
+                item1.setWidth(Uihelper.dip2px(mActivity, 90));
+                item1.setIcon(getResources().getDrawable(R.drawable.messsagedelete_selector));
+                menu.addMenuItem(item1);
             }
         };
         mSwipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-
             @Override
-            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
+            public void onMenuItemClick(final int position, SwipeMenu menu, int index) {
                 //删除消息
                 begin();
                 MessageInfo messageInfo = list.get(position);
@@ -300,25 +283,23 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                     }
                 }, messageInfo.getId(), "", 0);
 
-                return false;
             }
         });
         mSwipeMenuListView.setMenuCreator(creator);
-        pullToListView.setMode(PullToRefreshBase.Mode.DISABLED);
-        pullToListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mSwipeMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
-                if (position == 0||position==list.size()+1) {
+                if (position == list.size() + 1) {
                 } else {
                     //消息
-                    MessageInfo messageInfo = list.get(position - 1);
+                    MessageInfo messageInfo = list.get(position);
                     int msgType = messageInfo.getMsgType();
                     if (messageType == 1) {
                         //公告
-                        boolean isReaded = Pref.getBoolean(Pref.PUSH + list.get(position - 1).getId(), mActivity, false);
+                        boolean isReaded = Pref.getBoolean(Pref.PUSH + list.get(position).getId(), mActivity, false);
                         if (!isReaded) {
-                            Pref.saveBoolean(Pref.PUSH + list.get(position - 1).getId(), true, mActivity);
-                            list.get(position - 1).setIsRead(true);
+                            Pref.saveBoolean(Pref.PUSH + list.get(position).getId(), true, mActivity);
+                            list.get(position).setIsRead(true);
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -332,7 +313,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         default:
                             Intent intent_other = new Intent(mActivity, AnnounceResultActivity.class);
                             intent_other.putExtra("id", messageInfo.getId());
-                            intent_other.putExtra("position", position - 1);
+                            intent_other.putExtra("position", position);
                             if (messageType == 0) {
                                 intent_other.putExtra("isMessage", true);
                             } else {
@@ -343,14 +324,6 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                 }
             }
         });
-    }
-
-    private void createMenu1(SwipeMenu menu) {
-        SwipeMenuItem item1 = new SwipeMenuItem(getApplicationContext());
-        item1.setBackground(getResources().getDrawable(R.drawable.shape_swip_red));
-        item1.setWidth(Uihelper.dip2px(mActivity, 90));
-        item1.setIcon(getResources().getDrawable(R.drawable.messsagedelete_selector));
-        menu.addMenuItem(item1);
     }
 
     @Override
@@ -370,7 +343,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     }
 
     @Override
-    protected String getPageName()  {
+    protected String getPageName() {
         return "消息";
     }
 
@@ -497,6 +470,10 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
+        if (isOver||isLoading){
+            return;
+        }
+
         View firstView = view.getChildAt(firstVisibleItem);
         // 当firstVisibleItem是第0位。如果firstView==null说明列表为空，需要刷新;或者top==0说明已经到达列表顶部, 也需要刷新
         if (firstVisibleItem == 0 && (firstView == null || firstView.getTop() == 0)) {
@@ -505,8 +482,8 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             swipeRefresh.setEnabled(false);
         }
         if (messageType == 0) {
-            if (visibleItemCount + firstVisibleItem >= totalItemCount - 1 && !isOver && !isLoading) {
-                if (list.size() < count) {
+            if (visibleItemCount + firstVisibleItem >= totalItemCount - 1) {
+                if (list!=null&&list.size() < count) {
                     isOver = true;
                     isLoading = true;
                     HttpRequest.getMessageList(mActivity, list.get(list.size() - 1).getId() + "", new ICallback<UserMessageResult>() {
@@ -575,7 +552,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         if (MobileOS.getNetworkType(mContext) == -1) {
             tvTips.setText("暂时没有网络");
             ivMessageData.setBackgroundResource(R.drawable.nonetwork);
-        }else {
+        } else {
             tvTips.setText("数据获取失败，请重新获取");
             ivMessageData.setBackgroundResource(R.drawable.error_data);
         }

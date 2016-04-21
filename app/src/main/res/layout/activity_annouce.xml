@@ -112,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.handmark.pulltorefresh.library.PullToRefreshSwipeMenuListView
+        <com.miqian.mq.views.swipemenulistview.SwipeMenuListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -120,7 +120,7 @@
             android:divider="@null"
             android:headerDividersEnabled="false"
             android:scrollbars="none"
-            app:ptrAnimationStyle="flip" />
+             />
 
     </com.miqian.mq.views.MySwipeRefresh>
 </LinearLayout>

@@ -116,11 +116,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
-
         //app在当前
         showJushTip();
     }
-
     //  版本是否强制更新
     private void checkVersion() {
         HttpRequest.forceUpdate(this, new ICallback<UpdateResult>() {
@@ -510,7 +508,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 if (MyApplication.getInstance().isBackStage()) {
                     current_tab = (int) data;
                     ActivityStack.getActivityStack().clearActivity();
-                    mTabHost.setCurrentTab(current_tab);
                 }
                 break;
             default:
