@@ -66,7 +66,7 @@ public class TextViewEx extends TextView {
 			String word = block.substring(start, ++start);
 			cacheWidth = paint.measureText(word);
 			maxWidth -= cacheWidth;
-			if (maxWidth <= 0) {
+			if (maxWidth < 0) {
 				return new Object[] { line, maxWidth + cacheWidth };
 			}
 			line += word;

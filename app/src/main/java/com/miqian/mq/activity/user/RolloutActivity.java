@@ -32,6 +32,7 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTradePassword;
+import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
@@ -65,7 +66,7 @@ public class RolloutActivity extends BaseActivity {
     private boolean isSuccessBindBranch;
     private View btnRollout;
     private BigDecimal mLimitLowestMoney = BigDecimal.TEN;  //最低提现金额，默认10元
-    private TextView tvTips;
+    private TextViewEx tvTips;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -91,7 +92,7 @@ public class RolloutActivity extends BaseActivity {
                     }
                     String limitTips = bankCard.getWithdrawLimitPrompt();
                     limitTips = limitTips.replace("|n", "\n");
-                    tvTips.setText(limitTips);
+                    tvTips.setText(limitTips,true);
                 }
                 initBindBranchView();
             }
@@ -200,7 +201,7 @@ public class RolloutActivity extends BaseActivity {
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         textBranch = (TextView) findViewById(R.id.tv_bank_branch);
         tv_bank_province = (TextView) findViewById(R.id.tv_bank_province);
-        tvTips = (TextView) findViewById(R.id.tv_rollout_tip);
+        tvTips = (TextViewEx) findViewById(R.id.tv_rollout_tip);
 
 
         frame_bindbranch = findViewById(R.id.frame_bindbranch);
