@@ -184,7 +184,7 @@ public class Urls {
     //定期赚详情
     public final static String web_regular_earn_detail = base_server + "webView/getRegDetail/";
     //定期计划详情
-    public final static String web_regular_plan_detail = base_server + "webView/regPlanDetail";
+    public final static String web_regular_plan_detail = base_server + "webView/regPlanDetail/";
 
     //提现说明
     public final static String web_rollout = "https://res.shicaidai.com/miaoqian/webView/presentDescription.html";
