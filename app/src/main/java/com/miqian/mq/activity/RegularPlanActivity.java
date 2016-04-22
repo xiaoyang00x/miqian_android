@@ -148,7 +148,7 @@ public class RegularPlanActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 MobclickAgent.onEvent(mContext, "1011");
-                WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail);
+                WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
             }
         });
     }
