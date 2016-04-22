@@ -10,6 +10,7 @@ import android.view.animation.Interpolator;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+
 public class SwipeMenuListView extends ListView {
 
 	private static final int TOUCH_STATE_NONE = 0;
@@ -137,11 +138,13 @@ public class SwipeMenuListView extends ListView {
 					mTouchState = TOUCH_STATE_Y;
 				}
 				if (mTouchState != TOUCH_STATE_Y && dx > MAX_X) {
+					requestDisallowInterceptTouchEven(true);
 					mTouchState = TOUCH_STATE_X;
 				}
 			}
 			break;
 		case MotionEvent.ACTION_UP:
+			requestDisallowInterceptTouchEven(false);
 			if (mTouchState == TOUCH_STATE_X) {
 				if (mTouchView != null) {
 					mTouchView.onSwipe(ev);
@@ -180,4 +183,10 @@ public class SwipeMenuListView extends ListView {
 	public static interface OpenOrCloseListener {
 		void isOpen(boolean isOpen);
 	}
+	public void requestDisallowInterceptTouchEven(boolean isRequest){
+
+		getParent().requestDisallowInterceptTouchEvent(true);
+	}
+
+
 }
