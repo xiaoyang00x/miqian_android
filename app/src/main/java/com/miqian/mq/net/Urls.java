@@ -223,7 +223,7 @@ public class Urls {
     public final static String web_aboutus_zhanlue = "https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
 
     //我的邀请
-    public final static String web_my_invite = "https://testapi.shicaidai.com:8443/activityService/inviteMain";
+    public final static String web_my_invite = base_server+"activityService/inviteMain";
 
 
 }
