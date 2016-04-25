@@ -11,11 +11,12 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.user.ProjectMatchActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.UserCurrent;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -194,12 +195,12 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.frame_project_match:
                 MobclickAgent.onEvent(mActivity, "1036");
-                Intent intent = new Intent(mActivity, ProjectMatchActivity.class);
-                startActivity(intent);
+                //定期计划 项目匹配
+                WebActivity.startActivity(mActivity, Urls.project_match + "0");
                 break;
             case R.id.bt_redeem:
                 MobclickAgent.onEvent(mActivity, "1038");
-                intent = new Intent(mActivity, ActivityRedeem.class);
+                Intent intent = new Intent(mActivity, ActivityRedeem.class);
                 startActivity(intent);
                 break;
             case R.id.bt_subscribe:

@@ -138,7 +138,7 @@ public class Urls {
     //我的定期详情
     public final static String user_regular_detail = base_server + "commonService/getRegDetail";
     //项目匹配
-    public final static String project_match = base_server + "subjectService/getMatchList";
+    public final static String project_match = base_server + "webView/getProjMatchList/";
     //我的定期转让情况
     public final static String regular_transfer_detail = base_server + "commonService/getRegTrans";
     //还款详情

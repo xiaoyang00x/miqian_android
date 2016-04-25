@@ -194,14 +194,12 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             case R.id.frame_project_match:
                 MobclickAgent.onEvent(mActivity, "1045");
                 if (userRegularDetail != null) {
+                    subjectId = userRegularDetail.getBdId();
                     if ("3".equals(userRegularDetail.getProdId())) {
-                        subjectId = userRegularDetail.getBdId();
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
                     } else if ("4".equals(userRegularDetail.getProdId())) {
                         //定期计划 项目匹配
-                        Intent intent = new Intent(mActivity, ProjectMatchActivity.class);
-                        intent.putExtra("peerCustId", "1372");
-                        startActivity(intent);
+                        WebActivity.startActivity(mActivity, Urls.project_match + subjectId);
                     }
                 }
                 break;
