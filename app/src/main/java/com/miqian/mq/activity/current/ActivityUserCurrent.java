@@ -195,7 +195,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.frame_project_match:
                 MobclickAgent.onEvent(mActivity, "1036");
-                //定期计划 项目匹配
+                //项目匹配
                 WebActivity.startActivity(mActivity, Urls.project_match + "0");
                 break;
             case R.id.bt_redeem:
