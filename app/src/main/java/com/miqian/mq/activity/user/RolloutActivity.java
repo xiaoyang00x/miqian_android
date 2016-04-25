@@ -91,8 +91,10 @@ public class RolloutActivity extends BaseActivity {
                         mLimitLowestMoney = new BigDecimal(limitLowestMoney);
                     }
                     String limitTips = bankCard.getWithdrawLimitPrompt();
-                    limitTips = limitTips.replace("|n", "\n");
-                    tvTips.setText(limitTips,true);
+                    if (!TextUtils.isEmpty(limitTips)) {
+                        limitTips = limitTips.replace("|n", "\n");
+                        tvTips.setText(limitTips,true);
+                    }
                 }
                 initBindBranchView();
             }
