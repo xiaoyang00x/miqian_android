@@ -399,7 +399,7 @@ public class HttpRequest {
     }
 
     //获得个人消息
-    public static void getMessageList(Context context, String id, final ICallback<UserMessageResult> callback) {
+    public static void getMessageList(final Context context, String id, final ICallback<UserMessageResult> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("id", id));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
@@ -410,6 +410,8 @@ public class HttpRequest {
                 UserMessageResult userMessageResult = JsonUtil.parseObject(result, UserMessageResult.class);
                 if (userMessageResult.getCode().equals("000000")) {
                     callback.onSucceed(userMessageResult);
+                    //保存数据到本地，缓存用
+                    Pref.saveString(Pref.DATA_MESSAGE,result,context);
                 } else {
                     callback.onFail(userMessageResult.getMessage());
                 }
@@ -423,7 +425,7 @@ public class HttpRequest {
     }
 
     //获得公告列表
-    public static void getPushList(Context context, String id, String page, final ICallback<PushDataResult> callback) {
+    public static void getPushList(final Context context, String id, String page, final ICallback<PushDataResult> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("id", id));
         mList.add(new Param("page", page));
@@ -434,6 +436,8 @@ public class HttpRequest {
                 PushDataResult pushDataResult = JsonUtil.parseObject(result, PushDataResult.class);
                 if (pushDataResult.getCode().equals("000000")) {
                     callback.onSucceed(pushDataResult);
+                    //保存数据到本地，缓存用
+                    Pref.saveString(Pref.DATA_PUSH,result,context);
                 } else {
                     callback.onFail(pushDataResult.getMessage());
                 }

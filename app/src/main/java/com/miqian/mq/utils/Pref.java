@@ -64,6 +64,12 @@ public class Pref {
     public final static String GESTURESTATE = "gestureState";
     // 推送开关
     public final static String PUSH_STATE = "pushstate";
+    //个人消息
+    public final static String DATA_MESSAGE = "data_message";
+    //全推
+    public final static String DATA_PUSH = "data_push";
+
+
 
     private static SharedPreferences getSettings(final Context contex) {
         SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);
