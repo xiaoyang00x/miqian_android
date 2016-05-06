@@ -129,7 +129,11 @@ public class MobileOS {
      */
     public static String getIMEI(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String imei = telephonyManager.getDeviceId();
+        String imei = "";
+        try {
+            imei = telephonyManager.getDeviceId();
+        } catch (Exception e) {
+        }
         return !TextUtils.isEmpty(imei) ? imei : getLocalMacAddress(context);
     }
 
