@@ -2,6 +2,7 @@ package com.miqian.mq.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +25,7 @@ import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
@@ -125,14 +127,24 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
                 @Override
                 public void onFail(String error) {
-                    if (list != null && adapter != null) {
-                        list.clear();
-                        adapter.notifyDataSetChanged();
+                    //判断是否有缓存
+                    String messageCash = Pref.getString(Pref.DATA_MESSAGE, mActivity, "");
+                    if (TextUtils.isEmpty(messageCash)) {
+                        if (list != null && adapter != null) {
+                            list.clear();
+                            adapter.notifyDataSetChanged();
+                        }
+                        showErrorView();
+                    } else {
+                        //显示缓存信息
+                        UserMessageResult userMessageResult = JsonUtil.parseObject(messageCash, UserMessageResult.class);
+                        list = userMessageResult.getData().getMsgList();
+                        adapter = new MessageAdapter(mActivity, list);
+                        mSwipeMenuListView.setAdapter(adapter);
                     }
+                    swipeRefresh.setRefreshing(false);
                     isLoading = false;
                     end();
-                    showErrorView();
-                    swipeRefresh.setRefreshing(false);
                     Uihelper.showToast(mActivity, error);
                 }
             });
@@ -164,13 +176,23 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
                 @Override
                 public void onFail(String error) {
-                    if (list != null && adapter != null) {
-                        list.clear();
-                        adapter.notifyDataSetChanged();
+                    //判断是否有缓存
+                    String messageCash = Pref.getString(Pref.DATA_PUSH, mActivity, "");
+                    if (TextUtils.isEmpty(messageCash)) {
+                        if (list != null && adapter != null) {
+                            list.clear();
+                            adapter.notifyDataSetChanged();
+                        }
+                        showErrorView();
+                    } else {
+                        //显示缓存信息
+                        PushDataResult pushDataResult = JsonUtil.parseObject(messageCash, PushDataResult.class);
+                        list = pushDataResult.getData().getPushList();
+                        adapter = new MessageAdapter(mActivity, list);
+                        mSwipeMenuListView.setAdapter(adapter);
                     }
                     end();
                     swipeRefresh.setRefreshing(false);
-                    showErrorView();
                     Uihelper.showToast(mActivity, error);
                 }
             });
@@ -421,7 +443,6 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                 messageType = 1;
                 if (list != null && adapter != null) {
                     list.clear();
-
                     adapter.notifyDataSetChanged();
                 }
                 obtainData();
@@ -470,7 +491,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-        if (isOver||isLoading){
+        if (isOver || isLoading) {
             return;
         }
 
@@ -483,7 +504,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         }
         if (messageType == 0) {
             if (visibleItemCount + firstVisibleItem >= totalItemCount - 1) {
-                if (list!=null&&list.size() < count) {
+                if (list != null && list.size() < count) {
                     isOver = true;
                     isLoading = true;
                     HttpRequest.getMessageList(mActivity, list.get(list.size() - 1).getId() + "", new ICallback<UserMessageResult>() {
