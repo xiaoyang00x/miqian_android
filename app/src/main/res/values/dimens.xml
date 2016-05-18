@@ -54,5 +54,25 @@
     <dimen name="mq_font11">44sp</dimen>
     <dimen name="mq_font12">30sp</dimen>
 
+
+    <!--UI标准字号_V2-->
+    <dimen name="mq_font1_v2">9sp</dimen>
+    <dimen name="mq_font2_v2">10sp</dimen>
+    <dimen name="mq_font3_v2">12sp</dimen>
+    <dimen name="mq_font4_v2">13sp</dimen>
+    <dimen name="mq_font5_v2">14sp</dimen>
+    <dimen name="mq_font6_v2">15sp</dimen>
+    <dimen name="mq_font7_v2">16sp</dimen>
+    <dimen name="mq_font8_v2">18sp</dimen>
+    <dimen name="mq_font9_v2">20sp</dimen>
+    <dimen name="mq_font10_v2">22sp</dimen>
+    <dimen name="mq_font11_v2">24sp</dimen>
+    <dimen name="mq_font12_v2">30sp</dimen>
+    <dimen name="mq_font13_v2">32sp</dimen>
+    <dimen name="mq_font14_v2">36sp</dimen>
+    <dimen name="mq_font15_v2">40sp</dimen>
+    <dimen name="mq_font16_v2">50sp</dimen>
+    <dimen name="mq_font17_v2">70sp</dimen>
+
     <dimen name="divider_height">4dp</dimen>
 </resources>
