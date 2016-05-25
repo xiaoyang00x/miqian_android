@@ -66,6 +66,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         if (TextUtils.isEmpty(text)) {
             textView.setVisibility(View.GONE);
         } else {
+            textView.setVisibility(View.VISIBLE);
             textView.setText(text);
         }
     }
