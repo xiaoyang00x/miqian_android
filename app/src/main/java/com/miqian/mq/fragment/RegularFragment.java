@@ -1,11 +1,15 @@
 package com.miqian.mq.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -16,6 +20,8 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.MyAsyncTask;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.RegularProjectView;
+import com.miqian.mq.views.RegularTransferView;
 import com.miqian.mq.views.ServerBusyView;
 
 /**
@@ -23,149 +29,143 @@ import com.miqian.mq.views.ServerBusyView;
  */
 public class RegularFragment extends BasicFragment {
 
-    RegularListAdapter mAdapter;
-    private GetRegularInfo mData;
+//    private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
 
-    private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
+    private TextView tv_regular_project; // 定期项目
+    private TextView tv_regular_transfer; // 定期转让
+    private View title_line; // 定期项目 定期转让选中后下面显示的红色横线
 
-    private ServerBusyView serverBusyView;
-    private boolean isServerBusyPageShow = false; // 默认不显示服务器繁忙页面
-    private boolean isNoNetworkPageShow = false; // 默认不显示无网络页面
+    private final int LEFTPAGE = 0x01; // 定期项目 被选中
+    private final int RIGHTPAGE = 0x02; // 定期转让 被选中
+    private int curSwitch = LEFTPAGE; // 当前已选中
+
+    private FrameLayout content;
+
+    private RegularProjectView regularProjectView;
+    private RegularTransferView regularTransferView;
+
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_regular, container, false);
-        findView(view);
-        setView();
-        getMainRegular();
-        return view;
+        if (null == rootView) {
+            LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rootView = mInflater.inflate(R.layout.fragment_regular, null);
+            initView();
+            initListener();
+            switchTitleTo(curSwitch);
+            switchContentTo(curSwitch);
+        }
+        obtainData(curSwitch);
+        return rootView;
     }
 
-    private RecyclerView recyclerView;
-    private MySwipeRefresh swipeRefresh;
-    private TextView titleText;
-
-    private void findView(View view) {
-        serverBusyView = (ServerBusyView) view.findViewById(R.id.serverBusyView);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        titleText = (TextView) view.findViewById(R.id.title);
-        swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
-        swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
-            @Override
-            public void onRefresh() {
-                isFirstLoading = true;
-                getMainRegular();
-            }
-        });
+    private void initView() {
+        tv_regular_project = (TextView) rootView.findViewById(R.id.tv_regular_project);
+        tv_regular_transfer = (TextView) rootView.findViewById(R.id.tv_regular_transfer);
+        title_line = rootView.findViewById(R.id.title_line);
+        content = (FrameLayout) rootView.findViewById(R.id.content);
     }
 
-    private void setView() {
-        titleText.setText("定期");
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            //用来标记是否正在向最后一个滑动，既是否向右滑动或向下滑动
-//            boolean isSlidingToLast = false;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                // 当不滚动时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    //获取最后一个完全显示的ItemPosition
-                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                    int totalItemCount = manager.getItemCount();
-
-                    // 判断是否滚动到底部，并且是向右滚动
-                    if (lastVisibleItem == (totalItemCount - 1)) {
-//                        Toast.makeText(mActivity, "加载更多", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        });
-
-        if (mData != null) {
-            mAdapter = new RegularListAdapter(mData, mApplicationContext);
-            recyclerView.setAdapter(mAdapter);
-        } else if (isServerBusyPageShow) {
-            serverBusyView.showServerBusy();
-        } else if (isNoNetworkPageShow) {
-            serverBusyView.showNoNetwork();
-        } else {
-            serverBusyView.hide();
-        }
-        serverBusyView.setListener(requestAgain);
+    private void initListener() {
+        tv_regular_project.setOnClickListener(mOnclicklistener);
+        tv_regular_transfer.setOnClickListener(mOnclicklistener);
     }
 
-    private boolean inProcess = false;
-    private final Object mLock = new Object();
-
-    private void getMainRegular() {
-        if (inProcess) {
-            return;
-        }
-        synchronized (mLock) {
-            inProcess = true;
-        }
-        if (isFirstLoading || isNoNetworkPageShow || isServerBusyPageShow) {
-            begin();
-            isFirstLoading = false;
-        }
-        swipeRefresh.setRefreshing(true);
-        HttpRequest.getMainRegular(getActivity(), new ICallback<GetRegularResult>() {
-
-            @Override
-            public void onSucceed(GetRegularResult result) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                end();
-                swipeRefresh.setRefreshing(false);
-                if (result == null) return;
-                mData = result.getData();
-                if (mData == null) return;
-                mAdapter = new RegularListAdapter(mData, mApplicationContext);
-                recyclerView.setAdapter(mAdapter);
-
-                serverBusyView.hide();
-                isServerBusyPageShow = false;
-                isNoNetworkPageShow = false;
-            }
-
-            @Override
-            public void onFail(String error) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                end();
-                swipeRefresh.setRefreshing(false);
-//                Uihelper.showToast(getActivity(), error);
-                if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
-                    serverBusyView.showServerBusy();
-                    isServerBusyPageShow = true;
-                    isNoNetworkPageShow = false;
-                } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {
-                    serverBusyView.showNoNetwork();
-                    isNoNetworkPageShow = true;
-                    isServerBusyPageShow = false;
-                }
-            }
-        });
-    }
-
-    // 服务器繁忙页面 - 再次请求 - 刷新
-    private ServerBusyView.IRequestAgain requestAgain = new ServerBusyView.IRequestAgain() {
+    private View.OnClickListener mOnclicklistener = new View.OnClickListener() {
         @Override
-        public void execute() {
-            getMainRegular();
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.tv_regular_project:
+                    if (curSwitch != LEFTPAGE) {
+                        switchTitleTo(LEFTPAGE);
+                        switchContentTo(LEFTPAGE);
+                    }
+                    break;
+                case R.id.tv_regular_transfer:
+                    if (curSwitch != RIGHTPAGE) {
+                        switchTitleTo(RIGHTPAGE);
+                        switchContentTo(RIGHTPAGE);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     };
+
+    // 标题切换
+    private void switchTitleTo(int curSwitch) {
+        this.curSwitch = curSwitch;
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title_line.getLayoutParams();
+        switch (curSwitch) {
+            case LEFTPAGE:
+                tv_regular_project.setAlpha(1.0f);
+                tv_regular_transfer.setAlpha(0.7f);
+                params.addRule(RelativeLayout.ALIGN_LEFT, R.id.tv_regular_project);
+                params.addRule(RelativeLayout.ALIGN_RIGHT, R.id.tv_regular_project);
+                break;
+            case RIGHTPAGE:
+                tv_regular_transfer.setAlpha(1.0f);
+                tv_regular_project.setAlpha(0.7f);
+                params.addRule(RelativeLayout.ALIGN_LEFT, R.id.tv_regular_transfer);
+                params.addRule(RelativeLayout.ALIGN_RIGHT, R.id.tv_regular_transfer);
+                break;
+            default:
+                break;
+        }
+        title_line.setLayoutParams(params);
+    }
+
+    // 内容切换
+    private void switchContentTo(int curSwitch) {
+        switch (curSwitch) {
+            case LEFTPAGE:
+                if (null == regularProjectView) {
+                    regularProjectView = new RegularProjectView(mContext);
+                    content.addView(regularProjectView.getView());
+                }
+                regularProjectView.getView().setVisibility(View.VISIBLE);
+                if (null != regularTransferView) {
+                    regularTransferView.getView().setVisibility(View.GONE);
+                }
+                break;
+            case RIGHTPAGE:
+                if (null == regularTransferView) {
+                    regularTransferView = new RegularTransferView(mContext);
+                    content.addView(regularTransferView.getView());
+                }
+                regularTransferView.getView().setVisibility(View.VISIBLE);
+                if (null != regularProjectView) {
+                    regularProjectView.getView().setVisibility(View.GONE);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    // 刷新当前页面数据
+    private void obtainData(int curSwitch) {
+        switch (curSwitch) {
+            case LEFTPAGE:
+                if (null != regularProjectView) {
+                    regularProjectView.obtainData();
+                }
+                break;
+            case RIGHTPAGE:
+                if (null != regularTransferView) {
+                    regularTransferView.obtainData();
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     @Override
     protected String getPageName() {
         return "定期首页";
     }
+
 }

@@ -4,28 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/frame_title" />
+    <include layout="@layout/frame_title_optional" />
 
     <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.miqian.mq.views.MySwipeRefresh
-            android:id="@+id/swipe_refresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="none" />
-        </com.miqian.mq.views.MySwipeRefresh>
-
-        <com.miqian.mq.views.ServerBusyView
-            android:id="@+id/serverBusyView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-    </FrameLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/temp1"
         android:layout_below="@+id/temp1"
-        android:layout_marginTop="2dp"
         android:text="8.5"
         android:textColor="@color/mq_r1_v2"
         android:textSize="@dimen/mq_font13_v2"
@@ -55,7 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/temp1"
         android:layout_alignTop="@+id/temp1"
-        android:layout_below="@+id/tv_title"
         android:layout_marginLeft="65dp"
         android:layout_toRightOf="@+id/temp1"
         android:text="项目期限"
@@ -68,7 +66,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/temp2"
         android:layout_below="@+id/temp2"
-        android:layout_marginTop="2dp"
         android:text="60"
         android:textColor="@color/mq_r1_v2"
         android:textSize="@dimen/mq_font13_v2"
@@ -85,6 +82,7 @@
         android:textStyle="bold" />
 
     <Button
+        android:id="@+id/btn_state"
         android:layout_width="85dp"
         android:layout_height="40dp"
         android:layout_alignBottom="@+id/profit_rate"
@@ -93,6 +91,17 @@
         android:layout_marginRight="35dp"
         android:text="立即购买"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_begin_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btn_state"
+        android:layout_marginRight="35dp"
+        android:text="3月15日 15:30分"
+        android:textColor="@color/mq_bl3_v2"
+        android:textSize="@dimen/mq_font3_v2" />
 
     <View
         android:id="@+id/line"
