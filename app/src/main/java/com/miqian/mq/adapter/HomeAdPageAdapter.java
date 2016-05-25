@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.entity.AdvertisementImg;
+import com.miqian.mq.entity.HomeAdData;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class HomeAdPageAdapter extends PagerAdapter {
-    private ArrayList<AdvertisementImg> list = new ArrayList<>();
+    private ArrayList<HomeAdData> list = new ArrayList<>();
     private Recylcer recylcer;
     private LayoutParams lp =
             new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -49,8 +49,8 @@ public class HomeAdPageAdapter extends PagerAdapter {
         }
     }
 
-    public HomeAdPageAdapter(Context context, List<AdvertisementImg> recommends) {
-        for (AdvertisementImg recommend : recommends) {
+    public HomeAdPageAdapter(Context context, List<HomeAdData> recommends) {
+        for (HomeAdData recommend : recommends) {
             list.add(recommend);
         }
         ctx = context;
@@ -59,9 +59,9 @@ public class HomeAdPageAdapter extends PagerAdapter {
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
     }
 
-    public void reload(ArrayList<AdvertisementImg> recommends) {
+    public void reload(ArrayList<HomeAdData> recommends) {
         list.clear();
-        for (AdvertisementImg recommend : recommends) {
+        for (HomeAdData recommend : recommends) {
             list.add(recommend);
         }
         notifyDataSetChanged();
@@ -81,7 +81,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
         return list.size();
     }
 
-    public AdvertisementImg getItem(int position) {
+    public HomeAdData getItem(int position) {
         // 对position取余数
         return list.get(position % list.size());
     }
@@ -122,7 +122,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
         void onPageItemClick(ViewGroup parent, View item, int position);
     }
 
-    public ArrayList<AdvertisementImg> getList() {
+    public ArrayList<HomeAdData> getList() {
         return list;
     }
 }

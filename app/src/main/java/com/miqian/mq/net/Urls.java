@@ -151,7 +151,7 @@ public class Urls {
     public final static String getFitSubject = base_server + "subjectService/getFitSubject";
 
     //home
-    public final static String homeInfo = base_server + "commonService/v2/getHome";
+    public final static String homeInfo = base_server + "commonService/v3/getHome";
     //records of capital
     public final static String recordsCapital = base_server + "userService/getAssetRecord";
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/mq_b6_v2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@drawable/icon_tel"
+            android:drawablePadding="5dp"
+            android:text="客服电话"
+            android:textColor="@color/mq_b3_v2"
+            android:textSize="@dimen/mq_font5_v2" />
+
+        <TextView
+            android:id="@+id/tv_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/mq_bl1_v2"
+            android:textSize="@dimen/mq_font12_v2"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/icon_home_asset"
+                android:gravity="center_horizontal"
+                android:text="多元化优质\n资产项目"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/icon_home_risk"
+                android:gravity="center_horizontal"
+                android:text="依托成熟专业\n的风控体系"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/icon_home_info"
+                android:gravity="center_horizontal"
+                android:text="平台信息透明\n转让机制灵活"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/mq_b6_v2" />
+    </LinearLayout>
+</LinearLayout>

@@ -49,13 +49,13 @@ public class FormatUtil {
      * @return
      */
     public static String formatAmount(BigDecimal amount) {
-//        NumberFormat nf = new DecimalFormat("#,###.##");
+        NumberFormat nf = new DecimalFormat("#,###.##");
         String format = amount.toString();
-//        try{
-//            format = nf.format(amount);
-//        }catch (Exception e) {
-//
-//        }
+        try{
+            format = nf.format(amount);
+        }catch (Exception e) {
+
+        }
         return format;
     }
 
@@ -65,13 +65,13 @@ public class FormatUtil {
      * @return
      */
     public static String formatAmountStr(String amount) {
-//        NumberFormat nf = new DecimalFormat("#,###.##");
+        NumberFormat nf = new DecimalFormat("#,###.##");
         String format = amount;
-//        try{
-//            format = nf.format(new BigDecimal(amount));
-//        }catch (Exception e) {
-//
-//        }
+        try{
+            format = nf.format(new BigDecimal(amount));
+        }catch (Exception e) {
+
+        }
         return format;
     }
 }

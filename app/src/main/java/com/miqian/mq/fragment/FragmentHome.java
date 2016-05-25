@@ -34,6 +34,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,7 +44,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     private RecyclerView recyclerView;
     private MySwipeRefresh swipeRefresh;
     HomeAdapter adapter;
-    HomePageInfo mData;
+    ArrayList<HomePageInfo> mDatas;
     GetHomeActivity mHomeActivityData;
     private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
     private PendingIntent dialogPendingIntent;
@@ -71,8 +72,8 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        if (mData != null) {
-            adapter = new HomeAdapter(mActivity, mData);
+        if (mDatas != null) {
+            adapter = new HomeAdapter(mActivity, mDatas);
             recyclerView.setAdapter(adapter);
         } else if (isServerBusyPageShow) {
             serverBusyView.showServerBusy();
@@ -104,22 +105,22 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     public void onLoadingCancelled(String s, View view) {
     }
 
-    private class AutoScrollTimerTask extends TimerTask {
-        @Override
-        public void run() {
-            if (null != adapter) adapter.setAutoScroll();
-        }
-    }
+//    private class AutoScrollTimerTask extends TimerTask {
+//        @Override
+//        public void run() {
+//            if (null != adapter) adapter.setAutoScroll();
+//        }
+//    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (timer == null) {// 自动滑动
-            timer = new Timer();
-            timerTask = new AutoScrollTimerTask();
-            timer.schedule(timerTask, 5000, 5000);
-        }
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (timer == null) {// 自动滑动
+//            timer = new Timer();
+//            timerTask = new AutoScrollTimerTask();
+//            timer.schedule(timerTask, 5000, 5000);
+//        }
+//    }
 
     @Override
     protected String getPageName() {
@@ -130,7 +131,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     public void onDestroy() {
         super.onDestroy();
         adapter = null;
-        mData = null;
+        mDatas = null;
     }
 
     private void findView(View view) {
@@ -172,10 +173,10 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 end();
                 swipeRefresh.setRefreshing(false);
                 if (result == null) return;
-                mData = result.getData();
-                if (mData == null) return;
+                mDatas = result.getData();
+                if (mDatas == null) return;
 //                if (null == adapter) {
-                adapter = new HomeAdapter(mActivity, mData);
+                adapter = new HomeAdapter(mActivity, mDatas);
                 recyclerView.setAdapter(adapter);
 //                } else {
 //                    adapter.notifyDataSetChanged(info);
@@ -193,11 +194,11 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 end();
                 swipeRefresh.setRefreshing(false);
 //                Uihelper.showToast(getActivity(), error);
-                if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
+                if (error.equals(MyAsyncTask.SERVER_ERROR) && mDatas == null) {
                     serverBusyView.showServerBusy();
                     isServerBusyPageShow = true;
                     isNoNetworkPageShow = false;
-                } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {
+                } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mDatas == null) {
                     serverBusyView.showNoNetwork();
                     isNoNetworkPageShow = true;
                     isServerBusyPageShow = false;
