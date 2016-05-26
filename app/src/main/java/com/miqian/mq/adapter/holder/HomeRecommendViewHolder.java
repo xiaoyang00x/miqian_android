@@ -39,10 +39,10 @@ public class HomeRecommendViewHolder extends HomeBaseViewHolder {
 
         mViewPager = (ViewPager) itemView.findViewById(R.id.viewpager);
         tv_lable = (TextView) itemView.findViewById(R.id.tv_lable);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mViewPager.getLayoutParams();
-        int width = itemView.getResources().getDisplayMetrics().widthPixels;
-        params.height = width * 338 / 586;
-        mViewPager.setLayoutParams(params);
+//        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mViewPager.getLayoutParams();
+//        int width = itemView.getResources().getDisplayMetrics().widthPixels;
+//        params.height = width * 338 / 586;
+//        mViewPager.setLayoutParams(params);
         mViewPager.setOffscreenPageLimit(5);
         mViewPager.setPageMargin(Uihelper.dip2px(itemView.getContext(), 10));
 
@@ -65,6 +65,7 @@ public class HomeRecommendViewHolder extends HomeBaseViewHolder {
                 tv_lable.setVisibility(View.VISIBLE);
             }
             if(data.getHotRecommendData() == null) return;
+            mViewPager.removeAllViews();
             mViewPager.setAdapter(new AdCyclePagerAdapter(itemView.getContext(), mViewPager, data.getHotRecommendData()));
             if(data.getHotRecommendData().size() > 1) {
                 mViewPager.setCurrentItem(1, false);

@@ -4,12 +4,17 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.RegularEarnActivity;
+import com.miqian.mq.activity.RegularPlanActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomeSelectionProject;
+import com.miqian.mq.entity.RegularBaseData;
 import com.miqian.mq.utils.FormatUtil;
 
 /**
@@ -59,7 +64,7 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
      * @param data
      * @return
      */
-    private View initProjectView(HomeSelectionProject data) {
+    private View initProjectView(final HomeSelectionProject data) {
         View projectView = inflater.inflate(R.layout.item_home_project, null);
         //项目名称
         TextView tv_project_name = (TextView)projectView.findViewById(R.id.tv_project_name);
@@ -73,6 +78,8 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
         TextView tv_corner_mark = (TextView)projectView.findViewById(R.id.tv_corner_mark);
         //剩余金额/总金额
         TextView tv_remain_amount = (TextView)projectView.findViewById(R.id.tv_remain_amount);
+        //btn_buy
+        Button btn_buy = (Button) projectView.findViewById(R.id.btn_buy);
 
         tv_project_name.setText(data.getSubjectName());
         profit_rate.setText(data.getYearInterest());
@@ -90,6 +97,21 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
         }
         tv_remain_amount.setText("剩余金额:￥"+ FormatUtil.formatAmount(data.getResidueAmt())+"/" + FormatUtil.formatAmount(data.getTotalAmt()));
 
+        btn_buy.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if(TextUtils.isEmpty(data.getJumpProjectUrl())) {
+                    if (RegularBaseData.PRODID_REGULAR_PLAN.equals(data.getProdId())) {
+                        RegularPlanActivity.startActivity(view.getContext(), data.getSubjectId());
+                    } else {
+                        RegularEarnActivity.startActivity(view.getContext(), data.getSubjectId());
+                    }
+                }else {
+                    WebActivity.startActivity(view.getContext(), data.getJumpProjectUrl());
+                }
+            }
+        });
         return projectView;
     }
 }

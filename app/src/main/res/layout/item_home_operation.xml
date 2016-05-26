@@ -19,7 +19,7 @@
 
             <RelativeLayout
                 android:id="@+id/layout_register"
-                android:layout_width="185dp"
+                android:layout_width="200dp"
                 android:layout_height="98dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/bg_home_operation_red"
@@ -63,7 +63,7 @@
 
             <RelativeLayout
                 android:id="@+id/layout_volume"
-                android:layout_width="185dp"
+                android:layout_width="200dp"
                 android:layout_height="98dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/bg_home_operation_green"
@@ -107,7 +107,7 @@
 
             <RelativeLayout
                 android:id="@+id/layout_earnings"
-                android:layout_width="185dp"
+                android:layout_width="200dp"
                 android:layout_height="98dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/bg_home_operation_blue"
@@ -151,7 +151,7 @@
 
             <RelativeLayout
                 android:id="@+id/layout_operation_days"
-                android:layout_width="185dp"
+                android:layout_width="200dp"
                 android:layout_height="98dp"
                 android:background="@drawable/bg_home_operation_yellow"
                 android:paddingLeft="10dp"

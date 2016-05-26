@@ -104,4 +104,14 @@
     <!-- 预定义定义主题背景 -->
     <attr name="theme_background" format="reference" />
     <attr name="title_bar_bg" format="reference" />
+
+
+    <!--圆角 ImageView-->
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius" format="dimension" />
+        <attr name="type">
+            <enum name="circle" value="0" />
+            <enum name="round" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>
