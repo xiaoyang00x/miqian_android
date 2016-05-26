@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/title_height"
+    android:background="@color/mq_r1">
+
+    <View
+        android:id="@+id/reference"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tv_regular_project"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/reference"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="定期项目"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font8_v2" />
+
+    <TextView
+        android:id="@+id/tv_regular_transfer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/reference"
+        android:alpha="0.7"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="定期转让"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font8_v2" />
+
+    <ImageView
+        android:id="@+id/title_line"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_alignLeft="@+id/tv_regular_project"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/tv_regular_project"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@drawable/line_horizontal_white_bold" />
+
+
+</RelativeLayout>
