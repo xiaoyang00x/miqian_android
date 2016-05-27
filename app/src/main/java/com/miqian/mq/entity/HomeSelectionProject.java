@@ -19,7 +19,7 @@ public class HomeSelectionProject {
     private String subjectId;                                   //标的ID
     private String prodId;                                      //产品类型：定期赚 3、定期计划4
     private String subscript;                                   //右上角角标
-    private BigDecimal totalAmt;                                //标的总额
+    private BigDecimal subjectTotalPrice;                       //标的总额
     private BigDecimal residueAmt;                              //标的剩余额度
     private String subjectStatus;                               //标的状态  投标状态编码: 99待开标不显示   00待开标   01已开标   02已满标（已售罄）  03已到期  04已撤销  05已流标   06审批中    07还款中    08正常还完
 
@@ -103,12 +103,12 @@ public class HomeSelectionProject {
         this.subscript = subscript;
     }
 
-    public BigDecimal getTotalAmt() {
-        return totalAmt;
+    public BigDecimal getSubjectTotalPrice() {
+        return subjectTotalPrice;
     }
 
-    public void setTotalAmt(BigDecimal totalAmt) {
-        this.totalAmt = totalAmt;
+    public void setSubjectTotalPrice(BigDecimal subjectTotalPrice) {
+        this.subjectTotalPrice = subjectTotalPrice;
     }
 
     public BigDecimal getResidueAmt() {

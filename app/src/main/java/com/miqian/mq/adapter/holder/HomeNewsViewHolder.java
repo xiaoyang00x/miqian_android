@@ -57,21 +57,18 @@ public class HomeNewsViewHolder extends HomeBaseViewHolder {
         tv_title.setText(data.getTitle());
         tv_description.setText(data.getDesc());
 
-//        imageLoader.displayImage(data.getImgUrl(), img_news, options);
-        imageLoader.displayImage("http://t1.baidu.com/it/u=http%3A%2F%2Fcharacter.workercn.cn%2Fhtml%2Ffiles%2F2016-05%2F25%2F20160525140254647533753.jpg&fm=30", img_news, options);
+        imageLoader.displayImage(data.getImgUrl(), img_news, options);
         img_news.setScaleType(ImageView.ScaleType.FIT_XY);
-//        if(!TextUtils.isEmpty(data.getJumpUrl())) {
-//
-//        }
-        img_news.setTag(data.getJumpUrl());// 绑定imageview 视图
-        projectView.setOnClickListener(new View.OnClickListener() {
+        if(!TextUtils.isEmpty(data.getJumpUrl())) {
+            img_news.setTag(data.getJumpUrl());// 绑定imageview 视图
+            projectView.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-//                WebActivity.startActivity(img_news.getContext(), img_news.getTag().toString());
-                WebActivity.startActivity(img_news.getContext(), "http://character.workercn.cn/361/201605/25/160525140254932.shtml");
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                WebActivity.startActivity(img_news.getContext(), img_news.getTag().toString());
+                }
+            });
+        }
         return projectView;
     }
 

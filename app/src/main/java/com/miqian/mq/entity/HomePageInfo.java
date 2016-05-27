@@ -19,7 +19,7 @@ public class HomePageInfo {
     private int module;
     private String title;
     private ArrayList<HomeAdData> bsAdListData;                                 //轮播图
-    private HomeBulletinData bsPushData;                                        //公告
+    private MessageInfo bsPushData;                                             //公告
     private ArrayList<HomeOperationData> operationDatas;                        //运营数据
     private ArrayList<HomeRecommendData> hotRecommendData;                      //热门推荐
     private ArrayList<HomeSelectionProject> subjectInfoData;                    //精选项目
@@ -51,11 +51,11 @@ public class HomePageInfo {
         this.bsAdListData = bsAdListData;
     }
 
-    public HomeBulletinData getBsPushData() {
+    public MessageInfo getBsPushData() {
         return bsPushData;
     }
 
-    public void setBsPushData(HomeBulletinData bsPushData) {
+    public void setBsPushData(MessageInfo bsPushData) {
         this.bsPushData = bsPushData;
     }
 

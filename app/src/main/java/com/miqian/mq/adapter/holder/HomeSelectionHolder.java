@@ -1,6 +1,6 @@
 package com.miqian.mq.adapter.holder;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +27,11 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
     private LinearLayout layout_container;
     private LayoutInflater inflater;
     private View divider;
+    private Context mContext;
 
     public HomeSelectionHolder(View itemView) {
         super(itemView);
-
+        mContext = itemView.getContext();
         inflater = LayoutInflater.from(itemView.getContext());
         tv_lable = (TextView)itemView.findViewById(R.id.tv_lable);
         divider = itemView.findViewById(R.id.divider);
@@ -78,6 +79,10 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
         TextView tv_corner_mark = (TextView)projectView.findViewById(R.id.tv_corner_mark);
         //剩余金额/总金额
         TextView tv_remain_amount = (TextView)projectView.findViewById(R.id.tv_remain_amount);
+        //开始时间
+        TextView tv_begin_time = (TextView)projectView.findViewById(R.id.tv_begin_time);
+        //天
+        TextView tv_day = (TextView)projectView.findViewById(R.id.tv_day);
         //btn_buy
         Button btn_buy = (Button) projectView.findViewById(R.id.btn_buy);
 
@@ -95,7 +100,45 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_corner_mark.setText(data.getSubscript());
             tv_corner_mark.setVisibility(View.VISIBLE);
         }
-        tv_remain_amount.setText("剩余金额:￥"+ FormatUtil.formatAmount(data.getResidueAmt())+"/" + FormatUtil.formatAmount(data.getTotalAmt()));
+        tv_remain_amount.setText("剩余金额:￥"+ FormatUtil.formatAmount(data.getResidueAmt())+"/" + FormatUtil.formatAmount(data.getSubjectTotalPrice()));
+
+        //待开标
+        if ("00".equals(data.getSubjectStatus())) {
+            tv_project_name.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+            btn_buy.setBackgroundResource(R.drawable.btn_no_begin);
+            btn_buy.setText("待开标");
+            btn_buy.setEnabled(true);
+
+            tv_begin_time.setText(FormatUtil.formatDate(data.getStartTimestamp(), "MM月dd日 HH:mm发售"));
+            tv_begin_time.setVisibility(View.VISIBLE);
+        } else if ("01".equals(data.getSubjectStatus())) {
+            tv_project_name.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+            btn_buy.setBackgroundResource(R.drawable.btn_default_selector);
+            btn_buy.setText(R.string.buy_now);
+            btn_buy.setEnabled(true);
+
+            tv_begin_time.setVisibility(View.GONE);
+
+        } else {
+            tv_project_name.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+            btn_buy.setBackgroundResource(R.drawable.btn_has_done);
+            btn_buy.setText("已满额");
+            btn_buy.setEnabled(false);
+
+            tv_begin_time.setVisibility(View.GONE);
+        }
 
         btn_buy.setOnClickListener(new View.OnClickListener() {
 

@@ -619,7 +619,12 @@ public class HttpRequest {
      * 获取首页信息
      */
     public static void getHomePageInfo(Context context, final ICallback<HomePageInfoResult> callback) {
-        new MyAsyncTask(context, Urls.homeInfo, null, new ICallback<String>() {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        new MyAsyncTask(context, Urls.homeInfo, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {

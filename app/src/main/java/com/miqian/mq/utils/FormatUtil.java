@@ -50,7 +50,7 @@ public class FormatUtil {
      */
     public static String formatAmount(BigDecimal amount) {
         NumberFormat nf = new DecimalFormat("#,###.##");
-        String format = amount.toString();
+        String format = amount == null ? "0" : amount.toString();
         try{
             format = nf.format(amount);
         }catch (Exception e) {
@@ -66,7 +66,7 @@ public class FormatUtil {
      */
     public static String formatAmountStr(String amount) {
         NumberFormat nf = new DecimalFormat("#,###.##");
-        String format = amount;
+        String format = TextUtils.isEmpty(amount)? "0" : amount;
         try{
             format = nf.format(new BigDecimal(amount));
         }catch (Exception e) {

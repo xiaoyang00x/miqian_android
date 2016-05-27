@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_alignParentTop="true"
-        android:background="@color/mq_b4" />
+        android:background="@color/mq_b6_v2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/img_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:src="@drawable/tab_home_selector" />
 
@@ -29,6 +29,6 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textColor="@drawable/main_tab_text_color"
-            android:textSize="@dimen/mq_font10" />
+            android:textSize="@dimen/mq_font2_v2" />
     </LinearLayout>
 </com.miqian.mq.views.MyRelativeLayout>

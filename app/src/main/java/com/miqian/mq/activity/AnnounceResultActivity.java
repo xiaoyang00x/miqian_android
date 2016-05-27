@@ -74,12 +74,7 @@ public class AnnounceResultActivity extends BaseActivity {
             tv_content.setText("      " + fromHtml);
         }
 
-        String sendTime = detailInfo.getSendTime();
-        if (!TextUtils.isEmpty(sendTime)) {
-
-            String time = Uihelper.timestampToDateStr_other(Double.parseDouble(sendTime));
-            tv_time.setText(time);
-        }
+        tv_time.setText(Uihelper.timestampToDateStr_other(detailInfo.getSendTime()));
     }
 
     @Override
