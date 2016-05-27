@@ -1,4 +1,4 @@
-package com.miqian.mq.adapter.typeadapter;
+package com.miqian.mq.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;

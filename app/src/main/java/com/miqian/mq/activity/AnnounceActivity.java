@@ -1,6 +1,7 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,8 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,8 +17,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.adapter.MessageAdapter;
 import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.entity.Meta;
-import com.miqian.mq.entity.PushData;
-import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.UserMessageData;
 import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.net.HttpRequest;
@@ -45,16 +42,8 @@ import java.util.List;
  */
 public class AnnounceActivity extends BaseActivity implements OnClickListener, AbsListView.OnScrollListener, ExtendOperationController.ExtendOperationListener {
 
-    private Button titleLeft;
-    private Button titleRight;
-    private ImageButton btLeft;
     private MySwipeRefresh swipeRefresh;
-    private TextView textRight;
-
-    private int messageType = 0; //0为消息，1为公告
-
     private MessageAdapter adapter;
-    private CustomDialog dialogTips;
     private int count;
     private List<MessageInfo> list;
     private SwipeMenuListView mSwipeMenuListView;
@@ -82,7 +71,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     public void obtainData() {
         progressBarLoading.setVisibility(View.GONE);
         textLoading.setText("");
-        if (messageType == 0 && !UserUtil.hasLogin(mActivity)) {
+        if (!UserUtil.hasLogin(mActivity)) {
             mViewnoresult_data.setVisibility(View.VISIBLE);
             ivMessageData.setBackgroundResource(R.drawable.nomessage);
             view_Refresh.setVisibility(View.GONE);
@@ -94,114 +83,66 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         if (!swipeRefresh.isRefreshing()) {
             begin();
         }
-        if (messageType == 0) {
-            isLoading = true;
-            HttpRequest.getMessageList(mActivity, "", new ICallback<UserMessageResult>() {
-                @Override
-                public void onSucceed(UserMessageResult result) {
-                    isLoading = false;
-                    end();
-                    swipeRefresh.setRefreshing(false);
-                    UserMessageData userMessageData = result.getData();
-                    count = userMessageData.getCount();
-                    list = userMessageData.getMsgList();
-                    if (list != null && list.size() > 0) {
-                        checkReadStatus(list);
-                        showContentView();
-                        if (list.size() < count) {
-                            isOver = false;
-                            progressBarLoading.setVisibility(View.VISIBLE);
-                            textLoading.setText("加载更多");
-                        } else {
-                            isOver = true;
-                            progressBarLoading.setVisibility(View.GONE);
-                            textLoading.setText("");
-                        }
-                        adapter = new MessageAdapter(mActivity, list);
-                        mSwipeMenuListView.setAdapter(adapter);
-
+        isLoading = true;
+        HttpRequest.getMessageList(mActivity, "", new ICallback<UserMessageResult>() {
+            @Override
+            public void onSucceed(UserMessageResult result) {
+                isLoading = false;
+                end();
+                swipeRefresh.setRefreshing(false);
+                UserMessageData userMessageData = result.getData();
+                count = userMessageData.getCount();
+                list = userMessageData.getMsgList();
+                if (list != null && list.size() > 0) {
+                    checkReadStatus(list);
+                    showContentView();
+                    if (list.size() < count) {
+                        isOver = false;
+                        progressBarLoading.setVisibility(View.VISIBLE);
+                        textLoading.setText("加载更多");
                     } else {
-                        showEmptyView();
-                    }
-                }
-
-                @Override
-                public void onFail(String error) {
-                    //判断是否有缓存
-                    String messageCash = Pref.getString(Pref.DATA_MESSAGE, mActivity, "");
-                    if (TextUtils.isEmpty(messageCash)) {
-                        if (list != null && adapter != null) {
-                            list.clear();
-                            adapter.notifyDataSetChanged();
-                        }
-                        showErrorView();
-                    } else {
-                        //显示缓存信息
-                        UserMessageResult userMessageResult = JsonUtil.parseObject(messageCash, UserMessageResult.class);
-                        list = userMessageResult.getData().getMsgList();
-                        adapter = new MessageAdapter(mActivity, list);
-                        mSwipeMenuListView.setAdapter(adapter);
-                    }
-                    swipeRefresh.setRefreshing(false);
-                    isLoading = false;
-                    end();
-                    Uihelper.showToast(mActivity, error);
-                }
-            });
-        } else {
-            HttpRequest.getPushList(mActivity, "", 50 + "", new ICallback<PushDataResult>() {
-                @Override
-                public void onSucceed(PushDataResult result) {
-                    end();
-                    swipeRefresh.setRefreshing(false);
-                    PushData pushData = result.getData();
-                    list = pushData.getPushList();
-                    if (list != null && list.size() > 0) {
-                        showContentView();
-                        //和本地匹配是否已读
-                        for (MessageInfo info : list) {
-                            int id = info.getId();
-                            boolean isReaded = Pref.getBoolean(Pref.PUSH + id, mActivity, false);
-                            if (isReaded) {
-                                info.setIsRead(true);
-                            }
-                        }
-                        adapter = new MessageAdapter(mActivity, list);
-                        mSwipeMenuListView.setAdapter(adapter);
+                        isOver = true;
+                        progressBarLoading.setVisibility(View.GONE);
                         textLoading.setText("");
-                    } else {
-                        showEmptyView();
                     }
-                }
+                    adapter = new MessageAdapter(mActivity, list);
+                    mSwipeMenuListView.setAdapter(adapter);
 
-                @Override
-                public void onFail(String error) {
-                    //判断是否有缓存
-                    String messageCash = Pref.getString(Pref.DATA_PUSH, mActivity, "");
-                    if (TextUtils.isEmpty(messageCash)) {
-                        if (list != null && adapter != null) {
-                            list.clear();
-                            adapter.notifyDataSetChanged();
-                        }
-                        showErrorView();
-                    } else {
-                        //显示缓存信息
-                        PushDataResult pushDataResult = JsonUtil.parseObject(messageCash, PushDataResult.class);
-                        list = pushDataResult.getData().getPushList();
-                        adapter = new MessageAdapter(mActivity, list);
-                        mSwipeMenuListView.setAdapter(adapter);
-                    }
-                    end();
-                    swipeRefresh.setRefreshing(false);
-                    Uihelper.showToast(mActivity, error);
+                } else {
+                    showEmptyView();
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFail(String error) {
+                //判断是否有缓存
+                String messageCash = Pref.getString(Pref.DATA_MESSAGE, mActivity, "");
+                if (TextUtils.isEmpty(messageCash)) {
+                    if (list != null && adapter != null) {
+                        list.clear();
+                        adapter.notifyDataSetChanged();
+                    }
+                    showErrorView();
+                } else {
+                    //显示缓存信息
+                    UserMessageResult userMessageResult = JsonUtil.parseObject(messageCash, UserMessageResult.class);
+                    list = userMessageResult.getData().getMsgList();
+                    adapter = new MessageAdapter(mActivity, list);
+                    mSwipeMenuListView.setAdapter(adapter);
+                }
+                swipeRefresh.setRefreshing(false);
+                isLoading = false;
+                end();
+                Uihelper.showToast(mActivity, error);
+            }
+        });
+
+
     }
 
     private void checkReadStatus(List<MessageInfo> list) {
         if (list.size() == 0) {
-            textRight.setText("");
+            mTitle.setRightText("");
             return;
         }
         for (MessageInfo messageInfo : list) {
@@ -213,9 +154,9 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             }
         }
         if (hasUnread) {
-            textRight.setText("全部已读");
+            mTitle.setRightText("全部已读");
         } else {
-            textRight.setText("全部清空");
+            mTitle.setRightText("");
         }
     }
 
@@ -231,16 +172,6 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         footView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_loading, null);
         progressBarLoading = (ProgressBar) footView.findViewById(R.id.progressBar);
         textLoading = (TextView) footView.findViewById(R.id.text_loading);
-        btLeft = (ImageButton) findViewById(R.id.bt_left);
-        btLeft.setOnClickListener(this);
-
-        titleLeft = (Button) findViewById(R.id.title_left);
-        titleRight = (Button) findViewById(R.id.title_right);
-        textRight = (TextView) findViewById(R.id.tv_clearall);
-
-        textRight.setOnClickListener(this);
-        titleLeft.setOnClickListener(this);
-        titleRight.setOnClickListener(this);
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         mSwipeMenuListView = (SwipeMenuListView) findViewById(R.id.listview);
         mSwipeMenuListView.setOnScrollListener(this);
@@ -274,7 +205,9 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                 SwipeMenuItem item1 = new SwipeMenuItem(getApplicationContext());
                 item1.setBackground(getResources().getDrawable(R.drawable.shape_swip_red));
                 item1.setWidth(Uihelper.dip2px(mActivity, 90));
-                item1.setIcon(getResources().getDrawable(R.drawable.messsagedelete_selector));
+                item1.setTitle("置为已读");
+                item1.setTitleColor(Color.WHITE);
+                item1.setTitleSize(18);
                 menu.addMenuItem(item1);
             }
         };
@@ -316,15 +249,6 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                     //消息
                     MessageInfo messageInfo = list.get(position);
                     int msgType = messageInfo.getMsgType();
-                    if (messageType == 1) {
-                        //公告
-                        boolean isReaded = Pref.getBoolean(Pref.PUSH + list.get(position).getId(), mActivity, false);
-                        if (!isReaded) {
-                            Pref.saveBoolean(Pref.PUSH + list.get(position).getId(), true, mActivity);
-                            list.get(position).setIsRead(true);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
                     switch (msgType) {
                         // 内置浏览器
                         case 51:
@@ -336,11 +260,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             Intent intent_other = new Intent(mActivity, AnnounceResultActivity.class);
                             intent_other.putExtra("id", messageInfo.getId());
                             intent_other.putExtra("position", position);
-                            if (messageType == 0) {
-                                intent_other.putExtra("isMessage", true);
-                            } else {
-                                intent_other.putExtra("isMessage", false);
-                            }
+                            intent_other.putExtra("isMessage", true);
                             startActivity(intent_other);
                     }
                 }
@@ -360,8 +280,33 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        View parentView = (View) mTitle.getParent();
-        parentView.setVisibility(View.GONE);
+        mTitle.setTitleText("消息");
+        mTitle.setRightText("");
+        mTitle.setOnRightClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //设置全部已读
+                begin();
+                HttpRequest.setMessageReaded(mActivity, new ICallback<Meta>() {
+                    @Override
+                    public void onSucceed(Meta result) {
+                        end();
+                        for (MessageInfo messageInfo : list) {
+                            messageInfo.setIsRead(true);
+                        }
+                        checkReadStatus(list);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFail(String error) {
+                        end();
+                        Uihelper.showToast(mActivity, error);
+                    }
+                }, list.get(0).getId() + "", list.get(list.size() - 1).getId() + "", 1);
+            }
+        });
+
     }
 
     @Override
@@ -369,118 +314,9 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         return "消息";
     }
 
-    private void showDialog() {
-        initDialog();
-        dialogTips.show();
-    }
-
-    private void initDialog() {
-        if (dialogTips == null) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-                @Override
-                public void positionBtnClick() {
-                    dismiss();
-                    begin();
-                    //清空消息
-                    HttpRequest.deleteMessage(mActivity, new ICallback<Meta>() {
-                        @Override
-                        public void onSucceed(Meta result) {
-                            end();
-                            Uihelper.showToast(mActivity, "删除成功");
-                            list.clear();
-                            adapter.notifyDataSetChanged();
-                            textRight.setText("");
-                            showEmptyView();
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            end();
-                            Uihelper.showToast(mActivity, error);
-                        }
-                    }, list.get(0).getId(), list.get(list.size() - 1).getId() + "", 1);
-                }
-
-                @Override
-                public void negativeBtnClick() {
-
-                }
-            };
-            dialogTips.setNegative(View.VISIBLE);
-            dialogTips.setRemarks("     您确定删除所有消息吗？");
-            dialogTips.setNegative("取消");
-        }
-    }
 
     @Override
     public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.title_left:
-                titleLeft.setTextColor(getResources().getColor(R.color.mq_r1));
-                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left_selected);
-                titleRight.setTextColor(getResources().getColor(R.color.white));
-                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right);
-                //消息
-                isOver = false;
-                mSwipeMenuListView.setMenuCreator(creator);
-                messageType = 0;
-                if (list != null && adapter != null) {
-                    list.clear();
-                    adapter.notifyDataSetChanged();
-                }
-                obtainData();
-                textRight.setText("");
-                break;
-            case R.id.title_right:
-
-                titleLeft.setTextColor(getResources().getColor(R.color.white));
-                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left);
-                titleRight.setTextColor(getResources().getColor(R.color.mq_r1));
-                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right_selected);
-                //公告
-                mSwipeMenuListView.setMenuCreator(null);
-                messageType = 1;
-                if (list != null && adapter != null) {
-                    list.clear();
-                    adapter.notifyDataSetChanged();
-                }
-                obtainData();
-                textRight.setText("");
-                break;
-            case R.id.bt_left:
-                AnnounceActivity.this.finish();
-                break;
-            case R.id.tv_clearall://清空消息
-                if (hasUnread) {
-                    //设置全部已读
-                    begin();
-                    HttpRequest.setMessageReaded(mActivity, new ICallback<Meta>() {
-                        @Override
-                        public void onSucceed(Meta result) {
-                            end();
-                            for (MessageInfo messageInfo : list) {
-                                messageInfo.setIsRead(true);
-                            }
-                            checkReadStatus(list);
-                            adapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            end();
-                            Uihelper.showToast(mActivity, error);
-                        }
-                    }, list.get(0).getId() + "", list.get(list.size() - 1).getId() + "", 1);
-
-
-                } else {
-                    showDialog();
-                }
-                break;
-            default:
-                break;
-        }
     }
 
     @Override
@@ -502,38 +338,36 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
         } else {
             swipeRefresh.setEnabled(false);
         }
-        if (messageType == 0) {
-            if (visibleItemCount + firstVisibleItem >= totalItemCount - 1) {
-                if (list != null && list.size() < count) {
-                    isOver = true;
-                    isLoading = true;
-                    HttpRequest.getMessageList(mActivity, list.get(list.size() - 1).getId() + "", new ICallback<UserMessageResult>() {
-                        @Override
-                        public void onSucceed(UserMessageResult result) {
-                            isLoading = false;
-                            UserMessageData userMessageData = result.getData();
-                            count = userMessageData.getCount();
-                            List<MessageInfo> tempList = userMessageData.getMsgList();
-                            if (tempList != null && tempList.size() > 0) {
-                                list.addAll(tempList);
-                                checkReadStatus(list);
-                                adapter.notifyDataSetChanged();
-                            }
-                            if (list.size() < count) {
-                                isOver = false;
-                            } else {
-                                progressBarLoading.setVisibility(View.GONE);
-                                textLoading.setText("没有更多");
-                            }
+        if (visibleItemCount + firstVisibleItem >= totalItemCount - 1) {
+            if (list != null && list.size() < count) {
+                isOver = true;
+                isLoading = true;
+                HttpRequest.getMessageList(mActivity, list.get(list.size() - 1).getId() + "", new ICallback<UserMessageResult>() {
+                    @Override
+                    public void onSucceed(UserMessageResult result) {
+                        isLoading = false;
+                        UserMessageData userMessageData = result.getData();
+                        count = userMessageData.getCount();
+                        List<MessageInfo> tempList = userMessageData.getMsgList();
+                        if (tempList != null && tempList.size() > 0) {
+                            list.addAll(tempList);
+                            checkReadStatus(list);
+                            adapter.notifyDataSetChanged();
                         }
+                        if (list.size() < count) {
+                            isOver = false;
+                        } else {
+                            progressBarLoading.setVisibility(View.GONE);
+                            textLoading.setText("没有更多");
+                        }
+                    }
 
-                        @Override
-                        public void onFail(String error) {
-                            isLoading = false;
-                            Uihelper.showToast(mActivity, error);
-                        }
-                    });
-                }
+                    @Override
+                    public void onFail(String error) {
+                        isLoading = false;
+                        Uihelper.showToast(mActivity, error);
+                    }
+                });
             }
         }
     }
@@ -558,7 +392,6 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     protected void showContentView() {
         mViewnoresult_data.setVisibility(View.GONE);
         swipeRefresh.setVisibility(View.VISIBLE);
-
     }
 
     /**
