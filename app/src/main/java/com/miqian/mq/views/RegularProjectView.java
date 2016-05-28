@@ -103,9 +103,9 @@ public class RegularProjectView {
     }
 
     // 服务器繁忙页面 - 再次请求 - 刷新
-    private ServerBusyView.IRequestAgain requestAgain = new ServerBusyView.IRequestAgain() {
+    private ServerBusyView.IRequestAgainListener requestAgain = new ServerBusyView.IRequestAgainListener() {
         @Override
-        public void execute() {
+        public void request() {
             obtainData();
         }
     };
