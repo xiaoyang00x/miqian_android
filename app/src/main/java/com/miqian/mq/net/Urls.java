@@ -145,7 +145,9 @@ public class Urls {
     public final static String repayment_detail = base_server + "commonService/getRepaymentList";
 
     //定期首页
-    public final static String getRegMain = base_server + "subjectService/v2/getRegMain";
+    public final static String getRegMain = base_server + "subjectService/regularList";
+    //定期转让首页
+    public final static String REGULA_PROJECT_TRANSFER = base_server + "transferService/regularList";
 
     //红包定期列表
     public final static String getFitSubject = base_server + "subjectService/getFitSubject";

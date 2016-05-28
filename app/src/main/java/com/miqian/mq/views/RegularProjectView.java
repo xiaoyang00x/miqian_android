@@ -121,19 +121,14 @@ public class RegularProjectView {
         synchronized (mLock) {
             inProcess = true;
         }
-//        if (isFirstLoading || isNoNetworkPageShow || isServerBusyPageShow) {
-//            begin();
-//            isFirstLoading = false;
-//        }
         swipeRefresh.setRefreshing(true);
-        HttpRequest.getMainRegular(mContext, new ICallback<GetRegularResult>() {
+        HttpRequest.getRegularList(mContext, new ICallback<GetRegularResult>() {
 
             @Override
             public void onSucceed(GetRegularResult result) {
                 synchronized (mLock) {
                     inProcess = false;
                 }
-//                end();
                 swipeRefresh.setRefreshing(false);
                 if (result == null || (mData = result.getData()) == null) {
                     return;
@@ -149,7 +144,6 @@ public class RegularProjectView {
                 synchronized (mLock) {
                     inProcess = false;
                 }
-//                end();
                 swipeRefresh.setRefreshing(false);
 //                Uihelper.showToast(getActivity(), error);
                 if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
@@ -165,5 +159,10 @@ public class RegularProjectView {
         return mView;
     }
 
+    public void setVisibility(int visibility) {
+        if (null != mView) {
+            mView.setVisibility(visibility);
+        }
+    }
 
 }

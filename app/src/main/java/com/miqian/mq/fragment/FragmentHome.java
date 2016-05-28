@@ -81,7 +81,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         } else {
             serverBusyView.hide();
         }
-        serverBusyView.setListener(requestAgain);
+        serverBusyView.setListener(requestAgainListener);
     }
 
     private Timer timer;// 首页焦点图自动滑动timer
@@ -294,9 +294,9 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     }
 
     // 服务器繁忙页面 - 再次请求 - 刷新
-    private ServerBusyView.IRequestAgain requestAgain = new ServerBusyView.IRequestAgain() {
+    private ServerBusyView.IRequestAgainListener requestAgainListener = new ServerBusyView.IRequestAgainListener() {
         @Override
-        public void execute() {
+        public void request() {
             getHomePageInfo();
         }
     };

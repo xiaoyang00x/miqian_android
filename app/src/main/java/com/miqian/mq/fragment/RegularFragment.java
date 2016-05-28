@@ -29,11 +29,9 @@ import com.miqian.mq.views.ServerBusyView;
  */
 public class RegularFragment extends BasicFragment {
 
-//    private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
-
-    private TextView tv_regular_project; // 定期项目
-    private TextView tv_regular_transfer; // 定期转让
-    private View title_line; // 定期项目 定期转让选中后下面显示的红色横线
+    private TextView tv_regular_project; // 定期项目标题
+    private TextView tv_regular_transfer; // 定期转让标题
+    private View title_line; // 定期项目 定期转让标题选中后下面显示的红色横线
 
     private final int LEFTPAGE = 0x01; // 定期项目 被选中
     private final int RIGHTPAGE = 0x02; // 定期转让 被选中
@@ -41,8 +39,8 @@ public class RegularFragment extends BasicFragment {
 
     private FrameLayout content;
 
-    private RegularProjectView regularProjectView;
-    private RegularTransferView regularTransferView;
+    private RegularProjectView regularProjectView; // 定期项目内容页面
+    private RegularTransferView regularTransferView; // 定期转让内容页面
 
     private View rootView;
 
@@ -125,9 +123,9 @@ public class RegularFragment extends BasicFragment {
                     regularProjectView = new RegularProjectView(mContext);
                     content.addView(regularProjectView.getView());
                 }
-                regularProjectView.getView().setVisibility(View.VISIBLE);
+                regularProjectView.setVisibility(View.VISIBLE);
                 if (null != regularTransferView) {
-                    regularTransferView.getView().setVisibility(View.GONE);
+                    regularTransferView.setVisibility(View.GONE);
                 }
                 break;
             case RIGHTPAGE:
@@ -135,9 +133,9 @@ public class RegularFragment extends BasicFragment {
                     regularTransferView = new RegularTransferView(mContext);
                     content.addView(regularTransferView.getView());
                 }
-                regularTransferView.getView().setVisibility(View.VISIBLE);
+                regularTransferView.setVisibility(View.VISIBLE);
                 if (null != regularProjectView) {
-                    regularProjectView.getView().setVisibility(View.GONE);
+                    regularProjectView.setVisibility(View.GONE);
                 }
                 break;
             default:
@@ -155,7 +153,7 @@ public class RegularFragment extends BasicFragment {
                 break;
             case RIGHTPAGE:
                 if (null != regularTransferView) {
-                    regularTransferView.obtainData();
+
                 }
                 break;
             default:

@@ -5,6 +5,9 @@ package com.miqian.mq.entity;
  * 获取定期首页数据
  */
 public class GetRegularResult extends Meta {
+
+    private GetRegularInfo data;
+
     public GetRegularInfo getData() {
         return data;
     }
@@ -13,5 +16,4 @@ public class GetRegularResult extends Meta {
         this.data = data;
     }
 
-    private GetRegularInfo data;
 }

@@ -21,7 +21,7 @@ import com.miqian.mq.utils.MobileOS;
 public class ServerBusyView extends ScrollView {
 
     private Context mContext;
-    private IRequestAgain requestAgain;
+    private IRequestAgainListener requestAgainListener;
 
     private ImageView iv_houzi;
     private TextView tv_tip;
@@ -78,11 +78,13 @@ public class ServerBusyView extends ScrollView {
 
     // 服务器繁忙页面 - 隐藏
     public void hide() {
-        setVisibility(View.GONE);
+        if (View.VISIBLE == getVisibility()) {
+            setVisibility(View.GONE);
+        }
     }
 
-    public void setListener(IRequestAgain requestAgain) {
-        this.requestAgain = requestAgain;
+    public void setListener(IRequestAgainListener requestAgainListener) {
+        this.requestAgainListener = requestAgainListener;
         btn_refresh.setOnClickListener(mOnClickListener);
         tv_lookAround1.setOnClickListener(mOnClickListener);
         tv_lookAround2.setOnClickListener(mOnClickListener);
@@ -95,7 +97,9 @@ public class ServerBusyView extends ScrollView {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_refresh:
-                    requestAgain.execute();
+                    if (null != requestAgainListener) {
+                        requestAgainListener.request();
+                    }
                     break;
                 case R.id.tv_lookAround1:
                     WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
@@ -113,8 +117,8 @@ public class ServerBusyView extends ScrollView {
         }
     };
 
-    public interface IRequestAgain {
-        void execute();
+    public interface IRequestAgainListener {
+        void request();
     }
 
 }

@@ -7,7 +7,9 @@ import java.util.ArrayList;
  */
 public class GetRegularInfo {
 
-    private ArrayList<SubjectCategoryData> subjectData;
+    private ArrayList<SubjectCategoryData> subjectData; // 标的数据
+
+    private Page page;
 
     private String fitSubjectDesc;  //红包规则描述
 
@@ -27,4 +29,11 @@ public class GetRegularInfo {
         this.subjectData = subjectData;
     }
 
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
 }

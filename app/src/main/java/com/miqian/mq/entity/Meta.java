@@ -5,7 +5,6 @@ package com.miqian.mq.entity;
  */
 public class Meta {
 
-
     private String code;
     private String message;
 
@@ -16,7 +15,6 @@ public class Meta {
     public void setMessage(String message) {
         this.message = message;
     }
-
 
     public String getCode() {
         return code;
