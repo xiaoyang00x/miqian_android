@@ -75,7 +75,7 @@ public class MessageAdapter extends BaseAdapter {
                 holder.iv_isRead.setBackgroundResource(R.drawable.message_close);
             }
 
-        String dateToChineseStrings = Uihelper.timestampToDateStr_other(Double.parseDouble(messageInfo.getSendTime()));
+        String dateToChineseStrings = Uihelper.timestampToDateStr_other(messageInfo.getSendTime());
         holder.tv_time.setText(dateToChineseStrings);
         return convertView;
     }

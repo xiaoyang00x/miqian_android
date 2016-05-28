@@ -1,11 +1,21 @@
 package com.miqian.mq.entity;
 
 /**
- * Created by sunyong on 9/16/15.
+ * Created by wgl on 5/20/16.
+ * 首页轮播图数据
  */
-public class AdvertisementImg {
-  private String imgUrl;
-  private String jumpUrl;
+public class HomeAdData {
+  private int id;
+  private String imgUrl;            //图片链接
+  private String jumpUrl;           //跳转链接
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getImgUrl() {
     return imgUrl;

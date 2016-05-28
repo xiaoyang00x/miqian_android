@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/account_head_bg"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_acount_center" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/iv_center"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="145dp"
+                android:layout_height="145dp"
+                android:background="@drawable/circle_white" />
+
+            <LinearLayout
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_totalasset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="--.--"
+                    android:textColor="@color/mq_r1_v2"
+                    android:textSize="@dimen/mq_font12_v2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:text="总资产(元)"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font6_v2" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/iv_center"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="158dp">
+
+            <ImageView
+                android:layout_width="113dp"
+                android:layout_height="113dp"
+                android:background="@drawable/circle_white" />
+
+            <LinearLayout
+                android:layout_width="113dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="--.--"
+                    android:textColor="@color/mq_r1_v2"
+                    android:textSize="@dimen/mq_font10_v2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="账户余额(元)"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font4_v2" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/iv_center"
+            android:layout_marginLeft="116dp"
+            android:layout_marginTop="110dp">
+
+            <ImageView
+                android:layout_width="92dp"
+                android:layout_height="92dp"
+                android:background="@drawable/circle_white" />
+
+            <LinearLayout
+                android:layout_width="92dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_ydayprofit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="--.--"
+                    android:textColor="@color/mq_r1_v2"
+                    android:textSize="@dimen/mq_font9_v2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="昨日收益(元)"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font2_v2" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/iv_center"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="198dp">
+
+            <ImageView
+                android:layout_width="101dp"
+                android:layout_height="101dp"
+                android:background="@drawable/circle_white" />
+
+            <LinearLayout
+                android:layout_width="101dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_totalProfit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="--.--"
+                    android:textColor="@color/mq_r1_v2"
+                    android:textSize="@dimen/mq_font9_v2" />
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="累计收益(元)"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font2_v2" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_rollin"
+                android:layout_width="130dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/btn_yellow"
+                android:text="充值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font10_v2" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_rollout"
+                android:layout_width="130dp"
+                android:layout_height="45dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/btn_yellow"
+                android:text="提现"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font10_v2" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

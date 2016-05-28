@@ -8,7 +8,7 @@ public class MessageInfo {
 
     private String content;  //内容
     private String title;
-    private String sendTime;
+    private long sendTime;
     private int id;
     private boolean isRead;
     private String jumpUrl;
@@ -30,11 +30,11 @@ public class MessageInfo {
         this.title = title;
     }
 
-    public String getSendTime() {
+    public long getSendTime() {
         return sendTime;
     }
 
-    public void setSendTime(String sendTime) {
+    public void setSendTime(long sendTime) {
         this.sendTime = sendTime;
     }
 

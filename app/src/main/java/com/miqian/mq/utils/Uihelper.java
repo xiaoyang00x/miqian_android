@@ -158,9 +158,9 @@ public class Uihelper {
         return date;
     }
 
-    public static String timestampToDateStr_other(Double timestamp) {
+    public static String timestampToDateStr_other(long timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String date = sdf.format(new Date((long) (timestamp * 1L)));
+        String date = sdf.format(new Date(timestamp));
         return date;
     }
 

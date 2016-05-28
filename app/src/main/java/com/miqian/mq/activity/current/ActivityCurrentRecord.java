@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.adapter.typeadapter.AdapterCurrrentRecord;
+import com.miqian.mq.adapter.AdapterCurrrentRecord;
 import com.miqian.mq.entity.CurSubRecord;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.Page;

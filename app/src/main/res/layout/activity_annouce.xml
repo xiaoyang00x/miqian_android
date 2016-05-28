@@ -5,54 +5,6 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/frame_title"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:background="@color/mq_r1">
-
-        <ImageButton
-            android:id="@+id/bt_left"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:background="@color/transparent"
-            android:src="@drawable/btn_back_selector" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <Button
-                android:id="@+id/title_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bt_regualr_tab_left_selected"
-                android:text="消息"
-                android:textColor="@color/mq_r1"
-                android:textSize="@dimen/mq_font3" />
-
-            <Button
-                android:id="@+id/title_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bt_regualr_tab_right"
-                android:text="公告"
-                android:textColor="@color/white"
-                android:textSize="@dimen/mq_font3" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_clearall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="@dimen/mq_font3" />
-    </RelativeLayout>
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/frame_no_messagedata"

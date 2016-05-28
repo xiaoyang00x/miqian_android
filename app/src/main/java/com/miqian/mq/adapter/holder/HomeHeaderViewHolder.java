@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.HomeAdPageAdapter;
-import com.miqian.mq.entity.AdvertisementImg;
+import com.miqian.mq.entity.HomeAdData;
 import com.miqian.mq.utils.Uihelper;
 
 import java.util.ArrayList;
@@ -25,11 +25,11 @@ public class HomeHeaderViewHolder extends RecyclerView.ViewHolder {
     private ViewPager mHomeViewpager;
     private LinearLayout layout_indicator;
     private ImageView[] imageViews;
-    private ArrayList<AdvertisementImg> mDataList;
+    private ArrayList<HomeAdData> mDataList;
     private HomeAdPageAdapter mAdpagerAdapter;
     private int currentPageState = ViewPager.SCROLL_STATE_IDLE;// Viewpager状态
 
-    public HomeHeaderViewHolder(View itemView, ArrayList<AdvertisementImg> mDataList) {
+    public HomeHeaderViewHolder(View itemView, ArrayList<HomeAdData> mDataList) {
         super(itemView);
         this.mDataList = mDataList;
         mHomeViewpager = (ViewPager) itemView.findViewById(R.id.vp_home_viewpager);

@@ -1,6 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/mq_b7_v2"
+    >
 
     <com.miqian.mq.views.MySwipeRefresh
         android:id="@+id/swipe_refresh"

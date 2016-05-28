@@ -25,6 +25,7 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
+import com.miqian.mq.activity.user.NoticeActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
@@ -62,7 +63,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private TextView tv_Current, tv_Regular, tv_Ticket;
     private UserInfo userInfo;
     private UserInfo userInfoTemp;
-    private TextView tv_TotalProfit, tv_balance, tv_totalasset;
+    private TextView tv_TotalProfit;//总收益
+    private TextView tv_balance;//可用余额
+    private TextView tv_totalasset;//总资产
+    private TextView tv_ydayprofit;//昨日收益
     private CustomDialog dialogTips;
     private MySwipeRefresh swipeRefresh;
     private ImageButton btn_message;
@@ -193,6 +197,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         } else {
             tv_totalasset.setText("--.--");
         }
+        //昨日收益
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getYdayProfit())) {
+            tv_ydayprofit.setText(userInfo.getYdayProfit());
+        } else {
+            tv_ydayprofit.setText("--.--");
+        }
     }
 
     @Override
@@ -226,10 +236,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         tv_Title.setText("我的");
 
         btn_message = (ImageButton) view.findViewById(R.id.bt_left);
-        if (hasMessage){
+        if (hasMessage) {
+            btn_message.setImageResource(R.drawable.bt_hasmessage);
+        } else {
             btn_message.setImageResource(R.drawable.btn_message);
-        }else {
-            btn_message.setImageResource(R.drawable.btn_message_none);
         }
         btn_message.setOnClickListener(this);
 
@@ -251,6 +261,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         tv_balance = (TextView) view.findViewById(R.id.tv_balance);
         tv_TotalProfit = (TextView) view.findViewById(R.id.tv_totalProfit);
         tv_totalasset = (TextView) view.findViewById(R.id.tv_totalasset);
+        tv_ydayprofit = (TextView) view.findViewById(R.id.tv_ydayprofit);
 
         View frame_current = view.findViewById(R.id.frame_account_current);
         View frame_regular = view.findViewById(R.id.frame_regular);
@@ -460,7 +471,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             case R.id.bt_left:
                 MobclickAgent.onEvent(getActivity(), "1015");
                 startActivity(new Intent(getActivity(), AnnounceActivity.class));
-                hasMessage=false;
+                hasMessage = false;
                 btn_message.setImageResource(R.drawable.btn_message_none);
                 break;
             //我的设置
@@ -512,12 +523,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         switch (operationKey) {
             case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
-                hasMessage=true;
+                hasMessage = true;
                 btn_message.setImageResource(R.drawable.btn_message);
                 break;
             case ExtendOperationController.OperationKey.MessageState:
                 // 更新数据
-                hasMessage=false;
+                hasMessage = false;
                 btn_message.setImageResource(R.drawable.btn_message_none);
                 break;
             case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:

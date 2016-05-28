@@ -83,9 +83,10 @@ public class MyReceiver extends BroadcastReceiver {
             response.setUserId(userId);
             // 保存到数据库
             MyDataBaseHelper.getInstance(context).recordJpush(response);
-            // 通知消息页面更新
-            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.RERESH_JPUSH, null);
-
+            if ("1".equals(response.getPushSource())) {
+                // 通知消息更新
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.RERESH_JPUSH, null);
+            }
             // 解析数据
             String string_uritype = response.getUriType();
             String noticeId = response.getId();

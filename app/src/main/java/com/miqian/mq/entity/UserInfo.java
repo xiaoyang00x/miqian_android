@@ -36,6 +36,8 @@ public class UserInfo implements Serializable {
     private String singleAmtLimit; //单笔限额
     private String dayAmtLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
+    private String ydayProfit;//昨日收益
+
 
     public String getCanRedeem() {
         return canRedeem;
@@ -267,5 +269,13 @@ public class UserInfo implements Serializable {
 
     public void setMonthAmtLimit(String monthAmtLimit) {
         this.monthAmtLimit = monthAmtLimit;
+    }
+
+    public String getYdayProfit() {
+        return ydayProfit;
+    }
+
+    public void setYdayProfit(String ydayProfit) {
+        this.ydayProfit = ydayProfit;
     }
 }

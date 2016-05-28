@@ -238,6 +238,10 @@
             android:name=".activity.GestureLockSetActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.user.NoticeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <receiver
             android:name=".receiver.HomeDialogReceiver"
             android:exported="false">
