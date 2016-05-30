@@ -23,6 +23,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.WaterWaveView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
@@ -30,6 +31,7 @@ import java.math.BigDecimal;
 public class FragmentCurrent extends BasicFragment implements View.OnClickListener {
 
     private View view;
+    private WaterWaveView waterWaveView;
     private Button btInvestment;
     private TextView titleText;
     private RelativeLayout frameImage;
@@ -67,6 +69,9 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     }
 
     private void findViewById(View view) {
+        waterWaveView = (WaterWaveView) view.findViewById(R.id.wave_view);
+        waterWaveView.startWave();
+
         titleText = (TextView) view.findViewById(R.id.title);
         titleText.setText("活期");
 
@@ -133,10 +138,10 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
             balance = currentInfo.getBalance();
             initInterestView();
             if (currentInfo.getCurrentSwitch().equals("0")) {
-//                btInvestment.setText("已满额");
+                btInvestment.setText("已满额");
                 btInvestment.setEnabled(false);
             } else {
-//                btInvestment.setText("立即认购");
+                btInvestment.setText("立即认购");
                 btInvestment.setEnabled(true);
             }
         }
@@ -167,6 +172,10 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
     @Override
     public void onDestroy() {
+        if (waterWaveView != null) {
+            waterWaveView.stopWave();
+            waterWaveView = null;
+        }
         if (dialogPay != null) {
             dialogPay = null;
         }

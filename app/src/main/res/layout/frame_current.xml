@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mq_b7_v2">
+    android:background="@color/white">
 
 
     <include layout="@layout/frame_title" />
@@ -29,7 +29,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/current_gradual_bg"
+                        android:background="@color/mq_r1"
                         android:orientation="vertical">
 
                         <RelativeLayout
@@ -38,8 +38,8 @@
 
                             <RelativeLayout
                                 android:id="@+id/frame_image"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="360dp"
+                                android:layout_height="288dp"
                                 android:layout_centerInParent="true"
                                 android:clickable="true"
                                 android:background="@drawable/current_circle_bg">
@@ -50,8 +50,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="76dp"
                                     android:layout_centerHorizontal="true"
-                                    android:textSize="@dimen/mq_font16_v2"
-                                    android:textColor="@color/mq_r1_v2"
+                                    android:textSize="72sp"
+                                    android:textColor="@color/mq_r1"
+                                    android:drawableRight="@drawable/current_interest_percent"
                                     android:visibility="visible"/>
 
                             </RelativeLayout>
@@ -64,13 +65,24 @@
 
                             <Button
                                 android:id="@+id/bt_investment"
-                                android:layout_width="wrap_content"
+                                android:layout_width="174dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginBottom="6dp"
                                 android:background="@drawable/btn_subscribe"
+                                android:text="立即认购"
                                 android:textColor="@color/mq_r1"
                                 android:textSize="@dimen/mq_font2" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:drawableLeft="@drawable/icon_current_safe"
+                                android:drawablePadding="5dp"
+                                android:text="由融资租赁机构提供本息保障，安全透明值得认购"
+                                android:textColor="#aaffffff"
+                                android:textSize="@dimen/mq_font10" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -78,8 +90,13 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/current_wave_bg">
+                        android:layout_height="50dp"
+                        android:background="@color/mq_r1">
+
+                        <com.miqian.mq.views.WaterWaveView
+                            android:id="@+id/wave_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
                     </LinearLayout>
 
                     <RelativeLayout
