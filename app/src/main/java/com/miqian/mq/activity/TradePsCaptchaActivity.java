@@ -40,6 +40,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
     private String telephone;
     private boolean isModifyPhone;
     private String realNameStatus;
+    private TextView tv_tip;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -70,12 +71,10 @@ public class TradePsCaptchaActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
+        tv_tip = (TextView) findViewById(R.id.tv_tip);
+        tv_phone = (TextView) findViewById(R.id.tv_phone);
         telephone = Pref.getString(Pref.TELEPHONE, mActivity, "");
-        if (!TextUtils.isEmpty(telephone)) {
-            tv_phone.setText("验证码发送至" + telephone.substring(0, 3) + "****" + telephone.substring(telephone.length() - 4, telephone.length()));
-        }
-
+        tv_phone.setText(telephone);
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
         if (!isModifyPhone) {
             mEtRealname = (EditText) findViewById(R.id.et_realname);
@@ -99,12 +98,16 @@ public class TradePsCaptchaActivity extends BaseActivity {
             findViewById(R.id.frament_modifytradepassword).setVisibility(View.GONE);
             findViewById(R.id.view_1).setVisibility(View.GONE);
             mTitle.setTitleText("修改手机号码");
+            tv_tip.setText("修改手机密码,请先验证手机");
         }
         if (!TextUtils.isEmpty(realNameStatus)) {
             //未实名认证
             if ("0".equals(realNameStatus)) {
                 findViewById(R.id.frament_modifytradepassword).setVisibility(View.GONE);
                 findViewById(R.id.view_1).setVisibility(View.GONE);
+                tv_tip.setText("修改交易密码,请先验证手机");
+            } else {
+                tv_tip.setText("修改交易密码,请先验证手机和身份证");
             }
         }
     }

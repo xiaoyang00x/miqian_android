@@ -104,7 +104,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
 
         //待开标
         if ("00".equals(data.getSubjectStatus())) {
-            tv_project_name.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
             profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
             tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
             tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
@@ -116,7 +115,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_begin_time.setText(FormatUtil.formatDate(data.getStartTimestamp(), "MM月dd日 HH:mm发售"));
             tv_begin_time.setVisibility(View.VISIBLE);
         } else if ("01".equals(data.getSubjectStatus())) {
-            tv_project_name.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
             profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
             tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
             tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
@@ -128,7 +126,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_begin_time.setVisibility(View.GONE);
 
         } else {
-            tv_project_name.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
             profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
             tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
             tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));

@@ -95,7 +95,7 @@
     </RelativeLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_left_right"
@@ -106,7 +106,7 @@
             android:id="@+id/bt_back"
             style="@style/click_btn"
             android:text="确定" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/frame_tip"

@@ -84,7 +84,7 @@
     </RelativeLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_left_right"
@@ -96,6 +96,6 @@
             style="@style/click_btn"
             android:onClick="btn_click"
             android:text="确认" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
