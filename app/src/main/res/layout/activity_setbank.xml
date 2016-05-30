@@ -77,7 +77,7 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
         android:layout_marginBottom="@dimen/margin_top"
@@ -90,7 +90,7 @@
             style="@style/click_btn"
             android:onClick="btn_click"
             android:text="确定" />
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

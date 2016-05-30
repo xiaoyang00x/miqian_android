@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mohu">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:padding="20dp">
+        android:padding="45dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,8 +30,7 @@
                     android:id="@+id/rela_telephone"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/input_background">
+                    android:layout_marginTop="20dp">
 
                     <ImageView
                         android:id="@+id/login_image1"
@@ -59,13 +59,16 @@
                         android:typeface="monospace" />
                 </RelativeLayout>
 
+                <View
+                    style="@style/item_divider"
+                    android:layout_marginLeft="10dp"></View>
+
 
                 <RelativeLayout
                     android:id="@+id/rela_password"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/input_background"
                     android:padding="2dp">
 
                     <ImageView
@@ -94,48 +97,57 @@
                         android:typeface="monospace" />
                 </RelativeLayout>
 
+                <View
+                    style="@style/item_divider"
+                    android:layout_marginLeft="10dp"></View>
 
-                <LinearLayout
+                <RelativeLayout
                     style="@style/FillContent"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/margin_left_right"
-                    android:paddingTop="@dimen/margin_left_right">
+                    android:orientation="vertical"
+                    android:paddingTop="35dp">
 
                     <Button
                         android:id="@+id/btn_login"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/bt_height"
-                        android:layout_weight="1"
+                        android:layout_width="220dp"
+                        android:layout_height="45dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
                         android:background="@drawable/btn_red"
                         android:text="登录"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/mq_font1" />
-                </LinearLayout>
+                        android:textSize="@dimen/mq_font7_v2" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_login_forgetpw"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="忘记密码?"
-                        android:textColor="@color/mq_bl1"
-                        android:textSize="@dimen/mq_font2" />
+                        android:layout_alignLeft="@+id/btn_login"
+                        android:layout_alignRight="@+id/btn_login"
+                        android:layout_below="@+id/btn_login"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp">
 
-                    <TextView
-                        android:id="@+id/tv_login_register"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right|center"
-                        android:text="立即注册>"
-                        android:textColor="@color/mq_r1"
-                        android:textSize="@dimen/mq_font2" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_login_forgetpw"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="忘记密码?"
+                            android:textColor="@color/mq_b4_v2"
+                            android:textSize="@dimen/mq_font4_v2" />
+
+                        <TextView
+                            android:id="@+id/tv_login_register"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:text="立即注册"
+                            android:textColor="@color/mq_r1"
+                            android:textSize="@dimen/mq_font4_v2" />
+                    </LinearLayout>
+                </RelativeLayout>
 
 
             </LinearLayout>

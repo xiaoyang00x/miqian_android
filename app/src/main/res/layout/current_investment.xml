@@ -245,7 +245,7 @@
                 <!--android:text="80.00元" />-->
                 <!--</RelativeLayout>-->
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_right"
@@ -266,7 +266,7 @@
                         android:id="@+id/bt_pay"
                         style="@style/click_btn"
                         android:text="确定认购" />
-                </LinearLayout>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

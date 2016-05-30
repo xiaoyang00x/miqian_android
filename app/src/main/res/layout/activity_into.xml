@@ -194,7 +194,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_left_right"
@@ -215,7 +215,7 @@
             android:id="@+id/bt_rollin"
             style="@style/click_btn"
             android:text="确认" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
