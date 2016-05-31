@@ -57,6 +57,7 @@
   <!--v2颜色表-->
   <color name="mq_r1_v2">#e8373d</color>
   <color name="mq_r2_v2">#da2626</color>
+  <color name="mq_r3_v2">#fd5e47</color><!--渐变色底部-->
   <color name="mq_b1_v2">#333333</color>
   <color name="mq_b2_v2">#666666</color>
   <color name="mq_b3_v2">#888888</color>
