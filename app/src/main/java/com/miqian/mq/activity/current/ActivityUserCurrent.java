@@ -38,7 +38,6 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private RelativeLayout frameProjectMatch;
     private Button btRedeem;//赎回
     private Button btSubscribe;//认购
-    private ImageView imageInterest;
     private TextView textInterest;
 
     private UserCurrent userCurrent;
@@ -105,12 +104,10 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             }
             String tempInterest = userCurrent.getCurrentYearRate();
             if (TextUtils.isEmpty(tempInterest)) {
-                imageInterest.setVisibility(View.VISIBLE);
                 textInterest.setVisibility(View.GONE);
             } else {
-                imageInterest.setVisibility(View.GONE);
                 textInterest.setVisibility(View.VISIBLE);
-                textInterest.setText(tempInterest);
+                textInterest.setText(tempInterest+"%");
             }
         } else {
             btRedeem.setEnabled(false);
@@ -130,7 +127,6 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         btRedeem = (Button) findViewById(R.id.bt_redeem);
         btSubscribe = (Button) findViewById(R.id.bt_subscribe);
 
-        imageInterest = (ImageView) findViewById(R.id.image_interest);
         textInterest = (TextView) findViewById(R.id.text_interest);
 
         frameCurrentRecord.setOnClickListener(this);
