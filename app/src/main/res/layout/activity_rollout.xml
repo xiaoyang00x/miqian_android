@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:background="@drawable/frame_red_bg"
+                android:background="@drawable/account_head_bg"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -49,10 +49,7 @@
                             android:background="@null"
                             android:inputType="numberDecimal"
                             android:singleLine="true" />
-
-
                     </RelativeLayout>
-
                 </LinearLayout>
 
                 <LinearLayout
