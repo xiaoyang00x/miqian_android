@@ -56,8 +56,6 @@ import java.util.Map;
 public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private Button btRollin;
-//    private LinearLayout frameBank;
-//    private RelativeLayout frameBankInput;
     private EditText editMoney;
     private EditText editMoneyBound;
     private ImageView imageBank;
@@ -67,7 +65,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout frameRealName;
     private EditText editName;
     private EditText editCardId;
-//    private TextView textTip;
     private TextView textLimit;
     private TextView textErrorLian;
     private LinearLayout frameBind;
@@ -83,7 +80,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private String idCard;
     private int rollType;//为1时传入充值金额，为0时不传
     private int bindStatus;
-//    private String bindSupportStatus;
     private String relaNameStatus;
 
     @Override
@@ -93,6 +89,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onSucceed(LoginResult result) {
                 end();
+                showContentView();
                 userInfo = result.getData();
                 refreshView();
             }
@@ -100,6 +97,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onFail(String error) {
                 end();
+                showErrorView();
                 btRollin.setEnabled(false);
                 Uihelper.showToast(mActivity, error);
             }
@@ -136,8 +134,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             editMoneyBound.setText(money);
             editMoneyBound.setEnabled(false);
         }
-//        frameBankInput = (RelativeLayout) findViewById(R.id.frame_bank_input);
-//        frameBank = (LinearLayout) findViewById(R.id.frame_bank);
         imageBank = (ImageView) findViewById(R.id.image_bank);
         editBankNumber = (EditText) findViewById(R.id.edit_bank_number);
         editBankNumber.addTextChangedListener(textWatcher);
@@ -151,7 +147,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         editCardId = (EditText) frameRealName.findViewById(R.id.edit_card_id);
         editName.addTextChangedListener(textWatcherLian);
         editCardId.addTextChangedListener(textWatcherLian);
-//        textTip = (TextView) findViewById(R.id.text_tip);
         mHandler = new MyHandler(this);
         frameBind = (LinearLayout) findViewById(R.id.frame_bind);
         frameBound = (LinearLayout) findViewById(R.id.frame_bound);
@@ -159,8 +154,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private void refreshView() {
         btRollin.setEnabled(true);
-//        bindStatus = userInfo.getBindCardStatus();
-//        bindSupportStatus = userInfo.getSupportStatus();
         relaNameStatus = userInfo.getRealNameStatus();
         if ("1".equals(relaNameStatus)) {
             editCardId.setEnabled(false);
@@ -193,38 +186,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             frameBound.setVisibility(View.GONE);
             showBankLimit();
         }
-//        if (bindStatus.equals("0")) {
-//            frameRealName.setVisibility(View.VISIBLE);
-////            frameBank.setVisibility(View.GONE);
-////            frameBankInput.setVisibility(View.VISIBLE);
-////            textTip.setVisibility(View.VISIBLE);
-//            frameBind.setVisibility(View.VISIBLE);
-//            frameBound.setVisibility(View.GONE);
-//            showBankLimit();
-//        } else if (bindStatus.equals("1")) {
-//            if (userInfo.getSupportStatus().equals("1")) {
-////                frameBank.setVisibility(View.VISIBLE);
-////                frameBankInput.setVisibility(View.GONE);
-//                frameRealName.setVisibility(View.GONE);
-//                frameBind.setVisibility(View.GONE);
-//                frameBound.setVisibility(View.VISIBLE);
-//            } else {
-//                frameRealName.setVisibility(View.VISIBLE);
-////                frameBank.setVisibility(View.GONE);
-////                frameBankInput.setVisibility(View.VISIBLE);
-////                textTip.setVisibility(View.VISIBLE);
-//                frameBind.setVisibility(View.VISIBLE);
-//                frameBound.setVisibility(View.GONE);
-//                showBankLimit();
-//            }
-//            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
-//            if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
-//                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
-//            }
-//            bindBankNumber.setText(bankNumber);
-//            bindBankName.setText(userInfo.getBankName());
-//            textLimit.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
-//        }
     }
 
     private void rollIn() {
@@ -246,7 +207,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
         }
 
-//        if (bindStatus.equals("0") || bindSupportStatus.equals("0")) {
         if (bindStatus == 0) {
             bankNumber = editBankNumber.getText().toString().replaceAll(" ", "");
             if (TextUtils.isEmpty(bankNumber)) {
