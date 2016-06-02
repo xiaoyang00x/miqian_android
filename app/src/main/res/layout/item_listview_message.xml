@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="70dp"
         android:paddingBottom="10dp"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right"
@@ -61,7 +61,7 @@
                 android:id="@+id/tv_content"
                 style="@style/text_gray_item"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:text="--"
                 android:textSize="12sp" />
         </LinearLayout>

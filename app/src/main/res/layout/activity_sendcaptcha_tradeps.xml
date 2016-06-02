@@ -4,70 +4,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="@dimen/margin_top">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
 
-    <LinearLayout
-        android:id="@+id/frament_modifytradepassword"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:minHeight="40dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-
-        >
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/trans"
-            android:src="@drawable/identification" />
-
-        <EditText
-            android:id="@+id/et_realname"
-            style="@style/edittext_item"
-            android:layout_width="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/btn_send"
-            android:layout_toRightOf="@+id/tv_register"
-            android:digits="0123456789Xx"
-            android:hint="请输入身份证号码"
-            android:inputType="text"
-            android:maxLength="18"
-            android:singleLine="true" />
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view_1"
-        style="@style/item_divider" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
-        android:background="@drawable/list_click">
-
-        <TextView
-            android:id="@+id/tv_modifyphone_captcha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:text="验证码发送至"
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font2" />
-
-        ImageView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/margin_left_right"
-        android:src="@drawable/arrow_right" />
-    </RelativeLayout>
+        android:src="@drawable/account_phone"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mq_b2_v2"
+            android:textSize="@dimen/mq_font9_v2"
+            android:text="手机号"/>
+        <TextView
+            android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mq_b3_v2"
+        android:textSize="@dimen/mq_font9_v2"
+        android:text=""/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mq_b4_v2"
+        android:textSize="@dimen/mq_font5_v2"
+        android:layout_marginBottom="15dp"
+        android:layout_gravity="center"
+        android:text=""/>
 
-    <View style="@style/item_divider" />
+</LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -78,22 +57,12 @@
         android:paddingLeft="10dp"
         android:paddingTop="5dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/trans"
-            android:src="@drawable/captcha" />
-
         <EditText
             android:id="@+id/et_account_captcha"
             style="@style/edittext_item"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView"
             android:layout_toLeftOf="@+id/btn_send"
-            android:layout_toRightOf="@+id/imageView"
             android:hint="请输入验证码"
             android:inputType="number"
             android:maxLength="6" />
@@ -111,9 +80,37 @@
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_small" />
     </RelativeLayout>
-
-
+    <View
+        android:id="@+id/view_1"
+        style="@style/item_divider" />
     <LinearLayout
+        android:id="@+id/frament_modifytradepassword"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_item"
+        android:background="@color/white"
+        android:minHeight="40dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+
+        >
+
+        <EditText
+            android:id="@+id/et_realname"
+            style="@style/edittext_item"
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_send"
+            android:layout_toRightOf="@+id/tv_register"
+            android:digits="0123456789Xx"
+            android:hint="请输入身份证号码"
+            android:inputType="text"
+            android:maxLength="18"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_top"
@@ -126,7 +123,7 @@
             style="@style/click_btn"
             android:onClick="btn_click"
             android:text="下一步" />
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

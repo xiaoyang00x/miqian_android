@@ -30,7 +30,7 @@
             android:layout_toRightOf="@+id/tv_register"
             android:hint="请输入手机号码"
             android:inputType="number"
-            android:maxLength="11"/>
+            android:maxLength="11" />
     </LinearLayout>
 
     <View style="@style/item_divider" />
@@ -55,14 +55,14 @@
             android:id="@+id/et_account_captcha"
             style="@style/edittext_item"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/imageView"
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@+id/imageView"
             android:hint="请输入验证码"
             android:inputType="number"
-            android:maxLength="6"
-            android:layout_height="wrap_content"/>
+            android:maxLength="6" />
 
         <Button
             android:id="@+id/btn_send"
@@ -104,15 +104,15 @@
             android:digits="@string/match"
             android:hint="6~16位数字字母组合"
             android:inputType="textPassword"
-            android:maxLength="16"/>
+            android:maxLength="16" />
 
     </LinearLayout>
 
-    <View style="@style/item_divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:minHeight="40dp"
         android:paddingBottom="5dp"
@@ -134,26 +134,25 @@
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@+id/tv_register"
             android:digits="@string/match"
-            android:maxLength="10"
             android:hint="邀请码(非必填)"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:maxLength="10" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/bt_under_text"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right"
         android:layout_marginTop="@dimen/margin_top">
 
         <Button
             android:id="@+id/btn_next"
             style="@style/click_btn"
             android:onClick="btn_click"
+            android:layout_centerHorizontal="true"
             android:text="下一步" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
