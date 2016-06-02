@@ -4,7 +4,20 @@
     android:layout_height="33dp"
     android:background="@color/mq_b7_v2">
 
+    <include
+        layout="@layout/divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true" />
+
+    <include
+        layout="@layout/divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true" />
+
     <TextView
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
@@ -14,6 +27,7 @@
         android:textSize="@dimen/mq_font3_v2" />
 
     <TextView
+        android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"

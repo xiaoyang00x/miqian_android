@@ -1,18 +1,19 @@
 package com.miqian.mq.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.miqian.mq.R;
-import com.miqian.mq.adapter.RegularListAdapter;
 import com.miqian.mq.adapter.RegularTransferAdapter;
-import com.miqian.mq.entity.GetRegularInfo;
-import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.RegularTransferList;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.net.HttpRequest;

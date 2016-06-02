@@ -8,8 +8,11 @@ import android.view.View;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.RegularListAdapter;
+import com.miqian.mq.adapter.RegularProjectAdapter;
 import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
+import com.miqian.mq.entity.RegularProjectList;
+import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.MyAsyncTask;
@@ -23,8 +26,8 @@ import com.miqian.mq.net.MyAsyncTask;
 public class RegularProjectView {
 
     private Context mContext;
-    private RegularListAdapter mAdapter;
-    private GetRegularInfo mData;
+    private RegularProjectAdapter mAdapter;
+    private RegularProjectList mData;
 
     private View mView;
     private MySwipeRefresh swipeRefresh;
@@ -51,59 +54,24 @@ public class RegularProjectView {
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new RegularProjectAdapter(mContext);
+        recyclerView.setAdapter(mAdapter);
     }
 
     private void initListener() {
         swipeRefresh.setOnPullRefreshListener(mOnPullRefreshListener);
-        recyclerView.addOnScrollListener(mOnScrollListener);
-        serverBusyView.setListener(requestAgain);
+        serverBusyView.setListener(requestAgainListener);
     }
 
     private MySwipeRefresh.OnPullRefreshListener mOnPullRefreshListener = new MySwipeRefresh.OnPullRefreshListener() {
         @Override
         public void onRefresh() {
-//                isFirstLoading = true;
             obtainData();
         }
     };
-
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
-//            //用来标记是否正在向最后一个滑动，既是否向右滑动或向下滑动
-//            boolean isSlidingToLast = false;
-
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            // 当不滚动时
-            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                //获取最后一个完全显示的ItemPosition
-                int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                int totalItemCount = manager.getItemCount();
-
-                // 判断是否滚动到底部，并且是向右滚动
-                if (lastVisibleItem == (totalItemCount - 1)) {
-//                        Toast.makeText(mActivity, "加载更多", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
-    };
-
-    private void refreshData() {
-        if (mData == null) {
-            obtainData();
-//            if (isServerBusyPageShow) {
-//                serverBusyView.showServerBusy();
-//            } else if (isNoNetworkPageShow) {
-//                serverBusyView.showNoNetwork();
-//            } else {
-//                serverBusyView.hide();
-//            }
-        }
-    }
 
     // 服务器繁忙页面 - 再次请求 - 刷新
-    private ServerBusyView.IRequestAgainListener requestAgain = new ServerBusyView.IRequestAgainListener() {
+    private ServerBusyView.IRequestAgainListener requestAgainListener = new ServerBusyView.IRequestAgainListener() {
         @Override
         public void request() {
             obtainData();
@@ -122,10 +90,10 @@ public class RegularProjectView {
             inProcess = true;
         }
         swipeRefresh.setRefreshing(true);
-        HttpRequest.getRegularList(mContext, new ICallback<GetRegularResult>() {
+        HttpRequest.getRegularProjectList(mContext, new ICallback<RegularProjectListResult>() {
 
             @Override
-            public void onSucceed(GetRegularResult result) {
+            public void onSucceed(RegularProjectListResult result) {
                 synchronized (mLock) {
                     inProcess = false;
                 }
@@ -133,9 +101,9 @@ public class RegularProjectView {
                 if (result == null || (mData = result.getData()) == null) {
                     return;
                 }
-                mAdapter = new RegularListAdapter(mData, mContext);
-                recyclerView.setAdapter(mAdapter);
-
+                mAdapter.clear();
+                mAdapter.addAll(mData);
+                mAdapter.notifyDataSetChanged();
                 serverBusyView.hide();
             }
 
@@ -162,6 +130,9 @@ public class RegularProjectView {
     public void setVisibility(int visibility) {
         if (null != mView) {
             mView.setVisibility(visibility);
+            if (visibility == View.VISIBLE && null == mData) {
+                obtainData();
+            }
         }
     }
 

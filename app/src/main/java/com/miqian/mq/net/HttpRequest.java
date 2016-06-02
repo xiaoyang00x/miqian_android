@@ -29,6 +29,7 @@ import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularEarnResult;
 import com.miqian.mq.entity.RegularPlanResult;
+import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
@@ -729,16 +730,15 @@ public class HttpRequest {
     /**
      * 获取定期首页列表数据
      */
-    public static void getRegularList(Context context, final ICallback<GetRegularResult> callback) {
+    public static void getRegularProjectList(Context context, final ICallback<RegularProjectListResult> callback) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("operationType", "0"));
         params.add(new Param("pageNo", "1"));
-        params.add(new Param("pageSize", "20"));
-        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
+        params.add(new Param("pageSize", "50"));
+        new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                GetRegularResult meta = JsonUtil.parseObject(result, GetRegularResult.class);
+                RegularProjectListResult meta = JsonUtil.parseObject(result, RegularProjectListResult.class);
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -818,7 +818,7 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
         params.add(new Param("prodId", prodId));
         params.add(new Param("subjectId", subjectId));
-        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -848,7 +848,7 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
         params.add(new Param("prodId", prodId));
         params.add(new Param("subjectId", subjectId));
-        new MyAsyncTask(context, Urls.getRegMain, params, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -872,7 +872,7 @@ public class HttpRequest {
      */
     public static void getRegularPlanDetails(Context context,
                                              final ICallback<GetRegularResult> callback) {
-        new MyAsyncTask(context, Urls.getRegMain, null, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.REGULA_PROJECT, null, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {

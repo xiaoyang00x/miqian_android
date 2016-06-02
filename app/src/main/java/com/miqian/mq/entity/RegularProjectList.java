@@ -10,23 +10,24 @@ import java.util.ArrayList;
  */
 public class RegularProjectList {
 
-    private Page page;
+    private ArrayList<RegularProjectInfo> featureData;
 
-    private ArrayList<RegularProjectInfo> subjectData;
+    private ArrayList<RegularProjectData> regularData;
 
-    public Page getPage() {
-        return page;
+    public ArrayList<RegularProjectInfo> getFeatureData() {
+        return featureData;
     }
 
-    public void setPage(Page page) {
-        this.page = page;
+    public void setFeatureData(ArrayList<RegularProjectInfo> featureData) {
+        this.featureData = featureData;
     }
 
-    public ArrayList<RegularProjectInfo> getSubjectData() {
-        return subjectData;
+    public ArrayList<RegularProjectData> getRegularData() {
+        return regularData;
     }
 
-    public void setSubjectData(ArrayList<RegularProjectInfo> subjectData) {
-        this.subjectData = subjectData;
+    public void setRegularData(ArrayList<RegularProjectData> regularData) {
+        this.regularData = regularData;
     }
+
 }

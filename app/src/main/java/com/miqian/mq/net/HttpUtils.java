@@ -33,7 +33,7 @@ public class HttpUtils {
             return MyAsyncTask.NETWORK_ERROR;
         }
         final OkHttpClient client = new OkHttpClient();
-        if (url == Urls.getRegMain || url == Urls.homeInfo) {
+        if (url == Urls.REGULA_PROJECT || url == Urls.homeInfo) {
             client.setConnectTimeout(10, TimeUnit.SECONDS);
             client.setWriteTimeout(10, TimeUnit.SECONDS);
             client.setReadTimeout(10, TimeUnit.SECONDS);

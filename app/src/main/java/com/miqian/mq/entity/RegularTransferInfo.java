@@ -1,5 +1,7 @@
 package com.miqian.mq.entity;
 
+import java.math.BigDecimal;
+
 /**
  * @author wangduo
  * @description: 定期转让项目信息
@@ -40,7 +42,7 @@ public class RegularTransferInfo {
 
     private String purchasePrice; // 已投总额
 
-    private String residueAmt; // 剩余额度
+    private BigDecimal residueAmt; // 剩余额度
 
     private String discountRate; // 折让信息
 
@@ -172,11 +174,11 @@ public class RegularTransferInfo {
         this.purchasePrice = purchasePrice;
     }
 
-    public String getResidueAmt() {
+    public BigDecimal getResidueAmt() {
         return residueAmt;
     }
 
-    public void setResidueAmt(String residueAmt) {
+    public void setResidueAmt(BigDecimal residueAmt) {
         this.residueAmt = residueAmt;
     }
 

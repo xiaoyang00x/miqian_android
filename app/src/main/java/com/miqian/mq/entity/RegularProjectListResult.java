@@ -6,7 +6,7 @@ package com.miqian.mq.entity;
  * @email: cswangduo@163.com
  * @date: 16/5/26
  */
-public class RegularProjectListResult {
+public class RegularProjectListResult extends Meta{
 
     private RegularProjectList data;
 

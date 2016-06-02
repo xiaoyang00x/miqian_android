@@ -143,17 +143,15 @@ public class RegularFragment extends BasicFragment {
         }
     }
 
-    // 刷新当前页面数据
+    // 刷新当前页面数据(预留)
     private void obtainData(int curSwitch) {
         switch (curSwitch) {
             case LEFTPAGE:
                 if (null != regularProjectView) {
-                    regularProjectView.obtainData();
                 }
                 break;
             case RIGHTPAGE:
                 if (null != regularTransferView) {
-
                 }
                 break;
             default:

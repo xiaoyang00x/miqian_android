@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.ProjectInfo;
 import com.miqian.mq.entity.RegularTransferInfo;
+import com.miqian.mq.utils.FormatUtil;
 
 import java.util.ArrayList;
 
@@ -25,7 +28,7 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private final int ITEM_TYPE_NORMAL = 0; //
     private final int ITEM_TYPE_FOOTER = 1; // 加载更多
 
-    private ArrayList<RegularTransferInfo> mList = new ArrayList<>();
+    private ArrayList<RegularTransferInfo> mList;
     private Context mContext;
     private int totalCount; // 定期转让总量
 
@@ -79,7 +82,7 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemCount() {
-        return size() + 1;
+        return size() == 0 ? 0 : size() + 1;
     }
 
     @Override
@@ -98,12 +101,14 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private class RegularTransferHolder extends RecyclerView.ViewHolder {
 
-        private TextView tv_title; // 标题
-        private TextView profit_rate; // 年化收益
+        private TextView tv_name; // 标题
+        private TextView tv_profit_rate; // 年化收益
+        private TextView tv_profit_rate_unit; // 年利率单位:%, 有加息的话如:+0.5%
         private TextView tv_time_limit; // 项目期限
-        private Button btn_state; // 立即购买(已售罄)按钮
+        private TextView tv_time_limit_unit; // 项目期限单位:天
         private TextView tv_remain_amount; // 剩余金额
-        private TextView tv_total_amount; // 项目期限
+        private Button btn_state; // 立即购买(已售罄)按钮
+        private View divider;
 
         public RegularTransferHolder(View itemView) {
             super(itemView);
@@ -111,29 +116,56 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         private void initView(View itemView) {
-            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-            profit_rate = (TextView) itemView.findViewById(R.id.profit_rate);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_profit_rate = (TextView) itemView.findViewById(R.id.tv_profit_rate);
+            tv_profit_rate_unit = (TextView) itemView.findViewById(R.id.tv_profit_rate_unit);
             tv_time_limit = (TextView) itemView.findViewById(R.id.tv_time_limit);
+            tv_time_limit_unit = (TextView) itemView.findViewById(R.id.tv_time_limit_unit);
             btn_state = (Button) itemView.findViewById(R.id.btn_state);
             tv_remain_amount = (TextView) itemView.findViewById(R.id.tv_remain_amount);
-            tv_total_amount = (TextView) itemView.findViewById(R.id.tv_total_amount);
+            divider = itemView.findViewById(R.id.divider);
         }
 
         public void bindData(final int position) {
             RegularTransferInfo info = mList.get(position);
-            tv_title.setText(info.getSubjectName());
-            profit_rate.setText(info.getPredictRate());
+
+            tv_name.setText(info.getSubjectName());
+            tv_profit_rate.setText(info.getPredictRate());
             tv_time_limit.setText(info.getLimit());
-            tv_remain_amount.setText("剩余金额:" + info.getResidueAmt());
-            tv_total_amount.setText("原始债券总额:" + info.getSubjectTotalPrice());
-            btn_state.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnItemClickListener != null) {
-                        mOnItemClickListener.onItemClick(position);
+            tv_remain_amount.setText(
+                    new StringBuilder("剩余金额:￥").
+                            append(FormatUtil.formatAmount(info.getResidueAmt()))
+                            .toString());
+
+            if (info.getSubjectStatus().equals(ProjectInfo.STATE_02)) {
+                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                btn_state.setBackgroundResource(R.drawable.btn_has_done);
+                btn_state.setText("已满额");
+            } else {
+                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                btn_state.setBackgroundResource(R.drawable.btn_default_selector);
+                btn_state.setText("立即认购");
+                btn_state.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnItemClickListener != null) {
+                            mOnItemClickListener.onItemClick(position);
+                        }
                     }
-                }
-            });
+                });
+            }
+
+            if (position + 2 == getTotalCount()) {
+                divider.setVisibility(View.GONE);
+            } else {
+                divider.setVisibility(View.VISIBLE);
+            }
         }
 
     }
