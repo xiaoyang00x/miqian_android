@@ -52,7 +52,8 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+//    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
     //线上
     public static final String SERVER_ONLINE = "https://api.shicaidai.com/";
 
@@ -145,7 +146,7 @@ public class Urls {
     public final static String repayment_detail = base_server + "commonService/getRepaymentList";
 
     //定期首页
-    public final static String getRegMain = base_server + "subjectService/regularList";
+    public final static String REGULA_PROJECT = base_server + "subjectService/regularList";
     //定期转让首页
     public final static String REGULA_PROJECT_TRANSFER = base_server + "transferService/regularList";
 
