@@ -127,11 +127,11 @@ public class RegularListActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("优惠券使用");
+        mTitle.setTitleText("红包/卡使用");
     }
 
     @Override
     protected String getPageName() {
-        return "红包/券使用";
+        return "红包/卡使用";
     }
 }

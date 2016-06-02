@@ -34,10 +34,18 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_LIST = 1;
 
     private Context mContext;
+    private boolean isValid;        //卡券是否有效
 
-    public AdapterMyTicket(Context context, List<Promote> promList) {
+    /**
+     *
+     * @param context
+     * @param promList
+     * @param isValid  卡券是否有效
+     */
+    public AdapterMyTicket(Context context, List<Promote> promList, boolean isValid) {
         this.promList = promList;
         this.mContext = context;
+        this.isValid = isValid;
     }
 
     //促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
@@ -83,79 +91,35 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             setText(tempViewHoleder.tv_use_limit, promote.getLimitMsg());
             String desUrl = promote.getPromUrl();
             if (Promote.TYPE.JX.getValue().equals(promote.getType())) { // 加息券
-                tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_quan);
+                tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_blue);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
+                tempViewHoleder.tv_precent_unit.setVisibility(View.VISIBLE);
                 setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
             } else {
                 setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
+                tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
+
                 if (Promote.TYPE.SC.getValue().equals(promote.getType())) { // 拾财券
-                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_miaoqian);
+                    tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_yellow);
                 } else if (Promote.TYPE.HB.getValue().equals(promote.getType())) { // 红包
-                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_hongbao);
-                } else if (Promote.TYPE.TY.getValue().equals(promote.getType())) { // 体验金
-                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_tiyanjin);
-                } else if (Promote.TYPE.FXQ.getValue().equals(promote.getType())) { // 分享券
-                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_fenxiang);
-                    desUrl = promote.getShareUrl();
-                } else if (Promote.TYPE.DK.getValue().equals(promote.getType())) { // 抵扣券
-                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_diyong);
+                    tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_red);
                 } else {
-                    tempViewHoleder.iv_icon.setImageResource(R.drawable.ticket_icon_default);
+                    tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_black);
                 }
+
             }
             clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
+
+            setViewEnable(tempViewHoleder);
         }
-//        if (holder instanceof ViewHolderTicket) { // 拾财券
-//            Promote promote = promList.get(position);
-//            ((ViewHolderTicket) holder).textMoney.setText("" + promote.getCanUseAmt());
-//            ((ViewHolderTicket) holder).textName.setText(promote.getPromProdName());
-//            ((ViewHolderTicket) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
-//            setView(((ViewHolderTicket) holder).limitMoney, promote.getFitBdTermOrYrt());
-//            ((ViewHolderTicket) holder).limitType.setText(promote.getFitProdOrBdType());
-//            ((ViewHolderTicket) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-//            toUseTicket(holder, promote.getPromProdId());
-//        } else if (holder instanceof ViewHolderShare) {
-//            final Promote promote = promList.get(position);
-//            ((ViewHolderShare) holder).textMoney.setText("" + promote.getCanUseAmt());
-//            ((ViewHolderShare) holder).textName.setText(promote.getPromProdName());
-//            ((ViewHolderShare) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
-//            setView(((ViewHolderShare) holder).limitMoney, promote.getFitBdTermOrYrt());
-//            ((ViewHolderShare) holder).limitType.setText(promote.getFitProdOrBdType());
-//            ((ViewHolderShare) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-//            ((ViewHolderShare) holder).frameTicket.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    WebActivity.startActivity(mContext, promote.getShareUrl());
-//                }
-//            });
-////          分享券 这个不跳红包使用界面
-////            toUseTicket(holder, promote.getPromProdId());
-//        } else if (holder instanceof ViewHolderPackage) { // 红包
-//            Promote promote = promList.get(position);
-//            ((ViewHolderPackage) holder).textMoney.setText("" + promote.getCanUseAmt());
-//            ((ViewHolderPackage) holder).textName.setText(promote.getPromProdName());
-//            ((ViewHolderPackage) holder).textPercent.setText(promote.getMinBuyAmtOrPerc());
-//            setView(((ViewHolderPackage) holder).limitMoney, promote.getFitBdTermOrYrt());
-//            ((ViewHolderPackage) holder).limitType.setText(promote.getFitProdOrBdType());
-//            ((ViewHolderPackage) holder).limitDate.setText(Uihelper.redPaperTime(promote.getEndTimestamp()));
-//            toUseTicket(holder, promote.getPromProdId());
-//        } else
         else if (holder instanceof ProgressViewHolder) {
             if (position >= maxValue) {
-//                ((ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
-//                if (maxValue <= 5) {
-//                    ((ProgressViewHolder) holder).textLoading.setVisibility(View.GONE);
-//                } else {
-//                    ((ProgressViewHolder) holder).textLoading.setText("没有更多");
-//                }
                 ((ProgressViewHolder) holder).frameLoad.setVisibility(View.GONE);
                 ((ProgressViewHolder) holder).frameNone.setVisibility(View.VISIBLE);
             } else {
                 ((ProgressViewHolder) holder).frameLoad.setVisibility(View.VISIBLE);
                 ((ProgressViewHolder) holder).frameNone.setVisibility(View.GONE);
-//                ((ProgressViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
-//                ((ProgressViewHolder) holder).textLoading.setText("加载更多");
             }
         }
     }
@@ -195,6 +159,19 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         maxValue = value;
     }
 
+    private void setViewEnable(BaseViewHoleder holder) {
+        holder.frame_ticket.setEnabled(isValid);
+        holder.tv_name.setEnabled(isValid);
+        holder.tv_precent_unit.setEnabled(isValid);
+        holder.tv_amount_unit.setEnabled(isValid);
+        holder.tv_amount.setEnabled(isValid);
+        holder.tv_validate_date.setEnabled(isValid);
+        holder.tv_percent_limit.setEnabled(isValid);
+        holder.tv_date_limit.setEnabled(isValid);
+        holder.tv_use_limit.setEnabled(isValid);
+        holder.itemView.setEnabled(isValid);
+
+    }
     class BaseViewHoleder extends RecyclerView.ViewHolder {
 
         protected TextView tv_name;
@@ -203,9 +180,9 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         protected TextView tv_date_limit;
         protected TextView tv_use_limit;
         protected TextView tv_amount_unit;
+        protected TextView tv_precent_unit;
         protected TextView tv_amount;
         protected RelativeLayout frame_ticket;
-        protected ImageView iv_icon;
 
         public BaseViewHoleder(View itemView) {
             super(itemView);
@@ -216,8 +193,8 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             tv_use_limit = (TextView) itemView.findViewById(R.id.tv_use_limit);
             tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
             tv_amount_unit = (TextView) itemView.findViewById(R.id.tv_amount_unit);
+            tv_precent_unit = (TextView) itemView.findViewById(R.id.tv_precent_unit);
             frame_ticket = (RelativeLayout) itemView.findViewById(R.id.frame_ticket);
-            iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
         }
     }
 

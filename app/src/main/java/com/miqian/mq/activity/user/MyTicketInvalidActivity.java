@@ -11,18 +11,15 @@ import android.widget.RadioGroup;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.adapter.AdapterInvalidMyTicket;
+import com.miqian.mq.adapter.AdapterMyTicket;
 import com.miqian.mq.entity.Page;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.Redpaper;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +35,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     private RadioGroup radioGroup;
     private LinearLayout frameNone;
 
-    private AdapterInvalidMyTicket adapterMyTicket;
+    private AdapterMyTicket adapterMyTicket;
     private int pageNo = 1;
     private String pageSize = "20";
     private Page page;
@@ -160,7 +157,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
 
     private void refreshView() {
-        adapterMyTicket = new AdapterInvalidMyTicket(mActivity, promList);
+        adapterMyTicket = new AdapterMyTicket(mActivity, promList, false);
         adapterMyTicket.setMaxItem(page.getCount());
         recyclerView.setAdapter(adapterMyTicket);
     }
@@ -172,12 +169,12 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("我的优惠券");
+        mTitle.setTitleText("红包/卡");
     }
 
     @Override
     protected String getPageName() {
-        return "红包/券";
+        return "红包/卡";
     }
 
     @Override

@@ -152,7 +152,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void refreshView() {
-        adapterMyTicket = new AdapterMyTicket(mActivity, promList);
+        adapterMyTicket = new AdapterMyTicket(mActivity, promList, true);
         adapterMyTicket.setMaxItem(page.getCount());
         recyclerView.setAdapter(adapterMyTicket);
     }
@@ -172,7 +172,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("我的优惠券");
+        mTitle.setTitleText("红包/卡");
         mTitle.setRightImage(R.drawable.ic_ticket_rule);
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +185,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected String getPageName() {
-        return "红包/券";
+        return "红包/卡";
     }
 
     @Override
