@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -67,6 +68,7 @@ public class RolloutActivity extends BaseActivity {
     private View btnRollout;
     private BigDecimal mLimitLowestMoney = BigDecimal.TEN;  //最低提现金额，默认10元
     private TextViewEx tvTips;
+    private ImageView imageBank;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -190,6 +192,7 @@ public class RolloutActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userInfo.getBankName())) {
             bindBankName.setText(userInfo.getBankName());
         }
+        imageLoader.displayImage(userInfo.getBankUrlSmall(), imageBank, options);
 
         if (!TextUtils.isEmpty(userInfo.getBalance())) {
             totalMoney = userInfo.getBalance();
@@ -204,7 +207,7 @@ public class RolloutActivity extends BaseActivity {
         textBranch = (TextView) findViewById(R.id.tv_bank_branch);
         tv_bank_province = (TextView) findViewById(R.id.tv_bank_province);
         tvTips = (TextViewEx) findViewById(R.id.tv_rollout_tip);
-
+        imageBank = (ImageView) findViewById(R.id.image_bank);
 
         frame_bindbranch = findViewById(R.id.frame_bindbranch);
         frame_bank_province = findViewById(R.id.frame_bank_province);

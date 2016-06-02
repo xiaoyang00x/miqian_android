@@ -134,9 +134,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="@dimen/mq_font7_v2"
+            android:text="认购赎回记录"
             android:textColor="@color/mq_b2_v2"
-            android:text="认购赎回记录" />
+            android:textSize="@dimen/mq_font7_v2" />
 
         <ImageView
             style="@style/WrapContent"
@@ -145,6 +145,7 @@
             android:src="@drawable/right" />
     </RelativeLayout>
 
+    <view style="@style/item_divider"></view>
 
     <RelativeLayout
         android:id="@+id/frame_project_match"
@@ -158,9 +159,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="@dimen/mq_font7_v2"
+            android:text="项目匹配"
             android:textColor="@color/mq_b2_v2"
-            android:text="项目匹配" />
+            android:textSize="@dimen/mq_font7_v2" />
 
         <ImageView
             style="@style/WrapContent"

@@ -95,7 +95,7 @@
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/icon_bank" />
+                    android:src="@drawable/icon_bank" />
 
                 <TextView
                     android:id="@+id/bind_bank_name"

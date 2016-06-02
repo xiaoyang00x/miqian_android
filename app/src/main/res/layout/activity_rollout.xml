@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,85 +17,108 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
                 android:background="@drawable/account_head_bg"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/frame_white_bg"
-                    android:orientation="vertical">
-
-
-                    <RelativeLayout
-                        android:id="@+id/frame_money"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/edit_item">
-
-                        <ImageView
-                            style="@style/WrapContent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/icon_money" />
-
-                        <EditText
-                            android:id="@+id/edit_money"
-                            style="@style/edittext_item"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:background="@null"
-                            android:inputType="numberDecimal"
-                            android:singleLine="true" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/frame_bank"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bound_card_bg"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:padding="25dp">
 
-                    <RelativeLayout
+
+                    <LinearLayout
+                        android:id="@+id/frame_bank"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:gravity="center_vertical"
-                        android:padding="5dp">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp">
+
+                            <ImageView
+                                android:id="@+id/image_bank"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/icon_bank" />
+
+                            <TextView
+                                android:id="@+id/bind_bank_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@id/image_bank"
+                                android:text="工商银行"
+                                android:textColor="@color/mq_b1_v2"
+                                android:textSize="@dimen/mq_font7_v2"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/bind_bank_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10dp"
+                                android:maxLength="30"
+                                android:text="6214 8559 2026 0037"
+                                android:textColor="@color/mq_b1_v2"
+                                android:textSize="@dimen/mq_font7_v2"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
 
                         <TextView
-                            android:id="@+id/bind_bank_name"
+                            android:id="@+id/text_limit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/mq_font3" />
+                            android:layout_gravity="right"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="预计2个工作日内到账"
+                            android:textColor="@color/mq_b4_v2"
+                            android:textSize="@dimen/mq_font3_v2"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/bind_bank_number"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:maxLength="30"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/mq_font3" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="5dp"
-                        android:padding="5dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="预计两个工作日内到账"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/mq_font3" />
-                    </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/frame_money"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edit_item">
+
+                            <ImageView
+                                style="@style/WrapContent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/icon_money" />
+
+                            <EditText
+                                android:id="@+id/edit_money"
+                                style="@style/edittext_item"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="40dp"
+                                android:background="@null"
+                                android:inputType="numberDecimal"
+                                android:singleLine="true" />
+                        </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
+
 
             </LinearLayout>
 
@@ -107,8 +129,9 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -205,8 +228,8 @@
                 <Button
                     android:id="@+id/bt_rollout"
                     style="@style/click_btn"
-                    android:onClick="btn_click"
                     android:enabled="false"
+                    android:onClick="btn_click"
                     android:text="确定" />
             </RelativeLayout>
 
@@ -218,7 +241,6 @@
 
                 <com.miqian.mq.views.TextViewEx
                     android:id="@+id/tv_rollout_tip"
-                    android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -226,6 +248,7 @@
                     android:layout_marginRight="@dimen/margin_left_right"
                     android:layout_marginTop="5dp"
                     android:paddingBottom="30dp"
+                    android:text=""
                     android:textColor="@color/mq_b2"
                     android:textSize="@dimen/mq_font4" />
             </RelativeLayout>
