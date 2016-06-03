@@ -105,22 +105,22 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     public void onLoadingCancelled(String s, View view) {
     }
 
-//    private class AutoScrollTimerTask extends TimerTask {
-//        @Override
-//        public void run() {
-//            if (null != adapter) adapter.setAutoScroll();
-//        }
-//    }
+    private class AutoScrollTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            if (null != adapter) adapter.setAutoScroll();
+        }
+    }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (timer == null) {// 自动滑动
-//            timer = new Timer();
-//            timerTask = new AutoScrollTimerTask();
-//            timer.schedule(timerTask, 5000, 5000);
-//        }
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (timer == null) {// 自动滑动
+            timer = new Timer();
+            timerTask = new AutoScrollTimerTask();
+            timer.schedule(timerTask, 5000, 5000);
+        }
+    }
 
     @Override
     protected String getPageName() {

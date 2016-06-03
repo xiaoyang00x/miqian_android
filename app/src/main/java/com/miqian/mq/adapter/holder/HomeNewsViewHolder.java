@@ -1,5 +1,6 @@
 package com.miqian.mq.adapter.holder;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import com.miqian.mq.entity.HomeSelectionProject;
 import com.miqian.mq.utils.FormatUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * Created by guolei_wang on 16/5/24.
@@ -57,7 +60,27 @@ public class HomeNewsViewHolder extends HomeBaseViewHolder {
         tv_title.setText(data.getTitle());
         tv_description.setText(data.getDesc());
 
-        imageLoader.displayImage(data.getImgUrl(), img_news, options);
+        imageLoader.displayImage(data.getImgUrl(), img_news, options, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+                ((ImageView)view).setImageResource(R.drawable.bg_news_default);
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+                ((ImageView)view).setImageResource(R.drawable.bg_news_default);
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
         img_news.setScaleType(ImageView.ScaleType.FIT_XY);
         if(!TextUtils.isEmpty(data.getJumpUrl())) {
             img_news.setTag(data.getJumpUrl());// 绑定imageview 视图
