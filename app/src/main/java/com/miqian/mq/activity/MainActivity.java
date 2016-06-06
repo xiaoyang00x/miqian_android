@@ -77,6 +77,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     private RefeshDataListener mRefeshDataListener;
     private CustomDialog dialogTips;
     private CustomDialog jpushDialog;
+    private ImageView imgRedPointer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -235,10 +236,17 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         tabIndicator3 = initTabView(tw, R.drawable.tab_regular_selector, R.string.main_tab_regular);
         tabIndicator4 = initTabView(tw, R.drawable.tab_user_selector, R.string.main_tab_user);
 
+        imgRedPointer = (ImageView) tabIndicator4.findViewById(R.id.img_red_pointer);
+
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
                 current_tab = mTabHost.getCurrentTab();
+
+                //当点击财富Tab 隐藏此tab上的红点
+                if(current_tab == 3) {
+                    imgRedPointer.setVisibility(View.GONE);
+                }
             }
         });
         maintenance = (RelativeLayout) findViewById(R.id.maintenance);
@@ -558,4 +566,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         }
     };
 
+    /**
+     * 认购成功显示财富tab 上的红点
+     */
+    public void showRedPointer() {
+        if(imgRedPointer != null) {
+            imgRedPointer.setVisibility(View.VISIBLE);
+        }
+    }
 }

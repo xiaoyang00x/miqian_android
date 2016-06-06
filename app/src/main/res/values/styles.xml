@@ -79,6 +79,18 @@
         <item name="android:textSize">@dimen/mq_font3</item>
     </style>
 
+    <style name="f7_B1_V2" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/mq_b1_v2</item>
+        <item name="android:textSize">@dimen/mq_font7_v2</item>
+    </style>
+
+    <style name="f7_B4_V2" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/mq_b4_v2</item>
+        <item name="android:textSize">@dimen/mq_font7_v2</item>
+    </style>
+
     <style name="f3_B2" parent="WrapContent">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/mq_b2</item>
@@ -91,7 +103,15 @@
         <item name="android:textSize">@dimen/mq_font1</item>
     </style>
 
-    <style name="f3_R1_" parent="WrapContent">
+
+    <style name="f9_R1_V2" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/mq_r1_v2</item>
+        <item name="android:textSize">@dimen/mq_font9_v2</item>
+    </style>
+
+    <style name="f3_R1" parent="WrapContent">
+
         <item name="android:gravity">center</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">@color/mq_r1_v2</item>
@@ -111,6 +131,7 @@
         <item name="android:textColor">@color/mq_b4_v2</item>
         <item name="android:textSize">@dimen/mq_font7_v2</item>
     </style>
+
     <style name="f3_b4" parent="WrapContent">
         <item name="android:gravity">center</item>
         <item name="android:layout_centerVertical">true</item>

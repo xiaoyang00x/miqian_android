@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,140 +13,162 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/white">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="20dp">
-
-                    <TextView
-                        android:id="@+id/text_capital"
-                        style="@style/f3_B1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/margin_left_right"
-                        android:singleLine="true"
-                        android:text="待收本金：" />
-
-                    <TextView
-                        android:id="@+id/text_capital_money"
-                        style="@style/f1_R1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/text_capital" />
-
-                    <TextView
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:background="@color/mq_b4" />
-
-                    <TextView
-                        android:id="@+id/text_interest_rate"
-                        style="@style/f1_R1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/margin_left_right" />
-
-                    <TextView
-                        style="@style/f3_B1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/text_interest_rate"
-                        android:singleLine="true"
-                        android:text="年化收益：" />
-                </RelativeLayout>
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:background="@color/mq_r1"
                 android:orientation="vertical"
-                android:paddingBottom="15dp">
+                android:paddingLeft="@dimen/margin_left_right"
+                android:paddingRight="@dimen/margin_left_right">
+
+                <TextView
+                    android:id="@+id/text_project_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="计划33"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/mq_font7_v2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_capital"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="待收本金"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                        <TextView
+                            android:id="@+id/text_capital_money"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="1000,000元"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mq_font9_v2" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="55dp"
+                        android:background="@color/white"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="项目期限"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                        <TextView
+                            android:id="@+id/text_limit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="365天"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mq_font9_v2" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="55dp"
+                        android:background="@color/white"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="年化收益"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                        <TextView
+                            android:id="@+id/text_interest_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="12%"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mq_font9_v2" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:id="@+id/text_limit"
-                        style="@style/f3_B1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/margin_left_right" />
-
-                    <ImageView
-                        android:id="@+id/image_project_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/margin_left_right"
-                        android:visibility="visible" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="35dp">
 
                     <TextView
                         android:id="@+id/text_date_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_left_right"
-                        android:textColor="@color/mq_b1"
-                        android:textSize="@dimen/mq_font5" />
+                        android:gravity="center"
+                        android:text="认购日期："
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/mq_font3_v2" />
 
                     <TextView
                         android:id="@+id/text_date_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/margin_left_right"
-                        android:textColor="@color/mq_b1"
-                        android:textSize="@dimen/mq_font5" />
+                        android:gravity="center"
+                        android:text="到期日期："
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/mq_font3_v2" />
+
                 </RelativeLayout>
 
-                <com.miqian.mq.views.RoundCornerProgressBar
-                    android:id="@+id/progress_bar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="@dimen/margin_left_right"
-                    android:layout_marginRight="@dimen/margin_left_right"
-                    android:layout_marginTop="5dp"
-                    app:rcBackgroundColor="@color/mq_b4"
-                    app:rcBackgroundPadding="0dp"
-                    app:rcBackgroundRadius="6dp"
-                    app:rcMax="100"
-                    app:rcProgress="0"
-                    app:rcProgressColor="@color/mq_y" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:orientation="vertical">
+
+                <View
+                    style="@style/item_divider"
+                    android:layout_alignParentBottom="true" />
 
                 <RelativeLayout
                     android:id="@+id/frame_project_match"
@@ -155,7 +176,6 @@
                     android:layout_height="@dimen/listitem_height">
 
                     <TextView
-                        android:id="@+id/text_project_name"
                         style="@style/f3_B1"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
@@ -163,7 +183,8 @@
                         android:layout_marginLeft="@dimen/margin_left_right"
                         android:gravity="left"
                         android:singleLine="true"
-                        android:text="项目匹配" />
+                        android:text="项目详情"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -183,10 +204,11 @@
                     android:layout_height="@dimen/listitem_height">
 
                     <TextView
-                        style="@style/f3_B1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:textColor="@color/mq_b4_v2"
+                        android:textSize="@dimen/mq_font7_v2"
                         android:layout_marginLeft="@dimen/margin_left_right"
                         android:text="还款方式" />
 
@@ -202,7 +224,9 @@
 
                     <View
                         style="@style/item_divider"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -225,7 +249,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/margin_left_right" />
+                        android:layout_marginRight="@dimen/margin_left_right"
+                        android:textColor="@color/mq_r1_v2" />
 
                     <View
                         style="@style/item_divider"
@@ -233,20 +258,22 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/frame_transfer"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/listitem_height">
 
                     <TextView
                         style="@style/f3_B1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_left_right"
-                        android:text="转让情况" />
+                        android:gravity="left"
+                        android:singleLine="true"
+                        android:text="标的相关记录"
+                        android:textStyle="bold" />
 
                     <ImageView
-                        android:id="@+id/image_right"
+                        android:id="@+id/arrow_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -255,61 +282,218 @@
                         android:src="@drawable/right" />
 
                     <TextView
-                        android:id="@+id/text_transfer_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/margin_left_right"
-                        android:layout_toLeftOf="@id/image_right" />
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/arrow_detail"
+                        android:text="查看详情"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2" />
 
-                    <View
-                        style="@style/item_divider"
-                        android:layout_alignParentBottom="true" />
+
                 </RelativeLayout>
 
-                <!--<RelativeLayout-->
-                <!--android:id="@+id/frame_contract"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/listitem_height">-->
-
-                <!--<TextView-->
-                <!--style="@style/f3_B1"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginLeft="@dimen/margin_left_right"-->
-                <!--android:text="查看合同" />-->
-
-                <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginRight="@dimen/margin_left_right"-->
-                <!--android:src="@drawable/right" />-->
-
-                <!--<View-->
-                <!--style="@style/item_divider"-->
-                <!--android:layout_alignParentBottom="true" />-->
-                <!--</RelativeLayout>-->
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/base_background">
-
-                <Button
-                    android:id="@+id/bt_repayment"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edit_item"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/arrow_detail"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginRight="@dimen/margin_left_right"
-                    android:layout_marginTop="15dp"
-                    android:text="还款详情" />
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="right"
+                            android:text="3333"
+                            android:textColor="@color/mq_r1_v2"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/process_red" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="55555"
+                            android:textColor="@color/mq_r1_v2"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="right"
+                            android:text="3333"
+                            android:textColor="@color/mq_r1_v2"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                        <RelativeLayout
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp">
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerHorizontal="true"
+                                android:background="@color/mq_b5_v2"></View>
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/process_grey" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="55555"
+
+                            android:textColor="@color/mq_r1_v2"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="right"
+                            android:text="3333"
+                            android:textColor="@color/mq_r1_v2"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                        <RelativeLayout
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp">
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerHorizontal="true"
+                                android:background="@color/mq_b5_v2"></View>
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/process_grey" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="55555"
+
+                            android:textColor="@color/mq_r1_v2"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:gravity="right"
+                            android:text="3333"
+                            android:textColor="@color/mq_r1_v2"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                        <RelativeLayout
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp">
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerHorizontal="true"
+                                android:background="@color/mq_b5_v2"></View>
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/process_grey" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="55555"
+
+                            android:textColor="@color/mq_r1_v2"
+                            android:textSize="@dimen/mq_font3_v2" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
             </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/btn_click"
+            style="@style/click_btn_rec"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:layout_marginTop="15dp"
+            android:text="还款详情" />
+    </LinearLayout>
+</RelativeLayout>
