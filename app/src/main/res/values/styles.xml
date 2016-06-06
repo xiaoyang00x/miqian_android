@@ -36,7 +36,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
+
     <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
 
     <style name="wfy_title_default">
@@ -89,16 +91,39 @@
         <item name="android:textSize">@dimen/mq_font1</item>
     </style>
 
-    <style name="f3_R1" parent="WrapContent">
+    <style name="f3_R1_" parent="WrapContent">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/mq_r1</item>
-        <item name="android:textSize">@dimen/mq_font3</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/mq_r1_v2</item>
+        <item name="android:textSize">@dimen/mq_font3_v2</item>
     </style>
+
+    <style name="f7_b1" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/mq_b1_v2</item>
+        <item name="android:textSize">@dimen/mq_font7_v2</item>
+    </style>
+
+    <style name="f7_b4" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/mq_b4_v2</item>
+        <item name="android:textSize">@dimen/mq_font7_v2</item>
+    </style>
+    <style name="f3_b4" parent="WrapContent">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/mq_b4_v2</item>
+        <item name="android:textSize">@dimen/mq_font3_v2</item>
+    </style>
+
 
     <style name="text_gray_item" parent="WrapContent">
         <item name="android:textColor">@color/miqian_gray</item>
         <item name="android:textSize">@dimen/mq_font2</item>
     </style>
+
     <style name="edittext_item" parent="FillContent">
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">@dimen/edit_item</item>
@@ -120,10 +145,10 @@
     </style>
 
     <style name="listItem" parent="FillContent">
-    <item name="android:paddingRight">@dimen/margin_left_right</item>
-    <item name="android:paddingLeft">@dimen/margin_left_right</item>
-    <item name="android:background">@drawable/list_click</item>
-    <item name="android:layout_height">@dimen/listitem_height</item>
+        <item name="android:paddingRight">@dimen/margin_left_right</item>
+        <item name="android:paddingLeft">@dimen/margin_left_right</item>
+        <item name="android:background">@drawable/list_click</item>
+        <item name="android:layout_height">@dimen/listitem_height</item>
     </style>
 
     <style name="listItem_tv1" parent="WrapContent">
@@ -146,6 +171,17 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/mq_font1</item>
         <item name="android:background">@drawable/btn_red</item>
+        <item name="android:layout_height">@dimen/bt_height</item>
+        <item name="android:layout_centerHorizontal">true</item>
+
+    </style>
+
+    <style name="click_btn_rec" parent="click_btn">
+        <item name="android:layout_width">260dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/mq_font1</item>
+        <item name="android:background">@drawable/btn_rec_red</item>
         <item name="android:layout_height">@dimen/bt_height</item>
         <item name="android:layout_centerHorizontal">true</item>
 
