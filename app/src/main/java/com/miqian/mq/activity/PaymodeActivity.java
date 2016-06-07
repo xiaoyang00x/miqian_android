@@ -101,7 +101,7 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initViewByData() {
-        textMoney.setText("待付款" + money + "元");
+        textMoney.setText(money);
         textBankName.setText(bankString);
         textTip.setText("单日限额 ");
         textCurrentMoney.setText("可用" + currentMoney + "元");

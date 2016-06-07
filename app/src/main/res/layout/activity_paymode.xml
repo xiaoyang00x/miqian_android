@@ -6,17 +6,38 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
+        android:layout_height="65dp"
         android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="待付款"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/mq_b1_v2"
+            android:textSize="@dimen/mq_font7_v2" />
 
         <TextView
             android:id="@+id/text_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:textColor="@color/mq_r1"
-            android:textSize="@dimen/mq_font3" />
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="120"
+            android:textColor="@color/mq_r1_v2"
+            android:textSize="@dimen/mq_font12_v2" />
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/text_money"
+            android:text="￥"
+            android:paddingTop="5dp"
+            android:textColor="@color/mq_r1_v2"
+            android:textSize="@dimen/mq_font7_v2" />
 
     </RelativeLayout>
 
@@ -24,42 +45,42 @@
         android:id="@+id/frame_bank"
         android:layout_width="match_parent"
         android:layout_height="@dimen/listitem_height"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/list_click">
 
         <ImageView
             android:id="@+id/iv_bank"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
             android:src="@drawable/icon_bank" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="10dp"
             android:layout_toLeftOf="@+id/iv_choose_bank"
             android:layout_toRightOf="@+id/iv_bank"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_bankname"
-                style="@style/f3_B1"
+                style="@style/f7_B1_V2"
                 android:layout_width="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
                 android:gravity="left|center"
                 android:maxEms="10"/>
 
             <TextView
                 android:id="@+id/text_tip"
                 style="@style/WrapContent"
-                android:layout_marginTop="3dp"
-                android:textSize="@dimen/mq_font5"
-                android:textColor="@color/mq_b2"/>
+                android:layout_marginTop="1dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="@dimen/mq_font3_v2"
+                android:textColor="@color/mq_b4_v2"/>
+
         </LinearLayout>
 
         <ImageView
@@ -77,7 +98,6 @@
         android:id="@+id/frame_current"
         android:layout_width="match_parent"
         android:layout_height="@dimen/listitem_height"
-        android:layout_marginTop="5dp"
         android:background="@drawable/list_click"
         android:paddingLeft="@dimen/margin_left_right">
 
@@ -99,11 +119,8 @@
 
             <TextView
                 android:id="@+id/text_current"
-                style="@style/f3_B1"
+                style="@style/f7_B1_V2"
                 android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
                 android:drawablePadding="9dp"
                 android:drawableRight="@drawable/icon_explaint"
                 android:gravity="left|center"
@@ -113,9 +130,9 @@
             <TextView
                 android:id="@+id/text_current_money"
                 style="@style/WrapContent"
-                android:layout_marginTop="3dp"
-                android:textColor="@color/mq_b3"
-                android:textSize="@dimen/mq_font5"/>
+                android:layout_marginTop="1dp"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"/>
         </LinearLayout>
 
         <ImageView
@@ -127,13 +144,17 @@
             android:layout_marginRight="@dimen/margin_left_right"
             android:src="@drawable/icon_choose"
             android:visibility="gone"/>
+
+        <View
+            style="@style/item_divider"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/frame_balance"
         android:layout_width="match_parent"
         android:layout_height="@dimen/listitem_height"
-        android:layout_marginTop="5dp"
         android:background="@drawable/list_click"
         android:paddingLeft="@dimen/margin_left_right">
 
@@ -155,11 +176,8 @@
 
             <TextView
                 android:id="@+id/text_balance"
-                style="@style/f3_B1"
+                style="@style/f7_B1_V2"
                 android:layout_width="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
                 android:gravity="left|center"
                 android:maxEms="10"
                 android:text="账户余额" />
@@ -167,9 +185,9 @@
             <TextView
                 android:id="@+id/text_balance_money"
                 style="@style/WrapContent"
-                android:layout_marginTop="3dp"
-                android:textColor="@color/mq_b3"
-                android:textSize="@dimen/mq_font5"/>
+                android:layout_marginTop="1dp"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"/>
         </LinearLayout>
 
         <ImageView
@@ -181,6 +199,10 @@
             android:layout_marginRight="@dimen/margin_left_right"
             android:src="@drawable/icon_choose"
             android:visibility="gone"/>
+        <View
+            style="@style/item_divider"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp" />
     </RelativeLayout>
 
 

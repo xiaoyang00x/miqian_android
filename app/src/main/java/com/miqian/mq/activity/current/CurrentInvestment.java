@@ -248,6 +248,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
                 textPayType.setText(producedOrder.getBankName() + "(" + bankNo + ")");
                 textPayTip.setText("单笔限额" + producedOrder.getSingleAmtLimit() + "元， 单日限额" + producedOrder.getDayAmtLimit() + "元");
+                imageType.setImageResource(R.drawable.icon_bank);
                 imageLoader.displayImage(producedOrder.getBankUrlSmall(), imageType, options);
             } else if (payModeState == PAY_MODE_CURRENT) {
                 textPayType.setText("活期资产");
