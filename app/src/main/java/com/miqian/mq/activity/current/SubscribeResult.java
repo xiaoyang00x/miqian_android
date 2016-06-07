@@ -23,7 +23,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class SubscribeResult extends BaseActivity implements View.OnClickListener {
 
-    private ImageView imageSuccess;
+    private ImageView imageStatus;
     private TextView textMoney;
     private TextView textPromote;
     private TextView tradeNumber;
@@ -72,7 +72,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initView() {
-        imageSuccess = (ImageView) findViewById(R.id.image_success);
+        imageStatus = (ImageView) findViewById(R.id.image_status);
         textMoney = (TextView) findViewById(R.id.text_money);
         textPayType = (TextView) findViewById(R.id.text_pay_type);
         textPayMoney = (TextView) findViewById(R.id.text_pay_money);
@@ -88,13 +88,13 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
 
     private void refreshView() {
         if (status == 1) {
-            imageSuccess.setImageResource(R.drawable.rollin_status_success);
+            imageStatus.setImageResource(R.drawable.result_success);
             tradeNumber.setText(orderNo);
             tvStatus.setText("认购成功");
         } else {
             findViewById(R.id.frame_trade_number).setVisibility(View.GONE);
             tvTip.setText("如果多次失败，请联系客服400-6656-191");
-            imageSuccess.setImageResource(R.drawable.rollin_status_fail);
+            imageStatus.setImageResource(R.drawable.result_fail);
             tvStatus.setText("认购失败");
         }
         if (payModeState == CurrentInvestment.PAY_MODE_BALANCE) {
@@ -122,7 +122,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("认购");
+        mTitle.setTitleText("认购结果");
         mTitle.setIvLeftVisiable(View.GONE);
     }
 

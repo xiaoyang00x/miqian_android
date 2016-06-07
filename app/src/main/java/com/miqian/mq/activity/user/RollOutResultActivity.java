@@ -54,7 +54,7 @@ public class RollOutResultActivity extends BaseActivity implements View.OnClickL
                 tvOrderNum.setText(rollOut.getOrderNo());
             }
         } else {
-            imageStatus.setImageResource(R.drawable.rollin_status_fail);
+            imageStatus.setImageResource(R.drawable.result_fail);
             tvTip.setText("");
             textState.setText("提现失败");
             findViewById(R.id.divider1).setVisibility(View.GONE);

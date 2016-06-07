@@ -4,48 +4,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="279dp"
+        android:background="@drawable/account_head_bg"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/result_bg" />
 
         <ImageView
             android:id="@+id/image_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/rollin_status_success"/>
+            android:layout_centerInParent="true"
+            android:src="@drawable/result_success" />
 
         <TextView
             android:id="@+id/text_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="15dp"
-            android:textSize="@dimen/mq_font2"
-            android:textColor="@color/mq_b1"
-            android:text="赎回成功"/>
-
-    </LinearLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/image_status"
+            android:text="赎回成功"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mq_font6_v2" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/margin_top"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
-            style="@style/f3_B1"
+            style="@style/f7_B1_V2"
             android:text="赎回本金" />
 
         <TextView
             android:id="@+id/text_capital"
-            style="@style/f3_B1"
+            style="@style/f7_B4_V2"
             android:layout_alignParentRight="true"
             android:text="--" />
 
@@ -65,12 +69,12 @@
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
-            style="@style/f3_B1"
+            style="@style/f7_B1_V2"
             android:text="对应利息" />
 
         <TextView
             android:id="@+id/text_interest"
-            style="@style/f3_B1"
+            style="@style/f7_B4_V2"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 
@@ -88,12 +92,12 @@
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
-            style="@style/f3_B1"
+            style="@style/f7_B1_V2"
             android:text="已到余额" />
 
         <TextView
             android:id="@+id/text_balance"
-            style="@style/f3_B1"
+            style="@style/f7_B4_V2"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
     <View
@@ -110,12 +114,12 @@
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
-            style="@style/f3_B1"
+            style="@style/f7_B1_V2"
             android:text="业务编号" />
 
         <TextView
             android:id="@+id/trade_number"
-            style="@style/f3_B1"
+            style="@style/f7_B4_V2"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 
@@ -145,11 +149,10 @@
 
         <TextView
             android:id="@+id/tv_tip"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/mq_b2"
-            android:text=""
             android:textSize="@dimen/mq_font4"/>
 
 

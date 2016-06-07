@@ -83,7 +83,7 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
             if (!TextUtils.isEmpty(redeem.getAmt())) {
                 textCapital.setText(redeem.getAmt() + "元");
             }
-            imageStatus.setImageResource(R.drawable.rollin_status_success);
+            imageStatus.setImageResource(R.drawable.result_success);
 
         } else {
             findViewById(R.id.view_divider3).setVisibility(View.GONE);
@@ -93,7 +93,7 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
             findViewById(R.id.view_divider2).setVisibility(View.GONE);
             findViewById(R.id.frame_casecode).setVisibility(View.GONE);
             tvTip.setText("如果多次失败，请联系客服400-6656-191");
-            imageStatus.setImageResource(R.drawable.rollin_status_fail);
+            imageStatus.setImageResource(R.drawable.result_fail);
             textState.setText("赎回失败");
             textCapital.setText(capital + "元");
         }
