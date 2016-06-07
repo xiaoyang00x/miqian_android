@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,13 +11,13 @@
         android:paddingBottom="10dp"
         android:paddingLeft="@dimen/margin_left_right"
         android:paddingRight="@dimen/margin_left_right"
-        android:paddingTop="10dp" >
+        android:paddingTop="10dp">
 
         <ImageView
             android:id="@+id/iv_isRead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,9 +25,11 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/iv_isRead"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-            <RelativeLayout style="@style/f3_R1" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -35,26 +37,26 @@
                     android:layout_width="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:maxEms="10"
-                    android:gravity="left|center"
-                    android:singleLine="true"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@+id/tv_time"
-                    android:layout_toStartOf="@+id/tv_time" />
+                    android:layout_toStartOf="@+id/tv_time"
+                    android:gravity="left|center"
+                    android:maxEms="10"
+                    android:singleLine="true" />
 
                 <TextView
                     android:id="@+id/tv_time"
                     style="@style/text_gray_item"
                     android:layout_alignParentRight="true"
-                    android:ellipsize="end"
                     android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/iv_state"
+                    android:layout_toRightOf="@+id/iv_state"
+                    android:ellipsize="end"
                     android:gravity="right"
                     android:maxLines="2"
-                    android:text="--"
                     android:singleLine="true"
-                    android:textSize="14sp"
-                    android:layout_toRightOf="@+id/iv_state"
-                    android:layout_toEndOf="@+id/iv_state" />
+                    android:text="--"
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <TextView
@@ -69,5 +71,5 @@
 
     <View
         android:id="@+id/divider"
-        style="@style/item_divider"/>
+        style="@style/item_divider" />
 </LinearLayout>
