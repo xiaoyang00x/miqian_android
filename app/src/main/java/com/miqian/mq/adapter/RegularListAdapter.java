@@ -1,95 +1,143 @@
 package com.miqian.mq.adapter;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.RegularPlanActivity;
-import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.adapter.holder.RegularEarnViewHoder;
-import com.miqian.mq.entity.GetRegularInfo;
+import com.miqian.mq.activity.RegularDetailActivity;
+import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularBaseData;
-import com.miqian.mq.entity.SubjectCategoryData;
 import com.miqian.mq.utils.FormatUtil;
-import com.miqian.mq.views.DecoratorViewPager;
-import com.miqian.mq.views.indicator.CirclePageIndicator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.analytics.MobclickAgent;
+import com.miqian.mq.utils.Uihelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by guolei_wang on 15/9/17.
  */
 public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int ITEM_TYPE_HEADER = 0;
-    private final int ITEM_TYPE_NORMAL = 1;
-
-    private ArrayList<RegularBaseData> regularBaseDatas = new ArrayList<>();
+    private ArrayList<RegularBaseData> mList = new ArrayList<>();
     private Context mContext;
-    private boolean isHasHeader = false;
 
-    public RegularListAdapter(GetRegularInfo info, Context mContext) {
+    public RegularListAdapter(Context mContext) {
         this.mContext = mContext;
+    }
 
-        if (info.getSubjectData() != null) {
-            for (int i = 0; i < info.getSubjectData().size(); i++) {
-                SubjectCategoryData categoryData = info.getSubjectData().get(i);
-                if (categoryData != null && categoryData.getSubjectInfo().size() > 0) {
-                    categoryData.getSubjectInfo().get(0).setShowLable(true);
-                    categoryData.getSubjectInfo().get(0).setSubjectCategoryName(categoryData.getSubjectCategoryName());
-                    categoryData.getSubjectInfo().get(0).setSubjectCategoryIconUrl(categoryData.getSubjectCategoryIconUrl());
-                    categoryData.getSubjectInfo().get(0).setSubjectCategoryDesc(categoryData.getSubjectCategoryDesc());
-                    categoryData.getSubjectInfo().get(0).setSubjectCategoryDescUrl(categoryData.getSubjectCategoryDescUrl());
-                    regularBaseDatas.addAll(categoryData.getSubjectInfo());
-                }
-            }
-        }
+    public void add(RegularBaseData info) {
+        mList.add(info);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        return new RegularEarnViewHoder(inflater.inflate(R.layout.regular_earn_item, parent, false));
+        return new RegularListHolder(inflater.inflate(R.layout.item_regular_content, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof RegularEarnViewHoder) {
-            final RegularBaseData regularEarn = regularBaseDatas.get(isHasHeader ? position - 1 : position);
-            RegularEarnViewHoder viewHolder = (RegularEarnViewHoder) holder;
-            viewHolder.bindView(mContext, regularEarn, regularEarn.isShowLable());
+        if (holder instanceof RegularListHolder) {
+            RegularListHolder viewHolder = (RegularListHolder) holder;
+            viewHolder.bindData(position);
         }
     }
 
     @Override
     public int getItemCount() {
-        int itemsCount = regularBaseDatas == null ? 0 : regularBaseDatas.size();
-        return !isHasHeader ? itemsCount : itemsCount + 1;
+        return mList == null ? 0 : mList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (!isHasHeader) {
-            return ITEM_TYPE_NORMAL;
-        }
-        return position == 0 ? ITEM_TYPE_HEADER : ITEM_TYPE_NORMAL;
+        return position;
     }
+
+    private class RegularListHolder extends RecyclerView.ViewHolder {
+
+        private TextView tv_name; // 名称
+        private TextView tv_profit_rate; // 年利率
+        private TextView tv_profit_rate_unit; // 年利率单位:%, 有加息的话如:+0.5%
+        private TextView tv_time_limit; // 期限
+        private TextView tv_time_limit_unit; // 期限单位:元
+        private TextView tv_begin_time; // 开始时间
+        private TextView tv_remain_amount; // 剩余可购金额
+        private Button btn_state; // 立即购买(已售罄)按钮
+
+        public RegularListHolder(View itemView) {
+            super(itemView);
+            initView(itemView);
+        }
+
+        private void initView(View itemView) {
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_profit_rate = (TextView) itemView.findViewById(R.id.tv_profit_rate);
+            tv_profit_rate_unit = (TextView) itemView.findViewById(R.id.tv_profit_rate_unit);
+            tv_time_limit = (TextView) itemView.findViewById(R.id.tv_time_limit);
+            tv_time_limit_unit = (TextView) itemView.findViewById(R.id.tv_time_limit_unit);
+            tv_begin_time = (TextView) itemView.findViewById(R.id.tv_begin_time);
+            tv_remain_amount = (TextView) itemView.findViewById(R.id.tv_remain_amount);
+            btn_state = (Button) itemView.findViewById(R.id.btn_state);
+        }
+
+        public void bindData(final int position) {
+            final RegularBaseData info =  mList.get(position);
+            tv_name.setText(info.getSubjectName());
+            tv_profit_rate.setText(info.getYearInterest());
+            tv_profit_rate_unit.setText("%");
+            if ("Y".equals(info.getPresentationYesNo())) {
+                tv_profit_rate_unit.setText(
+                        new StringBuilder("+").
+                                append(info.getPresentationYearInterest()).
+                                append("%"));
+            }
+            tv_time_limit.setText(info.getLimit());
+            tv_remain_amount.setText(
+                    new StringBuilder("剩余金额:￥").
+                            append(FormatUtil.formatAmount(info.getResidueAmt())).
+                            append("/").
+                            append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
+
+            if (info.getSubjectStatus().equals(RegularBase.STATE_00)) {
+                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_begin_time.setText(Uihelper.timeToDateRegular(info.getStartTimestamp()));
+                tv_begin_time.setVisibility(View.VISIBLE);
+                btn_state.setBackgroundResource(R.drawable.btn_no_begin);
+                btn_state.setText("待开标");
+            } else if (info.getSubjectStatus().equals(RegularBase.STATE_01)) {
+                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_begin_time.setVisibility(View.GONE);
+                btn_state.setBackgroundResource(R.drawable.btn_default_selector);
+                btn_state.setText("立即认购");
+            } else {
+                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_begin_time.setVisibility(View.GONE);
+                btn_state.setBackgroundResource(R.drawable.btn_has_done);
+                btn_state.setText("已满额");
+            }
+            btn_state.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RegularDetailActivity.startActivity(
+                            mContext, info.getSubjectId(), info.getProdId());
+                }
+            });
+        }
+
+    }
+
 
 }

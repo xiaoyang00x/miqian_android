@@ -10,16 +10,12 @@ import com.miqian.mq.adapter.holder.HomeAdViewHolder;
 import com.miqian.mq.adapter.holder.HomeBaseViewHolder;
 import com.miqian.mq.adapter.holder.HomeBulletinHolder;
 import com.miqian.mq.adapter.holder.HomeContactViewHolder;
-import com.miqian.mq.adapter.holder.HomeHeaderViewHolder;
 import com.miqian.mq.adapter.holder.HomeHotActivitysViewHolder;
 import com.miqian.mq.adapter.holder.HomeNewsViewHolder;
 import com.miqian.mq.adapter.holder.HomeOperationHolder;
 import com.miqian.mq.adapter.holder.HomeRecommendViewHolder;
 import com.miqian.mq.adapter.holder.HomeSelectionHolder;
-import com.miqian.mq.adapter.holder.RegularEarnViewHoder;
 import com.miqian.mq.entity.HomePageInfo;
-import com.miqian.mq.entity.RegularBaseData;
-import com.miqian.mq.entity.SubjectCategoryData;
 
 import java.util.ArrayList;
 

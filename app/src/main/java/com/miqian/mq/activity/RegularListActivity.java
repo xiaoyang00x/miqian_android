@@ -9,24 +9,29 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.RegularListAdapter;
-import com.miqian.mq.entity.GetRegularInfo;
 import com.miqian.mq.entity.GetRegularResult;
+import com.miqian.mq.entity.RegularBaseData;
+import com.miqian.mq.entity.SubjectCategoryData;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
+import java.util.ArrayList;
+
 /**
+ * 使用红包跳转到的定期列表
  * Created by guolei_wang on 16/1/23.
  */
 public class RegularListActivity extends BaseActivity {
-    public static final String KEY_PROMID = "KEY_PROMID";
-    RegularListAdapter mAdapter;
-    private GetRegularInfo mData;
+
+    private RegularListAdapter mAdapter;
     private String promId; //促销 ID
 
     private RecyclerView recyclerView;
     private TextView tv_description;
+
     @Override
     public void obtainData() {
         getFitSubject();
@@ -34,15 +39,15 @@ public class RegularListActivity extends BaseActivity {
 
     public static void startActivity(Context context, String subjectId) {
         Intent intent = new Intent(context, RegularListActivity.class);
-        intent.putExtra(KEY_PROMID, subjectId);
+        intent.putExtra(Constants.PROMID, subjectId);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        promId = getIntent().getStringExtra(KEY_PROMID);
+        promId = getIntent().getStringExtra(Constants.PROMID);
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -50,36 +55,11 @@ public class RegularListActivity extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         tv_description = (TextView) findViewById(R.id.tv_description);
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            //用来标记是否正在向最后一个滑动，既是否向右滑动或向下滑动
-//            boolean isSlidingToLast = false;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                // 当不滚动时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    //获取最后一个完全显示的ItemPosition
-                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                    int totalItemCount = manager.getItemCount();
-
-                    // 判断是否滚动到底部，并且是向右滚动
-                    if (lastVisibleItem == (totalItemCount - 1)) {
-//                        Toast.makeText(mActivity, "加载更多", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-        });
-
-        if (mData != null) {
-            mAdapter = new RegularListAdapter(mData, mApplicationContext);
-            recyclerView.setAdapter(mAdapter);
-            tv_description.setText(mData.getFitSubjectDesc());
-        }
+        mAdapter = new RegularListAdapter(mApplicationContext);
+        recyclerView.setAdapter(mAdapter);
     }
 
     private boolean inProcess = false;
@@ -101,12 +81,7 @@ public class RegularListActivity extends BaseActivity {
                     inProcess = false;
                 }
                 end();
-                if (result == null) return;
-                mData = result.getData();
-                if (mData == null) return;
-                mAdapter = new RegularListAdapter(mData, mApplicationContext);
-                recyclerView.setAdapter(mAdapter);
-                tv_description.setText(mData.getFitSubjectDesc());
+                handleSuccessResult(result);
             }
 
             @Override
@@ -120,9 +95,31 @@ public class RegularListActivity extends BaseActivity {
         });
     }
 
+    private ArrayList<SubjectCategoryData> mList;
+
+    private void handleSuccessResult(GetRegularResult result) {
+        if (result == null || result.getData() == null ||
+                (mList = result.getData().getSubjectData()) == null ||
+                mList.size() <= 0) {
+            return;
+        }
+        for (SubjectCategoryData data : mList) {
+            ArrayList<RegularBaseData> tempList;
+            if ((tempList = data.getSubjectInfo()) == null ||
+                    data.getSubjectInfo().size() <= 0) {
+                continue;
+            }
+            for (RegularBaseData info : tempList) {
+                mAdapter.add(info);
+            }
+        }
+        tv_description.setText(result.getData().getFitSubjectDesc());
+        mAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public int getLayoutId() {
-        return R.layout.regular_list_activity;
+        return R.layout.activity_regular_project;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.miqian.mq.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.growingio.android.sdk.collection.GrowingIO;
@@ -67,6 +68,7 @@ public class UserUtil {
             }
         }
     }
+
     /**
      * 退出成功通知监听
      */
@@ -124,7 +126,7 @@ public class UserUtil {
         logout();
     }
 
-    public static void loginActivity(final Activity context, final Class<?> cls, Dialog_Login dialog_login ) {
+    public static void loginActivity(final Activity context, final Class<?> cls, Dialog_Login dialog_login) {
         if (!hasLogin(context)) {
             dialog_login.show();
         } else {
@@ -162,6 +164,33 @@ public class UserUtil {
         } else {
             dialogPay.show();
         }
+    }
+
+    //  认购时确认是否登录
+    public static void showLoginDialog(final Activity context) {
+        Dialog_Login dialog_login = new Dialog_Login(context) {
+            @Override
+            public void login(String telephone, String password) {
+                HttpRequest.login(context, new ICallback<LoginResult>() {
+                    @Override
+                    public void onSucceed(LoginResult result) {
+                        dismiss();
+                        UserInfo userInfo = result.getData();
+                        saveUserInfo(context, userInfo);
+
+                        if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                            GestureLockSetActivity.startActivity(context, null);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String error) {
+                        Uihelper.showToast(context, error);
+                    }
+                }, telephone, password);
+            }
+        };
+        dialog_login.show();
     }
 
     /**

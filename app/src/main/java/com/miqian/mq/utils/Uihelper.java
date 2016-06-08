@@ -9,6 +9,7 @@ import com.miqian.mq.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -162,6 +163,25 @@ public class Uihelper {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String date = sdf.format(new Date(timestamp));
         return date;
+    }
+
+    /**
+     * 将时间戳换算成 MM月dd日 HH:mm分 (定期待开标项目开标时间)
+     * @param time
+     * @return
+     */
+    public static String timeToDateRegular(long time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(time));
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        return new StringBuilder().
+                append(month).append("月").
+                append(day).append("日").append(" ").
+                append(hour).append(":").
+                append(minute).append("分").toString();
     }
 
     /**

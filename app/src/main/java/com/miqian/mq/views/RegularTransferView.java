@@ -1,17 +1,12 @@
 package com.miqian.mq.views;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
-import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.RegularTransferAdapter;
 import com.miqian.mq.entity.RegularTransferList;
@@ -44,7 +39,7 @@ public class RegularTransferView {
 
     public RegularTransferView(Context mContext) {
         this.mContext = mContext;
-        mView = LayoutInflater.from(mContext).inflate(R.layout.regular_project, null);
+        mView = LayoutInflater.from(mContext).inflate(R.layout.regular_home_project, null);
         findView();
         initView();
         initListener();
@@ -68,15 +63,8 @@ public class RegularTransferView {
     private void initListener() {
         swipeRefresh.setOnPullRefreshListener(mOnPullRefreshListener);
         recyclerView.addOnScrollListener(mOnScrollListener);
-        mAdapter.setOnItemClickListener(mOnItemClickListener);
         serverBusyView.setListener(requestAgainListener);
     }
-
-    private RegularTransferAdapter.OnItemClickListener mOnItemClickListener = new RegularTransferAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(int position) {
-        }
-    };
 
     // 下拉刷新
     private MySwipeRefresh.OnPullRefreshListener mOnPullRefreshListener = new MySwipeRefresh.OnPullRefreshListener() {

@@ -5,12 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.miqian.mq.R;
-import com.miqian.mq.adapter.RegularListAdapter;
 import com.miqian.mq.adapter.RegularProjectAdapter;
-import com.miqian.mq.entity.GetRegularInfo;
-import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.RegularProjectList;
 import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.net.HttpRequest;
@@ -37,8 +35,7 @@ public class RegularProjectView {
 
     public RegularProjectView(Context mContext) {
         this.mContext = mContext;
-        LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mView = mInflater.inflate(R.layout.regular_project, null);
+        mView = LayoutInflater.from(mContext).inflate(R.layout.regular_home_project, null);
         findView();
         initView();
         initListener();
@@ -118,6 +115,8 @@ public class RegularProjectView {
                     serverBusyView.showServerBusy();
                 } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {
                     serverBusyView.showNoNetwork();
+                } else {
+                    Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
                 }
             }
         });

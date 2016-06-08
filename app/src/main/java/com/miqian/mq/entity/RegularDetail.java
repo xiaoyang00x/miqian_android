@@ -4,23 +4,13 @@ import java.util.ArrayList;
 
 /**
  * @author wangduo
- * @description: 定期项目转让列表
+ * @description: ${todo}
  * @email: cswangduo@163.com
- * @date: 16/5/26
+ * @date: 16/6/2
  */
-public class RegularTransferList {
-
-    private Page page;
+public class RegularDetail {
 
     private ArrayList<RegularProjectInfo> subjectData;
-
-    public Page getPage() {
-        return page;
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
-    }
 
     public ArrayList<RegularProjectInfo> getSubjectData() {
         return subjectData;
@@ -29,5 +19,4 @@ public class RegularTransferList {
     public void setSubjectData(ArrayList<RegularProjectInfo> subjectData) {
         this.subjectData = subjectData;
     }
-
 }

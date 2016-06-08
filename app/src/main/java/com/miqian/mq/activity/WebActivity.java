@@ -24,6 +24,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
@@ -268,13 +269,13 @@ public class WebActivity extends BaseActivity implements LoginListener {
     //定期赚详情页面
     @JavascriptInterface
     public void startRegularEarn(String subjectId) {
-        RegularEarnActivity.startActivity(this, subjectId);
+        RegularDetailActivity.startActivity(this, subjectId, RegularBase.REGULAR_03);
     }
 
     //定期计划详情页面
     @JavascriptInterface
     public void startRegularPlan(String subjectId) {
-        RegularPlanActivity.startActivity(this, subjectId);
+        RegularDetailActivity.startActivity(this, subjectId, RegularBase.REGULAR_05);
     }
 
     //活期首页

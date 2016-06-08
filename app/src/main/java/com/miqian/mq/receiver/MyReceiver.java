@@ -15,13 +15,13 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.AnnounceResultActivity;
 import com.miqian.mq.activity.MainActivity;
-import com.miqian.mq.activity.RegularEarnActivity;
-import com.miqian.mq.activity.RegularPlanActivity;
+import com.miqian.mq.activity.RegularDetailActivity;
 import com.miqian.mq.activity.SplashActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
@@ -185,16 +185,12 @@ public class MyReceiver extends BroadcastReceiver {
                             try {
                                 JSONObject jsonObject = new JSONObject(ext);
                                 if (jsonObject != null) {
-                                    String prodId = jsonObject.getString("prodId");
+                                    int prodId = jsonObject.getInt("prodId");
                                     String subjectId = jsonObject.getString("subjectId");
-                                    if (!TextUtils.isEmpty(prodId) && !TextUtils.isEmpty(subjectId)) {
-                                        if ("3".equals(prodId)) {//定期赚
-                                            notificationIntent = new Intent(context, RegularEarnActivity.class);
-                                            notificationIntent.putExtra("KEY_SUBJECT_ID", subjectId);
-                                        } else if ("5".equals(prodId)) {//定期计划
-                                            notificationIntent = new Intent(context, RegularPlanActivity.class);
-                                            notificationIntent.putExtra("KEY_SUBJECT_ID", subjectId);
-                                        }
+                                    if (!TextUtils.isEmpty(subjectId)) {
+                                        notificationIntent = new Intent(context, RegularDetailActivity.class);
+                                        notificationIntent.putExtra(Constants.SUBJECTID, subjectId);
+                                        notificationIntent.putExtra(Constants.PRODID, prodId);
                                     } else {
                                         notificationIntent = new Intent(context, MainActivity.class);
                                     }

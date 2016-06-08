@@ -39,7 +39,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
             // 激活状态栏设置
             tintManager.setStatusBarTintEnabled(true);
             // 设置一个颜色给系统栏
-            tintManager.setStatusBarTintResource(R.color.mq_r1);
+            tintManager.setStatusBarTintResource(R.color.mq_r1_v2);
         }
 
 

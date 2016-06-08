@@ -1,6 +1,7 @@
 package com.miqian.mq.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * @author wangduo
@@ -10,49 +11,65 @@ import java.math.BigDecimal;
  */
 public class RegularProjectInfo extends RegularBase {
 
-    private String limit; // 期限
-
     private String presentationYearInterest; // 赠送年利率
-
-    private String subjectStatus; // 标的状态
-
-    private BigDecimal subjectTotalPrice; // 标的总额
-
-    private String prodId; // 产品类型
-
-    private String startTimestamp; // 开始时间戳
 
     private String businessType; // 标的业务类型
 
-    private BigDecimal residueAmt; // 剩余额度
-
     private String yearInterest; // 年化收益率
 
-    private String personTime; // 认购人次
-
-    private String subjectMaxBuy; // 最大可以认购金额
-
-    private String fromInvestmentAmount; // 最低认购金额/起投金额
-
-    private String subjectName; // 标的名称
-
-    private String continueInvestmentLimit; // 续投金额
-
-    private String subjectId; // 标的ID
-
-    private String endTimestamp; // 结束时间戳
+    private BigDecimal continueInvestmentLimit; // 续投金额
 
     private String presentationYesNo; // 是否赠送收益
 
-    private String purchasePrice; // 已投总额
+    private String limit; // 期限
 
-    public String getLimit() {
-        return limit;
-    }
+    private String predictRate; // 预计年化收益率
 
-    public void setLimit(String limit) {
-        this.limit = limit;
-    }
+    private String subjectStatus; // 标的状态 00：待开标 01：已开标 02：已满标（已售罄）03：已到期 04：已撤销 05：已流标 06：审批中 07：还款中 08：正常还完
+
+    private int prodId; // 产品类型  1活期，2活期转让，3定期，4定期转让，5定期计划，6计划转让
+
+    private int limitDay4Transfer; // 再次转让限制天数
+
+    private String originalRate; // 原始年化收益率
+
+    private String personTime; // 认购人次
+
+    private BigDecimal fromInvestmentAmount; // 最低认购金额/起投金额
+
+    private BigDecimal subjectMaxBuy; // 最大可以认购金额
+
+    private String subjectId; // 标的ID
+
+    private String subjectName; // 标的名称
+
+    private long startTimestamp; // 开始时间戳
+
+    private String residueTimestamp; // 剩余时间
+
+    private String endTimestamp; // 结束时间戳
+
+    private BigDecimal subjectTotalPrice; // 标的总额
+
+    private BigDecimal purchasePrice; // 已投总额
+
+    private BigDecimal residueAmt; // 剩余额度
+
+    private String discountRate; // 折让信息
+
+    private BigDecimal actualAmt; // 全额认购实际支付金额
+
+    private BigDecimal predictIncome; // 全额认购实际利息收益
+
+    private String originalSubjectName; // 原始标的名称
+
+    private String originalSubjectId; // 原始标的ID
+
+    private ArrayList<RegularEarnDetail> subjectBar;
+
+    private ArrayList<RegularProjectMatch> matchItem;
+
+    private ArrayList<RegularProjectFeature> subjectFeature;
 
     public String getPresentationYearInterest() {
         return presentationYearInterest;
@@ -60,38 +77,6 @@ public class RegularProjectInfo extends RegularBase {
 
     public void setPresentationYearInterest(String presentationYearInterest) {
         this.presentationYearInterest = presentationYearInterest;
-    }
-
-    public String getSubjectStatus() {
-        return subjectStatus;
-    }
-
-    public void setSubjectStatus(String subjectStatus) {
-        this.subjectStatus = subjectStatus;
-    }
-
-    public BigDecimal getSubjectTotalPrice() {
-        return subjectTotalPrice;
-    }
-
-    public void setSubjectTotalPrice(BigDecimal subjectTotalPrice) {
-        this.subjectTotalPrice = subjectTotalPrice;
-    }
-
-    public String getProdId() {
-        return prodId;
-    }
-
-    public void setProdId(String prodId) {
-        this.prodId = prodId;
-    }
-
-    public String getStartTimestamp() {
-        return startTimestamp;
-    }
-
-    public void setStartTimestamp(String startTimestamp) {
-        this.startTimestamp = startTimestamp;
     }
 
     public String getBusinessType() {
@@ -102,14 +87,6 @@ public class RegularProjectInfo extends RegularBase {
         this.businessType = businessType;
     }
 
-    public BigDecimal getResidueAmt() {
-        return residueAmt;
-    }
-
-    public void setResidueAmt(BigDecimal residueAmt) {
-        this.residueAmt = residueAmt;
-    }
-
     public String getYearInterest() {
         return yearInterest;
     }
@@ -118,60 +95,12 @@ public class RegularProjectInfo extends RegularBase {
         this.yearInterest = yearInterest;
     }
 
-    public String getPersonTime() {
-        return personTime;
-    }
-
-    public void setPersonTime(String personTime) {
-        this.personTime = personTime;
-    }
-
-    public String getSubjectMaxBuy() {
-        return subjectMaxBuy;
-    }
-
-    public void setSubjectMaxBuy(String subjectMaxBuy) {
-        this.subjectMaxBuy = subjectMaxBuy;
-    }
-
-    public String getFromInvestmentAmount() {
-        return fromInvestmentAmount;
-    }
-
-    public void setFromInvestmentAmount(String fromInvestmentAmount) {
-        this.fromInvestmentAmount = fromInvestmentAmount;
-    }
-
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-
-    public String getContinueInvestmentLimit() {
+    public BigDecimal getContinueInvestmentLimit() {
         return continueInvestmentLimit;
     }
 
-    public void setContinueInvestmentLimit(String continueInvestmentLimit) {
+    public void setContinueInvestmentLimit(BigDecimal continueInvestmentLimit) {
         this.continueInvestmentLimit = continueInvestmentLimit;
-    }
-
-    public String getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(String subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public String getEndTimestamp() {
-        return endTimestamp;
-    }
-
-    public void setEndTimestamp(String endTimestamp) {
-        this.endTimestamp = endTimestamp;
     }
 
     public String getPresentationYesNo() {
@@ -182,11 +111,203 @@ public class RegularProjectInfo extends RegularBase {
         this.presentationYesNo = presentationYesNo;
     }
 
-    public String getPurchasePrice() {
+    public String getLimit() {
+        return limit;
+    }
+
+    public void setLimit(String limit) {
+        this.limit = limit;
+    }
+
+    public String getPredictRate() {
+        return predictRate;
+    }
+
+    public void setPredictRate(String predictRate) {
+        this.predictRate = predictRate;
+    }
+
+    public String getSubjectStatus() {
+        return subjectStatus;
+    }
+
+    public void setSubjectStatus(String subjectStatus) {
+        this.subjectStatus = subjectStatus;
+    }
+
+    public int getProdId() {
+        return prodId;
+    }
+
+    public void setProdId(int prodId) {
+        this.prodId = prodId;
+    }
+
+    public int getLimitDay4Transfer() {
+        return limitDay4Transfer;
+    }
+
+    public void setLimitDay4Transfer(int limitDay4Transfer) {
+        this.limitDay4Transfer = limitDay4Transfer;
+    }
+
+    public String getOriginalRate() {
+        return originalRate;
+    }
+
+    public void setOriginalRate(String originalRate) {
+        this.originalRate = originalRate;
+    }
+
+    public String getPersonTime() {
+        return personTime;
+    }
+
+    public void setPersonTime(String personTime) {
+        this.personTime = personTime;
+    }
+
+    public BigDecimal getFromInvestmentAmount() {
+        return fromInvestmentAmount;
+    }
+
+    public void setFromInvestmentAmount(BigDecimal fromInvestmentAmount) {
+        this.fromInvestmentAmount = fromInvestmentAmount;
+    }
+
+    public BigDecimal getSubjectMaxBuy() {
+        return subjectMaxBuy;
+    }
+
+    public void setSubjectMaxBuy(BigDecimal subjectMaxBuy) {
+        this.subjectMaxBuy = subjectMaxBuy;
+    }
+
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public long getStartTimestamp() {
+        return startTimestamp;
+    }
+
+    public void setStartTimestamp(long startTimestamp) {
+        this.startTimestamp = startTimestamp;
+    }
+
+    public String getResidueTimestamp() {
+        return residueTimestamp;
+    }
+
+    public void setResidueTimestamp(String residueTimestamp) {
+        this.residueTimestamp = residueTimestamp;
+    }
+
+    public String getEndTimestamp() {
+        return endTimestamp;
+    }
+
+    public void setEndTimestamp(String endTimestamp) {
+        this.endTimestamp = endTimestamp;
+    }
+
+    public BigDecimal getSubjectTotalPrice() {
+        return subjectTotalPrice;
+    }
+
+    public void setSubjectTotalPrice(BigDecimal subjectTotalPrice) {
+        this.subjectTotalPrice = subjectTotalPrice;
+    }
+
+    public BigDecimal getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(String purchasePrice) {
+    public void setPurchasePrice(BigDecimal purchasePrice) {
         this.purchasePrice = purchasePrice;
+    }
+
+    public BigDecimal getResidueAmt() {
+        return residueAmt;
+    }
+
+    public void setResidueAmt(BigDecimal residueAmt) {
+        this.residueAmt = residueAmt;
+    }
+
+    public String getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(String discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public ArrayList<RegularEarnDetail> getSubjectBar() {
+        return subjectBar;
+    }
+
+    public void setSubjectBar(ArrayList<RegularEarnDetail> subjectBar) {
+        this.subjectBar = subjectBar;
+    }
+
+    public ArrayList<RegularProjectMatch> getMatchItem() {
+        return matchItem;
+    }
+
+    public void setMatchItem(ArrayList<RegularProjectMatch> matchItem) {
+        this.matchItem = matchItem;
+    }
+
+    public ArrayList<RegularProjectFeature> getSubjectFeature() {
+        return subjectFeature;
+    }
+
+    public void setSubjectFeature(ArrayList<RegularProjectFeature> subjectFeature) {
+        this.subjectFeature = subjectFeature;
+    }
+
+    public BigDecimal getActualAmt() {
+        return actualAmt;
+    }
+
+    public void setActualAmt(BigDecimal actualAmt) {
+        this.actualAmt = actualAmt;
+    }
+
+    public BigDecimal getPredictIncome() {
+        return predictIncome;
+    }
+
+    public void setPredictIncome(BigDecimal predictIncome) {
+        this.predictIncome = predictIncome;
+    }
+
+    public String getOriginalSubjectName() {
+        return originalSubjectName;
+    }
+
+    public void setOriginalSubjectName(String originalSubjectName) {
+        this.originalSubjectName = originalSubjectName;
+    }
+
+    public String getOriginalSubjectId() {
+        return originalSubjectId;
+    }
+
+    public void setOriginalSubjectId(String originalSubjectId) {
+        this.originalSubjectId = originalSubjectId;
     }
 }

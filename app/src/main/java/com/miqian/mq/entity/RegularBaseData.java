@@ -9,10 +9,8 @@ import java.math.BigDecimal;
  */
 public class RegularBaseData implements Serializable {
 
-    public static final String PRODID_REGULAR_EARN = "3";   //定期赚
-    public static final String PRODID_REGULAR_PLAN = "5";   //定期计划
     protected String subjectId;//标的ID
-    protected String prodId;//产品类型：定期赚 3、定期计划4
+    protected int prodId;//产品类型：定期赚 3、定期计划4
     protected String subjectName;//标的名称
     protected long startTimestamp; //开始时间
     protected long endTimestamp; //结束时间
@@ -20,6 +18,9 @@ public class RegularBaseData implements Serializable {
     protected String subjectStatus; //标的状态  投标状态编码: 99待开标不显示   00待开标   01已开标   02已满标（已售罄）  03已到期  04已撤销  05已流标   06审批中    07还款中    08正常还完
     protected int presentationYesNo; // "0",//是否赠送收益  1 赠送
     protected String presentationYearInterest; //赠送年利率
+
+    private BigDecimal residueAmt;
+    private BigDecimal subjectTotalPrice;
 
     protected String yearInterest; //年化收益
     protected String limit; //期限
@@ -40,11 +41,11 @@ public class RegularBaseData implements Serializable {
         this.subjectId = subjectId;
     }
 
-    public String getProdId() {
+    public int getProdId() {
         return prodId;
     }
 
-    public void setProdId(String prodId) {
+    public void setProdId(int prodId) {
         this.prodId = prodId;
     }
 
@@ -158,5 +159,21 @@ public class RegularBaseData implements Serializable {
 
     public void setSubjectCategoryIconUrl(String subjectCategoryIconUrl) {
         this.subjectCategoryIconUrl = subjectCategoryIconUrl;
+    }
+
+    public BigDecimal getResidueAmt() {
+        return residueAmt;
+    }
+
+    public void setResidueAmt(BigDecimal residueAmt) {
+        this.residueAmt = residueAmt;
+    }
+
+    public BigDecimal getSubjectTotalPrice() {
+        return subjectTotalPrice;
+    }
+
+    public void setSubjectTotalPrice(BigDecimal subjectTotalPrice) {
+        this.subjectTotalPrice = subjectTotalPrice;
     }
 }

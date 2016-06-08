@@ -9,12 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.RegularEarnActivity;
-import com.miqian.mq.activity.RegularPlanActivity;
+import com.miqian.mq.activity.RegularDetailActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomeSelectionProject;
-import com.miqian.mq.entity.RegularBaseData;
 import com.miqian.mq.utils.FormatUtil;
 
 /**
@@ -141,13 +139,9 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
 
             @Override
             public void onClick(View view) {
-                if(TextUtils.isEmpty(data.getJumpProjectUrl())) {
-                    if (RegularBaseData.PRODID_REGULAR_PLAN.equals(data.getProdId())) {
-                        RegularPlanActivity.startActivity(view.getContext(), data.getSubjectId());
-                    } else {
-                        RegularEarnActivity.startActivity(view.getContext(), data.getSubjectId());
-                    }
-                }else {
+                if (TextUtils.isEmpty(data.getJumpProjectUrl())) {
+                    RegularDetailActivity.startActivity(mContext, data.getSubjectId(), data.getProdId());
+                } else {
                     WebActivity.startActivity(view.getContext(), data.getJumpProjectUrl());
                 }
             }

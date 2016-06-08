@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_name"
@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btn_state"
-        android:layout_marginRight="35dp"
+        android:layout_marginRight="25dp"
         android:textColor="@color/mq_bl3_v2"
         android:textSize="@dimen/mq_font3_v2"
         android:visibility="gone" />

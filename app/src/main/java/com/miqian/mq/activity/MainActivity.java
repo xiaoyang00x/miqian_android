@@ -24,6 +24,7 @@ import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MaintenanceResult;
+import com.miqian.mq.entity.RegularDetail;
 import com.miqian.mq.entity.UpdateInfo;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.fragment.FragmentCurrent;
@@ -393,14 +394,10 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             try {
                 JSONObject jsonObject = new JSONObject(ext);
                 if (jsonObject != null) {
-                    String prodId = jsonObject.getString("prodId");
+                    int prodId = jsonObject.getInt("prodId");
                     String subjectId = jsonObject.getString("subjectId");
-                    if (!TextUtils.isEmpty(prodId) && !TextUtils.isEmpty(subjectId)) {
-                        if ("3".equals(prodId)) {//定期赚
-                            RegularEarnActivity.startActivity(mContext, subjectId);
-                        } else if ("5".equals(prodId)) {//定期计划
-                            RegularPlanActivity.startActivity(mContext, subjectId);
-                        }
+                    if (!TextUtils.isEmpty(subjectId)) {
+                        RegularDetailActivity.startActivity(mContext, subjectId, prodId);
                         MyApplication.getInstance().getPushList().clear();
                     }
                 }

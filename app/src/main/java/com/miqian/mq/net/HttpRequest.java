@@ -27,8 +27,7 @@ import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.RegisterResult;
-import com.miqian.mq.entity.RegularEarnResult;
-import com.miqian.mq.entity.RegularPlanResult;
+import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
@@ -155,7 +154,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if ("999991".equals(meta.getCode()) || "000000".equals(meta.getCode()) || "996633".equals(meta.getCode()) ) {
+                if ("999991".equals(meta.getCode()) || "000000".equals(meta.getCode()) || "996633".equals(meta.getCode())) {
                     callback.onSucceed(result);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -411,7 +410,7 @@ public class HttpRequest {
                 if (userMessageResult.getCode().equals("000000")) {
                     callback.onSucceed(userMessageResult);
                     //保存数据到本地，缓存用
-                    Pref.saveString(Pref.DATA_MESSAGE,result,context);
+                    Pref.saveString(Pref.DATA_MESSAGE, result, context);
                 } else {
                     callback.onFail(userMessageResult.getMessage());
                 }
@@ -437,7 +436,7 @@ public class HttpRequest {
                 if (pushDataResult.getCode().equals("000000")) {
                     callback.onSucceed(pushDataResult);
                     //保存数据到本地，缓存用
-                    Pref.saveString(Pref.DATA_PUSH,result,context);
+                    Pref.saveString(Pref.DATA_PUSH, result, context);
                 } else {
                     callback.onFail(pushDataResult.getMessage());
                 }
@@ -453,8 +452,8 @@ public class HttpRequest {
     //设置消息已读
     public static void setMessageReaded(Context context, final ICallback<Meta> callback, String startId, String endId, int isAll) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("startId", startId ));
-        mList.add(new Param("endId", endId ));
+        mList.add(new Param("startId", startId));
+        mList.add(new Param("endId", endId));
         mList.add(new Param("isAll", isAll + ""));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         new MyAsyncTask(context, Urls.setMessageReaded, mList, new ICallback<String>() {
@@ -811,72 +810,18 @@ public class HttpRequest {
     /**
      * 获取定期详情
      *
-     * @param prodId    3：为获取定期赚 5：为获取定期计划
      * @param subjectId 标的编号，如传入则返回改标的相关信息
      */
-    public static void getRegularDetails(Context context, String prodId, String subjectId, final ICallback<RegularPlanResult> callback) {
+    public static void getRegularDetail(Context context, String subjectId, final ICallback<RegularDetailResult> callback) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("prodId", prodId));
         params.add(new Param("subjectId", subjectId));
+        params.add(new Param("pageNo", "1"));
+        params.add(new Param("pageSize", "50"));
         new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                RegularPlanResult regularPlanResult = JsonUtil.parseObject(result, RegularPlanResult.class);
-                if (regularPlanResult.getCode().equals("000000")) {
-                    callback.onSucceed(regularPlanResult);
-                } else {
-                    callback.onFail(regularPlanResult.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 获取定期赚详情
-     *
-     * @param prodId    3：为获取定期赚 5：为获取定期计划
-     * @param subjectId 标的编号，如传入则返回改标的相关信息
-     */
-    public static void getRegularEarnDetails(Context context, String prodId, String subjectId,
-                                             final ICallback<RegularEarnResult> callback) {
-        ArrayList params = new ArrayList<>();
-        params.add(new Param("prodId", prodId));
-        params.add(new Param("subjectId", subjectId));
-        new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                RegularEarnResult meta = JsonUtil.parseObject(result, RegularEarnResult.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 获取定期计划详情
-     */
-    public static void getRegularPlanDetails(Context context,
-                                             final ICallback<GetRegularResult> callback) {
-        new MyAsyncTask(context, Urls.REGULA_PROJECT, null, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                GetRegularResult meta = JsonUtil.parseObject(result, GetRegularResult.class);
+                RegularDetailResult meta = JsonUtil.parseObject(result, RegularDetailResult.class);
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -1383,7 +1328,6 @@ public class HttpRequest {
 
     /**
      * 获取首页运营活动列表
-     *
      */
     public static void getHomeActivity(Context context, final ICallback<GetHomeActivityResult> callback) {
         ArrayList params = new ArrayList<>();
@@ -1409,17 +1353,18 @@ public class HttpRequest {
             }
         }).executeOnExecutor();
     }
+
     /**
      * 获取首页运营活动已读反馈
      *
-     * @param activityId 活动 ID
-     * @param activityPlanId   计划 ID
+     * @param activityId     活动 ID
+     * @param activityPlanId 计划 ID
      */
     public static void getActivityFeedback(Context context, String activityId, String activityPlanId, final ICallback<Meta> callback) {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
         if (!TextUtils.isEmpty(custId)) {
-            params.add(new Param("custId",  RSAUtils.encryptURLEncode(custId)));
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
         }
         params.add(new Param("activityId", activityId));
         params.add(new Param("activityPlanId", activityPlanId));
@@ -1450,7 +1395,7 @@ public class HttpRequest {
 //                    if ("2".equals(updateInfo.getUpgradeSign())) {
 //                        Pref.saveString(Pref.FORCE_UPDATE, MobileOS.getClientVersion(context), context);
 //                    }
-                 } else {
+                } else {
                     callback.onFail(updateResult.getMessage());
                 }
             }

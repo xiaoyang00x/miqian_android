@@ -7,12 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.ProjectInfo;
-import com.miqian.mq.entity.RegularTransferInfo;
+import com.miqian.mq.activity.RegularDetailActivity;
+import com.miqian.mq.entity.RegularProjectInfo;
 import com.miqian.mq.utils.FormatUtil;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private final int ITEM_TYPE_NORMAL = 0; //
     private final int ITEM_TYPE_FOOTER = 1; // 加载更多
 
-    private ArrayList<RegularTransferInfo> mList;
+    private ArrayList<RegularProjectInfo> mList;
     private Context mContext;
     private int totalCount; // 定期转让总量
 
@@ -37,7 +36,7 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         mList = new ArrayList<>();
     }
 
-    public void addAll(ArrayList<RegularTransferInfo> list) {
+    public void addAll(ArrayList<RegularProjectInfo> list) {
         mList.addAll(list);
     }
 
@@ -93,12 +92,6 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return ITEM_TYPE_NORMAL;
     }
 
-    private OnItemClickListener mOnItemClickListener;
-
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
-    }
-
     private class RegularTransferHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_name; // 标题
@@ -127,7 +120,7 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         public void bindData(final int position) {
-            RegularTransferInfo info = mList.get(position);
+            final RegularProjectInfo info = mList.get(position);
 
             tv_name.setText(info.getSubjectName());
             tv_profit_rate.setText(info.getPredictRate());
@@ -137,7 +130,7 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             append(FormatUtil.formatAmount(info.getResidueAmt()))
                             .toString());
 
-            if (info.getSubjectStatus().equals(ProjectInfo.STATE_02)) {
+            if (info.getSubjectStatus().equals(info.STATE_02)) {
                 tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
                 tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
                 tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
@@ -151,15 +144,14 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                 btn_state.setBackgroundResource(R.drawable.btn_default_selector);
                 btn_state.setText("立即认购");
-                btn_state.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mOnItemClickListener != null) {
-                            mOnItemClickListener.onItemClick(position);
-                        }
-                    }
-                });
             }
+            btn_state.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RegularDetailActivity.startActivity(
+                            mContext, info.getSubjectId(), info.getProdId());
+                }
+            });
 
             if (position + 2 == getTotalCount()) {
                 divider.setVisibility(View.GONE);

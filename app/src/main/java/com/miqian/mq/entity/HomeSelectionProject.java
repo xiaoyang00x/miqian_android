@@ -17,7 +17,7 @@ public class HomeSelectionProject {
     private String yearInterest;                                //年化收益
     private int presentationYesNo;                              //是否赠送收益  1 赠送  0不赠送
     private String subjectId;                                   //标的ID
-    private String prodId;                                      //产品类型：定期赚 3、定期计划4
+    private int prodId;                                      //产品类型：定期赚 3、定期计划4
     private String subscript;                                   //右上角角标
     private BigDecimal subjectTotalPrice;                       //标的总额
     private BigDecimal residueAmt;                              //标的剩余额度
@@ -87,11 +87,11 @@ public class HomeSelectionProject {
         this.subjectId = subjectId;
     }
 
-    public String getProdId() {
+    public int getProdId() {
         return prodId;
     }
 
-    public void setProdId(String prodId) {
+    public void setProdId(int prodId) {
         this.prodId = prodId;
     }
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/mq_b7_v2" />
+
+    <include layout="@layout/divide_line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
+        android:text="匹配项目"
+        android:textColor="@color/mq_b2_v2"
+        android:textSize="@dimen/mq_font5_v2" />
+
+    <LinearLayout
+        android:id="@+id/llyt_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical" />
+
+    <include layout="@layout/divide_line" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/mq_b7_v2" />
+
+    <include layout="@layout/divide_line" />
+
+    <TextView
+        android:id="@+id/tv_seemore"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="查看全部匹配项目"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font7_v2"
+        android:textStyle="bold" />
+
+    <include layout="@layout/divide_line" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/mq_b7_v2" />
+
+    <include layout="@layout/divide_line" />
+
+</LinearLayout>
+
+

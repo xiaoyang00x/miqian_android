@@ -11,6 +11,7 @@ public class RegularProjectHeader extends RegularBase {
     private String title;
     private String jumpUrl;
     private String name;
+    private String iconUrl;
 
     public String getTitle() {
         return title;
@@ -34,5 +35,13 @@ public class RegularProjectHeader extends RegularBase {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 }
