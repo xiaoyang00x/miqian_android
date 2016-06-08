@@ -1,6 +1,7 @@
 package com.miqian.mq.adapter.holder;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,6 +22,8 @@ import com.miqian.mq.entity.HomeRecommendData;
 import com.miqian.mq.utils.Uihelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -75,8 +78,6 @@ public class HomeRecommendViewHolder extends HomeBaseViewHolder {
 
     class AdCyclePagerAdapter extends CyclePagerAdapter<HomeRecommendData> {
 
-        private LinearLayout.LayoutParams lp =
-                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         private ImageLoader imageLoader;
         private DisplayImageOptions options;
 
@@ -89,7 +90,27 @@ public class HomeRecommendViewHolder extends HomeBaseViewHolder {
         @Override
         public View instantiateItem(Context mContext, HomeRecommendData data) {
             final ImageView imageView = new ImageView(mContext);
-            imageLoader.displayImage(data.getImgUrl(), imageView, options);
+            imageLoader.displayImage(data.getImgUrl(), imageView, options, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String s, View view) {
+                    ((ImageView)view).setImageResource(R.drawable.bg_ad_default);
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+                    ((ImageView)view).setImageResource(R.drawable.bg_ad_default);
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
+
+                }
+            });
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setTag(data.getJumpUrl());// 绑定imageview 视图
             imageView.setOnClickListener(new View.OnClickListener() {

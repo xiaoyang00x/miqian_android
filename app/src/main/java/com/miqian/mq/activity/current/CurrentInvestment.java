@@ -7,6 +7,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,16 +65,21 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private TextView textInterestRate;
     private Button btPay;
     private TextView textOrderMoney;
+    private TextView expectMoney;
     private TextView textPromote;
     private TextView textPromoteMoney;
     private TextView textPromoteUnit;
+    private RelativeLayout frameExpect;
+    private RelativeLayout frameFact;
     private RelativeLayout frameRedPackage;
     private RelativeLayout frameLianPay;
     private TextView textLian;
     private RelativeLayout framePayChoose;
     private TextView textPayType;
-    private TextView textPayMoney;
+    private TextView textPayTip;
+    //    private TextView textPayMoney;
     private TextView textErrorLian;
+    private ImageView imageType;
 
     private RelativeLayout frameTip;
     private View frameSpace;
@@ -198,6 +204,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
      * 红包列显示
      */
     private void refreshPromoteView() {
+        expectMoney.setText(producedOrder.getPredictIncome());
         if (promList != null && promList.size() > 0) {
             if (promoteMoney.compareTo(bFlag) > 0) {
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
@@ -232,14 +239,21 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             textLian.setText("" + payMoney);
         } else {
             showLianView(false);
-            textPayMoney.setText("" + payMoney);
+//            textPayMoney.setText("" + payMoney);
             if (payModeState == PAY_MODE_BALANCE) {
                 textPayType.setText("账户余额");
+                textPayTip.setText("可用" + producedOrder.getBalance() + "元");
+                imageType.setImageResource(R.drawable.balance_enable);
             } else if (payModeState == PAY_MODE_BANK) {
                 String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
                 textPayType.setText(producedOrder.getBankName() + "(" + bankNo + ")");
+                textPayTip.setText("单笔限额" + producedOrder.getSingleAmtLimit() + "元， 单日限额" + producedOrder.getDayAmtLimit() + "元");
+                imageType.setImageResource(R.drawable.icon_bank);
+                imageLoader.displayImage(producedOrder.getBankUrlSmall(), imageType, options);
             } else if (payModeState == PAY_MODE_CURRENT) {
                 textPayType.setText("活期资产");
+                textPayTip.setText("可用" + producedOrder.getBalanceCurrent() + "元");
+                imageType.setImageResource(R.drawable.current_enable);
             }
         }
     }
@@ -289,11 +303,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
         frameSpace = findViewById(R.id.frame_space);
         frameLianPay = (RelativeLayout) findViewById(R.id.frame_lian_pay);
+        frameExpect = (RelativeLayout) findViewById(R.id.frame_expect);
         textLian = (TextView) findViewById(R.id.text_lian);
         framePayChoose = (RelativeLayout) findViewById(R.id.frame_pay_choose);
         framePayChoose.setOnClickListener(this);
         textPayType = (TextView) findViewById(R.id.text_pay_type);
-        textPayMoney = (TextView) findViewById(R.id.text_pay_money);
+        textPayTip = (TextView) findViewById(R.id.text_pay_tip);
+        imageType = (ImageView) findViewById(R.id.image_type);
+//        textPayMoney = (TextView) findViewById(R.id.text_pay_money);
 
         textProjectType = (TextView) findViewById(R.id.text_project_type);
         textInterestRate = (TextView) findViewById(R.id.text_interest_rate);
@@ -302,21 +319,19 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         frameRedPackage.setOnClickListener(this);
         if (PRODID_CURRENT.equals(prodId)) {
             frameRedPackage.setVisibility(View.GONE);
+            frameExpect.setVisibility(View.GONE);
             textProjectType.setText("活期赚");
-            textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_current), null, null, null);
             if (TextUtils.isEmpty(interestRateString)) {
-                textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.investment_interest), null);
+                textInterestRate.setText("年化收益：8%");
             } else {
                 textInterestRate.setText("年化收益：" + interestRateString);
             }
         } else if (PRODID_REGULAR.equals(prodId)) {
             textProjectType.setText("定期赚");
-            textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_regular), null, null, null);
             textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             textInterestRate.setText("年化收益：" + interestRateString);
         } else if (PRODID_REGULAR_PLAN.equals(prodId)) {
             textProjectType.setText("定期计划");
-            textProjectType.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.icon_type_regular), null, null, null);
             textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             textInterestRate.setText("年化收益：" + interestRateString);
         }
@@ -324,7 +339,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         btPay = (Button) findViewById(R.id.bt_pay);
         btPay.setOnClickListener(this);
         textOrderMoney = (TextView) findViewById(R.id.order_money);
-        textOrderMoney.setText(money + "元");
+        textOrderMoney.setText(money);
+        expectMoney = (TextView) findViewById(R.id.expect_money);
         textPromote = (TextView) findViewById(R.id.text_promote);
         textPromoteMoney = (TextView) findViewById(R.id.text_promote_money);
         textPromoteUnit = (TextView) findViewById(R.id.text_promote_unit);

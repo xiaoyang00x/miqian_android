@@ -1,5 +1,6 @@
 package com.miqian.mq.adapter.holder;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.utils.Uihelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * Created by guolei_wang on 16/5/24.
@@ -56,8 +59,28 @@ public class HomeHotActivitysViewHolder extends HomeBaseViewHolder {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imageViewWidth, imageViewHeight);
                     params.setMargins(0, 0, 0, Uihelper.dip2px(activityView.getContext(), 10));
 
-                    imageLoader.displayImage(homeNewActivitiesData.getImgUrl(), imageView, options);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageLoader.displayImage(homeNewActivitiesData.getImgUrl(), imageView, options, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
+                            ((ImageView)view).setImageResource(R.drawable.bg_ad_default);
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
+                            ((ImageView)view).setImageResource(R.drawable.bg_ad_default);
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+
+                        }
+                    });
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     imageView.setTag(homeNewActivitiesData.getJumpUrl());// 绑定imageview 视图
                     imageView.setOnClickListener(new View.OnClickListener() {
 

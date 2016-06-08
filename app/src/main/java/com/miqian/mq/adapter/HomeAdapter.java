@@ -26,6 +26,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeBaseViewHolder> {
     HomePageInfo info;
     Activity activity;
     ArrayList<HomePageInfo> mDatas;
+    HomeAdViewHolder homeAdViewHolder;
 
     public HomeAdapter(Activity activity, ArrayList<HomePageInfo> datas) {
         this.activity = activity;
@@ -58,7 +59,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeBaseViewHolder> {
 
         switch (viewType) {
             case HomePageInfo.MODULE_LOOP:
-                return new HomeAdViewHolder(mInflater.inflate(R.layout.home_ad_recyclerview,parent, false));
+                homeAdViewHolder = new HomeAdViewHolder(mInflater.inflate(R.layout.home_ad_recyclerview,parent, false));
+                return homeAdViewHolder;
             case HomePageInfo.MODULE_BULLETIN:
                 return new HomeBulletinHolder(mInflater.inflate(R.layout.item_home_bulletin,parent, false));
             case HomePageInfo.MODULE_HOT_RECOMMEND:
@@ -92,12 +94,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeBaseViewHolder> {
         notifyDataSetChanged();
     }
 
-//    /**
-//     * 设置图片自动滚动
-//     */
-//    public void setAutoScroll() {
-//        if(homeHeaderViewHolder != null) {
-//            homeHeaderViewHolder.handler.sendEmptyMessage(HomeHeaderViewHolder.MSG_ACTION_SLIDE_PAGE);
-//        }
-//    }
+
+    /**
+     * 设置图片自动滚动
+     */
+    public void setAutoScroll() {
+        if(homeAdViewHolder != null) {
+            homeAdViewHolder.handler.sendEmptyMessage(HomeAdViewHolder.MSG_ACTION_SLIDE_PAGE);
+        }
+    }
 }

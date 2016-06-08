@@ -47,7 +47,6 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
             } else {
                 img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
             }
-            img_bulletin.setOnClickListener(this);
             tv_content.setOnClickListener(this);
         }
     }
@@ -56,16 +55,7 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_content:
-//                if (mPushData != null) {
-//                    Intent intent = new Intent(mContext, AnnounceResultActivity.class);
-//                    intent.putExtra("id", mPushData.getId());
-//                    intent.putExtra("isMessage", false);
-//                    mContext.startActivity(intent);
-//                }
                 mContext.startActivity(new Intent(mContext, NoticeActivity.class));
-                break;
-            case R.id.img_bulletin:
-//                mContext.startActivity(new Intent(mContext, NoticeActivity.class));
                 break;
             default:
                 break;

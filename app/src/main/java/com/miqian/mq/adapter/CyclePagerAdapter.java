@@ -6,6 +6,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.miqian.mq.utils.LogUtil;
+
 import java.util.ArrayList;
 
 /**
@@ -62,7 +64,7 @@ public abstract class CyclePagerAdapter<E> extends PagerAdapter implements ViewP
      * @param position view 所在的 position 从 0 开始
      * @return 返回所对应的数据在数组中的真实位置  从0开始
      */
-    private int getRealDataPosition(int position) {
+    protected int getRealDataPosition(int position) {
         int realDataPositon = 0;
         if (mDataList.size() > 1) {
             if (position == 0) {
@@ -97,12 +99,13 @@ public abstract class CyclePagerAdapter<E> extends PagerAdapter implements ViewP
         if (getViewsCount() > 1) {
             if (position < 1) {
                 position = mDataList.size();
-                mViewPager.setCurrentItem(position, false);
             } else if (position > mDataList.size()) {
                 position = 1;
-                mViewPager.setCurrentItem(position, false);
             }
+            mViewPager.setCurrentItem(position, false);
         }
+
+        LogUtil.d("onPageSelected parent.position = " + position);
     }
 
     @Override

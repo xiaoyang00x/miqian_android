@@ -99,6 +99,9 @@ public class WebActivity extends BaseActivity implements LoginListener {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setAppCacheEnabled(false);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         settings.setSupportZoom(true);
         settings.setSavePassword(false);
         webview.setWebChromeClient(new WebChromeClientEx() {
@@ -127,8 +130,11 @@ public class WebActivity extends BaseActivity implements LoginListener {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                loadUrl(url);
-                return false;
+                if( url.startsWith("http:") || url.startsWith("https:") ) {
+                    loadUrl(url);
+                    return false;
+                }
+                return true;
             }
 
             @Override

@@ -60,16 +60,16 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
         textOrderMoney.setText(money + "元");
         textOrderNo.setText(orderNo);
         if (status == CurrentInvestment.SUCCESS) {
-            imageStatus.setImageResource(R.drawable.rollin_status_success);
+            imageStatus.setImageResource(R.drawable.result_success);
         } else if (status == CurrentInvestment.PROCESSING) {
             textStatus.setText("充值处理中");
 //            textProcessing.setVisibility(View.VISIBLE);
-            imageStatus.setImageResource(R.drawable.rollin_status_processing);
+            imageStatus.setImageResource(R.drawable.result_processing);
             frameTip.setVisibility(View.VISIBLE);
             textTip.setText("请在 “我的” 资金记录中查看充值结果");
         } else if (status == CurrentInvestment.FAIL) {
             textStatus.setText("充值失败");
-            imageStatus.setImageResource(R.drawable.rollin_status_fail);
+            imageStatus.setImageResource(R.drawable.result_fail);
 //            frameFail.setVisibility(View.VISIBLE);
             frameTip.setVisibility(View.VISIBLE);
             textTip.setText("可能是网银支付出现问题，建议您稍后重试。如果一直失败，请在官网在线支付，官网地址：www.shicaidai.com");
