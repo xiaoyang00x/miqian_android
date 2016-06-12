@@ -3,6 +3,7 @@ package com.miqian.mq.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
     private ImageView ivChooseBank;
     private ImageView ivChooseCurrent;
     private ImageView ivChooseBalance;
+    private Button btRollin;
 
     private TextView textBankName;
     private TextView textCurrent;
@@ -85,6 +87,8 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
         ivChooseBank = (ImageView) findViewById(R.id.iv_choose_bank);
         ivChooseCurrent = (ImageView) findViewById(R.id.iv_choose_current);
         ivChooseBalance = (ImageView) findViewById(R.id.iv_choose_balance);
+        btRollin = (Button) findViewById(R.id.bt_rollin);
+        btRollin.setOnClickListener(this);
 
         textBankName = (TextView) findViewById(R.id.tv_bankname);
         textCurrent = (TextView) findViewById(R.id.text_current);
@@ -123,10 +127,12 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
 
         if (balanceMoney.compareTo(payMoney) >= 0) {
             frameBalance.setOnClickListener(this);
+            btRollin.setVisibility(View.GONE);
         } else {
             textBalance.setTextColor(getResources().getColor(R.color.mq_b3));
             textBalance.setText("余额不足");
             imageBalance.setEnabled(false);
+            btRollin.setVisibility(View.VISIBLE);
         }
     }
 
@@ -190,6 +196,8 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
                     refreshView();
                 }
                 backSubscribePage();
+                break;
+            case R.id.bt_rollin:
                 break;
             default:
                 break;

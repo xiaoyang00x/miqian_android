@@ -13,8 +13,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="待付款"
             android:layout_marginLeft="20dp"
+            android:text="待付款"
             android:textColor="@color/mq_b1_v2"
             android:textSize="@dimen/mq_font7_v2" />
 
@@ -22,8 +22,8 @@
             android:id="@+id/text_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:text="120"
             android:textColor="@color/mq_r1_v2"
@@ -34,8 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/text_money"
-            android:text="￥"
             android:paddingTop="5dp"
+            android:text="￥"
             android:textColor="@color/mq_r1_v2"
             android:textSize="@dimen/mq_font7_v2" />
 
@@ -70,7 +70,7 @@
                 style="@style/f7_B1_V2"
                 android:layout_width="match_parent"
                 android:gravity="left|center"
-                android:maxEms="10"/>
+                android:maxEms="10" />
 
             <TextView
                 android:id="@+id/text_tip"
@@ -78,8 +78,8 @@
                 android:layout_marginTop="1dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textSize="@dimen/mq_font3_v2"
-                android:textColor="@color/mq_b4_v2"/>
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2" />
 
         </LinearLayout>
 
@@ -91,7 +91,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
             android:src="@drawable/icon_choose"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -132,7 +132,7 @@
                 style="@style/WrapContent"
                 android:layout_marginTop="1dp"
                 android:textColor="@color/mq_b4_v2"
-                android:textSize="@dimen/mq_font3_v2"/>
+                android:textSize="@dimen/mq_font3_v2" />
         </LinearLayout>
 
         <ImageView
@@ -143,7 +143,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
             android:src="@drawable/icon_choose"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <View
             style="@style/item_divider"
@@ -187,7 +187,7 @@
                 style="@style/WrapContent"
                 android:layout_marginTop="1dp"
                 android:textColor="@color/mq_b4_v2"
-                android:textSize="@dimen/mq_font3_v2"/>
+                android:textSize="@dimen/mq_font3_v2" />
         </LinearLayout>
 
         <ImageView
@@ -198,7 +198,18 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
             android:src="@drawable/icon_choose"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/bt_rollin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:background="@drawable/btn_rollin"
             android:visibility="gone"/>
+
         <View
             style="@style/item_divider"
             android:layout_marginLeft="0dp"
