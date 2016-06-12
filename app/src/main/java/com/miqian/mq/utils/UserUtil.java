@@ -103,11 +103,7 @@ public class UserUtil {
 
     public static boolean hasLogin(Context context) {
         String token = getToken(context);
-        if (TextUtils.isEmpty(token)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !TextUtils.isEmpty(token);
     }
 
     public static void clearUserInfo(Context context) {

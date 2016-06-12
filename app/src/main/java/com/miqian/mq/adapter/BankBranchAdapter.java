@@ -74,7 +74,7 @@ public class BankBranchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      * @param listener
      */
     public void setOnItemClickListener(MyItemClickListener listener) {
-        this.mItemClickListener = listener;
+        mItemClickListener = listener;
     }
 
 
@@ -84,6 +84,6 @@ public class BankBranchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public interface MyItemClickListener {
-        public void onItemClick(View view, int postion);
+        void onItemClick(View view, int postion);
     }
 }

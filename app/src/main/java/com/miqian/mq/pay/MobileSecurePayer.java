@@ -20,7 +20,7 @@ import com.yintong.secure.service.PayService;
 
 public class MobileSecurePayer {
 
-    Integer lock = 0;
+    final Integer lock = 0;
     IPayService payService = null;
     boolean mbPaying = false;
     static final String TAG = "MobileSecurePayer";

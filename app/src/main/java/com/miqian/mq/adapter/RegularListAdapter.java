@@ -89,7 +89,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tv_name.setText(info.getSubjectName());
             tv_profit_rate.setText(info.getYearInterest());
             tv_profit_rate_unit.setText("%");
-            if ("Y".equals(info.getPresentationYesNo())) {
+            if (1 == info.getPresentationYesNo()) {
                 tv_profit_rate_unit.setText(
                         new StringBuilder("+").
                                 append(info.getPresentationYearInterest()).
@@ -102,31 +102,35 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             append("/").
                             append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
 
-            if (info.getSubjectStatus().equals(RegularBase.STATE_00)) {
-                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_begin_time.setText(Uihelper.timeToDateRegular(info.getStartTimestamp()));
-                tv_begin_time.setVisibility(View.VISIBLE);
-                btn_state.setBackgroundResource(R.drawable.btn_no_begin);
-                btn_state.setText("待开标");
-            } else if (info.getSubjectStatus().equals(RegularBase.STATE_01)) {
-                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_begin_time.setVisibility(View.GONE);
-                btn_state.setBackgroundResource(R.drawable.btn_default_selector);
-                btn_state.setText("立即认购");
-            } else {
-                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_begin_time.setVisibility(View.GONE);
-                btn_state.setBackgroundResource(R.drawable.btn_has_done);
-                btn_state.setText("已满额");
+            switch (info.getSubjectStatus()) {
+                case RegularBase.STATE_00:
+                    tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_begin_time.setText(Uihelper.timeToDateRegular(info.getStartTimestamp()));
+                    tv_begin_time.setVisibility(View.VISIBLE);
+                    btn_state.setBackgroundResource(R.drawable.btn_no_begin);
+                    btn_state.setText("待开标");
+                    break;
+                case RegularBase.STATE_01:
+                    tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_begin_time.setVisibility(View.GONE);
+                    btn_state.setBackgroundResource(R.drawable.btn_default_selector);
+                    btn_state.setText("立即认购");
+                    break;
+                default:
+                    tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_begin_time.setVisibility(View.GONE);
+                    btn_state.setBackgroundResource(R.drawable.btn_has_done);
+                    btn_state.setText("已满额");
+                    break;
             }
             btn_state.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -55,7 +55,7 @@
 
             <View
                 style="@style/item_divider"
-                android:layout_marginLeft="10dp"></View>
+                android:layout_marginLeft="10dp"/>
 
 
             <RelativeLayout
@@ -93,7 +93,7 @@
 
             <View
                 style="@style/item_divider"
-                android:layout_marginLeft="10dp"></View>
+                android:layout_marginLeft="10dp"/>
 
             <RelativeLayout
                 style="@style/FillContent"

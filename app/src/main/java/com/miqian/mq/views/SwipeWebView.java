@@ -229,7 +229,7 @@ public class SwipeWebView extends WebView {
 
         script.append("if(typeof(window.").append(interfaceName).append(")!='undefined'){");
         if (DEBUG) {
-            script.append("    console.log('window." + interfaceName + "_js_interface_name is exist!!');");
+            script.append("    console.log('window.").append(interfaceName).append("_js_interface_name is exist!!');");
         }
 
         script.append("}else {");

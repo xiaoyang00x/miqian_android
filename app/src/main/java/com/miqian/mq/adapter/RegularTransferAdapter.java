@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.RegularDetailActivity;
+import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularProjectInfo;
 import com.miqian.mq.utils.FormatUtil;
 
@@ -127,10 +128,9 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             tv_time_limit.setText(info.getLimit());
             tv_remain_amount.setText(
                     new StringBuilder("剩余金额:￥").
-                            append(FormatUtil.formatAmount(info.getResidueAmt()))
-                            .toString());
+                            append(FormatUtil.formatAmount(info.getResidueAmt())));
 
-            if (info.getSubjectStatus().equals(info.STATE_02)) {
+            if (info.getSubjectStatus().equals(RegularBase.STATE_02)) {
                 tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
                 tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
                 tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));

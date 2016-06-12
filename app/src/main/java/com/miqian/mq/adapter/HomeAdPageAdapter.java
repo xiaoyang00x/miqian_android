@@ -87,7 +87,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     }
 
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((ImageView) object);
+        return view == object;
     }
 
     @Override

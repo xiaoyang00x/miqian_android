@@ -108,36 +108,6 @@ public class AdapterPacket extends RecyclerView.Adapter {
         return VIEW_TYPE_HB;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView limitType;
-        public TextView limitDate;
-        public TextView textMoney;
-        public TextView textName;
-        public ImageView promoteChoosed;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mPosition != getLayoutPosition()) {
-                        mPosition = getLayoutPosition();
-                    } else {
-                        mPosition = -1;
-                    }
-                    onItemClickListener.onItemClick(v, mPosition);
-                    notifyDataSetChanged();
-                }
-            });
-            limitType = (TextView) itemView.findViewById(R.id.limit_type);
-            limitDate = (TextView) itemView.findViewById(R.id.limit_date);
-            textName = (TextView) itemView.findViewById(R.id.text_name);
-            textMoney = (TextView) itemView.findViewById(R.id.text_money);
-            promoteChoosed = (ImageView) itemView.findViewById(R.id.promote_choosed);
-        }
-    }
-
     class BaseViewHoleder extends RecyclerView.ViewHolder {
 
         protected TextView tv_name;

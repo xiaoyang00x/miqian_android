@@ -498,7 +498,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
             longPaddingBefore = getPaddingLeft();
             longPaddingAfter = getPaddingRight();
             parentWidth = getResources().getDisplayMetrics().widthPixels;
-            ;
         } else {
             longPaddingBefore = getPaddingTop();
             longPaddingAfter = getPaddingBottom();

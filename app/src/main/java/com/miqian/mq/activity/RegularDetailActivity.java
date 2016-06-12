@@ -2,10 +2,7 @@ package com.miqian.mq.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +29,6 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -99,7 +95,7 @@ public class RegularDetailActivity extends BaseActivity {
         subjectId = getIntent().getStringExtra(Constants.SUBJECTID);
         prodId = getIntent().getIntExtra(Constants.PRODID, -1);
         super.onCreate(arg0);
-        imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
@@ -438,38 +434,40 @@ public class RegularDetailActivity extends BaseActivity {
                 }
             });
         }
-
-        if (subjectStatus.equals(mInfo.STATE_00)) { // 待开标
-            rlyt_input.setVisibility(View.GONE);
-            btn_state.setVisibility(View.VISIBLE);
-            btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
-            btn_state.setText("待开标");
-        } else if (subjectStatus.equals(mInfo.STATE_01)) { // 已开标
-            rlyt_input.setVisibility(View.VISIBLE);
-            btn_state.setVisibility(View.GONE);
-            mInfo.getFromInvestmentAmount(); //最低认购金额
-            mInfo.getContinueInvestmentLimit(); // 续投金额
-            mInfo.getSubjectMaxBuy(); // 最大可认购金额
-            tv_dialog_min_amount.setText(FormatUtil.formatAmount(mInfo.getFromInvestmentAmount()));
-            tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getSubjectMaxBuy()));
-            if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
-                et_input.setHint("输入认购金额");
-            } else {
-                et_input.setHint("输入认购本金");
-            }
-            rlyt_input.post(new Runnable() {
-                @Override
-                public void run() {
-                    mBottom = rlyt_input.getBottom();
+        switch (subjectStatus) {
+            case RegularBase.STATE_00:
+                rlyt_input.setVisibility(View.GONE);
+                btn_state.setVisibility(View.VISIBLE);
+                btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
+                btn_state.setText("待开标");
+                break;
+            case RegularBase.STATE_01:
+                rlyt_input.setVisibility(View.VISIBLE);
+                btn_state.setVisibility(View.GONE);
+                mInfo.getFromInvestmentAmount(); //最低认购金额
+                mInfo.getContinueInvestmentLimit(); // 续投金额
+                mInfo.getSubjectMaxBuy(); // 最大可认购金额
+                tv_dialog_min_amount.setText(FormatUtil.formatAmount(mInfo.getFromInvestmentAmount()));
+                tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getSubjectMaxBuy()));
+                if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
+                    et_input.setHint("输入认购金额");
+                } else {
+                    et_input.setHint("输入认购本金");
                 }
-            });
-        } else { // 已满标（已售罄）
-            rlyt_input.setVisibility(View.GONE);
-            btn_state.setVisibility(View.VISIBLE);
-            btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
-            btn_state.setText("已满额");
+                rlyt_input.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBottom = rlyt_input.getBottom();
+                    }
+                });
+                break;
+            default:
+                rlyt_input.setVisibility(View.GONE);
+                btn_state.setVisibility(View.VISIBLE);
+                btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
+                btn_state.setText("已满额");
+                break;
         }
-
     }
 
     // 更新 定期项目转让/定期计划转让 view
@@ -513,7 +511,7 @@ public class RegularDetailActivity extends BaseActivity {
         }
 
         RegularProjectFeature feature2 = mList.get(1);
-        tv1.setText(feature2.getTitle());
+        tv2.setText(feature2.getTitle());
         if (!TextUtils.isEmpty(feature2.getImgUrl())) {
             imageLoader.displayImage(feature2.getImgUrl(), iv2, options);
         }
@@ -522,7 +520,7 @@ public class RegularDetailActivity extends BaseActivity {
         }
 
         RegularProjectFeature feature3 = mList.get(2);
-        tv1.setText(feature3.getTitle());
+        tv3.setText(feature3.getTitle());
         if (!TextUtils.isEmpty(feature3.getImgUrl())) {
             imageLoader.displayImage(feature3.getImgUrl(), iv3, options);
         }
@@ -540,7 +538,7 @@ public class RegularDetailActivity extends BaseActivity {
     private View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
         @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-            if (oldBottom == 0 || !subjectStatus.equals(mInfo.STATE_01)) {
+            if (oldBottom == 0 || !subjectStatus.equals(RegularBase.STATE_01)) {
                 return;
             }
             if (mBottom != bottom) { // 键盘弹起(出)

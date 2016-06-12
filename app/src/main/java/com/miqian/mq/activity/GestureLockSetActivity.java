@@ -140,11 +140,6 @@ public class GestureLockSetActivity extends BaseActivity {
 
         @Override
         public void onPatterStart() {
-            if (isFirstSet) {
-//                tv_tip.setText(INPUT);
-            } else {
-//                tv_tip.setText(INPUT_AGAIN);
-            }
         }
     };
 

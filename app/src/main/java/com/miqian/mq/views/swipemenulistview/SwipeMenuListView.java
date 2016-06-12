@@ -173,14 +173,14 @@ public class SwipeMenuListView extends ListView {
 		this.mOnMenuItemClickListener = onMenuItemClickListener;
 	}
 
-	public static interface OnMenuItemClickListener {
+	public interface OnMenuItemClickListener {
 		void onMenuItemClick(int position, SwipeMenu menu, int index);
 	}
 	public void setOnOpenOrCloseListener(OpenOrCloseListener onOpenOrCloseListener) {
 		this.onOpenOrCloseListener = onOpenOrCloseListener;
 	}
 
-	public static interface OpenOrCloseListener {
+	public interface OpenOrCloseListener {
 		void isOpen(boolean isOpen);
 	}
 	public void requestDisallowInterceptTouchEven(boolean isRequest){

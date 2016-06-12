@@ -97,14 +97,14 @@ public abstract class Dialog_Login extends Dialog {
                                 dismiss();
                                 login(telephone, password);
                             } else {
-                                Uihelper.showToast((Activity) mContext, R.string.tip_password_login);
+                                Uihelper.showToast(mContext, R.string.tip_password_login);
                             }
 
                         } else {
                             Uihelper.showToast(mContext, "密码不能为空");
                         }
                     } else {
-                        Uihelper.showToast((Activity) mContext, R.string.phone_noeffect);
+                        Uihelper.showToast(mContext, R.string.phone_noeffect);
                     }
                 } else {
                     Uihelper.showToast(mContext, "手机号码不能为空");

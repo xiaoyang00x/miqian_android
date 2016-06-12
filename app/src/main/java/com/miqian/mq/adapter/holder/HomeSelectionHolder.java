@@ -86,7 +86,7 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
 
         tv_project_name.setText(data.getSubjectName());
         profit_rate.setText(data.getYearInterest());
-        if("1".equals(data.getPresentationYesNo())) {
+        if (1 == data.getPresentationYesNo()) {
             tv_add_interest.setText("+ " + data.getPresentationYearInterest() + "%");
         }else {
             tv_add_interest.setText("%");

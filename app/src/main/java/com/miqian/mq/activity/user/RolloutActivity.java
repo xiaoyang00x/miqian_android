@@ -292,7 +292,7 @@ public class RolloutActivity extends BaseActivity {
                     StringBuilder tip = new StringBuilder();
                     for (WithdrawItem item : data) {
                         if (!"0".equals(item.getFeeAmt())) {
-                            tip.append("；" + item.getName()).append(item.getFeeAmt() + "元");
+                            tip.append("；").append(item.getName()).append(item.getFeeAmt()).append("元");
                         }
                     }
                     if (!TextUtils.isEmpty(tip)) {
