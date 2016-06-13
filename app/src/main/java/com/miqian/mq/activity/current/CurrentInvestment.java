@@ -108,7 +108,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private BigDecimal payMoney;//需支付的金额
     private BigDecimal bFlag = BigDecimal.ZERO;
 
-    private static final int REQUEST_CODE_ROLLIN = 1;
+    public static final int REQUEST_CODE_ROLLIN = 1;
     private static final int REQUEST_CODE_REDPACKET = 2;
     private static final int REQUEST_CODE_PAYMODE = 3;
     private static final int REQUEST_CODE_PASSWORD = 4;
@@ -484,7 +484,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         } else if (requestCode == REQUEST_CODE_PAYMODE) {
             if (resultCode == SUCCESS) {
                 payModeState = data.getIntExtra("payModeState", payModeState);
+                String balanceTemp = data.getStringExtra("balanceMoney");
+                if (!TextUtils.isEmpty(balanceTemp)) {
+                    producedOrder.setBalance(new BigDecimal(balanceTemp));
+                }
                 refreshPayView();
+            } else if (resultCode  == PROCESSING) {
+                CurrentInvestment.this.finish();
             }
         } else if (requestCode == REQUEST_CODE_PASSWORD) {
             if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {

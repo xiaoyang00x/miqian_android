@@ -330,12 +330,12 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_right"
                     android:layout_marginRight="@dimen/margin_left_right"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -343,15 +343,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="3dp"
-                        android:text="text"
+                        android:layout_gravity="center"
                         android:textColor="@color/mq_r1"
                         android:visibility="gone" />
 
                     <Button
                         android:id="@+id/bt_pay"
                         style="@style/click_btn"
+                        android:layout_gravity="center"
                         android:text="确定认购" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

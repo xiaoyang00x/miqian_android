@@ -15,7 +15,6 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.WFYTitle;
 
 

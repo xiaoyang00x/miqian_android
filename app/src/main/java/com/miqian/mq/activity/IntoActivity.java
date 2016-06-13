@@ -127,7 +127,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         editMoneyBound = (EditText) findViewById(R.id.edit_money_bound);
-        if (rollType == 1) {
+        if (rollType == 1 || rollType == 2) {
             money = intent.getStringExtra("money");
             editMoney.setText(money);
             editMoney.setEnabled(false);
@@ -422,11 +422,17 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
      * @param orderNo
      */
     private void jumpToResult(int status, String money, String orderNo) {
-        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-        intent.putExtra("status", status);
-        intent.putExtra("money", money);
-        intent.putExtra("orderNo", orderNo);
-        startActivity(intent);
+        if (rollType == 0 || status == CurrentInvestment.PROCESSING) {
+            Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
+            intent.putExtra("status", status);
+            intent.putExtra("money", money);
+            intent.putExtra("orderNo", orderNo);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("orderNo", orderNo);
+            setResult(status, intent);
+        }
         IntoActivity.this.finish();
     }
 
