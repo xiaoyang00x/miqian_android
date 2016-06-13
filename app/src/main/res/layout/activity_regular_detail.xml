@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rlyt_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mq_b6_v2"
-    android:visibility="gone">
+    android:background="@color/mq_b6_v2">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +40,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:maxLines="1"
-                    android:text="苏宁云商-上市公司保理项目(三期)"
                     android:textColor="@color/white"
                     android:textSize="@dimen/mq_font7_v2"
                     android:textStyle="bold" />
@@ -57,7 +53,6 @@
                     android:layout_marginTop="10dp"
                     android:alpha="0.5"
                     android:maxLines="1"
-                    android:text="30天可转让 | 100元起投 | 无限购"
                     android:textColor="@color/white"
                     android:textSize="@dimen/mq_font3_v2"
                     android:textStyle="bold" />
@@ -294,7 +289,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="55dp" />
+                android:layout_height="50dp" />
         </LinearLayout>
 
     </ScrollView>
@@ -303,7 +298,6 @@
         android:id="@+id/view_close_keyboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rlyt_dialog"
         android:alpha="0.4"
         android:background="#000000"
         android:visibility="gone" />
@@ -392,7 +386,7 @@
     <Button
         android:id="@+id/btn_state"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:textColor="@color/white"
         android:textSize="@dimen/mq_font7_v2"

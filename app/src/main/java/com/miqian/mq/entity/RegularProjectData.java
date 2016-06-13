@@ -13,6 +13,7 @@ public class RegularProjectData {
     private String title;
     private String jumpUrl;
     private String name;
+    private String iconUrl;
     private ArrayList<RegularProjectInfo> subjectData;
 
     public String getTitle() {
@@ -47,4 +48,11 @@ public class RegularProjectData {
         this.subjectData = subjectData;
     }
 
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
 }

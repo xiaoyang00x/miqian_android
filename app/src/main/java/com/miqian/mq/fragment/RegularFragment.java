@@ -28,8 +28,8 @@ public class RegularFragment extends BasicFragment {
 
     private FrameLayout content;
 
-    private RegularProjectView regularProjectView; // 定期项目内容页面
-    private RegularTransferView regularTransferView; // 定期转让内容页面
+    private RegularProjectView regularProjectView; // 定期项目列表页面
+    private RegularTransferView regularTransferView; // 定期转让列表页面
 
     private View rootView;
 
@@ -132,15 +132,17 @@ public class RegularFragment extends BasicFragment {
         }
     }
 
-    // 刷新当前页面数据(预留)
+    // 刷新当前页面数据
     private void obtainData(int curSwitch) {
         switch (curSwitch) {
             case LEFTPAGE:
                 if (null != regularProjectView) {
+                    regularProjectView.setVisibility(View.VISIBLE);
                 }
                 break;
             case RIGHTPAGE:
                 if (null != regularTransferView) {
+                    regularTransferView.setVisibility(View.VISIBLE);
                 }
                 break;
             default:

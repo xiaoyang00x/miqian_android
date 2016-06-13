@@ -3,8 +3,10 @@ package com.miqian.mq.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.inputmethod.InputMethodManager;
@@ -29,6 +31,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -45,7 +48,6 @@ import java.util.ArrayList;
  */
 public class RegularDetailActivity extends BaseActivity {
 
-    private RelativeLayout rlyt_page;
     private TextView tv_begin_countdown; // 开标倒计时
     private TextView tv_name; // 标的名称
     private TextView tv_description; // 标的描述
@@ -65,17 +67,15 @@ public class RegularDetailActivity extends BaseActivity {
     private TextView tv2;
     private TextView tv3;
 
-    private int mBottom; // 抛去状态栏的屏幕高度  也是底部输入栏的底部bottom
-
     /*  底部输入框相关   */
     private EditText et_input;
     private Button btn_buy;
     private View view_close_keyboard;
     private RelativeLayout rlyt_input; // 底部状态:立即认购输入框
-    private Button btn_state; // 底部状态:标的状态:已满额 待开标
     private RelativeLayout rlyt_dialog;
     private TextView tv_dialog_min_amount; // 起投金额
     private TextView tv_dialog_max_amount; // 最大可认购金额
+    private Button btn_state; // 底部状态:标的状态:已满额 待开标
     private InputMethodManager imm;
     /*  底部输入框相关   */
 
@@ -89,6 +89,7 @@ public class RegularDetailActivity extends BaseActivity {
 
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
+    private int mBottom; // 抛去状态栏的屏幕高度  也是底部输入栏view的bottom
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -99,6 +100,7 @@ public class RegularDetailActivity extends BaseActivity {
 
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
+        showDefaultView();
     }
 
     public static void startActivity(Context context, String subjectId, int prodId) {
@@ -111,7 +113,6 @@ public class RegularDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        rlyt_page = (RelativeLayout) findViewById(R.id.rlyt_page);
         tv_begin_countdown = (TextView) findViewById(R.id.tv_begin_countdown);
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_description = (TextView) findViewById(R.id.tv_description);
@@ -222,7 +223,6 @@ public class RegularDetailActivity extends BaseActivity {
                     return;
                 }
                 showContentView();
-                rlyt_page.setVisibility(View.VISIBLE);
                 mInfo = result.getData().getSubjectData().get(0);
                 subjectStatus = mInfo.getSubjectStatus();
                 updateUI();
@@ -233,7 +233,6 @@ public class RegularDetailActivity extends BaseActivity {
                 synchronized (mLock) {
                     inProcess = false;
                 }
-                RegularDetailActivity.this.finish();
                 Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
                 showErrorView();
             }
@@ -310,10 +309,10 @@ public class RegularDetailActivity extends BaseActivity {
         tv_seemore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
+                if (RegularBase.REGULAR_03 == prodId) {
+                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
+                } else if (RegularBase.REGULAR_05 == prodId) {
+                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
                 }
             }
         });
@@ -343,10 +342,10 @@ public class RegularDetailActivity extends BaseActivity {
         tv_seemore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
+                if (RegularBase.REGULAR_03 == prodId) {
+                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
+                } else if (RegularBase.REGULAR_05 == prodId) {
+                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
                 }
             }
         });
@@ -354,8 +353,6 @@ public class RegularDetailActivity extends BaseActivity {
 
     // 更新 定期项目 定期计划 公共部分 头部 (标的信息)
     private void updateRegularCom() {
-        tv_begin_countdown.setVisibility(View.GONE);
-
         // 标的名称
         tv_name.setText(mInfo.getSubjectName());
 
@@ -412,13 +409,14 @@ public class RegularDetailActivity extends BaseActivity {
                             append(FormatUtil.formatAmount(mInfo.getResidueAmt())));
             tv_info_right.setText(
                     new StringBuilder("原标的年化收益: ").
-                            append(mInfo.getOriginalRate()));
+                            append(mInfo.getOriginalRate()).
+                            append("%"));
             tv_people_amount.setVisibility(View.GONE);
         } else { // 定期 原标的
             tv_remain_amount.setText(
                     new StringBuilder("可认购金额:￥").
                             append(FormatUtil.formatAmount(mInfo.getResidueAmt())).
-                            append("/").
+                            append("/￥").
                             append(FormatUtil.formatAmount(mInfo.getSubjectTotalPrice())));
             tv_people_amount.setText(FormatUtil.formatAmountStr(mInfo.getPersonTime()));
             tv_people_amount.setVisibility(View.VISIBLE);
@@ -426,23 +424,41 @@ public class RegularDetailActivity extends BaseActivity {
             tv_info_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                    } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
+                    if (RegularBase.REGULAR_03 == prodId) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
+                    } else if (RegularBase.REGULAR_05 == prodId) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
                     }
                 }
             });
         }
+        updateProjectStatus();
+    }
+
+    // 更新标的状态
+    private void updateProjectStatus() {
         switch (subjectStatus) {
             case RegularBase.STATE_00:
+                tv_begin_countdown.setVisibility(View.VISIBLE);
+                tv_begin_countdown.setText(
+                        new StringBuilder(Uihelper.timeToDateRegular(mInfo.getStartTimestamp())).
+                                append("发售"));
                 rlyt_input.setVisibility(View.GONE);
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
                 btn_state.setText("待开标");
                 break;
             case RegularBase.STATE_01:
+                if (RegularBase.REGULAR_04 == prodId || RegularBase.REGULAR_06 == prodId) {
+                    tv_begin_countdown.setVisibility(View.VISIBLE);
+                    setMaxTime(mInfo.getEndTimestamp() - System.currentTimeMillis());
+                    mHandler.post(mRunnable);
+                } else {
+                    tv_begin_countdown.setVisibility(View.GONE);
+                }
                 rlyt_input.setVisibility(View.VISIBLE);
+                rlyt_dialog.setOnTouchListener(mOnTouchListener);
+                rlyt_input.setOnTouchListener(mOnTouchListener);
                 btn_state.setVisibility(View.GONE);
                 mInfo.getFromInvestmentAmount(); //最低认购金额
                 mInfo.getContinueInvestmentLimit(); // 续投金额
@@ -462,6 +478,7 @@ public class RegularDetailActivity extends BaseActivity {
                 });
                 break;
             default:
+                tv_begin_countdown.setVisibility(View.GONE);
                 rlyt_input.setVisibility(View.GONE);
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
@@ -486,10 +503,10 @@ public class RegularDetailActivity extends BaseActivity {
         rlyt_buy_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
+                if (RegularBase.REGULAR_03 == prodId) {
+                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
+                } else if (RegularBase.REGULAR_05 == prodId) {
+                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
                 }
             }
         });
@@ -544,7 +561,6 @@ public class RegularDetailActivity extends BaseActivity {
             if (mBottom != bottom) { // 键盘弹起(出)
                 view_close_keyboard.setVisibility(View.VISIBLE);
                 rlyt_dialog.setVisibility(View.VISIBLE);
-//                Toast.makeText(v.getContext(), "键盘弹起(出)", Toast.LENGTH_SHORT).show();
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint("输入100整数倍");
                 } else {
@@ -553,7 +569,6 @@ public class RegularDetailActivity extends BaseActivity {
             } else if (oldBottom < bottom) {  // 键盘收起
                 view_close_keyboard.setVisibility(View.GONE);
                 rlyt_dialog.setVisibility(View.GONE);
-//                Toast.makeText(v.getContext(), "键盘收起", Toast.LENGTH_SHORT).show();
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint("输入认购金额");
                 } else {
@@ -575,5 +590,47 @@ public class RegularDetailActivity extends BaseActivity {
         }
     }
 
+    private long maxTime;
+
+    private void setMaxTime(long time) {
+        maxTime = time;
+    }
+
+    private Handler mHandler = new Handler();
+
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (maxTime <= 0) {
+                // 倒计时结束(转让已结束)
+                subjectStatus = RegularBase.STATE_03;
+                updateProjectStatus();
+            }
+            tv_begin_countdown.setText(timeToString(maxTime));
+            maxTime -= 1000L;
+            mHandler.postDelayed(this, 1000L);
+        }
+    };
+
+    // 时间差转换为*天*时*分*秒
+    private StringBuilder timeToString(long between) {
+        long day = between / (24 * 60 * 60 * 1000);
+        long hour = (between - day * 24 * 60 * 60 * 1000) / (60 * 60 * 1000);
+        long minute = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000) / (60 * 1000);
+        long second = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - minute * 60 * 1000) / 1000;
+        return new StringBuilder("结束时间:").
+                append(0 == day ? "" : day).append(0 == day ? "" : "天").
+                append(0 == hour ? "" : hour).append(0 == hour ? "" : "时").
+                append(0 == minute ? "" : minute).append(0 == minute ? "" : "分").
+                append(0 == second ? "" : second).append(0 == second ? "" : "秒");
+    }
+
+    // 屏蔽触摸 点击事件
+    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return true;
+        }
+    };
 
 }

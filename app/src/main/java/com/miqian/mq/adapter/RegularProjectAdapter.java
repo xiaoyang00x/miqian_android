@@ -51,24 +51,25 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
         }
 
-        if (null != mData.getRegularData()) {
-            for (RegularProjectData regularProjectData : mData.getRegularData()) {
-                if (null != regularProjectData.getSubjectData() && regularProjectData.getSubjectData().size() > 0) {
+        if (null == mData.getRegularData() || mData.getRegularData().size() <= 0) {
+            return;
+        }
 
-                    RegularProjectHeader regularProjectHeader = new RegularProjectHeader();
-                    regularProjectHeader.setType(RegularBase.ITEM_TYPE_TITLE);
-                    regularProjectHeader.setName(regularProjectData.getName());
-                    regularProjectHeader.setTitle(regularProjectData.getTitle());
-                    regularProjectHeader.setJumpUrl(regularProjectData.getJumpUrl());
-                    mList.add(regularProjectHeader);
+        for (RegularProjectData regularProjectData : mData.getRegularData()) {
+            if (regularProjectData.getSubjectData() == null || regularProjectData.getSubjectData().size() <= 0) {
+                continue;
+            }
+            RegularProjectHeader regularProjectHeader = new RegularProjectHeader();
+            regularProjectHeader.setType(RegularBase.ITEM_TYPE_TITLE);
+            regularProjectHeader.setName(regularProjectData.getName());
+            regularProjectHeader.setTitle(regularProjectData.getTitle());
+            regularProjectHeader.setJumpUrl(regularProjectData.getJumpUrl());
+            regularProjectHeader.setIconUrl(regularProjectData.getIconUrl());
+            mList.add(regularProjectHeader);
 
-                    int size = regularProjectData.getSubjectData().size();
-                    for (int index = 0; index < size; index++) {
-                        RegularProjectInfo info = regularProjectData.getSubjectData().get(index);
-                        info.setType(RegularBase.ITEM_TYPE_LIST);
-                        mList.add(info);
-                    }
-                }
+            for (RegularProjectInfo info : regularProjectData.getSubjectData()) {
+                info.setType(RegularBase.ITEM_TYPE_LIST);
+                mList.add(info);
             }
         }
     }
@@ -86,8 +87,9 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 return new RegularTitleHolder(LayoutInflater.from(mContext).inflate(R.layout.item_regular_title, parent, false));
             case RegularBase.ITEM_TYPE_LIST:
                 return new RegularListHolder(LayoutInflater.from(mContext).inflate(R.layout.item_regular_content, parent, false));
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override
@@ -146,9 +148,9 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tv_profit_rate.setText(info.getYearInterest());
             tv_time_limit.setText(info.getLimit());
             tv_remain_amount.setText(
-                    new StringBuilder("剩余金额:￥").
+                    new StringBuilder("可认购金额:￥").
                             append(FormatUtil.formatAmount(info.getResidueAmt())).
-                            append("/").
+                            append("/￥").
                             append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
 
             if (info.getPresentationYesNo().equals("Y")) {
@@ -159,7 +161,6 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 tv_profit_rate_unit.setText("%");
             }
-
             btn_buy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -260,9 +261,9 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
             tv_time_limit.setText(info.getLimit());
             tv_remain_amount.setText(
-                    new StringBuilder("剩余金额:￥").
+                    new StringBuilder("可认购金额:￥").
                             append(FormatUtil.formatAmount(info.getResidueAmt())).
-                            append("/").
+                            append("/￥").
                             append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
             if (position + 1 == getItemCount()) {
                 divider.setVisibility(View.GONE);
