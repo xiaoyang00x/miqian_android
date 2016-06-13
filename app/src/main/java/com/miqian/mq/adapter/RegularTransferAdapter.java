@@ -127,23 +127,26 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             tv_profit_rate.setText(info.getPredictRate());
             tv_time_limit.setText(info.getLimit());
             tv_remain_amount.setText(
-                    new StringBuilder("剩余金额:￥").
+                    new StringBuilder("可认购本金:￥").
                             append(FormatUtil.formatAmount(info.getResidueAmt())));
 
-            if (info.getSubjectStatus().equals(RegularBase.STATE_02)) {
-                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                btn_state.setBackgroundResource(R.drawable.btn_has_done);
-                btn_state.setText("已满额");
-            } else {
-                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                btn_state.setBackgroundResource(R.drawable.btn_default_selector);
-                btn_state.setText("立即认购");
+            switch (info.getSubjectStatus()) {
+                case RegularBase.STATE_01:
+                    tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    btn_state.setBackgroundResource(R.drawable.btn_default_selector);
+                    btn_state.setText("立即认购");
+                    break;
+                default:
+                    tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    btn_state.setBackgroundResource(R.drawable.btn_has_done);
+                    btn_state.setText("已满额");
+                    break;
             }
             btn_state.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -153,17 +156,10 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
             });
 
-            if (position + 2 == getTotalCount()) {
-                divider.setVisibility(View.GONE);
-            } else {
-                divider.setVisibility(View.VISIBLE);
-            }
+            divider.setVisibility(
+                    position + 2 == getTotalCount() ? View.GONE : View.VISIBLE);
         }
 
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
     }
 
     private class ProgressViewHolder extends RecyclerView.ViewHolder {
@@ -176,11 +172,8 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         public void showOrHide() {
-            if (frameLoad.getVisibility() == View.VISIBLE && size() >= totalCount) {
-                frameLoad.setVisibility(View.GONE);
-            } else if (frameLoad.getVisibility() == View.GONE && size() < totalCount) {
-                frameLoad.setVisibility(View.VISIBLE);
-            }
+            frameLoad.setVisibility(
+                    size() >= totalCount ? View.GONE : View.VISIBLE);
         }
 
     }

@@ -182,9 +182,9 @@ public class RegularTransferView {
                 synchronized (mLock) {
                     inProcess = false;
                 }
-                Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
                 swipeRefresh.setRefreshing(false);
                 iCallback.onFail(error);
+                Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
             }
         }, nextPage);
     }

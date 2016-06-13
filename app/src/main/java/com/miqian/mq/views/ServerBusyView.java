@@ -78,9 +78,7 @@ public class ServerBusyView extends ScrollView {
 
     // 服务器繁忙页面 - 隐藏
     public void hide() {
-        if (View.VISIBLE == getVisibility()) {
-            setVisibility(View.GONE);
-        }
+        setVisibility(View.GONE);
     }
 
     public void setListener(IRequestAgainListener requestAgainListener) {

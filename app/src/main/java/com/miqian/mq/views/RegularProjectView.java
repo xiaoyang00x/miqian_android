@@ -31,7 +31,7 @@ public class RegularProjectView {
     private MySwipeRefresh swipeRefresh;
     private RecyclerView recyclerView;
 
-    private ServerBusyView serverBusyView; // 服务器繁忙/无网络连接页面
+    private ServerBusyView serverBusyView; // 服务器繁忙(无网络)页面
 
     public RegularProjectView(Context mContext) {
         this.mContext = mContext;
@@ -110,7 +110,6 @@ public class RegularProjectView {
                     inProcess = false;
                 }
                 swipeRefresh.setRefreshing(false);
-//                Uihelper.showToast(getActivity(), error);
                 if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
                     serverBusyView.showServerBusy();
                 } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {

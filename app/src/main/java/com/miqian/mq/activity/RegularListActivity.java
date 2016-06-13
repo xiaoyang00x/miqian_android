@@ -81,6 +81,7 @@ public class RegularListActivity extends BaseActivity {
                     inProcess = false;
                 }
                 end();
+                showContentView();
                 handleSuccessResult(result);
             }
 
@@ -90,6 +91,7 @@ public class RegularListActivity extends BaseActivity {
                     inProcess = false;
                 }
                 end();
+                showErrorView();
                 Uihelper.showToast(RegularListActivity.this, error);
             }
         });

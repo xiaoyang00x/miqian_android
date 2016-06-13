@@ -47,7 +47,7 @@ public class RegularProjectInfo extends RegularBase {
 
     private String residueTimestamp; // 剩余时间
 
-    private String endTimestamp; // 结束时间戳
+    private long endTimestamp; // 结束时间戳
 
     private BigDecimal subjectTotalPrice; // 标的总额
 
@@ -215,11 +215,11 @@ public class RegularProjectInfo extends RegularBase {
         this.residueTimestamp = residueTimestamp;
     }
 
-    public String getEndTimestamp() {
+    public long getEndTimestamp() {
         return endTimestamp;
     }
 
-    public void setEndTimestamp(String endTimestamp) {
+    public void setEndTimestamp(long endTimestamp) {
         this.endTimestamp = endTimestamp;
     }
 
