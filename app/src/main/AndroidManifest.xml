@@ -198,6 +198,7 @@
             android:name=".activity.RegularListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.setting.AboutUsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

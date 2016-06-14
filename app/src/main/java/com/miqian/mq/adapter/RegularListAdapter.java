@@ -35,15 +35,13 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        return new RegularListHolder(inflater.inflate(R.layout.item_regular_content, parent, false));
+        return new RegularListHolder(LayoutInflater.from(mContext).inflate(R.layout.item_regular_content, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RegularListHolder) {
-            RegularListHolder viewHolder = (RegularListHolder) holder;
-            viewHolder.bindData(position);
+            ((RegularListHolder) holder).bindData(position);
         }
     }
 
@@ -67,6 +65,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private TextView tv_begin_time; // 开始时间
         private TextView tv_remain_amount; // 剩余可购金额
         private Button btn_state; // 立即购买(已售罄)按钮
+        private View divider;
 
         public RegularListHolder(View itemView) {
             super(itemView);
@@ -82,10 +81,11 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tv_begin_time = (TextView) itemView.findViewById(R.id.tv_begin_time);
             tv_remain_amount = (TextView) itemView.findViewById(R.id.tv_remain_amount);
             btn_state = (Button) itemView.findViewById(R.id.btn_state);
+            divider = itemView.findViewById(R.id.divider);
         }
 
         public void bindData(final int position) {
-            final RegularBaseData info =  mList.get(position);
+            final RegularBaseData info = mList.get(position);
             tv_name.setText(info.getSubjectName());
             tv_profit_rate.setText(info.getYearInterest());
             tv_profit_rate_unit.setText("%");
@@ -97,11 +97,11 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
             tv_time_limit.setText(info.getLimit());
             tv_remain_amount.setText(
-                    new StringBuilder("剩余金额:￥").
+                    new StringBuilder("可认购金额:￥").
                             append(FormatUtil.formatAmount(info.getResidueAmt())).
-                            append("/").
+                            append("/￥").
                             append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
-
+            divider.setVisibility(position + 1 == getItemCount() ? View.GONE : View.VISIBLE);
             switch (info.getSubjectStatus()) {
                 case RegularBase.STATE_00:
                     tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));

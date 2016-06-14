@@ -497,9 +497,9 @@ public class RegularDetailActivity extends BaseActivity {
         TextView tv_info2 = (TextView) viewDetail.findViewById(R.id.tv_info2);
         TextView tv_info3 = (TextView) viewDetail.findViewById(R.id.tv_info3);
         RelativeLayout rlyt_buy_record = (RelativeLayout) viewDetail.findViewById(R.id.rlyt_buy_record);
-        tv_info1.setText(new StringBuilder("￥ ").append(FormatUtil.formatAmount(mInfo.getResidueAmt())));
-        tv_info2.setText(new StringBuilder("￥ ").append(FormatUtil.formatAmount(mInfo.getActualAmt())));
-        tv_info3.setText(new StringBuilder("￥ ").append(FormatUtil.formatAmount(mInfo.getPredictIncome())));
+        tv_info1.setText(FormatUtil.formatAmount(mInfo.getResidueAmt()));
+        tv_info2.setText(FormatUtil.formatAmount(mInfo.getActualAmt()));
+        tv_info3.setText(FormatUtil.formatAmount(mInfo.getPredictIncome()));
         rlyt_buy_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

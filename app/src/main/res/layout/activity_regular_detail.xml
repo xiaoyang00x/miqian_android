@@ -31,14 +31,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_regular_card">
+                android:background="@drawable/bg_regular_card"
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp"
                     android:maxLines="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/mq_font7_v2"
@@ -139,8 +138,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_profit_rate"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="30dp"
                     android:ellipsize="end"
                     android:maxLines="1"
@@ -170,7 +167,6 @@
                     android:layout_alignBottom="@+id/tv_remain_amount"
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@+id/tv_remain_amount"
-                    android:layout_marginRight="15dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/white"

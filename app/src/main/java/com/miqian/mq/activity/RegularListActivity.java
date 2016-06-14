@@ -37,9 +37,9 @@ public class RegularListActivity extends BaseActivity {
         getFitSubject();
     }
 
-    public static void startActivity(Context context, String subjectId) {
+    public static void startActivity(Context context, String promId) {
         Intent intent = new Intent(context, RegularListActivity.class);
-        intent.putExtra(Constants.PROMID, subjectId);
+        intent.putExtra(Constants.PROMID, promId);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -48,6 +48,7 @@ public class RegularListActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         promId = getIntent().getStringExtra(Constants.PROMID);
         super.onCreate(savedInstanceState);
+        showDefaultView();
     }
 
     @Override
@@ -107,8 +108,7 @@ public class RegularListActivity extends BaseActivity {
         }
         for (SubjectCategoryData data : mList) {
             ArrayList<RegularBaseData> tempList;
-            if ((tempList = data.getSubjectInfo()) == null ||
-                    data.getSubjectInfo().size() <= 0) {
+            if ((tempList = data.getSubjectInfo()) == null || tempList.size() <= 0) {
                 continue;
             }
             for (RegularBaseData info : tempList) {

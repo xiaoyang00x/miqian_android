@@ -89,6 +89,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="25dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="@dimen/mq_font4_v2"
         android:textStyle="bold" />
 
     <TextView

@@ -7,43 +7,53 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:background="@color/mq_b7_v2"
         android:gravity="center_vertical|left"
-        android:paddingLeft="15dp"
+        android:padding="15dp"
         android:text="标的信息"
         android:textColor="@color/mq_b4_v2"
         android:textSize="@dimen/mq_font7_v2" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="left"
             android:maxLines="1"
+            android:padding="15dp"
             android:text="可认购本金(元)"
             android:textColor="@color/mq_b2_v2"
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_info1"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="￥ "
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font7_v2" />
+
+        <TextView
             android:id="@+id/tv_info1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
             android:ellipsize="end"
-            android:gravity="center_vertical|right"
+            android:gravity="right"
             android:maxLines="1"
-            android:text=""
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
@@ -58,32 +68,42 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
             android:ellipsize="end"
-            android:gravity="center_vertical"
             android:maxLines="1"
+            android:padding="15dp"
             android:text="实际支付金额(元)"
             android:textColor="@color/mq_b2_v2"
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_info2"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="￥ "
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font7_v2" />
+
+        <TextView
             android:id="@+id/tv_info2"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
             android:ellipsize="end"
-            android:gravity="center_vertical|right"
+            android:gravity="right"
             android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
             android:text=""
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font7_v2"
@@ -99,33 +119,42 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
             android:ellipsize="end"
-            android:gravity="center_vertical"
             android:maxLines="1"
+            android:padding="15dp"
             android:text="利息收益(元)"
             android:textColor="@color/mq_b2_v2"
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_info3"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="￥ "
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font7_v2" />
+
+        <TextView
             android:id="@+id/tv_info3"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
             android:ellipsize="end"
-            android:gravity="center_vertical|right"
+            android:gravity="right"
             android:maxLines="1"
-            android:text=""
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
@@ -141,17 +170,16 @@
     <RelativeLayout
         android:id="@+id/rlyt_buy_record"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
             android:ellipsize="end"
-            android:gravity="center_vertical"
             android:maxLines="1"
+            android:padding="15dp"
             android:text="认购记录"
             android:textColor="@color/mq_b2_v2"
             android:textSize="@dimen/mq_font7_v2"
@@ -159,13 +187,14 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
             android:ellipsize="end"
-            android:gravity="center_vertical|right"
+            android:gravity="right"
             android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
             android:text=">"
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font7_v2"
@@ -175,10 +204,10 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:background="@color/mq_b7_v2"
         android:gravity="center_vertical|left"
-        android:paddingLeft="15dp"
+        android:padding="15dp"
         android:text="原标的"
         android:textColor="@color/mq_b4_v2"
         android:textSize="@dimen/mq_font7_v2" />

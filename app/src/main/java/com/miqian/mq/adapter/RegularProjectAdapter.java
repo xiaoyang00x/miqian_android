@@ -95,14 +95,11 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RegularCardHolder) {
-            RegularCardHolder viewHolder = (RegularCardHolder) holder;
-            viewHolder.bindData(position);
+            ((RegularCardHolder) holder).bindData(position);
         } else if (holder instanceof RegularTitleHolder) {
-            RegularTitleHolder viewHolder = (RegularTitleHolder) holder;
-            viewHolder.bindData(position);
+            ((RegularTitleHolder) holder).bindData(position);
         } else if (holder instanceof RegularListHolder) {
-            RegularListHolder viewHolder = (RegularListHolder) holder;
-            viewHolder.bindData(position);
+            ((RegularListHolder) holder).bindData(position);
         }
     }
 
