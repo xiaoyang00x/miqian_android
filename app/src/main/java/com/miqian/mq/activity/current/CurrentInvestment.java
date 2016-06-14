@@ -571,13 +571,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                         @Override
                         public void onSucceed(SubscribeOrderResult result) {
                             mWaitingDialog.dismiss();
-                            Intent intent = new Intent(CurrentInvestment.this, SubscribeResult.class);
                             SubscribeOrder subscribeOrder = result.getData();
                             if (result.getCode().equals("996633")) {
                                 Uihelper.showToast(mActivity, result.getMessage());
                             } else if (result.getCode().equals("999992")) {
                                 showPwdError4Dialog(result.getMessage());
                             } else {
+                                Intent intent = new Intent(CurrentInvestment.this, SubscribeResult.class);
                                 intent.putExtra("money", orderMoney.toString());
                                 intent.putExtra("payMoney", payMoney.toString());
                                 intent.putExtra("payModeState", payModeState);

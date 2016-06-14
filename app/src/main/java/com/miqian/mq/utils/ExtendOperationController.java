@@ -37,8 +37,8 @@ public class ExtendOperationController {
 		int BACK_REGULAR = 1003;
 		/** 返回我的 */
 		int BACK_USER = 1004;
-		/** 实名认证 */
-		int REAL_NAME = 1005;
+		/** 返回原始Tab */
+		int BACK_MAIN = 1005;
 
 		/** token改变 */
 		int CHANGE_TOKEN = 1006;
