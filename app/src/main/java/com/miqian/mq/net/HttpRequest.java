@@ -27,6 +27,7 @@ import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.RegisterResult;
+import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.entity.RegularTransferListResult;
@@ -812,13 +813,14 @@ public class HttpRequest {
      *
      * @param subjectId 标的编号，如传入则返回改标的相关信息
      */
-    public static void getRegularDetail(Context context, String subjectId, final ICallback<RegularDetailResult> callback) {
+    public static void getRegularDetail(Context context, String subjectId, int prodId, final ICallback<RegularDetailResult> callback) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("subjectId", subjectId));
         params.add(new Param("pageNo", "1"));
         params.add(new Param("pageSize", "50"));
-        new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
-
+        String url = prodId == RegularBase.REGULAR_03 || prodId == RegularBase.REGULAR_05 ?
+                Urls.REGULA_PROJECT : Urls.REGULA_PROJECT_TRANSFER;
+        new MyAsyncTask(context, url, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
                 RegularDetailResult meta = JsonUtil.parseObject(result, RegularDetailResult.class);

@@ -325,7 +325,7 @@
             android:layout_below="@+id/tv_dialog_min_amount_tip"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="100"
+            android:text=""
             android:textColor="@color/mq_b1_v2"
             android:textSize="@dimen/mq_font9_v2"
             android:textStyle="bold" />
@@ -358,7 +358,7 @@
             android:layout_below="@+id/tv_dialog_max_amount_tip"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="100"
+            android:text=""
             android:textColor="@color/mq_b1_v2"
             android:textSize="@dimen/mq_font9_v2"
             android:textStyle="bold" />
@@ -404,15 +404,15 @@
 
         <EditText
             android:id="@+id/et_input"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignBottom="@+id/bg_input"
             android:layout_alignLeft="@+id/bg_input"
+            android:layout_alignRight="@+id/bg_input"
             android:layout_alignTop="@+id/bg_input"
-            android:layout_toLeftOf="@+id/btn_buy"
             android:background="@null"
-            android:digits="0123456789."
-            android:inputType="number"
+            android:digits="0123456789"
+            android:inputType="phone"
             android:maxLines="1"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"

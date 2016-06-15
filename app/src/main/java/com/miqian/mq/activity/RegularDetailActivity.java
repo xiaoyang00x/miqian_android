@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +36,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
@@ -94,7 +99,6 @@ public class RegularDetailActivity extends BaseActivity {
 
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
-    private int mBottom; // 抛去状态栏的屏幕高度  也是底部输入栏view的bottom
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -106,18 +110,21 @@ public class RegularDetailActivity extends BaseActivity {
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         showDefaultView();
+        screenHeight = MobileOS.getScreenHeight(this);
     }
+
+    private int screenHeight;
 
     @Override
     protected void onResume() {
         super.onResume();
-        rlyt_input.addOnLayoutChangeListener(onLayoutChangeListener);
+        mContentView.addOnLayoutChangeListener(onLayoutChangeListener);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        rlyt_input.removeOnLayoutChangeListener(onLayoutChangeListener);
+        mContentView.removeOnLayoutChangeListener(onLayoutChangeListener);
     }
 
     public static void startActivity(Context context, String subjectId, int prodId) {
@@ -162,8 +169,6 @@ public class RegularDetailActivity extends BaseActivity {
         view_close_keyboard.setVisibility(View.GONE);
         view_close_keyboard.setOnClickListener(mOnclickListener);
         btn_buy.setOnClickListener(mOnclickListener);
-        et_input.setOnClickListener(mOnclickListener);
-        et_input.setOnFocusChangeListener(mOnFocusChangeListener);
         et_input.addTextChangedListener(mTextWatcher);
     }
 
@@ -202,7 +207,7 @@ public class RegularDetailActivity extends BaseActivity {
         BigDecimal downLimit = mInfo.getFromInvestmentAmount(); // 最低认购金额
         BigDecimal remainderLimit = mInfo.getContinueInvestmentLimit(); // 续投金额
         BigDecimal upLimit = mInfo.getSubjectMaxBuy(); // 最大可认购金额
-        BigDecimal leftLimit = mInfo.getResidueAmt();
+        BigDecimal leftLimit = mInfo.getResidueAmt(); // 剩余金额
 
         if (!TextUtils.isEmpty(input)) {
             upLimit = leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
@@ -215,9 +220,8 @@ public class RegularDetailActivity extends BaseActivity {
             } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
                 Toast.makeText(getBaseContext(), "提示：请输入" + remainderLimit + "的整数倍", Toast.LENGTH_SHORT).show();
             } else {
-                closeKeyboard();
                 String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
-                UserUtil.currenPay(mActivity, paymentAmount, String.valueOf(prodId), subjectId, interestRateString);
+                UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString, paymentAmount);
                 et_input.setText("");
             }
         } else {
@@ -237,7 +241,7 @@ public class RegularDetailActivity extends BaseActivity {
         synchronized (mLock) {
             inProcess = true;
         }
-        HttpRequest.getRegularDetail(mContext, subjectId, new ICallback<RegularDetailResult>() {
+        HttpRequest.getRegularDetail(mContext, subjectId, prodId, new ICallback<RegularDetailResult>() {
 
             @Override
             public void onSucceed(RegularDetailResult result) {
@@ -353,7 +357,7 @@ public class RegularDetailActivity extends BaseActivity {
         }
         if (RegularBase.REGULAR_04 == prodId || RegularBase.REGULAR_06 == prodId) {
             sb.append("次日计息");
-        } else if (mInfo.getSubjectMaxBuy() != null) {
+        } else if (mInfo.getSubjectMaxBuy() != null && !mInfo.getSubjectMaxBuy().equals(new BigDecimal("999999999999"))) {
             sb.append("限购");
             sb.append(mInfo.getSubjectMaxBuy());
             sb.append("元");
@@ -362,39 +366,34 @@ public class RegularDetailActivity extends BaseActivity {
         }
         tv_description.setText(sb);
 
-        // 标的年利率
-        tv_profit_rate.setText(mInfo.getYearInterest());
-
         // 标的是否有加息 (转让标的 无加息)
-        if ("Y".equals(mInfo.getPresentationYesNo())
-                && (RegularBase.REGULAR_04 == prodId ||
-                RegularBase.REGULAR_06 == prodId)) {
-            tv_profit_rate_unit.setText(
-                    new StringBuilder("+").
-                            append(mInfo.getPresentationYearInterest()).
-                            append("%"));
-            total_profit_rate = new BigDecimal(mInfo.getYearInterest()).
-                    add(new BigDecimal(mInfo.getPresentationYearInterest())).
-                    toString();
+        if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
+            // 标的年利率
+            tv_profit_rate.setText(mInfo.getYearInterest());
+            if ("Y".equals(mInfo.getPresentationYesNo())) {
+                tv_profit_rate_unit.setText(
+                        new StringBuilder("+").
+                                append(mInfo.getPresentationYearInterest()).
+                                append("%"));
+                total_profit_rate = new BigDecimal(mInfo.getYearInterest()).
+                        add(new BigDecimal(mInfo.getPresentationYearInterest())).
+                        toString();
+            } else {
+                total_profit_rate = mInfo.getYearInterest();
+                tv_profit_rate_unit.setText("%");
+            }
         } else {
+            // 标的年利率
+            tv_profit_rate.setText(mInfo.getPredictRate());
             tv_profit_rate_unit.setText("%");
-            total_profit_rate = mInfo.getYearInterest();
+            total_profit_rate = mInfo.getPredictRate();
         }
 
         // 标的项目期限
         tv_time_limit.setText(mInfo.getLimit());
 
         // 标的本金 剩余金额 购买人数等信息
-        if (RegularBase.REGULAR_04 == prodId || RegularBase.REGULAR_06 == prodId) { // 转让标的
-            tv_remain_amount.setText(
-                    new StringBuilder("可认购本金:￥").
-                            append(FormatUtil.formatAmount(mInfo.getResidueAmt())));
-            tv_info_right.setText(
-                    new StringBuilder("原标的年化收益: ").
-                            append(mInfo.getOriginalRate()).
-                            append("%"));
-            tv_people_amount.setVisibility(View.GONE);
-        } else { // 定期 原标的
+        if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
             tv_remain_amount.setText(
                     new StringBuilder("可认购金额:￥").
                             append(FormatUtil.formatAmount(mInfo.getResidueAmt())).
@@ -404,6 +403,15 @@ public class RegularDetailActivity extends BaseActivity {
             tv_people_amount.setVisibility(View.VISIBLE);
             tv_info_right.setText(" 人已购买");
             tv_info_right.setOnClickListener(mOnclickListener);
+        } else { // 转让
+            tv_remain_amount.setText(
+                    new StringBuilder("可认购本金:￥").
+                            append(FormatUtil.formatAmount(mInfo.getResidueAmt())));
+            tv_info_right.setText(
+                    new StringBuilder("原标的年化收益: ").
+                            append(mInfo.getOriginalRate()).
+                            append("%"));
+            tv_people_amount.setVisibility(View.GONE);
         }
         updateProjectStatus();
     }
@@ -421,34 +429,29 @@ public class RegularDetailActivity extends BaseActivity {
                 btn_state.setText("待开标");
                 break;
             case RegularBase.STATE_01:
-                if (RegularBase.REGULAR_04 == prodId || RegularBase.REGULAR_06 == prodId) {
+                if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
+                    tv_begin_countdown.setVisibility(View.GONE);
+                } else {
                     tv_begin_countdown.setVisibility(View.VISIBLE);
                     setMaxTime(mInfo.getEndTimestamp() - System.currentTimeMillis());
                     mHandler.post(mRunnable);
-                } else {
-                    tv_begin_countdown.setVisibility(View.GONE);
                 }
                 rlyt_dialog.setOnTouchListener(mOnTouchListener);
                 rlyt_input.setOnTouchListener(mOnTouchListener);
                 btn_state.setVisibility(View.GONE);
-                mInfo.getFromInvestmentAmount(); //最低认购金额
-                mInfo.getContinueInvestmentLimit(); // 续投金额
-                mInfo.getSubjectMaxBuy(); // 最大可认购金额
                 tv_dialog_min_amount.setText(FormatUtil.formatAmount(mInfo.getFromInvestmentAmount()));
+                tv_dialog_min_amount.setOnClickListener(mOnclickListener);
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint("输入认购金额");
                     tv_dialog_max_amount_tip.setText("最大可认购金额");
-                    tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getSubjectTotalPrice()));
+                    tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getResidueAmt()));
+                    tv_dialog_max_amount.setOnClickListener(mOnclickListener);
                 } else {
                     et_input.setHint("输入认购本金");
                     tv_dialog_max_amount_tip.setText("实际支付金额");
                 }
-                rlyt_input.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mBottom = rlyt_input.getBottom();
-                    }
-                });
+                // 限制输入长度
+                et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
@@ -520,17 +523,19 @@ public class RegularDetailActivity extends BaseActivity {
     private View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
         @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-            if (oldBottom == 0 || !subjectStatus.equals(RegularBase.STATE_01)) {
+            if (!subjectStatus.equals(RegularBase.STATE_01)) {
                 return;
             }
-            if (mBottom != bottom) { // 键盘弹起(出)
+            if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > screenHeight / 3)) {
+//                Toast.makeText(getBaseContext(), "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
                 showKeyBoardView();
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
-                    et_input.setHint("输入100整数倍");
+                    et_input.setHint(new StringBuilder("输入").append(mInfo.getContinueInvestmentLimit()).append("整数倍"));
                 } else {
                     et_input.setHint("输入认购本金");
                 }
-            } else if (oldBottom < bottom) {  // 键盘收起
+            } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > screenHeight / 3)) {
+//                Toast.makeText(getBaseContext(), "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
                 hideKeyBoardView();
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint("输入认购金额");
@@ -555,9 +560,6 @@ public class RegularDetailActivity extends BaseActivity {
                 case R.id.view_close_keyboard:
                     closeKeyboard();
                     break;
-                case R.id.et_input:
-                    showKeyBoardView();
-                    break;
                 case R.id.tv_seemore:
                 case R.id.tv_info_right:
                     if (RegularBase.REGULAR_03 == prodId) {
@@ -566,17 +568,16 @@ public class RegularDetailActivity extends BaseActivity {
                         WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
                     }
                     break;
+                case R.id.tv_dialog_max_amount:
+                    et_input.setText(mInfo.getResidueAmt().toString());
+                    Selection.setSelection(et_input.getText(), et_input.getText().toString().length());
+                    break;
+                case R.id.tv_dialog_min_amount:
+                    et_input.setText(mInfo.getFromInvestmentAmount().toString());
+                    Selection.setSelection(et_input.getText(), et_input.getText().toString().length());
+                    break;
                 default:
                     break;
-            }
-        }
-    };
-
-    private View.OnFocusChangeListener mOnFocusChangeListener = new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (hasFocus) {
-                showKeyBoardView();
             }
         }
     };
@@ -633,9 +634,11 @@ public class RegularDetailActivity extends BaseActivity {
             if (null == mInfo.getDiscountRate()) {
                 tv_dialog_max_amount.setText("--");
             } else {
-                paymentAmount = new BigDecimal(input).multiply(
-                        new BigDecimal(1).subtract(mInfo.getDiscountRate())).toString();
-                tv_dialog_max_amount.setText(paymentAmount);
+                paymentAmount = FormatUtil.getMoneyString(
+                        new BigDecimal(input).multiply(
+                                new BigDecimal(1).subtract(
+                                        mInfo.getDiscountRate())).toString());
+                tv_dialog_max_amount.setText(FormatUtil.formatAmountStr(paymentAmount));
             }
         } catch (Exception e) {
             tv_dialog_max_amount.setText("--");
