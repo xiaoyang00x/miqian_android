@@ -265,11 +265,11 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //                }
 //                break;
             case R.id.btn_click:
-                Intent intent = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("userRegularDetail", userRegularDetail);
-                intent.putExtras(bundle);
-                startActivity(intent);
+//                Intent intent = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("userRegularDetail", userRegularDetail);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
                 break;
         }
     }
