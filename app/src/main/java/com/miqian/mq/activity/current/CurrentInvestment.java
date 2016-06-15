@@ -77,7 +77,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private RelativeLayout framePayChoose;
     private TextView textPayType;
     private TextView textPayTip;
-    //    private TextView textPayMoney;
+    private TextView textPayMoney;
+    private TextView factMoney;
     private TextView textErrorLian;
     private ImageView imageType;
 
@@ -95,6 +96,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private String promoteType = "";
 
     private String money;
+    private String realMoney;
     private String prodId; //0:充值产品 1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
     private String subjectId; //标的id，活期默认为0
     private String interestRateString; //年化收益和期限
@@ -124,7 +126,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     public static final String PRODID_CURRENT = "1";
     public static final String PRODID_REGULAR = "3";
+    public static final String PRODID_REGULAR_TRANSFER = "4";
     public static final String PRODID_REGULAR_PLAN = "5";
+    public static final String PRODID_REGULAR_PLAN_TRANSFER = "6";
 
     public static final String SUBJECTID_CURRENT = "0";
 
@@ -137,7 +141,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         money = intent.getStringExtra("money");
         orderMoney = new BigDecimal(money);
+        realMoney = intent.getStringExtra("realMoney");
         prodId = intent.getStringExtra("prodId");
+        if (!TextUtils.isEmpty(realMoney) && (prodId.equals(PRODID_REGULAR_TRANSFER) || prodId.equals(PRODID_REGULAR_PLAN_TRANSFER))) {
+            orderMoney = new BigDecimal(realMoney);
+        }
         subjectId = intent.getStringExtra("subjectId");
         interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
@@ -195,6 +203,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     private void refreshView() {
+        expectMoney.setText(producedOrder.getPredictIncome());
+        factMoney.setText(realMoney);
         initPayMode();
         refreshPromoteView();
         refreshPayView();
@@ -204,7 +214,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
      * 红包列显示
      */
     private void refreshPromoteView() {
-        expectMoney.setText(producedOrder.getPredictIncome());
         if (promList != null && promList.size() > 0) {
             if (promoteMoney.compareTo(bFlag) > 0) {
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
@@ -239,7 +248,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             textLian.setText("" + payMoney);
         } else {
             showLianView(false);
-//            textPayMoney.setText("" + payMoney);
+            textPayMoney.setText("" + payMoney);
             if (payModeState == PAY_MODE_BALANCE) {
                 textPayType.setText("账户余额");
                 textPayTip.setText("可用" + producedOrder.getBalance() + "元");
@@ -303,14 +312,16 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
         frameSpace = findViewById(R.id.frame_space);
         frameLianPay = (RelativeLayout) findViewById(R.id.frame_lian_pay);
+        frameFact = (RelativeLayout) findViewById(R.id.frame_fact);
+        factMoney = (TextView) findViewById(R.id.fact_money);
         frameExpect = (RelativeLayout) findViewById(R.id.frame_expect);
         textLian = (TextView) findViewById(R.id.text_lian);
         framePayChoose = (RelativeLayout) findViewById(R.id.frame_pay_choose);
         framePayChoose.setOnClickListener(this);
         textPayType = (TextView) findViewById(R.id.text_pay_type);
+        textPayMoney = (TextView) findViewById(R.id.text_pay_money);
         textPayTip = (TextView) findViewById(R.id.text_pay_tip);
         imageType = (ImageView) findViewById(R.id.image_type);
-//        textPayMoney = (TextView) findViewById(R.id.text_pay_money);
 
         textProjectType = (TextView) findViewById(R.id.text_project_type);
         textInterestRate = (TextView) findViewById(R.id.text_interest_rate);
@@ -327,14 +338,23 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textInterestRate.setText("年化收益：" + interestRateString);
             }
         } else if (PRODID_REGULAR.equals(prodId)) {
-            textProjectType.setText("定期赚");
-            textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            textProjectType.setText("定期项目");
             textInterestRate.setText("年化收益：" + interestRateString);
         } else if (PRODID_REGULAR_PLAN.equals(prodId)) {
             textProjectType.setText("定期计划");
-            textInterestRate.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             textInterestRate.setText("年化收益：" + interestRateString);
+        } else if (PRODID_REGULAR_TRANSFER.equals(prodId)) {
+            frameRedPackage.setVisibility(View.GONE);
+            textProjectType.setText("定期项目转让");
+            textInterestRate.setText("预期年化：" + interestRateString);
+            frameFact.setVisibility(View.VISIBLE);
+        } else if (PRODID_REGULAR_PLAN_TRANSFER.equals(prodId)) {
+            frameRedPackage.setVisibility(View.GONE);
+            textProjectType.setText("定期计划转让");
+            textInterestRate.setText("预期年化：" + interestRateString);
+            frameFact.setVisibility(View.VISIBLE);
         }
+
 
         btPay = (Button) findViewById(R.id.bt_pay);
         btPay.setOnClickListener(this);
@@ -418,7 +438,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                if (!PRODID_CURRENT.equals(prodId) && promList != null && promList.size() > 0 && position < 0) {
+                if ((PRODID_REGULAR_PLAN.equals(prodId) || PRODID_REGULAR.equals(prodId)) && promList != null && promList.size() > 0 && position < 0) {
                     showPackageTips();
                 } else {
                     clickToPayOrder();
@@ -578,7 +598,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                 showPwdError4Dialog(result.getMessage());
                             } else {
                                 Intent intent = new Intent(CurrentInvestment.this, SubscribeResult.class);
-                                intent.putExtra("money", orderMoney.toString());
+                                intent.putExtra("money", money);
                                 intent.putExtra("payMoney", payMoney.toString());
                                 intent.putExtra("payModeState", payModeState);
                                 intent.putExtra("promoteMoney", promoteMoney.toString());
@@ -646,7 +666,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 if (result.getCode().equals("996633")) {
                     Uihelper.showToast(mActivity, result.getMessage());
                 } else {
-                    intent.putExtra("money", orderMoney.toString());
+                    intent.putExtra("money", money);
                     intent.putExtra("payMoney", payMoney.toString());
                     intent.putExtra("payModeState", payModeState);
                     intent.putExtra("promoteMoney", promoteMoney.toString());

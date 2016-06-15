@@ -298,7 +298,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
-                            android:layout_toLeftOf="@+id/image_arrow"
+                            android:layout_toLeftOf="@+id/text_pay_money"
                             android:layout_toRightOf="@+id/image_type"
                             android:orientation="vertical">
 
@@ -318,6 +318,21 @@
                                 android:textColor="@color/mq_b3_v2"
                                 android:textSize="@dimen/mq_font3_v2" />
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/text_pay_money_unit"
+                            style="@style/f7_B4_V2"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dp"
+                            android:text="元" />
+
+                        <TextView
+                            android:id="@+id/text_pay_money"
+                            style="@style/f9_R1_V2"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/text_pay_money_unit"
+                            android:text="--.--" />
 
                         <ImageView
                             android:id="@+id/image_arrow"
