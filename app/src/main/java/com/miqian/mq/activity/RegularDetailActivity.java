@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularEarnDetail;
@@ -74,7 +75,8 @@ public class RegularDetailActivity extends BaseActivity {
     private RelativeLayout rlyt_input; // 底部状态:立即认购输入框
     private RelativeLayout rlyt_dialog;
     private TextView tv_dialog_min_amount; // 起投金额
-    private TextView tv_dialog_max_amount; // 最大可认购金额
+    private TextView tv_dialog_max_amount_tip; // 最大可认购金额/实际支付金额 文案
+    private TextView tv_dialog_max_amount; // 最大可认购金额/实际支付金额
     private Button btn_state; // 底部状态:标的状态:已满额 待开标
     private InputMethodManager imm;
     /*  底部输入框相关   */
@@ -86,6 +88,9 @@ public class RegularDetailActivity extends BaseActivity {
     private String total_profit_rate; // 标的总年化利率:原始+赠送利率
 
     private RegularProjectInfo mInfo;
+
+    private String input; // 用户输入金额
+    private String paymentAmount; // 用户实际支付金额
 
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
@@ -101,6 +106,18 @@ public class RegularDetailActivity extends BaseActivity {
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         showDefaultView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        rlyt_input.addOnLayoutChangeListener(onLayoutChangeListener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        rlyt_input.removeOnLayoutChangeListener(onLayoutChangeListener);
     }
 
     public static void startActivity(Context context, String subjectId, int prodId) {
@@ -140,15 +157,14 @@ public class RegularDetailActivity extends BaseActivity {
         btn_buy = (Button) findViewById(R.id.btn_buy);
         tv_dialog_min_amount = (TextView) findViewById(R.id.tv_dialog_min_amount);
         tv_dialog_max_amount = (TextView) findViewById(R.id.tv_dialog_max_amount);
+        tv_dialog_max_amount_tip = (TextView) findViewById(R.id.tv_dialog_max_amount_tip);
 
         view_close_keyboard.setVisibility(View.GONE);
-        view_close_keyboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeKeyboard();
-            }
-        });
+        view_close_keyboard.setOnClickListener(mOnclickListener);
         btn_buy.setOnClickListener(mOnclickListener);
+        et_input.setOnClickListener(mOnclickListener);
+        et_input.setOnFocusChangeListener(mOnFocusChangeListener);
+        et_input.addTextChangedListener(mTextWatcher);
     }
 
     @Override
@@ -181,22 +197,33 @@ public class RegularDetailActivity extends BaseActivity {
         return null;
     }
 
-    private View.OnClickListener mOnclickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_buy:
-                    if (!UserUtil.hasLogin(RegularDetailActivity.this)) {
-                        UserUtil.showLoginDialog(RegularDetailActivity.this);
-                    } else {
-                        jumpToNextPageIfInputValid();
-                    }
-                    break;
-                default:
-                    break;
+    // 跳转到下个页面
+    private void jumpToNextPageIfInputValid() {
+        BigDecimal downLimit = mInfo.getFromInvestmentAmount(); // 最低认购金额
+        BigDecimal remainderLimit = mInfo.getContinueInvestmentLimit(); // 续投金额
+        BigDecimal upLimit = mInfo.getSubjectMaxBuy(); // 最大可认购金额
+        BigDecimal leftLimit = mInfo.getResidueAmt();
+
+        if (!TextUtils.isEmpty(input)) {
+            upLimit = leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
+            BigDecimal money = new BigDecimal(input);
+            BigDecimal remainder = money.remainder(remainderLimit);
+            if (money.compareTo(downLimit) == -1) {
+                Toast.makeText(getBaseContext(), "提示：" + downLimit + "元起投", Toast.LENGTH_SHORT).show();
+            } else if (money.compareTo(upLimit) == 1) {
+                Toast.makeText(getBaseContext(), "提示：请输入小于等于" + upLimit + "元", Toast.LENGTH_SHORT).show();
+            } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
+                Toast.makeText(getBaseContext(), "提示：请输入" + remainderLimit + "的整数倍", Toast.LENGTH_SHORT).show();
+            } else {
+                closeKeyboard();
+                String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
+                UserUtil.currenPay(mActivity, paymentAmount, String.valueOf(prodId), subjectId, interestRateString);
+                et_input.setText("");
             }
+        } else {
+            Toast.makeText(getBaseContext(), "提示：请输入金额", Toast.LENGTH_SHORT).show();
         }
-    };
+    }
 
     private boolean inProcess = false;
     private final Object mLock = new Object();
@@ -239,33 +266,6 @@ public class RegularDetailActivity extends BaseActivity {
         });
     }
 
-    private void jumpToNextPageIfInputValid() {
-        final String input = et_input.getText().toString();
-        BigDecimal downLimit = mInfo.getFromInvestmentAmount(); // 最低认购金额
-        BigDecimal remainderLimit = mInfo.getContinueInvestmentLimit(); // 续投金额
-        BigDecimal upLimit = mInfo.getSubjectMaxBuy(); // 最大可认购金额
-        BigDecimal leftLimit = mInfo.getResidueAmt();
-
-        if (!TextUtils.isEmpty(input)) {
-            upLimit = leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
-            BigDecimal money = new BigDecimal(input);
-            BigDecimal remainder = money.remainder(remainderLimit);
-            if (money.compareTo(downLimit) == -1) {
-                Toast.makeText(getBaseContext(), "提示：" + downLimit + "元起投", Toast.LENGTH_SHORT).show();
-            } else if (money.compareTo(upLimit) == 1) {
-                Toast.makeText(getBaseContext(), "提示：请输入小于等于" + upLimit + "元", Toast.LENGTH_SHORT).show();
-            } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
-                Toast.makeText(getBaseContext(), "提示：请输入" + remainderLimit + "的整数倍", Toast.LENGTH_SHORT).show();
-            } else {
-                et_input.setText("");
-                String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
-                UserUtil.currenPay(mActivity, input, CurrentInvestment.PRODID_REGULAR, subjectId, interestRateString);
-            }
-        } else {
-            Toast.makeText(getBaseContext(), "提示：请输入金额", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void updateUI() {
         updateRegularCom();
         switch (prodId) {
@@ -306,16 +306,7 @@ public class RegularDetailActivity extends BaseActivity {
             ((TextView) mView.findViewById(R.id.tv_right)).setText(detail.getName());
             content.addView(mView);
         }
-        tv_seemore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (RegularBase.REGULAR_03 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
-                } else if (RegularBase.REGULAR_05 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
-                }
-            }
-        });
+        tv_seemore.setOnClickListener(mOnclickListener);
     }
 
     // 更新 定期计划详情 中间部分 标的信息
@@ -339,16 +330,7 @@ public class RegularDetailActivity extends BaseActivity {
             ((TextView) mView.findViewById(R.id.tv_content)).setText(projectMatch.getName());
             content.addView(mView);
         }
-        tv_seemore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (RegularBase.REGULAR_03 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
-                } else if (RegularBase.REGULAR_05 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
-                }
-            }
-        });
+        tv_seemore.setOnClickListener(mOnclickListener);
     }
 
     // 更新 定期项目 定期计划 公共部分 头部 (标的信息)
@@ -421,16 +403,7 @@ public class RegularDetailActivity extends BaseActivity {
             tv_people_amount.setText(FormatUtil.formatAmountStr(mInfo.getPersonTime()));
             tv_people_amount.setVisibility(View.VISIBLE);
             tv_info_right.setText(" 人已购买");
-            tv_info_right.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (RegularBase.REGULAR_03 == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
-                    } else if (RegularBase.REGULAR_05 == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
-                    }
-                }
-            });
+            tv_info_right.setOnClickListener(mOnclickListener);
         }
         updateProjectStatus();
     }
@@ -443,7 +416,6 @@ public class RegularDetailActivity extends BaseActivity {
                 tv_begin_countdown.setText(
                         new StringBuilder(Uihelper.timeToDateRegular(mInfo.getStartTimestamp())).
                                 append("发售"));
-                rlyt_input.setVisibility(View.GONE);
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
                 btn_state.setText("待开标");
@@ -456,7 +428,6 @@ public class RegularDetailActivity extends BaseActivity {
                 } else {
                     tv_begin_countdown.setVisibility(View.GONE);
                 }
-                rlyt_input.setVisibility(View.VISIBLE);
                 rlyt_dialog.setOnTouchListener(mOnTouchListener);
                 rlyt_input.setOnTouchListener(mOnTouchListener);
                 btn_state.setVisibility(View.GONE);
@@ -464,11 +435,13 @@ public class RegularDetailActivity extends BaseActivity {
                 mInfo.getContinueInvestmentLimit(); // 续投金额
                 mInfo.getSubjectMaxBuy(); // 最大可认购金额
                 tv_dialog_min_amount.setText(FormatUtil.formatAmount(mInfo.getFromInvestmentAmount()));
-                tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getSubjectMaxBuy()));
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint("输入认购金额");
+                    tv_dialog_max_amount_tip.setText("最大可认购金额");
+                    tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getSubjectTotalPrice()));
                 } else {
                     et_input.setHint("输入认购本金");
+                    tv_dialog_max_amount_tip.setText("实际支付金额");
                 }
                 rlyt_input.post(new Runnable() {
                     @Override
@@ -479,7 +452,6 @@ public class RegularDetailActivity extends BaseActivity {
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
-                rlyt_input.setVisibility(View.GONE);
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
                 btn_state.setText("已满额");
@@ -489,7 +461,6 @@ public class RegularDetailActivity extends BaseActivity {
 
     // 更新 定期项目转让/定期计划转让 view
     private void updateRegularTransferDetail() {
-
         viewstub_detail.setLayoutResource(R.layout.regular_transfer_detail);
         View viewDetail = viewstub_detail.inflate();
         LinearLayout content = (LinearLayout) viewDetail.findViewById(R.id.llyt_content);
@@ -546,12 +517,6 @@ public class RegularDetailActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        rlyt_input.addOnLayoutChangeListener(onLayoutChangeListener);
-    }
-
     private View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
         @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -559,16 +524,14 @@ public class RegularDetailActivity extends BaseActivity {
                 return;
             }
             if (mBottom != bottom) { // 键盘弹起(出)
-                view_close_keyboard.setVisibility(View.VISIBLE);
-                rlyt_dialog.setVisibility(View.VISIBLE);
+                showKeyBoardView();
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint("输入100整数倍");
                 } else {
                     et_input.setHint("输入认购本金");
                 }
             } else if (oldBottom < bottom) {  // 键盘收起
-                view_close_keyboard.setVisibility(View.GONE);
-                rlyt_dialog.setVisibility(View.GONE);
+                hideKeyBoardView();
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint("输入认购金额");
                 } else {
@@ -578,15 +541,104 @@ public class RegularDetailActivity extends BaseActivity {
         }
     };
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        rlyt_input.removeOnLayoutChangeListener(onLayoutChangeListener);
+    private View.OnClickListener mOnclickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_buy:
+                    if (!UserUtil.hasLogin(RegularDetailActivity.this)) {
+                        UserUtil.showLoginDialog(RegularDetailActivity.this);
+                    } else {
+                        jumpToNextPageIfInputValid();
+                    }
+                    break;
+                case R.id.view_close_keyboard:
+                    closeKeyboard();
+                    break;
+                case R.id.et_input:
+                    showKeyBoardView();
+                    break;
+                case R.id.tv_seemore:
+                case R.id.tv_info_right:
+                    if (RegularBase.REGULAR_03 == prodId) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
+                    } else if (RegularBase.REGULAR_05 == prodId) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    private View.OnFocusChangeListener mOnFocusChangeListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (hasFocus) {
+                showKeyBoardView();
+            }
+        }
+    };
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            calculatePaymentAmountAndShow();
+        }
+    };
+
+    // 屏蔽触摸 点击事件
+    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return true;
+        }
+    };
+
+    // 弹出输入法键盘后额外view
+    private void showKeyBoardView() {
+        view_close_keyboard.setVisibility(View.VISIBLE);
+        rlyt_dialog.setVisibility(View.VISIBLE);
+        calculatePaymentAmountAndShow();
+    }
+
+    // 隐藏输入法后键盘额外view
+    private void hideKeyBoardView() {
+        view_close_keyboard.setVisibility(View.GONE);
+        rlyt_dialog.setVisibility(View.GONE);
     }
 
     private void closeKeyboard() {
         if (null != imm) {
             imm.hideSoftInputFromWindow(et_input.getWindowToken(), 0);
+        }
+    }
+
+    // 计算实际支付金额
+    private void calculatePaymentAmountAndShow() {
+        paymentAmount = input = et_input.getText().toString().trim();
+        if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
+            return;
+        }
+        try {
+            if (null == mInfo.getDiscountRate()) {
+                tv_dialog_max_amount.setText("--");
+            } else {
+                paymentAmount = new BigDecimal(input).multiply(
+                        new BigDecimal(1).subtract(mInfo.getDiscountRate())).toString();
+                tv_dialog_max_amount.setText(paymentAmount);
+            }
+        } catch (Exception e) {
+            tv_dialog_max_amount.setText("--");
         }
     }
 
@@ -624,13 +676,5 @@ public class RegularDetailActivity extends BaseActivity {
                 append(0 == minute ? "" : minute).append(0 == minute ? "" : "分").
                 append(0 == second ? "" : second).append(0 == second ? "" : "秒");
     }
-
-    // 屏蔽触摸 点击事件
-    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            return true;
-        }
-    };
 
 }

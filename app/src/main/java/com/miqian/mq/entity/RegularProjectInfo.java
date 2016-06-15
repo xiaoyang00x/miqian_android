@@ -55,7 +55,7 @@ public class RegularProjectInfo extends RegularBase {
 
     private BigDecimal residueAmt; // 剩余额度
 
-    private String discountRate; // 折让信息
+    private BigDecimal discountRate; // 折让信息
 
     private BigDecimal actualAmt; // 全额认购实际支付金额
 
@@ -247,11 +247,11 @@ public class RegularProjectInfo extends RegularBase {
         this.residueAmt = residueAmt;
     }
 
-    public String getDiscountRate() {
+    public BigDecimal getDiscountRate() {
         return discountRate;
     }
 
-    public void setDiscountRate(String discountRate) {
+    public void setDiscountRate(BigDecimal discountRate) {
         this.discountRate = discountRate;
     }
 
