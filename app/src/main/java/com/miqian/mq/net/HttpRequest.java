@@ -21,6 +21,7 @@ import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.OperationResult;
 import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.PushDataResult;
@@ -1378,6 +1379,37 @@ public class HttpRequest {
 
             @Override
             public void onFail(String error) {
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     *
+     *
+     *
+     */
+    public static void findInvestInfo(Context context, String investId, final ICallback<OperationResult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        params.add(new Param("investId", investId));
+        new MyAsyncTask(context, Urls.findInvestInfo, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                OperationResult meta = JsonUtil.parseObject(result, OperationResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
             }
         }).executeOnExecutor();
     }

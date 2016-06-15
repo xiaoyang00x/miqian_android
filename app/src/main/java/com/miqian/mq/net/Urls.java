@@ -170,6 +170,8 @@ public class Urls {
     public final static String withdrawPreprocess = base_server + "assetService/withdrawPreprocess";
     //版本更新
     public final static String forceUpdate = base_server + "commonService/v2/forceUpdate";
+    //查询标的相关记录
+    public final static String findInvestInfo = base_server + "userRegService/v2/findInvestInfo";
 
     /**
      * 网页的URL
