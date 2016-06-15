@@ -136,7 +136,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
         frameProjectMatch.setOnClickListener(this);
         btnClick.setOnClickListener(this);
-
+        findViewById(R.id.tv_referrecord).setOnClickListener(this);
 
     }
 
@@ -271,6 +271,13 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //                intent.putExtras(bundle);
 //                startActivity(intent);
                 break;
+            case R.id.tv_referrecord:  //查看标的操作记录详情
+
+                Intent intent = new Intent(this, OperationRecordAcitivity.class);
+                intent.putExtra("investId", investId);
+                startActivity(intent);
+                break;
+
         }
     }
 
