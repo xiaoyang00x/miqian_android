@@ -10,6 +10,10 @@ import android.view.animation.Interpolator;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.miqian.mq.entity.MessageInfo;
+
+import java.util.List;
+
 
 public class SwipeMenuListView extends ListView {
 
@@ -31,6 +35,8 @@ public class SwipeMenuListView extends ListView {
 	private Interpolator mOpenInterpolator;
 	private OpenOrCloseListener onOpenOrCloseListener;
 	private boolean isFristOpen;
+	private List<MessageInfo> mList;
+
 	public SwipeMenuListView(Context context) {
 		super(context);
 		init();
@@ -51,16 +57,18 @@ public class SwipeMenuListView extends ListView {
 		MAX_Y = dp2px(MAX_Y);
 		mTouchState = TOUCH_STATE_NONE;
 	}
-
+     public void setdataList(List<MessageInfo> list){
+		  this.mList=list;
+	 }
 	@Override
 	public void setAdapter(ListAdapter adapter) {
-		super.setAdapter(new SwipeMenuAdapter(getContext(), adapter) {
-			@Override
-			public void createMenu(SwipeMenu menu) {
-				if (mMenuCreator != null) {
-					mMenuCreator.create(menu);
-				}
-			}
+		super.setAdapter(new SwipeMenuAdapter(getContext(), adapter,mList) {
+//			@Override
+//			public void createMenu(SwipeMenu menu,int type) {
+////				if (mMenuCreator != null) {
+////					mMenuCreator.create(menu,type);
+////				}
+//			}
 
 			@Override
 			public void onItemClick(SwipeMenuView view, SwipeMenu menu,
@@ -164,8 +172,9 @@ public class SwipeMenuListView extends ListView {
 				getContext().getResources().getDisplayMetrics());
 	}
 
-	public void setMenuCreator(SwipeMenuCreator menuCreator) {
+	public void setMenuCreator(SwipeMenuCreator menuCreator, List<MessageInfo> list) {
 		this.mMenuCreator = menuCreator;
+		this.mList=list;
 	}
 
 	public void setOnMenuItemClickListener(

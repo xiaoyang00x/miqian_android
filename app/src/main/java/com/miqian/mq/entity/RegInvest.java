@@ -15,6 +15,7 @@ public class RegInvest {
     private String dueDt;//计息到期日期
     private String crtDt;//创建日期
     private String realInterest;//实际利率
+    private String presentInterest;//赠送收益
     private String prnTransSa;//投资可转让金额
     private String transSta;//转让状态  WZ:未转让 ZR:转让中
     private String transing;//转让中金额
@@ -26,7 +27,24 @@ public class RegInvest {
     private String bearingStatus;//结息状态 Y:已结息 N：未结息
     private String regAmt;//待收本金
     private String regIncome;//待收收益
+    private String prnIncome;//已收收益
     private String prnAmt;//总投资本金
+
+    public String getPrnIncome() {
+        return prnIncome;
+    }
+
+    public void setPrnIncome(String prnIncome) {
+        this.prnIncome = prnIncome;
+    }
+
+    public String getPresentInterest() {
+        return presentInterest;
+    }
+
+    public void setPresentInterest(String presentInterest) {
+        this.presentInterest = presentInterest;
+    }
 
     public String getId() {
         return id;

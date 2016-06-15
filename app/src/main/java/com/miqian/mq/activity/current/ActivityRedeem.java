@@ -3,10 +3,12 @@ package com.miqian.mq.activity.current;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -15,6 +17,7 @@ import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
+import com.miqian.mq.entity.UserCurrent;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
@@ -25,10 +28,12 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTradePassword;
+import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * 赎回
@@ -36,28 +41,59 @@ import java.math.BigDecimal;
  */
 public class ActivityRedeem extends BaseActivity {
     private EditText editMoney;
-    private String capital;
     private UserInfo userInfo;
     private DialogTradePassword dialogTradePassword_input;
     private String money;
     private Button btnRollout;
     private CustomDialog dialogTips;
+    private TextViewEx tvTip;
+    private TextViewEx tvExtra;
+    private UserCurrent userCurrent;
+    private BigDecimal resideMoney;//可赎回金额
+
+    @Override
+    public void onCreate(Bundle arg0) {
+        userCurrent = (UserCurrent) getIntent().getExtras().getSerializable("userCurrent");
+        super.onCreate(arg0);
+    }
 
     @Override
     public void obtainData() {
+        if (userCurrent != null) {
+            BigDecimal balance = userCurrent.getBalance();//活期余额
+            BigDecimal curDayResidue = userCurrent.getCurDayResidue();//当日剩余可赎回额度
+            if (curDayResidue.compareTo(balance) > 0) {
+                resideMoney = balance;
+            } else {
+                resideMoney = curDayResidue;
+            }
+           editMoney.setHint("可赎回"+resideMoney+"元");
+            btnRollout.setEnabled(true);
+            BigDecimal curMonthAmt = userCurrent.getCurMonthAmt();//本月已赎回的金额
+            BigDecimal lmtMonthAmt = userCurrent.getLmtMonthAmt();//本月限制赎回额度
+            BigDecimal curResidue = lmtMonthAmt.subtract(curMonthAmt);//剩余可赎回额度
+            DecimalFormat df = new java.text.DecimalFormat("#.00");
+            String textCurResidue = df.format(curResidue);
+            String textCurMonthAmt = df.format(curMonthAmt);
+            if (TextUtils.isEmpty(textCurResidue)) {
+                textCurResidue = "0";
+            }
+            if (TextUtils.isEmpty(textCurMonthAmt)) {
+                textCurMonthAmt = "0";
+            }
+            tvExtra.setText("您剩余可赎回额度" + textCurResidue + "元" + "(本月已经赎回" + textCurMonthAmt + "元)");
+            String tip = userCurrent.getWarmPrompt();//温馨提示
+            if (!TextUtils.isEmpty(tip)) {
+                String limitTips = tip.replace("|n", "\n");
+                tvTip.setText(limitTips, true);
+            }
+        }
         begin();
         HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
                 end();
                 userInfo = result.getData();
-                if (userInfo != null) {
-                    capital = userInfo.getCanRedeem();
-                    if (!TextUtils.isEmpty(capital)) {
-                        editMoney.setHint("可赎回" + capital + "元");
-                        btnRollout.setEnabled(true);
-                    }
-                }
             }
 
             @Override
@@ -70,9 +106,10 @@ public class ActivityRedeem extends BaseActivity {
 
     @Override
     public void initView() {
-
         editMoney = (EditText) findViewById(R.id.edit_money);
         btnRollout = (Button) findViewById(R.id.bt_redeem);
+        tvExtra = (TextViewEx) findViewById(R.id.tv_extra);
+        tvTip = (TextViewEx) findViewById(R.id.tv_tip);
         editMoney.addTextChangedListener(new MyTextWatcher() {
 
             @Override
@@ -88,7 +125,6 @@ public class ActivityRedeem extends BaseActivity {
                 }
             }
         });
-
     }
 
     @Override
@@ -115,14 +151,8 @@ public class ActivityRedeem extends BaseActivity {
         }
         money = editMoney.getText().toString();
         if (!TextUtils.isEmpty(money)) {
-
             BigDecimal moneyCurrent = new BigDecimal(money);
-
-            if (TextUtils.isEmpty(capital)) {
-                return;
-            }
-            BigDecimal moneyTotal = new BigDecimal(capital);
-            if (moneyCurrent.compareTo(moneyTotal) > 0) {
+            if (moneyCurrent.compareTo(resideMoney) > 0) {
                 Uihelper.showToast(mActivity, "超出可赎回的金额");
             } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
                 Uihelper.showToast(mActivity, "金额不能小于0.01");

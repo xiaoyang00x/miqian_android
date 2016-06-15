@@ -29,7 +29,27 @@
             </EditText>
         </LinearLayout>
 
+        <com.miqian.mq.views.TextViewEx
+          android:id="@+id/tv_extra"
+          android:layout_marginLeft="@dimen/margin_left_right"
+          android:layout_marginRight="@dimen/margin_left_right"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:textSize="@dimen/mq_font3_v2"
+          android:textColor="@color/mq_b4_v2"
+          android:text=""/>
 
+        <com.miqian.mq.views.TextViewEx
+            android:id="@+id/tv_tip"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:textSize="@dimen/mq_font3_v2"
+            android:textColor="@color/mq_b4_v2"
+            android:text=""/>
 
         <RelativeLayout
             android:layout_width="match_parent"

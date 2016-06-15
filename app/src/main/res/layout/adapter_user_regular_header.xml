@@ -1,60 +1,193 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:background="@color/white"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:paddingBottom="35dp"
+        android:paddingTop="35dp">
 
-        <TextView
-            android:id="@+id/text_regular"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/liyout"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_left_right">
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/layout_transfer"-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="@dimen/margin_left_right"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="已转让(笔)"-->
+                        <!--android:textColor="@color/mq_b2_v2"-->
+                        <!--android:textSize="@dimen/mq_font3" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tv_transfered_num"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="233"-->
+                        <!--android:textColor="@color/mq_r1_v2"-->
+                        <!--android:textSize="@dimen/mq_font8_v2" />-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="@dimen/margin_left_right"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="转让中(笔)"-->
+                        <!--android:textColor="@color/mq_b2_v2"-->
+                        <!--android:textSize="@dimen/mq_font3" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tv_transfering_num"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="233"-->
+                        <!--android:textColor="@color/mq_r1_v2"-->
+                        <!--android:textSize="@dimen/mq_font8_v2" />-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+
+            <TextView
+                android:id="@+id/text_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:gravity="center"
+                android:text="定期投资(笔)"
+                android:textColor="@color/mq_b2_v2"
+                android:textSize="@dimen/mq_font3"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/text_regular_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/text_regular"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font8_v2"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_left_right"
-            android:text="定期投资："
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
+            android:layout_toRightOf="@+id/liyout"
+            android:background="@color/mq_b4_v2"></View>
 
-        <TextView
-            android:id="@+id/text_regular_count"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/text_regular"
-            android:text="2笔"
-            android:textColor="@color/mq_r1"
-            android:textSize="@dimen/mq_font6" />
+            android:layout_toRightOf="@+id/divider"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_left_right">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_capital_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="总代收本金(元)"
+                    android:textColor="@color/mq_b3_v2"
+                    android:textSize="@dimen/mq_font3_v2" />
+
+                <TextView
+                    android:id="@+id/text_capital"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="--.--"
+                    android:textColor="@color/mq_b3_v2"
+                    android:textSize="@dimen/mq_font8_v2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_earning_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="总代收收益(元)"
+                    android:textColor="@color/mq_b3_v2"
+                    android:textSize="@dimen/mq_font3_v2" />
+
+                <TextView
+                    android:id="@+id/text_earning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="--.--"
+                    android:textColor="@color/mq_b3_v2"
+                    android:textSize="@dimen/mq_font8_v2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/frame_capital"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/text_capital"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="待收本金："
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
-
-        <TextView
-            android:id="@+id/text_earning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:text="待收收益："
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
-    </RelativeLayout>
 </LinearLayout>

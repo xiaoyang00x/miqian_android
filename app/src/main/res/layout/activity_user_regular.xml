@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/frame_tab"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:checkedButton="@+id/bt_overdue"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/bt_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="true"
+                android:background="@drawable/tab_package_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="未结算"
+                android:textColor="@drawable/tab_package_textcolor"
+                android:textSize="@dimen/mq_font3" />
+
+            <RadioButton
+                android:id="@+id/bt_middle"
+                style="@style/WrapContent"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_package_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="已结算"
+                android:textColor="@drawable/tab_package_textcolor"
+                android:textSize="@dimen/mq_font3" />
+
+            <RadioButton
+                android:id="@+id/bt_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_package_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="转让"
+                android:textColor="@drawable/tab_package_textcolor"
+                android:textSize="@dimen/mq_font3" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <com.miqian.mq.views.MySwipeRefresh
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </com.miqian.mq.views.MySwipeRefresh>
+</LinearLayout>

@@ -195,9 +195,14 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 WebActivity.startActivity(mActivity, Urls.project_match + "0");
                 break;
             case R.id.bt_redeem:
-                MobclickAgent.onEvent(mActivity, "1038");
-                Intent intent = new Intent(mActivity, ActivityRedeem.class);
-                startActivity(intent);
+                if (userCurrent!=null){
+                    MobclickAgent.onEvent(mActivity, "1038");
+                    Intent intent = new Intent(mActivity, ActivityRedeem.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("userCurrent",userCurrent);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
                 break;
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");

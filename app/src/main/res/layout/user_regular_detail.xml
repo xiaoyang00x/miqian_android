@@ -57,7 +57,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:gravity="center"
-                            android:text="1000,000元"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/mq_font9_v2" />
 
@@ -90,7 +90,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:gravity="center"
-                            android:text="365天"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/mq_font9_v2" />
                     </LinearLayout>
@@ -114,16 +114,28 @@
                             android:text="年化收益"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mq_font3_v2" />
-
-                        <TextView
-                            android:id="@+id/text_interest_rate"
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal"
                             android:layout_marginTop="5dp"
-                            android:gravity="center"
-                            android:text="12%"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/mq_font9_v2" />
+                            >
+                            <TextView
+                                android:id="@+id/text_interest_rate"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/mq_font10_v2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                            <TextView
+                                android:id="@+id/text_interest_rate_present"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/mq_font3_v2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                        </LinearLayout>
                     </LinearLayout>
 
 
@@ -176,6 +188,7 @@
                     android:layout_height="@dimen/listitem_height">
 
                     <TextView
+                        android:id="@+id/text_project"
                         style="@style/f3_B1"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
@@ -207,10 +220,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/mq_b4_v2"
-                        android:textSize="@dimen/mq_font7_v2"
                         android:layout_marginLeft="@dimen/margin_left_right"
-                        android:text="还款方式" />
+                        android:text="还款方式"
+                        android:textColor="@color/mq_b4_v2"
+                        android:textSize="@dimen/mq_font7_v2" />
 
                     <TextView
                         android:id="@+id/text_repayment"
@@ -295,6 +308,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_record"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/arrow_detail"
@@ -305,28 +319,59 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="35dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            >
+                            <TextView
+                                android:id="@+id/tv_date_first"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="right"
+                                android:text="3333"
+                                android:textColor="@color/mq_r1_v2"
+                                android:textSize="@dimen/mq_font3_v2" />
+                            <TextView
+                                android:id="@+id/tv_time_first"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="right"
+                                android:text="1111"
+                                android:textColor="@color/mq_r1_v2"
+                                android:textSize="@dimen/mq_font2_v2" />
+                        </LinearLayout>
+                        <RelativeLayout
+                            android:layout_width="18dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp">
+
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:background="@color/mq_b5_v2"></View>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/process_red" />
+                        </RelativeLayout>
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:id="@+id/tv_content_first"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:gravity="right"
-                            android:text="3333"
-                            android:textColor="@color/mq_r1_v2"
-                            android:textSize="@dimen/mq_font3_v2" />
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:src="@drawable/process_red" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="55555"
@@ -334,145 +379,6 @@
                             android:textSize="@dimen/mq_font3_v2" />
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:gravity="right"
-                            android:text="3333"
-                            android:textColor="@color/mq_r1_v2"
-                            android:textSize="@dimen/mq_font3_v2" />
-
-                        <RelativeLayout
-                            android:layout_width="18dp"
-                            android:layout_height="25dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp">
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="match_parent"
-                                android:layout_centerHorizontal="true"
-                                android:background="@color/mq_b5_v2"></View>
-
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_alignParentBottom="true"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/process_grey" />
-                        </RelativeLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="55555"
-
-                            android:textColor="@color/mq_r1_v2"
-                            android:textSize="@dimen/mq_font3_v2" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:gravity="right"
-                            android:text="3333"
-                            android:textColor="@color/mq_r1_v2"
-                            android:textSize="@dimen/mq_font3_v2" />
-
-                        <RelativeLayout
-                            android:layout_width="18dp"
-                            android:layout_height="25dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp">
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="match_parent"
-                                android:layout_centerHorizontal="true"
-                                android:background="@color/mq_b5_v2"></View>
-
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_alignParentBottom="true"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/process_grey" />
-                        </RelativeLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="55555"
-
-                            android:textColor="@color/mq_r1_v2"
-                            android:textSize="@dimen/mq_font3_v2" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:gravity="right"
-                            android:text="3333"
-                            android:textColor="@color/mq_r1_v2"
-                            android:textSize="@dimen/mq_font3_v2" />
-
-                        <RelativeLayout
-                            android:layout_width="18dp"
-                            android:layout_height="25dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp">
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="match_parent"
-                                android:layout_centerHorizontal="true"
-                                android:background="@color/mq_b5_v2"></View>
-
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_alignParentBottom="true"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/process_grey" />
-                        </RelativeLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="55555"
-
-                            android:textColor="@color/mq_r1_v2"
-                            android:textSize="@dimen/mq_font3_v2" />
-
-                    </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -488,12 +394,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
-        <TextView
+
+        <Button
             android:id="@+id/btn_click"
             style="@style/click_btn_rec"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
             android:layout_marginTop="15dp"
-            android:text="还款详情" />
+            android:text="状态" />
     </LinearLayout>
 </RelativeLayout>

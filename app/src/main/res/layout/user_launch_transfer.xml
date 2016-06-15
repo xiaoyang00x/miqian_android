@@ -22,7 +22,7 @@
                 android:paddingRight="@dimen/margin_left_right">
 
                 <TextView
-                    android:id="@+id/text_project_name"
+                    android:id="@+id/text_project"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="计划33"
@@ -187,7 +187,7 @@
                         android:text="剩余期限" />
 
                     <TextView
-                        android:id="@+id/text_repayment"
+                        android:id="@+id/text_remindday"
                         style="@style/f7_B4_V2"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
@@ -210,7 +210,7 @@
                         android:text="还款方式" />
 
                     <TextView
-                        android:id="@+id/text_3"
+                        android:id="@+id/text_repayment"
                         style="@style/f3_b4_V2"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
@@ -231,7 +231,7 @@
                         android:text="可转换金额" />
 
                     <TextView
-                        android:id="@+id/text_1"
+                        android:id="@+id/text_prnTransSa"
                         style="@style/f7_B4_V2"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
@@ -254,6 +254,7 @@
                         android:text="转让金额" />
 
                     <EditText
+                        android:id="@+id/et_money"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -281,6 +282,7 @@
                         android:text="转让后年化收益" />
 
                     <EditText
+                        android:id="@+id/et_transfer_rate"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -325,11 +327,12 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tv_changemoney"
                             style="@style/f3_R1_V2"
                             android:layout_gravity="center"
                             android:layout_marginTop="3dp"
                             android:gravity="center"
-                            android:text="2000元" />
+                            android:text="--" />
 
 
                     </LinearLayout>
@@ -354,10 +357,11 @@
                                 android:text="折让比" />
 
                             <TextView
+                                android:id="@+id/tv_discountrate"
                                 style="@style/f3_R1_V2"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="3dp"
-                                android:text="2000元" />
+                                android:text="--" />
 
 
                         </LinearLayout>

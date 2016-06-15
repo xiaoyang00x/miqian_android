@@ -1,25 +1,31 @@
 package com.miqian.mq.activity.user;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.entity.Operation;
 import com.miqian.mq.entity.UserRegularDetail;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.RoundCornerProgressBar;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.List;
 
 public class UserRegularDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -50,6 +56,19 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private String clearYn;//Y:已结息  N:未结息
     private String projectType;//Y:已结息  N:未结息
     private String subjectId;//标的id
+    private TextView textProject;
+    private Button btnClick;
+    private TextView textInterestRatePresent;
+    private UserRegularDetail.RegInvest regInvest;
+    private List<Operation> operationList;
+    private TextView tvContentFirst;
+    private TextView tvDateFirst;
+    private TextView tvTimeFirst;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private LinearLayout linearLayoutRecord;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -76,6 +95,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             public void onSucceed(UserRegularDetailResult result) {
                 end();
                 userRegularDetail = result.getData();
+                regInvest = userRegularDetail.getRegInvest();
+                operationList = userRegularDetail.getOperation();
                 refreshView();
             }
 
@@ -91,67 +112,118 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         textCapital = (TextView) findViewById(R.id.text_capital);
         textCapitalMoney = (TextView) findViewById(R.id.text_capital_money);
         textInterestRate = (TextView) findViewById(R.id.text_interest_rate);
+        textInterestRatePresent = (TextView) findViewById(R.id.text_interest_rate_present);
 
         textLimit = (TextView) findViewById(R.id.text_limit);
         textDateStart = (TextView) findViewById(R.id.text_date_start);
         textDateEnd = (TextView) findViewById(R.id.text_date_end);
-
+        btnClick = (Button) findViewById(R.id.btn_click);
 
         textProjectName = (TextView) findViewById(R.id.text_project_name);
+        textProject = (TextView) findViewById(R.id.text_project);
         frameProjectMatch = (RelativeLayout) findViewById(R.id.frame_project_match);
         textRepayment = (TextView) findViewById(R.id.text_repayment);
 
         textEarningType = (TextView) findViewById(R.id.text_earning_type);
         textEarning = (TextView) findViewById(R.id.text_earning);
-
         textTransferMoney = (TextView) findViewById(R.id.text_transfer_money);
-//        frameTransfer = (RelativeLayout) findViewById(R.id.frame_transfer);
-//        frameContract = (RelativeLayout) findViewById(R.id.frame_contract);
 
-//        btRepayment = (Button) findViewById(R.id.bt_repayment);
+        tvDateFirst = (TextView) findViewById(R.id.tv_date_first);
+        tvTimeFirst = (TextView) findViewById(R.id.tv_time_first);
+        tvContentFirst = (TextView) findViewById(R.id.tv_content_first);
+        linearLayoutRecord = (LinearLayout) findViewById(R.id.linear_record);
+
 
         frameProjectMatch.setOnClickListener(this);
-//        frameTransfer.setOnClickListener(this);
-//        frameContract.setOnClickListener(this);
-//        btRepayment.setOnClickListener(this);
+        btnClick.setOnClickListener(this);
+
+
     }
 
     public void refreshView() {
         if (userRegularDetail == null) {
             return;
         }
-        textInterestRate.setText(userRegularDetail.getRealInterest());
+        textInterestRate.setText(regInvest.getRealInterest());
+        String presentInterest = regInvest.getPresentInterest();
+        if (TextUtils.isEmpty(presentInterest)) {
+            textInterestRatePresent.setText("%");
+        } else {
+            textInterestRatePresent.setText("+" + presentInterest + "%");
+        }
+        textProjectName.setText(regInvest.getBdNm());
+        textLimit.setText(regInvest.getLimitCnt());
 
-        textLimit.setText( userRegularDetail.getLimitCnt());
-
-        if ("Y".equals(userRegularDetail.getBearingStatus())) {
+        if ("Y".equals(regInvest.getBearingStatus())) {
             textCapital.setText("投资本金");
-            textCapitalMoney.setText(userRegularDetail.getPrnAmt());
+            textCapitalMoney.setText(regInvest.getPrnAmt());
             frameProjectMatch.setVisibility(View.GONE);
             textEarningType.setText("总收益");
-            textEarning.setText(userRegularDetail.getRegAssert());
-        } else if ("N".equals(userRegularDetail.getBearingStatus())) {
+            textEarning.setText(regInvest.getPrnIncome());
+        } else if ("N".equals(regInvest.getBearingStatus())) {
             textCapital.setText("待收本金");
-            textCapitalMoney.setText(userRegularDetail.getRegAmt());
-            if ("1".equals(userRegularDetail.getProjectState())) {
+            textCapitalMoney.setText(regInvest.getRegAmt());
+            if ("1".equals(regInvest.getProjectState())) {
                 frameProjectMatch.setVisibility(View.VISIBLE);
-            } else if ("2".equals(userRegularDetail.getProjectState())) {
+            } else if ("2".equals(regInvest.getProjectState())) {
                 frameProjectMatch.setVisibility(View.GONE);
             } else {
                 frameProjectMatch.setVisibility(View.VISIBLE);
             }
             textEarningType.setText("待收收益");
-            textEarning.setText(userRegularDetail.getRegIncome());
+            textEarning.setText(regInvest.getRegIncome());
         }
-        if ("3".equals(userRegularDetail.getProdId())) {
+        if ("3".equals(regInvest.getProdId())) {
             frameProjectMatch.setVisibility(View.VISIBLE);
-            textProjectName.setText(userRegularDetail.getBdNm());
+            textProject.setText("项目详情");
         } else {
-            textProjectName.setText("项目匹配");
+            textProject.setText("项目匹配");
         }
-        textDateStart.setText("认购日期:"+userRegularDetail.getCrtDt());
-        textDateEnd.setText("结束日期:"+userRegularDetail.getDueDt());
-        textRepayment.setText(userRegularDetail.getPayMeansName());
+        textDateStart.setText("认购日期:" + regInvest.getCrtDt());
+        textDateEnd.setText("结束日期:" + regInvest.getDueDt());
+        textRepayment.setText(regInvest.getPayMeansName());
+        if (regInvest.getTransFlag().equals("Y")) {
+            btnClick.setEnabled(true);
+        } else {
+            btnClick.setEnabled(false);
+            btnClick.setBackgroundColor(ContextCompat.getColor(this, R.color.mq_b4_v2));
+        }
+        btnClick.setText(regInvest.getTransDesc());
+
+        //标的相关记录
+        if (operationList.size() > 0) {
+            tvContentFirst.setText(operationList.get(0).getOperationContent());
+            String operationDt = operationList.get(0).getOperationDt();
+            if (!TextUtils.isEmpty(operationDt)) {
+                String dt = Uihelper.timestampToDateStr_other(Long.parseLong(operationDt));
+                String[] split = dt.split(" ");
+                tvDateFirst.setText(split[0]);
+                tvTimeFirst.setText(split[1]);
+            }
+        }
+        if (operationList.size() > 1) {
+            for (int i = 1; i < operationList.size(); i++) {
+                View itemRecord = LayoutInflater.from(this).inflate(R.layout.item_record, null);
+                TextView tvDate = (TextView) itemRecord.findViewById(R.id.tv_date);
+                TextView tvTime = (TextView) itemRecord.findViewById(R.id.tv_time);
+                TextView tvContent = (TextView) itemRecord.findViewById(R.id.tv_content);
+                View view = (View) itemRecord.findViewById(R.id.view);
+                String operationDt = operationList.get(i).getOperationDt();
+                if (!TextUtils.isEmpty(operationDt)) {
+                    String dt = Uihelper.timestampToDateStr_other(Long.parseLong(operationDt));
+                    String[] split = dt.split(" ");
+                    tvDate.setText(split[0]);
+                    tvTime.setText(split[1]);
+                }
+                tvContent.setText(operationList.get(i).getOperationContent());
+                if (i == operationList.size() - 1) {
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(Uihelper.dip2px(mContext, 3), Uihelper.dip2px(mContext, 20));
+                    view.setLayoutParams(layoutParams);
+                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP | RelativeLayout.CENTER_HORIZONTAL);//addRule参数对应RelativeLayout XML布局的属性
+                }
+                linearLayoutRecord.addView(itemRecord);
+            }
+        }
     }
 
     public int getLayoutId() {
@@ -172,10 +244,10 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             case R.id.frame_project_match:
                 MobclickAgent.onEvent(mActivity, "1045");
                 if (userRegularDetail != null) {
-                    subjectId = userRegularDetail.getBdId();
-                    if ("3".equals(userRegularDetail.getProdId())) {
+                    subjectId = regInvest.getBdId();
+                    if ("3".equals(regInvest.getProdId())) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                    } else if ("4".equals(userRegularDetail.getProdId())) {
+                    } else if ("4".equals(regInvest.getProdId())) {
                         //定期计划 项目匹配
                         WebActivity.startActivity(mActivity, Urls.project_match + subjectId);
                     }
@@ -192,6 +264,25 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //                    startActivity(intent);
 //                }
 //                break;
+            case R.id.btn_click:
+                Intent intent = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userRegularDetail", userRegularDetail);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
     }
 }

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -25,7 +26,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
-public class UserRegularActivity extends BaseActivity implements View.OnClickListener, AdapterUserRegular.MyItemClickListener {
+public class UserRegularActivity extends BaseActivity implements View.OnClickListener, AdapterUserRegular.MyItemClickListener,RadioGroup.OnCheckedChangeListener {
 
     private Button titleLeft;
     private Button titleRight;
@@ -45,6 +46,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private UserRegular userRegular;
     private List<RegInvest> regInvestList;
     private boolean isStop;  //activity被finish则停止从网络获取数据的异步操作
+    private RadioGroup radioGroup;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -121,15 +123,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initView() {
-        btLeft = (ImageButton) findViewById(R.id.bt_left);
-        btLeft.setOnClickListener(this);
 
-        titleLeft = (Button) findViewById(R.id.title_left);
-        titleRight = (Button) findViewById(R.id.title_right);
-
-        titleLeft.setOnClickListener(this);
-        titleRight.setOnClickListener(this);
-
+        radioGroup = (RadioGroup) findViewById(R.id.radio_group);
+        radioGroup.setOnCheckedChangeListener(this);
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
@@ -158,7 +154,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void refreshView() {
-        mAdapter = new AdapterUserRegular(regInvestList, userRegular.getReg(), mType);
+        mAdapter = new AdapterUserRegular(this,regInvestList, userRegular.getReg(),userRegular.getPage(), mType);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setMaxItem(userRegular.getPage().getCount());
         mRecyclerView.setAdapter(mAdapter);
@@ -166,41 +162,37 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public int getLayoutId() {
-        return R.layout.user_regualr;
+        return R.layout.activity_user_regular;
     }
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        View parentView = (View) mTitle.getParent();
-        parentView.setVisibility(View.GONE);
+          mTitle.setTitleText("我的定期");
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_left:
-                titleLeft.setTextColor(getResources().getColor(R.color.mq_r1));
-                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left_selected);
-                titleRight.setTextColor(getResources().getColor(R.color.white));
-                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right);
-                isExpiry = "N";
-                mType = 0;
-                obtainData();
-                break;
-            case R.id.title_right:
-
-                titleLeft.setTextColor(getResources().getColor(R.color.white));
-                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left);
-                titleRight.setTextColor(getResources().getColor(R.color.mq_r1));
-                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right_selected);
-                isExpiry = "Y";
-                mType = 1;
-                obtainData();
-                break;
-            case R.id.bt_left:
-                UserRegularActivity.this.finish();
-                break;
-        }
+//        switch (v.getId()) {
+//            case R.id.title_left:
+//                titleLeft.setTextColor(getResources().getColor(R.color.mq_r1));
+//                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left_selected);
+//                titleRight.setTextColor(getResources().getColor(R.color.white));
+//                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right);
+//                isExpiry = "N";
+//                mType = 0;
+//                obtainData();
+//                break;
+//            case R.id.title_right:
+//
+//                titleLeft.setTextColor(getResources().getColor(R.color.white));
+//                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left);
+//                titleRight.setTextColor(getResources().getColor(R.color.mq_r1));
+//                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right_selected);
+//                isExpiry = "Y";
+//                mType = 1;
+//                obtainData();
+//                break;
+//        }
     }
 
     @Override
@@ -221,5 +213,25 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected String getPageName() {
         return "我的定期";
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+
+        if (checkId == R.id.bt_left) {
+            isExpiry = "N";
+            mType = 0;
+            obtainData();
+        } else if (checkId == R.id.bt_middle) {
+            isExpiry = "Y";
+            mType = 1;
+            obtainData();
+        } else if (checkId == R.id.bt_right) {
+            isExpiry = "ZR";
+            mType = 2;
+            obtainData();
+        }
+        obtainData();
+
     }
 }

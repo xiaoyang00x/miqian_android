@@ -9,129 +9,152 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.WrapperListAdapter;
 
+import com.miqian.mq.R;
+import com.miqian.mq.entity.MessageInfo;
+import com.miqian.mq.utils.Uihelper;
+
+import java.util.IllegalFormatCodePointException;
+import java.util.List;
+
 public class SwipeMenuAdapter implements WrapperListAdapter,
-		SwipeMenuView.OnItemClickListener {
+        SwipeMenuView.OnItemClickListener {
 
-	private ListAdapter mAdapter;
-	private Context mContext;
-	private SwipeMenuListView.OnMenuItemClickListener onMenuItemClickListener;
+    private ListAdapter mAdapter;
+    private Context mContext;
+    List<MessageInfo> mList;
+    private SwipeMenuListView.OnMenuItemClickListener onMenuItemClickListener;
 
-	public SwipeMenuAdapter(Context context, ListAdapter adapter) {
-		mAdapter = adapter;
-		mContext = context;
-	}
+    public SwipeMenuAdapter(Context context, ListAdapter adapter, List<MessageInfo> list) {
+        mAdapter = adapter;
+        mContext = context;
+        mList = list;
+    }
 
-	@Override
-	public int getCount() {
-		return mAdapter.getCount();
-	}
+    @Override
+    public int getCount() {
+        return mAdapter.getCount();
+    }
 
-	@Override
-	public Object getItem(int position) {
-		return mAdapter.getItem(position);
-	}
+    @Override
+    public Object getItem(int position) {
+        return mAdapter.getItem(position);
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return mAdapter.getItemId(position);
-	}
+    @Override
+    public long getItemId(int position) {
+        return mAdapter.getItemId(position);
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		SwipeMenuLayout layout = null;
-		if (convertView == null) {
-			View contentView = mAdapter.getView(position, convertView, parent);
-			SwipeMenu menu = new SwipeMenu(mContext);
-			createMenu(menu);
-			SwipeMenuView menuView = new SwipeMenuView(menu,
-					(SwipeMenuListView) parent);
-			menuView.setOnItemClickListener(this);
-			SwipeMenuListView listView = (SwipeMenuListView) parent;
-			layout = new SwipeMenuLayout(contentView, menuView,
-					listView.getCloseInterpolator(),
-					listView.getOpenInterpolator());
-			layout.setPosition(position);
-		} else {
-			layout = (SwipeMenuLayout) convertView;
-			layout.closeMenu();
-			layout.setPosition(position);
-			mAdapter.getView(position, layout.getContentView(),
-					parent);
-		}
-		return layout;
-	}
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        SwipeMenuLayout layout = null;
+        if (convertView == null) {
+            View contentView = mAdapter.getView(position, convertView, parent);
+            SwipeMenu menu = new SwipeMenu(mContext);
+            createMenu(menu,mList.get(position));
+            SwipeMenuView menuView = new SwipeMenuView(menu,
+                    (SwipeMenuListView) parent);
+            menuView.setOnItemClickListener(this);
+            SwipeMenuListView listView = (SwipeMenuListView) parent;
+            layout = new SwipeMenuLayout(contentView, menuView,
+                    listView.getCloseInterpolator(),
+                    listView.getOpenInterpolator());
+            layout.setPosition(position);
+        } else {
+            layout = (SwipeMenuLayout) convertView;
+            layout.closeMenu();
+            layout.setPosition(position);
+            mAdapter.getView(position, layout.getContentView(),
+                    parent);
+        }
+        return layout;
+    }
 
-	public void createMenu(SwipeMenu menu) {
-		// Test Code
-		SwipeMenuItem item = new SwipeMenuItem(mContext);
-		item.setTitle("Item 1");
-		item.setBackground(new ColorDrawable(Color.GRAY));
-		item.setWidth(300);
-		menu.addMenuItem(item);
+    public void createMenu(SwipeMenu menu,MessageInfo messageInfo) {
 
-		item = new SwipeMenuItem(mContext);
-		item.setTitle("Item 2");
-		item.setBackground(new ColorDrawable(Color.RED));
-		item.setWidth(300);
-		menu.addMenuItem(item);
-	}
+        SwipeMenuItem item1 = new SwipeMenuItem(mContext);
+        item1.setBackground(mContext.getResources().getDrawable(R.drawable.shape_swip_red));
+        item1.setWidth(Uihelper.dip2px(mContext, 90));
+        if (messageInfo.isRead()){
+            item1.setWidth(Uihelper.dip2px(mContext, 0));
+            item1.setTitleColor(Color.GRAY);
+        }else {
+            item1.setTitle("置为已读");
+            item1.setTitleColor(Color.WHITE);
+        }
 
-	@Override
-	public void onItemClick(SwipeMenuView view, SwipeMenu menu, int index) {
-		if (onMenuItemClickListener != null) {
-			onMenuItemClickListener.onMenuItemClick(view.getPosition(), menu,
-					index);
-		}
-	}
+        item1.setTitleSize(18);
+        menu.addMenuItem(item1);
+//		// Test Code
+//		SwipeMenuItem item = new SwipeMenuItem(mContext);
+//		item.setTitle("Item 1");
+//		item.setBackground(new ColorDrawable(Color.GRAY));
+//		item.setWidth(300);
+//		menu.addMenuItem(item);
+//
+//		item = new SwipeMenuItem(mContext);
+//		item.setTitle("Item 2");
+//		item.setBackground(new ColorDrawable(Color.RED));
+//		item.setWidth(300);
+//		menu.addMenuItem(item);
+    }
 
-	public void setOnMenuItemClickListener(
-			SwipeMenuListView.OnMenuItemClickListener onMenuItemClickListener) {
-		this.onMenuItemClickListener = onMenuItemClickListener;
-	}
+    @Override
+    public void onItemClick(SwipeMenuView view, SwipeMenu menu, int index) {
+        if (onMenuItemClickListener != null) {
+            onMenuItemClickListener.onMenuItemClick(view.getPosition(), menu,
+                    index);
+        }
+    }
 
-	@Override
-	public void registerDataSetObserver(DataSetObserver observer) {
-		mAdapter.registerDataSetObserver(observer);
-	}
+    public void setOnMenuItemClickListener(
+            SwipeMenuListView.OnMenuItemClickListener onMenuItemClickListener) {
+        this.onMenuItemClickListener = onMenuItemClickListener;
+    }
 
-	@Override
-	public void unregisterDataSetObserver(DataSetObserver observer) {
-		mAdapter.unregisterDataSetObserver(observer);
-	}
+    @Override
+    public void registerDataSetObserver(DataSetObserver observer) {
+        mAdapter.registerDataSetObserver(observer);
+    }
 
-	@Override
-	public boolean areAllItemsEnabled() {
-		return mAdapter.areAllItemsEnabled();
-	}
+    @Override
+    public void unregisterDataSetObserver(DataSetObserver observer) {
+        mAdapter.unregisterDataSetObserver(observer);
+    }
 
-	@Override
-	public boolean isEnabled(int position) {
-		return mAdapter.isEnabled(position);
-	}
+    @Override
+    public boolean areAllItemsEnabled() {
+        return mAdapter.areAllItemsEnabled();
+    }
 
-	@Override
-	public boolean hasStableIds() {
-		return mAdapter.hasStableIds();
-	}
+    @Override
+    public boolean isEnabled(int position) {
+        return mAdapter.isEnabled(position);
+    }
 
-	@Override
-	public int getItemViewType(int position) {
-		return mAdapter.getItemViewType(position);
-	}
+    @Override
+    public boolean hasStableIds() {
+        return mAdapter.hasStableIds();
+    }
 
-	@Override
-	public int getViewTypeCount() {
-		return mAdapter.getViewTypeCount();
-	}
+    @Override
+    public int getItemViewType(int position) {
+        return mAdapter.getItemViewType(position);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return mAdapter.isEmpty();
-	}
+    @Override
+    public int getViewTypeCount() {
+        return mAdapter.getViewTypeCount();
+    }
 
-	@Override
-	public ListAdapter getWrappedAdapter() {
-		return mAdapter;
-	}
+    @Override
+    public boolean isEmpty() {
+        return mAdapter.isEmpty();
+    }
+
+    @Override
+    public ListAdapter getWrappedAdapter() {
+        return mAdapter;
+    }
 
 }

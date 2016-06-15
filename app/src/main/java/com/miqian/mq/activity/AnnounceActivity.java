@@ -106,6 +106,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         textLoading.setText("");
                     }
                     adapter = new MessageAdapter(mActivity, list);
+                    mSwipeMenuListView.setdataList(list);
                     mSwipeMenuListView.setAdapter(adapter);
 
                 } else {
@@ -120,6 +121,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                 if (TextUtils.isEmpty(messageCash)) {
                     if (list != null && adapter != null) {
                         list.clear();
+                        mSwipeMenuListView.setdataList(list);
                         adapter.notifyDataSetChanged();
                     }
                     showErrorView();
@@ -128,6 +130,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                     UserMessageResult userMessageResult = JsonUtil.parseObject(messageCash, UserMessageResult.class);
                     list = userMessageResult.getData().getMsgList();
                     adapter = new MessageAdapter(mActivity, list);
+                    mSwipeMenuListView.setdataList(list);
                     mSwipeMenuListView.setAdapter(adapter);
                 }
                 swipeRefresh.setRefreshing(false);
@@ -224,6 +227,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         Uihelper.showToast(mActivity, "删除成功");
                         list.remove(position);
                         checkReadStatus(list);
+                        mSwipeMenuListView.setdataList(list);
                         adapter.notifyDataSetChanged();
                         //没有数据
                         if (list.size() == 0) {
@@ -240,7 +244,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
             }
         });
-        mSwipeMenuListView.setMenuCreator(creator);
+//        mSwipeMenuListView.setMenuCreator(creator,list);
         mSwipeMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
@@ -295,6 +299,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             messageInfo.setIsRead(true);
                         }
                         checkReadStatus(list);
+                        mSwipeMenuListView.setdataList(list);
                         adapter.notifyDataSetChanged();
                     }
 
@@ -352,6 +357,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                         if (tempList != null && tempList.size() > 0) {
                             list.addAll(tempList);
                             checkReadStatus(list);
+                            mSwipeMenuListView.setdataList(list);
                             adapter.notifyDataSetChanged();
                         }
                         if (list.size() < count) {
@@ -420,6 +426,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
             MessageInfo messageInfo = list.get(position);
             if (!messageInfo.isRead()) {
                 list.get(position).setIsRead(true);
+                mSwipeMenuListView.setdataList(list);
                 adapter.notifyDataSetChanged();
                 checkReadStatus(list);
             }
