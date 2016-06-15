@@ -87,7 +87,20 @@ public class GestureCueView extends View {
      * @param canvas 画布
      */
     private void point2Canvas(Canvas canvas) {
-        for (int i = 0; i < points.length; i++) {
+        for (GestureLockPoint[] pointTemp : points) {
+            for (GestureLockPoint point : pointTemp) {
+                Matrix matrix = new Matrix();
+                float sx = 1.0f;
+                matrix.setScale(sx, sx);
+                matrix.postTranslate(point.pointX - bitmapR * sx * 0.5f, point.pointY - bitmapR * sx * 0.5f);
+                if (point.state == GestureLockPoint.STATE_NOR) {
+                    canvas.drawBitmap(bitmap_circle_nor, matrix, mPaint);
+                } else if (point.state == GestureLockPoint.STATE_PRESS) {
+                    canvas.drawBitmap(bitmap_circle_press, matrix, mPaint);
+                }
+            }
+        }
+        /*for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 Matrix matrix = new Matrix();
 //                float sx = (float) (1.0 * Math.min(screenHeight, screenWidth) / 720);
@@ -102,7 +115,7 @@ public class GestureCueView extends View {
 //                    canvas.drawBitmap(bitmap_circle_press, points[i][j].pointX - bitmapR / 2, points[i][j].pointY - bitmapR / 2, mPaint);
                 }
             }
-        }
+        }*/
     }
 
     /**
@@ -113,7 +126,18 @@ public class GestureCueView extends View {
     public void showSelectedPoint(String psw) {
         int counter = 0;
         int pswLength = psw.length();
-        for (int i = 0; i < points.length; i++) {
+        for (GestureLockPoint[] pointTemp : points) {
+            for (GestureLockPoint point : pointTemp) {
+                if (psw.contains(String.valueOf(point.index))) {
+                    point.state = GestureLockPoint.STATE_PRESS;
+                    counter++;
+                    if (pswLength == counter) {
+                        break;
+                    }
+                }
+            }
+        }
+        /*for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 GestureLockPoint point = points[i][j];
                 if (psw.contains(String.valueOf(point.index))) {
@@ -124,7 +148,7 @@ public class GestureCueView extends View {
                     }
                 }
             }
-        }
+        }*/
         invalidate();
     }
 
@@ -132,9 +156,14 @@ public class GestureCueView extends View {
      * 重置已选点并刷新
      */
     public void resetAndInvalidate() {
-        for (int i = 0; i < points.length; i++) {
+        /*for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 GestureLockPoint point = points[i][j];
+
+            }
+        }*/
+        for (GestureLockPoint[] pointTemp : points) {
+            for (GestureLockPoint point : pointTemp) {
                 point.state = GestureLockPoint.STATE_NOR;
             }
         }

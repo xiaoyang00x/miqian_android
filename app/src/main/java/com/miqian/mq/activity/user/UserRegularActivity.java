@@ -144,7 +144,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
                 if (lastVisibleItem >= totalItemCount - 2) {
                     loadMore();

@@ -31,7 +31,6 @@
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/iv_left"
         android:gravity="center_vertical"
-        android:text="定期赚"
         android:textColor="@color/mq_b3_v2"
         android:textSize="@dimen/mq_font3_v2" />
 
@@ -42,7 +41,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:gravity="center_vertical"
-        android:text="项目详情  >"
         android:textColor="@color/mq_b3_v2"
         android:textSize="@dimen/mq_font3_v2" />
 

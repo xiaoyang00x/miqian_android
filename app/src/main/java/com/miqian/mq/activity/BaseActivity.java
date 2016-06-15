@@ -132,6 +132,12 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         }
     }
 
+    // 刚进入页面不显示数据 从服务器获取到数据再显示数据
+    protected void showDefaultView() {
+        mContentView.setVisibility(View.GONE);
+        mViewnoresult.setVisibility(View.GONE);
+    }
+
     /**
      * 无数据
      */
@@ -149,14 +155,12 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     protected void showContentView() {
         mContentView.setVisibility(View.VISIBLE);
         mViewnoresult.setVisibility(View.GONE);
-
     }
 
     /**
      * 获取失败，请重新获取
      */
     protected void showErrorView() {
-
         mContentView.setVisibility(View.GONE);
         mViewnoresult.setVisibility(View.VISIBLE);
         if (MobileOS.getNetworkType(mContext) == -1) {

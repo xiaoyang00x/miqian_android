@@ -203,7 +203,7 @@ android {
 apply plugin: 'maa'
 dependencies {
     compile 'com.android.support:multidex:1.0.0'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'io.reactivex:rxandroid:0.24.0'
@@ -216,7 +216,7 @@ dependencies {
     compile 'com.umeng:fb:5.4.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile project(':onekeyshare')
-    compile fileTree(dir: 'maa/sdk', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'maa/sdk')
     compile 'com.growingio.android:vds-android:latest.release@aar'
     compile project(path: ':Udesk_Separate_UI')
 }

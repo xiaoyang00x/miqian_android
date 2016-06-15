@@ -457,6 +457,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
+            case OperationKey.BACK_MAIN:
+                ActivityStack.getActivityStack().clearActivity();
+                if (current_tab != 3) {
+                    showRedPointer();
+                }
+                break;
             case OperationKey.BACK_HOME:
                 current_tab = 0;
                 ActivityStack.getActivityStack().clearActivity();

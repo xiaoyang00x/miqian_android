@@ -103,11 +103,7 @@ public class UserUtil {
 
     public static boolean hasLogin(Context context) {
         String token = getToken(context);
-        if (TextUtils.isEmpty(token)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !TextUtils.isEmpty(token);
     }
 
     public static void clearUserInfo(Context context) {
@@ -202,11 +198,25 @@ public class UserUtil {
      * @param interestRateString 定期计划和定期赚的利率和期限
      */
     public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString) {
+        currenPay(activity, money, prodId, subjectId, interestRateString, null);
+    }
+
+    /**
+     * 跳转认购页
+     *
+     * @param money              认购金额
+     * @param prodId             0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param subjectId          标的id，活期默认为0
+     * @param interestRateString 定期计划和定期赚的利率和期限
+     * @param realMoney           实际支付金额（认购转让标的显示）
+     */
+    public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString, String realMoney) {
         Intent intent = new Intent(activity, CurrentInvestment.class);
         intent.putExtra("money", money);
         intent.putExtra("prodId", prodId);
         intent.putExtra("subjectId", subjectId);
         intent.putExtra("interestRateString", interestRateString);
+        intent.putExtra("realMoney", realMoney);
         activity.startActivity(intent);
     }
 

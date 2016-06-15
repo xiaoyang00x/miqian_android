@@ -113,7 +113,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 int totalItemCount = layoutManager.getItemCount();
                 if (lastVisibleItem >= totalItemCount - 3) {
                     loadMore();

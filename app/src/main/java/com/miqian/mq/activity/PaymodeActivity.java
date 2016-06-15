@@ -3,6 +3,7 @@ package com.miqian.mq.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.WFYTitle;
 
@@ -30,6 +32,7 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
     private ImageView ivChooseBank;
     private ImageView ivChooseCurrent;
     private ImageView ivChooseBalance;
+    private Button btRollin;
 
     private TextView textBankName;
     private TextView textCurrent;
@@ -48,8 +51,11 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
     private String prodId;
 
     private BigDecimal payMoney;
+    private BigDecimal rollinMoney;
     private BigDecimal currentMoney = BigDecimal.ZERO;//活转定中使用的活期余额
     private BigDecimal balanceMoney = BigDecimal.ZERO;//账户余额
+
+    private int isRollin = -1;//是否充值成功 -1是未充值，0是失败，1是成功，2是处理中
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -85,6 +91,8 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
         ivChooseBank = (ImageView) findViewById(R.id.iv_choose_bank);
         ivChooseCurrent = (ImageView) findViewById(R.id.iv_choose_current);
         ivChooseBalance = (ImageView) findViewById(R.id.iv_choose_balance);
+        btRollin = (Button) findViewById(R.id.bt_rollin);
+        btRollin.setOnClickListener(this);
 
         textBankName = (TextView) findViewById(R.id.tv_bankname);
         textCurrent = (TextView) findViewById(R.id.text_current);
@@ -116,17 +124,24 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
             if (currentMoney.compareTo(payMoney) >= 0) {
                 frameCurrent.setOnClickListener(this);
             } else {
-                textCurrent.setTextColor(getResources().getColor(R.color.mq_b3));
+                textCurrent.setTextColor(getResources().getColor(R.color.mq_b4_v2));
                 imageCurrent.setEnabled(false);
             }
         }
 
         if (balanceMoney.compareTo(payMoney) >= 0) {
+            rollinMoney = BigDecimal.ZERO;
             frameBalance.setOnClickListener(this);
+            textBalance.setTextColor(getResources().getColor(R.color.mq_b1_v2));
+            textBalance.setText("账户余额");
+            imageBalance.setEnabled(true);
+            btRollin.setVisibility(View.GONE);
         } else {
-            textBalance.setTextColor(getResources().getColor(R.color.mq_b3));
+            rollinMoney = payMoney.subtract(balanceMoney);
+            textBalance.setTextColor(getResources().getColor(R.color.mq_b4_v2));
             textBalance.setText("余额不足");
             imageBalance.setEnabled(false);
+            btRollin.setVisibility(View.VISIBLE);
         }
     }
 
@@ -191,6 +206,12 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
                 }
                 backSubscribePage();
                 break;
+            case R.id.bt_rollin:
+                Intent intent = new Intent(PaymodeActivity.this, IntoActivity.class);
+                intent.putExtra("rollType", 2);
+                intent.putExtra("money", rollinMoney.toString());
+                startActivityForResult(intent, CurrentInvestment.REQUEST_CODE_ROLLIN);
+                break;
             default:
                 break;
         }
@@ -203,7 +224,35 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
     private void backSubscribePage() {
         Intent intent = new Intent();
         intent.putExtra("payModeState", payModeState);
-        setResult(CurrentInvestment.SUCCESS, intent);
+        if (isRollin == 1) {
+            intent.putExtra("balanceMoney", balanceMoney.toString());
+            setResult(CurrentInvestment.SUCCESS, intent);
+        } else if (isRollin == 2) {
+            setResult(CurrentInvestment.PROCESSING, intent);
+        } else if (isRollin == -1) {
+            setResult(CurrentInvestment.SUCCESS, intent);
+        }
         PaymodeActivity.this.finish();
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CurrentInvestment.REQUEST_CODE_ROLLIN) {
+            if (resultCode == CurrentInvestment.SUCCESS) {
+                balanceMoney = balanceMoney.add(rollinMoney);
+                producedOrder.setBalance(balanceMoney);
+                initViewByData();
+                isRollin = 1;
+            } else if (resultCode == CurrentInvestment.PROCESSING) {
+                Uihelper.showToast(mActivity, "充值处理中");
+                isRollin = 2;
+                backSubscribePage();
+            } else if (resultCode == CurrentInvestment.FAIL) {
+                Uihelper.showToast(mActivity, "充值失败，请重新充值");
+                isRollin = 0;
+            }
+        }
+    }
+
 }

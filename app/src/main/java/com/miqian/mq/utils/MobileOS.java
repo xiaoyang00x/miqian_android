@@ -255,7 +255,7 @@ public class MobileOS {
         }
     }
 
-    public static enum NetWorkEnum {
+    public enum NetWorkEnum {
         NoConnection, Mobile, Wifi
     }
 

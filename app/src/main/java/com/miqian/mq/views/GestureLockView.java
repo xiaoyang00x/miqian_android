@@ -25,9 +25,7 @@ public class GestureLockView extends View {
     private Paint mPaint;
 
     private Bitmap bitmap_circle_nor, bitmap_circle_press, bitmap_circle_error, bitmap_line_pressed, bitmap_line_error;
-    private int offsetX, offsetY;
     private int movingX, movingY; // 当前手指所在位置坐标
-    private GestureLockPoint curPoint; // 当前手指触碰的点(不在九宫格内则为null)
     private boolean isStart; // 绘制开始
     private boolean isFinish; // 绘制结束
     private ArrayList<GestureLockPoint> selectedPointsList;
@@ -82,7 +80,8 @@ public class GestureLockView extends View {
                     onPatterChangeListener.onPatterStart();
                 }
                 reset();
-                curPoint = isXYInPoint(movingX, movingY);
+                // 当前手指触碰的点(不在九宫格内则为null)
+                GestureLockPoint curPoint = isXYInPoint(movingX, movingY);
                 isStart = null != curPoint;
                 if (isStart) {
                     mHandler.removeCallbacks(runnable);
@@ -142,10 +141,17 @@ public class GestureLockView extends View {
      * @return
      */
     private GestureLockPoint isXYInPoint(int x, int y) {
-        for (int i = 0; i < points.length; i++) {
+       /* for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 if (isXYInPoint(x, y, points[i][j])) {
                     return points[i][j];
+                }
+            }
+        }*/
+        for (GestureLockPoint[] pointTemp : points) {
+            for (GestureLockPoint point : pointTemp) {
+                if (isXYInPoint(x, y, point)) {
+                    return point;
                 }
             }
         }
@@ -170,7 +176,22 @@ public class GestureLockView extends View {
      * @param canvas 画布
      */
     private void point2Canvas(Canvas canvas) {
-        for (int i = 0; i < points.length; i++) {
+        for (GestureLockPoint[] pointTemp : points) {
+            for (GestureLockPoint point : pointTemp) {
+                Matrix matrix = new Matrix();
+                float sx = 1.0f;
+                matrix.setScale(sx, sx);
+                matrix.postTranslate(point.pointX - bitmapR * sx * 0.5f, point.pointY - bitmapR * sx * 0.5f);
+                if (point.state == GestureLockPoint.STATE_NOR) {
+                    canvas.drawBitmap(bitmap_circle_nor, matrix, mPaint);
+                } else if (point.state == GestureLockPoint.STATE_PRESS) {
+                    canvas.drawBitmap(bitmap_circle_press, matrix, mPaint);
+                } else if (point.state == GestureLockPoint.STATE_ERROR) {
+                    canvas.drawBitmap(bitmap_circle_error, matrix, mPaint);
+                }
+            }
+        }
+        /*for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 Matrix matrix = new Matrix();
                 float sx = 1.0f;
@@ -184,7 +205,7 @@ public class GestureLockView extends View {
                     canvas.drawBitmap(bitmap_circle_error, matrix, mPaint);
                 }
             }
-        }
+        }*/
     }
 
     /**
@@ -236,8 +257,8 @@ public class GestureLockView extends View {
         if (isInit) {
             return;
         }
-        offsetX = (width - paddingIn * 2 - bitmapR * 3) / 2;
-        offsetY = offsetX;
+        int offsetX = (width - paddingIn * 2 - bitmapR * 3) / 2;
+        int offsetY = offsetX;
         resize();
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
@@ -268,7 +289,7 @@ public class GestureLockView extends View {
             point.state = GestureLockPoint.STATE_ERROR;
         }
         invalidate();
-        mHandler.postDelayed(runnable, 1000l);
+        mHandler.postDelayed(runnable, 1000L);
     }
 
     // 延时消失

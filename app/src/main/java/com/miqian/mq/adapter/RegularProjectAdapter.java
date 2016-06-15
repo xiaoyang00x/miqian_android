@@ -1,7 +1,6 @@
 package com.miqian.mq.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.RegularDetailActivity;
-import com.miqian.mq.activity.TestActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularProjectData;
@@ -53,24 +51,25 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
         }
 
-        if (null != mData.getRegularData()) {
-            for (RegularProjectData regularProjectData : mData.getRegularData()) {
-                if (null != regularProjectData.getSubjectData() && regularProjectData.getSubjectData().size() > 0) {
+        if (null == mData.getRegularData() || mData.getRegularData().size() <= 0) {
+            return;
+        }
 
-                    RegularProjectHeader regularProjectHeader = new RegularProjectHeader();
-                    regularProjectHeader.setType(RegularBase.ITEM_TYPE_TITLE);
-                    regularProjectHeader.setName(regularProjectData.getName());
-                    regularProjectHeader.setTitle(regularProjectData.getTitle());
-                    regularProjectHeader.setJumpUrl(regularProjectData.getJumpUrl());
-                    mList.add(regularProjectHeader);
+        for (RegularProjectData regularProjectData : mData.getRegularData()) {
+            if (regularProjectData.getSubjectData() == null || regularProjectData.getSubjectData().size() <= 0) {
+                continue;
+            }
+            RegularProjectHeader regularProjectHeader = new RegularProjectHeader();
+            regularProjectHeader.setType(RegularBase.ITEM_TYPE_TITLE);
+            regularProjectHeader.setName(regularProjectData.getName());
+            regularProjectHeader.setTitle(regularProjectData.getTitle());
+            regularProjectHeader.setJumpUrl(regularProjectData.getJumpUrl());
+            regularProjectHeader.setIconUrl(regularProjectData.getIconUrl());
+            mList.add(regularProjectHeader);
 
-                    int size = regularProjectData.getSubjectData().size();
-                    for (int index = 0; index < size; index++) {
-                        RegularProjectInfo info = regularProjectData.getSubjectData().get(index);
-                        info.setType(RegularBase.ITEM_TYPE_LIST);
-                        mList.add(info);
-                    }
-                }
+            for (RegularProjectInfo info : regularProjectData.getSubjectData()) {
+                info.setType(RegularBase.ITEM_TYPE_LIST);
+                mList.add(info);
             }
         }
     }
@@ -88,21 +87,19 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 return new RegularTitleHolder(LayoutInflater.from(mContext).inflate(R.layout.item_regular_title, parent, false));
             case RegularBase.ITEM_TYPE_LIST:
                 return new RegularListHolder(LayoutInflater.from(mContext).inflate(R.layout.item_regular_content, parent, false));
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RegularCardHolder) {
-            RegularCardHolder viewHolder = (RegularCardHolder) holder;
-            viewHolder.bindData(position);
+            ((RegularCardHolder) holder).bindData(position);
         } else if (holder instanceof RegularTitleHolder) {
-            RegularTitleHolder viewHolder = (RegularTitleHolder) holder;
-            viewHolder.bindData(position);
+            ((RegularTitleHolder) holder).bindData(position);
         } else if (holder instanceof RegularListHolder) {
-            RegularListHolder viewHolder = (RegularListHolder) holder;
-            viewHolder.bindData(position);
+            ((RegularListHolder) holder).bindData(position);
         }
     }
 
@@ -148,9 +145,9 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tv_profit_rate.setText(info.getYearInterest());
             tv_time_limit.setText(info.getLimit());
             tv_remain_amount.setText(
-                    new StringBuilder("剩余金额:￥").
+                    new StringBuilder("可认购金额:￥").
                             append(FormatUtil.formatAmount(info.getResidueAmt())).
-                            append("/").
+                            append("/￥").
                             append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
 
             if (info.getPresentationYesNo().equals("Y")) {
@@ -161,7 +158,6 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 tv_profit_rate_unit.setText("%");
             }
-
             btn_buy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -262,9 +258,9 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
             tv_time_limit.setText(info.getLimit());
             tv_remain_amount.setText(
-                    new StringBuilder("剩余金额:￥").
+                    new StringBuilder("可认购金额:￥").
                             append(FormatUtil.formatAmount(info.getResidueAmt())).
-                            append("/").
+                            append("/￥").
                             append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
             if (position + 1 == getItemCount()) {
                 divider.setVisibility(View.GONE);
@@ -274,31 +270,35 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 divider.setVisibility(View.VISIBLE);
             }
-            if (info.getSubjectStatus().equals(RegularBase.STATE_00)) {
-                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_begin_time.setText(Uihelper.timeToDateRegular(info.getStartTimestamp()));
-                tv_begin_time.setVisibility(View.VISIBLE);
-                btn_state.setBackgroundResource(R.drawable.btn_no_begin);
-                btn_state.setText("待开标");
-            } else if (info.getSubjectStatus().equals(RegularBase.STATE_01)) {
-                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                tv_begin_time.setVisibility(View.GONE);
-                btn_state.setBackgroundResource(R.drawable.btn_default_selector);
-                btn_state.setText("立即认购");
-            } else {
-                tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-                tv_begin_time.setVisibility(View.GONE);
-                btn_state.setBackgroundResource(R.drawable.btn_has_done);
-                btn_state.setText("已满额");
+            switch (info.getSubjectStatus()) {
+                case RegularBase.STATE_00:
+                    tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_begin_time.setText(Uihelper.timeToDateRegular(info.getStartTimestamp()));
+                    tv_begin_time.setVisibility(View.VISIBLE);
+                    btn_state.setBackgroundResource(R.drawable.btn_no_begin);
+                    btn_state.setText("待开标");
+                    break;
+                case RegularBase.STATE_01:
+                    tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    tv_begin_time.setVisibility(View.GONE);
+                    btn_state.setBackgroundResource(R.drawable.btn_default_selector);
+                    btn_state.setText("立即认购");
+                    break;
+                default:
+                    tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    tv_begin_time.setVisibility(View.GONE);
+                    btn_state.setBackgroundResource(R.drawable.btn_has_done);
+                    btn_state.setText("已满额");
+                    break;
             }
             btn_state.setOnClickListener(new View.OnClickListener() {
                 @Override

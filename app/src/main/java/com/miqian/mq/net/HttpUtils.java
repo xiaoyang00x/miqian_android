@@ -84,8 +84,8 @@ public class HttpUtils {
         StringBuffer signBuffer = new StringBuffer();
         if (list != null && list.size() > 0) {
             for (Param param : list) {
-                signBuffer.append("&" + param.key);
-                signBuffer.append("=" + param.value);
+                signBuffer.append("&").append(param.key);
+                signBuffer.append("=").append(param.value);
             }
             signBuffer.append(APP_KEY);
             signBuffer.deleteCharAt(0);

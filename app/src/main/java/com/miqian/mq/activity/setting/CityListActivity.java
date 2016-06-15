@@ -71,8 +71,8 @@ public class CityListActivity extends BaseActivity {
             }
             for (CityInfo sortModel : sourceDateList) {
                 String name = sortModel.getCity();
-                if (name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name)
-                        .startsWith(filterStr.toString())) {
+                if (name.indexOf(filterStr) != -1 || characterParser.getSelling(name)
+                        .startsWith(filterStr)) {
                     filterDateList.add(sortModel);
                 }
             }

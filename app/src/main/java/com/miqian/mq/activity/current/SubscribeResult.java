@@ -127,19 +127,30 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        closeActivity();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_back:
-                MobclickAgent.onEvent(mContext, "1065");
-                if (status == 1) {
-                    ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
-                } else {
-                    SubscribeResult.this.finish();
-                    ActivityStack.getActivityStack().popActivity();
-                }
+                closeActivity();
                 break;
             default:
                 break;
         }
     }
+
+    private void closeActivity() {
+        MobclickAgent.onEvent(mContext, "1065");
+        if (status == 1) {
+            ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_MAIN, null);
+        } else {
+            SubscribeResult.this.finish();
+            ActivityStack.getActivityStack().popActivity();
+        }
+    }
+
 }

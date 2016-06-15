@@ -63,7 +63,7 @@ public class GestureLockVerifyActivity extends BaseActivity {
         return null;
     }
 
-    private final String hideMiddle4ofPhoneNum(String telphone) {
+    private String hideMiddle4ofPhoneNum(String telphone) {
         StringBuilder sb = new StringBuilder();
         if (!TextUtils.isEmpty(telphone)) {
             for (int index = 0; index < telphone.length(); index++) {
@@ -122,7 +122,7 @@ public class GestureLockVerifyActivity extends BaseActivity {
                 Pref.saveInt(Pref.UNLOCKCOUNT, unlockCount, getBaseContext());
                 StringBuilder sb = new StringBuilder();
                 sb.append("密码错误，还可以再输入").append(unlockCount).append("次");
-                tv_tip.setText(sb.toString());
+                tv_tip.setText(sb);
                 tv_tip.setTextColor(getResources().getColor(R.color.mq_y));
                 startShake();
             }

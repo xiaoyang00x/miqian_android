@@ -133,14 +133,10 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         delete(Jpush_TABLE_NAME, jpushInfo);
     }
 
-    ;
-
     public void deleteall(String userId) {
         SQLiteDatabase db = getDatabase();
         db.delete(Jpush_TABLE_NAME, "userId" + "=?", new String[]{userId});
     }
-
-    ;
 
 
     public void recordJpush(JpushInfo jpushInfo) {

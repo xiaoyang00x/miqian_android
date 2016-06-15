@@ -34,7 +34,7 @@ public class RSAUtils {
      * @param bysKey
      * @return
      */
-    private static PublicKey getPublicKeyFromX509(String algorithm, String bysKey) throws NoSuchAlgorithmException, Exception {
+    private static PublicKey getPublicKeyFromX509(String algorithm, String bysKey) throws Exception {
         byte[] decodedKey = Base64.decode(bysKey, Base64.DEFAULT);
         X509EncodedKeySpec x509 = new X509EncodedKeySpec(decodedKey);
         KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
@@ -124,7 +124,7 @@ public class RSAUtils {
             byte[] buffer = Base64.decode(privateKeyStr, Base64.DEFAULT);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
             KeyFactory keyFactory = KeyFactory.getInstance(RSA, "BC");
-            return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
+            return keyFactory.generatePrivate(keySpec);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此算法");
         } catch (InvalidKeySpecException e) {

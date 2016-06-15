@@ -20,8 +20,8 @@ public class NetBroadReceiver extends BroadcastReceiver  {
 	        }
 	    }
 
-	    public static abstract interface netEventHandler {
+	    public interface netEventHandler {
 
-	        public abstract void onNetChange();
+	        void onNetChange();
 	    }
 }

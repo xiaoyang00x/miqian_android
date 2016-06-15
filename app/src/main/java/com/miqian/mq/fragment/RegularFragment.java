@@ -2,9 +2,6 @@ package com.miqian.mq.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.adapter.RegularListAdapter;
-import com.miqian.mq.entity.GetRegularInfo;
-import com.miqian.mq.entity.GetRegularResult;
-import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.net.ICallback;
-import com.miqian.mq.net.MyAsyncTask;
-import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.RegularProjectView;
 import com.miqian.mq.views.RegularTransferView;
-import com.miqian.mq.views.ServerBusyView;
 
 /**
  * Created by guolei_wang on 15/9/16.
@@ -39,8 +28,8 @@ public class RegularFragment extends BasicFragment {
 
     private FrameLayout content;
 
-    private RegularProjectView regularProjectView; // 定期项目内容页面
-    private RegularTransferView regularTransferView; // 定期转让内容页面
+    private RegularProjectView regularProjectView; // 定期项目列表页面
+    private RegularTransferView regularTransferView; // 定期转让列表页面
 
     private View rootView;
 
@@ -143,15 +132,17 @@ public class RegularFragment extends BasicFragment {
         }
     }
 
-    // 刷新当前页面数据(预留)
+    // 刷新当前页面数据
     private void obtainData(int curSwitch) {
         switch (curSwitch) {
             case LEFTPAGE:
                 if (null != regularProjectView) {
+                    regularProjectView.setVisibility(View.VISIBLE);
                 }
                 break;
             case RIGHTPAGE:
                 if (null != regularTransferView) {
+                    regularTransferView.setVisibility(View.VISIBLE);
                 }
                 break;
             default:
