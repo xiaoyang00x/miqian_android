@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.InputType;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -170,6 +168,8 @@ public class RegularDetailActivity extends BaseActivity {
         view_close_keyboard.setOnClickListener(mOnclickListener);
         btn_buy.setOnClickListener(mOnclickListener);
         et_input.addTextChangedListener(mTextWatcher);
+        et_input.setOnFocusChangeListener(mOnFousChangeListener);
+        et_input.setOnClickListener(mOnclickListener);
     }
 
     @Override
@@ -204,13 +204,17 @@ public class RegularDetailActivity extends BaseActivity {
 
     // 跳转到下个页面
     private void jumpToNextPageIfInputValid() {
-        BigDecimal downLimit = mInfo.getFromInvestmentAmount(); // 最低认购金额
-        BigDecimal remainderLimit = mInfo.getContinueInvestmentLimit(); // 续投金额
-        BigDecimal upLimit = mInfo.getSubjectMaxBuy(); // 最大可认购金额
-        BigDecimal leftLimit = mInfo.getResidueAmt(); // 剩余金额
-
         if (!TextUtils.isEmpty(input)) {
-            upLimit = leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
+            BigDecimal downLimit = mInfo.getFromInvestmentAmount(); // 最低认购金额
+            BigDecimal remainderLimit = mInfo.getContinueInvestmentLimit(); // 续投金额
+            BigDecimal upLimit = mInfo.getSubjectMaxBuy(); // 最大可认购金额
+            BigDecimal leftLimit = mInfo.getResidueAmt(); // 剩余金额
+
+            if (upLimit == null) {
+                upLimit = leftLimit;
+            } else {
+                upLimit = leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
+            }
             BigDecimal money = new BigDecimal(input);
             BigDecimal remainder = money.remainder(remainderLimit);
             if (money.compareTo(downLimit) == -1) {
@@ -474,16 +478,7 @@ public class RegularDetailActivity extends BaseActivity {
         tv_info1.setText(FormatUtil.formatAmount(mInfo.getResidueAmt()));
         tv_info2.setText(FormatUtil.formatAmount(mInfo.getActualAmt()));
         tv_info3.setText(FormatUtil.formatAmount(mInfo.getPredictIncome()));
-        rlyt_buy_record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (RegularBase.REGULAR_03 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
-                } else if (RegularBase.REGULAR_05 == prodId) {
-                    WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
-                }
-            }
-        });
+        rlyt_buy_record.setOnClickListener(mOnclickListener);
     }
 
     // 更新标的特色
@@ -560,12 +555,16 @@ public class RegularDetailActivity extends BaseActivity {
                 case R.id.view_close_keyboard:
                     closeKeyboard();
                     break;
+                case R.id.et_input:
+                    showKeyBoardView();
+                    break;
                 case R.id.tv_seemore:
                 case R.id.tv_info_right:
-                    if (RegularBase.REGULAR_03 == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/" + prodId);
-                    } else if (RegularBase.REGULAR_05 == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/" + prodId);
+                case R.id.rlyt_buy_record:
+                    if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
+                    } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
                     }
                     break;
                 case R.id.tv_dialog_max_amount:
@@ -578,6 +577,15 @@ public class RegularDetailActivity extends BaseActivity {
                     break;
                 default:
                     break;
+            }
+        }
+    };
+
+    private View.OnFocusChangeListener mOnFousChangeListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (hasFocus) {
+                showKeyBoardView();
             }
         }
     };
