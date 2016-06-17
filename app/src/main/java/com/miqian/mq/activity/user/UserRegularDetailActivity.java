@@ -69,6 +69,9 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private LinearLayout linearLayoutRecord;
+    private TextView tvOriginproject;
+    private TextView tvOriginprojectName;
+    private View layoutPriginproject;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -133,10 +136,16 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         tvContentFirst = (TextView) findViewById(R.id.tv_content_first);
         linearLayoutRecord = (LinearLayout) findViewById(R.id.linear_record);
 
+        //购买转让的Ui
+        layoutPriginproject = findViewById(R.id.layout_originproject);
+        tvOriginproject = (TextView) findViewById(R.id.tv_originproject);
+        tvOriginprojectName = (TextView) findViewById(R.id.tv_originproject_name);
+
 
         frameProjectMatch.setOnClickListener(this);
         btnClick.setOnClickListener(this);
         findViewById(R.id.tv_referrecord).setOnClickListener(this);
+        layoutPriginproject.setOnClickListener(this);
 
     }
 
@@ -224,6 +233,13 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 linearLayoutRecord.addView(itemRecord);
             }
         }
+        //购买转让来的原始标的详情
+        String sysbdName = regInvest.getSysbdName();
+        if (!TextUtils.isEmpty(sysbdName)) {
+            layoutPriginproject.setVisibility(View.VISIBLE);
+            tvOriginproject.setVisibility(View.VISIBLE);
+            tvOriginprojectName.setText(sysbdName);
+        }
     }
 
     public int getLayoutId() {
@@ -265,11 +281,20 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //                }
 //                break;
             case R.id.btn_click:
-//                Intent intent = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("userRegularDetail", userRegularDetail);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
+                Intent intent_launch = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
+                intent_launch.putExtra("investId", investId);
+                startActivity(intent_launch);
+                break;
+            case R.id.layout_originproject:
+                if (userRegularDetail != null) {
+                    String subjectId = regInvest.getSysbdId();
+                    if ("3".equals(regInvest.getProdId())) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
+                    } else if ("4".equals(regInvest.getProdId())) {
+                        //定期计划 项目匹配
+                        WebActivity.startActivity(mActivity, Urls.project_match + subjectId);
+                    }
+                }
                 break;
             case R.id.tv_referrecord:  //查看标的操作记录详情
 

@@ -27,6 +27,8 @@ import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
+import com.miqian.mq.entity.RegTransDetailResult;
+import com.miqian.mq.entity.RegTransFerredDetailResult;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularProjectListResult;
@@ -1199,6 +1201,70 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    /**
+     *
+     *  我的定期赚转让详情
+     *
+     */
+    public static void getRegTransFerredDetail(Context context, String investId, final ICallback<RegTransFerredDetailResult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        params.add(new Param("investId", investId));
+        new MyAsyncTask(context, Urls.getRegTransFerredDetail, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                RegTransFerredDetailResult meta = JsonUtil.parseObject(result, RegTransFerredDetailResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+
+    /**
+     *
+     *  发起转让详情
+     *
+     */
+    public static void getRegTransDetail(Context context, String investId,String clearYn, final ICallback<RegTransDetailResult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        params.add(new Param("investId", investId));
+        params.add(new Param("clearYn", clearYn));
+        new MyAsyncTask(context, Urls.getRegTransDetail, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                RegTransDetailResult meta = JsonUtil.parseObject(result, RegTransDetailResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
     //我的促销接口，包括红包，拾财券等
     public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String state, String pageNum, String pageSize) {
         List<Param> mList = new ArrayList<>();
@@ -1301,6 +1367,9 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+
+
+
     //赎回预处理
     public static void withdrawPreprocess(Context context, final ICallback<WithDrawResult> callback, String amt) {
         List<Param> mList = new ArrayList<>();
@@ -1383,7 +1452,7 @@ public class HttpRequest {
 
     /**
      *
-     *
+     *  标的相关记录
      *
      */
     public static void findInvestInfo(Context context, String investId, final ICallback<OperationResult> callback) {
@@ -1411,7 +1480,6 @@ public class HttpRequest {
             }
         }).executeOnExecutor();
     }
-
     /**
      * 版本是否强制更新(正常更新为友盟更新)
      */

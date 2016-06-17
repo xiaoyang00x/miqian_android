@@ -67,20 +67,22 @@ public class ActivityRedeem extends BaseActivity {
             } else {
                 resideMoney = curDayResidue;
             }
-           editMoney.setHint("可赎回"+resideMoney+"元");
+            editMoney.setHint("可赎回" + resideMoney + "元");
             btnRollout.setEnabled(true);
             BigDecimal curMonthAmt = userCurrent.getCurMonthAmt();//本月已赎回的金额
             BigDecimal lmtMonthAmt = userCurrent.getLmtMonthAmt();//本月限制赎回额度
             BigDecimal curResidue = lmtMonthAmt.subtract(curMonthAmt);//剩余可赎回额度
+
             DecimalFormat df = new java.text.DecimalFormat("#.00");
             String textCurResidue = df.format(curResidue);
             String textCurMonthAmt = df.format(curMonthAmt);
-            if (TextUtils.isEmpty(textCurResidue)) {
+            if (textCurResidue.equals(".00")) {
                 textCurResidue = "0";
             }
-            if (TextUtils.isEmpty(textCurMonthAmt)) {
+            if (textCurMonthAmt.equals(".00")) {
                 textCurMonthAmt = "0";
             }
+
             tvExtra.setText("您剩余可赎回额度" + textCurResidue + "元" + "(本月已经赎回" + textCurMonthAmt + "元)");
             String tip = userCurrent.getWarmPrompt();//温馨提示
             if (!TextUtils.isEmpty(tip)) {

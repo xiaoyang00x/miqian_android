@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -28,7 +29,9 @@ import com.miqian.mq.views.swipemenulistview.SwipeMenuListView;
 
 import java.util.List;
 
-/** 公告列表
+/**
+ * 公告列表
+ *
  * @author Tuliangtan 2016.5.23
  */
 public class NoticeActivity extends BaseActivity {
@@ -36,11 +39,11 @@ public class NoticeActivity extends BaseActivity {
     private MySwipeRefresh swipeRefresh;
     private MessageAdapter adapter;
     private List<MessageInfo> list;
-    private SwipeMenuListView mSwipeMenuListView;
     private View mViewnoresult_data;
     private TextView tvTips;
     private TextView view_Refresh;
     private ImageView ivMessageData;
+    private ListView mListView;
 
     @Override
     public void obtainData() {
@@ -65,7 +68,7 @@ public class NoticeActivity extends BaseActivity {
                         }
                     }
                     adapter = new MessageAdapter(mActivity, list);
-                    mSwipeMenuListView.setAdapter(adapter);
+                    mListView.setAdapter(adapter);
                 } else {
                     showEmptyView();
                 }
@@ -86,7 +89,7 @@ public class NoticeActivity extends BaseActivity {
                     PushDataResult pushDataResult = JsonUtil.parseObject(messageCash, PushDataResult.class);
                     list = pushDataResult.getData().getPushList();
                     adapter = new MessageAdapter(mActivity, list);
-                    mSwipeMenuListView.setAdapter(adapter);
+                    mListView.setAdapter(adapter);
                 }
                 end();
                 swipeRefresh.setRefreshing(false);
@@ -98,7 +101,7 @@ public class NoticeActivity extends BaseActivity {
     public void initView() {
 
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
-        mSwipeMenuListView = (SwipeMenuListView) findViewById(R.id.listview);
+        mListView = (ListView) findViewById(R.id.listview);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
@@ -121,7 +124,7 @@ public class NoticeActivity extends BaseActivity {
     }
 
     private void initPullToListView() {
-        mSwipeMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
                 if (position == list.size() + 1) {

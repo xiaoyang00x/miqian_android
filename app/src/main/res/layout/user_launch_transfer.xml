@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -188,8 +190,8 @@
                     <TextView
                         android:id="@+id/text_remindday"
                         style="@style/f7_B4_V2"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
                         android:text="136天" />
 
@@ -211,8 +213,8 @@
                     <TextView
                         android:id="@+id/text_repayment"
                         style="@style/f3_b4_V2"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
                         android:text="按月付息，到期还本" />
                 </RelativeLayout>
@@ -232,8 +234,8 @@
                     <TextView
                         android:id="@+id/text_prnTransSa"
                         style="@style/f7_B4_V2"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
                         android:text="1254" />
                 </RelativeLayout>
@@ -252,6 +254,12 @@
                         android:drawableRight="@drawable/question"
                         android:text="转让金额" />
 
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="0px"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"></LinearLayout>
+
                     <EditText
                         android:id="@+id/et_money"
                         android:layout_width="150dp"
@@ -263,8 +271,10 @@
                         android:gravity="right"
                         android:hint="1000元起转"
                         android:maxEms="12"
+                        android:inputType="number"
                         android:textColor="@color/mq_b1_v2"
-                        android:textColorHint="@color/mq_b5_v2" />
+                        android:textColorHint="@color/mq_b5_v2">
+                    </EditText>
                 </RelativeLayout>
 
                 <View style="@style/item_divider" />
@@ -280,6 +290,12 @@
                         android:drawablePadding="5dp"
                         android:text="转让后年化收益" />
 
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="0px"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"></LinearLayout>
+
                     <EditText
                         android:id="@+id/et_transfer_rate"
                         android:layout_width="200dp"
@@ -291,6 +307,7 @@
                         android:gravity="right"
                         android:hint="点此填写转让年化收益"
                         android:maxEms="12"
+                        android:inputType="number"
                         android:textColor="@color/mq_b1_v2"
                         android:textColorHint="@color/mq_b5_v2" />
                 </RelativeLayout>
@@ -372,7 +389,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -385,5 +402,5 @@
             android:layout_height="@dimen/edit_item"
             android:layout_marginTop="15dp"
             android:text="确认转让" />
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

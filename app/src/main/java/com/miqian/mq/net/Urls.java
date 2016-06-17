@@ -172,6 +172,10 @@ public class Urls {
     public final static String forceUpdate = base_server + "commonService/v2/forceUpdate";
     //查询标的相关记录
     public final static String findInvestInfo = base_server + "userRegService/v2/findInvestInfo";
+    //查询标的相关记录
+    public final static String getRegTransDetail = base_server + "userRegService/v2/getRegTransDetail";
+    //我的转让详情
+    public final static String getRegTransFerredDetail = base_server + "userRegService/v2/getRegTransFerredDetail";
 
     /**
      * 网页的URL

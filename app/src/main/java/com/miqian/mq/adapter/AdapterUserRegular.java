@@ -86,7 +86,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ViewHolder) holder).textEarning.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
                 ((ViewHolder) holder).textInterestRate.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
                 ((ViewHolder) holder).textInterestRatePresent.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
-                regInvest.setProjectState("0");
                 if (regInvest.getProjectState().equals("0")) {
                     ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
@@ -218,7 +217,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             textEarningName = (TextView) itemView.findViewById(R.id.text_earning_name);
             textRight = (TextView) itemView.findViewById(R.id.text_right);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -229,7 +227,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             });
         }
     }
-
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textRegularCount;

@@ -202,31 +202,19 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
     }
 
     private void initPullToListView() {
-        creator = new SwipeMenuCreator() {
-            @Override
-            public void create(SwipeMenu menu) {
-                SwipeMenuItem item1 = new SwipeMenuItem(getApplicationContext());
-                item1.setBackground(getResources().getDrawable(R.drawable.shape_swip_red));
-                item1.setWidth(Uihelper.dip2px(mActivity, 90));
-                item1.setTitle("置为已读");
-                item1.setTitleColor(Color.WHITE);
-                item1.setTitleSize(18);
-                menu.addMenuItem(item1);
-            }
-        };
         mSwipeMenuListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public void onMenuItemClick(final int position, SwipeMenu menu, int index) {
                 //删除消息
                 begin();
                 MessageInfo messageInfo = list.get(position);
-                HttpRequest.deleteMessage(mActivity, new ICallback<Meta>() {
+                HttpRequest.setMessageReaded(mActivity, new ICallback<Meta>() {
                     @Override
                     public void onSucceed(Meta result) {
                         end();
-                        Uihelper.showToast(mActivity, "删除成功");
-                        list.remove(position);
+                        Uihelper.showToast(mActivity, "设置成功");
                         checkReadStatus(list);
+                        list.get(position).setIsRead(true);
                         mSwipeMenuListView.setdataList(list);
                         adapter.notifyDataSetChanged();
                         //没有数据
@@ -234,17 +222,15 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                             showEmptyView();
                         }
                     }
-
                     @Override
                     public void onFail(String error) {
                         end();
                         Uihelper.showToast(mActivity, error);
                     }
-                }, messageInfo.getId(), "", 0);
+                }, messageInfo.getId() + "", "", 0);
 
             }
         });
-//        mSwipeMenuListView.setMenuCreator(creator,list);
         mSwipeMenuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {

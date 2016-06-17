@@ -66,7 +66,7 @@
                     <View
                         android:layout_width="1px"
                         android:layout_height="55dp"
-                        android:background="@color/white"/>
+                        android:background="@color/white" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                     <View
                         android:layout_width="1px"
                         android:layout_height="55dp"
-                        android:background="@color/white"/>
+                        android:background="@color/white" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -113,27 +113,29 @@
                             android:text="年化收益"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mq_font3_v2" />
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:orientation="horizontal"
                             android:layout_marginTop="5dp"
-                            >
+                            android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/text_interest_rate"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/mq_font10_v2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="" />
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/mq_font10_v2" />
+
                             <TextView
                                 android:id="@+id/text_interest_rate_present"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/mq_font3_v2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="" />
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/mq_font3_v2" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -174,7 +176,6 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:background="@color/white"
                 android:orientation="vertical">
 
                 <View
@@ -184,7 +185,8 @@
                 <RelativeLayout
                     android:id="@+id/frame_project_match"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/listitem_height">
+                    android:layout_height="@dimen/listitem_height"
+                    android:background="@color/white">
 
                     <TextView
                         android:id="@+id/text_project"
@@ -213,7 +215,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/listitem_height">
+                    android:layout_height="@dimen/listitem_height"
+                    android:background="@color/white">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -243,7 +246,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/listitem_height">
+                    android:layout_height="@dimen/listitem_height"
+                    android:background="@color/white">
 
                     <TextView
                         android:id="@+id/text_earning_type"
@@ -269,9 +273,52 @@
                         android:layout_alignParentBottom="true" />
                 </RelativeLayout>
 
+                <TextView
+                    android:id="@+id/tv_originproject"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:layout_marginTop="5dp"
+                    android:text="原项目信息" />
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/layout_originproject"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/listitem_height"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_originproject_name"
+                        style="@style/f3_B1"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_left_right"
+                        android:gravity="left"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/arrow_origin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_left_right"
+                        android:src="@drawable/right" />
+
+                </RelativeLayout>
+
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/listitem_height">
+                    android:layout_height="@dimen/listitem_height"
+                    android:background="@color/white">
 
                     <TextView
                         style="@style/f3_B1"
@@ -307,45 +354,47 @@
 
                 </RelativeLayout>
 
+
                 <LinearLayout
                     android:id="@+id/linear_record"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/arrow_detail"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginRight="@dimen/margin_left_right"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:background="@color/white"
+                    android:layout_marginBottom="60dp"
+                    android:orientation="vertical"
+                    android:paddingTop="15dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="35dp">
 
-                   <LinearLayout
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:orientation="vertical"
-                       android:layout_gravity="center"
-                       >
-                       <TextView
-                           android:id="@+id/tv_date_first"
-                           android:layout_width="100dp"
-                           android:layout_height="wrap_content"
-                           android:layout_gravity="bottom"
-                           android:gravity="right"
-                           android:text="3333"
-                           android:textColor="@color/mq_r1_v2"
-                           android:textSize="@dimen/mq_font3_v2" />
-                       <TextView
-                           android:id="@+id/tv_time_first"
-                           android:layout_width="100dp"
-                           android:layout_height="wrap_content"
-                           android:layout_gravity="bottom"
-                           android:gravity="right"
-                           android:text="3333"
-                           android:textColor="@color/mq_r1_v2"
-                           android:textSize="@dimen/mq_font2_v2" />
-                   </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_date_first"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:gravity="right"
+                                android:text="3333"
+                                android:textColor="@color/mq_r1_v2"
+                                android:textSize="@dimen/mq_font3_v2" />
+
+                            <TextView
+                                android:id="@+id/tv_time_first"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:gravity="right"
+                                android:text="3333"
+                                android:textColor="@color/mq_r1_v2"
+                                android:textSize="@dimen/mq_font2_v2" />
+                        </LinearLayout>
 
 
                         <RelativeLayout
@@ -359,13 +408,13 @@
                                 android:layout_height="20dp"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
-                                android:background="@color/mq_b5_v2"/>
+                                android:background="@color/mq_b5_v2" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
                                 android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
                                 android:src="@drawable/process_red" />
                         </RelativeLayout>
 

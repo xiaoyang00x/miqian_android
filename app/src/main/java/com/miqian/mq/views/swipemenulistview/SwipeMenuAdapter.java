@@ -48,37 +48,30 @@ public class SwipeMenuAdapter implements WrapperListAdapter,
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         SwipeMenuLayout layout = null;
-        if (convertView == null) {
-            View contentView = mAdapter.getView(position, convertView, parent);
-            SwipeMenu menu = new SwipeMenu(mContext);
-            createMenu(menu,mList.get(position));
-            SwipeMenuView menuView = new SwipeMenuView(menu,
-                    (SwipeMenuListView) parent);
-            menuView.setOnItemClickListener(this);
-            SwipeMenuListView listView = (SwipeMenuListView) parent;
-            layout = new SwipeMenuLayout(contentView, menuView,
-                    listView.getCloseInterpolator(),
-                    listView.getOpenInterpolator());
-            layout.setPosition(position);
-        } else {
-            layout = (SwipeMenuLayout) convertView;
-            layout.closeMenu();
-            layout.setPosition(position);
-            mAdapter.getView(position, layout.getContentView(),
-                    parent);
-        }
+        View contentView = mAdapter.getView(position, convertView, parent);
+        SwipeMenu menu = new SwipeMenu(mContext);
+        createMenu(menu, mList.get(position));
+        SwipeMenuView menuView = new SwipeMenuView(menu,
+                (SwipeMenuListView) parent);
+        menuView.setOnItemClickListener(this);
+        SwipeMenuListView listView = (SwipeMenuListView) parent;
+        layout = new SwipeMenuLayout(contentView, menuView,
+                listView.getCloseInterpolator(),
+                listView.getOpenInterpolator());
+        layout.setPosition(position);
+        layout.closeMenu();
         return layout;
     }
 
-    public void createMenu(SwipeMenu menu,MessageInfo messageInfo) {
+    public void createMenu(SwipeMenu menu, MessageInfo messageInfo) {
 
         SwipeMenuItem item1 = new SwipeMenuItem(mContext);
         item1.setBackground(mContext.getResources().getDrawable(R.drawable.shape_swip_red));
         item1.setWidth(Uihelper.dip2px(mContext, 90));
-        if (messageInfo.isRead()){
+        if (messageInfo.isRead()) {
             item1.setWidth(Uihelper.dip2px(mContext, 0));
             item1.setTitleColor(Color.GRAY);
-        }else {
+        } else {
             item1.setTitle("置为已读");
             item1.setTitleColor(Color.WHITE);
         }

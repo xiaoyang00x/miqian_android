@@ -26,7 +26,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
-public class UserRegularActivity extends BaseActivity implements View.OnClickListener, AdapterUserRegular.MyItemClickListener,RadioGroup.OnCheckedChangeListener {
+public class UserRegularActivity extends BaseActivity implements View.OnClickListener, AdapterUserRegular.MyItemClickListener, RadioGroup.OnCheckedChangeListener {
 
     private Button titleLeft;
     private Button titleRight;
@@ -56,7 +56,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             //通知进来的情况下，不是当前用户则退出此界面
             String token = UserUtil.getToken(this);
             if (UserUtil.hasLogin(this) && !token.equals(jpushToken)) {
-                isStop=true;
+                isStop = true;
                 finish();
             }
         }
@@ -65,7 +65,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void obtainData() {
-        if (isStop){
+        if (isStop) {
             return;
         }
         pageNo = 1;
@@ -154,7 +154,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void refreshView() {
-        mAdapter = new AdapterUserRegular(this,regInvestList, userRegular.getReg(),userRegular.getPage(), mType);
+        mAdapter = new AdapterUserRegular(this, regInvestList, userRegular.getReg(), userRegular.getPage(), mType);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setMaxItem(userRegular.getPage().getCount());
         mRecyclerView.setAdapter(mAdapter);
@@ -167,7 +167,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-          mTitle.setTitleText("我的定期");
+        mTitle.setTitleText("我的定期");
     }
 
     @Override
@@ -203,7 +203,13 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
         } else {
             MobclickAgent.onEvent(mActivity, "1039");
         }
-        Intent intent = new Intent(mActivity, UserRegularDetailActivity.class);
+
+        Intent intent = null;
+        if (mType == 2) {
+            intent = new Intent(mActivity, MyRegularTransferDetailActivity.class);
+        } else {
+            intent = new Intent(mActivity, UserRegularDetailActivity.class);
+        }
         intent.putExtra("investId", regInvest.getId());
         intent.putExtra("clearYn", regInvest.getBearingStatus());
         intent.putExtra("projectType", regInvest.getProdId());

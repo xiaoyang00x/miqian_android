@@ -19,6 +19,7 @@ public class MessageAdapter extends BaseAdapter {
     private Context context;
     private List<MessageInfo> messageList;
 
+
     public MessageAdapter(Context context, List<MessageInfo> messageList) {
         this.context = context;
         this.messageList = messageList;
@@ -45,38 +46,37 @@ public class MessageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_message, null);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-            holder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
-            holder.iv_isRead = (ImageView) convertView.findViewById(R.id.iv_isRead);
-			holder.divider = convertView.findViewById(R.id.divider);
-            convertView.setTag(holder);
+
+        View divider;
+        TextView tv_content;
+        TextView tv_title;
+        TextView tv_time;
+        ImageView iv_isRead;
+        convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_message, null);
+        tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+        tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+        tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+        iv_isRead = (ImageView) convertView.findViewById(R.id.iv_isRead);
+        divider = convertView.findViewById(R.id.divider);
+        if (position == getCount() - 1) {
+            divider.setVisibility(View.GONE);
         } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        if (position == getCount() -1) {
-            holder.divider.setVisibility(View.GONE);
-        } else {
-            holder.divider.setVisibility(View.VISIBLE);
+            divider.setVisibility(View.VISIBLE);
         }
         final MessageInfo messageInfo = messageList.get(position);
-        holder.tv_title.setText(messageInfo.getTitle());
-        holder.tv_content.setText(messageInfo.getContent());
+        tv_title.setText(messageInfo.getTitle());
+        tv_content.setText(messageInfo.getContent());
 
 
         // 判断是否是未读状态
-            if (messageInfo.isRead()) {
-                holder.iv_isRead.setBackgroundResource(R.drawable.message_open);
-            } else {
-                holder.iv_isRead.setBackgroundResource(R.drawable.message_close);
-            }
+        if (messageInfo.isRead()) {
+            iv_isRead.setBackgroundResource(R.drawable.message_open);
+        } else {
+            iv_isRead.setBackgroundResource(R.drawable.message_close);
+        }
 
         String dateToChineseStrings = Uihelper.timestampToDateStr_other(messageInfo.getSendTime());
-        holder.tv_time.setText(dateToChineseStrings);
+        tv_time.setText(dateToChineseStrings);
         return convertView;
     }
 
