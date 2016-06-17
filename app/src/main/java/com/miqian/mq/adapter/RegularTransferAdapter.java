@@ -95,6 +95,7 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private class RegularTransferHolder extends RecyclerView.ViewHolder {
 
+        private View itemView;
         private TextView tv_name; // 标题
         private TextView tv_profit_rate; // 年化收益
         private TextView tv_profit_rate_unit; // 年利率单位:%, 有加息的话如:+0.5%
@@ -106,10 +107,11 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public RegularTransferHolder(View itemView) {
             super(itemView);
-            initView(itemView);
+            this.itemView = itemView;
+            initView();
         }
 
-        private void initView(View itemView) {
+        private void initView() {
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_profit_rate = (TextView) itemView.findViewById(R.id.tv_profit_rate);
             tv_profit_rate_unit = (TextView) itemView.findViewById(R.id.tv_profit_rate_unit);
@@ -149,6 +151,13 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     break;
             }
             btn_state.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RegularDetailActivity.startActivity(
+                            mContext, info.getSubjectId(), info.getProdId());
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     RegularDetailActivity.startActivity(

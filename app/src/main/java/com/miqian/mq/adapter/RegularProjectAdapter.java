@@ -118,6 +118,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private class RegularCardHolder extends RecyclerView.ViewHolder {
 
+        private View itemView;
         private TextView tv_name; // 名称
         private TextView tv_profit_rate; // 年利率
         private TextView tv_profit_rate_unit; // 年利率单位:%, 有加息的话如:+0.5%
@@ -127,10 +128,11 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public RegularCardHolder(View itemView) {
             super(itemView);
-            initView(itemView);
+            this.itemView = itemView;
+            initView();
         }
 
-        private void initView(View itemView) {
+        private void initView() {
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_profit_rate = (TextView) itemView.findViewById(R.id.tv_profit_rate);
             tv_profit_rate_unit = (TextView) itemView.findViewById(R.id.tv_profit_rate_unit);
@@ -159,6 +161,13 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 tv_profit_rate_unit.setText("%");
             }
             btn_buy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RegularDetailActivity.startActivity(
+                            mContext, info.getSubjectId(), info.getProdId());
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     RegularDetailActivity.startActivity(
@@ -218,6 +227,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private class RegularListHolder extends RecyclerView.ViewHolder {
 
+        private View itemView;
         private TextView tv_name; // 名称
         private TextView tv_profit_rate; // 年利率
         private TextView tv_profit_rate_unit; // 年利率单位:%, 有加息的话如:+0.5%
@@ -230,10 +240,11 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public RegularListHolder(View itemView) {
             super(itemView);
-            initView(itemView);
+            this.itemView = itemView;
+            initView();
         }
 
-        private void initView(View itemView) {
+        private void initView() {
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_profit_rate = (TextView) itemView.findViewById(R.id.tv_profit_rate);
             tv_profit_rate_unit = (TextView) itemView.findViewById(R.id.tv_profit_rate_unit);
@@ -301,6 +312,13 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     break;
             }
             btn_state.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RegularDetailActivity.startActivity(
+                            mContext, info.getSubjectId(), info.getProdId());
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     RegularDetailActivity.startActivity(

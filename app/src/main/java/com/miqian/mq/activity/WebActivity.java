@@ -284,6 +284,12 @@ public class WebActivity extends BaseActivity implements LoginListener {
         RegularDetailActivity.startActivity(this, subjectId, RegularBase.REGULAR_05);
     }
 
+    //定期详情页面
+    @JavascriptInterface
+    public void startRegularDetail(String subjectId,int product_id) {
+        RegularDetailActivity.startActivity(this, subjectId, product_id);
+    }
+
     //活期首页
     @JavascriptInterface
     public void startCurrent() {

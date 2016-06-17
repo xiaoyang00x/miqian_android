@@ -132,7 +132,7 @@ public class RegularFragment extends BasicFragment {
         }
     }
 
-    // 刷新当前页面数据
+    // 获取当前页面数据 - 若无数据
     private void obtainData(int curSwitch) {
         switch (curSwitch) {
             case LEFTPAGE:
