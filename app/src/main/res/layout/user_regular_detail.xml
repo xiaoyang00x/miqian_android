@@ -294,12 +294,14 @@
                     <TextView
                         android:id="@+id/tv_originproject_name"
                         style="@style/f3_B1"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_left_right"
+                        android:layout_toLeftOf="@+id/arrow_origin"
                         android:gravity="left"
                         android:singleLine="true"
+                        android:layout_alignParentLeft="true"
                         android:text=""
                         android:textStyle="bold" />
 

@@ -265,7 +265,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_annouce;
+        return R.layout.activity_message;
     }
 
     @Override

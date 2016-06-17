@@ -86,8 +86,8 @@ public class MyRegularTransferDetailActivity extends BaseActivity implements Vie
         tv_description.setText(sb.toString());
         tv_profit_rate.setText(regTransFerredDetail.getPredictRate());
         tv_time_limit.setText(regTransFerredDetail.getLimitCnt());
-        tvOriginProfit.setText(regTransFerredDetail.getOldYrt() + "%");
-        tv_remain_amount.setText(regTransFerredDetail.getBidAmt() + "元");
+        tvOriginProfit.setText("原年化收益:"+regTransFerredDetail.getOldYrt() + "%");
+        tv_remain_amount.setText("可认购本金:"+regTransFerredDetail.getBidAmt() + "元");
         tvBidamt.setText(regTransFerredDetail.getBidAmt());
         tvRealbidAmt.setText(regTransFerredDetail.getRealBidAmt());
         tvReginncome.setText(regTransFerredDetail.getRegIncome());
@@ -212,7 +212,7 @@ public class MyRegularTransferDetailActivity extends BaseActivity implements Vie
 
     public void updateProjectStatus() {
         //转让中
-        if (regTransFerredDetail.getProjectState().equals("3")) {
+        if (regTransFerredDetail.getProjectState().equals("1")) {
             tv_begin_countdown.setVisibility(View.VISIBLE);
             setMaxTime(regTransFerredDetail.getBdEndTm() - System.currentTimeMillis());
             mHandler.post(mRunnable);
