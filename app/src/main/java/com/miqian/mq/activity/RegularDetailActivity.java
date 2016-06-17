@@ -7,8 +7,11 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Selection;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -64,12 +67,14 @@ public class RegularDetailActivity extends BaseActivity {
 
     private ViewStub viewstub_detail;
 
+    /*  标的特色相关   */
     private ImageView iv1;
     private ImageView iv2;
     private ImageView iv3;
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
+    /*  标的特色相关   */
 
     /*  底部输入框相关   */
     private EditText et_input;
@@ -98,20 +103,19 @@ public class RegularDetailActivity extends BaseActivity {
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
 
+    private int screenHeight; // 屏幕高度
+
     @Override
     public void onCreate(Bundle arg0) {
         subjectId = getIntent().getStringExtra(Constants.SUBJECTID);
         prodId = getIntent().getIntExtra(Constants.PRODID, -1);
         super.onCreate(arg0);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         showDefaultView();
         screenHeight = MobileOS.getScreenHeight(this);
     }
-
-    private int screenHeight;
 
     @Override
     protected void onResume() {
@@ -444,11 +448,13 @@ public class RegularDetailActivity extends BaseActivity {
                 rlyt_input.setOnTouchListener(mOnTouchListener);
                 btn_state.setVisibility(View.GONE);
                 tv_dialog_min_amount.setText(FormatUtil.formatAmount(mInfo.getFromInvestmentAmount()));
+                addUnit(tv_dialog_min_amount);
                 tv_dialog_min_amount.setOnClickListener(mOnclickListener);
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint("输入认购金额");
                     tv_dialog_max_amount_tip.setText("最大可认购金额");
                     tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getResidueAmt()));
+                    addUnit(tv_dialog_max_amount); // 增加 元 单位符号
                     tv_dialog_max_amount.setOnClickListener(mOnclickListener);
                 } else {
                     et_input.setHint("输入认购本金");
@@ -479,6 +485,8 @@ public class RegularDetailActivity extends BaseActivity {
         tv_info2.setText(FormatUtil.formatAmount(mInfo.getActualAmt()));
         tv_info3.setText(FormatUtil.formatAmount(mInfo.getPredictIncome()));
         rlyt_buy_record.setOnClickListener(mOnclickListener);
+
+
     }
 
     // 更新标的特色
@@ -639,18 +647,27 @@ public class RegularDetailActivity extends BaseActivity {
             return;
         }
         try {
-            if (null == mInfo.getDiscountRate()) {
+            if (TextUtils.isEmpty(paymentAmount) || null == mInfo.getDiscountRate()) {
                 tv_dialog_max_amount.setText("--");
             } else {
-                paymentAmount = FormatUtil.getMoneyString(
-                        new BigDecimal(input).multiply(
-                                new BigDecimal(1).subtract(
-                                        mInfo.getDiscountRate())).toString());
-                tv_dialog_max_amount.setText(FormatUtil.formatAmountStr(paymentAmount));
+                BigDecimal temp = mInfo.getDiscountRate().divide(new BigDecimal(100));
+                temp = new BigDecimal(1).subtract(temp);
+                temp = new BigDecimal(input).multiply(temp);
+                paymentAmount = FormatUtil.getMoneyString(temp.toString());
+                String str = FormatUtil.formatAmountStr(paymentAmount);
+                tv_dialog_max_amount.setText(str);
             }
         } catch (Exception e) {
             tv_dialog_max_amount.setText("--");
         }
+        addUnit(tv_dialog_max_amount);
+    }
+
+    // 增加单位(元)
+    private void addUnit(TextView textView) {
+        SpannableString spannableString = new SpannableString("元");
+        spannableString.setSpan(new TextAppearanceSpan(this, R.style.f3_b4_V2), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.append(spannableString);
     }
 
     private long maxTime;
