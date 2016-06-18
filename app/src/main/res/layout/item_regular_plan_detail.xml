@@ -11,15 +11,14 @@
         android:background="@color/white"
         android:ellipsize="end"
         android:gravity="left"
-        android:paddingBottom="15dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
+        android:padding="15dp"
         android:singleLine="true"
         android:text="天津鑫海融资租赁有限公司"
         android:textColor="@color/mq_b2_v2"
-        android:textSize="@dimen/mq_font5_v2" />
+        android:textSize="@dimen/mq_font7_v2" />
 
     <include
+        android:id="@+id/line"
         layout="@layout/divide_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -35,7 +35,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="年化收益"
-            android:textColor="@color/mq_y2_v2"
+            android:textColor="@color/mq_y3_v2"
             android:textSize="@dimen/mq_font3_v2" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="期限"
-            android:textColor="@color/mq_y2_v2"
+            android:textColor="@color/mq_y3_v2"
             android:textSize="@dimen/mq_font3_v2" />
 
         <TextView

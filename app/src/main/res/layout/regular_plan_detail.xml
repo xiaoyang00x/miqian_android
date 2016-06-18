@@ -16,10 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="匹配项目"
-        android:textColor="@color/mq_b2_v2"
-        android:textSize="@dimen/mq_font5_v2" />
+        android:textColor="@color/mq_b1_v2"
+        android:textSize="@dimen/mq_font7_v2"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/llyt_content"

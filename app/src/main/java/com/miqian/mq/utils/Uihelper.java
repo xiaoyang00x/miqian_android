@@ -148,10 +148,10 @@ public class Uihelper {
     /**
      * 将时间戳转换成yyyy-MM-dd HH:mm:ss
      *
-     * @author yangsq
-     * @date 2014-7-22
      * @param timestamp
      * @return
+     * @author yangsq
+     * @date 2014-7-22
      */
     public static String timestampToDateStr(Double timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -167,6 +167,7 @@ public class Uihelper {
 
     /**
      * 将时间戳换算成 MM月dd日 HH:mm分 (定期待开标项目开标时间)
+     *
      * @param time
      * @return
      */
@@ -178,19 +179,20 @@ public class Uihelper {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         return new StringBuilder().
-                append(month).append("月").
-                append(day).append("日").append(" ").
-                append(hour).append(":").
-                append(minute).append("分").toString();
+                append(String.format("%02d", month)).append("月").
+                append(String.format("%02d", day)).append("日").
+                append(" ").
+                append(String.format("%02d", hour)).append(":").
+                append(String.format("%02d", minute)).append("分").toString();
     }
 
     /**
      * 将时间戳转换成yyyyMMdd
      *
-     * @author Jackie
-     * @date 2015-9-29
      * @param timestamp
      * @return
+     * @author Jackie
+     * @date 2015-9-29
      */
     public static String timestampToString(String timestamp) {
         if (!TextUtils.isEmpty(timestamp)) {
@@ -204,10 +206,10 @@ public class Uihelper {
     /**
      * 红包显示时间格式
      *
-     * @author Jackie
-     * @date 2015-9-29
      * @param timestamp
      * @return
+     * @author Jackie
+     * @date 2015-9-29
      */
     public static String redPaperTime(String timestamp) {
         if (TextUtils.isEmpty(timestamp)) {
@@ -222,10 +224,10 @@ public class Uihelper {
     /**
      * 将时间戳转换成yyyyMMdd
      *
-     * @author Jackie
-     * @date 2015-9-29
      * @param timestamp
      * @return
+     * @author Jackie
+     * @date 2015-9-29
      */
     public static String timeToString(String timestamp) {
         if (!TextUtils.isEmpty(timestamp)) {
@@ -259,6 +261,7 @@ public class Uihelper {
         }
         return true;
     }
+
     public static void setLastClickTime() {
         lastClickTime = 0;
     }

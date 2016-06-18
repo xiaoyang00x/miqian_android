@@ -31,6 +31,8 @@ public class RegularProjectInfo extends RegularBase {
 
     private int limitDay4Transfer; // 再次转让限制天数
 
+    private String transferFlag; // 转让天数信息
+
     private String originalRate; // 原始年化收益率
 
     private String personTime; // 认购人次
@@ -309,5 +311,13 @@ public class RegularProjectInfo extends RegularBase {
 
     public void setOriginalSubjectId(String originalSubjectId) {
         this.originalSubjectId = originalSubjectId;
+    }
+
+    public String getTransferFlag() {
+        return transferFlag;
+    }
+
+    public void setTransferFlag(String transferFlag) {
+        this.transferFlag = transferFlag;
     }
 }

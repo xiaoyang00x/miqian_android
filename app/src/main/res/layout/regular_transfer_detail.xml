@@ -208,16 +208,44 @@
         android:background="@color/mq_b7_v2"
         android:gravity="center_vertical|left"
         android:padding="15dp"
-        android:text="原标的"
+        android:text="原产品相关信息"
         android:textColor="@color/mq_b4_v2"
         android:textSize="@dimen/mq_font7_v2" />
 
-    <LinearLayout
-        android:id="@+id/llyt_content"
+    <RelativeLayout
+        android:id="@+id/rlyt_original_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical" />
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_original_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:ellipsize="end"
+            android:padding="15dp"
+            android:singleLine="true"
+            android:textColor="@color/mq_b2_v2"
+            android:textSize="@dimen/mq_font7_v2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:singleLine="true"
+            android:text=">"
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font7_v2"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

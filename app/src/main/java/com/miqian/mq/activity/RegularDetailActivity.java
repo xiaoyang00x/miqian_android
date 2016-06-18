@@ -340,6 +340,9 @@ public class RegularDetailActivity extends BaseActivity {
             RegularProjectMatch projectMatch = mList.get(index);
             View mView = mInflater.inflate(R.layout.item_regular_plan_detail, null);
             ((TextView) mView.findViewById(R.id.tv_content)).setText(projectMatch.getName());
+            if (index == count - 1) {
+                mView.findViewById(R.id.line).setVisibility(View.GONE);
+            }
             content.addView(mView);
         }
         tv_seemore.setOnClickListener(mOnclickListener);
@@ -352,25 +355,21 @@ public class RegularDetailActivity extends BaseActivity {
 
         // 标的描述
         StringBuilder sb = new StringBuilder();
-        if (1 == mInfo.getLimitDay4Transfer()) {
-            sb.append("次日");
-        } else {
-            sb.append(mInfo.getLimitDay4Transfer());
-            sb.append("天");
+        if (!TextUtils.isEmpty(mInfo.getTransferFlag())) {
+            sb.append(mInfo.getTransferFlag()).append(" | ");
         }
-        sb.append("可转").append(" | ");
         if (mInfo.getFromInvestmentAmount() != null) {
             sb.append(mInfo.getFromInvestmentAmount());
             sb.append("元起投").append(" | ");
         }
         if (RegularBase.REGULAR_04 == prodId || RegularBase.REGULAR_06 == prodId) {
             sb.append("次日计息");
-        } else if (mInfo.getSubjectMaxBuy() != null && !mInfo.getSubjectMaxBuy().equals(new BigDecimal("999999999999"))) {
+        } else if (mInfo.getSubjectMaxBuy() == null || mInfo.getSubjectMaxBuy().compareTo(new BigDecimal("999999999999")) == 0) {
+            sb.append("无限购");
+        } else {
             sb.append("限购");
             sb.append(mInfo.getSubjectMaxBuy());
             sb.append("元");
-        } else {
-            sb.append("无限购");
         }
         tv_description.setText(sb);
 
@@ -476,17 +475,23 @@ public class RegularDetailActivity extends BaseActivity {
     private void updateRegularTransferDetail() {
         viewstub_detail.setLayoutResource(R.layout.regular_transfer_detail);
         View viewDetail = viewstub_detail.inflate();
-        LinearLayout content = (LinearLayout) viewDetail.findViewById(R.id.llyt_content);
         TextView tv_info1 = (TextView) viewDetail.findViewById(R.id.tv_info1);
         TextView tv_info2 = (TextView) viewDetail.findViewById(R.id.tv_info2);
         TextView tv_info3 = (TextView) viewDetail.findViewById(R.id.tv_info3);
         RelativeLayout rlyt_buy_record = (RelativeLayout) viewDetail.findViewById(R.id.rlyt_buy_record);
+        RelativeLayout rlyt_original_name = (RelativeLayout) viewDetail.findViewById(R.id.rlyt_original_name);
+        TextView tv_original_name = (TextView) viewDetail.findViewById(R.id.tv_original_name);
         tv_info1.setText(FormatUtil.formatAmount(mInfo.getResidueAmt()));
         tv_info2.setText(FormatUtil.formatAmount(mInfo.getActualAmt()));
         tv_info3.setText(FormatUtil.formatAmount(mInfo.getPredictIncome()));
+        tv_original_name.setText(mInfo.getOriginalSubjectName());
         rlyt_buy_record.setOnClickListener(mOnclickListener);
-
-
+        rlyt_original_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegularDetailActivity.startActivity(getBaseContext(), mInfo.getOriginalSubjectId(), mInfo.getProdId() - 1);
+            }
+        });
     }
 
     // 更新标的特色
@@ -495,31 +500,46 @@ public class RegularDetailActivity extends BaseActivity {
         if (null == mList || mList.size() != 3) {
             return;
         }
-        RegularProjectFeature feature1 = mList.get(0);
+        final RegularProjectFeature feature1 = mList.get(0);
         tv1.setText(feature1.getTitle());
         if (!TextUtils.isEmpty(feature1.getImgUrl())) {
             imageLoader.displayImage(feature1.getImgUrl(), iv1, options);
         }
         if (!TextUtils.isEmpty(feature1.getJumpUrl())) {
-            WebActivity.startActivity(getBaseContext(), feature1.getJumpUrl());
+            iv1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebActivity.startActivity(getBaseContext(), feature1.getJumpUrl());
+                }
+            });
         }
 
-        RegularProjectFeature feature2 = mList.get(1);
+        final RegularProjectFeature feature2 = mList.get(1);
         tv2.setText(feature2.getTitle());
         if (!TextUtils.isEmpty(feature2.getImgUrl())) {
             imageLoader.displayImage(feature2.getImgUrl(), iv2, options);
         }
         if (!TextUtils.isEmpty(feature2.getJumpUrl())) {
-            WebActivity.startActivity(getBaseContext(), feature2.getJumpUrl());
+            iv2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebActivity.startActivity(getBaseContext(), feature2.getJumpUrl());
+                }
+            });
         }
 
-        RegularProjectFeature feature3 = mList.get(2);
+        final RegularProjectFeature feature3 = mList.get(2);
         tv3.setText(feature3.getTitle());
         if (!TextUtils.isEmpty(feature3.getImgUrl())) {
             imageLoader.displayImage(feature3.getImgUrl(), iv3, options);
         }
         if (!TextUtils.isEmpty(feature3.getJumpUrl())) {
-            WebActivity.startActivity(getBaseContext(), feature3.getJumpUrl());
+            iv3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebActivity.startActivity(getBaseContext(), feature3.getJumpUrl());
+                }
+            });
         }
     }
 
@@ -699,10 +719,14 @@ public class RegularDetailActivity extends BaseActivity {
         long minute = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000) / (60 * 1000);
         long second = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - minute * 60 * 1000) / 1000;
         return new StringBuilder("结束时间:").
-                append(0 == day ? "" : day).append(0 == day ? "" : "天").
-                append(0 == hour ? "" : hour).append(0 == hour ? "" : "时").
-                append(0 == minute ? "" : minute).append(0 == minute ? "" : "分").
-                append(0 == second ? "" : second).append(0 == second ? "" : "秒");
+                append(String.format("%02d", day)).append("天").
+                append(String.format("%02d", hour)).append("时").
+                append(String.format("%02d", minute)).append("分").
+                append(String.format("%02d", second)).append("秒");
+    }
+
+    public static void main(String[] args) {
+        System.out.println(String.format("%02d", 1L));
     }
 
 }
