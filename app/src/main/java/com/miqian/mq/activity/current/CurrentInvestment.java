@@ -404,7 +404,19 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("确认订单");
+        if (PRODID_CURRENT.equals(prodId)) {
+            mTitle.setTitleText("活期认购");
+        } else if (PRODID_REGULAR.equals(prodId)) {
+            mTitle.setTitleText("定期认购");
+        } else if (PRODID_REGULAR_PLAN.equals(prodId)) {
+            mTitle.setTitleText("定期认购");
+        } else if (PRODID_REGULAR_TRANSFER.equals(prodId)) {
+            mTitle.setTitleText("定期项目转让认购");
+        } else if (PRODID_REGULAR_PLAN_TRANSFER.equals(prodId)) {
+            mTitle.setTitleText("定期计划转让认购");
+        } else {
+            mTitle.setTitleText("确认订单");
+        }
     }
 
     @Override
