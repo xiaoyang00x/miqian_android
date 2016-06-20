@@ -2,6 +2,7 @@ package com.miqian.mq.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -65,9 +66,13 @@ public class RegularDetailActivity extends BaseActivity {
     private TextView tv_people_amount; // 已认购人数
     private TextView tv_info_right; // 默认文字(已认购人数)或原年化收益:
 
+    private TextView tv_88; // 88理财节
+
     private ViewStub viewstub_detail;
 
     /*  标的特色相关   */
+    private LinearLayout llyt_project_feature;
+    private TextView tv_project_feature;
     private ImageView iv1;
     private ImageView iv2;
     private ImageView iv3;
@@ -115,6 +120,9 @@ public class RegularDetailActivity extends BaseActivity {
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         showDefaultView();
         screenHeight = MobileOS.getScreenHeight(this);
+        // 关于Android收起输入法时会出现屏幕部分黑屏解决
+        // http://blog.csdn.net/lytxyc/article/details/44622367
+        mContentView.getRootView().setBackgroundColor(getResources().getColor(R.color.white));
     }
 
     @Override
@@ -148,8 +156,11 @@ public class RegularDetailActivity extends BaseActivity {
         tv_remain_amount = (TextView) findViewById(R.id.tv_remain_amount);
         tv_people_amount = (TextView) findViewById(R.id.tv_people_amount);
         tv_info_right = (TextView) findViewById(R.id.tv_info_right);
+        tv_88 = (TextView) findViewById(R.id.tv_88);
         viewstub_detail = (ViewStub) findViewById(R.id.viewstub_detail);
 
+        llyt_project_feature = (LinearLayout) findViewById(R.id.llyt_project_feature);
+        tv_project_feature = (TextView) findViewById(R.id.tv_project_feature);
         iv1 = (ImageView) findViewById(R.id.iv_1);
         iv2 = (ImageView) findViewById(R.id.iv_2);
         iv3 = (ImageView) findViewById(R.id.iv_3);
@@ -420,6 +431,13 @@ public class RegularDetailActivity extends BaseActivity {
                             append("%"));
             tv_people_amount.setVisibility(View.GONE);
         }
+        if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
+            tv_88.setVisibility(View.VISIBLE);
+            tv_88.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+            tv_88.getPaint().setAntiAlias(true);
+        } else {
+            tv_88.setVisibility(View.GONE);
+        }
         updateProjectStatus();
     }
 
@@ -450,7 +468,7 @@ public class RegularDetailActivity extends BaseActivity {
                 addUnit(tv_dialog_min_amount);
                 tv_dialog_min_amount.setOnClickListener(mOnclickListener);
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
-                    et_input.setHint("输入认购金额");
+                    et_input.setHint(new StringBuilder("输入").append(mInfo.getContinueInvestmentLimit()).append("的整数倍"));
                     tv_dialog_max_amount_tip.setText("最大可认购金额");
                     tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getResidueAmt()));
                     addUnit(tv_dialog_max_amount); // 增加 元 单位符号
@@ -460,7 +478,7 @@ public class RegularDetailActivity extends BaseActivity {
                     tv_dialog_max_amount_tip.setText("实际支付金额");
                 }
                 // 限制输入长度
-                et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
+//                et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
@@ -496,6 +514,20 @@ public class RegularDetailActivity extends BaseActivity {
 
     // 更新标的特色
     private void updateRegularProjectFeature() {
+        if (RegularBase.REGULAR_04 == prodId || RegularBase.REGULAR_06 == prodId) {
+            llyt_project_feature.setVisibility(View.GONE);
+            tv_project_feature.setVisibility(View.GONE);
+            return;
+        }
+        llyt_project_feature.setVisibility(View.VISIBLE);
+        tv_project_feature.setVisibility(View.VISIBLE);
+
+        if (RegularBase.REGULAR_03 == prodId) {
+            tv1.setText("严格风控");
+        } else if (RegularBase.REGULAR_05 == prodId) {
+            tv1.setText("分散投资");
+        }
+
         ArrayList<RegularProjectFeature> mList = mInfo.getSubjectFeature();
         if (null == mList || mList.size() != 3) {
             return;
@@ -552,19 +584,9 @@ public class RegularDetailActivity extends BaseActivity {
             if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > screenHeight / 3)) {
 //                Toast.makeText(getBaseContext(), "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
                 showKeyBoardView();
-                if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
-                    et_input.setHint(new StringBuilder("输入").append(mInfo.getContinueInvestmentLimit()).append("整数倍"));
-                } else {
-                    et_input.setHint("输入认购本金");
-                }
             } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > screenHeight / 3)) {
 //                Toast.makeText(getBaseContext(), "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
                 hideKeyBoardView();
-                if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
-                    et_input.setHint("输入认购金额");
-                } else {
-                    et_input.setHint("输入认购本金");
-                }
             }
         }
     };

@@ -4,9 +4,24 @@
     android:layout_height="match_parent"
     android:background="@color/mq_b6_v2">
 
+    <TextView
+        android:id="@+id/tv_begin_countdown"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FAECBC"
+        android:drawableLeft="@drawable/ic_clock"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:singleLine="true"
+        android:textColor="@color/mq_y3_v2"
+        android:textSize="@dimen/mq_font5_v2"
+        android:visibility="gone" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/tv_begin_countdown"
         android:fillViewport="true"
         android:scrollbarThumbVertical="@android:color/transparent"
         android:scrollbars="vertical">
@@ -15,20 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_begin_countdown"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="#FAECBC"
-                android:drawableLeft="@drawable/ic_clock"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:singleLine="true"
-                android:textColor="@color/mq_y3_v2"
-                android:textSize="@dimen/mq_font5_v2"
-                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -177,12 +178,28 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/tv_88"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mq_b7_v2"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:text="参与88理财节,每满1000元获得一个金币,可兑换奖品"
+                android:textColor="@color/mq_bl1_v2"
+                android:textSize="@dimen/mq_font3_v2" />
+
             <ViewStub
                 android:id="@+id/viewstub_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/tv_project_feature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -194,9 +211,11 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/llyt_project_feature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:orientation="horizontal"
                 android:paddingBottom="40dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
@@ -395,7 +414,7 @@
             android:layout_alignRight="@+id/bg_input"
             android:layout_alignTop="@+id/bg_input"
             android:background="@null"
-            android:digits="0123456789"
+            android:digits="0123456789."
             android:inputType="phone"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
