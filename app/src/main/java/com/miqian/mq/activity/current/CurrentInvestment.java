@@ -549,7 +549,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             packageTips.setRemarksVisibility(View.GONE);
             packageTips.setNegative("选择优惠券");
             packageTips.setPositive("认购");
-            packageTips.setTitle("您有未使用的优惠券");
+            packageTips.setTitle("您有未使用的红包/卡");
             packageTips.setCanceledOnTouchOutside(false);
         }
         packageTips.show();
