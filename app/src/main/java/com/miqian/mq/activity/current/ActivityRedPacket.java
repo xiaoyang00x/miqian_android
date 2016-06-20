@@ -83,7 +83,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
 
     @Override
     protected String getPageName() {
-        return "红包/券";
+        return "红包/卡";
     }
 
     @Override
