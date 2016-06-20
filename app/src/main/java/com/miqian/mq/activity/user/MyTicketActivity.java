@@ -172,7 +172,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("红包卡券");
+        mTitle.setTitleText("红包/卡");
         mTitle.setRightImage(R.drawable.ic_ticket_rule);
         mTitle.setOnRightClickListener(new View.OnClickListener() {
             @Override
