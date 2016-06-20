@@ -95,7 +95,7 @@
         <TextView
             style="@style/f7_B1_V2"
             android:layout_centerVertical="true"
-            android:text="优惠券" />
+            android:text="红包/卡" />
 
         <TextView
             android:id="@+id/text_promote"
@@ -132,6 +132,25 @@
             style="@style/item_divider"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/frame_gold"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:layout_marginTop="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text_gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/mq_font3_v2"
+            android:layout_centerInParent="true"
+            android:textColor="@color/mq_bl1"
+            android:text="恭喜你，已经获得1金币" />
     </RelativeLayout>
 
     <RelativeLayout

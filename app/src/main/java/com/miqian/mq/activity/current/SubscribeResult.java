@@ -30,7 +30,9 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private TextView textPayType;
     private TextView textPayMoney;
     private TextView tvTip;
+    private TextView textGold;
     private RelativeLayout framePromote;
+    private RelativeLayout frameGold;
 
     private int status;
     private int payModeState;
@@ -38,6 +40,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private String money;
     private String payMoney;
     private String promoteMoney;
+    private String goldCoin;
     private String orderNo;
     private Button btBack;
     private TextView tvStatus;
@@ -55,6 +58,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         payMoney = intent.getStringExtra("payMoney");
         payModeState = intent.getIntExtra("payModeState", 0);
         promoteMoney = intent.getStringExtra("promoteMoney");
+        goldCoin = intent.getStringExtra("goldCoin");
 
         orderNo = intent.getStringExtra("orderNo");
         super.onCreate(bundle);
@@ -79,6 +83,8 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         textPromote = (TextView) findViewById(R.id.text_promote);
         tradeNumber = (TextView) findViewById(R.id.trade_number);
         framePromote = (RelativeLayout) findViewById(R.id.frame_promote);
+        frameGold = (RelativeLayout) findViewById(R.id.frame_gold);
+        textGold = (TextView) findViewById(R.id.text_gold);
 
         btBack = (Button) findViewById(R.id.bt_back);
         btBack.setOnClickListener(this);
@@ -112,6 +118,10 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             framePromote.setVisibility(View.GONE);
         } else {
             textPromote.setText(promoteMoney + "元");
+        }
+        if (!TextUtils.isEmpty(goldCoin)) {
+            frameGold.setVisibility(View.VISIBLE);
+            textGold.setText(goldCoin);
         }
     }
 
