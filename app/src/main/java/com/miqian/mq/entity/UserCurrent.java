@@ -8,9 +8,9 @@ import java.math.BigDecimal;
  */
 public class UserCurrent implements Serializable{
 
-    private String curAmt;//活期待收收益
+    private BigDecimal curAmt;//活期待收收益
     private String curYesterDayAmt;//活期昨日新增收益
-    private String curAsset;//活期待收本金
+    private BigDecimal curAsset;//活期待收本金
     private String currentSwitch;//活期赚认购开关
     private String currentYearRate;//活期待收本金
     private BigDecimal currentBuyUpLimit;//活期赚认购上限
@@ -20,6 +20,15 @@ public class UserCurrent implements Serializable{
     private BigDecimal curMonthAmt;//当月已赎回总额
     private BigDecimal curDayResidue;//当日剩余可赎回额度
     private String warmPrompt;//温馨提示
+    private BigDecimal lmtDayAmt;//赎回限制每日金额
+
+    public BigDecimal getLmtDayAmt() {
+        return lmtDayAmt;
+    }
+
+    public void setLmtDayAmt(BigDecimal lmtDayAmt) {
+        this.lmtDayAmt = lmtDayAmt;
+    }
 
     public BigDecimal getLmtMonthAmt() {
         return lmtMonthAmt;
@@ -61,11 +70,11 @@ public class UserCurrent implements Serializable{
         this.currentSwitch = currentSwitch;
     }
 
-    public String getCurAmt() {
+    public BigDecimal getCurAmt() {
         return curAmt;
     }
 
-    public void setCurAmt(String curAmt) {
+    public void setCurAmt(BigDecimal curAmt) {
         this.curAmt = curAmt;
     }
 
@@ -77,11 +86,11 @@ public class UserCurrent implements Serializable{
         this.curYesterDayAmt = curYesterDayAmt;
     }
 
-    public String getCurAsset() {
+    public BigDecimal getCurAsset() {
         return curAsset;
     }
 
-    public void setCurAsset(String curAsset) {
+    public void setCurAsset(BigDecimal curAsset) {
         this.curAsset = curAsset;
     }
 

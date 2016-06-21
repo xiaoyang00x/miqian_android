@@ -88,9 +88,9 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private void refreshView() {
         if (userCurrent != null) {
             textEarning.setText(userCurrent.getCurYesterDayAmt());
-            textCaptial.setText(userCurrent.getCurAsset());
-            textTotalEarning.setText(userCurrent.getCurAmt());
-            BigDecimal money = new BigDecimal(userCurrent.getCurAsset());
+            textCaptial.setText(userCurrent.getCurAsset()+"");
+            textTotalEarning.setText(userCurrent.getCurAmt()+"");
+            BigDecimal money = new BigDecimal(userCurrent.getCurAsset()+"");
             downLimit = userCurrent.getCurrentBuyDownLimit();
             upLimit = userCurrent.getCurrentBuyUpLimit();
             balance = userCurrent.getBalance();

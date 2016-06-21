@@ -60,7 +60,7 @@ public class ActivityRedeem extends BaseActivity {
     @Override
     public void obtainData() {
         if (userCurrent != null) {
-            BigDecimal balance = userCurrent.getBalance();//活期余额
+            BigDecimal balance = userCurrent.getCurAsset();//活期待收金额
             BigDecimal curDayResidue = userCurrent.getCurDayResidue();//当日剩余可赎回额度
             if (curDayResidue.compareTo(balance) > 0) {
                 resideMoney = balance;

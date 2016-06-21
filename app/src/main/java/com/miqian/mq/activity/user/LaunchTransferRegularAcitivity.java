@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
@@ -26,6 +27,7 @@ import com.miqian.mq.entity.TransFer;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
@@ -278,14 +280,15 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
         //计算折让金
         BigDecimal tempMoney = new BigDecimal(money);
         disCountMoney = discountRate.multiply(tempMoney);
-        if (disCountMoney.compareTo(BigDecimal.ZERO) < 0) {
+        if (disCountMoney.compareTo(BigDecimal.ZERO) > 0) {
             textChangeMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_b4_v2));
             textChangeMoneyRight.setTextColor(ContextCompat.getColor(this, R.color.mq_b4_v2));
         } else {
             textChangeMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
             textChangeMoneyRight.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
         }
-        textChangeMoney.setText(fnum.format(disCountMoney) + "");
+
+        textChangeMoney.setText(fnum.format(disCountMoney.abs()) + "");
 
         //转让后收入
         BigDecimal finalMoney = tempMoney.subtract(disCountMoney);
@@ -298,7 +301,7 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
 
             case R.id.tv_question:
                 //可转让金额说明
-
+                WebActivity.startActivity(mContext, Urls.web_transferamt_expaint);
                 break;
             case R.id.btn_click:
 
@@ -390,7 +393,7 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
                     @Override
                     public void positionBtnClick(String s) {
                         dismiss();
-                        //提现
+                        //请求接口
                         rollOut(s);
                     }
                 };

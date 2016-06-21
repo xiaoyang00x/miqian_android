@@ -194,6 +194,8 @@ public class Urls {
     public final static String web_regplan_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //发起转让页面：秒钱债权转让协议
     public final static String web_transfer_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
+    //发起转让页面：可转金额说明
+    public final static String web_transferamt_expaint = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //定期赚详情
     public final static String web_regular_earn_detail = base_server + "webView/getRegDetail/";
     //定期计划详情
@@ -236,7 +238,7 @@ public class Urls {
     public final static String web_aboutus_zhanlue = "https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
 
     //我的邀请
-    public final static String web_my_invite = base_server+"activityService/inviteMain";
+    public final static String web_my_invite = base_server + "activityService/inviteMain";
 
 
 }
