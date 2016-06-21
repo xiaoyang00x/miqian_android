@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.view.View;
@@ -29,6 +30,7 @@ public abstract class DialogTradePassword extends Dialog {
 
     public final static int TYPE_SETPASSWORD = 0;
     public final static int TYPE_INPUTPASSWORD = 1;
+    public final static int TYPE_INPUTPASSWORD_LaunchTransfer = 2;//发起转让
     private int mType;
     private Context mContext;
 
@@ -61,8 +63,10 @@ public abstract class DialogTradePassword extends Dialog {
         forgetPassword = (TextView) findViewById(R.id.forget_psw);
         forgetPassword.setOnClickListener(onClickListener);
         et_password = (EditText) findViewById(R.id.et_password);
-
-        if (mType == TYPE_INPUTPASSWORD) {
+        if (mType == TYPE_INPUTPASSWORD_LaunchTransfer){
+            textLaw.setText("《秒钱债权转让协议》");
+        }
+        if (mType == TYPE_INPUTPASSWORD || mType == TYPE_INPUTPASSWORD_LaunchTransfer) {
             titleText.setText("交易密码");
             et_password.setHint("请输入交易密码");
         } else {
@@ -90,7 +94,7 @@ public abstract class DialogTradePassword extends Dialog {
 
             public void onClick(View arg0) {
                 int tipId = 0;
-                if (mType == TYPE_INPUTPASSWORD) {
+                if (mType == TYPE_INPUTPASSWORD || mType == TYPE_INPUTPASSWORD_LaunchTransfer) {
                     MobclickAgent.onEvent(mContext, "1061");
                     tipId = R.string.tip_password_pc;
                 } else {
@@ -123,7 +127,12 @@ public abstract class DialogTradePassword extends Dialog {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.text_law:
-                    WebActivity.startActivity(mContext, Urls.web_recharge_law);
+                    if (mType == TYPE_INPUTPASSWORD_LaunchTransfer){
+                        WebActivity.startActivity(mContext, Urls.web_transfer_law);
+                    }else {
+                        WebActivity.startActivity(mContext, Urls.web_recharge_law);
+                    }
+
                     break;
                 case R.id.forget_psw:
                     Intent intent = new Intent(mContext, TradePsCaptchaActivity.class);

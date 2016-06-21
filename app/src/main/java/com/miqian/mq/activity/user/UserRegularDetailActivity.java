@@ -16,6 +16,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.Operation;
+import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.UserRegularDetail;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.net.HttpRequest;
@@ -164,29 +165,16 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         textLimit.setText(regInvest.getLimitCnt());
 
         if ("Y".equals(regInvest.getBearingStatus())) {
-            textCapital.setText("投资本金");
+            textCapital.setText("投资本金(元)");
             textCapitalMoney.setText(regInvest.getPrnAmt());
             frameProjectMatch.setVisibility(View.GONE);
-            textEarningType.setText("总收益");
+            textEarningType.setText("总收益(元)");
             textEarning.setText(regInvest.getPrnIncome());
         } else if ("N".equals(regInvest.getBearingStatus())) {
-            textCapital.setText("待收本金");
+            textCapital.setText("待收本金(元)");
             textCapitalMoney.setText(regInvest.getRegAmt());
-            if ("1".equals(regInvest.getProjectState())) {
-                frameProjectMatch.setVisibility(View.VISIBLE);
-            } else if ("2".equals(regInvest.getProjectState())) {
-                frameProjectMatch.setVisibility(View.GONE);
-            } else {
-                frameProjectMatch.setVisibility(View.VISIBLE);
-            }
-            textEarningType.setText("待收收益");
+            textEarningType.setText("待收收益(元)");
             textEarning.setText(regInvest.getRegIncome());
-        }
-        if ("3".equals(regInvest.getProdId())) {
-            frameProjectMatch.setVisibility(View.VISIBLE);
-            textProject.setText("项目详情");
-        } else {
-            textProject.setText("项目匹配");
         }
         textDateStart.setText("认购日期:" + regInvest.getCrtDt());
         textDateEnd.setText("结束日期:" + regInvest.getDueDt());
@@ -233,12 +221,21 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 linearLayoutRecord.addView(itemRecord);
             }
         }
-        //购买转让来的原始标的详情
-        String sysbdName = regInvest.getSysbdName();
-        if (!TextUtils.isEmpty(sysbdName)) {
+
+        if ("3".equals(regInvest.getProdId())) {//定期赚
+            frameProjectMatch.setVisibility(View.VISIBLE);
+            textProject.setText("项目详情");
+        } else if ("4".equals(regInvest.getProdId())) {//定期赚转让
             layoutPriginproject.setVisibility(View.VISIBLE);
             tvOriginproject.setVisibility(View.VISIBLE);
-            tvOriginprojectName.setText(sysbdName);
+            tvOriginprojectName.setText(regInvest.getSysbdName());
+        } else if ("5".equals(regInvest.getProdId())) {//定期计划
+            frameProjectMatch.setVisibility(View.VISIBLE);
+            textProject.setText("项目匹配");
+        } else if ("6".equals(regInvest.getProdId())) {//定期计划转让
+            layoutPriginproject.setVisibility(View.VISIBLE);
+            tvOriginproject.setVisibility(View.VISIBLE);
+            tvOriginprojectName.setText(regInvest.getSysbdName());
         }
     }
 
@@ -261,11 +258,10 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 MobclickAgent.onEvent(mActivity, "1045");
                 if (userRegularDetail != null) {
                     subjectId = regInvest.getBdId();
-                    if ("3".equals(regInvest.getProdId())) {
+                    if (RegularBase.REGULAR_03 == Integer.parseInt(regInvest.getProdId())) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                    } else if ("4".equals(regInvest.getProdId())) {
-                        //定期计划 项目匹配
-                        WebActivity.startActivity(mActivity, Urls.project_match + subjectId);
+                    } else if (RegularBase.REGULAR_05 == Integer.parseInt(regInvest.getProdId())) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
                     }
                 }
                 break;
@@ -283,16 +279,16 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             case R.id.btn_click:
                 Intent intent_launch = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
                 intent_launch.putExtra("investId", investId);
+                intent_launch.putExtra("projectType", projectType);
                 startActivity(intent_launch);
                 break;
             case R.id.layout_originproject:
                 if (userRegularDetail != null) {
                     String subjectId = regInvest.getSysbdId();
-                    if ("3".equals(regInvest.getProdId())) {
+                    if (RegularBase.REGULAR_04 == Integer.parseInt(regInvest.getProdId())) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                    } else if ("4".equals(regInvest.getProdId())) {
-                        //定期计划 项目匹配
-                        WebActivity.startActivity(mActivity, Urls.project_match + subjectId);
+                    } else if (RegularBase.REGULAR_06 == Integer.parseInt(regInvest.getProdId())) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
                     }
                 }
                 break;

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.miqian.mq.R;
@@ -45,29 +46,22 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     private UserRegular userRegular;
     private List<RegInvest> regInvestList;
-    private boolean isStop;  //activity被finish则停止从网络获取数据的异步操作
     private RadioGroup radioGroup;
+    private boolean launchSuccess;
 
     @Override
     public void onCreate(Bundle arg0) {
 
-        String jpushToken = getIntent().getStringExtra("token");
-        if (!TextUtils.isEmpty(jpushToken)) {
-            //通知进来的情况下，不是当前用户则退出此界面
-            String token = UserUtil.getToken(this);
-            if (UserUtil.hasLogin(this) && !token.equals(jpushToken)) {
-                isStop = true;
-                finish();
-            }
+        launchSuccess = getIntent().getBooleanExtra("launchSuccess", false);
+        if (launchSuccess) {
+            isExpiry = "ZR";
+            mType = 2;
         }
         super.onCreate(arg0);
     }
 
     @Override
     public void obtainData() {
-        if (isStop) {
-            return;
-        }
         pageNo = 1;
         isForce = "1";
         if (!swipeRefresh.isRefreshing()) {
@@ -125,6 +119,10 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     public void initView() {
 
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
+        RadioButton btnRight = (RadioButton) findViewById(R.id.bt_right);
+        if (launchSuccess) {
+            btnRight.setChecked(true);
+        }
         radioGroup.setOnCheckedChangeListener(this);
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {

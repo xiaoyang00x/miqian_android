@@ -26,6 +26,7 @@
                     android:id="@+id/text_project"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:text="计划33"
                     android:textColor="@color/mq_b1_v2"
                     android:textSize="@dimen/mq_font7_v2" />
@@ -41,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="认购日期："
+                        android:text="认购"
                         android:textColor="@color/mq_b4_v2"
                         android:textSize="@dimen/mq_font3_v2" />
 
@@ -52,7 +53,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/text_date_start"
                         android:gravity="center"
-                        android:text="到期日期："
+                        android:text="到期"
                         android:textColor="@color/mq_b4_v2"
                         android:textSize="@dimen/mq_font3_v2" />
 
@@ -77,7 +78,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="待收本金"
+                            android:text="待收本金(元)"
                             android:textColor="@color/mq_b4_v2"
                             android:textSize="@dimen/mq_font3_v2" />
 
@@ -87,7 +88,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:gravity="center"
-                            android:text="1000,000元"
+                            android:text="--.--"
                             android:textColor="@color/mq_r1_v2"
                             android:textSize="@dimen/mq_font9_v2" />
 
@@ -106,7 +107,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="项目期限"
+                            android:text="项目期限(天)"
                             android:textColor="@color/mq_b4_v2"
                             android:textSize="@dimen/mq_font3_v2" />
 
@@ -116,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:gravity="center"
-                            android:text="365天"
+                            android:text="--"
                             android:textColor="@color/mq_r1_v2"
                             android:textSize="@dimen/mq_font9_v2" />
                     </LinearLayout>
@@ -137,15 +138,36 @@
                             android:textColor="@color/mq_b4_v2"
                             android:textSize="@dimen/mq_font3_v2" />
 
-                        <TextView
-                            android:id="@+id/text_interest_rate"
-                            android:layout_width="match_parent"
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"
-                            android:text="12%"
-                            android:textColor="@color/mq_r1_v2"
-                            android:textSize="@dimen/mq_font9_v2" />
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/text_interest_rate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:text="--"
+                                android:textColor="@color/mq_r1_v2"
+                                android:textSize="@dimen/mq_font9_v2" />
+
+                            <TextView
+                                android:id="@+id/tv_present_profit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:text="%"
+                                android:textColor="@color/mq_r1_v2"
+                                android:textSize="@dimen/mq_font3_v2" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
 
@@ -170,6 +192,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_marginBottom="60dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -190,10 +213,18 @@
                     <TextView
                         android:id="@+id/text_remindday"
                         style="@style/f7_B4_V2"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/text_right"
+                        android:text="136"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_right"
+                        style="@style/f7_B4_V2"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
-                        android:text="136天" />
+                        android:text="天" />
 
 
                 </RelativeLayout>
@@ -226,18 +257,29 @@
                     android:layout_height="@dimen/listitem_height">
 
                     <TextView
+                        android:id="@+id/tv_question"
                         style="@style/f7_B1_V2"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_left_right"
+                        android:drawableRight="@drawable/question"
+                        android:drawablePadding="5dp"
                         android:text="可转换金额" />
 
                     <TextView
                         android:id="@+id/text_prnTransSa"
                         style="@style/f7_B4_V2"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/text_money_day"
+                        android:text="1254"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_money_day"
+                        style="@style/f7_B4_V2"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
-                        android:text="1254" />
+                        android:text="元" />
                 </RelativeLayout>
 
                 <View style="@style/item_divider" />
@@ -250,8 +292,6 @@
                         style="@style/f7_B1_V2"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_left_right"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/question"
                         android:text="转让金额" />
 
                     <LinearLayout
@@ -268,13 +308,13 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
                         android:background="@null"
-                        android:gravity="right"
+                        android:paddingLeft="40dp"
                         android:hint="1000元起转"
-                        android:maxEms="12"
-                        android:inputType="number"
-                        android:textColor="@color/mq_b1_v2"
-                        android:textColorHint="@color/mq_b5_v2">
-                    </EditText>
+                        android:gravity="right"
+                        android:paddingRight="5dp"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/mq_r1_v2"
+                        android:textColorHint="@color/mq_b5_v2"></EditText>
                 </RelativeLayout>
 
                 <View style="@style/item_divider" />
@@ -300,16 +340,25 @@
                         android:id="@+id/et_transfer_rate"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="3dp"
+                        android:layout_toLeftOf="@+id/tv_percent"
+                        android:background="@null"
+                        android:hint="点此填写转让年化收益"
+                        android:gravity="right"
+                        android:paddingRight="5dp"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/mq_r1_v2"
+                        android:textColorHint="@color/mq_b5_v2" />
+
+                    <TextView
+                        android:id="@+id/tv_percent"
+                        style="@style/f7_B1_V2"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:hint="点此填写转让年化收益"
-                        android:maxEms="12"
-                        android:inputType="number"
-                        android:textColor="@color/mq_b1_v2"
-                        android:textColorHint="@color/mq_b5_v2" />
+                        android:drawablePadding="5dp"
+                        android:text="%" />
                 </RelativeLayout>
 
                 <View style="@style/item_divider" />
@@ -342,13 +391,29 @@
                                 android:text="/减价" />
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_changemoney"
-                            style="@style/f3_R1_V2"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="3dp"
-                            android:gravity="center"
-                            android:text="--" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_changemoney"
+                                style="@style/f3_R1_V2"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="3dp"
+                                android:gravity="center"
+                                android:text="--"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_changemoney_right"
+                                style="@style/f3_R1_V2"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="3dp"
+                                android:gravity="center"
+                                android:text="元" />
+                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -370,14 +435,30 @@
                                 style="@style/f3_b4_V2"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="折让比" />
+                                android:text="转让成功后收入" />
 
-                            <TextView
-                                android:id="@+id/tv_discountrate"
-                                style="@style/f3_R1_V2"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="3dp"
-                                android:text="--" />
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_final_money"
+                                    style="@style/f3_R1_V2"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="3dp"
+                                    android:gravity="center"
+                                    android:text="--"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    style="@style/f3_R1_V2"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="3dp"
+                                    android:gravity="center"
+                                    android:text="元" />
+                            </LinearLayout>
 
 
                         </LinearLayout>

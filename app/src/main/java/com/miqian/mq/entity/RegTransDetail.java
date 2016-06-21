@@ -1,5 +1,7 @@
 package com.miqian.mq.entity;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Administrator on 2016/6/15.
  */
@@ -15,6 +17,7 @@ public class RegTransDetail {
     private String prnTransSa;	  //投资可转让余额
     private String payMeansName;   //还款方式
     private String limitCnt;       //定期计划期限
+    private BigDecimal leftCnt;       //剩余期限
     private String projectState;   //项目状态 0未结息 1转让中 2已转让 3已到期
     private String bearingStatus;  //结息状态 Y:已结息 N：未结息
     private String prnAmt;	       //总投资本金
@@ -24,8 +27,25 @@ public class RegTransDetail {
     private String presentInterest;      //赠送收益
     private String transFlag;      //转让状态
     private String transDesc;      //转让描述
-    private String transferOverTop;      //折让过高临界值
-    private String transferOverLow;      //折让过低临界值
+    private BigDecimal transferOverTop;      //折让过高临界值
+    private BigDecimal transferOverLow;      //折让过低临界值
+    private String investmentAmt;        //起投金额
+
+    public BigDecimal getLeftCnt() {
+        return leftCnt;
+    }
+
+    public void setLeftCnt(BigDecimal leftCnt) {
+        this.leftCnt = leftCnt;
+    }
+
+    public String getInvestmentAmt() {
+        return investmentAmt;
+    }
+
+    public void setInvestmentAmt(String investmentAmt) {
+        this.investmentAmt = investmentAmt;
+    }
 
     public String getBdId() {
         return bdId;
@@ -179,19 +199,19 @@ public class RegTransDetail {
         this.transDesc = transDesc;
     }
 
-    public String getTransferOverTop() {
+    public BigDecimal getTransferOverTop() {
         return transferOverTop;
     }
 
-    public void setTransferOverTop(String transferOverTop) {
+    public void setTransferOverTop(BigDecimal transferOverTop) {
         this.transferOverTop = transferOverTop;
     }
 
-    public String getTransferOverLow() {
+    public BigDecimal getTransferOverLow() {
         return transferOverLow;
     }
 
-    public void setTransferOverLow(String transferOverLow) {
+    public void setTransferOverLow(BigDecimal transferOverLow) {
         this.transferOverLow = transferOverLow;
     }
 }

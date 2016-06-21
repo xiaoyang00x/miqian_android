@@ -186,7 +186,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:layout_marginTop="10dp"
-                android:text="原项目信息" />
+                android:text="标的信息" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

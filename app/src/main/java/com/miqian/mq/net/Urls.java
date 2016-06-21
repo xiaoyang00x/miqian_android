@@ -176,6 +176,8 @@ public class Urls {
     public final static String getRegTransDetail = base_server + "userRegService/v2/getRegTransDetail";
     //我的转让详情
     public final static String getRegTransFerredDetail = base_server + "userRegService/v2/getRegTransFerredDetail";
+    //发起转让
+    public final static String launchTransfer = base_server + "assetService/transfer";
 
     /**
      * 网页的URL
@@ -190,6 +192,8 @@ public class Urls {
     public final static String web_regular_law = "https://res.shicaidai.com/miaoqian/webView/dqzfwxy.html";
     //定期计划认购页面：《定期计划服务协议》
     public final static String web_regplan_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
+    //发起转让页面：秒钱债权转让协议
+    public final static String web_transfer_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //定期赚详情
     public final static String web_regular_earn_detail = base_server + "webView/getRegDetail/";
     //定期计划详情

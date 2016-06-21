@@ -82,10 +82,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ViewHolder) holder).textEarningName.setText("项目期限(天)");
                 ((ViewHolder) holder).textEarning.setText(regInvest.getLimitCnt());
                 ((ViewHolder) holder).textRight.setText("实际年化收益");
-                ((ViewHolder) holder).textCapitalMoney.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
-                ((ViewHolder) holder).textEarning.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
-                ((ViewHolder) holder).textInterestRate.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
-                ((ViewHolder) holder).textInterestRatePresent.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
                 if (regInvest.getProjectState().equals("0")) {
                     ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
