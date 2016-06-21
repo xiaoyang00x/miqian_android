@@ -82,6 +82,12 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initView() {
+        getmTitle().setOnLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backSubscribePage();
+            }
+        });
         textMoney = (TextView) findViewById(R.id.text_money);
         frameBank = (RelativeLayout) findViewById(R.id.frame_bank);
         frameBank.setOnClickListener(this);
@@ -235,6 +241,11 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
         PaymodeActivity.this.finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        backSubscribePage();
+        super.onBackPressed();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
