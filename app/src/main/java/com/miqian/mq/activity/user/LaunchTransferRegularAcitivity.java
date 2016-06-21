@@ -330,9 +330,12 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
                 BigDecimal transferOverTop = regTransDetail.getTransferOverTop();
                 BigDecimal subtractProfit = inputProfit.subtract(profit);
 
+
+                BigDecimal disCount = new BigDecimal(fnum.format(disCountMoney));
+
                 if (subtractProfit.compareTo(transferOverTop) > 0) {
                     StringBuffer sb = new StringBuffer();
-                    sb.append("您设定转让后年化收益为" + transferRate + "%。" + "让利金额" + fnum.format(disCountMoney) + "元, 让利金额过高,可能造成本金损失过多,是否继续？");
+                    sb.append("您设定转让后年化收益为" + transferRate + "%。" + "让利金额" + disCount.abs() + "元, 让利金额过高,可能造成本金损失过多,是否继续？");
                     DialogTransferTip dialogTips = new DialogTransferTip(LaunchTransferRegularAcitivity.this, sb.toString()) {
                         @Override
                         public void positionBtnClick() {
@@ -344,7 +347,7 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
                     dialogTips.show();
                 } else if (subtractProfit.compareTo(transferOverLow) < 0) {
                     StringBuffer sb = new StringBuffer();
-                    sb.append("您设定转让后年化收益为" + transferRate + "%。" + "让利金额" + fnum.format(disCountMoney) + "元, 让利金额过低,可能影响您的转让结果,是否继续？");
+                    sb.append("您设定转让后年化收益为" + transferRate + "%。" + "让利金额" + disCount.abs() + "元, 让利金额过低,可能影响您的转让结果,是否继续？");
                     DialogTransferTip dialogTips = new DialogTransferTip(LaunchTransferRegularAcitivity.this, sb.toString()) {
                         @Override
                         public void positionBtnClick() {
