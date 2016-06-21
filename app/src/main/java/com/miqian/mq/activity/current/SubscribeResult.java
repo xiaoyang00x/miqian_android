@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,10 +12,12 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
-import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
@@ -45,12 +48,16 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private Button btBack;
     private TextView tvStatus;
 
+    private SubscribeOrder subscribeOrder;
+
     @Override
     public void onCreate(Bundle bundle) {
         Intent intent = getIntent();
         status = intent.getIntExtra("status", 0);
         if (status == 1) {
             title = "认购成功";
+            String result = intent.getStringExtra("subscribeOrder");
+            subscribeOrder =  JsonUtil.parseObject(result, SubscribeOrder.class);
         } else {
             title = "认购失败";
         }
@@ -58,9 +65,11 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         payMoney = intent.getStringExtra("payMoney");
         payModeState = intent.getIntExtra("payModeState", 0);
         promoteMoney = intent.getStringExtra("promoteMoney");
-        goldCoin = intent.getStringExtra("goldCoin");
+        if (subscribeOrder != null) {
+            orderNo = subscribeOrder.getOrderNo();
+            goldCoin = subscribeOrder.getGoldCoin();
+        }
 
-        orderNo = intent.getStringExtra("orderNo");
         super.onCreate(bundle);
     }
 
@@ -85,6 +94,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         framePromote = (RelativeLayout) findViewById(R.id.frame_promote);
         frameGold = (RelativeLayout) findViewById(R.id.frame_gold);
         textGold = (TextView) findViewById(R.id.text_gold);
+        textGold.setOnClickListener(this);
 
         btBack = (Button) findViewById(R.id.bt_back);
         btBack.setOnClickListener(this);
@@ -121,6 +131,8 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         }
         if (!TextUtils.isEmpty(goldCoin)) {
             frameGold.setVisibility(View.VISIBLE);
+            textGold.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+            textGold.getPaint().setAntiAlias(true);//抗锯齿
             textGold.setText(goldCoin);
         }
     }
@@ -147,6 +159,11 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.bt_back:
                 closeActivity();
+                break;
+            case R.id.text_gold:
+                if (subscribeOrder != null) {
+                    WebActivity.startActivity(this, subscribeOrder.getGoldCoin_url());
+                }
                 break;
             default:
                 break;

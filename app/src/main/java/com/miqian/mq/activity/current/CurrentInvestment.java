@@ -616,7 +616,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                                 intent.putExtra("promoteMoney", promoteMoney.toString());
                                 if (result.getCode().equals("000000")) {
                                     intent.putExtra("status", 1);
-                                    intent.putExtra("orderNo", subscribeOrder.getOrderNo());
+                                    intent.putExtra("subscribeOrder", JSON.toJSONString(subscribeOrder));
                                 } else {
                                     intent.putExtra("status", 0);
                                 }
@@ -684,7 +684,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     intent.putExtra("promoteMoney", promoteMoney.toString());
                     if (result.getCode().equals("000000")) {
                         intent.putExtra("status", 1);
-                        intent.putExtra("orderNo", subscribeOrder.getOrderNo());
+                        intent.putExtra("subscribeOrder", JSON.toJSONString(subscribeOrder));
                     } else {
                         intent.putExtra("status", 0);
                     }

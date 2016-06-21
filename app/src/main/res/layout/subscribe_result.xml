@@ -149,8 +149,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/mq_font3_v2"
             android:layout_centerInParent="true"
-            android:textColor="@color/mq_bl1"
-            android:text="恭喜你，已经获得1金币" />
+            android:textColor="@color/mq_bl1"/>
     </RelativeLayout>
 
     <RelativeLayout
