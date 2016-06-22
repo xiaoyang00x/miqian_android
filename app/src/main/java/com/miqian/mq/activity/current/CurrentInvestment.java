@@ -157,8 +157,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     private void refreshData() {
+        position = -1;
         promListString = "";
         prodListString = "";
+        promoteType = "";
         promoteMoney = BigDecimal.ZERO;
         increaseMoney = BigDecimal.ZERO;
         if (!swipeRefresh.isRefreshing()) {
