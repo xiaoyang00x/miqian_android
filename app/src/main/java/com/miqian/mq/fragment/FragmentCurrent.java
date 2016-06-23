@@ -73,7 +73,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         waterWaveView.startWave();
 
         titleText = (TextView) view.findViewById(R.id.title);
-        titleText.setText("活期");
+        titleText.setText("活期理财");
 
         frameImage = (RelativeLayout) view.findViewById(R.id.frame_image);
         frameImage.setOnClickListener(this);
