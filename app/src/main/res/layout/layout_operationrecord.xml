@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text=""
                 android:textColor="@color/mq_r1_v2"
                 android:textSize="@dimen/mq_font3_v2" />
