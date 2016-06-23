@@ -5,17 +5,17 @@ package com.miqian.mq.entity;
  * 首页新闻动态数据
  */
 public class HomeNewsData {
-  private int id;
+  private String id;
   private String imgUrl;            //图片链接
   private String jumpUrl;           //跳转链接
   private String desc;              //新闻描述
   private String title;             //标题
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 

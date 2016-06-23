@@ -5,15 +5,15 @@ package com.miqian.mq.entity;
  * 首页轮播图数据
  */
 public class HomeAdData {
-  private int id;
+  private String id;
   private String imgUrl;            //图片链接
   private String jumpUrl;           //跳转链接
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 

@@ -9,7 +9,7 @@ public class MessageInfo {
     private String content;  //内容
     private String title;
     private long sendTime;
-    private int id;
+    private String id;
     private boolean isRead;
     private String jumpUrl;
     private int msgType;
@@ -38,11 +38,11 @@ public class MessageInfo {
         this.sendTime = sendTime;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

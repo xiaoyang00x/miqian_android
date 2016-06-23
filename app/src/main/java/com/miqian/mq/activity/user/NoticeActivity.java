@@ -61,8 +61,7 @@ public class NoticeActivity extends BaseActivity {
                     showContentView();
                     //和本地匹配是否已读
                     for (MessageInfo info : list) {
-                        int id = info.getId();
-                        boolean isReaded = Pref.getBoolean(Pref.PUSH + id, mActivity, false);
+                        boolean isReaded = Pref.getBoolean(Pref.PUSH + info.getId(), mActivity, false);
                         if (isReaded) {
                             info.setIsRead(true);
                         }
