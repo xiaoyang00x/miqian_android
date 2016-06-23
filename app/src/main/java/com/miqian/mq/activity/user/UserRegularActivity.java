@@ -74,9 +74,8 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                 swipeRefresh.setRefreshing(false);
                 userRegular = result.getData();
                 regInvestList = userRegular.getRegInvest();
-                refreshView();
+                    refreshView();
             }
-
             @Override
             public void onFail(String error) {
                 swipeRefresh.setRefreshing(false);
@@ -119,10 +118,10 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     public void initView() {
 
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
-        RadioButton btnRight = (RadioButton) findViewById(R.id.bt_right);
-        if (launchSuccess) {
-            btnRight.setChecked(true);
-        }
+//        RadioButton btnRight = (RadioButton) findViewById(R.id.bt_right);
+//        if (launchSuccess) {
+//            btnRight.setChecked(true);
+//        }
         radioGroup.setOnCheckedChangeListener(this);
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {

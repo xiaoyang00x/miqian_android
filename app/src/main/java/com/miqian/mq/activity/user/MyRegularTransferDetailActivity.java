@@ -232,9 +232,9 @@ public class MyRegularTransferDetailActivity extends BaseActivity implements Vie
         long minute = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000) / (60 * 1000);
         long second = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - minute * 60 * 1000) / 1000;
         return new StringBuilder("结束时间:").
-                append(0 == day ? "" : day).append(0 == day ? "" : "天").
-                append(0 == hour ? "" : hour).append(0 == hour ? "" : "时").
-                append(0 == minute ? "" : minute).append(0 == minute ? "" : "分").
-                append(0 == second ? "" : second).append(0 == second ? "" : "秒");
+                append(String.format("%02d", day)).append("天").
+                append(String.format("%02d", hour)).append("时").
+                append(String.format("%02d", minute)).append("分").
+                append(String.format("%02d", second)).append("秒");
     }
 }

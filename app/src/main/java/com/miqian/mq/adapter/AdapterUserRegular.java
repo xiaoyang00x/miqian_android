@@ -74,7 +74,11 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
+
             RegInvest regInvest = mList.get(position - 1);
+            if (regInvest == null) {
+                return;
+            }
             ((ViewHolder) holder).bdName.setText(regInvest.getBdNm());
             if (mType == 2) {
                 ((ViewHolder) holder).textCapital.setText("可转金额(元)");
@@ -82,6 +86,8 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ViewHolder) holder).textEarningName.setText("项目期限(天)");
                 ((ViewHolder) holder).textEarning.setText(regInvest.getLimitCnt());
                 ((ViewHolder) holder).textRight.setText("实际年化收益");
+
+            } else {
                 if (regInvest.getProjectState().equals("0")) {
                     ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
@@ -94,7 +100,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 } else {
                     ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 }
-            }else {
                 if (regInvest.getBearingStatus().equals("Y")) {
                     ((ViewHolder) holder).textCapital.setText("投资本金");
                     ((ViewHolder) holder).textEarningName.setText("已获收益");
@@ -104,7 +109,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                     ((ViewHolder) holder).textEarning.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
                     ((ViewHolder) holder).textInterestRate.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
                     ((ViewHolder) holder).textInterestRatePresent.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
+//                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 } else {
 
                     ((ViewHolder) holder).textCapital.setText("待收本金");
@@ -115,7 +120,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                     ((ViewHolder) holder).textEarning.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
                     ((ViewHolder) holder).textInterestRate.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
                     ((ViewHolder) holder).textInterestRatePresent.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
+//                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 }
             }
 
@@ -129,7 +134,11 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             if (TextUtils.isEmpty(presentInterest)) {
                 ((ViewHolder) holder).textInterestRatePresent.setText("%");
             } else {
-                ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
+                if (0==(Double.parseDouble(presentInterest))) {
+                    ((ViewHolder) holder).textInterestRatePresent.setText("%");
+                } else {
+                    ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
+                }
             }
             ((ViewHolder) holder).textDateSubscribe.setText(regInvest.getCrtDt() + "认购");
             ((ViewHolder) holder).textDateOver.setText(regInvest.getDueDt() + "到期");
@@ -146,6 +155,9 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ProgressViewHolder) holder).textLoading.setText("加载更多");
             }
         } else if (holder instanceof HeaderViewHolder) {
+            if (mReg == null) {
+                return;
+            }
             ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getCount() + "");
             if (mType == 1) {
                 ((HeaderViewHolder) holder).textCapitalName.setText("投资本金(元)");
@@ -223,6 +235,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             });
         }
     }
+
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textRegularCount;

@@ -159,7 +159,11 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         if (TextUtils.isEmpty(presentInterest)) {
             textInterestRatePresent.setText("%");
         } else {
-            textInterestRatePresent.setText("+" + presentInterest + "%");
+            if (0 == (Double.parseDouble(presentInterest))) {
+                textInterestRatePresent.setText("%");
+            } else {
+                textInterestRatePresent.setText("+" + presentInterest + "%");
+            }
         }
         textProjectName.setText(regInvest.getBdNm());
         textLimit.setText(regInvest.getLimitCnt());
@@ -228,14 +232,14 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         } else if ("4".equals(regInvest.getProdId())) {//定期赚转让
             layoutPriginproject.setVisibility(View.VISIBLE);
             tvOriginproject.setVisibility(View.VISIBLE);
-            tvOriginprojectName.setText(regInvest.getSysbdName());
+            tvOriginprojectName.setText(regInvest.getBdNm());
         } else if ("5".equals(regInvest.getProdId())) {//定期计划
             frameProjectMatch.setVisibility(View.VISIBLE);
             textProject.setText("项目匹配");
         } else if ("6".equals(regInvest.getProdId())) {//定期计划转让
             layoutPriginproject.setVisibility(View.VISIBLE);
             tvOriginproject.setVisibility(View.VISIBLE);
-            tvOriginprojectName.setText(regInvest.getSysbdName());
+            tvOriginprojectName.setText(regInvest.getBdNm());
         }
     }
 
