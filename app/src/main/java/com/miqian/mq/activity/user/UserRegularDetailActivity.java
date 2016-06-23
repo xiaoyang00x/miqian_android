@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -58,7 +59,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private String projectType;//Y:已结息  N:未结息
     private String subjectId;//标的id
     private TextView textProject;
-    private Button btnClick;
+//    private Button btnClick;
     private TextView textInterestRatePresent;
     private UserRegularDetail.RegInvest regInvest;
     private List<Operation> operationList;
@@ -73,6 +74,9 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private TextView tvOriginproject;
     private TextView tvOriginprojectName;
     private View layoutPriginproject;
+    private ImageView ivProjectState;
+    private View layoutTransferDetail;
+    private TextView tvTransferedMoney;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -121,7 +125,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         textLimit = (TextView) findViewById(R.id.text_limit);
         textDateStart = (TextView) findViewById(R.id.text_date_start);
         textDateEnd = (TextView) findViewById(R.id.text_date_end);
-        btnClick = (Button) findViewById(R.id.btn_click);
+//        btnClick = (Button) findViewById(R.id.btn_click);
 
         textProjectName = (TextView) findViewById(R.id.text_project_name);
         textProject = (TextView) findViewById(R.id.text_project);
@@ -141,12 +145,18 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         layoutPriginproject = findViewById(R.id.layout_originproject);
         tvOriginproject = (TextView) findViewById(R.id.tv_originproject);
         tvOriginprojectName = (TextView) findViewById(R.id.tv_originproject_name);
+        ivProjectState = (ImageView) findViewById(R.id.image_project_status);
+
+        //转让记录
+        layoutTransferDetail = findViewById(R.id.layout_transfer_detail);
+        tvTransferedMoney = (TextView) findViewById(R.id.tv_transfered_money);
 
 
         frameProjectMatch.setOnClickListener(this);
-        btnClick.setOnClickListener(this);
+//        btnClick.setOnClickListener(this);
         findViewById(R.id.tv_referrecord).setOnClickListener(this);
         layoutPriginproject.setOnClickListener(this);
+        layoutTransferDetail.setOnClickListener(this);
 
     }
 
@@ -183,13 +193,13 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         textDateStart.setText("认购日期:" + regInvest.getCrtDt());
         textDateEnd.setText("结束日期:" + regInvest.getDueDt());
         textRepayment.setText(regInvest.getPayMeansName());
-        if (regInvest.getTransFlag().equals("Y")) {
-            btnClick.setEnabled(true);
-        } else {
-            btnClick.setEnabled(false);
-            btnClick.setBackgroundColor(ContextCompat.getColor(this, R.color.mq_b4_v2));
-        }
-        btnClick.setText(regInvest.getTransDesc());
+//        if (regInvest.getTransFlag().equals("Y")) {
+//            btnClick.setEnabled(true);
+//        } else {
+//            btnClick.setEnabled(false);
+//            btnClick.setBackgroundColor(ContextCompat.getColor(this, R.color.mq_b4_v2));
+//        }
+//        btnClick.setText(regInvest.getTransDesc());
 
         //标的相关记录
         if (operationList.size() > 0) {
@@ -218,7 +228,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 }
                 tvContent.setText(operationList.get(i).getOperationContent());
                 if (i == operationList.size() - 1) {
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(Uihelper.dip2px(mContext, 3), Uihelper.dip2px(mContext, 20));
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(Uihelper.dip2px(mContext, 3), Uihelper.dip2px(mContext, 25));
                     view.setLayoutParams(layoutParams);
                     layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP | RelativeLayout.CENTER_HORIZONTAL);//addRule参数对应RelativeLayout XML布局的属性
                 }
@@ -240,6 +250,20 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             layoutPriginproject.setVisibility(View.VISIBLE);
             tvOriginproject.setVisibility(View.VISIBLE);
             tvOriginprojectName.setText(regInvest.getBdNm());
+        }
+        String projectState = regInvest.getProjectState();
+
+        if ("0".equals(projectState) || "1".equals(projectState) || "2".equals(projectState)) {
+            layoutTransferDetail.setVisibility(View.VISIBLE);
+            ivProjectState.setVisibility(View.VISIBLE);
+            tvTransferedMoney.setText("已转让" + regInvest.getTransedAmt());
+            if ("0".equals(projectState)) {
+                ivProjectState.setImageResource(R.drawable.user_regular_transfering);
+            } else if ("1".equals(projectState)) {
+                ivProjectState.setImageResource(R.drawable.user_regular_transfer_wjx);
+            } else {
+                ivProjectState.setImageResource(R.drawable.user_regular_transfered);
+            }
         }
     }
 
@@ -280,12 +304,12 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //                    startActivity(intent);
 //                }
 //                break;
-            case R.id.btn_click:
-                Intent intent_launch = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
-                intent_launch.putExtra("investId", investId);
-                intent_launch.putExtra("projectType", projectType);
-                startActivity(intent_launch);
-                break;
+//            case R.id.btn_click:
+//                Intent intent_launch = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
+//                intent_launch.putExtra("investId", investId);
+//                intent_launch.putExtra("projectType", projectType);
+//                startActivity(intent_launch);
+//                break;
             case R.id.layout_originproject:
                 if (userRegularDetail != null) {
                     String subjectId = regInvest.getSysbdId();
@@ -301,6 +325,14 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 Intent intent = new Intent(this, OperationRecordAcitivity.class);
                 intent.putExtra("investId", investId);
                 startActivity(intent);
+                break;
+
+            case R.id.layout_transfer_detail:  //查看转让详情
+
+                Intent intentTransfer = new Intent(this, TransferDetailActivity.class);
+                intentTransfer.putExtra("investId", investId);
+                intentTransfer.putExtra("clearYn", clearYn);
+                startActivity(intentTransfer);
                 break;
 
         }

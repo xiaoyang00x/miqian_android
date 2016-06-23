@@ -20,13 +20,34 @@
                 android:paddingLeft="@dimen/margin_left_right"
                 android:paddingRight="@dimen/margin_left_right">
 
-                <TextView
-                    android:id="@+id/text_project_name"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="计划33"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/mq_font7_v2" />
+                    android:layout_marginTop="40dp">
+
+                    <TextView
+                        android:id="@+id/text_project_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/image_project_status"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="--"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/mq_font7_v2" />
+
+
+                    <ImageView
+                        android:id="@+id/image_project_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_left_right"
+                        android:src="@drawable/user_regular_transfer_wjx"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -316,7 +337,45 @@
                         android:src="@drawable/right" />
 
                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/layout_transfer_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/listitem_height"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:visibility="gone">
+                    <TextView
+                        style="@style/f3_B1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_left_right"
+                        android:text="转让情况" />
+                    <TextView
+                        android:id="@+id/tv_transfered_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/arrow_tansfer"
+                        android:layout_marginRight="5dp"
+                        android:gravity="left"
+                        android:singleLine="true"
+                        android:textColor="@color/mq_b4_v2"
+                        android:text=""
+                        android:textSize="@dimen/mq_font4_v2"
+                         />
 
+                    <ImageView
+                        android:id="@+id/arrow_tansfer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_left_right"
+                        android:src="@drawable/right" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -370,7 +429,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="35dp">
+                        android:layout_height="45dp">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -443,18 +502,18 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:orientation="vertical">-->
 
-        <Button
-            android:id="@+id/btn_click"
-            style="@style/click_btn_rec"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_item"
-            android:layout_marginTop="15dp"
-            android:text="状态" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/btn_click"-->
+            <!--style="@style/click_btn_rec"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/edit_item"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:text="状态" />-->
+    <!--</LinearLayout>-->
 </RelativeLayout>

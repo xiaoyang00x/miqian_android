@@ -55,7 +55,15 @@ public class UserRegularDetail implements Serializable{
         private String transFlag;      //转让状态
         private String transDesc;      //转让描述
         private String sysbdId;      //原始标的的ID
-        private String sysbdName;      //原始标的的名称
+        private String transedAmt;      //已转让金额
+
+        public String getTransedAmt() {
+            return transedAmt;
+        }
+
+        public void setTransedAmt(String transedAmt) {
+            this.transedAmt = transedAmt;
+        }
 
         public String getPrnIncome() {
             return prnIncome;
@@ -96,15 +104,6 @@ public class UserRegularDetail implements Serializable{
         public void setSysbdId(String sysbdId) {
             this.sysbdId = sysbdId;
         }
-
-        public String getSysbdName() {
-            return sysbdName;
-        }
-
-        public void setSysbdName(String sysbdName) {
-            this.sysbdName = sysbdName;
-        }
-
 
         public String getBdId() {
             return bdId;

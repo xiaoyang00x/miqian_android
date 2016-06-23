@@ -92,7 +92,7 @@ public class OperationRecordAcitivity extends BaseActivity {
                 }
                 tvContent.setText(mOperationList.get(i).getOperationContent());
                 if (i == mOperationList.size() - 1) {
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(Uihelper.dip2px(mContext, 3), Uihelper.dip2px(mContext, 20));
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(Uihelper.dip2px(mContext, 3), Uihelper.dip2px(mContext, 25));
                     view.setLayoutParams(layoutParams);
                     layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP | RelativeLayout.CENTER_HORIZONTAL);//addRule参数对应RelativeLayout XML布局的属性
                 }
