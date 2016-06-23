@@ -86,7 +86,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:drawableLeft="@drawable/icon_current_safe"
                                 android:drawablePadding="5dp"
-                                android:text="真实债权，安全透明"
+                                android:text="由融资租赁机构提供本息保障，安全透明值得认购"
                                 android:textColor="#aaffffff"
                                 android:textSize="@dimen/mq_font2_v2" />
                         </LinearLayout>
