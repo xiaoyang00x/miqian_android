@@ -7,7 +7,7 @@
         <item name="android:buttonStyle">@style/MQ_Button</item>
         <item name="android:editTextStyle">@style/MQ_Edit</item>
         <item name="theme_background">@color/base_background</item>
-        <item name="title_bar_bg">@color/mq_r1</item>
+        <item name="title_bar_bg">@color/mq_r1_v2</item>
     </style>
 
 </resources>

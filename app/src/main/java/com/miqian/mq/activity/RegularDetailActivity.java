@@ -198,15 +198,15 @@ public class RegularDetailActivity extends BaseActivity {
             case RegularBase.REGULAR_03:
                 mTitle.setTitleText("定期项目");
                 break;
-            case RegularBase.REGULAR_04:
-                mTitle.setTitleText("定期项目转让");
-                break;
+//            case RegularBase.REGULAR_04:
+//                mTitle.setTitleText("定期项目转让");
+//                break;
             case RegularBase.REGULAR_05:
                 mTitle.setTitleText("定期计划");
                 break;
-            case RegularBase.REGULAR_06:
-                mTitle.setTitleText("定期计划转让");
-                break;
+//            case RegularBase.REGULAR_06:
+//                mTitle.setTitleText("定期计划转让");
+//                break;
             default:
                 break;
         }
@@ -298,10 +298,10 @@ public class RegularDetailActivity extends BaseActivity {
             case RegularBase.REGULAR_05:
                 updateRegularPlanDetail();
                 break;
-            case RegularBase.REGULAR_04:
-            case RegularBase.REGULAR_06:
-                updateRegularTransferDetail();
-                break;
+//            case RegularBase.REGULAR_04:
+//            case RegularBase.REGULAR_06:
+//                updateRegularTransferDetail();
+//                break;
             default:
                 break;
         }
@@ -431,10 +431,15 @@ public class RegularDetailActivity extends BaseActivity {
                             append("%"));
             tv_people_amount.setVisibility(View.GONE);
         }
-        if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
+        if ((RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId)
+                && !TextUtils.isEmpty(mInfo.getFestival88())) {
             tv_88.setVisibility(View.VISIBLE);
             tv_88.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
             tv_88.getPaint().setAntiAlias(true);
+            tv_88.setText(mInfo.getFestival88());
+            if (!TextUtils.isEmpty(mInfo.getFestival88_url())) {
+                tv_88.setOnClickListener(mOnclickListener);
+            }
         } else {
             tv_88.setVisibility(View.GONE);
         }
@@ -524,8 +529,10 @@ public class RegularDetailActivity extends BaseActivity {
 
         if (RegularBase.REGULAR_03 == prodId) {
             tv1.setText("严格风控");
+            iv1.setImageResource(R.drawable.ic_ygfk);
         } else if (RegularBase.REGULAR_05 == prodId) {
             tv1.setText("分散投资");
+            iv1.setImageResource(R.drawable.ic_fstz);
         }
 
         ArrayList<RegularProjectFeature> mList = mInfo.getSubjectFeature();
@@ -607,6 +614,9 @@ public class RegularDetailActivity extends BaseActivity {
                     break;
                 case R.id.et_input:
                     showKeyBoardView();
+                    break;
+                case R.id.tv_88:
+                    WebActivity.startActivity(mActivity, mInfo.getFestival88_url());
                     break;
                 case R.id.tv_seemore:
                 case R.id.tv_info_right:

@@ -19,8 +19,8 @@ import com.miqian.mq.views.RegularTransferView;
 public class RegularFragment extends BasicFragment {
 
     private TextView tv_regular_project; // 定期项目标题
-    private TextView tv_regular_transfer; // 定期转让标题
-    private View title_line; // 定期项目 定期转让标题选中后下面显示的红色横线
+//    private TextView tv_regular_transfer; // 定期转让标题
+//    private View title_line; // 定期项目 定期转让标题选中后下面显示的红色横线
 
     private final int LEFTPAGE = 0x01; // 定期项目 被选中
     private final int RIGHTPAGE = 0x02; // 定期转让 被选中
@@ -40,7 +40,7 @@ public class RegularFragment extends BasicFragment {
             rootView = mInflater.inflate(R.layout.fragment_regular, null);
             initView();
             initListener();
-            switchTitleTo(curSwitch);
+//            switchTitleTo(curSwitch);
             switchContentTo(curSwitch);
         }
         obtainData(curSwitch);
@@ -49,17 +49,17 @@ public class RegularFragment extends BasicFragment {
 
     private void initView() {
         tv_regular_project = (TextView) rootView.findViewById(R.id.tv_regular_project);
-        tv_regular_transfer = (TextView) rootView.findViewById(R.id.tv_regular_transfer);
-        title_line = rootView.findViewById(R.id.title_line);
+//        tv_regular_transfer = (TextView) rootView.findViewById(R.id.tv_regular_transfer);
+//        title_line = rootView.findViewById(R.id.title_line);
         content = (FrameLayout) rootView.findViewById(R.id.content);
     }
 
     private void initListener() {
-        tv_regular_project.setOnClickListener(mOnclicklistener);
-        tv_regular_transfer.setOnClickListener(mOnclicklistener);
+//        tv_regular_project.setOnClickListener(mOnclicklistener);
+//        tv_regular_transfer.setOnClickListener(mOnclicklistener);
     }
 
-    private View.OnClickListener mOnclicklistener = new View.OnClickListener() {
+    /*private View.OnClickListener mOnclicklistener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -79,10 +79,10 @@ public class RegularFragment extends BasicFragment {
                     break;
             }
         }
-    };
+    };*/
 
     // 标题切换
-    private void switchTitleTo(int curSwitch) {
+    /*private void switchTitleTo(int curSwitch) {
         this.curSwitch = curSwitch;
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title_line.getLayoutParams();
         switch (curSwitch) {
@@ -102,7 +102,7 @@ public class RegularFragment extends BasicFragment {
                 break;
         }
         title_line.setLayoutParams(params);
-    }
+    }*/
 
     // 内容切换
     private void switchContentTo(int curSwitch) {

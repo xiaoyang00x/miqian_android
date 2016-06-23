@@ -3,23 +3,23 @@
     android:layout_height="@dimen/title_height"
     android:background="@color/mq_r1_v2">
 
-    <View
-        android:id="@+id/reference"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
-
     <TextView
         android:id="@+id/tv_regular_project"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/reference"
+        android:layout_centerHorizontal="true"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="定期理财"
         android:textColor="@color/white"
         android:textSize="@dimen/mq_font8_v2" />
+
+    <!--<View
+        android:id="@+id/reference"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
 
     <TextView
         android:id="@+id/tv_regular_transfer"
@@ -45,6 +45,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/line_horizontal_white_bold" />
-
+-->
 
 </RelativeLayout>

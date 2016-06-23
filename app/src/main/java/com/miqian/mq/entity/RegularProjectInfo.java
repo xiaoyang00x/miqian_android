@@ -67,6 +67,10 @@ public class RegularProjectInfo extends RegularBase {
 
     private String originalSubjectId; // 原始标的ID
 
+    private String festival88; // 88理财节文案
+
+    private String festival88_url; // 88理财节跳转url
+
     private ArrayList<RegularEarnDetail> subjectBar;
 
     private ArrayList<RegularProjectMatch> matchItem;
@@ -311,6 +315,22 @@ public class RegularProjectInfo extends RegularBase {
 
     public void setOriginalSubjectId(String originalSubjectId) {
         this.originalSubjectId = originalSubjectId;
+    }
+
+    public String getFestival88() {
+        return festival88;
+    }
+
+    public void setFestival88(String festival88) {
+        this.festival88 = festival88;
+    }
+
+    public String getFestival88_url() {
+        return festival88_url;
+    }
+
+    public void setFestival88_url(String festival88_url) {
+        this.festival88_url = festival88_url;
     }
 
     public String getTransferFlag() {

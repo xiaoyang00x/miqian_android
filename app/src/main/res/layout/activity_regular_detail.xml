@@ -189,7 +189,6 @@
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:singleLine="true"
-                android:text="参与88理财节,每满1000元获得一个金币,可兑换奖品"
                 android:textColor="@color/mq_bl1_v2"
                 android:textSize="@dimen/mq_font3_v2" />
 
