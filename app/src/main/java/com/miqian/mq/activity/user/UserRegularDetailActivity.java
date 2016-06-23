@@ -59,7 +59,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private String projectType;//Y:已结息  N:未结息
     private String subjectId;//标的id
     private TextView textProject;
-//    private Button btnClick;
+    //    private Button btnClick;
     private TextView textInterestRatePresent;
     private UserRegularDetail.RegInvest regInvest;
     private List<Operation> operationList;
@@ -77,6 +77,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private ImageView ivProjectState;
     private View layoutTransferDetail;
     private TextView tvTransferedMoney;
+    private LinearLayout layoutFirst;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -140,6 +141,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         tvTimeFirst = (TextView) findViewById(R.id.tv_time_first);
         tvContentFirst = (TextView) findViewById(R.id.tv_content_first);
         linearLayoutRecord = (LinearLayout) findViewById(R.id.linear_record);
+        layoutFirst = (LinearLayout) findViewById(R.id.layout_first);
 
         //购买转让的Ui
         layoutPriginproject = findViewById(R.id.layout_originproject);
@@ -202,6 +204,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //        btnClick.setText(regInvest.getTransDesc());
 
         //标的相关记录
+        layoutFirst.setVisibility(View.VISIBLE);
         if (operationList.size() > 0) {
             tvContentFirst.setText(operationList.get(0).getOperationContent());
             String operationDt = operationList.get(0).getOperationDt();

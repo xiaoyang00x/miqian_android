@@ -30,6 +30,7 @@ public class OperationRecordAcitivity extends BaseActivity {
     private LinearLayout linearLayoutRecord;
     private List<Operation> mOperationList;
     private String investId;
+    private LinearLayout linearLayoutFirst;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -65,6 +66,7 @@ public class OperationRecordAcitivity extends BaseActivity {
         if (mOperationList == null) {
             return;
         }
+        linearLayoutFirst.setVisibility(View.VISIBLE);
         //标的相关记录
         if (mOperationList.size() > 0) {
             tvContentFirst.setText(mOperationList.get(0).getOperationContent());
@@ -109,6 +111,7 @@ public class OperationRecordAcitivity extends BaseActivity {
         tvTimeFirst = (TextView) findViewById(R.id.tv_time_first);
         tvContentFirst = (TextView) findViewById(R.id.tv_content_first);
         linearLayoutRecord = (LinearLayout) findViewById(R.id.linear_record);
+        linearLayoutFirst = (LinearLayout) findViewById(R.id.layout_first);
 
     }
 
