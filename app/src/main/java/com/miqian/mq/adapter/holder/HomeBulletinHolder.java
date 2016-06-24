@@ -22,7 +22,7 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
     private ImageView img_bulletin;
     private TextView tv_content;
     private Context mContext;
-    private MessageInfo mPushData;
+    private HomePageInfo data;
 
     public HomeBulletinHolder(View itemView) {
         super(itemView);
@@ -35,7 +35,7 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
 
     @Override
     public void bindView(HomePageInfo mData) {
-        mPushData = mData.getBsPushData();
+        data = mData;
         if (mData.getBsPushData() != null && !TextUtils.isEmpty(mData.getBsPushData().getTitle())) {
             tv_content.setText(mData.getBsPushData().getTitle());
 
@@ -58,9 +58,11 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
         switch (view.getId()) {
             case R.id.tv_content://跳公告详情
                 Intent intent = new Intent(mContext, AnnounceResultActivity.class);
-                intent.putExtra("id", mPushData.getId());
+                intent.putExtra("id", data.getBsPushData().getId());
                 intent.putExtra("isMessage", false);
                 mContext.startActivity(intent);
+                Pref.saveLong(Pref.DATA_BULLETIN_TIME, data.getBsPushData().getSendTime(), mContext);
+                img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
                 break;
             case R.id.img_bulletin://跳列表页
                 mContext.startActivity(new Intent(mContext, NoticeActivity.class));
