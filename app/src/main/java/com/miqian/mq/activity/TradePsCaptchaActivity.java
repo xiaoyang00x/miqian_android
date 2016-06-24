@@ -98,7 +98,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
             findViewById(R.id.frament_modifytradepassword).setVisibility(View.GONE);
             findViewById(R.id.view_1).setVisibility(View.GONE);
             mTitle.setTitleText("修改手机号码");
-            tv_tip.setText("修改手机密码,请先验证手机");
+            tv_tip.setText("修改手机号码,请先验证手机");
         }
         if (!TextUtils.isEmpty(realNameStatus)) {
             //未实名认证
