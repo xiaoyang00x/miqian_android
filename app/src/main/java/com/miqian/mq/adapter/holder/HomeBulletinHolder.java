@@ -30,6 +30,7 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
 
         img_bulletin = (ImageView) itemView.findViewById(R.id.img_bulletin);
         tv_content = (TextView) itemView.findViewById(R.id.tv_content);
+
     }
 
     @Override
@@ -48,13 +49,20 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
                 img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
             }
             tv_content.setOnClickListener(this);
+            img_bulletin.setOnClickListener(this);
         }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_content:
+            case R.id.tv_content://跳公告详情
+                Intent intent = new Intent(mContext, AnnounceResultActivity.class);
+                intent.putExtra("id", mPushData.getId());
+                intent.putExtra("isMessage", false);
+                mContext.startActivity(intent);
+                break;
+            case R.id.img_bulletin://跳列表页
                 mContext.startActivity(new Intent(mContext, NoticeActivity.class));
                 break;
             default:
