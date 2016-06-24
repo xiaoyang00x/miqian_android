@@ -185,7 +185,7 @@
                     <TextView
                         style="@style/f7_B1_V2"
                         android:layout_centerVertical="true"
-                        android:text="红包卡券" />
+                        android:text="红包/卡" />
 
                     <TextView
                         android:id="@+id/text_promote_unit"
