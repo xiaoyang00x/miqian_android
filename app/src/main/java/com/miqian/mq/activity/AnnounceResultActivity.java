@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -18,7 +20,7 @@ import com.miqian.mq.views.WFYTitle;
 
 public class AnnounceResultActivity extends BaseActivity {
 
-    private int messsageId;
+    private String messsageId;
     private TextView tv_title;
     private TextView tv_content;
     private TextView tv_time;
@@ -28,11 +30,10 @@ public class AnnounceResultActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle arg0) {
         Intent intent = getIntent();
-        messsageId = intent.getIntExtra("id", 0);
+        messsageId = intent.getStringExtra("id");
         position = intent.getIntExtra("position", 0);
         isMessage = intent.getBooleanExtra("isMessage", true);
         super.onCreate(arg0);
-
     }
 
     @Override
@@ -51,7 +52,6 @@ public class AnnounceResultActivity extends BaseActivity {
                 }
                 //更新消息列表
                 ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.RefeshMessage, position);
-
             }
 
             @Override
@@ -64,6 +64,8 @@ public class AnnounceResultActivity extends BaseActivity {
     }
 
     protected void setData(MessageInfo detailInfo) {
+
+        findViewById(R.id.linear_content).setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(detailInfo.getTitle())) {
             tv_title.setText(detailInfo.getTitle());
         }

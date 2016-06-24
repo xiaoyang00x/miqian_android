@@ -59,6 +59,7 @@ public class ActivityRedeem extends BaseActivity {
 
     @Override
     public void obtainData() {
+        DecimalFormat df = new java.text.DecimalFormat("#.00");
         if (userCurrent != null) {
             BigDecimal balance = userCurrent.getCurAsset();//活期待收金额
             BigDecimal curDayResidue = userCurrent.getCurDayResidue();//当日剩余可赎回额度
@@ -67,13 +68,13 @@ public class ActivityRedeem extends BaseActivity {
             } else {
                 resideMoney = curDayResidue;
             }
-            editMoney.setHint("可赎回" + resideMoney + "元");
+            editMoney.setHint("可赎回" + df.format(resideMoney) + "元");
             btnRollout.setEnabled(true);
             BigDecimal curMonthAmt = userCurrent.getCurMonthAmt();//本月已赎回的金额
             BigDecimal lmtMonthAmt = userCurrent.getLmtMonthAmt();//本月限制赎回额度
             BigDecimal curResidue = lmtMonthAmt.subtract(curMonthAmt);//剩余可赎回额度
 
-            DecimalFormat df = new java.text.DecimalFormat("#.00");
+
             String textCurResidue = df.format(curResidue);
             String textCurMonthAmt = df.format(curMonthAmt);
             if (textCurResidue.equals(".00")) {

@@ -123,18 +123,12 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
 //                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 }
             }
-
-            if (regInvest.getProdId().equals("3")) {
-                ((ViewHolder) holder).textProjectType.setText("定期赚");
-            } else {
-                ((ViewHolder) holder).textProjectType.setText("定期计划");
-            }
             ((ViewHolder) holder).textInterestRate.setText(regInvest.getRealInterest());
             String presentInterest = regInvest.getPresentInterest();
             if (TextUtils.isEmpty(presentInterest)) {
                 ((ViewHolder) holder).textInterestRatePresent.setText("%");
             } else {
-                if (0==(Double.parseDouble(presentInterest))) {
+                if (0 == (Double.parseDouble(presentInterest))) {
                     ((ViewHolder) holder).textInterestRatePresent.setText("%");
                 } else {
                     ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
@@ -202,7 +196,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
         public TextView textInterestRate;
         public TextView textInterestRatePresent;
         public TextView textEarningName;
-        public TextView textProjectType;
         public TextView textRight;
 
 
@@ -213,7 +206,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             super(itemView);
             bdName = (TextView) itemView.findViewById(R.id.text_name);
             imageProjectStatus = (ImageView) itemView.findViewById(R.id.image_project_status);
-            textProjectType = (TextView) itemView.findViewById(R.id.project_type);
             textCapital = (TextView) itemView.findViewById(R.id.text_capital);
             textCapitalMoney = (TextView) itemView.findViewById(R.id.text_capital_money);
             textEarning = (TextView) itemView.findViewById(R.id.text_earning);

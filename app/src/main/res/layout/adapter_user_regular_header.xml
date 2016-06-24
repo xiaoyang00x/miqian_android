@@ -137,7 +137,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="总代收本金(元)"
+                    android:text="总待收本金(元)"
                     android:textColor="@color/mq_b3_v2"
                     android:textSize="@dimen/mq_font3_v2" />
 
@@ -149,7 +149,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="--.--"
+                    android:text="0.00"
                     android:textColor="@color/mq_b3_v2"
                     android:textSize="@dimen/mq_font8_v2"
                     android:textStyle="bold" />
@@ -170,7 +170,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="总代收收益(元)"
+                    android:text="总待收收益(元)"
                     android:textColor="@color/mq_b3_v2"
                     android:textSize="@dimen/mq_font3_v2" />
 
@@ -181,7 +181,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="--.--"
+                    android:text="0.00"
                     android:textColor="@color/mq_b3_v2"
                     android:textSize="@dimen/mq_font8_v2"
                     android:textStyle="bold" />
