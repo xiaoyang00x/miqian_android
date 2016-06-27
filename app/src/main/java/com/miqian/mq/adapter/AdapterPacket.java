@@ -25,6 +25,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
     private int mPosition = -1;
 
     private static final int VIEW_TYPE_HB = 0;
+    private static final int VIEW_TYPE_ADD_INTEREST = 2;              //八八双倍收益卡
 
     public AdapterPacket(List<Promote> promList) {
         this.promList = promList;
@@ -41,6 +42,9 @@ public class AdapterPacket extends RecyclerView.Adapter {
             case VIEW_TYPE_HB:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket_temp, parent, false);
                 return new BaseViewHoleder(view);
+            case VIEW_TYPE_ADD_INTEREST:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ticket_baba_festival, parent, false);
+                return new BaBaViewHoleder(view);
             default:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket_temp, parent, false);
                 return new BaseViewHoleder(view);
@@ -59,7 +63,28 @@ public class AdapterPacket extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof BaseViewHoleder) {
+        if (holder instanceof BaBaViewHoleder) {
+            BaBaViewHoleder tempViewHoleder = (BaBaViewHoleder) holder;
+            final Promote promote = promList.get(position);
+            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
+            setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
+            setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
+            setText(tempViewHoleder.tv_use_limit, promote.getLimitMsg());
+//            String desUrl = promote.getPromUrl();
+            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+            tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
+            tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
+            if (mPosition == position) {
+                tempViewHoleder.promoteChoosed.setVisibility(View.VISIBLE);
+            } else {
+                tempViewHoleder.promoteChoosed.setVisibility(View.GONE);
+            }
+
+//            clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
+
+//            tempViewHoleder.setViewEnable(isValid);
+        } else if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             final Promote promote = promList.get(position);
             setText(tempViewHoleder.tv_name, promote.getPromProdName());
@@ -102,10 +127,14 @@ public class AdapterPacket extends RecyclerView.Adapter {
         return 0;
     }
 
-    //促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
+    //促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金 SK:双倍收益卡
     @Override
     public int getItemViewType(int position) {
-        return VIEW_TYPE_HB;
+        if (promList.get(position) != null && Promote.TYPE.SK.getValue().equals(promList.get(position).getType())) {
+            return VIEW_TYPE_ADD_INTEREST;
+        } else {
+            return VIEW_TYPE_HB;
+        }
     }
 
     class BaseViewHoleder extends RecyclerView.ViewHolder {
@@ -145,6 +174,21 @@ public class AdapterPacket extends RecyclerView.Adapter {
             tv_precent_unit = (TextView) itemView.findViewById(R.id.tv_precent_unit);
             frame_ticket = (RelativeLayout) itemView.findViewById(R.id.frame_ticket);
             promoteChoosed = (ImageView) itemView.findViewById(R.id.promote_choosed);
+        }
+    }
+
+    /**
+     * 八八双倍收益卡holder
+     */
+    class BaBaViewHoleder extends BaseViewHoleder {
+
+        protected ImageView img_background;
+        protected ImageView img_tag;
+
+        public BaBaViewHoleder(View itemView) {
+            super(itemView);
+            img_background = (ImageView) itemView.findViewById(R.id.img_background);
+            img_tag = (ImageView) itemView.findViewById(R.id.img_tag);
         }
     }
 
