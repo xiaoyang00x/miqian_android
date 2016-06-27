@@ -10,22 +10,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.database.MyDataBaseHelper;
+import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 public class AnnounceResultActivity extends BaseActivity {
 
-    private String messsageId;
+    private String messsageId = "0";
     private TextView tv_title;
     private TextView tv_content;
     private TextView tv_time;
     private boolean isMessage;
     private int position;
+    private MessageInfo detailInfo = new MessageInfo();
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -38,12 +42,25 @@ public class AnnounceResultActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
+
+        boolean isNative = Pref.getBoolean(Pref.FROM_NATIVE + messsageId, this, false);
+        if (isNative) {
+            JpushInfo jpushInfo = MyDataBaseHelper.getInstance(this).getJpushInfo(messsageId);
+            detailInfo.setTitle(jpushInfo.getTitle());
+            detailInfo.setContent(jpushInfo.getContent());
+            detailInfo.setSendTime(Long.parseLong(jpushInfo.getTime()));
+            showContentView();
+            setData(detailInfo);
+            Pref.saveBoolean(Pref.FROM_NATIVE + jpushInfo.getId(), false, this);
+            return;
+        }
+
         begin();
         HttpRequest.getPushDetail(mActivity, new ICallback<MessageInfoResult>() {
             @Override
             public void onSucceed(MessageInfoResult result) {
                 end();
-                MessageInfo detailInfo = result.getData();
+                detailInfo = result.getData();
                 if (detailInfo != null) {
                     showContentView();
                     setData(detailInfo);
@@ -71,11 +88,9 @@ public class AnnounceResultActivity extends BaseActivity {
         }
         String content = detailInfo.getContent();
         if (!TextUtils.isEmpty(content)) {
-
             Spanned fromHtml = Html.fromHtml(content);
             tv_content.setText("      " + fromHtml);
         }
-
         tv_time.setText(Uihelper.timestampToDateStr_other(detailInfo.getSendTime()));
     }
 

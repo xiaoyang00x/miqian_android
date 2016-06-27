@@ -79,6 +79,7 @@ public class OperationRecordAcitivity extends BaseActivity {
             }
         }
         if (mOperationList.size() > 1) {
+            findViewById(R.id.view_grey).setVisibility(View.VISIBLE);
             for (int i = 1; i < mOperationList.size(); i++) {
                 View itemRecord = LayoutInflater.from(this).inflate(R.layout.item_record, null);
                 TextView tvDate = (TextView) itemRecord.findViewById(R.id.tv_date);

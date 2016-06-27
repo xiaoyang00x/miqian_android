@@ -216,6 +216,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             }
         }
         if (operationList.size() > 1) {
+            findViewById(R.id.view_grey).setVisibility(View.VISIBLE);
             for (int i = 1; i < operationList.size(); i++) {
                 View itemRecord = LayoutInflater.from(this).inflate(R.layout.item_record, null);
                 TextView tvDate = (TextView) itemRecord.findViewById(R.id.tv_date);
@@ -238,21 +239,22 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 linearLayoutRecord.addView(itemRecord);
             }
         }
-
-        if ("3".equals(regInvest.getProdId())) {//定期赚
-            frameProjectMatch.setVisibility(View.VISIBLE);
-            textProject.setText("项目详情");
-        } else if ("4".equals(regInvest.getProdId())) {//定期赚转让
-            layoutPriginproject.setVisibility(View.VISIBLE);
-            tvOriginproject.setVisibility(View.VISIBLE);
-            tvOriginprojectName.setText(regInvest.getBdNm());
-        } else if ("5".equals(regInvest.getProdId())) {//定期计划
-            frameProjectMatch.setVisibility(View.VISIBLE);
-            textProject.setText("项目匹配");
-        } else if ("6".equals(regInvest.getProdId())) {//定期计划转让
-            layoutPriginproject.setVisibility(View.VISIBLE);
-            tvOriginproject.setVisibility(View.VISIBLE);
-            tvOriginprojectName.setText(regInvest.getBdNm());
+        if ("N".equals(regInvest.getBearingStatus())) {
+            if ("3".equals(regInvest.getProdId())) {//定期赚
+                frameProjectMatch.setVisibility(View.VISIBLE);
+                textProject.setText("项目详情");
+            } else if ("4".equals(regInvest.getProdId())) {//定期赚转让
+                layoutPriginproject.setVisibility(View.VISIBLE);
+                tvOriginproject.setVisibility(View.VISIBLE);
+                tvOriginprojectName.setText(regInvest.getBdNm());
+            } else if ("5".equals(regInvest.getProdId())) {//定期计划
+                frameProjectMatch.setVisibility(View.VISIBLE);
+                textProject.setText("项目匹配");
+            } else if ("6".equals(regInvest.getProdId())) {//定期计划转让
+                layoutPriginproject.setVisibility(View.VISIBLE);
+                tvOriginproject.setVisibility(View.VISIBLE);
+                tvOriginprojectName.setText(regInvest.getBdNm());
+            }
         }
         String projectState = regInvest.getProjectState();
 

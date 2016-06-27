@@ -121,6 +121,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         //app在当前
         showJushTip();
     }
+
     //  版本是否强制更新
     private void checkVersion() {
         HttpRequest.forceUpdate(this, new ICallback<UpdateResult>() {
@@ -164,7 +165,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     /**
      * 用户退出登录时将认购弹窗隐藏
      */
-    private void dialogPayDismiss () {
+    private void dialogPayDismiss() {
         if (mTabHost.getCurrentTab() == 1) {
             FragmentCurrent fragmentCurrent = (FragmentCurrent) getSupportFragmentManager().findFragmentByTag(TAG_CURRENT);
             fragmentCurrent.dialogPayDismiss();
@@ -245,7 +246,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 current_tab = mTabHost.getCurrentTab();
 
                 //当点击财富Tab 隐藏此tab上的红点
-                if(current_tab == 3) {
+                if (current_tab == 3) {
                     imgRedPointer.setVisibility(View.GONE);
                 }
             }
@@ -314,84 +315,79 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 return;
             }
             //用户登录或者是系统消息，弹出提示框
-            String jpushToken = jInfo.getToken();
-            String pushSource = jInfo.getPushSource();
-            String token = UserUtil.getToken(context);
-            if ("0".equals(pushSource) || (UserUtil.hasLogin(context) && token.equals(jpushToken))) {
-                String string_uritype = jInfo.getUriType();
-                int uritype;
-                if (TextUtils.isEmpty(string_uritype)) {
-                    return;
-                } else {
-                    uritype = Integer.valueOf(string_uritype);
-                }
-                switch (uritype) {
-                    case 16://找回登录密码
-                    case 17://修改登录密码
-                    case 0://其他设备登录
-                    case 18://手机号修改
-                        mTabHost.setCurrentTab(3);
-                        break;
-                    case 1://交易密码修改，到消息列表页
-                    case 2://提现受理，跳到资金记录
-                    case 3://充值成功，到我的
-                    case 4://认购 ，到资金记录
-                    case 5://定期赚到期，到我的定期列表页
-                    case 6://定期计划到期，到我的定期列表页
-                    case 7://活期赎回，到资金记录
-                    case 8://转让被认购完成,跳到资金记录
-                    case 15://提现受理失败
-                    case 50://系统升级,系统维护
-                        startActivity(new Intent(context, AnnounceActivity.class));
-                        break;
-                    case 9://收到红包
-                    case 10://收到拾财券
-                    case 11://红包即将到期
-                    case 12://拾财券即将到期
-                        startActivity(new Intent(context, MyTicketActivity.class));
-                        break;
-                    case 51://活动利好 webView
-                    case 52://平台相关新闻 webView
-                    case 53://相关项目 webView
-                        try {
-                            String ext = jInfo.getExt();
-                            JSONObject jsonObject = new JSONObject(ext);
-                            if (jsonObject != null) {
-                                String url = jsonObject.getString("url");
-                                if (!TextUtils.isEmpty(url)) {
-                                    WebActivity.startActivity(context, url);
-                                }
+            String string_uritype = jInfo.getUriType();
+            int uritype;
+            if (TextUtils.isEmpty(string_uritype)) {
+                return;
+            } else {
+                uritype = Integer.valueOf(string_uritype);
+            }
+            switch (uritype) {
+                case 16://找回登录密码
+                case 17://修改登录密码
+                case 0://其他设备登录
+                case 18://手机号修改
+                    mTabHost.setCurrentTab(3);
+                    break;
+                case 1://交易密码修改，到消息列表页
+                case 2://提现受理，跳到资金记录
+                case 3://充值成功，到我的
+                case 4://认购 ，到资金记录
+                case 5://定期赚到期，到我的定期列表页
+                case 6://定期计划到期，到我的定期列表页
+                case 7://活期赎回，到资金记录
+                case 8://转让被认购完成,跳到资金记录
+                case 15://提现受理失败
+                    startActivity(new Intent(context, AnnounceActivity.class));
+                    break;
+                case 9://收到红包
+                case 10://收到拾财券
+                case 11://红包即将到期
+                case 12://拾财券即将到期
+                    startActivity(new Intent(context, MyTicketActivity.class));
+                    break;
+                case 50://系统升级,系统维护
+                case 51://活动利好 webView
+                case 52://平台相关新闻 webView
+                case 53://相关项目 webView
+                    try {
+                        String ext = jInfo.getExt();
+                        JSONObject jsonObject = new JSONObject(ext);
+                        if (jsonObject != null) {
+                            String url = jsonObject.getString("url");
+                            if (!TextUtils.isEmpty(url)) {
+                                WebActivity.startActivity(context, url);
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                        break;
-                    case 54://运营公告文本
-                    case 55://产品公告文本
-                    case 56://活动公告文本
-                        Intent intent = new Intent(context, AnnounceResultActivity.class);
-                        intent.putExtra("id", Integer.parseInt(jInfo.getId()));
-                        intent.putExtra("isMessage", false);
-                        startActivity(intent);
-                        break;
-                    case 57://跳首页
-                        mTabHost.setCurrentTab(0);
-                        break;
-                    case 58://跳活期首页
-                        mTabHost.setCurrentTab(1);
-                        break;
-                    case 59://跳定期首页
-                        mTabHost.setCurrentTab(2);
-                        break;
-                    case 60://跳我的页面
-                        mTabHost.setCurrentTab(3);
-                        break;
-                    case 62://跳标的详情
-                        jumpToRegular(jInfo);
-                        break;
-                    default:
-                        break;
-                }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 54://运营公告文本
+                case 55://产品公告文本
+                case 56://活动公告文本
+                    Intent intent = new Intent(context, AnnounceResultActivity.class);
+                    intent.putExtra("id", jInfo.getId());
+                    intent.putExtra("isMessage", false);
+                    startActivity(intent);
+                    break;
+                case 57://跳首页
+                    mTabHost.setCurrentTab(0);
+                    break;
+                case 58://跳活期首页
+                    mTabHost.setCurrentTab(1);
+                    break;
+                case 59://跳定期首页
+                    mTabHost.setCurrentTab(2);
+                    break;
+                case 60://跳我的页面
+                    mTabHost.setCurrentTab(3);
+                    break;
+                case 62://跳标的详情
+                    jumpToRegular(jInfo);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -508,9 +504,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 ActivityStack.getActivityStack().clearActivity();
                 mTabHost.setVisibility(View.GONE);
                 maintenance.setVisibility(View.VISIBLE);
-                ((TextView)maintenance.findViewById(R.id.title)).setText(((MaintenanceResult) data).getTitle());
-                ((TextViewEx)maintenance.findViewById(R.id.content)).setText(((MaintenanceResult) data).getContent(), true);
-                ((TextView)maintenance.findViewById(R.id.inscription)).setText(((MaintenanceResult) data).getInscription());
+                ((TextView) maintenance.findViewById(R.id.title)).setText(((MaintenanceResult) data).getTitle());
+                ((TextViewEx) maintenance.findViewById(R.id.content)).setText(((MaintenanceResult) data).getContent(), true);
+                ((TextView) maintenance.findViewById(R.id.inscription)).setText(((MaintenanceResult) data).getInscription());
                 break;
             case OperationKey.ShowTips:
                 showJushTip();
@@ -573,7 +569,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
      * 认购成功显示财富tab 上的红点
      */
     public void showRedPointer() {
-        if(imgRedPointer != null) {
+        if (imgRedPointer != null) {
             imgRedPointer.setVisibility(View.VISIBLE);
         }
     }

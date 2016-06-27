@@ -212,7 +212,8 @@
 
                     <TextView
                         android:id="@+id/text_project"
-                        style="@style/f3_B1"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -246,12 +247,13 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_left_right"
                         android:text="还款方式"
-                        android:textColor="@color/mq_b4_v2"
-                        android:textSize="@dimen/mq_font7_v2" />
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2" />
 
                     <TextView
                         android:id="@+id/text_repayment"
-                        style="@style/f3_B2"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -273,7 +275,8 @@
 
                     <TextView
                         android:id="@+id/text_earning_type"
-                        style="@style/f3_B1"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -282,13 +285,14 @@
 
                     <TextView
                         android:id="@+id/text_earning"
-                        style="@style/f3_B2"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
-                        android:textColor="@color/mq_r1_v2" />
+                         />
 
                     <View
                         style="@style/item_divider"
@@ -382,11 +386,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/listitem_height"
+                    android:layout_marginTop="10dp"
                     android:background="@color/white">
 
                     <TextView
-                        style="@style/f3_B1"
-                        android:layout_width="100dp"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font7_v2"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_left_right"
@@ -411,7 +417,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
                         android:layout_toLeftOf="@+id/arrow_detail"
-                        android:text="查看详情"
+                        android:text="查看全部"
                         android:textColor="@color/mq_b2_v2"
                         android:textSize="@dimen/mq_font6_v2" />
 
@@ -470,6 +476,8 @@
                             android:layout_marginRight="5dp">
 
                             <View
+                                android:visibility="gone"
+                                android:id="@+id/view_grey"
                                 android:layout_width="3dp"
                                 android:layout_height="20dp"
                                 android:layout_alignParentBottom="true"

@@ -523,8 +523,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         switch (operationKey) {
             case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
-                hasMessage = true;
-                btn_message.setImageResource(R.drawable.btn_message);
+                if (UserUtil.hasLogin(getActivity())){
+                    hasMessage = true;
+                    btn_message.setImageResource(R.drawable.btn_message);
+                }
                 break;
             case ExtendOperationController.OperationKey.MessageState:
                 // 更新数据

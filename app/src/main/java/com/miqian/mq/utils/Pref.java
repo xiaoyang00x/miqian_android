@@ -70,7 +70,8 @@ public class Pref {
     public final static String DATA_BULLETIN_TIME = "DATA_BULLETIN_TIME";
     //全推
     public final static String DATA_PUSH = "data_push";
-
+    //本地获取
+    public final static String FROM_NATIVE = "fromnative";
 
 
     private static SharedPreferences getSettings(final Context contex) {
