@@ -32,6 +32,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
 
     private static final int VIEW_TYPE_FOOTER = 0;
     private static final int VIEW_TYPE_LIST = 1;
+    private static final int VIEW_TYPE_ADD_INTEREST = 2;              //八八双倍收益卡
 
     private Context mContext;
     private boolean isValid;        //卡券是否有效
@@ -51,8 +52,17 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     //促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
     @Override
     public int getItemViewType(int position) {
-        return position + 1 == getItemCount() ? VIEW_TYPE_FOOTER : VIEW_TYPE_LIST;
+        if(position + 1 == getItemCount()) {
+            return VIEW_TYPE_FOOTER;
+        }else {
+           if(promList.get(position) != null && Promote.TYPE.SK.getValue().equals(promList.get(position).getType())) {
+               return VIEW_TYPE_ADD_INTEREST;
+           }else {
+               return VIEW_TYPE_LIST;
+           }
+        }
     }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,6 +71,9 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             case VIEW_TYPE_LIST:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket_temp, parent, false);
                 return new BaseViewHoleder(view);
+            case VIEW_TYPE_ADD_INTEREST:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ticket_baba_festival, parent, false);
+                return new BaBaViewHoleder(view);
             case VIEW_TYPE_FOOTER:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
                 return new ProgressViewHolder(view);
@@ -81,7 +94,23 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof BaseViewHoleder) {
+        if (holder instanceof BaBaViewHoleder) {
+            BaBaViewHoleder tempViewHoleder = (BaBaViewHoleder) holder;
+            final Promote promote = promList.get(position);
+            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
+            setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
+            setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
+            setText(tempViewHoleder.tv_use_limit, promote.getLimitMsg());
+            String desUrl = promote.getPromUrl();
+            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+            tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
+            tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
+
+            clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
+
+            tempViewHoleder.setViewEnable(isValid);
+        } else if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             final Promote promote = promList.get(position);
             setText(tempViewHoleder.tv_name, promote.getPromProdName());
@@ -111,12 +140,12 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             }
             clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
 
-            setViewEnable(tempViewHoleder);
+            tempViewHoleder.setViewEnable(isValid);
         }
         else if (holder instanceof ProgressViewHolder) {
             if (position >= maxValue) {
                 ((ProgressViewHolder) holder).frameLoad.setVisibility(View.GONE);
-                ((ProgressViewHolder) holder).frameNone.setVisibility(View.VISIBLE);
+                ((ProgressViewHolder) holder).frameNone.setVisibility(isValid? View.VISIBLE : View.GONE);
             } else {
                 ((ProgressViewHolder) holder).frameLoad.setVisibility(View.VISIBLE);
                 ((ProgressViewHolder) holder).frameNone.setVisibility(View.GONE);
@@ -159,19 +188,6 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         maxValue = value;
     }
 
-    private void setViewEnable(BaseViewHoleder holder) {
-        holder.frame_ticket.setEnabled(isValid);
-        holder.tv_name.setEnabled(isValid);
-        holder.tv_precent_unit.setEnabled(isValid);
-        holder.tv_amount_unit.setEnabled(isValid);
-        holder.tv_amount.setEnabled(isValid);
-        holder.tv_validate_date.setEnabled(isValid);
-        holder.tv_percent_limit.setEnabled(isValid);
-        holder.tv_date_limit.setEnabled(isValid);
-        holder.tv_use_limit.setEnabled(isValid);
-        holder.itemView.setEnabled(isValid);
-
-    }
     class BaseViewHoleder extends RecyclerView.ViewHolder {
 
         protected TextView tv_name;
@@ -195,6 +211,41 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             tv_amount_unit = (TextView) itemView.findViewById(R.id.tv_amount_unit);
             tv_precent_unit = (TextView) itemView.findViewById(R.id.tv_precent_unit);
             frame_ticket = (RelativeLayout) itemView.findViewById(R.id.frame_ticket);
+        }
+
+        public void setViewEnable(boolean isValid) {
+            frame_ticket.setEnabled(isValid);
+            tv_name.setEnabled(isValid);
+            tv_precent_unit.setEnabled(isValid);
+            tv_amount_unit.setEnabled(isValid);
+            tv_amount.setEnabled(isValid);
+            tv_validate_date.setEnabled(isValid);
+            tv_percent_limit.setEnabled(isValid);
+            tv_date_limit.setEnabled(isValid);
+            tv_use_limit.setEnabled(isValid);
+            itemView.setEnabled(isValid);
+
+        }
+    }
+
+    /**
+     * 八八双倍收益卡holder
+     */
+    class BaBaViewHoleder extends BaseViewHoleder {
+
+        protected ImageView img_background;
+        protected ImageView img_tag;
+
+        public BaBaViewHoleder(View itemView) {
+            super(itemView);
+            img_background = (ImageView) itemView.findViewById(R.id.img_background);
+            img_tag = (ImageView) itemView.findViewById(R.id.img_tag);
+        }
+
+        public void setViewEnable(boolean isValid) {
+            super.setViewEnable(isValid);
+            img_tag.setImageResource(isValid? R.drawable.icon_babafestival_enabled : R.drawable.icon_babafestival_unabled);
+            img_background.setImageResource(isValid? R.drawable.icon_babacard_enabled: R.drawable.icon_babacard_unabled);
         }
     }
 

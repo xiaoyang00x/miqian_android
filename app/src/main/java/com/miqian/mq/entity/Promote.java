@@ -15,7 +15,8 @@ public class Promote {
         TY("TY"), //体验金
         JX("JX"), //加息券
         FXQ("FXQ"), //分享券
-        DK("DK"); //抵扣券
+        DK("DK"), //抵扣券
+        SK("SK"); //双倍收益卡
 
         private final String value;
 
@@ -41,7 +42,7 @@ public class Promote {
      */
     private String id;
     /**
-     * 促销类型：SC:拾财券 HB:红包 JF:积分 LP:礼品卡 TY:体验金 JX:加息券 FXQ:分享券 DK:抵扣券
+     * 促销类型：SC:拾财券 HB:红包 JF:积分 LP:礼品卡 TY:体验金 JX:加息券 FXQ:分享券 DK:抵扣券  SK:双倍收益卡
      */
     private String type;
     /**

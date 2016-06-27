@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="125dp">
+
+    <RelativeLayout
+        android:id="@+id/frame_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:background="@drawable/bg_ticket_black"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <LinearLayout
+            android:id="@+id/layout_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_amount_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_amount"
+                android:layout_toLeftOf="@+id/tv_amount"
+                android:text="¥"
+                android:textColor="@drawable/font_ticket_baba"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="600"
+                android:textColor="@drawable/font_ticket_baba"
+                android:textSize="@dimen/mq_font14_v2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_precent_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_amount"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/tv_amount"
+                android:text="%"
+                android:textColor="@drawable/font_ticket_baba"
+                android:textSize="@dimen/mq_font3_v2" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_babafestival_enabled" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/img_tag"
+            android:singleLine="true"
+            android:text="双倍收益卡"
+            android:textColor="@drawable/font_ticket_main"
+            android:textSize="@dimen/mq_font6_v2" />
+
+        <TextView
+            android:id="@+id/tv_validate_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:textColor="@drawable/font_ticket_subtitle"
+            android:textSize="@dimen/mq_font2_v2" />
+
+        <TextView
+            android:id="@+id/tv_percent_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_validate_date"
+            android:layout_marginTop="1dp"
+            android:singleLine="true"
+            android:textColor="@drawable/font_ticket_subtitle"
+            android:textSize="@dimen/mq_font2_v2" />
+
+        <TextView
+            android:id="@+id/tv_date_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_percent_limit"
+            android:layout_marginTop="1dp"
+            android:singleLine="true"
+            android:textColor="@drawable/font_ticket_subtitle"
+            android:textSize="@dimen/mq_font2_v2" />
+
+        <ImageView
+            android:id="@+id/img_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_babacard_enabled" />
+
+        <TextView
+            android:id="@+id/tv_use_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:singleLine="true"
+            android:text="限定使用"
+            android:textColor="@drawable/font_ticket_baba_left"
+            android:textSize="@dimen/mq_font2_v2" />
+
+        <ImageView
+            android:id="@+id/promote_choosed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/promote_choosed"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
