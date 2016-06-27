@@ -240,14 +240,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             }
         }
         if ("N".equals(regInvest.getBearingStatus())) {
-            if ("3".equals(regInvest.getProdId())) {//定期赚
-                frameProjectMatch.setVisibility(View.VISIBLE);
-                textProject.setText("项目详情");
-            } else if ("4".equals(regInvest.getProdId())) {//定期赚转让
-                layoutPriginproject.setVisibility(View.VISIBLE);
-                tvOriginproject.setVisibility(View.VISIBLE);
-                tvOriginprojectName.setText(regInvest.getBdNm());
-            } else if ("5".equals(regInvest.getProdId())) {//定期计划
+            if ("5".equals(regInvest.getProdId())) {//定期计划
                 frameProjectMatch.setVisibility(View.VISIBLE);
                 textProject.setText("项目匹配");
             } else if ("6".equals(regInvest.getProdId())) {//定期计划转让
@@ -256,6 +249,15 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 tvOriginprojectName.setText(regInvest.getBdNm());
             }
         }
+        if ("3".equals(regInvest.getProdId())) {//定期赚
+            frameProjectMatch.setVisibility(View.VISIBLE);
+            textProject.setText("项目详情");
+        } else if ("4".equals(regInvest.getProdId())) {//定期赚转让
+            layoutPriginproject.setVisibility(View.VISIBLE);
+            tvOriginproject.setVisibility(View.VISIBLE);
+            tvOriginprojectName.setText(regInvest.getBdNm());
+        }
+
         String projectState = regInvest.getProjectState();
 
         if ("0".equals(projectState) || "1".equals(projectState) || "2".equals(projectState)) {
