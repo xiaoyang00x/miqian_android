@@ -101,7 +101,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
-            setText(tempViewHoleder.tv_use_limit, promote.getLimitMsg());
+            setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
             String desUrl = promote.getPromUrl();
             setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
@@ -117,7 +117,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
-            setText(tempViewHoleder.tv_use_limit, promote.getLimitMsg());
+            setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
             String desUrl = promote.getPromUrl();
             if (Promote.TYPE.JX.getValue().equals(promote.getType())) { // 加息券
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_blue);
