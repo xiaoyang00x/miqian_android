@@ -68,7 +68,13 @@ public class ActivityRedeem extends BaseActivity {
             } else {
                 resideMoney = curDayResidue;
             }
-            editMoney.setHint("可赎回" + df.format(resideMoney) + "元");
+            String format = df.format(resideMoney);
+            if (format.equals(".00")) {
+                editMoney.setHint("可赎回0.00元");
+            } else {
+                editMoney.setHint("可赎回" + format + "元");
+            }
+
             btnRollout.setEnabled(true);
             BigDecimal curMonthAmt = userCurrent.getCurMonthAmt();//本月已赎回的金额
             BigDecimal lmtMonthAmt = userCurrent.getLmtMonthAmt();//本月限制赎回额度

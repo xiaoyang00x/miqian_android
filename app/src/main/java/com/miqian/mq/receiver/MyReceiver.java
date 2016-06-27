@@ -94,12 +94,12 @@ public class MyReceiver extends BroadcastReceiver {
             if (TextUtils.isEmpty(noticeId)) {
                 return;
             }
-            if (!UserUtil.hasLogin(context) && "1".equals(response.getPushSource())) {//1为个人信息，未登录则收到，不弹出通知
-                return;
-            }
             if (!MyApplication.getInstance().isCurrent()) {
                 notificationIntent = new Intent(context, SplashActivity.class);
                 Pref.saveBoolean(Pref.IsPush, true, context);
+                if ("2".equals(response.getPushSource())) {//未登录的用户,从本地读取消息
+                    Pref.saveBoolean(Pref.FROM_NATIVE+response.getId(), true, context);
+                }
             } else {
                 if (TextUtils.isEmpty(string_uritype)) {
                     return;
@@ -123,7 +123,7 @@ public class MyReceiver extends BroadcastReceiver {
                     case 7://活期赎回，到资金记录
                     case 8://转让被认购完成,跳到资金记录
                     case 15://提现受理失败
-                    case 50://系统升级,系统维护
+
                         notificationIntent = new Intent(context, AnnounceActivity.class);
                         break;
                     case 9://收到红包
@@ -132,6 +132,7 @@ public class MyReceiver extends BroadcastReceiver {
                     case 12://拾财券即将到期
                         notificationIntent = new Intent(context, MyTicketActivity.class);
                         break;
+                    case 50://系统升级,系统维护
                     case 51://活动利好 webView
                     case 52://平台相关新闻 webView
                     case 53://相关项目 webView
@@ -154,9 +155,14 @@ public class MyReceiver extends BroadcastReceiver {
                     case 54://运营公告文本
                     case 55://产品公告文本
                     case 56://活动公告文本
+
+                        if ("2".equals(response.getPushSource())) {//未登录的用户,从本地读取消息
+                            Pref.saveBoolean(Pref.FROM_NATIVE+response.getId(), true, context);
+                        }
                         notificationIntent = new Intent(context, AnnounceResultActivity.class);
-                        notificationIntent.putExtra("id", Integer.parseInt(response.getId()));
+                        notificationIntent.putExtra("id", response.getId());
                         notificationIntent.putExtra("isMessage", false);
+
                         break;
                     case 57://跳首页
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ChangeTab, 0);
@@ -239,7 +245,6 @@ public class MyReceiver extends BroadcastReceiver {
                     mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
                 }
             }
-
         } else {
             LogUtil.e("====MessageReceiver==", "==response=nulL=");
         }
