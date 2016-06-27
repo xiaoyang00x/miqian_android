@@ -222,7 +222,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textPromote.setText("已抵用");
                 textPromoteMoney.setText("" + promoteMoney);
                 textPromoteUnit.setText("元");
-            } else if ("JX".equals(promoteType)) {
+            } else if (Promote.TYPE.JX.getValue().equals(promoteType)) {
+                textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
+                textPromote.setText("收益加");
+                textPromoteMoney.setText("" + increaseMoney);
+                textPromoteUnit.setText("元");
+            } else if (Promote.TYPE.SK.getValue().equals(promoteType)) {
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
                 textPromote.setText("收益加");
                 textPromoteMoney.setText("" + increaseMoney);
@@ -504,7 +509,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 if (position >= 0) {
                     Promote promote = promList.get(position);
                     promoteType = promote.getType();
-                    if ("JX".equals(promote.getType())) {
+                    if (Promote.TYPE.JX.getValue().equals(promote.getType())) {
+                        increaseMoney = promote.getExtraIncome();
+                    } else if (Promote.TYPE.SK.getValue().equals(promote.getType())) {
                         increaseMoney = promote.getExtraIncome();
                     } else {
                         promoteMoney = promote.getWillUseAmt();
