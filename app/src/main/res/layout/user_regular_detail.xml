@@ -259,7 +259,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
-                        android:text="按月付息，到期还本" />
+                        android:text="" />
 
                     <View
                         style="@style/item_divider"
