@@ -329,47 +329,47 @@
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_dialog_min_amount_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:text="起投金额"
-            android:textColor="@color/mq_b4_v2"
-            android:textSize="@dimen/mq_font3_v2" />
-
-        <TextView
-            android:id="@+id/tv_dialog_min_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_dialog_min_amount_tip"
-            android:layout_below="@+id/tv_dialog_min_amount_tip"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text=""
-            android:textColor="@color/mq_b1_v2"
-            android:textSize="@dimen/mq_font9_v2"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/tv_dialog_max_amount_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tv_dialog_min_amount_tip"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="60dp"
+            android:layout_marginLeft="35dp"
             android:text="最大可认购金额"
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font3_v2" />
 
         <TextView
             android:id="@+id/tv_dialog_max_amount"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_dialog_max_amount_tip"
             android:layout_below="@+id/tv_dialog_max_amount_tip"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="--"
+            android:textColor="@color/mq_b1_v2"
+            android:textSize="@dimen/mq_font9_v2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_dialog_min_amount_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_dialog_max_amount_tip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="60dp"
+            android:text="起投金额"
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font3_v2" />
+
+        <TextView
+            android:id="@+id/tv_dialog_min_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_dialog_min_amount_tip"
+            android:layout_below="@+id/tv_dialog_min_amount_tip"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text=""
             android:textColor="@color/mq_b1_v2"
             android:textSize="@dimen/mq_font9_v2"
             android:textStyle="bold" />
@@ -413,7 +413,7 @@
             android:layout_alignRight="@+id/bg_input"
             android:layout_alignTop="@+id/bg_input"
             android:background="@null"
-            android:digits="0123456789."
+            android:digits="0123456789"
             android:inputType="phone"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"

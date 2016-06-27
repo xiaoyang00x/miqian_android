@@ -260,6 +260,7 @@ public class RegularDetailActivity extends BaseActivity {
         synchronized (mLock) {
             inProcess = true;
         }
+        begin();
         HttpRequest.getRegularDetail(mContext, subjectId, prodId, new ICallback<RegularDetailResult>() {
 
             @Override
@@ -267,6 +268,7 @@ public class RegularDetailActivity extends BaseActivity {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                end();
                 if (result == null || result.getData() == null
                         || result.getData().getSubjectData() == null
                         || result.getData().getSubjectData().size() <= 0) {
@@ -283,6 +285,7 @@ public class RegularDetailActivity extends BaseActivity {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                end();
                 Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
                 showErrorView();
             }
@@ -483,7 +486,7 @@ public class RegularDetailActivity extends BaseActivity {
                     tv_dialog_max_amount_tip.setText("实际支付金额");
                 }
                 // 限制输入长度
-//                et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
+                et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
