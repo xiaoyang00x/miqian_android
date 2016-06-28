@@ -2,13 +2,10 @@ package com.miqian.mq.adapter.holder;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,7 +15,6 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.adapter.CyclePagerAdapter;
 import com.miqian.mq.entity.HomeAdData;
 import com.miqian.mq.entity.HomePageInfo;
-import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -133,11 +129,8 @@ public class HomeAdViewHolder extends HomeBaseViewHolder implements ViewPager.On
 
         @Override
         public void onPageSelected(int position) {
-            LogUtil.d("onPageSelected begin child.position = " + position);
             super.onPageSelected(position);
             setImageBackground(getRealDataPosition(position));
-            LogUtil.d("onPageSelected getRealDataPosition(position) = " + getRealDataPosition(position));
-            LogUtil.d("onPageSelected end child.position = " + position);
         }
 
         @Override
