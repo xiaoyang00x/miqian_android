@@ -525,7 +525,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 // 更新数据
                 if (UserUtil.hasLogin(getActivity())){
                     hasMessage = true;
-                    btn_message.setImageResource(R.drawable.btn_message);
+                    btn_message.setImageResource(R.drawable.bt_hasmessage);
                 }
                 break;
             case ExtendOperationController.OperationKey.MessageState:
