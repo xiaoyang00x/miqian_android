@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceResultActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.NoticeActivity;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.MessageInfo;
@@ -57,10 +58,23 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_content://跳公告详情
-                Intent intent = new Intent(mContext, AnnounceResultActivity.class);
-                intent.putExtra("id", data.getBsPushData().getId());
-                intent.putExtra("isMessage", false);
-                mContext.startActivity(intent);
+                //消息
+                MessageInfo messageInfo = data.getBsPushData();
+                int msgType = messageInfo.getMsgType();
+                switch (msgType) {
+                    // 内置浏览器
+                    case 50:
+                    case 51:
+                    case 52:
+                    case 53:
+                        WebActivity.startActivity(mContext, messageInfo.getJumpUrl());
+                        break;
+                    default:
+                        Intent intent = new Intent(mContext, AnnounceResultActivity.class);
+                        intent.putExtra("id", messageInfo.getId());
+                        intent.putExtra("isMessage", true);
+                        mContext.startActivity(intent);
+                }
                 Pref.saveLong(Pref.DATA_BULLETIN_TIME, data.getBsPushData().getSendTime(), mContext);
                 img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
                 break;

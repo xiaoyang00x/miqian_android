@@ -241,6 +241,7 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                     int msgType = messageInfo.getMsgType();
                     switch (msgType) {
                         // 内置浏览器
+                        case 50:
                         case 51:
                         case 52:
                         case 53:
