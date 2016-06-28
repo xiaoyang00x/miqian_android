@@ -413,7 +413,7 @@
             android:layout_alignRight="@+id/bg_input"
             android:layout_alignTop="@+id/bg_input"
             android:background="@null"
-            android:digits="0123456789"
+            android:digits="0123456789."
             android:inputType="phone"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"

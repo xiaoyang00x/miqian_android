@@ -3,7 +3,7 @@
     <item android:state_pressed="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
 
-            <corners android:radius="17dp" />
+            <corners android:radius="20dp" />
 
             <solid android:color="@color/mq_r2_v2" />
 
@@ -13,7 +13,7 @@
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
 
-            <corners android:radius="17dp" />
+            <corners android:radius="20dp" />
 
             <solid android:color="@color/mq_r1_v2" />
 

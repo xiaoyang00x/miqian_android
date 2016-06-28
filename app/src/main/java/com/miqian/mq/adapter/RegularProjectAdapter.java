@@ -205,7 +205,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tv_name.setText(info.getTitle());
             if (!TextUtils.isEmpty(info.getName())) {
                 if (!TextUtils.isEmpty(info.getJumpUrl())) {
-                    tv_description.setText(new StringBuilder(info.getName()).append("    >"));
+                    tv_description.setText(new StringBuilder(info.getName()).append("  >"));
                     tv_description.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -213,7 +213,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         }
                     });
                 } else {
-                    tv_description.setText(new StringBuilder(info.getName()).append("  "));
+                    tv_description.setText(new StringBuilder(info.getName()).append(" "));
                 }
             } else {
                 tv_description.setText("");
