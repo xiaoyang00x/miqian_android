@@ -66,6 +66,8 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
                 break;
             case R.id.img_bulletin://跳列表页
                 mContext.startActivity(new Intent(mContext, NoticeActivity.class));
+                Pref.saveLong(Pref.DATA_BULLETIN_TIME, data.getBsPushData().getSendTime(), mContext);
+                img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
                 break;
             default:
                 break;
