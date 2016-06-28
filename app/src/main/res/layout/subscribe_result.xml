@@ -1,186 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="279dp"
-        android:background="@drawable/account_head_bg"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/result_bg" />
-
-        <ImageView
-            android:id="@+id/image_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/result_success" />
-
-        <TextView
-            android:id="@+id/text_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/image_status"
-            android:text="认购成功"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/mq_font6_v2" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
-
-        <TextView
-            style="@style/f7_B1_V2"
-            android:text="认购金额" />
-
-        <TextView
-            android:id="@+id/text_money"
-            style="@style/f7_B4_V2"
-            android:layout_alignParentRight="true"
-            android:text="--" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
-
-        <TextView
-            android:id="@+id/text_pay_type"
-            style="@style/f7_B1_V2"
-            android:layout_centerVertical="true"
-            android:text="余额支付" />
-
-        <TextView
-            android:id="@+id/text_pay_money"
-            style="@style/f7_B4_V2"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="--" />
-
-        <View
-            style="@style/item_divider"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/frame_promote"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
-
-        <TextView
-            style="@style/f7_B1_V2"
-            android:layout_centerVertical="true"
-            android:text="红包/卡" />
-
-        <TextView
-            android:id="@+id/text_promote"
-            style="@style/f7_B4_V2"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
-
-        <View
-            style="@style/item_divider"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp" />
-    </RelativeLayout>
-    
-    <RelativeLayout
-        android:id="@+id/frame_trade_number"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
-
-        <TextView
-            style="@style/f7_B1_V2"
-            android:layout_centerVertical="true"
-            android:text="交易编号" />
-
-        <TextView
-            android:id="@+id/trade_number"
-            style="@style/f7_B4_V2"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
-
-        <View
-            style="@style/item_divider"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/frame_gold"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right"
-        android:layout_marginTop="10dp"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/text_gold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/mq_font3_v2"
-            android:layout_centerInParent="true"
-            android:textColor="@color/mq_bl1"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right"
-        android:layout_marginTop="15dp">
-
-        <Button
-            android:id="@+id/bt_back"
-            style="@style/click_btn"
-            android:text="确定" />
-    </RelativeLayout>
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/frame_tip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_tip"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="279dp"
+            android:background="@drawable/account_head_bg"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/result_bg" />
+
+            <ImageView
+                android:id="@+id/image_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/result_success" />
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_status"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="认购成功"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font6_v2" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                style="@style/f7_B1_V2"
+                android:text="认购金额" />
+
+            <TextView
+                android:id="@+id/text_money"
+                style="@style/f7_B4_V2"
+                android:layout_alignParentRight="true"
+                android:text="--" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                android:id="@+id/text_pay_type"
+                style="@style/f7_B1_V2"
+                android:layout_centerVertical="true"
+                android:text="余额支付" />
+
+            <TextView
+                android:id="@+id/text_pay_money"
+                style="@style/f7_B4_V2"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="--" />
+
+            <View
+                style="@style/item_divider"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/frame_promote"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                style="@style/f7_B1_V2"
+                android:layout_centerVertical="true"
+                android:text="红包/卡" />
+
+            <TextView
+                android:id="@+id/text_promote"
+                style="@style/f7_B4_V2"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+            <View
+                style="@style/item_divider"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/frame_trade_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                style="@style/f7_B1_V2"
+                android:layout_centerVertical="true"
+                android:text="交易编号" />
+
+            <TextView
+                android:id="@+id/trade_number"
+                style="@style/f7_B4_V2"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+            <View
+                style="@style/item_divider"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/frame_gold"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/text_gold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/mq_bl1"
+                android:textSize="@dimen/mq_font3_v2" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/mq_b2"
-            android:textSize="@dimen/mq_font4" />
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:layout_marginTop="15dp">
+
+            <Button
+                android:id="@+id/bt_back"
+                style="@style/click_btn"
+                android:text="确定" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/frame_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:paddingBottom="60dp"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font4" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>
