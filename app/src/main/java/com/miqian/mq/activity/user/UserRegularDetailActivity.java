@@ -260,10 +260,12 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
         String projectState = regInvest.getProjectState();
 
-        if ("0".equals(projectState) || "1".equals(projectState) || "2".equals(projectState)) {
+        if ("Y".equals(regInvest.getHasTransOper())) {//有转让，N未转让
             layoutTransferDetail.setVisibility(View.VISIBLE);
-            ivProjectState.setVisibility(View.VISIBLE);
             tvTransferedMoney.setText("已转让" + regInvest.getTransedAmt());
+        }
+        if ("0".equals(projectState) || "1".equals(projectState) || "2".equals(projectState)) {
+            ivProjectState.setVisibility(View.VISIBLE);
             if ("0".equals(projectState)) {
                 ivProjectState.setImageResource(R.drawable.user_regular_transfering);
             } else if ("1".equals(projectState)) {

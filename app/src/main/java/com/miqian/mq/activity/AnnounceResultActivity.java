@@ -92,6 +92,13 @@ public class AnnounceResultActivity extends BaseActivity {
             tv_content.setText("      " + fromHtml);
         }
         tv_time.setText(Uihelper.timestampToDateStr_other(detailInfo.getSendTime()));
+
+        if (!isMessage){
+            boolean isReaded = Pref.getBoolean(Pref.PUSH + detailInfo.getId(), mActivity, false);
+            if (!isReaded) {
+                Pref.saveBoolean(Pref.PUSH + detailInfo.getId(), true, mActivity);
+            }
+        }
     }
 
     @Override

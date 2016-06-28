@@ -67,7 +67,12 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
                     case 51:
                     case 52:
                     case 53:
+                        boolean isReaded = Pref.getBoolean(Pref.PUSH + messageInfo.getId(), mContext, false);
+                        if (!isReaded) {
+                            Pref.saveBoolean(Pref.PUSH + messageInfo.getId(), true, mContext);
+                        }
                         WebActivity.startActivity(mContext, messageInfo.getJumpUrl());
+
                         break;
                     default:
                         Intent intent = new Intent(mContext, AnnounceResultActivity.class);
