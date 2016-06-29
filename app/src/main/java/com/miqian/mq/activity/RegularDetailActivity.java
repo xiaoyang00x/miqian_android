@@ -338,14 +338,17 @@ public class RegularDetailActivity extends BaseActivity {
     // 更新 定期计划详情 中间部分 标的信息
     private void updateRegularPlanDetail() {
         ArrayList<RegularProjectMatch> mList = mInfo.getMatchItem();
-        if (mList == null || mList.size() <= 0) {
-            return;
-        }
 
         viewstub_detail.setLayoutResource(R.layout.regular_plan_detail);
         View viewDetail = viewstub_detail.inflate();
         LinearLayout content = (LinearLayout) viewDetail.findViewById(R.id.llyt_content);
         TextView tv_seemore = (TextView) viewDetail.findViewById(R.id.tv_seemore);
+        tv_seemore.setOnClickListener(mOnclickListener);
+
+        if (mList == null || mList.size() <= 0) {
+            viewDetail.findViewById(R.id.llyt1).setVisibility(View.GONE);
+            return;
+        }
 
         LayoutInflater mInflater = LayoutInflater.from(getBaseContext());
         // 匹配项目(默认展示三条)。如不足三条，则有几条展示几条
@@ -359,7 +362,6 @@ public class RegularDetailActivity extends BaseActivity {
             }
             content.addView(mView);
         }
-        tv_seemore.setOnClickListener(mOnclickListener);
     }
 
     // 更新 定期项目 定期计划 公共部分 头部 (标的信息)
