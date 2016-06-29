@@ -114,6 +114,8 @@ public class UserUtil {
         Pref.saveString(Pref.REAL_NAME, "", context);
         //token值为"",表示取消之前设置的别名
         JpushHelper.setAlias(context);
+        // 通知消息更新
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.RERESH_JPUSH, null);
 
         //设置GrowingIO用户信息
         GrowingIO growingIO = GrowingIO.getInstance();

@@ -338,6 +338,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 case 7://活期赎回，到资金记录
                 case 8://转让被认购完成,跳到资金记录
                 case 15://提现受理失败
+                case 50://系统升级,系统维护
                     startActivity(new Intent(context, AnnounceActivity.class));
                     break;
                 case 9://收到红包
@@ -346,7 +347,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 case 12://拾财券即将到期
                     startActivity(new Intent(context, MyTicketActivity.class));
                     break;
-                case 50://系统升级,系统维护
                 case 51://活动利好 webView
                 case 52://平台相关新闻 webView
                 case 53://相关项目 webView

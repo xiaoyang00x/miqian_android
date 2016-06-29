@@ -267,11 +267,11 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         if ("0".equals(projectState) || "1".equals(projectState) || "2".equals(projectState)) {
             ivProjectState.setVisibility(View.VISIBLE);
             if ("0".equals(projectState)) {
-                ivProjectState.setImageResource(R.drawable.user_regular_transfering);
+                ivProjectState.setImageResource(R.drawable.transfer_detail_ing);
             } else if ("1".equals(projectState)) {
-                ivProjectState.setImageResource(R.drawable.user_regular_transfer_wjx);
+                ivProjectState.setImageResource(R.drawable.transfer_detail_wjx);
             } else {
-                ivProjectState.setImageResource(R.drawable.user_regular_transfered);
+                ivProjectState.setImageResource(R.drawable.transfer_detail_ed);
             }
         }
     }
