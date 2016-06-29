@@ -486,7 +486,7 @@ public class RegularDetailActivity extends BaseActivity {
                     tv_dialog_max_amount_tip.setText("实际支付金额");
                 }
                 // 限制输入长度
-//                et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
+                et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
