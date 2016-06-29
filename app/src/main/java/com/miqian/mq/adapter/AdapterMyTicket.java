@@ -125,7 +125,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 tempViewHoleder.tv_precent_unit.setVisibility(View.VISIBLE);
                 setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
             } else {
-                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+                setText(tempViewHoleder.tv_amount, String.valueOf(isValid? promote.getCanUseAmt() : promote.getTotalAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
