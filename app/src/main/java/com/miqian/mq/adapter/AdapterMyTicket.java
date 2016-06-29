@@ -103,7 +103,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
             String desUrl = promote.getPromUrl();
-            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(isValid? promote.getCanUseAmt() : promote.getTotalAmt()));
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
             tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
