@@ -96,7 +96,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof BaBaViewHoleder) {
             BaBaViewHoleder tempViewHoleder = (BaBaViewHoleder) holder;
-            final Promote promote = promList.get(position);
+            Promote promote = promList.get(position);
             setText(tempViewHoleder.tv_name, promote.getPromProdName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
@@ -107,12 +107,12 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
             tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
-            clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
+            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
 
             tempViewHoleder.setViewEnable(isValid);
         } else if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
-            final Promote promote = promList.get(position);
+            Promote promote = promList.get(position);
             setText(tempViewHoleder.tv_name, promote.getPromProdName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
@@ -138,7 +138,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 }
 
             }
-            clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
+            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
 
             tempViewHoleder.setViewEnable(isValid);
         }
@@ -153,22 +153,15 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         }
     }
 
-    // 使用券:(体验金 分享券)只能跳转h5,(其他券)优先跳h5,无h5跳转到定期列表使用页面
-    private void clickEvent(RecyclerView.ViewHolder holder, final String type, final String promProdId, final String promState, final String promUrl) {
+    // promState为1时可以跳转（有URL跳转到H5,否则跳转到定期列表）
+    private void clickEvent(RecyclerView.ViewHolder holder, final String promProdId, final String promState, final String promUrl) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != promUrl) {
-                    if (Promote.TYPE.FXQ.getValue().equals(type) || Promote.TYPE.TY.getValue().equals(type)) {
+                if ("1".equals(promState)) {
+                    if (!TextUtils.isEmpty(promUrl)) {
                         WebActivity.startActivity(mContext, promUrl);
-                    } else if ("1".equals(promState)) { // 可跳转
-                        WebActivity.startActivity(mContext, promUrl);
-                    } else {
-                        RegularListActivity.startActivity(mContext, promProdId);
-                    }
-                } else {
-                    if (!Promote.TYPE.FXQ.getValue().equals(type) &&
-                            !Promote.TYPE.TY.getValue().equals(type)) {
+                    }else {
                         RegularListActivity.startActivity(mContext, promProdId);
                     }
                 }
