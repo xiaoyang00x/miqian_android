@@ -217,19 +217,25 @@ public class RegularDetailActivity extends BaseActivity {
         return null;
     }
 
+    // 获取最大可认购金额
+    private BigDecimal getUpLimit() {
+        BigDecimal upLimit = mInfo.getSubjectMaxBuy(); // 最大可认购金额
+        BigDecimal leftLimit = mInfo.getResidueAmt(); // 剩余金额
+
+        if (upLimit == null) {
+            return leftLimit;
+        } else {
+            return leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
+        }
+    }
+
     // 跳转到下个页面
     private void jumpToNextPageIfInputValid() {
         if (!TextUtils.isEmpty(input)) {
             BigDecimal downLimit = mInfo.getFromInvestmentAmount(); // 最低认购金额
             BigDecimal remainderLimit = mInfo.getContinueInvestmentLimit(); // 续投金额
-            BigDecimal upLimit = mInfo.getSubjectMaxBuy(); // 最大可认购金额
-            BigDecimal leftLimit = mInfo.getResidueAmt(); // 剩余金额
+            BigDecimal upLimit = getUpLimit(); // 最大可认购金额
 
-            if (upLimit == null) {
-                upLimit = leftLimit;
-            } else {
-                upLimit = leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
-            }
             BigDecimal money = new BigDecimal(input);
             BigDecimal remainder = money.remainder(remainderLimit);
             if (money.compareTo(downLimit) == -1) {
@@ -480,7 +486,8 @@ public class RegularDetailActivity extends BaseActivity {
                 if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
                     et_input.setHint(new StringBuilder("输入").append(mInfo.getContinueInvestmentLimit()).append("的整数倍"));
                     tv_dialog_max_amount_tip.setText("最大可认购金额");
-                    tv_dialog_max_amount.setText(FormatUtil.formatAmount(mInfo.getResidueAmt()));
+
+                    tv_dialog_max_amount.setText(FormatUtil.formatAmount(getUpLimit()));
                     addUnit(tv_dialog_max_amount); // 增加 元 单位符号
                     tv_dialog_max_amount.setOnClickListener(mOnclickListener);
                 } else {
@@ -594,10 +601,8 @@ public class RegularDetailActivity extends BaseActivity {
                 return;
             }
             if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > screenHeight / 3)) {
-//                Toast.makeText(getBaseContext(), "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
                 showKeyBoardView();
             } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > screenHeight / 3)) {
-//                Toast.makeText(getBaseContext(), "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
                 hideKeyBoardView();
             }
         }
@@ -633,7 +638,7 @@ public class RegularDetailActivity extends BaseActivity {
                     }
                     break;
                 case R.id.tv_dialog_max_amount:
-                    et_input.setText(mInfo.getResidueAmt().toString());
+                    et_input.setText(getupLimit().toString());
                     Selection.setSelection(et_input.getText(), et_input.getText().toString().length());
                     break;
                 case R.id.tv_dialog_min_amount:
