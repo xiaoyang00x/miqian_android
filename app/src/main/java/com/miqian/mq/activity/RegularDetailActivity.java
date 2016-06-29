@@ -638,7 +638,7 @@ public class RegularDetailActivity extends BaseActivity {
                     }
                     break;
                 case R.id.tv_dialog_max_amount:
-                    et_input.setText(getupLimit().toString());
+                    et_input.setText(getUpLimit().toString());
                     Selection.setSelection(et_input.getText(), et_input.getText().toString().length());
                     break;
                 case R.id.tv_dialog_min_amount:
