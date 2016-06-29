@@ -6,8 +6,10 @@ import android.util.Log;
 
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.UserUtil;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
@@ -55,7 +57,7 @@ public class JpushHelper {
                     // 调用 JPush 接口来设置别名。
                     JPushInterface.setAliasAndTags(context.getApplicationContext(),
                             null,
-                            (Set<String>)msg.obj,
+                            (Set<String>) msg.obj,
                             mTagsCallback);
                     break;
                 default:
@@ -72,6 +74,7 @@ public class JpushHelper {
                 case 0:
                     logs = "Set alias success";
                     LogUtil.e(TAG, logs);
+                    LogUtil.e(TAG, logs + "---alias:" + alias + "---code:" + code );
                     // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
                     break;
                 case 6002:

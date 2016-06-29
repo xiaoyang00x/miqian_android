@@ -472,7 +472,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 MobclickAgent.onEvent(getActivity(), "1015");
                 startActivity(new Intent(getActivity(), AnnounceActivity.class));
                 hasMessage = false;
-                btn_message.setImageResource(R.drawable.btn_message_none);
+                btn_message.setImageResource(R.drawable.btn_message);
                 break;
             //我的设置
             case R.id.bt_right:
@@ -531,7 +531,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             case ExtendOperationController.OperationKey.MessageState:
                 // 更新数据
                 hasMessage = false;
-                btn_message.setImageResource(R.drawable.btn_message_none);
+                btn_message.setImageResource(R.drawable.btn_message);
                 break;
             case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
                 userInfoTemp.setPayPwdStatus("1");

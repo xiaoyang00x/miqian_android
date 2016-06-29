@@ -44,7 +44,6 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
             long bulletinLocalTime = Pref.getLong(Pref.DATA_BULLETIN_TIME, mContext, 0);
 
             if (mData.getBsPushData().getSendTime() > bulletinLocalTime) {
-                Pref.saveLong(Pref.DATA_BULLETIN_TIME, mData.getBsPushData().getSendTime(), mContext);
                 img_bulletin.setImageResource(R.drawable.icon_home_bulletin_new);
             } else {
                 img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
@@ -58,30 +57,29 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_content://跳公告详情
-                //消息
                 MessageInfo messageInfo = data.getBsPushData();
                 int msgType = messageInfo.getMsgType();
+
                 switch (msgType) {
                     // 内置浏览器
                     case 50:
                     case 51:
                     case 52:
                     case 53:
-                        boolean isReaded = Pref.getBoolean(Pref.PUSH + messageInfo.getId(), mContext, false);
-                        if (!isReaded) {
-                            Pref.saveBoolean(Pref.PUSH + messageInfo.getId(), true, mContext);
-                        }
                         WebActivity.startActivity(mContext, messageInfo.getJumpUrl());
-
                         break;
                     default:
                         Intent intent = new Intent(mContext, AnnounceResultActivity.class);
                         intent.putExtra("id", messageInfo.getId());
-                        intent.putExtra("isMessage", true);
+                        intent.putExtra("isMessage", false);
                         mContext.startActivity(intent);
                 }
                 Pref.saveLong(Pref.DATA_BULLETIN_TIME, data.getBsPushData().getSendTime(), mContext);
                 img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
+                boolean isReaded = Pref.getBoolean(Pref.PUSH + messageInfo.getId(), mContext, false);
+                if (!isReaded) {
+                    Pref.saveBoolean(Pref.PUSH + messageInfo.getId(), true, mContext);
+                }
                 break;
             case R.id.img_bulletin://跳列表页
                 mContext.startActivity(new Intent(mContext, NoticeActivity.class));

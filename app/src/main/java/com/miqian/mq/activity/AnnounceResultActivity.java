@@ -36,7 +36,7 @@ public class AnnounceResultActivity extends BaseActivity {
         Intent intent = getIntent();
         messsageId = intent.getStringExtra("id");
         position = intent.getIntExtra("position", 0);
-        isMessage = intent.getBooleanExtra("isMessage", true);
+        isMessage = intent.getBooleanExtra("isMessage", false);
         super.onCreate(arg0);
     }
 
@@ -92,13 +92,6 @@ public class AnnounceResultActivity extends BaseActivity {
             tv_content.setText("      " + fromHtml);
         }
         tv_time.setText(Uihelper.timestampToDateStr_other(detailInfo.getSendTime()));
-
-        if (!isMessage){
-            boolean isReaded = Pref.getBoolean(Pref.PUSH + detailInfo.getId(), mActivity, false);
-            if (!isReaded) {
-                Pref.saveBoolean(Pref.PUSH + detailInfo.getId(), true, mActivity);
-            }
-        }
     }
 
     @Override
