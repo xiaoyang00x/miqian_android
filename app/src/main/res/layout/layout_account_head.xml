@@ -185,6 +185,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -201,7 +202,7 @@
                 android:background="@drawable/btn_yellow"
                 android:text="充值"
                 android:textColor="@color/white"
-                android:textSize="@dimen/mq_font10_v2" />
+                android:textSize="@dimen/mq_font7_v2" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -218,7 +219,7 @@
                 android:background="@drawable/btn_yellow"
                 android:text="提现"
                 android:textColor="@color/white"
-                android:textSize="@dimen/mq_font10_v2" />
+                android:textSize="@dimen/mq_font7_v2" />
         </RelativeLayout>
     </LinearLayout>
 

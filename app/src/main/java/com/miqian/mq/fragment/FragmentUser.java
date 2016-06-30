@@ -233,7 +233,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         });
 
         TextView tv_Title = (TextView) view.findViewById(R.id.title);
-        tv_Title.setText("我的");
+        tv_Title.setText("我的资产");
 
         btn_message = (ImageButton) view.findViewById(R.id.bt_left);
         if (hasMessage) {
