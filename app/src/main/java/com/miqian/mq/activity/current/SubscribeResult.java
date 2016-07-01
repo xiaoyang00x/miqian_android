@@ -150,8 +150,8 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         closeActivity();
+        super.onBackPressed();
     }
 
     @Override

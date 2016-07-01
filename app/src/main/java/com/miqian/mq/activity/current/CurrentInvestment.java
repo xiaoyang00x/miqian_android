@@ -315,6 +315,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initView() {
+        getmTitle().setOnLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         textTip = (TextView) findViewById(R.id.text_tip);
         frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
         frameSpace = findViewById(R.id.frame_space);
@@ -457,6 +463,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
+                MobclickAgent.onEvent(mActivity, "1069");
                 if ((PRODID_REGULAR_PLAN.equals(prodId) || PRODID_REGULAR.equals(prodId)) && promList != null && promList.size() > 0 && position < 0) {
                     showPackageTips();
                 } else {
@@ -804,5 +811,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         intent.putExtra("orderNo", orderNo);
         startActivity(intent);
         CurrentInvestment.this.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        MobclickAgent.onEvent(mActivity, "1070");
+        finish();
     }
 }

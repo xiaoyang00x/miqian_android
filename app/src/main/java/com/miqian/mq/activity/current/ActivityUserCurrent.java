@@ -146,6 +146,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                         this.setTitle("提示：请输入小于等于" + upLimit + "元");
                         this.setTitleColor(getResources().getColor(R.color.mq_r1));
                     } else {
+                        MobclickAgent.onEvent(mActivity, "1037_1");
                         UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, TextUtils.isEmpty(interestRateString) ? "" : interestRateString + "%");
                         this.setEditMoney("");
                         this.setTitle("认购金额");
@@ -160,6 +161,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
 
             @Override
             public void negativeBtnClick() {
+                MobclickAgent.onEvent(mActivity, "1037_2");
                 this.setEditMoney("");
                 this.setTitle("认购金额");
                 this.setTitleColor(getResources().getColor(R.color.mq_b1));
