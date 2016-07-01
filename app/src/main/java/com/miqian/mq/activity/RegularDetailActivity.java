@@ -44,6 +44,7 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -214,7 +215,18 @@ public class RegularDetailActivity extends BaseActivity {
 
     @Override
     protected String getPageName() {
-        return null;
+        switch (prodId) {
+            case RegularBase.REGULAR_03:
+                return "定期赚详情";
+//            case RegularBase.REGULAR_04:
+//                return "定期赚转让详情";
+            case RegularBase.REGULAR_05:
+                return "定期计划详情";
+//            case RegularBase.REGULAR_06:
+//                return "定期计划转让详情";
+            default:
+                return "";
+        }
     }
 
     // 获取最大可认购金额
@@ -629,7 +641,13 @@ public class RegularDetailActivity extends BaseActivity {
                     WebActivity.startActivity(mActivity, mInfo.getFestival88_url());
                     break;
                 case R.id.tv_seemore:
+                    MobclickAgent.onEvent(mContext, "1071");
                 case R.id.tv_info_right:
+                    if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
+                        MobclickAgent.onEvent(mContext, "1013_1");
+                    } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
+                        MobclickAgent.onEvent(mContext, "1072");
+                    }
                 case R.id.rlyt_buy_record:
                     if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");

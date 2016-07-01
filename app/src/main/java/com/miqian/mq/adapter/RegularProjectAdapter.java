@@ -22,6 +22,7 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -163,6 +164,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             btn_buy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(mContext, "1010_1");
                     RegularDetailActivity.startActivity(
                             mContext, info.getSubjectId(), info.getProdId());
                 }
@@ -170,6 +172,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(mContext, "1010_1");
                     RegularDetailActivity.startActivity(
                             mContext, info.getSubjectId(), info.getProdId());
                 }
@@ -314,6 +317,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             btn_state.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(mContext, "1014");
                     RegularDetailActivity.startActivity(
                             mContext, info.getSubjectId(), info.getProdId());
                 }
@@ -321,6 +325,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(mContext, "1014");
                     RegularDetailActivity.startActivity(
                             mContext, info.getSubjectId(), info.getProdId());
                 }
