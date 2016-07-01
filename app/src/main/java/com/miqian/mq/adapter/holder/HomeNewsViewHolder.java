@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by guolei_wang on 16/5/24.
@@ -88,6 +89,7 @@ public class HomeNewsViewHolder extends HomeBaseViewHolder {
 
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(v.getContext(), "1004_3");
                 WebActivity.startActivity(img_news.getContext(), img_news.getTag().toString());
                 }
             });
