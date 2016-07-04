@@ -90,10 +90,10 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected String getPageName() {
-        if (projectType.equals("3")) {
-            return "定期赚详情";
+        if (projectType.equals("3")||projectType.equals("4")) {
+          return  "定期项目详情";
         } else {
-            return "定期计划详情";
+            return  "定期计划详情";
         }
     }
 
@@ -240,26 +240,16 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             }
         }
         if ("N".equals(regInvest.getBearingStatus())) {
-            if ("5".equals(regInvest.getProdId())) {//定期计划
+            if ("5".equals(regInvest.getProdId()) || "6".equals(regInvest.getProdId())) {//定期计划和定期计划转让
                 frameProjectMatch.setVisibility(View.VISIBLE);
                 textProject.setText("项目匹配");
-            } else if ("6".equals(regInvest.getProdId())) {//定期计划转让
-                layoutPriginproject.setVisibility(View.VISIBLE);
-                tvOriginproject.setVisibility(View.VISIBLE);
-                tvOriginprojectName.setText(regInvest.getBdNm());
             }
         }
-        if ("3".equals(regInvest.getProdId())) {//定期赚
+        if ("3".equals(regInvest.getProdId()) || "4".equals(regInvest.getProdId())) {//定期赚和定期赚转让详情
             frameProjectMatch.setVisibility(View.VISIBLE);
             textProject.setText("项目详情");
-        } else if ("4".equals(regInvest.getProdId())) {//定期赚转让
-            layoutPriginproject.setVisibility(View.VISIBLE);
-            tvOriginproject.setVisibility(View.VISIBLE);
-            tvOriginprojectName.setText(regInvest.getBdNm());
         }
-
         String projectState = regInvest.getProjectState();
-
         if ("Y".equals(regInvest.getHasTransOper())) {//有转让，N未转让
             layoutTransferDetail.setVisibility(View.VISIBLE);
             tvTransferedMoney.setText("已转让" + regInvest.getTransedAmt());
@@ -275,14 +265,14 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             }
         }
     }
-
+    @Override
     public int getLayoutId() {
         return R.layout.user_regular_detail;
     }
-
+    @Override
     public void initTitle(WFYTitle mTitle) {
-        if (projectType.equals("3")) {
-            mTitle.setTitleText("定期赚详情");
+        if (projectType.equals("3")||projectType.equals("4")) {
+            mTitle.setTitleText("定期项目详情");
         } else {
             mTitle.setTitleText("定期计划详情");
         }
@@ -295,10 +285,14 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 MobclickAgent.onEvent(mActivity, "1045");
                 if (userRegularDetail != null) {
                     subjectId = regInvest.getBdId();
-                    if (RegularBase.REGULAR_03 == Integer.parseInt(regInvest.getProdId())) {
+                    if (RegularBase.REGULAR_03 == Integer.parseInt(regInvest.getProdId())) {//定期项目
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
                     } else if (RegularBase.REGULAR_05 == Integer.parseInt(regInvest.getProdId())) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");//定期计划
+                    } else if (RegularBase.REGULAR_04 == Integer.parseInt(regInvest.getProdId())) {//定期项目转让
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + regInvest.getSysbdId() + "/3");
+                    } else if (RegularBase.REGULAR_06 == Integer.parseInt(regInvest.getProdId())) {//定期计划转让
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + regInvest.getSysbdId() + "/5");
                     }
                 }
                 break;
