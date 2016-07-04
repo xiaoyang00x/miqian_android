@@ -149,26 +149,31 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ProgressViewHolder) holder).textLoading.setText("加载更多");
             }
         } else if (holder instanceof HeaderViewHolder) {
-            if (mReg == null) {
-                return;
-            }
+
             ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getCount() + "");
             if (mType == 1) {
                 ((HeaderViewHolder) holder).textCapitalName.setText("投资本金(元)");
                 ((HeaderViewHolder) holder).textEarningName.setText("已获收益(元)");
-                ((HeaderViewHolder) holder).textCapital.setText(mReg.getPerTotalAmt());
-                ((HeaderViewHolder) holder).textEarning.setText(mReg.getPerTotalIncome());
+                if (mReg != null) {
+                    ((HeaderViewHolder) holder).textCapital.setText(mReg.getPerTotalAmt());
+                    ((HeaderViewHolder) holder).textEarning.setText(mReg.getPerTotalIncome());
+                }
+
             } else if (mType == 0) {
                 ((HeaderViewHolder) holder).textCapitalName.setText("总待收本金(元)");
                 ((HeaderViewHolder) holder).textEarningName.setText("总待收收益(元)");
-                ((HeaderViewHolder) holder).textCapital.setText(mReg.getRegTotalAmt());
-                ((HeaderViewHolder) holder).textEarning.setText(mReg.getRegTotalIncome());
+                if (mReg != null) {
+                    ((HeaderViewHolder) holder).textCapital.setText(mReg.getRegTotalAmt());
+                    ((HeaderViewHolder) holder).textEarning.setText(mReg.getRegTotalIncome());
+                }
             } else {
                 ((HeaderViewHolder) holder).textRegular.setText("已转让(笔)");
                 ((HeaderViewHolder) holder).textCapitalName.setText("累计金额(元)");
                 ((HeaderViewHolder) holder).textEarningName.setText("");
                 ((HeaderViewHolder) holder).textCapital.setText("");
-                ((HeaderViewHolder) holder).textEarning.setText(mReg.getTransTotalAmt());
+                if (mReg != null) {
+                    ((HeaderViewHolder) holder).textEarning.setText(mReg.getTransTotalAmt());
+                }
             }
         }
     }
