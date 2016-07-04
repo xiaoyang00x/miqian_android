@@ -108,7 +108,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
             btn_buy.setBackgroundResource(R.drawable.btn_no_begin);
             btn_buy.setText("待开标");
-            btn_buy.setEnabled(true);
 
             tv_begin_time.setText(FormatUtil.formatDate(data.getStartTimestamp(), "MM月dd日 HH:mm发售"));
             tv_begin_time.setVisibility(View.VISIBLE);
@@ -119,7 +118,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
             btn_buy.setBackgroundResource(R.drawable.btn_default_selector);
             btn_buy.setText(R.string.buy_now);
-            btn_buy.setEnabled(true);
 
             tv_begin_time.setVisibility(View.GONE);
 
@@ -130,12 +128,10 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
             btn_buy.setBackgroundResource(R.drawable.btn_has_done);
             btn_buy.setText("已满额");
-            btn_buy.setEnabled(false);
 
             tv_begin_time.setVisibility(View.GONE);
         }
-
-        btn_buy.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -145,7 +141,9 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
                     WebActivity.startActivity(view.getContext(), data.getJumpProjectUrl());
                 }
             }
-        });
+        };
+        btn_buy.setOnClickListener(onClickListener);
+        projectView.setOnClickListener(onClickListener);
         return projectView;
     }
 }
