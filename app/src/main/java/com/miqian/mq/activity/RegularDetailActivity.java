@@ -393,7 +393,7 @@ public class RegularDetailActivity extends BaseActivity {
             sb.append(mInfo.getTransferFlag()).append(" | ");
         }
         if (mInfo.getFromInvestmentAmount() != null) {
-            sb.append(mInfo.getFromInvestmentAmount());
+            sb.append(mInfo.getFromInvestmentAmount().equals(new BigDecimal(0)) ? 1 : mInfo.getFromInvestmentAmount());
             sb.append("元起投").append(" | ");
         }
         if (RegularBase.REGULAR_04 == prodId || RegularBase.REGULAR_06 == prodId) {
@@ -642,17 +642,19 @@ public class RegularDetailActivity extends BaseActivity {
                     break;
                 case R.id.tv_seemore:
                     MobclickAgent.onEvent(mContext, "1071");
-                case R.id.tv_info_right:
                     if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
-                        MobclickAgent.onEvent(mContext, "1013_1");
-                    } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
-                        MobclickAgent.onEvent(mContext, "1072");
-                    }
-                case R.id.rlyt_buy_record:
-                    if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
+                        // tab说明：0-项目匹配  1-安全保障 2-认购记录
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
                     } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
+                    }
+                    break;
+                case R.id.tv_info_right:
+                case R.id.rlyt_buy_record:
+                    if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_04 == prodId) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3" + "/2");
+                    } else if (RegularBase.REGULAR_05 == prodId || RegularBase.REGULAR_06 == prodId) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5" + "/2");
                     }
                     break;
                 case R.id.tv_dialog_max_amount:
