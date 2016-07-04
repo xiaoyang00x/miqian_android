@@ -127,6 +127,21 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         editMoneyBound = (EditText) findViewById(R.id.edit_money_bound);
+        editMoneyBound.addTextChangedListener(new MyTextWatcher() {
+
+            @Override
+            public void myAfterTextChanged(Editable s) {
+                try {
+                    textErrorLian.setVisibility(View.GONE);
+                    String temp = s.toString();
+                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
+                        return;
+                    }
+                    s.delete(temp.length() - 1, temp.length());
+                } catch (Exception e) {
+                }
+            }
+        });
         if (rollType == 1 || rollType == 2) {
             money = intent.getStringExtra("money");
             editMoney.setText(money);
