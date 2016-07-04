@@ -155,7 +155,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getCount() + "");
             if (mType == 1) {
                 ((HeaderViewHolder) holder).textCapitalName.setText("投资本金(元)");
-                ((HeaderViewHolder) holder).textEarningName.setText("已收益(元)");
+                ((HeaderViewHolder) holder).textEarningName.setText("已获收益(元)");
                 ((HeaderViewHolder) holder).textCapital.setText(mReg.getPerTotalAmt());
                 ((HeaderViewHolder) holder).textEarning.setText(mReg.getPerTotalIncome());
             } else if (mType == 0) {
