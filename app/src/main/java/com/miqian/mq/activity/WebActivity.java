@@ -130,11 +130,7 @@ public class WebActivity extends BaseActivity implements LoginListener {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if( url.startsWith("http:") || url.startsWith("https:") ) {
-                    loadUrl(url);
-                    return false;
-                }
-                return true;
+                return false;
             }
 
             @Override
