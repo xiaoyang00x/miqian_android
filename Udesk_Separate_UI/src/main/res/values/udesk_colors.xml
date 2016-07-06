@@ -55,8 +55,7 @@
        
        
     <!-- 顶部TitleBar的背景色 -->
-    <color name="udesk_titlebar_bg">#f13e3e</color>
-    <!--<color name="udesk_titlebar_bg">#3565df</color>  -->
+    <color name="udesk_titlebar_bg">#3565df</color>  
     <!-- 顶部TitleBar，中间文字的颜色 -->
     <color name="udesk_color_titlebar_text_center">#FFFFFF</color>
          <!-- 界面中分割线的颜色值 -->

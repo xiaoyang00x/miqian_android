@@ -181,18 +181,23 @@ public static final int *;
 ##--------------------End proguard configuration for GrowingIO------------------------
 
 ##-------------------Begin proguard configuration for udesk-------------------------
--libraryjars ../Udesk_Separate_UI/libs/asmack-android-8-4.0.6.jar
 -libraryjars ../Udesk_Separate_UI/libs/android-async-http-1.4.6.jar
 -libraryjars ../Udesk_Separate_UI/libs/qiniu-android-sdk-7.0.1.jar
--libraryjars ../Udesk_Separate_UI/libs/udesk_sdk_3.1.jar
+-libraryjars ../Udesk_Separate_UI/libs/udesk_sdk_3.2.0.jar
+-libraryjars ../Udesk_Separate_UI/libs/bugly_crash_release__2.1.jar
 -libraryjars ../Udesk_Separate_UI/libs/universal-image-loader-1.9.4.jar
+
+-keep class udesk.**{*; }
+-keep class cn.udesk.**{*; }
+-keep class com.qiniu.android.**{*; }
+-keep class com.tencent.bugly.**{*; }
+-keep class com.nostra13.universalimageloader.**{*; }
+-keep class com.loopj.android.http.**{*; }
 
 -keep class com.kenai.jbosh.** {*; }
 -keep class com.novell.sasl.client.** {*; }
 -keep class de.measite.smack.** {*; }
 -keep class org.** {*; }
--keep class udesk.core.** {*; }
--keep class cn.udesk.** {*; }
 -keepclasseswithmembernames class udesk.core.**  {*; }
 -keepclasseswithmembernames class cn.udesk.**  {*; }
 
