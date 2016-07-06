@@ -1,14 +1,17 @@
 package com.miqian.mq.activity;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -234,6 +237,10 @@ public class WebActivity extends BaseActivity implements LoginListener {
 
     @JavascriptInterface
     public void call(String phoneNumber) {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            Uihelper.showToast(mContext, "您尚未开启通话权限，请开启后再尝试。");
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
         startActivity(intent);
     }

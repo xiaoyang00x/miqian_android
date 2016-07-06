@@ -121,9 +121,6 @@ public class MobileOS {
     }
 
     /***
-     * <pre>
-     * add this permission to your AndroidManifest.xml
-     * <strong>android.permission.READ_PHONE_STATE</strong>
      * 获取 IMEI, CellNumber, Sim serial number .etc.
      * </pre>
      */
