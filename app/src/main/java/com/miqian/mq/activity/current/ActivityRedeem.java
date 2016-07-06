@@ -59,7 +59,7 @@ public class ActivityRedeem extends BaseActivity {
 
     @Override
     public void obtainData() {
-        DecimalFormat df = new java.text.DecimalFormat("#.00");
+        DecimalFormat df = new java.text.DecimalFormat("0.00");
         if (userCurrent != null) {
             BigDecimal balance = userCurrent.getCurAsset();//活期待收金额
             BigDecimal curDayResidue = userCurrent.getCurDayResidue();//当日剩余可赎回额度
