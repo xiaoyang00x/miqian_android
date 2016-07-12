@@ -34,7 +34,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:textColor="@color/mq_bl1_v2"
         android:textSize="@dimen/mq_font7_v2"
-        android:text="公告:祝贺福建省互联网金融协会成立,锣鼓喧天,鞭炮齐鸣!"
+        android:textStyle="bold"
         />
     <View
         android:layout_width="match_parent"

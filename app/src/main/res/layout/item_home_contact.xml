@@ -31,7 +31,7 @@
             android:id="@+id/tv_tel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="25dp"
             android:textColor="@color/mq_bl1_v2"
             android:textSize="@dimen/mq_font12_v2"
             android:textStyle="bold" />
