@@ -90,6 +90,9 @@ public class Urls {
     //获取用户信息
     public final static String user_info = base_server + "userService/getUserInfo";
 
+    //获取APP配置：广告、tab
+    public final static String app_config = base_server + "commonService/getAdverts";
+
     //获取验证码
     public final static String getCaptcha = base_server + "commonService/getCaptcha";
     //登录

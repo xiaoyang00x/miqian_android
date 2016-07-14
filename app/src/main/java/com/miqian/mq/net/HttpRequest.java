@@ -12,6 +12,7 @@ import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CityInfoResult;
+import com.miqian.mq.entity.ConfigResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.ErrorLianResult;
@@ -75,6 +76,30 @@ public class HttpRequest {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * APP的配置：广告，tab图标
+     */
+    public static void getConfig(Context context, final ICallback<ConfigResult> callback) {
+        List<Param> mList = new ArrayList<>();
+        new MyAsyncTask(context, Urls.app_config, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                ConfigResult configResult = JsonUtil.parseObject(result, ConfigResult.class);
+                if (configResult.getCode().equals("000000")) {
+                    callback.onSucceed(configResult);
+                } else {
+                    callback.onFail(configResult.getMessage());
                 }
             }
 

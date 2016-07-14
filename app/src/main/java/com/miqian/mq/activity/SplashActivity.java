@@ -16,6 +16,12 @@ import android.widget.LinearLayout.LayoutParams;
 
 import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.R;
+import com.miqian.mq.entity.Advert;
+import com.miqian.mq.entity.ConfigInfo;
+import com.miqian.mq.entity.ConfigResult;
+import com.miqian.mq.entity.Navigation;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
@@ -51,12 +57,31 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     }
 
     private void start() {
+        loadConfig();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 loadFinish();
             }
         }, 1500);
+    }
+
+    private void loadConfig() {
+        HttpRequest.getConfig(SplashActivity.this, new ICallback<ConfigResult>() {
+            @Override
+            public void onSucceed(ConfigResult result) {
+                ConfigInfo configInfo = result.getData();
+                if (configInfo != null) {
+                    Advert advert = configInfo.getAdvert();
+                    Navigation navigation = configInfo.getNavigation();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+
+            }
+        });
     }
 
     private void loadFinish() {
