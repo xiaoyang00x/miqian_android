@@ -7,8 +7,8 @@ public class Advert {
 
     private String imgUrl;
     private String jumpUrl;
-    private String android1x;
-    private String android2x;
+    private String imgUrl_android1x;
+    private String imgUrl_android2x;
     private String isShow;
 
     public String getImgUrl() {
@@ -27,20 +27,20 @@ public class Advert {
         this.jumpUrl = jumpUrl;
     }
 
-    public String getAndroid1x() {
-        return android1x;
+    public String getImgUrl_android1x() {
+        return imgUrl_android1x;
     }
 
-    public void setAndroid1x(String android1x) {
-        this.android1x = android1x;
+    public void setImgUrl_android1x(String imgUrl_android1x) {
+        this.imgUrl_android1x = imgUrl_android1x;
     }
 
-    public String getAndroid2x() {
-        return android2x;
+    public String getImgUrl_android2x() {
+        return imgUrl_android2x;
     }
 
-    public void setAndroid2x(String android2x) {
-        this.android2x = android2x;
+    public void setImgUrl_android2x(String imgUrl_android2x) {
+        this.imgUrl_android2x = imgUrl_android2x;
     }
 
     public String getIsShow() {
