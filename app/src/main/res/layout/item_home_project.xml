@@ -13,15 +13,29 @@
 
         <TextView
             android:id="@+id/tv_project_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/iv_tag"
             android:maxLines="1"
+            android:gravity="left"
             android:text="苏宁云商-上市公司保理项目(三期)"
             android:textColor="@color/mq_b2_v2"
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@id/iv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@null"
+            android:scaleType="matrix"
+            android:src="@drawable/double_card_blue" />
 
         <TextView
             android:id="@+id/temp1"

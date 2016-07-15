@@ -22,6 +22,7 @@ public class HomeSelectionProject {
     private BigDecimal subjectTotalPrice;                       //标的总额
     private BigDecimal residueAmt;                              //标的剩余额度
     private String subjectStatus;                               //标的状态  投标状态编码: 99待开标不显示   00待开标   01已开标   02已满标（已售罄）  03已到期  04已撤销  05已流标   06审批中    07还款中    08正常还完
+    private String subjectType; // 标的类型 00：标准标的 01：新手专属 02：众人拾财专属 03：老财主专享回馈 04：定向大额投资人 05：拼iPhone干货 06：加息专场 07：双倍收益标 0IP6：0元购iPhone6 88：88专属
 
     public long getStartTimestamp() {
         return startTimestamp;
@@ -133,5 +134,13 @@ public class HomeSelectionProject {
 
     public void setJumpProjectUrl(String jumpProjectUrl) {
         this.jumpProjectUrl = jumpProjectUrl;
+    }
+
+    public String getSubjectType() {
+        return subjectType;
+    }
+
+    public void setSubjectType(String subjectType) {
+        this.subjectType = subjectType;
     }
 }

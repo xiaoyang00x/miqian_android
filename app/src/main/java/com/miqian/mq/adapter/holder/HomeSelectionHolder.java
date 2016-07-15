@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomeSelectionProject;
 import com.miqian.mq.utils.FormatUtil;
+
+import java.math.BigDecimal;
 
 /**
  * Created by guolei_wang on 16/5/24.
@@ -84,9 +87,15 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
         //btn_buy
         Button btn_buy = (Button) projectView.findViewById(R.id.btn_buy);
 
+        //双倍卡标记
+        ImageView iv_tag = (ImageView) projectView.findViewById(R.id.iv_tag);
+
         tv_project_name.setText(data.getSubjectName());
         profit_rate.setText(data.getYearInterest());
-        if (1 == data.getPresentationYesNo()) {
+        if (data.getSubjectType().equals("07")) { // 双倍收益标
+            profit_rate.setText((new BigDecimal(data.getYearInterest()).multiply(new BigDecimal("2")).toString()));
+            tv_add_interest.setText("%");
+        } else if (1 == data.getPresentationYesNo()) {
             tv_add_interest.setText("+ " + data.getPresentationYearInterest() + "%");
         }else {
             tv_add_interest.setText("%");
@@ -108,6 +117,13 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
             btn_buy.setBackgroundResource(R.drawable.btn_no_begin);
             btn_buy.setText("待开标");
+            if (data.getSubjectType().equals("07")) { // 双倍收益标
+                iv_tag.setImageResource(R.drawable.double_rate_blue);
+            } else if (data.getSubjectType().equals("88")) { // 88专属
+                iv_tag.setImageResource(R.drawable.double_card_blue);
+            } else {
+                iv_tag.setImageResource(0);
+            }
 
             tv_begin_time.setText(FormatUtil.formatDate(data.getStartTimestamp(), "MM月dd日 HH:mm发售"));
             tv_begin_time.setVisibility(View.VISIBLE);
@@ -118,6 +134,13 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
             btn_buy.setBackgroundResource(R.drawable.btn_default_selector);
             btn_buy.setText(R.string.buy_now);
+            if (data.getSubjectType().equals("07")) { // 双倍收益标
+                iv_tag.setImageResource(R.drawable.double_rate_red);
+            } else if (data.getSubjectType().equals("88")) { // 88专属
+                iv_tag.setImageResource(R.drawable.double_card_red);
+            } else {
+                iv_tag.setImageResource(0);
+            }
 
             tv_begin_time.setVisibility(View.GONE);
 
@@ -128,6 +151,13 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
             btn_buy.setBackgroundResource(R.drawable.btn_has_done);
             btn_buy.setText("已满额");
+            if (data.getSubjectType().equals("07")) { // 双倍收益标
+                iv_tag.setImageResource(R.drawable.double_rate_gray);
+            } else if (data.getSubjectType().equals("88")) { // 88专属
+                iv_tag.setImageResource(R.drawable.double_card_gray);
+            } else {
+                iv_tag.setImageResource(0);
+            }
 
             tv_begin_time.setVisibility(View.GONE);
         }
