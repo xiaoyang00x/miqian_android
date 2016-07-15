@@ -27,8 +27,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
         android:background="@null"
-        android:scaleType="matrix"
-        android:src="@drawable/double_card_blue" />
+        android:scaleType="matrix" />
 
     <TextView
         android:id="@+id/temp1"
