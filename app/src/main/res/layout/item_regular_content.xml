@@ -2,19 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:paddingTop="15dp">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/iv_tag"
         android:ellipsize="end"
+        android:gravity="left"
         android:singleLine="true"
         android:textColor="@color/mq_b2_v2"
         android:textSize="@dimen/mq_font7_v2"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@null"
+        android:scaleType="matrix"
+        android:src="@drawable/double_card_blue" />
 
     <TextView
         android:id="@+id/temp1"
@@ -100,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btn_state"
-        android:layout_marginRight="22dp"
+        android:layout_marginRight="18dp"
         android:textColor="@color/mq_bl3_v2"
         android:textSize="@dimen/mq_font3_v2"
         android:visibility="gone" />

@@ -24,6 +24,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -121,6 +122,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         private View itemView;
         private TextView tv_name; // 名称
+        private ImageView iv_tag;
         private TextView tv_profit_rate; // 年利率
         private TextView tv_profit_rate_unit; // 年利率单位:%, 有加息的话如:+0.5%
         private TextView tv_time_limit; // 期限
@@ -135,6 +137,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         private void initView() {
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            iv_tag = (ImageView) itemView.findViewById(R.id.iv_tag);
             tv_profit_rate = (TextView) itemView.findViewById(R.id.tv_profit_rate);
             tv_profit_rate_unit = (TextView) itemView.findViewById(R.id.tv_profit_rate_unit);
             tv_time_limit = (TextView) itemView.findViewById(R.id.tv_time_limit);
@@ -146,20 +149,27 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             final RegularProjectInfo info = (RegularProjectInfo) mList.get(position);
             tv_name.setText(info.getSubjectName());
             tv_profit_rate.setText(info.getYearInterest());
+            tv_profit_rate_unit.setText("%");
             tv_time_limit.setText(info.getLimit());
             tv_remain_amount.setText(
                     new StringBuilder("可认购金额:￥").
                             append(FormatUtil.formatAmount(info.getResidueAmt())).
                             append("/￥").
                             append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
-
-            if (info.getPresentationYesNo().equals("Y")) {
+            if (info.getSubjectType().equals("07")) { // 双倍收益标
+                tv_profit_rate.setText((new BigDecimal(info.getYearInterest()).multiply(new BigDecimal("2")).toString()));
+            } else if ("Y".equals(info.getPresentationYesNo())) {
                 tv_profit_rate_unit.setText(
                         new StringBuilder("+").
                                 append(info.getPresentationYearInterest()).
                                 append("%"));
+            }
+            if (info.getSubjectType().equals("07")) { // 双倍收益标
+                iv_tag.setImageResource(R.drawable.double_rate_red);
+            } else if (info.getSubjectType().equals("88")) { // 88专属
+                iv_tag.setImageResource(R.drawable.double_card_red);
             } else {
-                tv_profit_rate_unit.setText("%");
+                iv_tag.setImageResource(0);
             }
             btn_buy.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -232,6 +242,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         private View itemView;
         private TextView tv_name; // 名称
+        private ImageView iv_tag;
         private TextView tv_profit_rate; // 年利率
         private TextView tv_profit_rate_unit; // 年利率单位:%, 有加息的话如:+0.5%
         private TextView tv_time_limit; // 期限
@@ -249,6 +260,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         private void initView() {
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            iv_tag = (ImageView) itemView.findViewById(R.id.iv_tag);
             tv_profit_rate = (TextView) itemView.findViewById(R.id.tv_profit_rate);
             tv_profit_rate_unit = (TextView) itemView.findViewById(R.id.tv_profit_rate_unit);
             tv_time_limit = (TextView) itemView.findViewById(R.id.tv_time_limit);
@@ -264,7 +276,9 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             tv_name.setText(info.getSubjectName());
             tv_profit_rate.setText(info.getYearInterest());
             tv_profit_rate_unit.setText("%");
-            if ("Y".equals(info.getPresentationYesNo())) {
+            if (info.getSubjectType().equals("07")) { // 双倍收益标
+                tv_profit_rate.setText((new BigDecimal(info.getYearInterest()).multiply(new BigDecimal("2")).toString()));
+            } else if ("Y".equals(info.getPresentationYesNo())) {
                 tv_profit_rate_unit.setText(
                         new StringBuilder("+").
                                 append(info.getPresentationYearInterest()).
@@ -294,6 +308,13 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     tv_begin_time.setVisibility(View.VISIBLE);
                     btn_state.setBackgroundResource(R.drawable.btn_no_begin);
                     btn_state.setText("待开标");
+                    if (info.getSubjectType().equals("07")) { // 双倍收益标
+                        iv_tag.setImageResource(R.drawable.double_rate_blue);
+                    } else if (info.getSubjectType().equals("88")) { // 88专属
+                        iv_tag.setImageResource(R.drawable.double_card_blue);
+                    } else {
+                        iv_tag.setImageResource(0);
+                    }
                     break;
                 case RegularBase.STATE_01:
                     tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
@@ -303,6 +324,13 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     tv_begin_time.setVisibility(View.GONE);
                     btn_state.setBackgroundResource(R.drawable.btn_default_selector);
                     btn_state.setText("立即认购");
+                    if (info.getSubjectType().equals("07")) { // 双倍收益标
+                        iv_tag.setImageResource(R.drawable.double_rate_red);
+                    } else if (info.getSubjectType().equals("88")) { // 88专属
+                        iv_tag.setImageResource(R.drawable.double_card_red);
+                    } else {
+                        iv_tag.setImageResource(0);
+                    }
                     break;
                 default:
                     tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
@@ -312,6 +340,13 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     tv_begin_time.setVisibility(View.GONE);
                     btn_state.setBackgroundResource(R.drawable.btn_has_done);
                     btn_state.setText("已满额");
+                    if (info.getSubjectType().equals("07")) { // 双倍收益标
+                        iv_tag.setImageResource(R.drawable.double_rate_gray);
+                    } else if (info.getSubjectType().equals("88")) { // 88专属
+                        iv_tag.setImageResource(R.drawable.double_card_gray);
+                    } else {
+                        iv_tag.setImageResource(0);
+                    }
                     break;
             }
             btn_state.setOnClickListener(new View.OnClickListener() {

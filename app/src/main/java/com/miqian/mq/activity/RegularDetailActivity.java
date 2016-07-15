@@ -41,6 +41,7 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -57,8 +58,11 @@ import java.util.ArrayList;
  */
 public class RegularDetailActivity extends BaseActivity {
 
+    private MySwipeRefresh swipeRefresh;
+
     private TextView tv_begin_countdown; // 开标倒计时
     private TextView tv_name; // 标的名称
+    private ImageView iv_tag;
     private TextView tv_description; // 标的描述
     private TextView tv_profit_rate; // 标的年利率
     private TextView tv_profit_rate_unit; // 标的年利率 单位
@@ -70,6 +74,7 @@ public class RegularDetailActivity extends BaseActivity {
     private TextView tv_88; // 88理财节
 
     private ViewStub viewstub_detail;
+    private View viewDetail;
 
     /*  标的特色相关   */
     private LinearLayout llyt_project_feature;
@@ -148,8 +153,11 @@ public class RegularDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
+
         tv_begin_countdown = (TextView) findViewById(R.id.tv_begin_countdown);
         tv_name = (TextView) findViewById(R.id.tv_name);
+        iv_tag = (ImageView) findViewById(R.id.iv_tag);
         tv_description = (TextView) findViewById(R.id.tv_description);
         tv_profit_rate = (TextView) findViewById(R.id.tv_profit_rate);
         tv_profit_rate_unit = (TextView) findViewById(R.id.tv_profit_rate_unit);
@@ -186,6 +194,7 @@ public class RegularDetailActivity extends BaseActivity {
         et_input.addTextChangedListener(mTextWatcher);
         et_input.setOnFocusChangeListener(mOnFousChangeListener);
         et_input.setOnClickListener(mOnclickListener);
+        swipeRefresh.setOnPullRefreshListener(mOnPullRefreshListener);
     }
 
     @Override
@@ -279,6 +288,7 @@ public class RegularDetailActivity extends BaseActivity {
             inProcess = true;
         }
         begin();
+        swipeRefresh.setRefreshing(true);
         HttpRequest.getRegularDetail(mContext, subjectId, prodId, new ICallback<RegularDetailResult>() {
 
             @Override
@@ -286,6 +296,7 @@ public class RegularDetailActivity extends BaseActivity {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                swipeRefresh.setRefreshing(false);
                 end();
                 if (result == null || result.getData() == null
                         || result.getData().getSubjectData() == null
@@ -303,6 +314,7 @@ public class RegularDetailActivity extends BaseActivity {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                swipeRefresh.setRefreshing(false);
                 end();
                 Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
                 showErrorView();
@@ -336,8 +348,10 @@ public class RegularDetailActivity extends BaseActivity {
             return;
         }
 
-        viewstub_detail.setLayoutResource(R.layout.regular_project_detail);
-        View viewDetail = viewstub_detail.inflate();
+        if (null == viewDetail) {
+            viewstub_detail.setLayoutResource(R.layout.regular_project_detail);
+            viewDetail = viewstub_detail.inflate();
+        }
         LinearLayout content = (LinearLayout) viewDetail.findViewById(R.id.llyt_content);
         TextView tv_seemore = (TextView) viewDetail.findViewById(R.id.tv_seemore);
 
@@ -357,8 +371,10 @@ public class RegularDetailActivity extends BaseActivity {
     private void updateRegularPlanDetail() {
         ArrayList<RegularProjectMatch> mList = mInfo.getMatchItem();
 
-        viewstub_detail.setLayoutResource(R.layout.regular_plan_detail);
-        View viewDetail = viewstub_detail.inflate();
+        if (null == viewDetail) {
+            viewstub_detail.setLayoutResource(R.layout.regular_plan_detail);
+            viewDetail = viewstub_detail.inflate();
+        }
         LinearLayout content = (LinearLayout) viewDetail.findViewById(R.id.llyt_content);
         TextView tv_seemore = (TextView) viewDetail.findViewById(R.id.tv_seemore);
         tv_seemore.setOnClickListener(mOnclickListener);
@@ -387,6 +403,14 @@ public class RegularDetailActivity extends BaseActivity {
         // 标的名称
         tv_name.setText(mInfo.getSubjectName());
 
+        if (mInfo.getSubjectType().equals("07")) { // 双倍收益标
+            iv_tag.setImageResource(R.drawable.double_rate_yellow);
+        } else if (mInfo.getSubjectType().equals("88")) { // 88专属
+            iv_tag.setImageResource(R.drawable.double_card_yellow);
+        } else {
+            iv_tag.setImageResource(0);
+        }
+
         // 标的描述
         StringBuilder sb = new StringBuilder();
         if (!TextUtils.isEmpty(mInfo.getTransferFlag())) {
@@ -411,7 +435,11 @@ public class RegularDetailActivity extends BaseActivity {
         if (RegularBase.REGULAR_03 == prodId || RegularBase.REGULAR_05 == prodId) {
             // 标的年利率
             tv_profit_rate.setText(mInfo.getYearInterest());
-            if ("Y".equals(mInfo.getPresentationYesNo())) {
+            tv_profit_rate_unit.setText("%");
+            if (mInfo.getSubjectType().equals("07")) { // 双倍收益标
+                total_profit_rate = new BigDecimal(mInfo.getYearInterest()).multiply(new BigDecimal("2")).toString();
+                tv_profit_rate.setText(total_profit_rate);
+            } else if ("Y".equals(mInfo.getPresentationYesNo())) {
                 tv_profit_rate_unit.setText(
                         new StringBuilder("+").
                                 append(mInfo.getPresentationYearInterest()).
@@ -421,7 +449,6 @@ public class RegularDetailActivity extends BaseActivity {
                         toString();
             } else {
                 total_profit_rate = mInfo.getYearInterest();
-                tv_profit_rate_unit.setText("%");
             }
         } else {
             // 标的年利率
@@ -474,9 +501,7 @@ public class RegularDetailActivity extends BaseActivity {
         switch (subjectStatus) {
             case RegularBase.STATE_00:
                 tv_begin_countdown.setVisibility(View.VISIBLE);
-                tv_begin_countdown.setText(
-                        new StringBuilder(Uihelper.timeToDateRegular(mInfo.getStartTimestamp())).
-                                append("发售"));
+                tv_begin_countdown.setText(Uihelper.timeToDateRegular(mInfo.getStartTimestamp()));
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
                 btn_state.setText("待开标");
@@ -520,8 +545,10 @@ public class RegularDetailActivity extends BaseActivity {
 
     // 更新 定期项目转让/定期计划转让 view
     private void updateRegularTransferDetail() {
-        viewstub_detail.setLayoutResource(R.layout.regular_transfer_detail);
-        View viewDetail = viewstub_detail.inflate();
+        if (null == viewDetail) {
+            viewstub_detail.setLayoutResource(R.layout.regular_transfer_detail);
+            viewDetail = viewstub_detail.inflate();
+        }
         TextView tv_info1 = (TextView) viewDetail.findViewById(R.id.tv_info1);
         TextView tv_info2 = (TextView) viewDetail.findViewById(R.id.tv_info2);
         TextView tv_info3 = (TextView) viewDetail.findViewById(R.id.tv_info3);
@@ -668,6 +695,13 @@ public class RegularDetailActivity extends BaseActivity {
                 default:
                     break;
             }
+        }
+    };
+
+    private MySwipeRefresh.OnPullRefreshListener mOnPullRefreshListener = new MySwipeRefresh.OnPullRefreshListener() {
+        @Override
+        public void onRefresh() {
+            obtainData();
         }
     };
 

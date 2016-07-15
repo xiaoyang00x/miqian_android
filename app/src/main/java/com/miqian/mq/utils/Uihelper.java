@@ -183,7 +183,7 @@ public class Uihelper {
                 append(String.format("%02d", day)).append("日").
                 append(" ").
                 append(String.format("%02d", hour)).append(":").
-                append(String.format("%02d", minute)).append("分").toString();
+                append(String.format("%02d", minute)).append("发售").toString();
     }
 
     /**

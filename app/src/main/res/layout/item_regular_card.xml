@@ -10,20 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/regular_card_top"
-        android:paddingBottom="30dp"
-        android:paddingTop="20dp">
+        android:paddingBottom="30dp">
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@+id/iv_tag"
             android:ellipsize="end"
+            android:gravity="left"
             android:singleLine="true"
             android:text="央企保理项目二期"
             android:textColor="@color/mq_b2_v2"
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="5dp"
+            android:background="@null"
+            android:scaleType="matrix"
+            android:src="@drawable/double_card_blue" />
 
         <TextView
             android:id="@+id/temp1"
@@ -43,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/temp1"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="80dp"
             android:layout_toRightOf="@+id/temp1"
             android:ellipsize="end"
             android:singleLine="true"
