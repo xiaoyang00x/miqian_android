@@ -1,7 +1,9 @@
 package com.miqian.mq.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
@@ -14,17 +16,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.growingio.android.sdk.collection.GrowingIO;
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Advert;
 import com.miqian.mq.entity.ConfigInfo;
 import com.miqian.mq.entity.ConfigResult;
 import com.miqian.mq.entity.Navigation;
+import com.miqian.mq.entity.TabInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Config;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.update.UmengUpdateAgent;
 
 import cn.jpush.android.api.JPushInterface;
@@ -74,11 +85,57 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                 if (configInfo != null) {
                     Advert advert = configInfo.getAdvert();
                     Navigation navigation = configInfo.getNavigation();
+                    Pref.saveString(Pref.TAB_NAVIGATION_STR, "", SplashActivity.this.getApplicationContext());
+                    Pref.saveInt(Pref.TAB_IMAGE_COUNT, 0, SplashActivity.this.getApplicationContext());
+                    if(navigation != null && navigation.isNavigationOnOff() && navigation.getNavigationList() != null && navigation.getNavigationList().size() > 0) {
+                        for(int i = 0; i < navigation.getNavigationList().size(); i++) {
+                            TabInfo tabInfo = navigation.getNavigationList().get(i);
+                            if(tabInfo == null) return;
+                            loadImage(tabInfo.getImg(), SplashActivity.this.getApplicationContext());
+                            loadImage(tabInfo.getImgClick(), SplashActivity.this.getApplicationContext());
+                        }
+
+                        String navigationStr = JSON.toJSONString(navigation);
+                        Pref.saveString(Pref.TAB_NAVIGATION_STR, navigationStr, SplashActivity.this.getApplicationContext());
+                    }
                 }
             }
 
             @Override
             public void onFail(String error) {
+
+            }
+        });
+    }
+
+    private DisplayImageOptions options;
+    private ImageLoader imageLoader;
+    public void loadImage(String url, final Context context) {
+        if(options == null) {
+            options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
+        }
+        if(imageLoader == null) {
+            imageLoader = ImageLoader.getInstance();
+        }
+        imageLoader.loadImage(url, options, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, context, 0);
+                Pref.saveInt(Pref.TAB_IMAGE_COUNT, ++tabImageCount, context);
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
 
             }
         });

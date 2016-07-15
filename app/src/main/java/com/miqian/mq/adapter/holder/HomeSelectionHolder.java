@@ -98,7 +98,7 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             tv_corner_mark.setText(data.getSubscript());
             tv_corner_mark.setVisibility(View.VISIBLE);
         }
-        tv_remain_amount.setText("剩余金额:￥"+ FormatUtil.formatAmount(data.getResidueAmt())+"/" + FormatUtil.formatAmount(data.getSubjectTotalPrice()));
+        tv_remain_amount.setText("可认购金额:￥"+ FormatUtil.formatAmount(data.getResidueAmt())+"/" + FormatUtil.formatAmount(data.getSubjectTotalPrice()));
 
         //待开标
         if ("00".equals(data.getSubjectStatus())) {

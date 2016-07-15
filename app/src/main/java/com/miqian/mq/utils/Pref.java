@@ -73,6 +73,11 @@ public class Pref {
     //本地获取
     public final static String FROM_NATIVE = "fromnative";
 
+    //首页Tab图片下载计数
+    public final static String TAB_IMAGE_COUNT = "TAB_IMAGE_COUNT";
+    //首页tab json
+    public final static String TAB_NAVIGATION_STR = "TAB_NAVIGATION_STR";
+
 
     private static SharedPreferences getSettings(final Context contex) {
         SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);

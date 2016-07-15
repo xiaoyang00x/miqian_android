@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -24,6 +27,7 @@ import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MaintenanceResult;
+import com.miqian.mq.entity.Navigation;
 import com.miqian.mq.entity.RegularDetail;
 import com.miqian.mq.entity.UpdateInfo;
 import com.miqian.mq.entity.UpdateResult;
@@ -40,12 +44,15 @@ import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.MyRelativeLayout;
 import com.miqian.mq.views.TextViewEx;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.update.UmengUpdateAgent;
 
 import org.json.JSONException;
@@ -71,7 +78,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     FragmentTabHost mTabHost;
     Context context;
     TabWidget tabWidget;
-    MyRelativeLayout tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
+    TabIndicator tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
     private RelativeLayout maintenance;
     private List<JpushInfo> jpushInfolist;
     private int current_tab = 0;
@@ -79,6 +86,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     private CustomDialog dialogTips;
     private CustomDialog jpushDialog;
     private ImageView imgRedPointer;
+    private DisplayImageOptions options;
+    private ImageLoader imageLoader;
+    private Navigation navigation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -233,34 +243,175 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         LinearLayout layout = (LinearLayout) mTabHost.getChildAt(0);
         TabWidget tw = (TabWidget) layout.getChildAt(1);
 
-        tabIndicator1 = initTabView(tw, R.drawable.tab_home_selector, R.string.main_tab_home);
-        tabIndicator2 = initTabView(tw, R.drawable.tab_current_selector, R.string.main_tab_current);
-        tabIndicator3 = initTabView(tw, R.drawable.tab_regular_selector, R.string.main_tab_regular);
-        tabIndicator4 = initTabView(tw, R.drawable.tab_user_selector, R.string.main_tab_user);
+        int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, mApplicationContext, 0);
+        final String navigationStr = Pref.getString(Pref.TAB_NAVIGATION_STR, mApplicationContext, "");
+        final boolean isChangeTab;
+        if(tabImageCount == 8 && !TextUtils.isEmpty(navigationStr)) {
+            navigation = JsonUtil.parseObject(navigationStr, Navigation.class);
+            isChangeTab = true;
+            tabIndicator1 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(0).getImgClick(), R.string.main_tab_home);
+            tabIndicator2 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(1).getImg(), R.string.main_tab_current);
+            tabIndicator3 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(2).getImg(), R.string.main_tab_regular);
+            tabIndicator4 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(3).getImg(), R.string.main_tab_user);
 
-        imgRedPointer = (ImageView) tabIndicator4.findViewById(R.id.img_red_pointer);
+
+
+            tabIndicator1.getTabName().setTextColor(Color.parseColor(navigation.getColorClick()));
+            tabIndicator2.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+            tabIndicator3.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+            tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+
+        }else {
+            isChangeTab = false;
+            tabIndicator1 = new TabIndicator(mContext, tw,R.drawable.tab_home_selector, R.string.main_tab_home);
+            tabIndicator2 = new TabIndicator(mContext, tw, R.drawable.tab_current_selector, R.string.main_tab_current);
+            tabIndicator3 = new TabIndicator(mContext, tw, R.drawable.tab_regular_selector, R.string.main_tab_regular);
+            tabIndicator4 = new TabIndicator(mContext, tw, R.drawable.tab_user_selector, R.string.main_tab_user);
+        }
+
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
+                if(!isChangeTab) return;
                 current_tab = mTabHost.getCurrentTab();
+                if(options == null) {
+                    options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
+                }
+                if(imageLoader == null) {
+                    imageLoader = ImageLoader.getInstance();
+                }
+                if(navigation == null) return;
+                switch (current_tab) {
+                    case 0:
+                        imageLoader.displayImage(navigation.getNavigationList().get(0).getImgClick(), tabIndicator1.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(1).getImg(), tabIndicator2.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(2).getImg(), tabIndicator3.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(3).getImg(), tabIndicator4.getTabIcon());
 
-                //当点击财富Tab 隐藏此tab上的红点
-                if (current_tab == 3) {
-                    imgRedPointer.setVisibility(View.GONE);
+                        tabIndicator1.getTabName().setTextColor(Color.parseColor(navigation.getColorClick()));
+                        tabIndicator2.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator3.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        break;
+                    case 1:
+                        imageLoader.displayImage(navigation.getNavigationList().get(0).getImg(), tabIndicator1.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(1).getImgClick(), tabIndicator2.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(2).getImg(), tabIndicator3.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(3).getImg(), tabIndicator4.getTabIcon());
+
+                        tabIndicator1.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator2.getTabName().setTextColor(Color.parseColor(navigation.getColorClick()));
+                        tabIndicator3.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        break;
+                    case 2:
+                        imageLoader.displayImage(navigation.getNavigationList().get(0).getImg(), tabIndicator1.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(1).getImg(), tabIndicator2.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(2).getImgClick(), tabIndicator3.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(3).getImg(), tabIndicator4.getTabIcon());
+
+                        tabIndicator1.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator2.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator3.getTabName().setTextColor(Color.parseColor(navigation.getColorClick()));
+                        tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        break;
+                    case 3:
+                        imageLoader.displayImage(navigation.getNavigationList().get(0).getImg(), tabIndicator1.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(1).getImg(), tabIndicator2.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(2).getImg(), tabIndicator3.getTabIcon());
+                        imageLoader.displayImage(navigation.getNavigationList().get(3).getImgClick(), tabIndicator4.getTabIcon());
+
+                        tabIndicator1.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator2.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator3.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
+                        tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColorClick()));
+                        //当点击财富Tab 隐藏此tab上的红点
+                        tabIndicator4.getImgRedPointer().setVisibility(View.GONE);
+                        break;
+                    default:
+                        break;
                 }
             }
         });
         maintenance = (RelativeLayout) findViewById(R.id.maintenance);
     }
 
-    private MyRelativeLayout initTabView(TabWidget tw, int drawbleId, int nameResId) {
-        MyRelativeLayout tabIndicator = (MyRelativeLayout) LayoutInflater.from(this).inflate(R.layout.tab_indicator, tw, false);
-        ImageView ivTab1 = (ImageView) tabIndicator.findViewById(R.id.img_tab);
-        TextView tv_name = (TextView) tabIndicator.findViewById(R.id.tv_name);
-        ivTab1.setImageResource(drawbleId);
-        tv_name.setText(nameResId);
-        return tabIndicator;
+
+    class TabIndicator {
+        private Context ctx;
+        private MyRelativeLayout tabIndicator;
+        private ImageView tabIcon;
+        private TextView tabName;
+        private ImageView imgRedPointer;
+
+        private TabIndicator(Context ctx, TabWidget tw, int drawbleId, int nameResId) {
+            this.ctx = ctx;
+            tabIndicator = (MyRelativeLayout) LayoutInflater.from(ctx).inflate(R.layout.tab_indicator, tw, false);
+            tabIcon = (ImageView) tabIndicator.findViewById(R.id.img_tab);
+            tabName = (TextView) tabIndicator.findViewById(R.id.tv_name);
+            imgRedPointer = (ImageView) tabIndicator.findViewById(R.id.img_red_pointer);
+
+            setView(drawbleId, nameResId);
+        }
+        private TabIndicator(Context ctx, TabWidget tw, String url, int nameResId) {
+            this.ctx = ctx;
+            tabIndicator = (MyRelativeLayout) LayoutInflater.from(ctx).inflate(R.layout.tab_indicator, tw, false);
+            tabIcon = (ImageView) tabIndicator.findViewById(R.id.img_tab);
+            tabName = (TextView) tabIndicator.findViewById(R.id.tv_name);
+            imgRedPointer = (ImageView) tabIndicator.findViewById(R.id.img_red_pointer);
+
+
+            setView(url, nameResId);
+        }
+
+
+        public void setView(int drawbleId, int nameResId) {
+            tabIcon.setImageResource(drawbleId);
+            tabName.setText(nameResId);
+        }
+        public void setView(String url, int nameResId) {
+            if(options == null) {
+                options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
+            }
+            if(imageLoader == null) {
+                imageLoader = ImageLoader.getInstance();
+            }
+            imageLoader.displayImage(url, tabIcon);
+            tabName.setText(nameResId);
+        }
+
+        public MyRelativeLayout getTabIndicator() {
+            return tabIndicator;
+        }
+
+        public void setTabIndicator(MyRelativeLayout tabIndicator) {
+            this.tabIndicator = tabIndicator;
+        }
+
+        public ImageView getTabIcon() {
+            return tabIcon;
+        }
+
+        public void setTabIcon(ImageView tabIcon) {
+            this.tabIcon = tabIcon;
+        }
+
+        public TextView getTabName() {
+            return tabName;
+        }
+
+        public void setTabName(TextView tabName) {
+            this.tabName = tabName;
+        }
+
+        public ImageView getImgRedPointer() {
+            return imgRedPointer;
+        }
+
+        public void setImgRedPointer(ImageView imgRedPointer) {
+            this.imgRedPointer = imgRedPointer;
+        }
     }
 
     /**
@@ -269,19 +420,19 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     public void initTab() {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         FragmentTabHost.TabSpec tabSpechome = mTabHost.newTabSpec(TAG_HOME);
-        tabSpechome.setIndicator(tabIndicator1);
+        tabSpechome.setIndicator(tabIndicator1.getTabIndicator());
         mTabHost.addTab(tabSpechome, FragmentHome.class, null);
 
         FragmentTabHost.TabSpec tabSpecCurrent = mTabHost.newTabSpec(TAG_CURRENT);
-        tabSpecCurrent.setIndicator(tabIndicator2);
+        tabSpecCurrent.setIndicator(tabIndicator2.getTabIndicator());
         mTabHost.addTab(tabSpecCurrent, FragmentCurrent.class, null);
 
         FragmentTabHost.TabSpec tabSpecRegular = mTabHost.newTabSpec(TAG_REGULAR);
-        tabSpecRegular.setIndicator(tabIndicator3);
+        tabSpecRegular.setIndicator(tabIndicator3.getTabIndicator());
         mTabHost.addTab(tabSpecRegular, RegularFragment.class, null);
 
         FragmentTabHost.TabSpec tabSpecUser = mTabHost.newTabSpec(TAG_USER);
-        tabSpecUser.setIndicator(tabIndicator4);
+        tabSpecUser.setIndicator(tabIndicator4.getTabIndicator());
         mTabHost.addTab(tabSpecUser, FragmentUser.class, null);
     }
 
