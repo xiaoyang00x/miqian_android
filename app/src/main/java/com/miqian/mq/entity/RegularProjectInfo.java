@@ -27,7 +27,9 @@ public class RegularProjectInfo extends RegularBase {
 
     private String subjectStatus; // 标的状态 00：待开标 01：已开标 02：已满标（已售罄）03：已到期 04：已撤销 05：已流标 06：审批中 07：还款中 08：正常还完
 
-    private String subjectType; // 标的类型 00：标准标的 01：新手专属 02：众人拾财专属 03：老财主专享回馈 04：定向大额投资人 05：拼iPhone干货 06：加息专场 07：双倍收益标 0IP6：0元购iPhone6 88：88专属
+    private String subjectType; // 标的类型 00：标准标的 01：新手专属 02：众人拾财专属 03：老财主专享回馈 04：定向大额投资人 05：拼iPhone干货 06：加息专场 07：双倍收益卡 0IP6：0元购iPhone6 88：88专属(双倍收益标)
+    public final static String TYPE_RATE = "88";
+    public final static String TYPE_CARD = "07";
 
     private int prodId; // 产品类型  1活期，2活期转让，3定期，4定期转让，5定期计划，6计划转让
 

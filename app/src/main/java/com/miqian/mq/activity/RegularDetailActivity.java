@@ -403,9 +403,9 @@ public class RegularDetailActivity extends BaseActivity {
         // 标的名称
         tv_name.setText(mInfo.getSubjectName());
 
-        if (mInfo.getSubjectType().equals("07")) { // 双倍收益标
+        if (mInfo.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
             iv_tag.setImageResource(R.drawable.double_rate_detail);
-        } else if (mInfo.getSubjectType().equals("88")) { // 88专属
+        } else if (mInfo.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
             iv_tag.setImageResource(R.drawable.double_card_detail);
         } else {
             iv_tag.setImageResource(0);
@@ -436,7 +436,7 @@ public class RegularDetailActivity extends BaseActivity {
             // 标的年利率
             tv_profit_rate.setText(mInfo.getYearInterest());
             tv_profit_rate_unit.setText("%");
-            if (mInfo.getSubjectType().equals("07")) { // 双倍收益标
+            if (mInfo.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
                 total_profit_rate = new BigDecimal(mInfo.getYearInterest()).multiply(new BigDecimal("2")).toString();
                 tv_profit_rate.setText(total_profit_rate);
             } else if ("Y".equals(mInfo.getPresentationYesNo())) {
