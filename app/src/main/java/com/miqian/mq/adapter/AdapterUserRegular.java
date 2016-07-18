@@ -135,7 +135,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 case CalculateUtil.INTEREST_SHOWTYPE_FOUR:
                     ((ViewHolder) holder).textInterestRate.setText(regInvest.getRealInterest());
                     ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.double_rate_detail);
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.double_rate_normal);
                     break;
                 case CalculateUtil.INTEREST_SHOWTYPE_FIVE:
                     ((ViewHolder) holder).textInterestRatePresent.setText("%");
@@ -146,7 +146,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                     }
                     ((ViewHolder) holder).textInterestRatePresent.setText("%");
                     ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.double_card_detail);
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.double_card_normal);
                     break;
                 case CalculateUtil.INTEREST_SHOWTYPE_SEVEN:
                     ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");

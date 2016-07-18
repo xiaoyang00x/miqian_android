@@ -29,7 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@drawable/user_regular_transfer_wjx" />
+            android:scaleType="matrix"
+            android:background="@null" />
 
     </RelativeLayout>
 
