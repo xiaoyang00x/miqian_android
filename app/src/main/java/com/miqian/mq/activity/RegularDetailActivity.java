@@ -404,9 +404,9 @@ public class RegularDetailActivity extends BaseActivity {
         tv_name.setText(mInfo.getSubjectName());
 
         if (mInfo.getSubjectType().equals("07")) { // 双倍收益标
-            iv_tag.setImageResource(R.drawable.double_rate_yellow);
+            iv_tag.setImageResource(R.drawable.double_rate_detail);
         } else if (mInfo.getSubjectType().equals("88")) { // 88专属
-            iv_tag.setImageResource(R.drawable.double_card_yellow);
+            iv_tag.setImageResource(R.drawable.double_card_detail);
         } else {
             iv_tag.setImageResource(0);
         }

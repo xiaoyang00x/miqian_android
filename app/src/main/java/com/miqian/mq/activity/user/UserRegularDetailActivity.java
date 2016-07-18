@@ -253,7 +253,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             case CalculateUtil.INTEREST_SHOWTYPE_FOUR:
                 textInterestRate.setText(regInvest.getRealInterest());
                 ivProjectState.setVisibility(View.VISIBLE);
-                ivProjectState.setImageResource(R.drawable.double_rate_yellow);
+                ivProjectState.setImageResource(R.drawable.double_rate_detail);
                 break;
             case CalculateUtil.INTEREST_SHOWTYPE_FIVE:
                 textInterestRatePresent.setText("%");
@@ -264,7 +264,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 }
                 textInterestRatePresent.setText("%");
                 ivProjectState.setVisibility(View.VISIBLE);
-                ivProjectState.setImageResource(R.drawable.double_card_yellow);
+                ivProjectState.setImageResource(R.drawable.double_card_detail);
                 break;
             case CalculateUtil.INTEREST_SHOWTYPE_SEVEN:
                 textInterestRatePresent.setText("+" + presentInterest + "%");

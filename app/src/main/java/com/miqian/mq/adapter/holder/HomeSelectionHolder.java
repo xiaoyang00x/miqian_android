@@ -118,9 +118,9 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             btn_buy.setBackgroundResource(R.drawable.btn_no_begin);
             btn_buy.setText("待开标");
             if (data.getSubjectType().equals("07")) { // 双倍收益标
-                iv_tag.setImageResource(R.drawable.double_rate_blue);
+                iv_tag.setImageResource(R.drawable.double_rate_nobegin);
             } else if (data.getSubjectType().equals("88")) { // 88专属
-                iv_tag.setImageResource(R.drawable.double_card_blue);
+                iv_tag.setImageResource(R.drawable.double_card_nobegin);
             } else {
                 iv_tag.setImageResource(0);
             }
@@ -135,9 +135,9 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             btn_buy.setBackgroundResource(R.drawable.btn_default_selector);
             btn_buy.setText(R.string.buy_now);
             if (data.getSubjectType().equals("07")) { // 双倍收益标
-                iv_tag.setImageResource(R.drawable.double_rate_red);
+                iv_tag.setImageResource(R.drawable.double_rate_normal);
             } else if (data.getSubjectType().equals("88")) { // 88专属
-                iv_tag.setImageResource(R.drawable.double_card_red);
+                iv_tag.setImageResource(R.drawable.double_card_normal);
             } else {
                 iv_tag.setImageResource(0);
             }
@@ -152,9 +152,9 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             btn_buy.setBackgroundResource(R.drawable.btn_has_done);
             btn_buy.setText("已满额");
             if (data.getSubjectType().equals("07")) { // 双倍收益标
-                iv_tag.setImageResource(R.drawable.double_rate_gray);
+                iv_tag.setImageResource(R.drawable.double_rate_hasdone);
             } else if (data.getSubjectType().equals("88")) { // 88专属
-                iv_tag.setImageResource(R.drawable.double_card_gray);
+                iv_tag.setImageResource(R.drawable.double_card_hasdone);
             } else {
                 iv_tag.setImageResource(0);
             }
