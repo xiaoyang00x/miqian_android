@@ -20,7 +20,6 @@
             android:layout_toLeftOf="@+id/iv_tag"
             android:maxLines="1"
             android:gravity="left"
-            android:text="苏宁云商-上市公司保理项目(三期)"
             android:textColor="@color/mq_b2_v2"
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
@@ -35,7 +34,7 @@
             android:layout_marginTop="13dp"
             android:background="@null"
             android:scaleType="matrix"
-            android:src="@drawable/double_card_nobegin" />
+            android:src="@null" />
 
         <TextView
             android:id="@+id/temp1"
@@ -55,7 +54,6 @@
             android:layout_alignLeft="@+id/temp1"
             android:layout_below="@+id/temp1"
             android:layout_marginTop="2dp"
-            android:text="8.25"
             android:textColor="@color/mq_r1_v2"
             android:textSize="@dimen/mq_font13_v2"
             android:textStyle="bold" />
@@ -66,7 +64,6 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/profit_rate"
             android:layout_toRightOf="@+id/profit_rate"
-            android:text=" + 0.5%"
             android:textColor="@color/mq_r1_v2"
             android:textSize="@dimen/mq_font5_v2"
             android:textStyle="bold" />
@@ -91,7 +88,6 @@
             android:layout_alignLeft="@+id/temp2"
             android:layout_below="@+id/temp2"
             android:layout_marginTop="2dp"
-            android:text="60"
             android:textColor="@color/mq_r1_v2"
             android:textSize="@dimen/mq_font13_v2"
             android:textStyle="bold" />
@@ -156,7 +152,6 @@
                 android:gravity="center_vertical|left"
                 android:maxLines="1"
                 android:paddingLeft="15dp"
-                android:text="剩余金额:￥67234/1,000,000"
                 android:textColor="@color/mq_b4_v2"
                 android:textSize="@dimen/mq_font3_v2"
                 android:textStyle="bold" />
