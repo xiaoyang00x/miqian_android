@@ -5,19 +5,10 @@ package com.miqian.mq.entity;
  */
 public class Advert {
 
-    private String imgUrl;
     private String jumpUrl;
     private String imgUrl_android1x;
     private String imgUrl_android2x;
-    private String isShow;
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
+    private int isShow;
 
     public String getJumpUrl() {
         return jumpUrl;
@@ -43,11 +34,11 @@ public class Advert {
         this.imgUrl_android2x = imgUrl_android2x;
     }
 
-    public String getIsShow() {
+    public int getIsShow() {
         return isShow;
     }
 
-    public void setIsShow(String isShow) {
+    public void setIsShow(int isShow) {
         this.isShow = isShow;
     }
 }

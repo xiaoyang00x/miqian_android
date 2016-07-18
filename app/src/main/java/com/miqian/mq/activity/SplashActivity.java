@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -15,11 +16,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
 import com.growingio.android.sdk.collection.GrowingIO;
-import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Advert;
 import com.miqian.mq.entity.ConfigInfo;
@@ -29,7 +29,6 @@ import com.miqian.mq.entity.TabInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Config;
-import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -38,12 +37,22 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.update.UmengUpdateAgent;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.ShareSDK;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
 
+    public final static int TYPE_ADS = 0;
+    public final static int TYPE_TAB = 1;
+    private Timer timer;
+
     private LinearLayout framePages;
+    private RelativeLayout frameAds;
+    private Button btSkip;
+    private ImageView imageAds;
 
     private static final int pageCount = 4;
 
@@ -84,15 +93,28 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                 ConfigInfo configInfo = result.getData();
                 if (configInfo != null) {
                     Advert advert = configInfo.getAdvert();
+                    if (advert != null && advert.getIsShow() == 1) {
+                        String imgUrl;
+                        if (Config.HEIGHT <= 1280) {
+                            imgUrl = advert.getImgUrl_android1x();
+				        } else {
+                            imgUrl = advert.getImgUrl_android2x();
+                        }
+                        Pref.saveString(Pref.CONFIG_ADS + "ImgUrl", imgUrl, SplashActivity.this);
+                        Pref.saveString(Pref.CONFIG_ADS + "JumpUrl", advert.getJumpUrl(), SplashActivity.this);
+                        loadImage(imgUrl, SplashActivity.this, TYPE_ADS);
+                    } else {
+                        Pref.saveInt(Pref.CONFIG_ADS, 0, SplashActivity.this);
+                    }
                     Navigation navigation = configInfo.getNavigation();
                     Pref.saveString(Pref.TAB_NAVIGATION_STR, "", SplashActivity.this.getApplicationContext());
                     Pref.saveInt(Pref.TAB_IMAGE_COUNT, 0, SplashActivity.this.getApplicationContext());
-                    if(navigation != null && navigation.isNavigationOnOff() && navigation.getNavigationList() != null && navigation.getNavigationList().size() > 0) {
-                        for(int i = 0; i < navigation.getNavigationList().size(); i++) {
+                    if (navigation != null && navigation.isNavigationOnOff() && navigation.getNavigationList() != null && navigation.getNavigationList().size() > 0) {
+                        for (int i = 0; i < navigation.getNavigationList().size(); i++) {
                             TabInfo tabInfo = navigation.getNavigationList().get(i);
-                            if(tabInfo == null) return;
-                            loadImage(tabInfo.getImg(), SplashActivity.this.getApplicationContext());
-                            loadImage(tabInfo.getImgClick(), SplashActivity.this.getApplicationContext());
+                            if (tabInfo == null) return;
+                            loadImage(tabInfo.getImg(), SplashActivity.this.getApplicationContext(), TYPE_TAB);
+                            loadImage(tabInfo.getImgClick(), SplashActivity.this.getApplicationContext(), TYPE_TAB);
                         }
 
                         String navigationStr = JSON.toJSONString(navigation);
@@ -110,13 +132,18 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
     private DisplayImageOptions options;
     private ImageLoader imageLoader;
-    public void loadImage(String url, final Context context) {
-        if(options == null) {
+
+    private void initImageLoader() {
+        if (options == null) {
             options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         }
-        if(imageLoader == null) {
+        if (imageLoader == null) {
             imageLoader = ImageLoader.getInstance();
         }
+    }
+
+    public void loadImage(String url, final Context context, final int type) {
+        initImageLoader();
         imageLoader.loadImage(url, options, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -130,8 +157,12 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, context, 0);
-                Pref.saveInt(Pref.TAB_IMAGE_COUNT, ++tabImageCount, context);
+                if (type == TYPE_ADS) {
+                    Pref.saveInt(Pref.CONFIG_ADS, 1, SplashActivity.this);
+                } else if (type == TYPE_TAB) {
+                    int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, context, 0);
+                    Pref.saveInt(Pref.TAB_IMAGE_COUNT, ++tabImageCount, context);
+                }
             }
 
             @Override
@@ -144,8 +175,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     private void loadFinish() {
         boolean first_use = Pref.getBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), this, true);
         if (!first_use) {
-            startActivity(new Intent(getBaseContext(), MainActivity.class));
-            SplashActivity.this.finish();
+            loadAds();
         } else {
             final ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
             ImageView imageSplash = (ImageView) findViewById(R.id.image_splash);
@@ -169,6 +199,49 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             mViewPager.setVisibility(View.VISIBLE);
         }
     }
+
+    private void loadAds() {
+        int adsInt = Pref.getInt(Pref.CONFIG_ADS, SplashActivity.this, 0);
+        if (adsInt == 1) {
+            frameAds = (RelativeLayout) findViewById(R.id.frame_ads);
+            btSkip = (Button) findViewById(R.id.bt_skip);
+            btSkip.setOnClickListener(this);
+            imageAds = (ImageView) findViewById(R.id.image_ads);
+            imageAds.setOnClickListener(this);
+            timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                int i = 3;
+                @Override
+                public void run() {
+                    handler.sendEmptyMessage(i--);
+                }
+            };
+            timer.schedule(timerTask, 0, 1000);
+        } else {
+            startActivity(new Intent(getBaseContext(), MainActivity.class));
+            SplashActivity.this.finish();
+        }
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                timer.cancel();
+                startActivity(new Intent(getBaseContext(), MainActivity.class));
+                SplashActivity.this.finish();
+            } else {
+                btSkip.setText(msg.what + " 跳过");
+                frameAds.setVisibility(View.VISIBLE);
+                String imgUrl = Pref.getString(Pref.CONFIG_ADS + "ImgUrl", SplashActivity.this, "");
+                if (imageLoader == null) {
+                    initImageLoader();
+                }
+                imageLoader.displayImage(imgUrl, imageAds);
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     // 填充ViewPager的数据适配器
     PagerAdapter mPagerAdapter = new PagerAdapter() {
@@ -237,10 +310,20 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-        startActivity(intent);
-        SplashActivity.this.finish();
+        switch (v.getId()) {
+            case R.id.image_ads:
+                Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                WebActivity.startActivity(SplashActivity.this, Pref.getString(Pref.CONFIG_ADS + "JumpUrl", SplashActivity.this, ""));
+                SplashActivity.this.finish();
+                break;
+            default:
+                Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
+                intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                SplashActivity.this.finish();
+        }
     }
 
     private int getScreen(int index) {
@@ -278,6 +361,10 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
         ShareSDK.stopSDK(this);
     }
 }

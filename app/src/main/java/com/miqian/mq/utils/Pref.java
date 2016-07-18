@@ -73,6 +73,9 @@ public class Pref {
     //本地获取
     public final static String FROM_NATIVE = "fromnative";
 
+    //启动页广告
+    public final static String CONFIG_ADS = "ConfigAds";
+
     //首页Tab图片下载计数
     public final static String TAB_IMAGE_COUNT = "TAB_IMAGE_COUNT";
     //首页tab json
