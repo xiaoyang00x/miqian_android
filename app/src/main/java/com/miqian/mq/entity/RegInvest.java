@@ -29,6 +29,24 @@ public class RegInvest {
     private String regIncome;//待收收益
     private String prnIncome;//已收收益
     private String prnAmt;//总投资本金
+    private String subjectType;//标的类型      "88": 88专属  "07":双倍收益卡
+    private String transedAmt;//已转金额
+
+    public String getSubjectType() {
+        return subjectType;
+    }
+
+    public void setSubjectType(String subjectType) {
+        this.subjectType = subjectType;
+    }
+
+    public String getTransedAmt() {
+        return transedAmt;
+    }
+
+    public void setTransedAmt(String transedAmt) {
+        this.transedAmt = transedAmt;
+    }
 
     public String getPrnIncome() {
         return prnIncome;

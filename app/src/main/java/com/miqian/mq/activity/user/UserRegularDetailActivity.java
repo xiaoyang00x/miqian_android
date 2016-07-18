@@ -1,13 +1,10 @@
 package com.miqian.mq.activity.user;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,6 +20,7 @@ import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.CalculateUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -47,10 +45,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private TextView textEarning;
     private TextView textTransferMoney;
 
-//    private RelativeLayout frameTransfer;//转让情况
-//    private RelativeLayout frameContract;//合同
-
-    private Button btRepayment;//还款详情
 
     private UserRegularDetail userRegularDetail;
 
@@ -59,7 +53,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private String projectType;//Y:已结息  N:未结息
     private String subjectId;//标的id
     private TextView textProject;
-    //    private Button btnClick;
     private TextView textInterestRatePresent;
     private UserRegularDetail.RegInvest regInvest;
     private List<Operation> operationList;
@@ -90,10 +83,10 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected String getPageName() {
-        if (projectType.equals("3")||projectType.equals("4")) {
-          return  "定期项目详情";
+        if (projectType.equals("3") || projectType.equals("4")) {
+            return "定期项目详情";
         } else {
-            return  "定期计划详情";
+            return "定期计划详情";
         }
     }
 
@@ -126,7 +119,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         textLimit = (TextView) findViewById(R.id.text_limit);
         textDateStart = (TextView) findViewById(R.id.text_date_start);
         textDateEnd = (TextView) findViewById(R.id.text_date_end);
-//        btnClick = (Button) findViewById(R.id.btn_click);
 
         textProjectName = (TextView) findViewById(R.id.text_project_name);
         textProject = (TextView) findViewById(R.id.text_project);
@@ -155,7 +147,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
 
         frameProjectMatch.setOnClickListener(this);
-//        btnClick.setOnClickListener(this);
         findViewById(R.id.tv_referrecord).setOnClickListener(this);
         layoutPriginproject.setOnClickListener(this);
         layoutTransferDetail.setOnClickListener(this);
@@ -165,17 +156,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     public void refreshView() {
         if (userRegularDetail == null) {
             return;
-        }
-        textInterestRate.setText(regInvest.getRealInterest());
-        String presentInterest = regInvest.getPresentInterest();
-        if (TextUtils.isEmpty(presentInterest)) {
-            textInterestRatePresent.setText("%");
-        } else {
-            if (0 == (Double.parseDouble(presentInterest))) {
-                textInterestRatePresent.setText("%");
-            } else {
-                textInterestRatePresent.setText("+" + presentInterest + "%");
-            }
         }
         textProjectName.setText(regInvest.getBdNm());
         textLimit.setText(regInvest.getLimitCnt());
@@ -195,13 +175,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         textDateStart.setText("认购日期:" + regInvest.getCrtDt());
         textDateEnd.setText("结束日期:" + regInvest.getDueDt());
         textRepayment.setText(regInvest.getPayMeansName());
-//        if (regInvest.getTransFlag().equals("Y")) {
-//            btnClick.setEnabled(true);
-//        } else {
-//            btnClick.setEnabled(false);
-//            btnClick.setBackgroundColor(ContextCompat.getColor(this, R.color.mq_b4_v2));
-//        }
-//        btnClick.setText(regInvest.getTransDesc());
 
         //标的相关记录
         layoutFirst.setVisibility(View.VISIBLE);
@@ -249,29 +222,78 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             frameProjectMatch.setVisibility(View.VISIBLE);
             textProject.setText("项目详情");
         }
-        String projectState = regInvest.getProjectState();
         if ("Y".equals(regInvest.getHasTransOper())) {//有转让，N未转让
             layoutTransferDetail.setVisibility(View.VISIBLE);
             tvTransferedMoney.setText("已转让" + regInvest.getTransedAmt());
         }
-        if ("0".equals(projectState) || "1".equals(projectState) || "2".equals(projectState)) {
-            ivProjectState.setVisibility(View.VISIBLE);
-            if ("0".equals(projectState)) {
-                ivProjectState.setImageResource(R.drawable.transfer_detail_ing);
-            } else if ("1".equals(projectState)) {
-                ivProjectState.setImageResource(R.drawable.transfer_detail_wjx);
-            } else {
-                ivProjectState.setImageResource(R.drawable.transfer_detail_ed);
-            }
+
+        String realInterest = regInvest.getRealInterest();
+        String presentInterest = regInvest.getPresentInterest();
+        textInterestRate.setText(realInterest);
+        int showType = CalculateUtil.getShowInterest(regInvest.getProjectState(), regInvest.getSubjectType(), regInvest.getRealInterest()
+                , regInvest.getPresentInterest(), regInvest.getTransedAmt());
+        String projectState = regInvest.getProjectState();
+
+        switch (showType) {
+            case CalculateUtil.INTEREST_SHOWTYPE_ONE:
+                showProjectImage(projectState, ivProjectState);
+                textInterestRatePresent.setText("%");
+                break;
+            case CalculateUtil.INTEREST_SHOWTYPE_TWO:
+                showProjectImage(projectState, ivProjectState);
+                if (!TextUtils.isEmpty(realInterest)) {
+                    textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
+                }
+                textInterestRatePresent.setText("%");
+                break;
+            case CalculateUtil.INTEREST_SHOWTYPE_THREE:
+                showProjectImage(projectState, ivProjectState);
+                textInterestRatePresent.setText("+" + presentInterest + "%");
+                break;
+            case CalculateUtil.INTEREST_SHOWTYPE_FOUR:
+                textInterestRate.setText(regInvest.getRealInterest());
+                ivProjectState.setVisibility(View.VISIBLE);
+                ivProjectState.setImageResource(R.drawable.double_rate_yellow);
+                break;
+            case CalculateUtil.INTEREST_SHOWTYPE_FIVE:
+                textInterestRatePresent.setText("%");
+                break;
+            case CalculateUtil.INTEREST_SHOWTYPE_SIX:
+                if (!TextUtils.isEmpty(realInterest)) {
+                    textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
+                }
+                textInterestRatePresent.setText("%");
+                ivProjectState.setVisibility(View.VISIBLE);
+                ivProjectState.setImageResource(R.drawable.double_card_yellow);
+                break;
+            case CalculateUtil.INTEREST_SHOWTYPE_SEVEN:
+                textInterestRatePresent.setText("+" + presentInterest + "%");
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void showProjectImage(String projectState, ImageView ivProjectState) {
+        ivProjectState.setVisibility(View.VISIBLE);
+        if ("0".equals(projectState)) {
+            ivProjectState.setImageResource(R.drawable.transfer_detail_ing);
+        } else if ("1".equals(projectState)) {
+            ivProjectState.setImageResource(R.drawable.transfer_detail_wjx);
+        } else {
+            ivProjectState.setImageResource(R.drawable.transfer_detail_ed);
         }
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.user_regular_detail;
     }
+
     @Override
     public void initTitle(WFYTitle mTitle) {
-        if (projectType.equals("3")||projectType.equals("4")) {
+        if (projectType.equals("3") || projectType.equals("4")) {
             mTitle.setTitleText("定期项目详情");
         } else {
             mTitle.setTitleText("定期计划详情");
@@ -296,23 +318,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                     }
                 }
                 break;
-//            case R.id.frame_contract://查看合同
-//                WebActivity.startActivity(mActivity, "https://www.baidu.com/");
-//                break;
-//            case R.id.bt_repayment://还款详情
-//                MobclickAgent.onEvent(mActivity, "1044");
-//                if (userRegularDetail != null) {
-//                    Intent intent = new Intent(mActivity, RepaymentActivity.class);
-//                    intent.putExtra("investId", userRegularDetail.getId());
-//                    startActivity(intent);
-//                }
-//                break;
-//            case R.id.btn_click:
-//                Intent intent_launch = new Intent(UserRegularDetailActivity.this, LaunchTransferRegularAcitivity.class);
-//                intent_launch.putExtra("investId", investId);
-//                intent_launch.putExtra("projectType", projectType);
-//                startActivity(intent_launch);
-//                break;
             case R.id.layout_originproject:
                 if (userRegularDetail != null) {
                     String subjectId = regInvest.getSysbdId();

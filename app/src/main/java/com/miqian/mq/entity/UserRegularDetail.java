@@ -56,6 +56,15 @@ public class UserRegularDetail implements Serializable{
         private String transDesc;      //转让描述
         private String sysbdId;      //原始标的的ID
         private String transedAmt;      //已转让金额
+        private String subjectType;//标的类型      "88": 88专属  "07":双倍收益卡
+
+        public String getSubjectType() {
+            return subjectType;
+        }
+
+        public void setSubjectType(String subjectType) {
+            this.subjectType = subjectType;
+        }
 
         public String getTransedAmt() {
             return transedAmt;

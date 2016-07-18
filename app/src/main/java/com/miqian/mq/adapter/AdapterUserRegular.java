@@ -8,15 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Page;
 import com.miqian.mq.entity.Reg;
 import com.miqian.mq.entity.RegInvest;
+import com.miqian.mq.utils.CalculateUtil;
 
 import java.util.List;
 
@@ -88,18 +87,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ViewHolder) holder).textRight.setText("实际年化收益");
 
             } else {
-                if (regInvest.getProjectState().equals("0")) {
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
-                } else if (regInvest.getProjectState().equals("1")) {
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_wjx);
-                } else if (regInvest.getProjectState().equals("2")) {
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
-                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.user_regular_transfered);
-                } else {
-                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
-                }
                 if (regInvest.getBearingStatus().equals("Y")) {
                     ((ViewHolder) holder).textCapital.setText("投资本金");
                     ((ViewHolder) holder).textEarningName.setText("已获收益");
@@ -109,7 +96,6 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                     ((ViewHolder) holder).textEarning.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
                     ((ViewHolder) holder).textInterestRate.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
                     ((ViewHolder) holder).textInterestRatePresent.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b4_v2));
-//                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 } else {
 
                     ((ViewHolder) holder).textCapital.setText("待收本金");
@@ -120,20 +106,55 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                     ((ViewHolder) holder).textEarning.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
                     ((ViewHolder) holder).textInterestRate.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
                     ((ViewHolder) holder).textInterestRatePresent.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
-//                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
                 }
             }
-            ((ViewHolder) holder).textInterestRate.setText(regInvest.getRealInterest());
+            String realInterest = regInvest.getRealInterest();
             String presentInterest = regInvest.getPresentInterest();
-            if (TextUtils.isEmpty(presentInterest)) {
-                ((ViewHolder) holder).textInterestRatePresent.setText("%");
-            } else {
-                if (0 == (Double.parseDouble(presentInterest))) {
+            ((ViewHolder) holder).textInterestRate.setText(realInterest);
+            ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
+            int showType = CalculateUtil.getShowInterest(regInvest.getProjectState(), regInvest.getSubjectType(), regInvest.getRealInterest()
+                    , regInvest.getPresentInterest(), regInvest.getTransedAmt());
+            String projectState = regInvest.getProjectState();
+
+            switch (showType) {
+                case CalculateUtil.INTEREST_SHOWTYPE_ONE:
+                    showProjectImage(projectState, (ViewHolder) holder);
                     ((ViewHolder) holder).textInterestRatePresent.setText("%");
-                } else {
+                    break;
+                case CalculateUtil.INTEREST_SHOWTYPE_TWO:
+                    showProjectImage(projectState, (ViewHolder) holder);
+                    if (!TextUtils.isEmpty(realInterest)) {
+                        ((ViewHolder) holder).textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
+                    }
+                    ((ViewHolder) holder).textInterestRatePresent.setText("%");
+                    break;
+                case CalculateUtil.INTEREST_SHOWTYPE_THREE:
+                    showProjectImage(projectState, (ViewHolder) holder);
                     ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
-                }
+                    break;
+                case CalculateUtil.INTEREST_SHOWTYPE_FOUR:
+                    ((ViewHolder) holder).textInterestRate.setText(regInvest.getRealInterest());
+                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.double_rate_yellow);
+                    break;
+                case CalculateUtil.INTEREST_SHOWTYPE_FIVE:
+                    ((ViewHolder) holder).textInterestRatePresent.setText("%");
+                    break;
+                case CalculateUtil.INTEREST_SHOWTYPE_SIX:
+                    if (!TextUtils.isEmpty(realInterest)) {
+                        ((ViewHolder) holder).textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
+                    }
+                    ((ViewHolder) holder).textInterestRatePresent.setText("%");
+                    ((ViewHolder) holder).imageProjectStatus.setVisibility(View.VISIBLE);
+                    ((ViewHolder) holder).imageProjectStatus.setImageResource(R.drawable.double_card_yellow);
+                    break;
+                case CalculateUtil.INTEREST_SHOWTYPE_SEVEN:
+                    ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
+                    break;
+                default:
+                    break;
             }
+
             ((ViewHolder) holder).textDateSubscribe.setText(regInvest.getCrtDt() + "认购");
             ((ViewHolder) holder).textDateOver.setText(regInvest.getDueDt() + "到期");
         } else if (holder instanceof ProgressViewHolder) {
@@ -175,6 +196,17 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                     ((HeaderViewHolder) holder).textEarning.setText(mReg.getTransTotalAmt());
                 }
             }
+        }
+    }
+
+    public void showProjectImage(String projectstatus, ViewHolder holder) {
+        holder.imageProjectStatus.setVisibility(View.VISIBLE);
+        if (projectstatus.equals("0")) {
+            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
+        } else if (projectstatus.equals("1")) {
+            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_wjx);
+        } else if (projectstatus.equals("2")) {
+            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfered);
         }
     }
 
@@ -221,6 +253,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
 
             textEarningName = (TextView) itemView.findViewById(R.id.text_earning_name);
             textRight = (TextView) itemView.findViewById(R.id.text_right);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
