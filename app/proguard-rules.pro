@@ -185,7 +185,6 @@ public static final int *;
 -libraryjars ../Udesk_Separate_UI/libs/qiniu-android-sdk-7.0.1.jar
 -libraryjars ../Udesk_Separate_UI/libs/udesk_sdk_3.2.0.jar
 -libraryjars ../Udesk_Separate_UI/libs/bugly_crash_release__2.1.jar
--libraryjars ../Udesk_Separate_UI/libs/universal-image-loader-1.9.4.jar
 
 -keep class udesk.**{*; }
 -keep class cn.udesk.**{*; }
