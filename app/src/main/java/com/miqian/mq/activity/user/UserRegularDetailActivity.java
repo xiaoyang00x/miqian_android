@@ -251,7 +251,10 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 textInterestRatePresent.setText("+" + presentInterest + "%");
                 break;
             case CalculateUtil.INTEREST_SHOWTYPE_FOUR:
-                textInterestRate.setText(regInvest.getRealInterest());
+                if (!TextUtils.isEmpty(realInterest)) {
+                    textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
+                }
+                textInterestRatePresent.setText("%");
                 ivProjectState.setVisibility(View.VISIBLE);
                 ivProjectState.setImageResource(R.drawable.double_rate_detail);
                 break;
