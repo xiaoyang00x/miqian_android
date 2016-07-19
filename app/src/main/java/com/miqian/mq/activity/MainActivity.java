@@ -245,10 +245,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
         int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, mApplicationContext, 0);
         final String navigationStr = Pref.getString(Pref.TAB_NAVIGATION_STR, mApplicationContext, "");
-        final boolean isChangeTab;
-        if(tabImageCount == 8 && !TextUtils.isEmpty(navigationStr)) {
+        final boolean isChangeTab = Pref.getBoolean(Pref.TAB_NAVIGATION_ON_OFF, mApplicationContext, false);
+        if(tabImageCount == 8 && !TextUtils.isEmpty(navigationStr) && isChangeTab) {
             navigation = JsonUtil.parseObject(navigationStr, Navigation.class);
-            isChangeTab = true;
             tabIndicator1 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(0).getImgClick(), R.string.main_tab_home);
             tabIndicator2 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(1).getImg(), R.string.main_tab_current);
             tabIndicator3 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(2).getImg(), R.string.main_tab_regular);
@@ -262,7 +261,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
 
         }else {
-            isChangeTab = false;
             tabIndicator1 = new TabIndicator(mContext, tw,R.drawable.tab_home_selector, R.string.main_tab_home);
             tabIndicator2 = new TabIndicator(mContext, tw, R.drawable.tab_current_selector, R.string.main_tab_current);
             tabIndicator3 = new TabIndicator(mContext, tw, R.drawable.tab_regular_selector, R.string.main_tab_regular);

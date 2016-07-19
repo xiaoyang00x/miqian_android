@@ -73,6 +73,10 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             UmengUpdateAgent.setChannel(channelId);
         }
         ShareSDK.initSDK(this);
+
+        Pref.saveString(Pref.TAB_NAVIGATION_STR, "", getApplicationContext());
+        Pref.saveInt(Pref.TAB_IMAGE_COUNT, 0, getApplicationContext());
+        Pref.saveBoolean(Pref.TAB_NAVIGATION_ON_OFF, false, getApplicationContext());
         start();
     }
 
@@ -107,8 +111,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                         Pref.saveInt(Pref.CONFIG_ADS, 0, SplashActivity.this);
                     }
                     Navigation navigation = configInfo.getNavigation();
-                    Pref.saveString(Pref.TAB_NAVIGATION_STR, "", SplashActivity.this.getApplicationContext());
-                    Pref.saveInt(Pref.TAB_IMAGE_COUNT, 0, SplashActivity.this.getApplicationContext());
                     if (navigation != null && navigation.isNavigationOnOff() && navigation.getNavigationList() != null && navigation.getNavigationList().size() > 0) {
                         for (int i = 0; i < navigation.getNavigationList().size(); i++) {
                             TabInfo tabInfo = navigation.getNavigationList().get(i);
@@ -119,6 +121,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
                         String navigationStr = JSON.toJSONString(navigation);
                         Pref.saveString(Pref.TAB_NAVIGATION_STR, navigationStr, SplashActivity.this.getApplicationContext());
+                        Pref.saveBoolean(Pref.TAB_NAVIGATION_ON_OFF, navigation.isNavigationOnOff(), getApplicationContext());
                     }
                 }
             }

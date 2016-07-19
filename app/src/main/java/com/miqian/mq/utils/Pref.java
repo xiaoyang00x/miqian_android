@@ -80,6 +80,8 @@ public class Pref {
     public final static String TAB_IMAGE_COUNT = "TAB_IMAGE_COUNT";
     //首页tab json
     public final static String TAB_NAVIGATION_STR = "TAB_NAVIGATION_STR";
+    //首页tab 是否切换
+    public final static String TAB_NAVIGATION_ON_OFF = "TAB_NAVIGATION_ON_OFF";
 
 
     private static SharedPreferences getSettings(final Context contex) {

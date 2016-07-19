@@ -9,7 +9,7 @@ public class Navigation {
 
     private String color;
     private String colorClick;
-    private boolean navigationOnOff;
+    private String navigationOnOff;
     private List<TabInfo> navigationList;
 
     public String getColor() {
@@ -29,11 +29,11 @@ public class Navigation {
     }
 
     public boolean isNavigationOnOff() {
-        return navigationOnOff;
+        return "1".equals(navigationOnOff);
     }
 
-    public void setNavigationOnOff(boolean navigationOnOff) {
-        this.navigationOnOff = navigationOnOff;
+    public void setNavigationOnOff(boolean onOff) {
+        this.navigationOnOff = onOff? "1" : "0";
     }
 
     public List<TabInfo> getNavigationList() {
