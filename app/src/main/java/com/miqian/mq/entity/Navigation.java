@@ -29,11 +29,19 @@ public class Navigation {
     }
 
     public boolean isNavigationOnOff() {
-        return "1".equals(navigationOnOff);
+        if (navigationList.equals("1")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void setNavigationOnOff(boolean onOff) {
-        this.navigationOnOff = onOff? "1" : "0";
+    public String getNavigationOnOff() {
+        return navigationOnOff;
+    }
+
+    public void setNavigationOnOff(String navigationOnOff) {
+        this.navigationOnOff = navigationOnOff;
     }
 
     public List<TabInfo> getNavigationList() {
@@ -43,4 +51,6 @@ public class Navigation {
     public void setNavigationList(List<TabInfo> navigationList) {
         this.navigationList = navigationList;
     }
+
+
 }

@@ -45,8 +45,6 @@ import cn.sharesdk.framework.ShareSDK;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
 
-    public final static int TYPE_ADS = 0;
-    public final static int TYPE_TAB = 1;
     private Timer timer;
 
     private LinearLayout framePages;
@@ -106,7 +104,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                         }
                         Pref.saveString(Pref.CONFIG_ADS + "ImgUrl", imgUrl, SplashActivity.this);
                         Pref.saveString(Pref.CONFIG_ADS + "JumpUrl", advert.getJumpUrl(), SplashActivity.this);
-                        loadImage(imgUrl, SplashActivity.this, TYPE_ADS);
+                        loadImageAds(imgUrl, SplashActivity.this);
                     } else {
                         Pref.saveInt(Pref.CONFIG_ADS, 0, SplashActivity.this);
                     }
@@ -115,8 +113,8 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                         for (int i = 0; i < navigation.getNavigationList().size(); i++) {
                             TabInfo tabInfo = navigation.getNavigationList().get(i);
                             if (tabInfo == null) return;
-                            loadImage(tabInfo.getImg(), SplashActivity.this.getApplicationContext(), TYPE_TAB);
-                            loadImage(tabInfo.getImgClick(), SplashActivity.this.getApplicationContext(), TYPE_TAB);
+                            loadImage(tabInfo.getImg(), SplashActivity.this.getApplicationContext());
+                            loadImage(tabInfo.getImgClick(), SplashActivity.this.getApplicationContext());
                         }
 
                         String navigationStr = JSON.toJSONString(navigation);
@@ -145,7 +143,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public void loadImage(String url, final Context context, final int type) {
+    public void loadImage(String url, final Context context) {
         initImageLoader();
         imageLoader.loadImage(url, options, new ImageLoadingListener() {
             @Override
@@ -160,12 +158,33 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                if (type == TYPE_ADS) {
-                    Pref.saveInt(Pref.CONFIG_ADS, 1, SplashActivity.this);
-                } else if (type == TYPE_TAB) {
-                    int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, context, 0);
-                    Pref.saveInt(Pref.TAB_IMAGE_COUNT, ++tabImageCount, context);
-                }
+                int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, context, 0);
+                Pref.saveInt(Pref.TAB_IMAGE_COUNT, ++tabImageCount, context);
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
+    }
+
+    public void loadImageAds(String url, final Context context) {
+        initImageLoader();
+        imageLoader.loadImage(url, options, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                Pref.saveInt(Pref.CONFIG_ADS, 1, SplashActivity.this);
             }
 
             @Override
@@ -229,7 +248,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 0) {
+            if (msg.what <= 0) {
                 timer.cancel();
                 startActivity(new Intent(getBaseContext(), MainActivity.class));
                 SplashActivity.this.finish();
