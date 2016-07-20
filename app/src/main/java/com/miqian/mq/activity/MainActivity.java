@@ -271,8 +271,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
-                if(!isChangeTab) return;
                 current_tab = mTabHost.getCurrentTab();
+                if(!isChangeTab) return;
                 if(options == null) {
                     options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
                 }
