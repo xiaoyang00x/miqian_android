@@ -29,7 +29,7 @@ public class Navigation {
     }
 
     public boolean isNavigationOnOff() {
-        if (navigationList.equals("1")) {
+        if (navigationOnOff.equals("1")) {
             return true;
         } else {
             return false;
