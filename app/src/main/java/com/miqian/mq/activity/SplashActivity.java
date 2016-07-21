@@ -332,17 +332,18 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         switch (v.getId()) {
             case R.id.image_ads:
-                Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                WebActivity.startActivity(SplashActivity.this, Pref.getString(Pref.CONFIG_ADS + "JumpUrl", SplashActivity.this, ""));
-                SplashActivity.this.finish();
-                break;
+//                Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
+                intent.putExtra("onClick", 1);
+//                startActivity(intent);
+//                WebActivity.startActivity(SplashActivity.this, Pref.getString(Pref.CONFIG_ADS + "JumpUrl", SplashActivity.this, ""));
+//                SplashActivity.this.finish();
+//                break;
             default:
                 Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
-                intent = new Intent(SplashActivity.this, MainActivity.class);
+//                intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
         }

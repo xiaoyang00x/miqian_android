@@ -12,6 +12,7 @@ import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.listener.HomeAdsListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
@@ -49,6 +50,25 @@ public class UserUtil {
     }
 
 
+    /**
+     * 显示广告跳转
+     */
+    public static void showWebActivity() {
+        synchronized (ListenerManager.adsListeners) {
+            Set<String> set = ListenerManager.adsListeners.keySet();
+            Iterator<String> it = set.iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                WeakReference<HomeAdsListener> ref = ListenerManager.adsListeners.get(key);
+                if (ref != null && ref.get() != null) {
+                    HomeAdsListener listener = ref.get();
+                    if (listener != null) {
+                        listener.showWeb();
+                    }
+                }
+            }
+        }
+    }
     /**
      * 登录成功通知监听
      */

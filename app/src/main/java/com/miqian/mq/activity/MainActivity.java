@@ -35,6 +35,8 @@ import com.miqian.mq.fragment.FragmentCurrent;
 import com.miqian.mq.fragment.FragmentHome;
 import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.fragment.RegularFragment;
+import com.miqian.mq.listener.HomeAdsListener;
+import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.receiver.JpushHelper;
@@ -68,7 +70,7 @@ import java.util.Set;
  * <p/>
  * Main
  */
-public class MainActivity extends BaseFragmentActivity implements ExtendOperationListener {
+public class MainActivity extends BaseFragmentActivity implements ExtendOperationListener, HomeAdsListener {
 
     private final String TAG_HOME = "HOME";
     private final String TAG_CURRENT = "CURRENT";
@@ -89,12 +91,17 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     private DisplayImageOptions options;
     private ImageLoader imageLoader;
     private Navigation navigation;
+    private int adsClickStatus;
+    private boolean isVerify;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        Intent intent = getIntent();
+        adsClickStatus = intent.getIntExtra("onClick", 0);
         checkVersion();
+        ListenerManager.registerAdsListener(MainActivity.class.getSimpleName(), this);
         ExtendOperationController.getInstance().registerExtendOperationListener(this);
         setContentView(R.layout.activity_main);
         findTabView();
@@ -110,9 +117,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
         // app每次重新打开都需打开手势密码界面－如果有手势密码
-        if (UserUtil.hasLogin(getBaseContext()) &&
-                Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false) &&
-                !TextUtils.isEmpty(Pref.getString(Pref.GESTUREPSW, getBaseContext(), ""))) {
+        isVerify = UserUtil.hasLogin(getBaseContext()) && Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false) && !TextUtils.isEmpty(Pref.getString(Pref.GESTUREPSW, getBaseContext(), ""));
+        if (isVerify) {
             GestureLockVerifyActivity.startActivity(getBaseContext(), MainActivity.class);
         }
         MyApplication.setIsBackStage(false);
@@ -125,6 +131,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         //设置在主页的状态
         MyApplication.getInstance().setIsOnMainAcitivity(true);
         MyApplication.setIsBackStage(false);
+        if (!isVerify) {
+            showWeb();
+        }
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
@@ -225,6 +234,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     protected void onDestroy() {
         ExtendOperationController.getInstance().unRegisterExtendOperationListener(this);
+        ListenerManager.unregisterAdsListener(MainActivity.class.getSimpleName());
         //反注册广播
         unregisterReceiver(mHomeKeyEventReceiver);
         super.onDestroy();
@@ -334,7 +344,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         });
         maintenance = (RelativeLayout) findViewById(R.id.maintenance);
     }
-
 
     class TabIndicator {
         private Context ctx;
@@ -720,6 +729,15 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     public void showRedPointer() {
         if (imgRedPointer != null) {
             imgRedPointer.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    @Override
+    public void showWeb() {
+        if (adsClickStatus == 1) {
+            WebActivity.startActivity(context, Pref.getString(Pref.CONFIG_ADS + "JumpUrl", context, ""));
+            adsClickStatus = 0;
         }
     }
 }

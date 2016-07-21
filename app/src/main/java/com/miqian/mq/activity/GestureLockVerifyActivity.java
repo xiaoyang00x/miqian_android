@@ -110,6 +110,7 @@ public class GestureLockVerifyActivity extends BaseActivity {
                 Pref.saveInt(Pref.UNLOCKCOUNT, Constants.MAXCOUNT, getBaseContext());
                 if (null != desClass) {
                     startActivity(new Intent(getBaseContext(), desClass));
+                    UserUtil.showWebActivity();
                 }
                 finish();
             } else {
