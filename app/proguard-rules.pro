@@ -192,6 +192,7 @@ public static final int *;
 -keep class com.tencent.bugly.**{*; }
 -keep class com.nostra13.universalimageloader.**{*; }
 -keep class com.loopj.android.http.**{*; }
+-keep class rx.internal.**{*; }
 
 -keep class com.kenai.jbosh.** {*; }
 -keep class com.novell.sasl.client.** {*; }
