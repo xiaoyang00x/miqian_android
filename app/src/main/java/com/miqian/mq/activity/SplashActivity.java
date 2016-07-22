@@ -335,6 +335,8 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        btSkip.setEnabled(false);
+        imageAds.setEnabled(false);
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         adsClickStatus = 1;
         switch (v.getId()) {
