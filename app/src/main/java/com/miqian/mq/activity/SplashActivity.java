@@ -51,6 +51,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     private RelativeLayout frameAds;
     private Button btSkip;
     private ImageView imageAds;
+    private int adsClickStatus;
 
     private static final int pageCount = 4;
 
@@ -250,8 +251,10 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         public void handleMessage(Message msg) {
             if (msg.what <= 0) {
                 timer.cancel();
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
-                SplashActivity.this.finish();
+                if (adsClickStatus == 0) {
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    SplashActivity.this.finish();
+                }
             } else {
                 btSkip.setText(msg.what + " 跳过");
                 frameAds.setVisibility(View.VISIBLE);
@@ -333,17 +336,12 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        adsClickStatus = 1;
         switch (v.getId()) {
             case R.id.image_ads:
-//                Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
                 intent.putExtra("onClick", 1);
-//                startActivity(intent);
-//                WebActivity.startActivity(SplashActivity.this, Pref.getString(Pref.CONFIG_ADS + "JumpUrl", SplashActivity.this, ""));
-//                SplashActivity.this.finish();
-//                break;
             default:
                 Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
-//                intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
         }
