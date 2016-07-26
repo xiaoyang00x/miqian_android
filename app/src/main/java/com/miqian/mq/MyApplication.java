@@ -93,13 +93,8 @@ public class MyApplication extends MultiDexApplication {
         JPushInterface.init(this);
         initImageLoader(getApplicationContext());
 
-        //      设置友盟渠道号
-        String channelId = Pref.getString(Pref.CHANNEL_ID, this, "");
-        if (TextUtils.isEmpty(channelId)) {
-            Pref.saveString(Pref.CHANNEL_ID, ChannelUtil.getChannel(this), this);
-        } else {
-            UmengUpdateAgent.setChannel(channelId);
-        }
+        //设置友盟渠道号
+        UmengUpdateAgent.setChannel(ChannelUtil.getChannel(this));
         //友盟  禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.openActivityDurationTrack(false);
 

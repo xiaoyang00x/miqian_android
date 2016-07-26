@@ -43,8 +43,6 @@ public class Pref {
 
     //用户信息
     public static final String PAY_STATUS = "PayStatus";
-    //	渠道id
-    public static final String CHANNEL_ID = "ChannelId";
 
     // 是否退出应用
     public static final String EXIT = "Exit";
