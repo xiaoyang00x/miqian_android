@@ -354,6 +354,7 @@ public class RegularDetailActivity extends BaseActivity {
         }
         LinearLayout content = (LinearLayout) viewDetail.findViewById(R.id.llyt_content);
         TextView tv_seemore = (TextView) viewDetail.findViewById(R.id.tv_seemore);
+        content.removeAllViews();
 
         LayoutInflater mInflater = LayoutInflater.from(getBaseContext());
         int count = mList.size() > 4 ? 4 : mList.size();
