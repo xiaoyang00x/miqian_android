@@ -3,7 +3,6 @@ package com.miqian.mq;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
-import com.mato.sdk.proxy.Proxy;
 import com.miqian.mq.utils.Config;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -79,7 +78,6 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Proxy.start(this);
         try {
             Class.forName("android.os.AsyncTask");
         } catch (ClassNotFoundException e) {

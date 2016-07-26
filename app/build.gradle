@@ -200,7 +200,6 @@ android {
     }
 }
 
-apply plugin: 'maa'
 dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -216,7 +215,6 @@ dependencies {
     compile 'com.umeng:fb:5.4.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile project(':onekeyshare')
-    compile fileTree(include: ['*.jar'], dir: 'maa/sdk')
     compile 'com.growingio.android:vds-android:latest.release@aar'
     compile project(path: ':Udesk_Separate_UI')
 }

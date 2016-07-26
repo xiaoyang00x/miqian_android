@@ -168,11 +168,6 @@ public static final int *;
         public <methods>;
 }
 
-##-------------------Begin proguard configuration for MAA-------------------------
--keep class com.mato.** { *; }
--dontwarn com.mato.**
--keepattributes Exceptions, Signature, InnerClasses
-##--------------------End proguard configuration for MAA------------------------
 
 ##-------------------Begin proguard configuration for GrowingIO-------------------------
 -keep class com.growingio.android.sdk.** {
