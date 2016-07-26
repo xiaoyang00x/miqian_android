@@ -354,6 +354,7 @@ public class RegularDetailActivity extends BaseActivity {
         }
         LinearLayout content = (LinearLayout) viewDetail.findViewById(R.id.llyt_content);
         TextView tv_seemore = (TextView) viewDetail.findViewById(R.id.tv_seemore);
+        tv_seemore.setOnClickListener(mOnclickListener);
         content.removeAllViews();
 
         LayoutInflater mInflater = LayoutInflater.from(getBaseContext());
@@ -365,7 +366,6 @@ public class RegularDetailActivity extends BaseActivity {
             ((TextView) mView.findViewById(R.id.tv_right)).setText(detail.getName());
             content.addView(mView);
         }
-        tv_seemore.setOnClickListener(mOnclickListener);
     }
 
     // 更新 定期计划详情 中间部分 标的信息
@@ -379,6 +379,7 @@ public class RegularDetailActivity extends BaseActivity {
         LinearLayout content = (LinearLayout) viewDetail.findViewById(R.id.llyt_content);
         TextView tv_seemore = (TextView) viewDetail.findViewById(R.id.tv_seemore);
         tv_seemore.setOnClickListener(mOnclickListener);
+        content.removeAllViews();
 
         if (mList == null || mList.size() <= 0) {
             viewDetail.findViewById(R.id.llyt1).setVisibility(View.GONE);
