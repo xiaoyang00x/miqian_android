@@ -19,6 +19,7 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
+-keepattributes Exceptions, Signature, InnerClasses
 
 
 -dontwarn android.support.**

@@ -94,7 +94,7 @@ public class MyApplication extends MultiDexApplication {
         initImageLoader(getApplicationContext());
 
         //设置友盟渠道号
-        UmengUpdateAgent.setChannel(ChannelUtil.getChannel(this));
+        MobclickAgent.startWithConfigure(new MobclickAgent.UMAnalyticsConfig(this, "54cc3aedfd98c5b1d000039a", ChannelUtil.getChannel(this)));
         //友盟  禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.openActivityDurationTrack(false);
 
