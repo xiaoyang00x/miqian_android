@@ -3,6 +3,7 @@ package com.miqian.mq.net;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.miqian.mq.utils.ChannelUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.UserUtil;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -119,7 +120,7 @@ public class HttpUtils {
         headerBuilder.add("deviceModel", MobileOS.getDeviceModel());
         headerBuilder.add("appName", "miqian");
         headerBuilder.add("appVersion", MobileOS.getClientVersion(context));
-        headerBuilder.add("channelCode", MobileOS.getChannelName(context));
+        headerBuilder.add("channelCode", ChannelUtil.getChannel(context));
         headerBuilder.add("sign", sign);
         headerBuilder.add("token", UserUtil.getToken(context));
         headerBuilder.add("osVersion", MobileOS.getOsVersion());

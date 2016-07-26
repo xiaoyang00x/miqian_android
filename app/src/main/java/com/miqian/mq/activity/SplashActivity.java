@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +34,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.umeng.update.UmengUpdateAgent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -64,13 +62,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
         setContentView(R.layout.activity_splash);
         Config.init(this);
-        //      设置友盟渠道号
-        String channelId = Pref.getString(Pref.CHANNEL_ID, this, "");
-        if (TextUtils.isEmpty(channelId)) {
-            Pref.saveString(Pref.CHANNEL_ID, MobileOS.getChannelName(this), this);
-        } else {
-            UmengUpdateAgent.setChannel(channelId);
-        }
         ShareSDK.initSDK(this);
 
         Pref.saveString(Pref.TAB_NAVIGATION_STR, "", getApplicationContext());

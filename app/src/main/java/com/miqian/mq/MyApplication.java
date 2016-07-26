@@ -2,13 +2,17 @@ package com.miqian.mq;
 
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 
+import com.miqian.mq.utils.ChannelUtil;
 import com.miqian.mq.utils.Config;
+import com.miqian.mq.utils.Pref;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.HashMap;
 
@@ -24,7 +28,7 @@ public class MyApplication extends MultiDexApplication {
     private static boolean isOnMainAcitivity;
     private static boolean isBackStage;
     private static boolean showTips;
-    private static HashMap<String,Boolean>   pushList=new HashMap<>();
+    private static HashMap<String, Boolean> pushList = new HashMap<>();
     public static long homePressTime;
 
     public static HashMap<String, Boolean> getPushList() {
@@ -50,6 +54,7 @@ public class MyApplication extends MultiDexApplication {
     public static void setIsOnMainAcitivity(boolean isOnMainAcitivity) {
         MyApplication.isOnMainAcitivity = isOnMainAcitivity;
     }
+
     //判断app的状态,退出app则为false,点home键还是为true
     public static boolean isCurrent() {
         return isCurrent;
@@ -70,9 +75,10 @@ public class MyApplication extends MultiDexApplication {
         }
         MyApplication.isBackStage = isBackStage;
     }
+
     //将消息加入队列中
-    public  void addJpushList(String id,boolean isShow){
-            pushList.put(id,isShow);
+    public void addJpushList(String id, boolean isShow) {
+        pushList.put(id, isShow);
     }
 
     @Override
@@ -87,6 +93,13 @@ public class MyApplication extends MultiDexApplication {
         JPushInterface.init(this);
         initImageLoader(getApplicationContext());
 
+        //      设置友盟渠道号
+        String channelId = Pref.getString(Pref.CHANNEL_ID, this, "");
+        if (TextUtils.isEmpty(channelId)) {
+            Pref.saveString(Pref.CHANNEL_ID, ChannelUtil.getChannel(this), this);
+        } else {
+            UmengUpdateAgent.setChannel(channelId);
+        }
         //友盟  禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -94,11 +107,13 @@ public class MyApplication extends MultiDexApplication {
         UdeskSDKManager.getInstance().initApiKey(this, Config.UDESK_DOMAIN, Config.UDESK_SECRETKEY);
 
     }
+
     public static void initImageLoader(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.FIFO).build();
         ImageLoader.getInstance().init(config);
     }
+
     public static MyApplication getInstance() {
         if (myApplication == null) {
             myApplication = new MyApplication();
