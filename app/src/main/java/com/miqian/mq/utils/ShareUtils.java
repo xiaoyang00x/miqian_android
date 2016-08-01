@@ -6,8 +6,10 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.miqian.mq.entity.ShareData;
 
+import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 /**
  * Created by guolei_wang on 15/12/11.
@@ -18,7 +20,7 @@ public class ShareUtils {
         if(TextUtils.isEmpty(json)) return;
         try{
             Gson gson = new Gson();
-            ShareData shareData = gson.fromJson(json, ShareData.class);
+            final ShareData shareData = gson.fromJson(json, ShareData.class);
             ShareSDK.initSDK(mActivity);
             OnekeyShare oks = new OnekeyShare();
             //关闭sso授权
@@ -42,10 +44,19 @@ public class ShareUtils {
             // Url：仅在QQ空间使用
             oks.setTitleUrl(shareData.getContentUrl());  //网友点进链接后，可以看到分享的详情
 
+            oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+                @Override
+                public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
+                    if ("SinaWeibo".equals(platform.getName())) {
+                        paramsToShare.setUrl(null);
+                        paramsToShare.setText(shareData.getContent() + " " + shareData.getContentUrl());
+                    }
+                }
+            });
+
             // 启动分享GUI
             oks.show(mActivity);
         }catch (Exception e) {
-
         }
     }
 }

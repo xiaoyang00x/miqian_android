@@ -135,6 +135,18 @@ public static final int *;
 
 
 ##-------------------Begin proguard configuration for ShareSdk-------------------------
+-libraryjars ../ShareSDK/libs/MobCommons-2016.0707.1708.jar
+-libraryjars ../ShareSDK/libs/MobTools-2016.0707.1708.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-Core-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-QQ-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-QZone-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-ShortMessage-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-SinaWeibo-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-Wechat-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-Wechat-Core-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-Wechat-Favorite-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-Wechat-Moments-2.7.4.jar
+
 -keep class cn.sharesdk.**{*;}
 -keep class com.sina.**{*;}
 -keep class **.R$* {*;}
