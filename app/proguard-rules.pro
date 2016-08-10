@@ -144,8 +144,8 @@ public static final int *;
 -libraryjars ../ShareSDK/libs/ShareSDK-SinaWeibo-2.7.4.jar
 -libraryjars ../ShareSDK/libs/ShareSDK-Wechat-2.7.4.jar
 -libraryjars ../ShareSDK/libs/ShareSDK-Wechat-Core-2.7.4.jar
--libraryjars ../ShareSDK/libs/ShareSDK-Wechat-Favorite-2.7.4.jar
 -libraryjars ../ShareSDK/libs/ShareSDK-Wechat-Moments-2.7.4.jar
+-libraryjars ../ShareSDK/libs/ShareSDK-Email-2.7.4.jar
 
 -keep class cn.sharesdk.**{*;}
 -keep class com.sina.**{*;}

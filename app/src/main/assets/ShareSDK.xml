@@ -58,7 +58,7 @@
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <SinaWeibo
         Id="1"
-        SortId="1"
+        SortId="3"
         AppKey="1539843537"
         AppSecret="48e5bd9a22f03fa197740586139a70e4"
         RedirectUrl="http://www.miaoqian.com"
@@ -69,7 +69,7 @@
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <QZone
         Id="2"
-        SortId="2"
+        SortId="5"
         AppId="1104975716"
         AppKey="8hkxuI6OJedCf9Dl"
         ShareByAppClient="true"
@@ -89,7 +89,7 @@
 	-->
     <Wechat
         Id="3"
-        SortId="3"
+        SortId="1"
         AppId="wx16b0021c13b2c365"
         AppSecret="db9e39f7a21c466c5ffc6719cf607ced"
         BypassApproval="false"
@@ -97,7 +97,7 @@
     
     <WechatMoments
         Id="4"
-        SortId="4"
+        SortId="2"
         AppId="wx16b0021c13b2c365"
         AppSecret="db9e39f7a21c466c5ffc6719cf607ced"
         BypassApproval="false"
@@ -105,7 +105,7 @@
 
 	<QQ
 		Id="5"
-		SortId="5"
+		SortId="4"
 		AppId="1104975716"
 		AppKey="8hkxuI6OJedCf9Dl"
 		ShareByAppClient="true"
@@ -115,6 +115,11 @@
     <Email
         Id="6"
         SortId="6"
+        Enable="true" />
+
+    <ShortMessage
+        Id="7"
+        SortId="7"
         Enable="true" />
     
 </DevInfor>
