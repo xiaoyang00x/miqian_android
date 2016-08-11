@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class OperationRecordAcitivity extends BaseActivity {
     private TextView tvDateFirst;
-    private TextView tvTimeFirst;
+//    private TextView tvTimeFirst;
     private TextView tvContentFirst;
     private LinearLayout linearLayoutRecord;
     private List<Operation> mOperationList;
@@ -75,23 +76,32 @@ public class OperationRecordAcitivity extends BaseActivity {
                 String dt = Uihelper.timestampToDateStr_other(Long.parseLong(operationDt));
                 String[] split = dt.split(" ");
                 tvDateFirst.setText(split[0]);
-                tvTimeFirst.setText(split[1]);
+//                tvTimeFirst.setText(split[1]);
             }
         }
         if (mOperationList.size() > 1) {
-            findViewById(R.id.view_grey).setVisibility(View.VISIBLE);
+            findViewById(R.id.view_red).setVisibility(View.VISIBLE);
             for (int i = 1; i < mOperationList.size(); i++) {
                 View itemRecord = LayoutInflater.from(this).inflate(R.layout.item_record, null);
                 TextView tvDate = (TextView) itemRecord.findViewById(R.id.tv_date);
-                TextView tvTime = (TextView) itemRecord.findViewById(R.id.tv_time);
+//                TextView tvTime = (TextView) itemRecord.findViewById(R.id.tv_time);
                 TextView tvContent = (TextView) itemRecord.findViewById(R.id.tv_content);
+                ImageView ivProcess = (ImageView) itemRecord.findViewById(R.id.iv_process);
                 View view = (View) itemRecord.findViewById(R.id.view);
                 String operationDt = mOperationList.get(i).getOperationDt();
                 if (!TextUtils.isEmpty(operationDt)) {
                     String dt = Uihelper.timestampToDateStr_other(Long.parseLong(operationDt));
                     String[] split = dt.split(" ");
                     tvDate.setText(split[0]);
-                    tvTime.setText(split[1]);
+//                    tvTime.setText(split[1]);
+                }
+                int state = mOperationList.get(i).getState();
+                if (state == 0) {
+                    ivProcess.setImageResource(R.drawable.process_grey);
+                    view.setBackgroundResource(R.color.mq_b5_v2);
+                } else {
+                    ivProcess.setImageResource(R.drawable.process_red);
+                    view.setBackgroundResource(R.color.mq_r1_v2);
                 }
                 tvContent.setText(mOperationList.get(i).getOperationContent());
                 if (i == mOperationList.size() - 1) {
@@ -109,7 +119,7 @@ public class OperationRecordAcitivity extends BaseActivity {
     public void initView() {
 
         tvDateFirst = (TextView) findViewById(R.id.tv_date_first);
-        tvTimeFirst = (TextView) findViewById(R.id.tv_time_first);
+//        tvTimeFirst = (TextView) findViewById(R.id.tv_time_first);
         tvContentFirst = (TextView) findViewById(R.id.tv_content_first);
         linearLayoutRecord = (LinearLayout) findViewById(R.id.linear_record);
         linearLayoutFirst = (LinearLayout) findViewById(R.id.layout_first);

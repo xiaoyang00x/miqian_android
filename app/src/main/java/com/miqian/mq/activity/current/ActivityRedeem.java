@@ -1,5 +1,7 @@
 package com.miqian.mq.activity.current;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,6 +29,7 @@ import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
@@ -50,6 +53,8 @@ public class ActivityRedeem extends BaseActivity {
     private TextViewEx tvExtra;
     private UserCurrent userCurrent;
     private BigDecimal resideMoney;//可赎回金额
+    private DialogTip mDialog;
+    private BigDecimal curResidue;//本月剩余可赎回额度
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -78,7 +83,7 @@ public class ActivityRedeem extends BaseActivity {
             btnRollout.setEnabled(true);
             BigDecimal curMonthAmt = userCurrent.getCurMonthAmt();//本月已赎回的金额
             BigDecimal lmtMonthAmt = userCurrent.getLmtMonthAmt();//本月限制赎回额度
-            BigDecimal curResidue = lmtMonthAmt.subtract(curMonthAmt);//剩余可赎回额度
+            curResidue = lmtMonthAmt.subtract(curMonthAmt);//剩余可赎回额度
 
 
             String textCurResidue = df.format(curResidue);
@@ -161,10 +166,16 @@ public class ActivityRedeem extends BaseActivity {
         money = editMoney.getText().toString();
         if (!TextUtils.isEmpty(money)) {
             BigDecimal moneyCurrent = new BigDecimal(money);
-            if (moneyCurrent.compareTo(resideMoney) > 0) {
-                Uihelper.showToast(mActivity, "超出可赎回的金额");
+            if (moneyCurrent.compareTo(curResidue) > 0) {
+                new DialogTip(mActivity, "您当月赎回金额已超限\n      请修改赎回金额") {}.show();
+                return;
+
+            } else if (moneyCurrent.compareTo(resideMoney) > 0) {
+                new DialogTip(mActivity, "您当日赎回金额已超限\n      请修改赎回金额") {}.show();
+
             } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
-                Uihelper.showToast(mActivity, "金额不能小于0.01");
+
+                new DialogTip(mActivity, "金额不能小于0.01") {}.show();
             } else {
                 if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
                     int state = Integer.parseInt(userInfo.getPayPwdStatus());
@@ -172,7 +183,7 @@ public class ActivityRedeem extends BaseActivity {
                 }
             }
         } else {
-            Uihelper.showToast(mActivity, "金额不能为空");
+            new DialogTip(mActivity, "赎回金额不可为空\n  请修改赎回金额") {}.show();
         }
     }
 
@@ -223,7 +234,7 @@ public class ActivityRedeem extends BaseActivity {
                 Intent intent = new Intent(mActivity, RedeemResult.class);
 
                 if (code.equals("999993") || code.equals("999988") || code.equals("996633")) {
-                    Uihelper.showToast(mActivity, result.getMessage());
+                    new DialogTip(mActivity, result.getMessage()) {}.show();
                 }//交易密码错误4次提示框
                 else if (code.equals("999992")) {
                     showPwdError4Dialog(result.getMessage());
