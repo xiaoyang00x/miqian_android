@@ -14,7 +14,7 @@ import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.DialogTip;
+import com.miqian.mq.views.DialogCurToReg;
 import com.miqian.mq.views.WFYTitle;
 
 import java.math.BigDecimal;
@@ -24,7 +24,7 @@ import java.math.BigDecimal;
  */
 public class PaymodeActivity extends BaseActivity implements View.OnClickListener {
 
-    private DialogTip dialogTip;
+    private DialogCurToReg dialogTip;
     private TextView textMoney;
     private RelativeLayout frameBank;
     private RelativeLayout frameCurrent;
@@ -186,7 +186,7 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.text_current:
                 if (dialogTip == null) {
-                    dialogTip = new DialogTip(mActivity) {
+                    dialogTip = new DialogCurToReg(mActivity) {
                     };
                 }
                 dialogTip.show();
