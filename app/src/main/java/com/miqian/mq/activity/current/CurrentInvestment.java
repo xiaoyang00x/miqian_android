@@ -119,6 +119,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public static final int SUCCESS = 1;
     public static final int PROCESSING = 2;
 
+//  支付方式: 余额、银行卡、活期、连连支付
     public static final int PAY_MODE_BALANCE = 0;
     public static final int PAY_MODE_BANK = 1;
     public static final int PAY_MODE_CURRENT = 2;
@@ -177,7 +178,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     showTips(false, result);
                     producedOrder = result.getData();
                     promList = producedOrder.getPromList();
-                    refreshView();
+                    refreshView(true);
                 }
             }
 
@@ -204,10 +205,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void refreshView() {
+    private void refreshView(boolean initFlag) {
         expectMoney.setText(producedOrder.getPredictIncome());
         factMoney.setText(realMoney);
-        initPayMode();
+        initPayMode(initFlag);
         refreshPromoteView();
         refreshPayView();
     }
@@ -219,17 +220,17 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         if (promList != null && promList.size() > 0) {
             if (promoteMoney.compareTo(bFlag) > 0) {
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
-                textPromote.setText("已抵用");
+                textPromote.setText("少支付");
                 textPromoteMoney.setText("" + promoteMoney);
                 textPromoteUnit.setText("元");
             } else if (Promote.TYPE.JX.getValue().equals(promoteType)) {
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
-                textPromote.setText("收益加");
+                textPromote.setText("收益增加");
                 textPromoteMoney.setText("" + increaseMoney);
                 textPromoteUnit.setText("元");
             } else if (Promote.TYPE.SK.getValue().equals(promoteType)) {
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
-                textPromote.setText("收益加");
+                textPromote.setText("收益增加");
                 textPromoteMoney.setText("" + increaseMoney);
                 textPromoteUnit.setText("元");
             } else {
@@ -260,6 +261,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textPayType.setText("账户余额");
                 textPayTip.setText("可用" + producedOrder.getBalance() + "元");
                 imageType.setImageResource(R.drawable.balance_enable);
+                showErrorView(producedOrder.getBalance());
             } else if (payModeState == PAY_MODE_BANK) {
                 String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
                 textPayType.setText(producedOrder.getBankName() + "(" + bankNo + ")");
@@ -270,15 +272,45 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textPayType.setText("活期资产");
                 textPayTip.setText("可用" + producedOrder.getBalanceCurrent() + "元");
                 imageType.setImageResource(R.drawable.current_enable);
+                showErrorView(producedOrder.getBalanceCurrent());
             }
         }
     }
 
     /**
+     * 活期或余额不足的提示
+     */
+    private void showErrorView(BigDecimal balance) {
+        if (payMoney.compareTo(balance) > 0) {
+            textErrorLian.setVisibility(View.VISIBLE);
+            textErrorLian.setText("账户余额不足，请充值或更换支付方式后，再进行认购");
+        }
+    }
+
+    /**
+     * 活期或余额不足的toast提示
+     */
+    private boolean insufficeBalance() {
+        if (payModeState == PAY_MODE_BALANCE) {
+            if (payMoney.compareTo(producedOrder.getBalance()) > 0) {
+                return true;
+            }
+        } else if (payModeState == PAY_MODE_CURRENT) {
+            if (payMoney.compareTo(producedOrder.getBalanceCurrent()) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * 根据服务端返回数据判断支付状态
      */
-    private void initPayMode() {
+    private void initPayMode(boolean initFlag) {
         payMoney = needPayMoney();
+        if (!initFlag) {
+            return;
+        }
         if (producedOrder != null) {
             if ("1".equals(producedOrder.getSupportStatus()) && "1".equals(producedOrder.getBindCardStatus())) {
                 bankNumber = RSAUtils.decryptByPrivate(producedOrder.getBankCardNo());
@@ -464,6 +496,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_pay:
                 MobclickAgent.onEvent(mActivity, "1069");
+                if (insufficeBalance()) {
+                    Uihelper.showToast(mActivity, "账户余额不足，请充值或更换支付方式后，再进行认购");
+                    return;
+                }
                 if ((PRODID_REGULAR_PLAN.equals(prodId) || PRODID_REGULAR.equals(prodId)) && promList != null && promList.size() > 0 && position < 0) {
                     showPackageTips();
                 } else {
@@ -527,7 +563,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     promListParam.add(promote);
                     promListString = JSON.toJSONString(promListParam, true);
                 }
-                refreshView();
+                refreshView(false);
             }
         } else if (requestCode == REQUEST_CODE_PAYMODE) {
             if (resultCode == SUCCESS) {

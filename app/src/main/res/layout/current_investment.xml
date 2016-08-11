@@ -360,6 +360,7 @@
                         android:paddingBottom="3dp"
                         android:layout_gravity="center"
                         android:textColor="@color/mq_r1"
+                        android:textSize="@dimen/mq_font3_v2"
                         android:visibility="gone" />
 
                     <Button

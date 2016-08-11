@@ -160,7 +160,7 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
             ivChooseBank.setVisibility(View.VISIBLE);
         } else if (payModeState == CurrentInvestment.PAY_MODE_CURRENT) {
             ivChooseCurrent.setVisibility(View.VISIBLE);
-        } else if (payModeState == CurrentInvestment.PAY_MODE_BALANCE) {
+        } else if (payModeState == CurrentInvestment.PAY_MODE_BALANCE && balanceMoney.compareTo(payMoney) >= 0) {
             ivChooseBalance.setVisibility(View.VISIBLE);
         }
     }
