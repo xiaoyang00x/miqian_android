@@ -93,4 +93,5 @@ dependencies {
     compile project(':onekeyshare')
     compile 'com.growingio.android:vds-android:latest.release@aar'
     compile project(path: ':Udesk_Separate_UI')
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
 }

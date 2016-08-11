@@ -145,10 +145,12 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
 
     private boolean exsitFragment = false;//当前Activity是否存在Fragment
 
+    protected boolean doubleClickEnable = false; // 是否支持双击or多点点击(webview查看大图页面会用到双击放大/缩小图片功能)
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            if (Uihelper.isFastDoubleClick()) {
+            if (Uihelper.isFastDoubleClick() && !doubleClickEnable) {
                 return true;
             }
         }

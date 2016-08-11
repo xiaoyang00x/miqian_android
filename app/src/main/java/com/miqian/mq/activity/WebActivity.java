@@ -89,7 +89,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
 
 //        Uri.Builder builder = new Uri.Builder();
         Uri uri = Uri.parse(url);
-        isRefresh =  "1".equals(uri.getQueryParameter("refresh"));
+        isRefresh = "1".equals(uri.getQueryParameter("refresh"));
         super.onCreate(savedInstanceState);
 
         ListenerManager.registerLoginListener(WebActivity.class.getSimpleName(), this);
@@ -323,7 +323,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
 
     //定期详情页面
     @JavascriptInterface
-    public void startRegularDetail(String subjectId,int product_id) {
+    public void startRegularDetail(String subjectId, int product_id) {
         RegularDetailActivity.startActivity(this, subjectId, product_id);
     }
 
@@ -357,6 +357,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
 
     @JavascriptInterface
     public void showpic(String img_url) {
+        ShowWebImgActivity.startActivity(mContext, img_url);
     }
 
     @Override
@@ -421,7 +422,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
 
     @Override
     public void shareLog(String json) {
-        webview.loadUrl("javascript:webview.share_log("+json+")");
+        webview.loadUrl("javascript:webview.share_log(" + json + ")");
     }
 
 
@@ -436,9 +437,9 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
 
     @JavascriptInterface
     public void onGetMetadata(String s) {
-        if(TextUtils.isEmpty(s)) return;
+        if (TextUtils.isEmpty(s)) return;
         String jsonStr = new String(Base64.decodeFast(s));
-        LogUtil.d("WEBVIEW",jsonStr);
+        LogUtil.d("WEBVIEW", jsonStr);
         final ShareData shareData = JsonUtil.parseObject(jsonStr, ShareData.class);
 
         runOnUiThread(new Runnable() {
@@ -448,16 +449,15 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
                 getmTitle().setOnRightClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(shareData.getType() == ShareData.TYPE_LINKS) {
+                        if (shareData.getType() == ShareData.TYPE_LINKS) {
                             WebActivity.startActivity(WebActivity.this, shareData.getLinks());
-                        }else {
+                        } else {
                             ShareUtils.share(WebActivity.this, shareData, WebActivity.this);
                         }
                     }
                 });
             }
         });
-
 
 
     }
