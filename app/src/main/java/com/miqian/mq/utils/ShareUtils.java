@@ -4,9 +4,15 @@ import android.app.Activity;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.miqian.mq.entity.JsShareLog;
 import com.miqian.mq.entity.ShareData;
+import com.miqian.mq.listener.JsShareListener;
+
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
@@ -16,11 +22,9 @@ import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
  */
 public class ShareUtils {
 
-    public static void share(Activity mActivity,String json) {
-        if(TextUtils.isEmpty(json)) return;
-        try{
-            Gson gson = new Gson();
-            final ShareData shareData = gson.fromJson(json, ShareData.class);
+    public static void share(Activity mActivity, final ShareData shareData, final JsShareListener jsShareListener) {
+        if (shareData == null) return;
+        try {
             ShareSDK.initSDK(mActivity);
             OnekeyShare oks = new OnekeyShare();
             //关闭sso授权
@@ -54,9 +58,108 @@ public class ShareUtils {
                 }
             });
 
+            oks.setCallback(new PlatformActionListener() {
+                @Override
+                public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                    setShareLog(true, platform, jsShareListener);
+                }
+
+                @Override
+                public void onError(Platform platform, int i, Throwable throwable) {
+                    setShareLog(false, platform, jsShareListener);
+
+                }
+
+                @Override
+                public void onCancel(Platform platform, int i) {
+
+                }
+            });
+            if (!TextUtils.isEmpty(shareData.getShare_platform())) {
+                String[] allPlatforms = {"1", "2", "3", "4", "5", "6", "7"};
+                String[] platforms = shareData.getShare_platform().split(",");
+                String[] hiddenPlatforms = minus(allPlatforms, platforms);
+                if (hiddenPlatforms.length > 0) {
+                    for (int i = 0; i < hiddenPlatforms.length; i++) {
+                        String platformName = hiddenPlatforms[i];
+                        if (ShareData.PLATFORM_WECHAT.equals(platformName)) {
+                            oks.addHiddenPlatform("Wechat");
+                        }else if (ShareData.PLATFORM_WECHAT_MOMENTS.equals(platformName)) {
+                            oks.addHiddenPlatform("WechatMoments");
+                        }else if (ShareData.PLATFORM_SINA.equals(platformName)) {
+                            oks.addHiddenPlatform("SinaWeibo");
+                        }else if (ShareData.PLATFORM_QQ.equals(platformName)) {
+                            oks.addHiddenPlatform("QQ");
+                        }else if (ShareData.PLATFORM_QQ_ZONE.equals(platformName)) {
+                            oks.addHiddenPlatform("QZone");
+                        }else if (ShareData.PLATFORM_EMAIL.equals(platformName)) {
+                            oks.addHiddenPlatform("Email");
+                        }else if (ShareData.PLATFORM_SHORT_MSG.equals(platformName)) {
+                            oks.addHiddenPlatform("ShortMessage");
+                        }
+                    }
+                }
+            }
+
             // 启动分享GUI
             oks.show(mActivity);
-        }catch (Exception e) {
+        } catch (Exception e) {
+        }
+    }
+
+    //求两个数组的差集
+    public static String[] minus(String[] arr1, String[] arr2) {
+        LinkedList<String> list = new LinkedList<>();
+        LinkedList<String> history = new LinkedList<>();
+        String[] longerArr = arr1;
+        String[] shorterArr = arr2;
+        //找出较长的数组来减较短的数组
+        if (arr1.length > arr2.length) {
+            longerArr = arr2;
+            shorterArr = arr1;
+        }
+        for (String str : longerArr) {
+            if (!list.contains(str)) {
+                list.add(str);
+            }
+        }
+        for (String str : shorterArr) {
+            if (list.contains(str)) {
+                history.add(str);
+                list.remove(str);
+            } else {
+                if (!history.contains(str)) {
+                    list.add(str);
+                }
+            }
+        }
+
+        String[] result = {};
+        return list.toArray(result);
+    }
+
+    public static void setShareLog(boolean isSuccess, Platform platform, JsShareListener jsShareListener) {
+        JsShareLog shareLog = new JsShareLog();
+        shareLog.setIs_success(isSuccess ? 1 : 0);
+        if ("Wechat".equals(platform.getName())) {
+            shareLog.setPlatform(ShareData.PLATFORM_WECHAT);
+        } else if ("WechatMoments".equals(platform.getName())) {
+            shareLog.setPlatform(ShareData.PLATFORM_WECHAT_MOMENTS);
+        } else if ("SinaWeibo".equals(platform.getName())) {
+            shareLog.setPlatform(ShareData.PLATFORM_SINA);
+        } else if ("QQ".equals(platform.getName())) {
+            shareLog.setPlatform(ShareData.PLATFORM_QQ);
+        } else if ("QZone".equals(platform.getName())) {
+            shareLog.setPlatform(ShareData.PLATFORM_QQ_ZONE);
+        } else if ("Email".equals(platform.getName())) {
+            shareLog.setPlatform(ShareData.PLATFORM_EMAIL);
+        } else if ("ShortMessage".equals(platform.getName())) {
+            shareLog.setPlatform(ShareData.PLATFORM_SHORT_MSG);
+        }
+        Gson gson = new Gson();
+        try {
+            jsShareListener.shareLog(gson.toJson(shareLog));
+        } catch (Exception e) {
         }
     }
 }

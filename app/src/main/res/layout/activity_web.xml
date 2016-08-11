@@ -44,10 +44,15 @@
             android:background="@drawable/btn_white"
             android:text="再试一次" />
     </LinearLayout>
-    <com.miqian.mq.views.SwipeWebView
-        android:id="@+id/webview"
+    <com.miqian.mq.views.MySwipeRefresh
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/progressbar"/>
+        android:layout_height="match_parent">
+        <com.miqian.mq.views.SwipeWebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/progressbar"/>
+    </com.miqian.mq.views.MySwipeRefresh>
 
 </RelativeLayout>

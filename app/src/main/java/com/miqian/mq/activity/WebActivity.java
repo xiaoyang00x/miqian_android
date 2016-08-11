@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,17 +24,23 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.Base64;
+import com.google.gson.Gson;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.RegularBase;
+import com.miqian.mq.entity.ShareData;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.listener.JsShareListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
@@ -41,6 +48,7 @@ import com.miqian.mq.utils.ShareUtils;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.Dialog_Login;
+import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WFYTitle;
 import com.miqian.mq.views.WebChromeClientEx;
@@ -48,16 +56,18 @@ import com.miqian.mq.views.WebChromeClientEx;
 /**
  * Created by guolei_wang on 15/9/25.
  */
-public class WebActivity extends BaseActivity implements LoginListener {
+public class WebActivity extends BaseActivity implements LoginListener, JsShareListener {
     public static final String KEY_URL = "KEY_URL";
     public static final String JS_INTERFACE_NAME = "MIAOQIAN";
 
     private String url;
     private SwipeWebView webview;
+    private MySwipeRefresh swipe_refresh;
     private ProgressBar progressBar;
     private View load_webview_error;
     private View tv_refresh;
     private String defaultAgent;     //默认 UA
+    private boolean isRefresh;       //是否支持下拉刷新
 
     public static void startActivity(Context context, String url) {
         context.startActivity(getIntent(context, url));
@@ -73,6 +83,13 @@ public class WebActivity extends BaseActivity implements LoginListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         url = getIntent().getStringExtra(KEY_URL);
+//        url = "http://172.20.10.8/index.php/Test/test_page?type=1";
+////        url = "http://172.20.10.8/index.php/Test/test_page?type=0";
+////        url = "http://172.20.10.8/index.php/Test/test_page?type=1&refresh=1";
+
+//        Uri.Builder builder = new Uri.Builder();
+        Uri uri = Uri.parse(url);
+        isRefresh =  "1".equals(uri.getQueryParameter("refresh"));
         super.onCreate(savedInstanceState);
 
         ListenerManager.registerLoginListener(WebActivity.class.getSimpleName(), this);
@@ -92,6 +109,7 @@ public class WebActivity extends BaseActivity implements LoginListener {
     public void initView() {
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         webview = (SwipeWebView) findViewById(R.id.webview);
+        swipe_refresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         load_webview_error = findViewById(R.id.load_webview_error);
         tv_refresh = findViewById(R.id.tv_refresh);
 
@@ -101,6 +119,7 @@ public class WebActivity extends BaseActivity implements LoginListener {
 
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setAppCacheEnabled(false);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -128,7 +147,7 @@ public class WebActivity extends BaseActivity implements LoginListener {
             }
 
         });
-        webview.setWebViewClient(new WebViewClient() {
+        webview.setWebViewClient(new MqWebViewClient() {
 
 
             @Override
@@ -144,12 +163,16 @@ public class WebActivity extends BaseActivity implements LoginListener {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                swipe_refresh.setRefreshing(false);
+                end();
 
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
+                swipe_refresh.setRefreshing(false);
+                end();
             }
         });
         webview.setDownloadListener(new DownloadListener() {
@@ -167,9 +190,20 @@ public class WebActivity extends BaseActivity implements LoginListener {
         tv_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                begin();
                 loadUrl(url);
             }
         });
+
+        swipe_refresh.setEnabled(isRefresh);
+        swipe_refresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
+            @Override
+            public void onRefresh() {
+                begin();
+                loadUrl(url);
+            }
+        });
+
         loadUrl(url);
 
         getmTitle().setOnLeftClickListener(new View.OnClickListener() {
@@ -260,7 +294,7 @@ public class WebActivity extends BaseActivity implements LoginListener {
     //分享接口
     @JavascriptInterface
     public void share(String jsonStr) {
-        ShareUtils.share(this, jsonStr);
+        ShareUtils.share(this, JsonUtil.parseObject(jsonStr, ShareData.class), this);
     }
 
     //充值页面(需要登录)
@@ -314,11 +348,15 @@ public class WebActivity extends BaseActivity implements LoginListener {
         super.onDestroy();
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void copyText(String text) {
+    @JavascriptInterface
+    public void copy(String text) {
         ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText(text, text);
         cmb.setPrimaryClip(clipData);
+    }
+
+    @JavascriptInterface
+    public void showpic(String img_url) {
     }
 
     @Override
@@ -363,7 +401,6 @@ public class WebActivity extends BaseActivity implements LoginListener {
 
         ua = jsonObject.toString();
         settings.setUserAgentString(defaultAgent + " miaoqian_json: " + ua);
-        LogUtil.d("webactivity3333", defaultAgent + " miaoqian_json: " + ua);
     }
 
     @Override
@@ -381,4 +418,48 @@ public class WebActivity extends BaseActivity implements LoginListener {
             webview.reload();
         }
     }
+
+    @Override
+    public void shareLog(String json) {
+        webview.loadUrl("javascript:webview.share_log("+json+")");
+    }
+
+
+    class MqWebViewClient extends WebViewClient {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            view.loadUrl("javascript:window." + JS_INTERFACE_NAME + ".onGetMetadata("
+                    + "document.querySelector('meta[name=\"miaoqian_right_content\"]').getAttribute('content')" + ");");
+            super.onPageFinished(view, url);
+        }
+    }
+
+    @JavascriptInterface
+    public void onGetMetadata(String s) {
+        if(TextUtils.isEmpty(s)) return;
+        String jsonStr = new String(Base64.decodeFast(s));
+        LogUtil.d("WEBVIEW",jsonStr);
+        final ShareData shareData = JsonUtil.parseObject(jsonStr, ShareData.class);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getmTitle().setRightText(shareData.getRight_name());
+                getmTitle().setOnRightClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(shareData.getType() == ShareData.TYPE_LINKS) {
+                            WebActivity.startActivity(WebActivity.this, shareData.getLinks());
+                        }else {
+                            ShareUtils.share(WebActivity.this, shareData, WebActivity.this);
+                        }
+                    }
+                });
+            }
+        });
+
+
+
+    }
+
 }
