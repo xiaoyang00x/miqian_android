@@ -234,7 +234,7 @@ public class ActivityRedeem extends BaseActivity {
                 Intent intent = new Intent(mActivity, RedeemResult.class);
 
                 if (code.equals("999993") || code.equals("999988") || code.equals("996633")) {
-                    Uihelper.showToast(mActivity, result.getMessage());
+                    new DialogTip(mActivity, result.getMessage()) {}.show();
                 }//交易密码错误4次提示框
                 else if (code.equals("999992")) {
                     showPwdError4Dialog(result.getMessage());
