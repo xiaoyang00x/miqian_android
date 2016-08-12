@@ -28,8 +28,8 @@ public class JpushHelper {
         // 调用 Handler 来异步设置别名
         //登录状态设置用户token别名，并且取消设置的标签
         if (UserUtil.hasLogin(mContext)) {
-            tagSet.clear();
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));
+//            tagSet.clear();
+//            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));
         } else {
             tagSet.add("unRegister");
             mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));

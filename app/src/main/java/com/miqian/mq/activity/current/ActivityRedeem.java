@@ -33,6 +33,7 @@ import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
+import com.mob.tools.utils.UIHandler;
 import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
@@ -166,11 +167,8 @@ public class ActivityRedeem extends BaseActivity {
         money = editMoney.getText().toString();
         if (!TextUtils.isEmpty(money)) {
             BigDecimal moneyCurrent = new BigDecimal(money);
-            if (moneyCurrent.compareTo(curResidue) > 0) {
-                new DialogTip(mActivity, "您当月赎回金额已超限\n      请修改赎回金额") {}.show();
-                return;
 
-            } else if (moneyCurrent.compareTo(resideMoney) > 0) {
+            if (moneyCurrent.compareTo(resideMoney) > 0) {
                 new DialogTip(mActivity, "您当日赎回金额已超限\n      请修改赎回金额") {}.show();
 
             } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
@@ -261,6 +259,7 @@ public class ActivityRedeem extends BaseActivity {
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
+                Uihelper.showToast(ActivityRedeem.this,error);
             }
         }, money, password);
 
