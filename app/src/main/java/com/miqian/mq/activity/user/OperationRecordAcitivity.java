@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.user;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,6 +103,8 @@ public class OperationRecordAcitivity extends BaseActivity {
                 } else {
                     ivProcess.setImageResource(R.drawable.process_red);
                     view.setBackgroundResource(R.color.mq_r1_v2);
+                    tvDate.setTextColor(ContextCompat.getColor(this,R.color.mq_r1_v2));
+                    tvContent.setTextColor(ContextCompat.getColor(this,R.color.mq_r1_v2));
                 }
                 tvContent.setText(mOperationList.get(i).getOperationContent());
                 if (i == mOperationList.size() - 1) {
