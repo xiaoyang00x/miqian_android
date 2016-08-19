@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/listitem_height"
-            android:background="@color/white" >
+            android:background="@color/white">
 
             <TextView
                 style="@style/text_black_item"
@@ -24,32 +24,20 @@
                 android:id="@+id/edit_money"
                 style="@style/edittext_item"
                 android:layout_height="match_parent"
-                android:paddingLeft="5dp"
-                android:numeric="decimal" >
-            </EditText>
+                android:numeric="decimal"
+                android:paddingLeft="5dp"></EditText>
         </LinearLayout>
 
         <com.miqian.mq.views.TextViewEx
-          android:id="@+id/tv_extra"
-          android:layout_marginLeft="@dimen/margin_left_right"
-          android:layout_marginRight="@dimen/margin_left_right"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:textSize="@dimen/mq_font3_v2"
-          android:textColor="@color/mq_b4_v2"
-          android:text=""/>
-
-        <com.miqian.mq.views.TextViewEx
-            android:id="@+id/tv_tip"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:layout_marginRight="@dimen/margin_left_right"
+            android:id="@+id/tv_extra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:textSize="@dimen/mq_font3_v2"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:layout_marginTop="10dp"
+            android:text=""
             android:textColor="@color/mq_b4_v2"
-            android:text=""/>
+            android:textSize="@dimen/mq_font3_v2" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,15 +45,26 @@
             android:layout_marginBottom="@dimen/margin_top"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right"
-            android:paddingTop="@dimen/margin_top" >
+            android:paddingTop="40dp">
 
             <Button
                 android:id="@+id/bt_redeem"
                 style="@style/click_btn"
-                android:onClick="btn_click"
                 android:enabled="false"
+                android:onClick="btn_click"
                 android:text="赎回" />
         </RelativeLayout>
+
+        <com.miqian.mq.views.TextViewEx
+            android:id="@+id/tv_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:text=""
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font3_v2" />
+
     </LinearLayout>
 
 </RelativeLayout>
