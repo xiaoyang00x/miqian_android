@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,7 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
@@ -119,7 +121,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public static final int SUCCESS = 1;
     public static final int PROCESSING = 2;
 
-//  支付方式: 余额、银行卡、活期、连连支付
+    //  支付方式: 余额、银行卡、活期、连连支付
     public static final int PAY_MODE_BALANCE = 0;
     public static final int PAY_MODE_BANK = 1;
     public static final int PAY_MODE_CURRENT = 2;
@@ -257,6 +259,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         } else {
             showLianView(false);
             textPayMoney.setText("" + payMoney);
+            textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
+            textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b1_v2));
             if (payModeState == PAY_MODE_BALANCE) {
                 textPayType.setText("账户余额");
                 textPayTip.setText("可用" + producedOrder.getBalance() + "元");
@@ -283,7 +287,15 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private void showErrorView(BigDecimal balance) {
         if (payMoney.compareTo(balance) > 0) {
             textErrorLian.setVisibility(View.VISIBLE);
-            textErrorLian.setText("账户余额不足，请充值或更换支付方式后，再进行认购");
+            textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b5_v2));
+            textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_b5_v2));
+            if (payModeState == PAY_MODE_BALANCE) {
+                imageType.setImageResource(R.drawable.balance_disable);
+                textErrorLian.setText("账户余额不足，请充值或更换支付方式后，再进行认购");
+            } else if (payModeState == PAY_MODE_CURRENT) {
+                imageType.setImageResource(R.drawable.current_disable);
+                textErrorLian.setText("活期余额不足，请充值或更换支付方式后，再进行认购");
+            }
         }
     }
 
@@ -497,7 +509,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             case R.id.bt_pay:
                 MobclickAgent.onEvent(mActivity, "1069");
                 if (insufficeBalance()) {
-                    Uihelper.showToast(mActivity, "账户余额不足，请充值或更换支付方式后，再进行认购");
+                    String tipString = "";
+                    if (payModeState == PAY_MODE_BALANCE) {
+                        tipString = "账户余额不足，请充值或更换支付方式后，再进行认购";
+                    } else if (payModeState == PAY_MODE_CURRENT) {
+                        tipString = "活期余额不足，请充值或更换支付方式后，再进行认购";
+                    }
+                    new DialogTip(mActivity, tipString) {
+                    }.show();
                     return;
                 }
                 if ((PRODID_REGULAR_PLAN.equals(prodId) || PRODID_REGULAR.equals(prodId)) && promList != null && promList.size() > 0 && position < 0) {
@@ -573,7 +592,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     producedOrder.setBalance(new BigDecimal(balanceTemp));
                 }
                 refreshPayView();
-            } else if (resultCode  == PROCESSING) {
+            } else if (resultCode == PROCESSING) {
                 CurrentInvestment.this.finish();
             }
         } else if (requestCode == REQUEST_CODE_PASSWORD) {
