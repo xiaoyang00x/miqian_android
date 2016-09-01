@@ -276,12 +276,16 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             tabIndicator3 = new TabIndicator(mContext, tw, R.drawable.tab_regular_selector, R.string.main_tab_regular);
             tabIndicator4 = new TabIndicator(mContext, tw, R.drawable.tab_user_selector, R.string.main_tab_user);
         }
-
+        imgRedPointer = tabIndicator4.getImgRedPointer();
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
                 current_tab = mTabHost.getCurrentTab();
+                //当点击财富Tab 隐藏此tab上的红点
+                if (current_tab == 3) {
+                    imgRedPointer.setVisibility(View.GONE);
+                }
                 if(!isChangeTab) return;
                 if(options == null) {
                     options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
@@ -334,8 +338,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                         tabIndicator2.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
                         tabIndicator3.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
                         tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColorClick()));
-                        //当点击财富Tab 隐藏此tab上的红点
-                        tabIndicator4.getImgRedPointer().setVisibility(View.GONE);
                         break;
                     default:
                         break;

@@ -163,6 +163,8 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
+                mTitle.setTitleText(view.getTitle());
                 swipe_refresh.setRefreshing(false);
                 end();
 
