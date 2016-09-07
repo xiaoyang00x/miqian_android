@@ -152,6 +152,10 @@ public class UserUtil {
         }
     }
 
+    public static void loginActivity(Dialog_Login dialog_login) {
+        dialog_login.show();
+    }
+
     //  支付时判断是否登录、实名认证
     public static void loginPay(final Activity context, final DialogPay dialogPay) {
         if (!UserUtil.hasLogin(context)) {
