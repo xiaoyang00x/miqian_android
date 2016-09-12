@@ -3,7 +3,6 @@ package com.miqian.mq.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.text.TextUtils;
 
 import com.growingio.android.sdk.collection.GrowingIO;

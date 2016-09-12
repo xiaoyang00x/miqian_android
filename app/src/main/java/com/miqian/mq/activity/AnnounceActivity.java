@@ -1,7 +1,6 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -27,12 +26,10 @@ import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
-import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 import com.miqian.mq.views.swipemenulistview.SwipeMenu;
 import com.miqian.mq.views.swipemenulistview.SwipeMenuCreator;
-import com.miqian.mq.views.swipemenulistview.SwipeMenuItem;
 import com.miqian.mq.views.swipemenulistview.SwipeMenuListView;
 
 import java.util.List;
