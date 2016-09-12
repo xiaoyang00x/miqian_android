@@ -29,7 +29,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
     private String mUrl;
 
     public static final String NETWORK_ERROR = "您当前网络不可用";
-    public static final String SERVER_ERROR = "服务端网络不通，请重试";
+    public static final String SERVER_ERROR = "网络有点卡，请稍后再试~";
 
     public MyAsyncTask(Context context, String url, List<Param> list, ICallback<String> callback) {
         this.mContext = context;
