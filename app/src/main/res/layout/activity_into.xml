@@ -4,290 +4,301 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/account_head_bg"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/frame_bind"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bind_card_bg"
-            android:orientation="vertical"
-            android:padding="25dp"
-            android:visibility="gone">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:gravity="center"
-                android:text="为确保资金安全，银行卡将作为唯一提现卡"
-                android:textColor="@color/mq_b1_v2"
-                android:textSize="@dimen/mq_font6_v2" />
+                android:background="@drawable/account_head_bg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/frame_bind"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bind_card_bg"
+                    android:orientation="vertical"
+                    android:padding="25dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center"
+                        android:text="为确保资金安全，银行卡将作为唯一提现卡"
+                        android:textColor="@color/mq_b1_v2"
+                        android:textSize="@dimen/mq_font6_v2" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/frame_money"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edit_item"
+                            android:background="@color/white">
+
+                            <EditText
+                                android:id="@+id/edit_money"
+                                style="@style/edittext_item"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="15dp"
+                                android:background="@null"
+                                android:hint="请输入充值金额"
+                                android:inputType="numberDecimal"
+                                android:singleLine="true" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/frame_bank_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edit_item"
+                            android:background="@color/white">
+
+                            <EditText
+                                android:id="@+id/edit_bank_number"
+                                style="@style/edittext_item"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="15dp"
+                                android:hint="请输入银行卡号"
+                                android:maxLength="23"
+                                android:numeric="integer" />
+
+                            <View style="@style/item_divider" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/frame_bound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bound_card_bg"
+                    android:orientation="vertical"
+                    android:padding="25dp"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/image_bank"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+                            android:src="@drawable/icon_bank" />
+
+                        <TextView
+                            android:id="@+id/bind_bank_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/image_bank"
+                            android:text="工商银行"
+                            android:textColor="@color/mq_b1_v2"
+                            android:textSize="@dimen/mq_font7_v2"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/bind_bank_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:maxLength="30"
+                            android:text="6214 8559 2026 0037"
+                            android:textColor="@color/mq_b1_v2"
+                            android:textSize="@dimen/mq_font7_v2"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/text_limit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="预计2个工作日内到账"
+                        android:textColor="@color/mq_b4_v2"
+                        android:textSize="@dimen/mq_font3_v2"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/frame_money_bound"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edit_item"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/white">
+
+                        <ImageView
+                            style="@style/WrapContent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+                            android:src="@drawable/icon_money" />
+
+                        <EditText
+                            android:id="@+id/edit_money_bound"
+                            style="@style/edittext_item"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="40dp"
+                            android:background="@null"
+                            android:hint="请输入充值金额"
+                            android:inputType="numberDecimal"
+                            android:singleLine="true" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/frame_real_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingBottom="10dp"
+                    android:text="为了保证您的资金安全，首次充值需要填写实名信息"
+                    android:textColor="@color/mq_b2_v2"
+                    android:textSize="@dimen/mq_font5_v2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/frame_white_bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/frame_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edit_item">
+
+                        <EditText
+                            android:id="@+id/edit_name"
+                            style="@style/edittext_item"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:hint="请输入姓名"
+                            android:maxLength="16"
+                            android:singleLine="true"
+                            android:textColor="@color/mq_b4_v2"
+                            android:textSize="@dimen/mq_font7_v2" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/frame_id_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edit_item">
+
+                        <EditText
+                            android:id="@+id/edit_card_id"
+                            style="@style/edittext_item"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:digits="0123456789Xx"
+                            android:hint="请输入身份证号"
+                            android:inputType="text"
+                            android:maxLength="18"
+                            android:singleLine="true"
+                            android:textColor="@color/mq_b4_v2"
+                            android:textSize="@dimen/mq_font7_v2" />
+
+                        <View style="@style/item_divider" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_error_lian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingBottom="3dp"
+                    android:textColor="@color/mq_r1"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/bt_rollin"
+                    style="@style/click_btn"
+                    android:layout_gravity="center"
+                    android:text="确认" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/bt_under_text">
 
-                <RelativeLayout
-                    android:id="@+id/frame_money"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edit_item"
-                    android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="确认代表您同意"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font3_v2" />
 
-                    <EditText
-                        android:id="@+id/edit_money"
-                        style="@style/edittext_item"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:background="@null"
-                        android:hint="请输入充值金额"
-                        android:inputType="numberDecimal"
-                        android:singleLine="true" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/frame_bank_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edit_item"
-                    android:background="@color/white">
-
-                    <EditText
-                        android:id="@+id/edit_bank_number"
-                        style="@style/edittext_item"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:hint="请输入银行卡号"
-                        android:maxLength="23"
-                        android:numeric="integer" />
-
-                    <View style="@style/item_divider" />
-                </RelativeLayout>
-
+                <Button
+                    android:id="@+id/text_law"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:onClick="textLawCick"
+                    android:text="《资金管理协议》"
+                    android:textColor="@color/mq_bl2"
+                    android:textSize="@dimen/mq_font3_v2" />
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/frame_bound"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bound_card_bg"
-            android:orientation="vertical"
-            android:padding="25dp"
-            android:visibility="gone">
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-                <ImageView
-                    android:id="@+id/image_bank"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/icon_bank" />
+                android:layout_marginTop="10dp">
 
                 <TextView
-                    android:id="@+id/bind_bank_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/image_bank"
-                    android:text="工商银行"
-                    android:textColor="@color/mq_b1_v2"
-                    android:textSize="@dimen/mq_font7_v2"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/bind_bank_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:maxLength="30"
-                    android:text="6214 8559 2026 0037"
-                    android:textColor="@color/mq_b1_v2"
-                    android:textSize="@dimen/mq_font7_v2"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/text_limit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:text="预计2个工作日内到账"
-                android:textColor="@color/mq_b4_v2"
-                android:textSize="@dimen/mq_font3_v2"
-                android:textStyle="bold" />
-
-            <RelativeLayout
-                android:id="@+id/frame_money_bound"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_item"
-                android:layout_marginTop="20dp"
-                android:background="@color/white">
-
-                <ImageView
-                    style="@style/WrapContent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/icon_money" />
-
-                <EditText
-                    android:id="@+id/edit_money_bound"
-                    style="@style/edittext_item"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="40dp"
-                    android:background="@null"
-                    android:hint="请输入充值金额"
-                    android:inputType="numberDecimal"
-                    android:singleLine="true" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:layout_marginRight="@dimen/margin_left_right"
+                    android:text="温馨提示：\n为了保证您的资金安全使用连连支付成功充值后，您的充值银行卡和提现银行卡将自动绑定为首次使用连连支付充值的银行卡，不可解除绑定。"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font3_v2" />
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/frame_real_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:text="为了保证您的资金安全，首次充值需要填写实名信息"
-            android:textColor="@color/mq_b2_v2"
-            android:textSize="@dimen/mq_font5_v2" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/frame_white_bg"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/frame_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_item">
-
-                <EditText
-                    android:id="@+id/edit_name"
-                    style="@style/edittext_item"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:hint="请输入姓名"
-                    android:maxLength="16"
-                    android:singleLine="true"
-                    android:textColor="@color/mq_b4_v2"
-                    android:textSize="@dimen/mq_font7_v2" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/frame_id_number"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_item">
-
-                <EditText
-                    android:id="@+id/edit_card_id"
-                    style="@style/edittext_item"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:digits="0123456789Xx"
-                    android:hint="请输入身份证号"
-                    android:inputType="text"
-                    android:maxLength="18"
-                    android:singleLine="true"
-                    android:textColor="@color/mq_b4_v2"
-                    android:textSize="@dimen/mq_font7_v2" />
-
-                <View style="@style/item_divider" />
-
-            </RelativeLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text_error_lian"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingBottom="3dp"
-            android:textColor="@color/mq_r1"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/bt_rollin"
-            style="@style/click_btn"
-            android:layout_gravity="center"
-            android:text="确认" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/bt_under_text">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="确认代表您同意"
-            android:textColor="@color/mq_b4_v2"
-            android:textSize="@dimen/mq_font3_v2" />
-
-        <Button
-            android:id="@+id/text_law"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@color/transparent"
-            android:onClick="textLawCick"
-            android:text="《资金管理协议》"
-            android:textColor="@color/mq_bl2"
-            android:textSize="@dimen/mq_font3_v2" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:text="温馨提示：\n为了保证您的资金安全使用连连支付成功充值后，您的充值银行卡和提现银行卡将自动绑定为首次使用连连支付充值的银行卡，不可解除绑定。"
-            android:textColor="@color/mq_b4_v2"
-            android:textSize="@dimen/mq_font3_v2" />
-    </RelativeLayout>
+    </ScrollView>
 </LinearLayout>

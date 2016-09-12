@@ -223,30 +223,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-//    private void initTipDialog() {
-//
-//        if (dialogTips == null) {
-//            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-//                @Override
-//                public void positionBtnClick() {
-//                    Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
-//                    intent_phone.putExtra("isModifyPhone", true);
-//                    startActivity(intent_phone);
-//                    dismiss();
-//                }
-//
-//                @Override
-//                public void negativeBtnClick() {
-//
-//                }
-//            };
-//            dialogTips.setNegative(View.VISIBLE);
-//            dialogTips.setRemarks("     是否修改手机号码？");
-//            dialogTips.setNegative("取消");
-//        }
-//        dialogTips.show();
-//    }
-
     //退出账号
     public void btn_click(View view) {
         MobclickAgent.onEvent(mActivity, "1034");

@@ -1,7 +1,6 @@
 package com.miqian.mq.activity;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,7 +23,6 @@ import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.Base64;
-import com.google.gson.Gson;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
@@ -38,7 +35,6 @@ import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
