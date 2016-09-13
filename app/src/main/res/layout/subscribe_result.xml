@@ -149,11 +149,16 @@
             android:layout_marginTop="10dp"
             android:visibility="gone">
 
-            <TextView
+            <com.miqian.mq.views.MQMarqueeTextView
                 android:id="@+id/text_gold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
                 android:textColor="@color/mq_bl1"
                 android:textSize="@dimen/mq_font3_v2" />
         </RelativeLayout>

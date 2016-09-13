@@ -199,17 +199,20 @@
                         android:textStyle="bold" />
                 </RelativeLayout>
 
-                <TextView
+                <com.miqian.mq.views.MQMarqueeTextView
                     android:id="@+id/tv_88"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/mq_b7_v2"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="10dp"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
+                    android:gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingTop="10dp"
                     android:textColor="@color/mq_bl1_v2"
                     android:textSize="@dimen/mq_font3_v2" />
 

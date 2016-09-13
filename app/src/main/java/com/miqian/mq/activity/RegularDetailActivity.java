@@ -41,6 +41,7 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.MQMarqueeTextView;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -71,7 +72,7 @@ public class RegularDetailActivity extends BaseActivity {
     private TextView tv_people_amount; // 已认购人数
     private TextView tv_info_right; // 默认文字(已认购人数)或原年化收益:
 
-    private TextView tv_88; // 88理财节
+    private MQMarqueeTextView tv_88; // 88理财节
 
     private ViewStub viewstub_detail;
     private View viewDetail;
@@ -165,7 +166,7 @@ public class RegularDetailActivity extends BaseActivity {
         tv_remain_amount = (TextView) findViewById(R.id.tv_remain_amount);
         tv_people_amount = (TextView) findViewById(R.id.tv_people_amount);
         tv_info_right = (TextView) findViewById(R.id.tv_info_right);
-        tv_88 = (TextView) findViewById(R.id.tv_88);
+        tv_88 = (MQMarqueeTextView) findViewById(R.id.tv_88);
         viewstub_detail = (ViewStub) findViewById(R.id.viewstub_detail);
 
         llyt_project_feature = (LinearLayout) findViewById(R.id.llyt_project_feature);
