@@ -16,7 +16,7 @@ import com.miqian.mq.utils.MyTextWatcher;
 
 public abstract class DialogPay extends Dialog {
 
-    private TextView titleText;
+    private TextView tipText;
     private EditText editMoney;
 
     /**
@@ -40,7 +40,7 @@ public abstract class DialogPay extends Dialog {
     }
 
     private void initViewCode() {
-        titleText = (TextView) findViewById(R.id.dialog_title);
+        tipText = (TextView) findViewById(R.id.text_tip);
         editMoney = (EditText) findViewById(R.id.edit_money);
         editMoney.addTextChangedListener(new MyTextWatcher() {
 
@@ -77,15 +77,16 @@ public abstract class DialogPay extends Dialog {
         });
     }
 
-    public void setTitle(String title) {
-        if (titleText != null) {
-            titleText.setText(title);
+    public void setTipText(String title) {
+        if (tipText != null) {
+            tipText.setVisibility(View.VISIBLE);
+            tipText.setText(title);
         }
     }
 
-    public void setTitleColor(int color) {
-        if (titleText != null) {
-            titleText.setTextColor(color);
+    public void setTipTextVisibility(int visibility) {
+        if (tipText != null) {
+            tipText.setVisibility(visibility);
         }
     }
 

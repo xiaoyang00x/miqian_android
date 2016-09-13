@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -140,22 +139,18 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 if (!TextUtils.isEmpty(moneyString)) {
                     BigDecimal money = new BigDecimal(moneyString);
                     if (money.compareTo(downLimit) < 0) {
-                        this.setTitle("提示：" + downLimit + "元起投");
-                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                        this.setTipText("提示：" + downLimit + "元起投");
                     } else if (money.compareTo(upLimit) > 0) {
-                        this.setTitle("提示：请输入小于等于" + upLimit + "元");
-                        this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                        this.setTipText("提示：请输入小于等于" + upLimit + "元");
                     } else {
                         MobclickAgent.onEvent(mActivity, "1037_1");
                         UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, TextUtils.isEmpty(interestRateString) ? "" : interestRateString + "%");
                         this.setEditMoney("");
-                        this.setTitle("认购金额");
-                        this.setTitleColor(getResources().getColor(R.color.mq_b1));
+                        this.setTipTextVisibility(View.GONE);
                         this.dismiss();
                     }
                 } else {
-                    this.setTitle("提示：请输入金额");
-                    this.setTitleColor(getResources().getColor(R.color.mq_r1));
+                    this.setTipText("提示：请输入金额");
                 }
             }
 
@@ -163,8 +158,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             public void negativeBtnClick() {
                 MobclickAgent.onEvent(mActivity, "1037_2");
                 this.setEditMoney("");
-                this.setTitle("认购金额");
-                this.setTitleColor(getResources().getColor(R.color.mq_b1));
+                this.setTipTextVisibility(View.GONE);
             }
         };
     }
