@@ -69,11 +69,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bt_height"
                 android:layout_weight="1"
-                android:background="@drawable/btn_cancel"
+                android:background="@color/transparent"
                 android:text="取消"
                 android:layout_marginRight="5dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/mq_font1" />
+                android:textColor="@drawable/btn_cancel_font"
+                android:textSize="@dimen/mq_font7_v2" />
 
             <Button
                 android:id="@+id/btn_sure"

@@ -10,9 +10,9 @@
         android:layout_centerInParent="true"
         android:background="@drawable/shape_dialog_background"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_left_right"
         android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right"
-        android:paddingBottom="@dimen/margin_left_right">
+        android:paddingRight="@dimen/margin_left_right">
 
         <!-- Title -->
 
@@ -26,9 +26,9 @@
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:visibility="gone"
                 android:contentDescription="@string/UMGprsCondition"
-                android:src="@drawable/umeng_update_wifi_disable" />
+                android:src="@drawable/umeng_update_wifi_disable"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/title_update"
@@ -107,12 +107,12 @@
                 android:layout_height="@dimen/bt_height"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_cancel"
+                android:background="@color/transparent"
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/UMNotNow"
-                android:textColor="@color/white"
-                android:textSize="@dimen/mq_font1"/>
+                android:textColor="@drawable/btn_cancel_font"
+                android:textSize="@dimen/mq_font7_v2" />
 
             <Button
                 android:id="@+id/umeng_update_id_ok"
@@ -120,26 +120,26 @@
                 android:layout_height="@dimen/bt_height"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_red"
+                android:background="@color/transparent"
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/UMUpdateNow"
-                android:textColor="@color/white"
-                android:textSize="@dimen/mq_font1"/>
+                android:textColor="@drawable/btn_cancel_font"
+                android:textSize="@dimen/mq_font7_v2" />
 
 
             <Button
                 android:id="@+id/umeng_update_id_ignore"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_height="@dimen/bt_height"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/umeng_update_button_cancel_bg_selector"
+                android:background="@color/transparent"
                 android:focusable="true"
                 android:gravity="center"
-                android:padding="12dp"
                 android:text="@string/UMIgnore"
-                android:textColor="#AAABAF"
+                android:textColor="@drawable/btn_cancel_font"
+                android:textSize="@dimen/mq_font7_v2"
                 android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
