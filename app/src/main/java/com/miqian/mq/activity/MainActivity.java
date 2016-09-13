@@ -46,6 +46,7 @@ import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.FragmentTabHost;
 import com.miqian.mq.views.MyRelativeLayout;
@@ -82,7 +83,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     private List<JpushInfo> jpushInfolist;
     private int current_tab = 0;
     private RefeshDataListener mRefeshDataListener;
-    private CustomDialog dialogTips;
+    private DialogTip dialogTips;
     private CustomDialog jpushDialog;
     private ImageView imgRedPointer;
     private DisplayImageOptions options;
@@ -681,21 +682,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     private void showDialog(JpushInfo jpushInfo) {
         if (dialogTips == null) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-
-                @Override
-                public void positionBtnClick() {
-                    dismiss();
-                }
-
-                @Override
-                public void negativeBtnClick() {
-
-                }
-            };
+            dialogTips = new DialogTip(MainActivity.this) {};
         }
         if (jpushInfo != null) {
-            dialogTips.setRemarks(jpushInfo.getContent());
+            dialogTips.setInfo(jpushInfo.getContent());
+            dialogTips.setSureInfo("确定");
+            dialogTips.setTitle(jpushInfo.getTitle());
             dialogTips.show();
         }
     }
