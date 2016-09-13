@@ -138,6 +138,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public int payModeState = 0;
     private CustomDialog dialogTips;
     private CustomDialog packageTips;
+    private DialogTip mDialogTip;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -515,8 +516,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     } else if (payModeState == PAY_MODE_CURRENT) {
                         tipString = "活期余额不足，请充值或更换支付方式后，再进行认购";
                     }
-                    new DialogTip(mActivity, tipString) {
-                    }.show();
+                    if (mDialogTip==null){
+                        mDialogTip=new DialogTip(mActivity) {};
+                    }else {
+                        mDialogTip.setInfo(tipString);
+                        mDialogTip.setSureInfo("确定");
+                    }
+                    mDialogTip.show();
                     return;
                 }
                 if ((PRODID_REGULAR_PLAN.equals(prodId) || PRODID_REGULAR.equals(prodId)) && promList != null && promList.size() > 0 && position < 0) {

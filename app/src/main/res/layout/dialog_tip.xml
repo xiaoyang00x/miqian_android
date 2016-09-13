@@ -13,28 +13,49 @@
         android:background="@drawable/shape_dialog_background"
         android:orientation="vertical">
 
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/icon_tip"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/mq_b1_v2"
+            android:textSize="@dimen/mq_font8_v2" />
+
         <com.miqian.mq.views.TextViewEx
             android:id="@+id/tv_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="45dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="30dp"
             android:text="dfeffefefeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetetetetetetette"
-            android:textColor="@color/mq_b3_v2"
-            android:textSize="@dimen/mq_font7_v2" />
+            android:textColor="@color/mq_b5_v2"
+            android:textSize="@dimen/mq_font6_v2" />
 
 
-        <Button
-            android:id="@+id/btn_sure"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bt_height"
-            android:background="@drawable/dialog_btn_confirm"
+        <TextView
+            android:id="@+id/tv_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="确定"
-            android:textColor="@color/white"
+            android:layout_marginBottom="30dp"
+            android:textColor="@drawable/btn_cancel_font"
             android:textSize="@dimen/mq_font7_v2" />
     </LinearLayout>
 </RelativeLayout>

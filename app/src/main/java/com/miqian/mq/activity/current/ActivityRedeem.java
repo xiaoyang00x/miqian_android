@@ -56,6 +56,7 @@ public class ActivityRedeem extends BaseActivity {
     private BigDecimal resideMoney;//可赎回金额
     private DialogTip mDialog;
     private BigDecimal curResidue;//本月剩余可赎回额度
+    private DialogTip mDialogTip;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -169,11 +170,16 @@ public class ActivityRedeem extends BaseActivity {
             BigDecimal moneyCurrent = new BigDecimal(money);
 
             if (moneyCurrent.compareTo(resideMoney) > 0) {
-                new DialogTip(mActivity, "您当日赎回金额已超限\n      请修改赎回金额") {}.show();
+                initDialog();
+                mDialogTip.setInfo("您当日赎回金额已超限\n      请修改赎回金额");
+                mDialogTip.setSureInfo("我知道了");
+                mDialogTip.show();
 
             } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
-
-                new DialogTip(mActivity, "金额不能小于0.01") {}.show();
+                initDialog();
+                mDialogTip.setInfo("金额不能小于0.01");
+                mDialogTip.setSureInfo("我知道了");
+                mDialogTip.show();
             } else {
                 if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
                     int state = Integer.parseInt(userInfo.getPayPwdStatus());
@@ -181,7 +187,10 @@ public class ActivityRedeem extends BaseActivity {
                 }
             }
         } else {
-            new DialogTip(mActivity, "赎回金额不可为空\n  请修改赎回金额") {}.show();
+            initDialog();
+            mDialogTip.setInfo("赎回金额不可为空\n  请修改赎回金额");
+            mDialogTip.setSureInfo("我知道了");
+            mDialogTip.show();
         }
     }
 
@@ -232,7 +241,10 @@ public class ActivityRedeem extends BaseActivity {
                 Intent intent = new Intent(mActivity, RedeemResult.class);
 
                 if (code.equals("999993") || code.equals("999988") || code.equals("996633")) {
-                    new DialogTip(mActivity, result.getMessage()) {}.show();
+                    initDialog();
+                    mDialogTip.setInfo(result.getMessage());
+                    mDialogTip.setSureInfo("确定");
+                    mDialogTip.show();
                 }//交易密码错误4次提示框
                 else if (code.equals("999992")) {
                     showPwdError4Dialog(result.getMessage());
@@ -259,10 +271,16 @@ public class ActivityRedeem extends BaseActivity {
             @Override
             public void onFail(String error) {
                 mWaitingDialog.dismiss();
-                Uihelper.showToast(ActivityRedeem.this,error);
+                Uihelper.showToast(ActivityRedeem.this, error);
             }
         }, money, password);
 
+    }
+
+    private void initDialog() {
+        if (mDialogTip == null) {
+            mDialogTip = new DialogTip(ActivityRedeem.this) {};
+        }
     }
 
     private void showPwdError4Dialog(String message) {

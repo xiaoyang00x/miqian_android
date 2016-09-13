@@ -44,6 +44,7 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
@@ -67,7 +68,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private TextView tv_balance;//可用余额
     private TextView tv_totalasset;//总资产
     private TextView tv_ydayprofit;//昨日收益
-    private CustomDialog dialogTips;
+    private DialogTip dialogTips;
     private MySwipeRefresh swipeRefresh;
     private ImageButton btn_message;
     private EditText editTelephone;
@@ -497,21 +498,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (MyApplication.getInstance().isShowTips()) {
             MyApplication.getInstance().setShowTips(false);
             if (dialogTips == null) {
-                dialogTips = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
-
-                    @Override
-                    public void positionBtnClick() {
-                        dismiss();
-                    }
-
-                    @Override
-                    public void negativeBtnClick() {
-
-                    }
-                };
+                dialogTips = new DialogTip(getActivity()) {};
             }
             if (jpushInfo != null) {
-                dialogTips.setRemarks(jpushInfo.getContent());
+                dialogTips.setInfo(jpushInfo.getContent());
+                dialogTips.setSureInfo("确定");
+                dialogTips.setTitle(jpushInfo.getTitle());
                 dialogTips.show();
             }
         }
