@@ -183,6 +183,7 @@
                     android:paddingRight="@dimen/margin_left_right">
 
                     <TextView
+                        android:id="@+id/text_promote_type"
                         style="@style/f7_B1_V2"
                         android:layout_centerVertical="true"
                         android:text="红包/卡" />

@@ -11,18 +11,22 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/margin_left_right">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/icon_tip"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginTop="15dp"
             android:text="活期转定期"
-            android:textColor="@color/mq_r1"
-            android:textSize="@dimen/mq_font1" />
+            android:textColor="@color/mq_b1_v2"
+            android:textSize="@dimen/mq_font8_v2" />
 
-        <View
-            style="@style/item_divider"
-            android:layout_marginTop="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,23 +34,20 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:layout_marginTop="15dp"
-            android:text="• 在购买定期理财产品时可用账户里的活期额度进行认购。"
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
+            android:layout_marginTop="10dp"
+            android:text="在购买定期理财产品时可用账户里的活期额度进行认购。"
+            android:textColor="@color/mq_b5_v2"
+            android:textSize="@dimen/mq_font6_v2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="30dp"
             android:text="活期转定期的优点"
-            android:textColor="@color/mq_r1"
-            android:textSize="@dimen/mq_font1" />
+            android:textColor="@color/mq_b1_v2"
+            android:textSize="@dimen/mq_font8_v2" />
 
-        <View
-            style="@style/item_divider"
-            android:layout_marginTop="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,10 +55,10 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="1.方便用户快速认购定期产品。用户可先投活期，有合适的定期产品时，再进行活期转定期。"
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
+            android:textColor="@color/mq_b5_v2"
+            android:textSize="@dimen/mq_font6_v2" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,19 +68,21 @@
             android:layout_marginRight="@dimen/margin_left_right"
             android:layout_marginTop="5dp"
             android:text="2.活期赎回有限额，用户通过购买定期产品再转让从而赎回自己的活期产品。"
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
+            android:textColor="@color/mq_b5_v2"
+            android:textSize="@dimen/mq_font6_v2" />
 
 
-        <ImageView
-            android:id="@+id/iv_closetip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="26dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/close_tip" />
-
+        <Button
+            android:id="@+id/bt_confirm"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/bt_height"
+            android:layout_gravity="center_horizontal"
+            android:text="确定"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/transparent"
+            android:textColor="@drawable/btn_cancel_font"
+            android:textSize="@dimen/mq_font7_v2"/>
     </LinearLayout>
 
 </RelativeLayout>

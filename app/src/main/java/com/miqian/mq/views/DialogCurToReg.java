@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 
 import com.miqian.mq.R;
 
@@ -23,8 +23,8 @@ public abstract class DialogCurToReg extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ImageView ivClose = (ImageView) findViewById(R.id.iv_closetip);
-        ivClose.setOnClickListener(new View.OnClickListener() {
+        Button btConfirm = (Button) findViewById(R.id.bt_confirm);
+        btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
