@@ -13,18 +13,22 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.entity.Popup;
 import com.miqian.mq.entity.SubscribeOrder;
+import com.miqian.mq.listener.JsShareListener;
 import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.ShareUtils;
+import com.miqian.mq.views.DialogShare;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Jackie on 2015/9/29.
  */
-public class SubscribeResult extends BaseActivity implements View.OnClickListener {
+public class SubscribeResult extends BaseActivity implements View.OnClickListener, JsShareListener {
 
     private ImageView imageStatus;
     private TextView textMoney;
@@ -135,6 +139,9 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             textGold.getPaint().setAntiAlias(true);//抗锯齿
             textGold.setText(goldCoin);
         }
+        if (subscribeOrder.getShareLink() != null) {
+            showShare();
+        }
     }
 
     @Override
@@ -180,4 +187,22 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         }
     }
 
+    @Override
+    public void shareLog(String json) {
+
+    }
+
+    private void showShare() {
+        DialogShare dialogShare = new DialogShare(SubscribeResult.this, subscribeOrder.getPopup()) {
+            @Override
+            public void share() {
+                shareChannel();
+            }
+        };
+        dialogShare.show();
+    }
+
+    private void shareChannel() {
+        ShareUtils.share(SubscribeResult.this, subscribeOrder.getShareLink(), SubscribeResult.this);
+    }
 }

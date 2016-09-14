@@ -8,6 +8,8 @@ public class SubscribeOrder {
     private String orderNo;
     private String goldCoin;
     private String goldCoin_url;
+    private ShareData shareLink;
+    private Popup popup;
 
     public String getOrderNo() {
         return orderNo;
@@ -31,5 +33,21 @@ public class SubscribeOrder {
 
     public void setGoldCoin_url(String goldCoin_url) {
         this.goldCoin_url = goldCoin_url;
+    }
+
+    public ShareData getShareLink() {
+        return shareLink;
+    }
+
+    public void setShareLink(ShareData shareLink) {
+        this.shareLink = shareLink;
+    }
+
+    public Popup getPopup() {
+        return popup;
+    }
+
+    public void setPopup(Popup popup) {
+        this.popup = popup;
     }
 }

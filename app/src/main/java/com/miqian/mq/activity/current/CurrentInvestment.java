@@ -635,11 +635,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     frameRedPackage.performClick();
                 }
             };
-            packageTips.setNegative(View.VISIBLE);
-            packageTips.setRemarksVisibility(View.GONE);
+//            packageTips.setNegative(View.VISIBLE);
+//            packageTips.setRemarksVisibility(View.GONE);
             packageTips.setNegative("选择红包/卡");
             packageTips.setPositive("认购");
-            packageTips.setTitle("您有未使用的红包/卡");
+            packageTips.setTitle("选择红包/卡");
+            packageTips.setRemarks("您有未使用的红包/卡");
             packageTips.setCanceledOnTouchOutside(false);
         }
         packageTips.show();

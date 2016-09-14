@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    
+
     <RelativeLayout
+        android:id="@+id/frame_title"
         android:layout_width="300dp"
         android:layout_height="160dp"
-        android:background="@drawable/bg_activity_top"
-        >
+        android:background="@drawable/bg_activity_top">
+
         <Button
             android:id="@+id/btn_close"
             android:layout_width="wrap_content"
@@ -16,7 +17,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_marginTop="60dp"
-            android:background="@drawable/bg_dialog_close"/>
+            android:background="@drawable/bg_dialog_close" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -24,27 +25,28 @@
         android:layout_width="300dp"
         android:layout_height="250dp"
         android:layout_marginBottom="45dp"
+        android:background="@color/white"
         android:gravity="center_horizontal"
         android:paddingLeft="45dp"
-        android:paddingRight="45dp"
-        android:background="@color/white">
+        android:paddingRight="45dp">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="40dp"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
             android:textColor="@color/mq_r1_v2"
             android:textSize="@dimen/mq_font8_v2" />
+
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
             android:layout_marginTop="15dp"
             android:gravity="center_horizontal"
-            android:layout_below="@id/tv_title"
             android:lineSpacingMultiplier="1.2"
             android:textColor="@color/mq_b5_v2"
             android:textSize="@dimen/mq_font5_v2" />
@@ -53,8 +55,8 @@
             android:id="@+id/btn_confirm"
             android:layout_width="210dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="25dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="25dp"
             android:background="@drawable/dialog_btn"
             android:gravity="center"
             android:textColor="@color/white"
