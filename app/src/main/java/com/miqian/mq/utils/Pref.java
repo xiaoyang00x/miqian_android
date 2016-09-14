@@ -14,6 +14,8 @@ public class Pref {
     final static String PREFS_NAME = "miqian_preferences";
 
     public static final String TOKEN = "Token";
+    //用户等级
+    public static final String CUSTLEVEL = "CUSTLEVEL";
 
     // 消息是否读取
     public static final String MESSAGE_READ = "MessageRead";

@@ -37,7 +37,15 @@ public class UserInfo implements Serializable {
     private String dayAmtLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
     private String ydayProfit;//昨日收益
+    private String custLevel;//新增用户等级
 
+    public String getCustLevel() {
+        return custLevel;
+    }
+
+    public void setCustLevel(String custLevel) {
+        this.custLevel = custLevel;
+    }
 
     public String getCanRedeem() {
         return canRedeem;
