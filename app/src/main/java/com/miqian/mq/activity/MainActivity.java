@@ -598,8 +598,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         }
         jpushDialog.setTitle(jpush.getTitle());
         jpushDialog.setRemarks(jpush.getContent());
-        jpushDialog.setNegative(View.VISIBLE);
-        jpushDialog.setNegative("取消");
         jpushDialog.show();
 
     }

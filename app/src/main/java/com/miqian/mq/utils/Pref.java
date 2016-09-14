@@ -15,7 +15,7 @@ public class Pref {
 
     public static final String TOKEN = "Token";
     //用户等级
-    public static final String CUSTLEVEL = "CUSTLEVEL";
+    public static final String CUSTLEVEL = "CustLevel";
 
     // 消息是否读取
     public static final String MESSAGE_READ = "MessageRead";

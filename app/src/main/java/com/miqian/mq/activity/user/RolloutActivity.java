@@ -298,9 +298,7 @@ public class RolloutActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(tip)) {
                         tip.deleteCharAt(0);
                         initTipDialog(1);
-                        dialogTipsReput.setNegative(View.VISIBLE);
                         dialogTipsReput.setRemarks(tip.toString());
-                        dialogTipsReput.setNegative("取消");
                         dialogTipsReput.show();
                     } else {
                         rollOutHttp();
@@ -449,7 +447,6 @@ public class RolloutActivity extends BaseActivity {
                     rollOutHttp();
                 }
             };
-            dialogTips.setNegative(View.VISIBLE);
             dialogTips.setRemarks(message);
             dialogTips.setNegative("继续尝试");
             dialogTips.setPositive("找回密码");
