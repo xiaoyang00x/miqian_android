@@ -43,6 +43,7 @@ public class UserUtil {
         //设置GrowingIO用户信息
         GrowingIO growingIO = GrowingIO.getInstance();
         growingIO.setCS1("user_id", RSAUtils.decryptByPrivate(userInfo.getCustId()));
+        growingIO.setCS2("user_class", userInfo.getCustLevel());
 
         //设置极光别名
         JpushHelper.setAlias(context);
@@ -140,6 +141,8 @@ public class UserUtil {
         //设置GrowingIO用户信息
         GrowingIO growingIO = GrowingIO.getInstance();
         growingIO.setCS1("user_id", "");
+        growingIO.setCS2("user_class", "");
+
 
         logout();
     }
