@@ -139,7 +139,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         showJushTip();
     }
 
-    //  版本是否强制更新
+    //  版本更新:1:建议更新 2:强制
     private void checkVersion() {
         HttpRequest.forceUpdate(this, new ICallback<UpdateResult>() {
             @Override
@@ -159,7 +159,20 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     dialogUpdate.setCanceledOnTouchOutside(false);
                     dialogUpdate.show();
                 } else if ("1".equals(updateInfo.getUpgradeSign())) {
-                    UmengUpdateAgent.update(context);
+                    if (!Pref.getString(Pref.IGNORE_VERSION, context, "").equals(updateInfo.getVersion())) {
+                        DialogUpdate dialogUpdate = new DialogUpdate(context, updateInfo) {
+                            @Override
+                            public void updateClick(String url) {
+//                        // 跳转到外部浏览器下载
+                                Uri uri = Uri.parse(url);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(intent);
+                            }
+
+                        };
+                        dialogUpdate.setIgnoreVisility(View.VISIBLE);
+                        dialogUpdate.show();
+                    }
                 }
             }
 
@@ -167,7 +180,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             public void onFail(String error) {
             }
         });
-
     }
 
     @Override

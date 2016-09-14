@@ -1,48 +1,38 @@
 package com.miqian.mq.activity.setting;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.UpdateInfo;
+import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
-import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileDeviceUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UmengUpdateListener;
-import com.umeng.update.UpdateResponse;
-import com.umeng.update.UpdateStatus;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import cn.udesk.UdeskConst;
 import cn.udesk.UdeskSDKManager;
-import udesk.core.UdeskCallBack;
-import udesk.core.UdeskHttpFacade;
 
 /**
  * Created by Administrator on 2015/9/17.
@@ -178,27 +168,28 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             //版本更新
             case R.id.frame_update:
                 MobclickAgent.onEvent(mActivity, "1032");
-                UmengUpdateAgent.setUpdateAutoPopup(false);
-                UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
-                    @Override
-                    public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
-                        switch (updateStatus) {
-                            case UpdateStatus.Yes: // has update
-                                UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
-                                break;
-                            case UpdateStatus.No: // has no update
-                                Toast.makeText(mContext, "当前已是最新版本", Toast.LENGTH_SHORT).show();
-                                break;
-                            case UpdateStatus.NoneWifi: // none wifi
-                                UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
-                                break;
-                            case UpdateStatus.Timeout: // time out
-                                Toast.makeText(mContext, "请求超时", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    }
-                });
-                UmengUpdateAgent.forceUpdate(mActivity);
+                checkVersion();
+//                UmengUpdateAgent.setUpdateAutoPopup(false);
+//                UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+//                    @Override
+//                    public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
+//                        switch (updateStatus) {
+//                            case UpdateStatus.Yes: // has update
+//                                UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
+//                                break;
+//                            case UpdateStatus.No: // has no update
+//                                Toast.makeText(mContext, "当前已是最新版本", Toast.LENGTH_SHORT).show();
+//                                break;
+//                            case UpdateStatus.NoneWifi: // none wifi
+//                                UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
+//                                break;
+//                            case UpdateStatus.Timeout: // time out
+//                                Toast.makeText(mContext, "请求超时", Toast.LENGTH_SHORT).show();
+//                                break;
+//                        }
+//                    }
+//                });
+//                UmengUpdateAgent.forceUpdate(mActivity);
                 break;
             //了解咪钱
             case R.id.frame_setting_about:
@@ -221,6 +212,47 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
         }
+    }
+
+
+    //  版本更新:1:建议更新 2:强制
+    private void checkVersion() {
+        HttpRequest.forceUpdate(this, new ICallback<UpdateResult>() {
+            @Override
+            public void onSucceed(UpdateResult result) {
+                UpdateInfo updateInfo = result.getData();
+                if ("2".equals(updateInfo.getUpgradeSign())) {
+                    DialogUpdate dialogUpdate = new DialogUpdate(mActivity, updateInfo) {
+                        @Override
+                        public void updateClick(String url) {
+//                        // 跳转到外部浏览器下载
+                            Uri uri = Uri.parse(url);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+                    };
+                    dialogUpdate.setCancelable(false);
+                    dialogUpdate.setCanceledOnTouchOutside(false);
+                    dialogUpdate.show();
+                } else if ("1".equals(updateInfo.getUpgradeSign())) {
+                    DialogUpdate dialogUpdate = new DialogUpdate(mActivity, updateInfo) {
+                        @Override
+                        public void updateClick(String url) {
+//                        // 跳转到外部浏览器下载
+                            Uri uri = Uri.parse(url);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+
+                    };
+                    dialogUpdate.show();
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+            }
+        });
     }
 
     //退出账号
@@ -270,9 +302,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         Map<String, String> info = new HashMap<String, String>();
         String userId = "";
-        if(UserUtil.hasLogin(mApplicationContext)) {
+        if (UserUtil.hasLogin(mApplicationContext)) {
             userId = UserUtil.getUserId(mApplicationContext);
-        }else {
+        } else {
             userId = MobileDeviceUtil.getInstance(mApplicationContext).getMobileImei();
         }
         info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, userId);

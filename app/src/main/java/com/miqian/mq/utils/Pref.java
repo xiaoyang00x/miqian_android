@@ -83,6 +83,8 @@ public class Pref {
     //首页tab 是否切换
     public final static String TAB_NAVIGATION_ON_OFF = "TAB_NAVIGATION_ON_OFF";
 
+    //忽略的版本号
+    public final static String IGNORE_VERSION = "IgnoreVersion";
 
     private static SharedPreferences getSettings(final Context contex) {
         SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);

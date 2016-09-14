@@ -69,6 +69,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private TextView textOrderMoney;
     private TextView expectMoney;
     private TextView textPromote;
+    private TextView textPromoteType;
     private TextView textPromoteMoney;
     private TextView textPromoteUnit;
     private RelativeLayout frameExpect;
@@ -222,26 +223,37 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private void refreshPromoteView() {
         if (promList != null && promList.size() > 0) {
             if (promoteMoney.compareTo(bFlag) > 0) {
+                Promote promote = promList.get(position);
+                if (Promote.TYPE.HB.getValue().equals(promoteType)) {
+                    textPromoteType.setText("红包");
+                } else {
+                    textPromoteType.setText(promote.getToUseRate() + "%秒钱卡");
+                }
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
                 textPromote.setText("少支付");
                 textPromoteMoney.setText("" + promoteMoney);
                 textPromoteUnit.setText("元");
             } else if (Promote.TYPE.JX.getValue().equals(promoteType)) {
+                Promote promote = promList.get(position);
+                textPromoteType.setText(promote.getGiveYrt() + "%加息卡");
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
                 textPromote.setText("收益增加");
                 textPromoteMoney.setText("" + increaseMoney);
                 textPromoteUnit.setText("元");
             } else if (Promote.TYPE.SK.getValue().equals(promoteType)) {
+                textPromoteType.setText("双倍收益卡");
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
                 textPromote.setText("收益增加");
                 textPromoteMoney.setText("" + increaseMoney);
                 textPromoteUnit.setText("元");
             } else {
+                textPromoteType.setText("红包/卡");
                 textPromote.setText("");
                 textPromoteMoney.setText("" + promList.size());
                 textPromoteUnit.setText("张可用");
             }
         } else {
+            textPromoteType.setText("红包/卡");
             textPromote.setTextColor(getResources().getColor(R.color.mq_b2));
             textPromote.setText("无可用");
             textPromoteMoney.setText("");
@@ -420,6 +432,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         textOrderMoney.setText(money);
         expectMoney = (TextView) findViewById(R.id.expect_money);
         textPromote = (TextView) findViewById(R.id.text_promote);
+        textPromoteType = (TextView) findViewById(R.id.text_promote_type);
         textPromoteMoney = (TextView) findViewById(R.id.text_promote_money);
         textPromoteUnit = (TextView) findViewById(R.id.text_promote_unit);
         textErrorLian = (TextView) findViewById(R.id.text_error_lian);
@@ -622,11 +635,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     frameRedPackage.performClick();
                 }
             };
-            packageTips.setNegative(View.VISIBLE);
-            packageTips.setRemarksVisibility(View.GONE);
+//            packageTips.setNegative(View.VISIBLE);
+//            packageTips.setRemarksVisibility(View.GONE);
             packageTips.setNegative("选择红包/卡");
             packageTips.setPositive("认购");
-            packageTips.setTitle("您有未使用的红包/卡");
+            packageTips.setTitle("选择红包/卡");
+            packageTips.setRemarks("您有未使用的红包/卡");
             packageTips.setCanceledOnTouchOutside(false);
         }
         packageTips.show();
