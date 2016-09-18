@@ -47,7 +47,7 @@
                 android:paddingLeft="8dp"
                 android:singleLine="true"
                 android:textColor="@color/mq_b1"
-                android:textColorHint="@color/mq_b6_v2"
+                android:textColorHint="@color/mq_b5_v2"
                 android:textSize="@dimen/mq_font6_v2" />
 
         </LinearLayout>
