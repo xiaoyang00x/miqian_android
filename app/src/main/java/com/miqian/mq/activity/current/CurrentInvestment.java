@@ -531,10 +531,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     }
                     if (mDialogTip==null){
                         mDialogTip=new DialogTip(mActivity) {};
-                    }else {
-                        mDialogTip.setInfo(tipString);
-                        mDialogTip.setSureInfo("确定");
                     }
+                    mDialogTip.setInfo(tipString);
                     mDialogTip.show();
                     return;
                 }

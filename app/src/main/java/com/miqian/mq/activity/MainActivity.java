@@ -696,7 +696,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         }
         if (jpushInfo != null) {
             dialogTips.setInfo(jpushInfo.getContent());
-            dialogTips.setSureInfo("确定");
             dialogTips.setTitle(jpushInfo.getTitle());
             dialogTips.show();
         }

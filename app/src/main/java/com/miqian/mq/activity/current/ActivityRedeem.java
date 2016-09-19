@@ -243,7 +243,6 @@ public class ActivityRedeem extends BaseActivity {
                 if (code.equals("999993") || code.equals("999988") || code.equals("996633")) {
                     initDialog();
                     mDialogTip.setInfo(result.getMessage());
-                    mDialogTip.setSureInfo("确定");
                     mDialogTip.show();
                 }//交易密码错误4次提示框
                 else if (code.equals("999992")) {

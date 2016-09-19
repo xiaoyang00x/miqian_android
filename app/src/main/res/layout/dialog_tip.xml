@@ -43,7 +43,7 @@
             android:layout_marginRight="25dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="dfeffefefeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeetetetetetetette"
+            android:text=""
             android:textColor="@color/mq_b5_v2"
             android:textSize="@dimen/mq_font6_v2" />
 
