@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:textColor="@color/mq_b5_v2"
+            android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font6_v2" />
 
         <LinearLayout
