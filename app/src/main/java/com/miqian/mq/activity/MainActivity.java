@@ -53,7 +53,6 @@ import com.miqian.mq.views.MyRelativeLayout;
 import com.miqian.mq.views.TextViewEx;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.update.UmengUpdateAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;

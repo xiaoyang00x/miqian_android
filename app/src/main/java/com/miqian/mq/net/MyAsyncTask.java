@@ -10,7 +10,6 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
-import com.umeng.update.UmengUpdateAgent;
 
 import java.util.List;
 
@@ -79,7 +78,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                         callback.onFail("");
                         return;
                     } else if (response.getCode().equals("900000")) {
-                        UmengUpdateAgent.forceUpdate(mContext);
+//                        UmengUpdateAgent.forceUpdate(mContext);
                     }
                     callback.onSucceed(result);
                 }
