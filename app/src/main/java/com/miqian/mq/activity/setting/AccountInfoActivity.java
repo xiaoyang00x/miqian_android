@@ -70,18 +70,18 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
 
     private void setData() {
 
-        if (!TextUtils.isEmpty(userInfo.getMobilePhone())) {
-            String phone = RSAUtils.decryptByPrivate(userInfo.getMobilePhone());
+        if (!TextUtils.isEmpty(userInfo.getMobile())) {
+            String phone = RSAUtils.decryptByPrivate(userInfo.getMobile());
             tvTelephone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
         }
 
         if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
             //已认证
             if ("1".equals(userInfo.getRealNameStatus())) {
-                if (!TextUtils.isEmpty(userInfo.getRealName())) {
+                if (!TextUtils.isEmpty(userInfo.getUserName())) {
                     frame_name.setVisibility(View.VISIBLE);
                     findViewById(R.id.divider_name).setVisibility(View.VISIBLE);
-                    tvName.setText(RSAUtils.decryptByPrivate(userInfo.getRealName()));
+                    tvName.setText(RSAUtils.decryptByPrivate(userInfo.getUserName()));
                 }
             }
         }
@@ -89,7 +89,7 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
         if ("1".equals(userInfo.getBindCardStatus())) {
             frame_bankcard.setVisibility(View.VISIBLE);
             findViewById(R.id.divider_bank).setVisibility(View.VISIBLE);
-            String bankNo = RSAUtils.decryptByPrivate(userInfo.getBankNo());
+            String bankNo = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
             if (!TextUtils.isEmpty(bankNo)) {
                 tvCardNum.setText(bankNo.substring(0, 4) + " **** **** " + bankNo.substring(bankNo.length() - 4, bankNo.length()));
             }

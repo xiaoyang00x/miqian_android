@@ -38,7 +38,7 @@ public class SetBankActivity extends BaseActivity {
         Intent intent = getIntent();
         userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
         if (userInfo != null) {
-            bankCardNo = userInfo.getBankNo();
+            bankCardNo = userInfo.getBankCardNo();
         }
         super.onCreate(arg0);
     }

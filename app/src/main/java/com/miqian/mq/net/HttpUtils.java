@@ -122,4 +122,17 @@ public class HttpUtils {
         headerBuilder.add("Connection", "close");
         return headerBuilder;
     }
+
+    public static String getUrl(List<Param> list) {
+        StringBuffer urlBuffer = new StringBuffer();
+        if (list != null && list.size() > 0) {
+            urlBuffer.append("?");
+            for (Param param : list) {
+                urlBuffer.append(param.getKey()).append("=").append(param.getValue());
+                urlBuffer.append("&");
+            }
+        }
+        urlBuffer.deleteCharAt(urlBuffer.length() - 1);
+        return urlBuffer.toString();
+    }
 }

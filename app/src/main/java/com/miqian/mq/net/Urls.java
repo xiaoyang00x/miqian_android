@@ -54,6 +54,8 @@ public class Urls {
     //测试
     public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
+//    public static final String SERVER_TEST = "http://172.20.50.104:8080/miaoqian-app/";
+//    public static final String SERVER_TEST = "http://172.20.50.115:8080/miaoqian-app/";
     //线上
     public static final String SERVER_ONLINE = "https://api.shicaidai.com/";
 
@@ -98,7 +100,7 @@ public class Urls {
     //登录
     public final static String login = base_server + "userService/login";
     //注册
-    public final static String register = base_server + "userService/register";
+    public final static String register = base_server + "account/register";
     //个人消息列表
     public final static String getMessageList = base_server + "pushService/getMessageList";
     //系统公告列表
@@ -242,6 +244,11 @@ public class Urls {
 
     //我的邀请
     public final static String web_my_invite = base_server + "activityService/inviteMain";
+
+    //汇付接口
+    public final static String hf_rollin_url = base_server + "tradeService/rechargeForJump";
+    public final static String hf_rollout_url = base_server + "tradeService/withdrawForJump";
+    public final static String hf_register = base_server + "account/huifuCreateAccountForJump";
 
 
 }

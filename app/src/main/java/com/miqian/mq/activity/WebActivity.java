@@ -57,13 +57,13 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     public static final String JS_INTERFACE_NAME = "MIAOQIAN";
 
     private String url;
-    private SwipeWebView webview;
-    private MySwipeRefresh swipe_refresh;
-    private ProgressBar progressBar;
-    private View load_webview_error;
-    private View tv_refresh;
+    protected SwipeWebView webview;
+    protected MySwipeRefresh swipe_refresh;
+    protected ProgressBar progressBar;
+    protected View load_webview_error;
+    protected View tv_refresh;
     private String defaultAgent;     //默认 UA
-    private boolean isRefresh;       //是否支持下拉刷新
+    protected boolean isRefresh;       //是否支持下拉刷新
 
     public static void startActivity(Context context, String url) {
         context.startActivity(getIntent(context, url));
@@ -79,11 +79,6 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         url = getIntent().getStringExtra(KEY_URL);
-//        url = "http://172.20.10.8/index.php/Test/test_page?type=1";
-////        url = "http://172.20.10.8/index.php/Test/test_page?type=0";
-////        url = "http://172.20.10.8/index.php/Test/test_page?type=1&refresh=1";
-
-//        Uri.Builder builder = new Uri.Builder();
         Uri uri = Uri.parse(url);
         isRefresh = "1".equals(uri.getQueryParameter("refresh"));
         super.onCreate(savedInstanceState);
@@ -370,7 +365,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     /**
      * 判断当前网页是否有前一页，如果有则返回，否则 finish()
      */
-    private void goBack() {
+    protected void goBack() {
         if (webview != null && webview.canGoBack()) {
             webview.goBack();
         } else {
@@ -383,7 +378,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
      *
      * @param settings
      */
-    private void setUserAgent(WebSettings settings) {
+    protected void setUserAgent(WebSettings settings) {
         if (TextUtils.isEmpty(defaultAgent)) {
             defaultAgent = settings.getUserAgentString();
         }

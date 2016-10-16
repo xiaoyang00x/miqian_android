@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.WebHFActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -1523,6 +1524,7 @@ public class HttpRequest {
                     callback.onFail(meta.getMessage());
                 }
             }
+
             @Override
             public void onFail(String error) {
                 callback.onFail(error);
@@ -1557,4 +1559,61 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+    /**
+     * 汇付充值接口
+     */
+    public static void rollinHf(final Context context, String amt) {
+        ArrayList params = new ArrayList<>();
+//        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
+//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("custId",  RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("amt", amt));
+        WebHFActivity.startActivity(context, Urls.hf_rollin_url, params);
+    }
+
+    /**
+     * 汇付提现接口
+     */
+    public static void rolloutHf(final Context context, String amt) {
+        ArrayList params = new ArrayList<>();
+//        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
+//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("custId",  RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("amt", amt));
+        WebHFActivity.startActivity(context, Urls.hf_rollout_url, params);
+    }
+
+    /**
+     * 汇付用户开户接口
+     */
+    public static void registerHf(final Context context) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+//        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
+        WebHFActivity.startActivity(context, Urls.hf_register, params);
+    }
+
+//    /**
+//     * 测试接口
+//     */
+//    public static void testView(Context context, final ICallback<String> callback) {
+//        ArrayList params = new ArrayList<>();
+//        params.add(new Param("custId", RSAUtils.encryptURLEncode("1474359996516565575")));
+//        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+//        params.add(new Param("amt", "100"));
+//
+//        new MyAsyncTask(context, Urls.hf_register, params, new ICallback<String>() {
+//
+//            @Override
+//            public void onSucceed(String result) {
+//                callback.onSucceed(result);
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//            }
+//        }).executeOnExecutor();
+//    }
 }

@@ -171,7 +171,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         if ("1".equals(relaNameStatus)) {
             editCardId.setEnabled(false);
             editName.setEnabled(false);
-            realName = RSAUtils.decryptByPrivate(userInfo.getRealName());
+            realName = RSAUtils.decryptByPrivate(userInfo.getUserName());
             idCard = RSAUtils.decryptByPrivate(userInfo.getIdCard());
             editName.setText(realName);
             editCardId.setText(idCard);
@@ -185,7 +185,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             frameRealName.setVisibility(View.GONE);
             frameBind.setVisibility(View.GONE);
             frameBound.setVisibility(View.VISIBLE);
-            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
+            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
             if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
                 bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
             }
@@ -227,7 +227,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 return;
             }
         } else {
-            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
+            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
         }
 
         if ("0".equals(relaNameStatus)) {

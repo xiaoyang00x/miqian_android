@@ -19,13 +19,11 @@ import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
-import com.miqian.mq.activity.PaymodeActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.NoticeActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
@@ -133,16 +131,16 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 if (userInfo != null) {
                     userInfoTemp = new UserInfo();
                     userInfoTemp.setBindCardStatus(userInfo.getBindCardStatus());
-                    userInfoTemp.setBankNo(userInfo.getBankNo());
+                    userInfoTemp.setBankCardNo(userInfo.getBankCardNo());
                     userInfoTemp.setBankName(userInfo.getBankName());
                     userInfoTemp.setBankUrlSmall(userInfo.getBankUrlSmall());
                     userInfoTemp.setBankCode(userInfo.getBankCode());
-                    userInfoTemp.setBalance(userInfo.getBalance());
+                    userInfoTemp.setUsableSa(userInfo.getUsableSa());
                     userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
                     userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
                     userInfoTemp.setPayPwdStatus(userInfo.getPayPwdStatus());
-                    userInfoTemp.setMobilePhone(userInfo.getMobilePhone());
-                    userInfoTemp.setRealName(userInfo.getRealName());
+                    userInfoTemp.setMobile(userInfo.getMobile());
+                    userInfoTemp.setUserName(userInfo.getUserName());
                     setData(userInfo);
                 }
             }
@@ -168,8 +166,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             tv_TotalProfit.setText("--.--");
         }
         //账户余额
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.getBalance())) {
-            tv_balance.setText(FormatUtil.formatAmountStr(userInfo.getBalance()));
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getUsableSa())) {
+            tv_balance.setText(FormatUtil.formatAmountStr(userInfo.getUsableSa()));
         } else {
             tv_balance.setText("--.--");
         }
@@ -411,7 +409,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 if (userInfo == null) {
                     return;
                 }
-                String balance = userInfo.getBalance();
+                String balance = userInfo.getUsableSa();
                 if (!TextUtils.isEmpty(balance)) {
                     if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
 

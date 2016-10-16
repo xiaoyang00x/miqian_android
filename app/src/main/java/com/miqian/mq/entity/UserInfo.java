@@ -8,36 +8,43 @@ import java.io.Serializable;
 public class UserInfo implements Serializable {
 
     private String custId;//客户id
-    private String mobilePhone;//手机号
-    private String token;//
-    private String loginName;//登录名
-    private String realName;//真实姓名
-    private String nickName;//昵称
-    private String idCard;//身份证号
-    private String bankNo;//银行卡号
-    private String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
-    private String balance;//可用余额
+    private String hfCustId;//客户汇付id
+    private String userName;//真实姓名
+    private String mobile;//手机号
     private String curAmt;//活期总额
     private String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
+    private String usableSa;//可用余额
+    private String idCard;//身份证号
     private String totalProfit;//历史收益
     private String regTotal;//定期认购笔数
+    private String bankCardNo;//银行卡号
     private String totalAsset;//总资产
-    private String wealthTicket;//拾财券
-    private String realNameStatus;//实名认证状态
-    private String redBag;//红包数
-    private int totalPromotion;//优惠券总数
+    private String bankCode;//绑定银行代码
     private String bankName;//绑定银行名称
     private String bankUrlSmall;//绑定银行图标url
     private String bankUrlBig;//绑定银行图标url
-    private String bankCode;//绑定银行代码
-    private String supportStatus;//是否支持连连绑卡
-    private String addRechargeMinValue;//充值最小额度
     private String canRedeem;//可赎回金额
+    private int totalPromotion;//优惠券总数
+    private String ydayProfit;//昨日收益
+    private String custLevel;//新增用户等级
+    private String token;
+
+    private String status;//用户状态 active 激活 close 未激活
+    private String hfAccountStatus;//汇付账户状态 unaccount 未开户 success 成功开始 process 进行中
+    private String cardInfo;//银行卡信息(对象)
+
+
+// TODO: 2016/10/16
+    /**
+     * 需要删除的
+     */
+    private String supportStatus;//是否支持连连绑卡
     private String singleAmtLimit; //单笔限额
     private String dayAmtLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
-    private String ydayProfit;//昨日收益
-    private String custLevel;//新增用户等级
+    private String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
+    private String realNameStatus;//实名认证状态
+    private String addRechargeMinValue;//充值最小额度
 
     public String getCustLevel() {
         return custLevel;
@@ -63,12 +70,20 @@ public class UserInfo implements Serializable {
         this.custId = custId;
     }
 
-    public String getMobilePhone() {
-        return mobilePhone;
+    public String getHfCustId() {
+        return hfCustId;
     }
 
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
+    public void setHfCustId(String hfCustId) {
+        this.hfCustId = hfCustId;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getToken() {
@@ -79,29 +94,29 @@ public class UserInfo implements Serializable {
         this.token = token;
     }
 
-    public String getLoginName() {
-        return loginName;
+//    public String getLoginName() {
+//        return loginName;
+//    }
+//
+//    public void setLoginName(String loginName) {
+//        this.loginName = loginName;
+//    }
+
+    public String getUserName() {
+        return userName;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
+//    public String getNickName() {
+//        return nickName;
+//    }
+//
+//    public void setNickName(String nickName) {
+//        this.nickName = nickName;
+//    }
 
     public String getIdCard() {
         return idCard;
@@ -111,28 +126,36 @@ public class UserInfo implements Serializable {
         this.idCard = idCard;
     }
 
-    public String getBankNo() {
-        return bankNo;
+    public String getBankCardNo() {
+        return bankCardNo;
     }
 
-    public void setBankNo(String bankNo) {
-        this.bankNo = bankNo;
+    public void setBankCardNo(String bankCardNo) {
+        this.bankCardNo = bankCardNo;
     }
+
+    //    public String getBankNo() {
+//        return bankNo;
+//    }
+//
+//    public void setBankNo(String bankNo) {
+//        this.bankNo = bankNo;
+//    }
 
     public String getPayPwdStatus() {
-        return payPwdStatus;
+        return "0";
     }
 
     public void setPayPwdStatus(String payPwdStatus) {
         this.payPwdStatus = payPwdStatus;
     }
 
-    public String getBalance() {
-        return balance;
+    public String getUsableSa() {
+        return usableSa;
     }
 
-    public void setBalance(String balance) {
-        this.balance = balance;
+    public void setUsableSa(String usableSa) {
+        this.usableSa = usableSa;
     }
 
     public String getCurAmt() {
@@ -175,13 +198,13 @@ public class UserInfo implements Serializable {
         this.totalAsset = totalAsset;
     }
 
-    public String getWealthTicket() {
-        return wealthTicket;
-    }
-
-    public void setWealthTicket(String wealthTicket) {
-        this.wealthTicket = wealthTicket;
-    }
+//    public String getWealthTicket() {
+//        return wealthTicket;
+//    }
+//
+//    public void setWealthTicket(String wealthTicket) {
+//        this.wealthTicket = wealthTicket;
+//    }
 
     public String getRealNameStatus() {
         return realNameStatus;
@@ -191,13 +214,13 @@ public class UserInfo implements Serializable {
         this.realNameStatus = realNameStatus;
     }
 
-    public String getRedBag() {
-        return redBag;
-    }
-
-    public void setRedBag(String redBag) {
-        this.redBag = redBag;
-    }
+//    public String getRedBag() {
+//        return redBag;
+//    }
+//
+//    public void setRedBag(String redBag) {
+//        this.redBag = redBag;
+//    }
 
     public int getTotalPromotion() {
         return totalPromotion;
@@ -285,5 +308,29 @@ public class UserInfo implements Serializable {
 
     public void setYdayProfit(String ydayProfit) {
         this.ydayProfit = ydayProfit;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getHfAccountStatus() {
+        return hfAccountStatus;
+    }
+
+    public void setHfAccountStatus(String hfAccountStatus) {
+        this.hfAccountStatus = hfAccountStatus;
+    }
+
+    public String getCardInfo() {
+        return cardInfo;
+    }
+
+    public void setCardInfo(String cardInfo) {
+        this.cardInfo = cardInfo;
     }
 }

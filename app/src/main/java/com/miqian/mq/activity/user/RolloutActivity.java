@@ -185,8 +185,8 @@ public class RolloutActivity extends BaseActivity {
         if (userInfo == null) {
             return;
         }
-        if (!TextUtils.isEmpty(userInfo.getBankNo())) {
-            cardNum = RSAUtils.decryptByPrivate(userInfo.getBankNo());
+        if (!TextUtils.isEmpty(userInfo.getBankCardNo())) {
+            cardNum = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
             bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
         }
         if (!TextUtils.isEmpty(userInfo.getBankName())) {
@@ -194,8 +194,8 @@ public class RolloutActivity extends BaseActivity {
         }
         imageLoader.displayImage(userInfo.getBankUrlSmall(), imageBank, options);
 
-        if (!TextUtils.isEmpty(userInfo.getBalance())) {
-            totalMoney = userInfo.getBalance();
+        if (!TextUtils.isEmpty(userInfo.getUsableSa())) {
+            totalMoney = userInfo.getUsableSa();
             editMoney.setHint("本次最多可提现" + totalMoney + "元");
         }
 
