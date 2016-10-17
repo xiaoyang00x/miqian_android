@@ -286,7 +286,7 @@ public class HttpRequest {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("captcha", captcha));
         mList.add(new Param("invitationCode", invitationCode));
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
         new MyAsyncTask(context, Urls.register, mList, new ICallback<String>() {

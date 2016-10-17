@@ -11,6 +11,7 @@ public class UserInfo implements Serializable {
     private String hfCustId;//客户汇付id
     private String userName;//真实姓名
     private String mobile;//手机号
+    private boolean status;//用户状态 true 开通 false 未开通
     private String curAmt;//活期总额
     private String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
     private String usableSa;//可用余额
@@ -19,6 +20,7 @@ public class UserInfo implements Serializable {
     private String regTotal;//定期认购笔数
     private String bankCardNo;//银行卡号
     private String totalAsset;//总资产
+    private String nickName;//昵称
     private String bankCode;//绑定银行代码
     private String bankName;//绑定银行名称
     private String bankUrlSmall;//绑定银行图标url
@@ -27,11 +29,8 @@ public class UserInfo implements Serializable {
     private int totalPromotion;//优惠券总数
     private String ydayProfit;//昨日收益
     private String custLevel;//新增用户等级
+    private boolean hfAccountStatus;//汇付账户状态 unaccount 未开户 success 成功开始 process 进行中
     private String token;
-
-    private String status;//用户状态 active 激活 close 未激活
-    private String hfAccountStatus;//汇付账户状态 unaccount 未开户 success 成功开始 process 进行中
-    private String cardInfo;//银行卡信息(对象)
 
 
 // TODO: 2016/10/16
@@ -94,14 +93,6 @@ public class UserInfo implements Serializable {
         this.token = token;
     }
 
-//    public String getLoginName() {
-//        return loginName;
-//    }
-//
-//    public void setLoginName(String loginName) {
-//        this.loginName = loginName;
-//    }
-
     public String getUserName() {
         return userName;
     }
@@ -109,14 +100,6 @@ public class UserInfo implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-//    public String getNickName() {
-//        return nickName;
-//    }
-//
-//    public void setNickName(String nickName) {
-//        this.nickName = nickName;
-//    }
 
     public String getIdCard() {
         return idCard;
@@ -133,14 +116,6 @@ public class UserInfo implements Serializable {
     public void setBankCardNo(String bankCardNo) {
         this.bankCardNo = bankCardNo;
     }
-
-    //    public String getBankNo() {
-//        return bankNo;
-//    }
-//
-//    public void setBankNo(String bankNo) {
-//        this.bankNo = bankNo;
-//    }
 
     public String getPayPwdStatus() {
         return "0";
@@ -198,13 +173,13 @@ public class UserInfo implements Serializable {
         this.totalAsset = totalAsset;
     }
 
-//    public String getWealthTicket() {
-//        return wealthTicket;
-//    }
-//
-//    public void setWealthTicket(String wealthTicket) {
-//        this.wealthTicket = wealthTicket;
-//    }
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getRealNameStatus() {
         return realNameStatus;
@@ -213,14 +188,6 @@ public class UserInfo implements Serializable {
     public void setRealNameStatus(String realNameStatus) {
         this.realNameStatus = realNameStatus;
     }
-
-//    public String getRedBag() {
-//        return redBag;
-//    }
-//
-//    public void setRedBag(String redBag) {
-//        this.redBag = redBag;
-//    }
 
     public int getTotalPromotion() {
         return totalPromotion;
@@ -310,27 +277,19 @@ public class UserInfo implements Serializable {
         this.ydayProfit = ydayProfit;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
-    public String getHfAccountStatus() {
+    public boolean getHfAccountStatus() {
         return hfAccountStatus;
     }
 
-    public void setHfAccountStatus(String hfAccountStatus) {
+    public void setHfAccountStatus(boolean hfAccountStatus) {
         this.hfAccountStatus = hfAccountStatus;
-    }
-
-    public String getCardInfo() {
-        return cardInfo;
-    }
-
-    public void setCardInfo(String cardInfo) {
-        this.cardInfo = cardInfo;
     }
 }
