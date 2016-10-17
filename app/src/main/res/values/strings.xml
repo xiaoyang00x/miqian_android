@@ -49,4 +49,12 @@
   <string name="main_tab_current"> 活期</string>
   <string name="main_tab_regular">定期</string>
   <string name="main_tab_user">我的</string>
+
+  <!-- 开通资金存管-->
+  <string name="open_third">第三方资金存管</string>
+  <string name="open_ensure">为确保账户资金安全，请开通第三方资金存管账户</string>
+  <string name="open_hint">秒钱账户的资金由恒丰银行存管，保证您的账户安全</string>
+  <string name="open_btn">开通资金存管</string>
+  <string name="open_rule">了解《资金存管明细》</string>
+
 </resources>
