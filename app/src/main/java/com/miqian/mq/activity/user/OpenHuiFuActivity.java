@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.views.WFYTitle;
@@ -58,8 +59,8 @@ public class OpenHuiFuActivity extends BaseActivity {
             case TypeUtil.TYPE_OPENHF_REGISTER:
                 mTitle.setTitleText("注册");
                 break;
-            case TypeUtil.TYPE_OPENHF_LOGIN:
-                mTitle.setTitleText("登录");
+            case TypeUtil.TYPE_OPENHF_ROOLIN:
+                mTitle.setTitleText("充值");
                 break;
             case TypeUtil.TYPE_OPENHF_INVESTMENT:
                 mTitle.setTitleText("认购");
@@ -91,9 +92,7 @@ public class OpenHuiFuActivity extends BaseActivity {
 
     //开通按钮
     public void btn_click(View v) {
-        LogUtil.e("dfdf","开通按钮");
-
-
+        HttpRequest.registerHf(this);
     }
 
     //暂不开通按钮
