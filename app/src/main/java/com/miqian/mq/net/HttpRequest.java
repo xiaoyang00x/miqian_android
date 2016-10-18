@@ -220,37 +220,37 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    /**
-     * 充值失败原因上传
-     */
-    public static void rollInError(final Context context, String orderNo, String error) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("orderNo", orderNo));
-        mList.add(new Param("llJson", error));
-        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, IntoActivity.showErrorString(context, "llErrorCodeVersion"))));
-
-        new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                ErrorLianResult errorLianResult = JsonUtil.parseObject(result, ErrorLianResult.class);
-                String errorData = errorLianResult.getData();
-                Map<String, String> userMap = null;
-                if (!TextUtils.isEmpty(errorData)) {
-                    userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
-                    });
-                    if (userMap.size() > 0) {
-                        Pref.saveString(Pref.ERROR_LIAN, errorData, context);
-                        Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
-                    }
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-            }
-        }).executeOnExecutor();
-    }
+//    /**
+//     * 充值失败原因上传
+//     */
+//    public static void rollInError(final Context context, String orderNo, String error) {
+//        List<Param> mList = new ArrayList<>();
+//        mList.add(new Param("orderNo", orderNo));
+//        mList.add(new Param("llJson", error));
+//        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, IntoActivity.showErrorString(context, "llErrorCodeVersion"))));
+//
+//        new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
+//
+//            @Override
+//            public void onSucceed(String result) {
+//                ErrorLianResult errorLianResult = JsonUtil.parseObject(result, ErrorLianResult.class);
+//                String errorData = errorLianResult.getData();
+//                Map<String, String> userMap = null;
+//                if (!TextUtils.isEmpty(errorData)) {
+//                    userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
+//                    });
+//                    if (userMap.size() > 0) {
+//                        Pref.saveString(Pref.ERROR_LIAN, errorData, context);
+//                        Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//            }
+//        }).executeOnExecutor();
+//    }
 
     /**
      * 获取用户信息
@@ -1562,12 +1562,11 @@ public class HttpRequest {
     /**
      * 汇付充值接口
      */
-    public static void rollinHf(final Context context, String amt) {
+    public static void rollinHf(final Context context, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
-//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("custId",  RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
         WebHFActivity.startActivity(context, Urls.hf_rollin_url, params);
     }
@@ -1575,12 +1574,11 @@ public class HttpRequest {
     /**
      * 汇付提现接口
      */
-    public static void rolloutHf(final Context context, String amt) {
+    public static void rolloutHf(final Context context, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
-//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("custId",  RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+//        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
         WebHFActivity.startActivity(context, Urls.hf_rollout_url, params);
     }

@@ -79,8 +79,8 @@ public class Urls {
     public final static String roll_in = base_server + "assetService/v2/recharge";
     //充值转入结果查询接口
     public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
-    //充值失败错误原因上传接口
-    public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
+//    //充值失败错误原因上传接口
+//    public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
     //认购预处理
@@ -90,7 +90,7 @@ public class Urls {
     //认购快捷支付
     public final static String quick_subscribe_order = base_server + "assetService/quickPayment";
     //获取用户信息
-    public final static String user_info = base_server + "userService/getUserInfo";
+    public final static String user_info = base_server + "account/getAccountProfile";// userService/getUserInfo
 
     //获取APP配置：广告、tab
     public final static String app_config = base_server + "commonService/getAdverts";
@@ -100,7 +100,7 @@ public class Urls {
     //登录
     public final static String login = base_server + "userService/login";
     //注册
-    public final static String register = base_server + "account/register";
+    public final static String register = base_server + "account/register";// userService/register
     //个人消息列表
     public final static String getMessageList = base_server + "pushService/getMessageList";
     //系统公告列表
@@ -212,8 +212,8 @@ public class Urls {
     public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
 
 
-    //连连支付支持绑定的银行界面
-    public final static String web_support_bank = base_server + "webView/querySupportBankLianLian";
+//    //连连支付支持绑定的银行界面
+//    public final static String web_support_bank = base_server + "webView/querySupportBankLianLian";
 
     //活期详情
     public final static String web_current = base_server + "webView/currentDetail";
