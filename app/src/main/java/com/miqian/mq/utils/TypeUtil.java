@@ -40,5 +40,14 @@ public class TypeUtil {
     //设置交易密密码成功
     public static final int TRADEPASSWORD_SETTING_SUCCESS =40002 ;
 
+    //认购跳到开通汇付界面
+    public static final int TYPE_OPENHF_INVESTMENT =40003 ;
+    //注册跳到开通汇付界面
+    public static final int TYPE_OPENHF_REGISTER =40004 ;
+    //登录跳到开通汇付界面
+    public static final int TYPE_OPENHF_LOGIN =40005 ;
+    //提现跳到开通汇付界面
+    public static final int TYPE_OPENHF_ROLLOUT=40006 ;
+
 
 }
