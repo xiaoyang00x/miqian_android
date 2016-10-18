@@ -98,7 +98,7 @@ public class Urls {
     //获取验证码
     public final static String getCaptcha = base_server + "commonService/getCaptcha";
     //登录
-    public final static String login = base_server + "userService/login";
+    public final static String login = base_server + "account/login";
     //注册
     public final static String register = base_server + "account/register";
     //个人消息列表
