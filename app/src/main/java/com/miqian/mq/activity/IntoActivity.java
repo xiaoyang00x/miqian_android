@@ -171,8 +171,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private void refreshView() {
         btRollin.setEnabled(true);
-        hfAccountStatus = userInfo.getHfAccountStatus();
-        activateStatus = userInfo.getStatus();
+        hfAccountStatus = userInfo.isHfAccountStatus();
+        activateStatus = userInfo.isStatus();
         if (!hfAccountStatus) {
             OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROOLIN);
             //开通汇付

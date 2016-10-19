@@ -401,10 +401,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     return;
                 }
                 MobclickAgent.onEvent(getActivity(), "1017");
-                if (!userInfo.getHfAccountStatus()) {
+                if (!userInfo.isHfAccountStatus()) {
                     OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROOLIN);
                     //开通汇付
-                } else if (!userInfo.getStatus()) {
+                } else if (!userInfo.isStatus()) {
                     //激活账户
                 } else {
                     //已开通状态

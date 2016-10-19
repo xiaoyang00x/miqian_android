@@ -222,7 +222,7 @@ public class WebHFActivity extends WebActivity {
 
     @JavascriptInterface
     public void hfCallback() {
-        
+
     }
 
 //    @Override

@@ -84,7 +84,7 @@ public class Urls {
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
     //认购预处理
-    public final static String order_produced = base_server + "assetService/subscribePreprocess";
+    public final static String order_produced = base_server + "tradeService/subscribePreprocess";//assetService/subscribePreprocess
     //认购
     public final static String subscribe_order = base_server + "assetService/subscribe";
     //认购快捷支付

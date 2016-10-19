@@ -29,7 +29,8 @@ public class UserInfo implements Serializable {
     private String ydayProfit;//昨日收益
     private String custLevel;//新增用户等级
     private String addRechargeMinValue;//充值最小额度
-    private boolean hfAccountStatus;//汇付账户状态 unaccount 未开户 success 成功开始 process 进行中
+    private boolean hfAccountStatus;//汇付账户状态 true 开通 false 未开通
+    private boolean hfAutoTenderPlanStatus;//汇付自动投标计划状态 true 开通 false 未开通
     private String token;
 
 
@@ -277,7 +278,15 @@ public class UserInfo implements Serializable {
         this.ydayProfit = ydayProfit;
     }
 
-    public boolean getStatus() {
+    public boolean isHfAutoTenderPlanStatus() {
+        return hfAutoTenderPlanStatus;
+    }
+
+    public void setHfAutoTenderPlanStatus(boolean hfAutoTenderPlanStatus) {
+        this.hfAutoTenderPlanStatus = hfAutoTenderPlanStatus;
+    }
+
+    public boolean isStatus() {
         return status;
     }
 
@@ -285,7 +294,7 @@ public class UserInfo implements Serializable {
         this.status = status;
     }
 
-    public boolean getHfAccountStatus() {
+    public boolean isHfAccountStatus() {
         return hfAccountStatus;
     }
 

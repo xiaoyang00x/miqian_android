@@ -255,7 +255,7 @@ public class HttpRequest {
     /**
      * 获取用户信息
      */
-    public static void getUserInfo(Context context, final ICallback<LoginResult> callback) {
+    public static void getUserInfo(final Context context, final ICallback<LoginResult> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
@@ -265,6 +265,7 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
                 if (loginResult.getCode().equals("000000")) {
+                    UserUtil.saveHfInfo(context, loginResult.getData());
                     callback.onSucceed(loginResult);
                 } else {
                     callback.onFail(loginResult.getMessage());

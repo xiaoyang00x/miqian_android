@@ -14,8 +14,6 @@ public class Pref {
     final static String PREFS_NAME = "miqian_preferences";
 
     public static final String TOKEN = "Token";
-    //用户等级
-    public static final String CUSTLEVEL = "CustLevel";
 
     // 消息是否读取
     public static final String MESSAGE_READ = "MessageRead";
@@ -45,6 +43,13 @@ public class Pref {
 
     //用户信息
     public static final String PAY_STATUS = "PayStatus";
+
+    //汇付用户的激活状态
+    public static final String HF_ACTIVATE_STATUS = "HfActivateStatus";
+    //汇付用户账户状态
+    public static final String HF_ACCOUNT_STATUS = "HfAccountStatus";
+    //汇付用户的自动投标状态
+    public static final String HF_AUTO_STATUS = "HfAutoStatus";
 
     // 是否退出应用
     public static final String EXIT = "Exit";
