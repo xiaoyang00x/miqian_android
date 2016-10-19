@@ -8,8 +8,10 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.utils.LogUtil;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.views.WFYTitle;
 
@@ -43,6 +45,17 @@ public class OpenHuiFuActivity extends BaseActivity {
             public void onClick(View v) {
                 //了解资金存管明细
 
+            }
+        });
+        mTitle.setOnLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mType == TypeUtil.TYPE_OPENHF_REGISTER) {
+                    if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
+                        GestureLockSetActivity.startActivity(getBaseContext(), null);
+                    }
+                }
+                finish();
             }
         });
 
@@ -93,12 +106,23 @@ public class OpenHuiFuActivity extends BaseActivity {
     //开通按钮
     public void btn_click(View v) {
         HttpRequest.registerHf(this);
+        finish();
     }
 
     //暂不开通按钮
     public void btn_close(View v) {
-        LogUtil.e("dfdf","暂不开通按钮");
-        finish();
+        onBackPressed();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        if (mType == TypeUtil.TYPE_OPENHF_REGISTER) {
+            if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
+                GestureLockSetActivity.startActivity(getBaseContext(), null);
+            }
+        }
+        finish();
+        super.onBackPressed();
+    }
 }
