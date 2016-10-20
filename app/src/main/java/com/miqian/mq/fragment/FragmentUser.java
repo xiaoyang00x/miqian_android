@@ -418,40 +418,49 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 if (userInfo == null) {
                     return;
                 }
-                String balance = userInfo.getUsableSa();
-                if (!TextUtils.isEmpty(balance)) {
-                    if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
-
-                        if ("1".equals(userInfo.getBindCardStatus())) {
-                            Intent intent = new Intent(getActivity(), RolloutActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("userInfo", userInfoTemp);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        } else {//提示绑卡
-                            if (tipDialog == null) {
-                                tipDialog = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
-                                    @Override
-                                    public void positionBtnClick() {
-                                        dismiss();
-                                    }
-
-                                    @Override
-                                    public void negativeBtnClick() {
-                                    }
-                                };
-                                tipDialog.setTitle("提示");
-                                tipDialog.setRemarks("请先充值完成绑卡流程");
-                            }
-                            tipDialog.show();
-                        }
-
-
-                    } else {
-                        Uihelper.showToast(getActivity(), "账户无余额，无法提现");
-                    }
-
+                if (!userInfo.isHfAccountStatus()) {
+                    OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROOLIN);
+                    //开通汇付
+                } else if (!userInfo.isStatus()) {
+                    //激活账户
+                } else {
+                    //已开通状态
+                    startActivity(new Intent(getActivity(), RolloutActivity.class));
                 }
+//                String balance = userInfo.getUsableSa();
+//                if (!TextUtils.isEmpty(balance)) {
+//                    if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
+//
+//                        if ("1".equals(userInfo.getBindCardStatus())) {
+//                            Intent intent = new Intent(getActivity(), RolloutActivity.class);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putSerializable("userInfo", userInfoTemp);
+//                            intent.putExtras(bundle);
+//                            startActivity(intent);
+//                        } else {//提示绑卡
+//                            if (tipDialog == null) {
+//                                tipDialog = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
+//                                    @Override
+//                                    public void positionBtnClick() {
+//                                        dismiss();
+//                                    }
+//
+//                                    @Override
+//                                    public void negativeBtnClick() {
+//                                    }
+//                                };
+//                                tipDialog.setTitle("提示");
+//                                tipDialog.setRemarks("请先充值完成绑卡流程");
+//                            }
+//                            tipDialog.show();
+//                        }
+//
+//
+//                    } else {
+//                        Uihelper.showToast(getActivity(), "账户无余额，无法提现");
+//                    }
+//
+//                }
 
                 break;
             //我的活期

@@ -34,6 +34,7 @@ public class UserUtil {
     }
 
     public static void saveHfInfo(Context context, UserInfo userInfo) {
+        Pref.saveString(getPrefKey(context, Pref.HF_CUSTID), RSAUtils.decryptByPrivate(userInfo.getHfCustId()), context);
         Pref.saveBoolean(getPrefKey(context, Pref.HF_ACTIVATE_STATUS), userInfo.isStatus(), context);
         Pref.saveBoolean(getPrefKey(context, Pref.HF_ACCOUNT_STATUS), userInfo.isHfAccountStatus(), context);
         Pref.saveBoolean(getPrefKey(context, Pref.HF_AUTO_STATUS), userInfo.isHfAutoTenderPlanStatus(), context);
@@ -123,6 +124,10 @@ public class UserUtil {
 
     public static String getUserId(Context context) {
         return Pref.getString(Pref.USERID, context, "");
+    }
+
+    public static String getHfCustId(Context context) {
+        return Pref.getString(getPrefKey(context, Pref.HF_CUSTID), context, "");
     }
 
     public static String getPrefKey(Context context, String name) {
