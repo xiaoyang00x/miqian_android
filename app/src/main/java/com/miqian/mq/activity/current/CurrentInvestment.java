@@ -129,7 +129,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         realMoney = intent.getStringExtra("realMoney");
         prodId = intent.getStringExtra("prodId");
         subjectId = intent.getStringExtra("subjectId");
-        subjectId = "CP16100816180000000000001";
+//        subjectId = "CP16100816180000000000001";
         interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
     }
@@ -159,7 +159,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     showTips(false, result);
                     producedOrder = result.getData();
                     promList = producedOrder.getPromotionList();
-                    producedOrder.setBalance(new BigDecimal("1000"));
                     refreshView(true);
                 }
             }
