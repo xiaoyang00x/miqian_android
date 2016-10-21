@@ -66,13 +66,13 @@ public class AdapterPacket extends RecyclerView.Adapter {
         if (holder instanceof BaBaViewHoleder) {
             BaBaViewHoleder tempViewHoleder = (BaBaViewHoleder) holder;
             final Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
 //            String desUrl = promote.getPromUrl();
-            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUsableAmt()));
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
             tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
             if (mPosition == position) {
@@ -80,14 +80,10 @@ public class AdapterPacket extends RecyclerView.Adapter {
             } else {
                 tempViewHoleder.promoteChoosed.setVisibility(View.GONE);
             }
-
-//            clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
-
-//            tempViewHoleder.setViewEnable(isValid);
         } else if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             final Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
@@ -96,9 +92,9 @@ public class AdapterPacket extends RecyclerView.Adapter {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_blue);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.VISIBLE);
-                setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
+                setText(tempViewHoleder.tv_amount, promote.getAddRate());
             } else {
-                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUsableAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
