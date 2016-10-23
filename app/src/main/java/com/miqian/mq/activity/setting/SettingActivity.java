@@ -37,14 +37,13 @@ import cn.udesk.UdeskSDKManager;
 /**
  * Created by Administrator on 2015/9/17.
  */
-public class SettingActivity extends BaseActivity implements View.OnClickListener, ExtendOperationController.ExtendOperationListener {
+public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
     private UserInfo userInfo;
     private ImageView ivPushState;
     private View frame_login;
     private Button btn_loginout;
     private boolean isPush;
-    private ExtendOperationController extendOperationController;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -82,18 +81,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_suggest.setOnClickListener(this);
         frame_setting_about.setOnClickListener(this);
         ivPushState.setOnClickListener(this);
-
-        extendOperationController = ExtendOperationController.getInstance();
-        extendOperationController.registerExtendOperationListener(this);
         setData();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (extendOperationController != null) {
-            extendOperationController.unRegisterExtendOperationListener(this);
-        }
-        super.onDestroy();
     }
 
     private void setData() {
@@ -142,9 +130,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             //安全设置
             case R.id.frame_setting_security:
                 MobclickAgent.onEvent(mActivity, "1026");
-                if (userInfo != null && !TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
+                if (userInfo != null) {
                     Intent intent = new Intent(mActivity, SecuritySettingActivity.class);
-                    intent.putExtra("payPwdStatus", userInfo.getPayPwdStatus());
                     intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
                     startActivity(intent);
                 }
@@ -280,20 +267,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     protected String getPageName() {
         return "设置";
     }
-
-    @Override
-    public void excuteExtendOperation(int operationKey, Object data) {
-
-        switch (operationKey) {
-            case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
-                userInfo.setPayPwdStatus("1");
-                break;
-            default:
-                break;
-        }
-
-    }
-
 
     /**
      * 设置 udesk 所需用户信息

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
+import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
@@ -21,6 +22,7 @@ import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
@@ -44,10 +46,17 @@ public class SendCaptchaActivity extends BaseActivity {
     private int type;   //忘记密码，绑定手机号
     private boolean isModifyPhone;
     private String oldCaptcha;
-
+    private Intent intent;
+    private View layoutPhone;
+    private View layoutInputPhone;
+    private boolean isModify;
 
     @Override
     public void obtainData() {
+        intent = getIntent();
+        type = intent.getIntExtra("type", 0);
+        oldCaptcha = intent.getStringExtra("captcha");
+        isModify = intent.getBooleanExtra("isModify", false);
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -61,29 +70,24 @@ public class SendCaptchaActivity extends BaseActivity {
                 super.handleMessage(msg);
             }
         };
+        if (type == TypeUtil.SENDCAPTCHA_FORGETPSW && isModify) {
+            layoutPhone.setVisibility(View.VISIBLE);
+            layoutInputPhone.setVisibility(View.GONE);
+            phone = Pref.getString(Pref.TELEPHONE, mActivity, "");
+            if (!TextUtils.isEmpty(phone)) {
+                tv_phone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
+            }
+        }
     }
 
     @Override
     public void initView() {
-
-        Intent intent = getIntent();
-        type = intent.getIntExtra("type", 0);
-        if (type == TypeUtil.SENDCAPTCHA_FORGETPSW) {
-            mTitle.setTitleText("忘记密码");
-            if (intent.getBooleanExtra("isModify", false)) {
-                mTitle.setTitleText("修改登录密码");
-            }
-
-        } else if (type == TypeUtil.MODIFY_PHONE) {
-            mTitle.setTitleText("绑定手机号码");
-            isModifyPhone = true;
-            oldCaptcha = intent.getStringExtra("captcha");
-        }
-        tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
-
+        tv_phone = (TextView) findViewById(R.id.tv_phone);
         mEt_Telephone = (EditText) findViewById(R.id.et_account_telephone);
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
         mBtn_sendCaptcha = (Button) findViewById(R.id.btn_send);
+        layoutInputPhone = findViewById(R.id.layout_input_phone);
+        layoutPhone = findViewById(R.id.layout_phone);
 
 
         mEt_Telephone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -98,7 +102,11 @@ public class SendCaptchaActivity extends BaseActivity {
         mBtn_sendCaptcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                watchEdittext(NUM_TYPE_CAPTCHA);
+                if (type == TypeUtil.SENDCAPTCHA_FORGETPSW && isModify) {
+                    sendMessage();
+                } else {
+                    watchEdittext(NUM_TYPE_CAPTCHA);
+                }
             }
         });
 
@@ -166,10 +174,10 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     public void btn_click(View v) {
-
+        if (!(type == TypeUtil.SENDCAPTCHA_FORGETPSW && isModify)) {
+            phone = mEt_Telephone.getText().toString();
+        }
         String captcha = mEt_Captcha.getText().toString();
-        phone = mEt_Telephone.getText().toString();
-
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
                 //检验验证码
@@ -241,7 +249,7 @@ public class SendCaptchaActivity extends BaseActivity {
             Intent intent = new Intent(mActivity, SetPasswordActivity.class);
             intent.putExtra("captcha", captcha);
             intent.putExtra("phone", phone);
-            intent.putExtra("type", TypeUtil.PASSWORD_LOGIN);
+            intent.putExtra("isModify", isModify);
             startActivity(intent);
             finish();
         }
@@ -279,14 +287,29 @@ public class SendCaptchaActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-
-        mTitle.setTitleText("注册");
-
+        if (type == TypeUtil.SENDCAPTCHA_FORGETPSW) {
+            mTitle.setTitleText("忘记密码");
+            if (isModify) {
+                mTitle.setTitleText("修改登录密码");
+            }
+        } else if (type == TypeUtil.MODIFY_PHONE) {
+            mTitle.setTitleText("绑定手机号码");
+            isModifyPhone = true;
+        }
     }
 
     @Override
     protected String getPageName() {
-        return "注册";
+        String pageName = "";
+        if (type == TypeUtil.SENDCAPTCHA_FORGETPSW) {
+            pageName = "忘记密码";
+            if (isModify) {
+                pageName = "修改登录密码";
+            }
+        } else if (type == TypeUtil.MODIFY_PHONE) {
+            pageName = "绑定手机号码";
+        }
+        return pageName;
     }
 
     public static void enterActivity(Context context, int type, boolean isModify) {

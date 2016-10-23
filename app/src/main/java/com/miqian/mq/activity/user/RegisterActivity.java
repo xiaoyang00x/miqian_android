@@ -3,6 +3,7 @@ package com.miqian.mq.activity.user;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.renderscript.Type;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -195,9 +196,10 @@ public class RegisterActivity extends BaseActivity {
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mActivity, userInfo);
 
-                        if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
-                            GestureLockSetActivity.startActivity(getBaseContext(), null);
-                        }
+//                        if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
+//                            GestureLockSetActivity.startActivity(getBaseContext(), null);
+//                        }
+                        OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_REGISTER);
                         finish();
                     }
 

@@ -42,7 +42,6 @@ public class UserInfo implements Serializable {
     private String singleAmtLimit; //单笔限额
     private String dayAmtLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
-    private String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
     private String realNameStatus;//实名认证状态
     private String idCard;//身份证号
 
@@ -116,14 +115,6 @@ public class UserInfo implements Serializable {
 
     public void setBankCardNo(String bankCardNo) {
         this.bankCardNo = bankCardNo;
-    }
-
-    public String getPayPwdStatus() {
-        return "0";
-    }
-
-    public void setPayPwdStatus(String payPwdStatus) {
-        this.payPwdStatus = payPwdStatus;
     }
 
     public String getUsableSa() {

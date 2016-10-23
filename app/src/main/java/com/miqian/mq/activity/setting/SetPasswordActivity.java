@@ -32,9 +32,11 @@ public class SetPasswordActivity extends BaseActivity {
     private EditText et_password;
     private String idCard;
     private String style;
-    private TextView tv_newpassword, tv_comfirmpassword;
-    private int mType;
     private String telephone;
+    private View layoutOldpassword;
+    private View dividerOldpassword;
+    private boolean isModify;
+    private EditText et_oldpassword;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -44,30 +46,26 @@ public class SetPasswordActivity extends BaseActivity {
         phone = intent.getStringExtra("phone");
         idCard = intent.getStringExtra("idCard");
         telephone = intent.getStringExtra("telephone");
-        mType = intent.getIntExtra("type", 0);
+        isModify = intent.getBooleanExtra("isModify", false);
         super.onCreate(arg0);
     }
 
     @Override
     public void obtainData() {
-
+            if (!isModify){
+                layoutOldpassword.setVisibility(View.GONE);
+                dividerOldpassword.setVisibility(View.GONE);
+            }
     }
 
     @Override
     public void initView() {
-
         et_password = (EditText) findViewById(R.id.et_password);
         et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
-        tv_comfirmpassword = (TextView) findViewById(R.id.tv_comfirmpassword);
-        tv_newpassword = (TextView) findViewById(R.id.tv_newpassword);
-        if (mType == TypeUtil.PASSWORD_TRADE || mType == TypeUtil.TRADEPASSWORD_FIRST_SETTING) {
-            mTitle.setTitleText("设置交易密码");
-            tv_newpassword.setText("设置交易密码");
-            tv_comfirmpassword.setText("确定交易密码");
-            et_password.setHint("输入6-16位数字字母组合");
-        }
+        et_oldpassword = (EditText) findViewById(R.id.et_old_password);
+        layoutOldpassword = findViewById(R.id.layout_oldpassword);
+        dividerOldpassword = findViewById(R.id.divider_oldpassword);
     }
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_setpassword;
@@ -76,31 +74,38 @@ public class SetPasswordActivity extends BaseActivity {
     public void btn_click(View v) {
 
         String password = et_password.getText().toString();
+        String oldpassword = et_oldpassword.getText().toString();
         String password_confirm = et_password_confirm.getText().toString();
+        if (isModify){
+            if (TextUtils.isEmpty(oldpassword)){
+                Uihelper.showToast(mActivity,"请填写旧密码");
+                return;
+            }
+        }
         if (!TextUtils.isEmpty(password)) {
             if (password.length() < 6 || password.length() > 20) {
                 Uihelper.showToast(this, R.string.tip_password);
             } else {
                 if (!TextUtils.isEmpty(password_confirm)) {
                     if (password_confirm.equals(password)) {
-                        forget_summit(password_confirm);
+                        summit(oldpassword,password);
                     } else {
-                        Uihelper.showToast(this, "两次密码不一致，请重新输入");
+                        Uihelper.showToast(this, "两次密码不一致，请重新填写");
                     }
 
                 } else {
-                    Uihelper.showToast(this, "请再次输入新密码");
+                    Uihelper.showToast(this, "请再次填写新密码");
                 }
             }
         } else {
-            Uihelper.showToast(this, "请输入新密码");
+            Uihelper.showToast(this, "请填写新密码");
         }
 
     }
 
-    private void forget_summit(String password_confirm) {
+    private void summit(String oldpassword,String password) {
         //设置登录密码
-        if (mType == TypeUtil.PASSWORD_LOGIN) {
+        if (!isModify) {
             begin();
             HttpRequest.getPassword(this, new ICallback<Meta>() {
                 @Override
@@ -115,20 +120,15 @@ public class SetPasswordActivity extends BaseActivity {
                     end();
                     Uihelper.showToast(mActivity, error);
                 }
-            }, phone, password_confirm, password_confirm, captcha);
-        }
-        //修改交易密码
+            }, phone, password, password, captcha);
+        }else {
 
-        else if (mType == TypeUtil.PASSWORD_TRADE) {
-            if (TextUtils.isEmpty(idCard)) {
-                idCard = "";
-            }
             begin();
-            HttpRequest.changePayPassword(this, new ICallback<Meta>() {
+            HttpRequest.changePassword(this, new ICallback<Meta>() {
                 @Override
                 public void onSucceed(Meta result) {
                     end();
-                    Uihelper.showToast(mActivity, "设置密码成功");
+                    Uihelper.showToast(mActivity, "成功修改密码");
                     SetPasswordActivity.this.finish();
                 }
 
@@ -137,29 +137,7 @@ public class SetPasswordActivity extends BaseActivity {
                     end();
                     Uihelper.showToast(mActivity, error);
                 }
-            }, "SXJ1", idCard, telephone, captcha, password_confirm, password_confirm);
-        }
-        //设置交易密码
-        else if (mType == TypeUtil.TRADEPASSWORD_FIRST_SETTING) {
-            begin();
-            HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
-                @Override
-                public void onSucceed(Meta result) {
-                    end();
-                    Uihelper.showToast(mActivity, "设置成功");
-                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS, null);
-                    Intent intent = new Intent();
-                    setResult(TypeUtil.TRADEPASSWORD_SETTING_SUCCESS, intent);
-                    SetPasswordActivity.this.finish();
-
-                }
-
-                @Override
-                public void onFail(String error) {
-                    end();
-                    Uihelper.showToast(mActivity, error);
-                }
-            }, password_confirm, password_confirm);
+            }, oldpassword, password, password, captcha);
         }
     }
 
@@ -167,7 +145,6 @@ public class SetPasswordActivity extends BaseActivity {
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("设置登录密码");
-
     }
 
     @Override

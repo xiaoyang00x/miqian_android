@@ -116,9 +116,9 @@ public class Urls {
     //修改交易密码
     public final static String setPayPassword = base_server + "userService/setPayPassword";
     //修改登录密码
-    public final static String changePassword = base_server + "userService/changePassword";
+    public final static String changePassword = base_server + "account/passwordChange ";// userService/changePassword
     //找回登录密码
-    public final static String getPassword = base_server + "userService/getPassword";
+    public final static String getPassword = base_server + "account/passwordReset";   // userService/getPassword
     //检验验证码
     public final static String checkCaptcha = base_server + "commonService/checkCaptcha";
     //获取用户的银行卡

@@ -139,7 +139,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     userInfoTemp.setUsableSa(userInfo.getUsableSa());
                     userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
                     userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
-                    userInfoTemp.setPayPwdStatus(userInfo.getPayPwdStatus());
                     userInfoTemp.setMobile(userInfo.getMobile());
                     userInfoTemp.setUserName(userInfo.getUserName());
                     setData(userInfo);
@@ -514,7 +513,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (MyApplication.getInstance().isShowTips()) {
             MyApplication.getInstance().setShowTips(false);
             if (dialogTips == null) {
-                dialogTips = new DialogTip(getActivity()) {};
+                dialogTips = new DialogTip(getActivity()) {
+                };
             }
             if (jpushInfo != null) {
                 dialogTips.setInfo(jpushInfo.getContent());
@@ -542,9 +542,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 // 更新数据
                 hasMessage = false;
                 btn_message.setImageResource(R.drawable.btn_message);
-                break;
-            case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
-                userInfoTemp.setPayPwdStatus("1");
                 break;
             default:
                 break;
