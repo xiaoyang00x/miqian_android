@@ -86,9 +86,7 @@ public class Urls {
     //认购预处理
     public final static String order_produced = base_server + "tradeService/subscribePreprocess";//assetService/subscribePreprocess
     //认购
-    public final static String subscribe_order = base_server + "assetService/subscribe";
-    //认购快捷支付
-    public final static String quick_subscribe_order = base_server + "assetService/quickPayment";
+    public final static String subscribe_order = base_server + "tradeService/subscribe";//assetService/subscribe
     //获取用户信息
     public final static String user_info = base_server + "account/getAccountProfile";// userService/getUserInfo
 
@@ -164,7 +162,7 @@ public class Urls {
     public final static String recordsCapital = base_server + "userService/getAssetRecord";
 
     //我的促销接口
-    public final static String getCustPromotion = base_server + "userService/getCustPromotion";
+    public final static String getCustPromotion = base_server + "deposit/mine/getMinePromList";//userService/getCustPromotion
     //赎回
     public final static String redeem = base_server + "assetService/redeem";
     //我的活期资金记录
@@ -249,6 +247,7 @@ public class Urls {
     public final static String hf_rollin_url = base_server + "tradeService/rechargeForJump";
     public final static String hf_rollout_url = base_server + "tradeService/withdrawForJump";
     public final static String hf_register = base_server + "account/huifuCreateAccountForJump";
+    public final static String hf_auto = base_server + "account/openAutoTenderPlanForJump";
 
 
 }

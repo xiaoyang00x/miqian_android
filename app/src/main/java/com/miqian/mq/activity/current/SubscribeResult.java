@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.entity.Popup;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.listener.JsShareListener;
 import com.miqian.mq.utils.ActivityStack;
@@ -34,7 +33,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private TextView textMoney;
     private TextView textPromote;
     private TextView tradeNumber;
-    private TextView textPayType;
+//    private TextView textPayType;
     private TextView textPayMoney;
     private TextView tvTip;
     private TextView textGold;
@@ -70,7 +69,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         payModeState = intent.getIntExtra("payModeState", 0);
         promoteMoney = intent.getStringExtra("promoteMoney");
         if (subscribeOrder != null) {
-            orderNo = subscribeOrder.getOrderNo();
+            orderNo = subscribeOrder.getSeqNo();
             goldCoin = subscribeOrder.getGoldCoin();
         }
 
@@ -91,7 +90,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     public void initView() {
         imageStatus = (ImageView) findViewById(R.id.image_status);
         textMoney = (TextView) findViewById(R.id.text_money);
-        textPayType = (TextView) findViewById(R.id.text_pay_type);
+//        textPayType = (TextView) findViewById(R.id.text_pay_type);
         textPayMoney = (TextView) findViewById(R.id.text_pay_money);
         textPromote = (TextView) findViewById(R.id.text_promote);
         tradeNumber = (TextView) findViewById(R.id.trade_number);
@@ -117,15 +116,15 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             imageStatus.setImageResource(R.drawable.result_fail);
             tvStatus.setText("认购失败");
         }
-        if (payModeState == CurrentInvestment.PAY_MODE_BALANCE) {
-            textPayType.setText("余额支付");
-        } else if (payModeState == CurrentInvestment.PAY_MODE_BANK) {
-            textPayType.setText("银行卡充值支付");
-        } else if (payModeState == CurrentInvestment.PAY_MODE_CURRENT) {
-            textPayType.setText("活期转定期");
-        } else if (payModeState == CurrentInvestment.PAY_MODE_LIAN) {
-            textPayType.setText("连连快捷支付");
-        }
+//        if (payModeState == CurrentInvestment.PAY_MODE_BALANCE) {
+//            textPayType.setText("余额支付");
+//        } else if (payModeState == CurrentInvestment.PAY_MODE_BANK) {
+//            textPayType.setText("银行卡充值支付");
+//        } else if (payModeState == CurrentInvestment.PAY_MODE_CURRENT) {
+//            textPayType.setText("活期转定期");
+//        } else if (payModeState == CurrentInvestment.PAY_MODE_LIAN) {
+//            textPayType.setText("连连快捷支付");
+//        }
         textPayMoney.setText(payMoney+ "元");
         textMoney.setText(money + "元");
         if (TextUtils.isEmpty(promoteMoney) || "0".equals(promoteMoney)) {
@@ -139,7 +138,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             textGold.getPaint().setAntiAlias(true);//抗锯齿
             textGold.setText(goldCoin);
         }
-        if (subscribeOrder.getShareLink() != null) {
+        if (subscribeOrder != null && subscribeOrder.getShareLink() != null) {
             showShare();
         }
     }

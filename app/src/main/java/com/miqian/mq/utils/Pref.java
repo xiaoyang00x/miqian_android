@@ -44,6 +44,8 @@ public class Pref {
     //用户信息
     public static final String PAY_STATUS = "PayStatus";
 
+    //用户的汇付id
+    public static final String HF_CUSTID = "HfCustId";
     //汇付用户的激活状态
     public static final String HF_ACTIVATE_STATUS = "HfActivateStatus";
     //汇付用户账户状态

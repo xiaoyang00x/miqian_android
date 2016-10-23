@@ -141,14 +141,14 @@ public class HttpRequest {
      * 认购订单生成页面
      *
      * @param amt    金额
-     * @param prodId 0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      */
-    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId, String prodId) {
+    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(context))));
         mList.add(new Param("amt", amt));
         mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("prodId", prodId));
+//        mList.add(new Param("prodId", prodId));
         new MyAsyncTask(context, Urls.order_produced, mList, new ICallback<String>() {
 
             @Override
@@ -219,38 +219,6 @@ public class HttpRequest {
             }
         }).executeOnExecutor();
     }
-
-//    /**
-//     * 充值失败原因上传
-//     */
-//    public static void rollInError(final Context context, String orderNo, String error) {
-//        List<Param> mList = new ArrayList<>();
-//        mList.add(new Param("orderNo", orderNo));
-//        mList.add(new Param("llJson", error));
-//        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, IntoActivity.showErrorString(context, "llErrorCodeVersion"))));
-//
-//        new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
-//
-//            @Override
-//            public void onSucceed(String result) {
-//                ErrorLianResult errorLianResult = JsonUtil.parseObject(result, ErrorLianResult.class);
-//                String errorData = errorLianResult.getData();
-//                Map<String, String> userMap = null;
-//                if (!TextUtils.isEmpty(errorData)) {
-//                    userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
-//                    });
-//                    if (userMap.size() > 0) {
-//                        Pref.saveString(Pref.ERROR_LIAN, errorData, context);
-//                        Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//            }
-//        }).executeOnExecutor();
-//    }
 
     /**
      * 获取用户信息
@@ -1172,51 +1140,17 @@ public class HttpRequest {
      * 认购接口
      *
      * @param amt       金额
-     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      * @param subjectId 0:活期
      */
-    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList, String prodList) {
+    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String subjectId, String promotionId) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("prodId", prodId));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+//        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
         mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("promList", promList));
-        mList.add(new Param("prodList", prodList));
+        mList.add(new Param("promotionId", promotionId));
         new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
-                callback.onSucceed(subscribeOrderResult);
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 活期、定期赚、定期计划
-     * 快捷认购接口
-     *
-     * @param amt       金额
-     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-     * @param subjectId 0:活期
-     */
-    public static void subscribeQuickOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String orderNo, String subjectId, String promList, String prodList) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("amt", amt));
-        mList.add(new Param("prodId", prodId));
-        mList.add(new Param("orderNo", orderNo));
-        mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("promList", promList));
-        mList.add(new Param("prodList", prodList));
-        new MyAsyncTask(context, Urls.quick_subscribe_order, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -1593,6 +1527,16 @@ public class HttpRequest {
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 //        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
         WebHFActivity.startActivity(context, Urls.hf_register, params);
+    }
+
+    /**
+     * 汇付用户开通自动投标
+     */
+    public static void autoHf(final Context context) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+//        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
+        WebHFActivity.startActivity(context, Urls.hf_auto, params);
     }
 
 //    /**
