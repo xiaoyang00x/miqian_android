@@ -592,23 +592,24 @@ public class HttpRequest {
     }
 
     //修改登录密码
-    public static void changePassword(Context context, final ICallback<LoginResult> callback,
-                                      String oldPassword, String newPassword, String confirmPassword) {
+    public static void changePassword(Context context, final ICallback<Meta> callback,
+                                      String oldPassword, String newPassword, String confirmPassword, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldPassword", RSAUtils.encryptURLEncode(oldPassword)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
+        mList.add(new Param("captcha", captcha));
 
         new MyAsyncTask(context, Urls.changePassword, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
-                if (loginResult.getCode().equals("000000")) {
-                    callback.onSucceed(loginResult);
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(loginResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
@@ -623,7 +624,7 @@ public class HttpRequest {
     public static void getPassword(Context context, final ICallback<Meta> callback,
                                    String mobilePhone, String newPassword, String confirmPassword, String captcha) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
         mList.add(new Param("captcha", captcha));
@@ -1565,7 +1566,7 @@ public class HttpRequest {
      */
     public static void rollinHf(final Context context, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("custId",  RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 //        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
@@ -1577,7 +1578,7 @@ public class HttpRequest {
      */
     public static void rolloutHf(final Context context, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("custId",  RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 //        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
