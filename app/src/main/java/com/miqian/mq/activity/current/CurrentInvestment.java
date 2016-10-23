@@ -29,7 +29,6 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTip;
-import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -68,9 +67,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private View frameSpace;
     private TextView textTip;
     private MySwipeRefresh swipeRefresh;
-
-    private DialogTradePassword dialogTradePasswordInput;
-
     private ProducedOrder producedOrder;
     private List<Promote> promList;
     private String promotionId = "";

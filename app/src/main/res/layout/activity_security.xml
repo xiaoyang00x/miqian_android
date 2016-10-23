@@ -33,33 +33,6 @@
                 android:layout_marginRight="@dimen/margin_left_right"
                 android:src="@drawable/right" />
         </RelativeLayout>
-
-        <View style="@style/item_divider" />
-
-        <RelativeLayout
-            android:id="@+id/password_transaction"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/listitem_height"
-            android:background="@drawable/list_click">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margin_left_right"
-                android:text="交易密码"
-                android:textColor="@color/mq_b1"
-                android:textSize="@dimen/mq_font2" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/margin_left_right"
-                android:src="@drawable/right" />
-        </RelativeLayout>
-
         <View style="@style/item_divider" />
 
         <RelativeLayout

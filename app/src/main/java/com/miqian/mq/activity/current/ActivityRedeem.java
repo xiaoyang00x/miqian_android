@@ -1,13 +1,9 @@
 package com.miqian.mq.activity.current;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +12,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
-import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
@@ -31,18 +25,11 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
-import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
-import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTip;
-import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
-import com.mob.tools.utils.UIHandler;
-import com.umeng.analytics.MobclickAgent;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
@@ -53,15 +40,12 @@ import java.text.DecimalFormat;
 public class ActivityRedeem extends BaseActivity implements View.OnClickListener {
     private EditText editMoney;
     private UserInfo userInfo;
-    private DialogTradePassword dialogTradePassword_input;
     private String money;
     private Button btnRollout;
-    private CustomDialog dialogTips;
     private TextViewEx tvTip;
     private TextViewEx tvExtra;
     private UserCurrent userCurrent;
     private BigDecimal resideMoney;//可赎回金额
-    private DialogTip mDialog;
     private BigDecimal curResidue;//本月剩余可赎回额度
     private DialogTip mDialogTip;
     private TextView tvPhone;
@@ -225,10 +209,10 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                     if (captcha.length() < 6) {
                         Uihelper.showToast(mActivity, R.string.capthcha_num);
                     } else {
-                        if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
-                            int state = Integer.parseInt(userInfo.getPayPwdStatus());
-                            initDialogTradePassword(state);
-                        }
+//                        if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
+//                            int state = Integer.parseInt(userInfo.getPayPwdStatus());
+//                            initDialogTradePassword(state);
+//                        }    删除交易密码操作
                     }
 
                 } else {
@@ -241,41 +225,6 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
             mDialogTip.setInfo("赎回金额不可为空\n  请修改赎回金额");
             mDialogTip.setSureInfo("我知道了");
             mDialogTip.show();
-        }
-    }
-
-    private void initDialogTradePassword(int type) {
-
-        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
-
-            Intent intent = new Intent(ActivityRedeem.this, SetPasswordActivity.class);
-            intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-            startActivityForResult(intent, 0);
-            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码");
-
-        } else {
-            if (dialogTradePassword_input == null) {
-                dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
-
-                    @Override
-                    public void positionBtnClick(String s) {
-                        dismiss();
-                        //赎回
-                        redoom(s);
-
-                    }
-                };
-            }
-            dialogTradePassword_input.show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //设置交易密码成功
-        if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
-            userInfo.setPayPwdStatus("1");
-            initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
         }
     }
 
@@ -295,7 +244,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                     mDialogTip.show();
                 }//交易密码错误4次提示框
                 else if (code.equals("999992")) {
-                    showPwdError4Dialog(result.getMessage());
+//                    showPwdError4Dialog(result.getMessage());  删除交易密码操作
                 } else {
                     if (code.equals("000000")) {
                         //刷新我的活期数据
@@ -331,34 +280,6 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
         }
     }
 
-    private void showPwdError4Dialog(String message) {
-
-        if (dialogTips == null) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-                @Override
-                public void positionBtnClick() {
-                    MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-                    startActivity(intent);
-                    dismiss();
-                }
-
-                @Override
-                public void negativeBtnClick() {
-                    initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
-                }
-            };
-            dialogTips.setNegative(View.VISIBLE);
-            dialogTips.setRemarks(message);
-            dialogTips.setNegative("继续尝试");
-            dialogTips.setPositive("找回密码");
-            dialogTips.setTitle("交易密码错误");
-            dialogTips.setCanceledOnTouchOutside(false);
-        }
-        dialogTips.show();
-
-    }
 
     private void sendMessage() {
         begin();
