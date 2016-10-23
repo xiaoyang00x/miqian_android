@@ -253,9 +253,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b1_v2));
 //            if (payModeState == PAY_MODE_BALANCE) {
                 textPayType.setText("账户余额");
-                textPayTip.setText("可用" + producedOrder.getBalance() + "元");
+                textPayTip.setText("可用" + producedOrder.getUsableAmt() + "元");
                 imageType.setImageResource(R.drawable.balance_enable);
-                showErrorView(producedOrder.getBalance());
+                showErrorView(producedOrder.getUsableAmt());
 //            } else if (payModeState == PAY_MODE_BANK) {
 //                String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
 //                textPayType.setText(producedOrder.getBankName() + "(" + bankNo + ")");
@@ -295,7 +295,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
      */
     private boolean insufficeBalance() {
 //        if (payModeState == PAY_MODE_BALANCE) {
-            if (payMoney.compareTo(producedOrder.getBalance()) > 0) {
+            if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
                 return true;
             }
 //        } else if (payModeState == PAY_MODE_CURRENT) {
@@ -317,7 +317,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         if (producedOrder != null) {
 //            if ("1".equals(producedOrder.getSupportStatus()) && "1".equals(producedOrder.getBindCardStatus())) {
 //                bankNumber = RSAUtils.decryptByPrivate(producedOrder.getBankCardNo());
-                if (payMoney.compareTo(producedOrder.getBalance()) > 0) {
+                if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
                     payModeState = PAY_MODE_BANK;
                 } else {
                     payModeState = PAY_MODE_BALANCE;
@@ -601,7 +601,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 payModeState = data.getIntExtra("payModeState", payModeState);
                 String balanceTemp = data.getStringExtra("balanceMoney");
                 if (!TextUtils.isEmpty(balanceTemp)) {
-                    producedOrder.setBalance(new BigDecimal(balanceTemp));
+                    producedOrder.setUsableAmt(new BigDecimal(balanceTemp));
                 }
                 refreshPayView();
             } else if (resultCode == PROCESSING) {

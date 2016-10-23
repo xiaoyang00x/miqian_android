@@ -9,7 +9,7 @@ import java.util.List;
 public class ProducedOrder {
 
     private List<Promote> promotionList;
-    private BigDecimal balance;     //余额
+    private BigDecimal usableAmt;     //余额
     private String bestToUseAmt;        //最高抵用金额（红包、秒钱卡
 //    private String currentYearRate;     //年化收益
     private String predictInterest;      //预计收益
@@ -22,12 +22,12 @@ public class ProducedOrder {
         this.promotionList = promotionList;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public BigDecimal getUsableAmt() {
+        return usableAmt;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setUsableAmt(BigDecimal usableAmt) {
+        this.usableAmt = usableAmt;
     }
 
     public String getBestToUseAmt() {

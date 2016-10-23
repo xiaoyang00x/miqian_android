@@ -49,7 +49,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     }
     @Override
     public void onCreate(Bundle arg0) {
-        type = "GQ";
+        type = "2";
 //        String jpushToken = getIntent().getStringExtra("token");
 //        if (!TextUtils.isEmpty(jpushToken)) {
 //            //通知进来的情况下，不是当前用户则退出此界面
@@ -180,11 +180,9 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if (checkedId == R.id.bt_overdue) {
-            type = "GQ";
+            type = "2";
         } else if (checkedId == R.id.bt_used) {
-            type = "YW";
-        } else if (checkedId == R.id.bt_gift) {
-            type = "ZS";
+            type = "1";
         }
         obtainData();
     }

@@ -138,7 +138,7 @@ public class Urls {
     //我的活期
     public final static String user_current = base_server + "userService/getMyCurrent";
     //我的定期
-    public final static String user_regular = base_server + "userRegService/v2/getMyRegBuyList";
+    public final static String user_regular = base_server + " deposit/mineService/getMineProductList";//userRegService/v2/getMyRegBuyList
     //我的定期详情
     public final static String user_regular_detail = base_server + "userRegService/v2/getRegDetail";
     //项目匹配

@@ -983,15 +983,13 @@ public class HttpRequest {
      * @param pageNo   页码(默认1)
      * @param pageSize 每页条数（默认20）
      * @param clearYn  默认为N  N：计息中  Y：已结息
-     * @param isForce  默认为0 1 强制刷新  0 不强制刷新
      */
-    public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn, String isForce) {
+    public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
         mList.add(new Param("clearYn", clearYn));
-        mList.add(new Param("isForce", isForce));
 
         new MyAsyncTask(context, Urls.user_regular, mList, new ICallback<String>() {
 
@@ -1224,12 +1222,14 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    //我的促销接口，包括红包，拾财券等
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String state, String pageNum, String pageSize) {
+    /**
+     * 我的促销接口，包括红包，拾财券等
+     * 促销券使用状态status: 0可使用,1使用完,2已过期,3赠送
+     */
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String status, String pageNum, String pageSize) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("promTypCd", ""));
-        mList.add(new Param("sta", state));
+        mList.add(new Param("status", status));
         mList.add(new Param("pageNum", pageNum));
         mList.add(new Param("pageSize", pageSize));
         new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {
