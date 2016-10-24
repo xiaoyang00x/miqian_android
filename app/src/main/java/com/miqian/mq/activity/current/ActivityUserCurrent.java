@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 
 /**
  * Created by Jackie on 2015/9/30.
+ * 我的秒钱宝
  */
 public class ActivityUserCurrent extends BaseActivity implements View.OnClickListener, ExtendOperationController.ExtendOperationListener {
 

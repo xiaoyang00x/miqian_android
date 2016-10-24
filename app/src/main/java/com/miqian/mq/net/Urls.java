@@ -137,8 +137,8 @@ public class Urls {
     public final static String loginOut = base_server + "userService/logout";
     //提现
     public final static String withdrawCash = base_server + "assetService/withdrawCash";
-    //我的活期
-    public final static String user_current = base_server + "userService/getMyCurrent";
+    //我的秒钱宝
+    public final static String user_current = base_server + "deposit/mine/getMineCurrentMain";
     //我的定期
     public final static String user_regular = base_server + "userRegService/v2/getMyRegBuyList";
     //我的定期详情
