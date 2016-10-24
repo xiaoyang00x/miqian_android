@@ -66,9 +66,9 @@ public abstract class BaseActivity extends BaseFragmentActivity {
                 finish();
             }
         });
-        initTitle(mTitle);
         initView();
         obtainData();
+        initTitle(mTitle);
 
         //增加栈管理器
         ActivityStack.getActivityStack().pushActivity(this);

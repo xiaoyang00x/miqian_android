@@ -211,7 +211,6 @@ public class TradePsCaptchaActivity extends BaseActivity {
                 intent.putExtra("captcha", captcha);
                 intent.putExtra("idCard", idCard);
                 intent.putExtra("telephone", telephone);
-                intent.putExtra("type", TypeUtil.PASSWORD_TRADE);
                 startActivity(intent);
                 finish();
             }

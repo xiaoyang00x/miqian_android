@@ -79,18 +79,16 @@ public class Urls {
     public final static String roll_in = base_server + "assetService/v2/recharge";
     //充值转入结果查询接口
     public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
-    //充值失败错误原因上传接口
-    public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
+//    //充值失败错误原因上传接口
+//    public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
     //活期首页
     public final static String current_home = base_server + "currentService/getCurrentMain";
     //认购预处理
-    public final static String order_produced = base_server + "assetService/subscribePreprocess";
+    public final static String order_produced = base_server + "tradeService/subscribePreprocess";//assetService/subscribePreprocess
     //认购
-    public final static String subscribe_order = base_server + "assetService/subscribe";
-    //认购快捷支付
-    public final static String quick_subscribe_order = base_server + "assetService/quickPayment";
+    public final static String subscribe_order = base_server + "tradeService/subscribe";//assetService/subscribe
     //获取用户信息
-    public final static String user_info = base_server + "userService/getUserInfo";
+    public final static String user_info = base_server + "account/getAccountProfile";// userService/getUserInfo
 
     //获取APP配置：广告、tab
     public final static String app_config = base_server + "commonService/getAdverts";
@@ -98,9 +96,9 @@ public class Urls {
     //获取验证码
     public final static String getCaptcha = base_server + "commonService/getCaptcha";
     //登录
-    public final static String login = base_server + "userService/login";
+    public final static String login = base_server + "account/login";
     //注册
-    public final static String register = base_server + "account/register";
+    public final static String register = base_server + "account/register";// userService/register
     //个人消息列表
     public final static String getMessageList = base_server + "pushService/getMessageList";
     //系统公告列表
@@ -118,9 +116,9 @@ public class Urls {
     //修改交易密码
     public final static String setPayPassword = base_server + "userService/setPayPassword";
     //修改登录密码
-    public final static String changePassword = base_server + "userService/changePassword";
+    public final static String changePassword = base_server + "account/passwordChange ";// userService/changePassword
     //找回登录密码
-    public final static String getPassword = base_server + "userService/getPassword";
+    public final static String getPassword = base_server + "account/passwordReset";   // userService/getPassword
     //检验验证码
     public final static String checkCaptcha = base_server + "commonService/checkCaptcha";
     //获取用户的银行卡
@@ -140,7 +138,7 @@ public class Urls {
     //我的秒钱宝
     public final static String user_current = base_server + "deposit/mine/getMineCurrentMain";
     //我的定期
-    public final static String user_regular = base_server + "userRegService/v2/getMyRegBuyList";
+    public final static String user_regular = base_server + " deposit/mineService/getMineProductList";//userRegService/v2/getMyRegBuyList
     //我的定期详情
     public final static String user_regular_detail = base_server + "userRegService/v2/getRegDetail";
     //项目匹配
@@ -164,7 +162,7 @@ public class Urls {
     public final static String recordsCapital = base_server + "userService/getAssetRecord";
 
     //我的促销接口
-    public final static String getCustPromotion = base_server + "userService/getCustPromotion";
+    public final static String getCustPromotion = base_server + "deposit/mine/getMinePromList";//userService/getCustPromotion
     //赎回
     public final static String redeem = base_server + "assetService/redeem";
     //我的活期资金记录
@@ -212,8 +210,8 @@ public class Urls {
     public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
 
 
-    //连连支付支持绑定的银行界面
-    public final static String web_support_bank = base_server + "webView/querySupportBankLianLian";
+//    //连连支付支持绑定的银行界面
+//    public final static String web_support_bank = base_server + "webView/querySupportBankLianLian";
 
     //活期详情
     public final static String web_current = base_server + "webView/currentDetail";
@@ -249,6 +247,7 @@ public class Urls {
     public final static String hf_rollin_url = base_server + "tradeService/rechargeForJump";
     public final static String hf_rollout_url = base_server + "tradeService/withdrawForJump";
     public final static String hf_register = base_server + "account/huifuCreateAccountForJump";
+    public final static String hf_auto = base_server + "account/openAutoTenderPlanForJump";
 
 
 }

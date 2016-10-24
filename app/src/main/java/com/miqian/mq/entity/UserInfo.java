@@ -11,11 +11,10 @@ public class UserInfo implements Serializable {
     private String hfCustId;//客户汇付id
     private String userName;//真实姓名
     private String mobile;//手机号
-    private boolean status;//用户状态 true 开通 false 未开通
+    private boolean status;//用户状态 true 激活 false 未激活
     private String curAmt;//活期总额
     private String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
     private String usableSa;//可用余额
-    private String idCard;//身份证号
     private String totalProfit;//历史收益
     private String regTotal;//定期认购笔数
     private String bankCardNo;//银行卡号
@@ -29,7 +28,9 @@ public class UserInfo implements Serializable {
     private int totalPromotion;//优惠券总数
     private String ydayProfit;//昨日收益
     private String custLevel;//新增用户等级
-    private boolean hfAccountStatus;//汇付账户状态 unaccount 未开户 success 成功开始 process 进行中
+    private String addRechargeMinValue;//充值最小额度
+    private boolean hfAccountStatus;//汇付账户状态 true 开通 false 未开通
+    private boolean hfAutoTenderPlanStatus;//汇付自动投标计划状态 true 开通 false 未开通
     private String token;
 
 
@@ -41,9 +42,8 @@ public class UserInfo implements Serializable {
     private String singleAmtLimit; //单笔限额
     private String dayAmtLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
-    private String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
     private String realNameStatus;//实名认证状态
-    private String addRechargeMinValue;//充值最小额度
+    private String idCard;//身份证号
 
     public String getCustLevel() {
         return custLevel;
@@ -115,14 +115,6 @@ public class UserInfo implements Serializable {
 
     public void setBankCardNo(String bankCardNo) {
         this.bankCardNo = bankCardNo;
-    }
-
-    public String getPayPwdStatus() {
-        return "0";
-    }
-
-    public void setPayPwdStatus(String payPwdStatus) {
-        this.payPwdStatus = payPwdStatus;
     }
 
     public String getUsableSa() {
@@ -277,7 +269,15 @@ public class UserInfo implements Serializable {
         this.ydayProfit = ydayProfit;
     }
 
-    public boolean getStatus() {
+    public boolean isHfAutoTenderPlanStatus() {
+        return hfAutoTenderPlanStatus;
+    }
+
+    public void setHfAutoTenderPlanStatus(boolean hfAutoTenderPlanStatus) {
+        this.hfAutoTenderPlanStatus = hfAutoTenderPlanStatus;
+    }
+
+    public boolean isStatus() {
         return status;
     }
 
@@ -285,7 +285,7 @@ public class UserInfo implements Serializable {
         this.status = status;
     }
 
-    public boolean getHfAccountStatus() {
+    public boolean isHfAccountStatus() {
         return hfAccountStatus;
     }
 

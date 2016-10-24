@@ -19,7 +19,6 @@ import com.miqian.mq.activity.user.MyTicketInvalidActivity;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.utils.Uihelper;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -97,23 +96,23 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         if (holder instanceof BaBaViewHoleder) {
             BaBaViewHoleder tempViewHoleder = (BaBaViewHoleder) holder;
             Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
             String desUrl = promote.getPromUrl();
-            setText(tempViewHoleder.tv_amount, String.valueOf(isValid? promote.getCanUseAmt() : promote.getTotalAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(isValid? promote.getUsableAmt() : promote.getTotalAmt()));
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
             tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
-            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
+            clickEvent(holder, promote.getCouponsId(), promote.getPromState(), desUrl);
 
             tempViewHoleder.setViewEnable(isValid);
         } else if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
@@ -123,9 +122,9 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_blue);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.VISIBLE);
-                setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
+                setText(tempViewHoleder.tv_amount, promote.getAddRate());
             } else {
-                setText(tempViewHoleder.tv_amount, String.valueOf(isValid? promote.getCanUseAmt() : promote.getTotalAmt()));
+                setText(tempViewHoleder.tv_amount, String.valueOf(isValid? promote.getUsableAmt() : promote.getTotalAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
@@ -138,7 +137,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 }
 
             }
-            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
+            clickEvent(holder, promote.getCouponsId(), promote.getPromState(), desUrl);
 
             tempViewHoleder.setViewEnable(isValid);
         }

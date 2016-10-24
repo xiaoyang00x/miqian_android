@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.DownloadListener;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -217,6 +218,11 @@ public class WebHFActivity extends WebActivity {
         headers.put("netWorkStandard", MobileOS.getNetworkString(this));
         headers.put("Connection", "close");
         return headers;
+    }
+
+    @JavascriptInterface
+    public void hfCallback() {
+
     }
 
 //    @Override

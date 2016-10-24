@@ -32,7 +32,6 @@ import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
-import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -61,7 +60,6 @@ public class RolloutActivity extends BaseActivity {
             cardNum,
             totalMoney;
     private CustomDialog dialogTips, dialogTipsReput;
-    private DialogTradePassword dialogTradePassword_input;
     private boolean isChooseCity;
     private BankCard bankCard;
     private boolean isSuccessBindBranch;
@@ -175,10 +173,10 @@ public class RolloutActivity extends BaseActivity {
                 tv_bank_province.setText(city);
             }
             //设置交易密码成功
-        } else if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
-            userInfo.setPayPwdStatus("1");
-            rollOutHttp();
         }
+//        else if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
+//            rollOutHttp();
+//        }
     }
 
     private void initBindView() {
@@ -349,29 +347,6 @@ public class RolloutActivity extends BaseActivity {
         }
     }
 
-    private void initDialogTradePassword(int type) {
-
-        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
-
-            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-            intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-            startActivityForResult(intent, 0);
-            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码");
-
-        } else {
-            if (dialogTradePassword_input == null) {
-                dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
-                    @Override
-                    public void positionBtnClick(String s) {
-                        dismiss();
-                        //提现
-                        rollOut(s);
-                    }
-                };
-            }
-            dialogTradePassword_input.show();
-        }
-    }
 
     private void rollOut(String password) {
         mWaitingDialog.show();
@@ -411,10 +386,12 @@ public class RolloutActivity extends BaseActivity {
                     intent.putExtras(extra);
                     startActivity(intent);
                     finish();
-                }//交易密码错误4次提示框
-                else if (resultCode.equals("999992")) {
-                    showPwdError4Dialog(result.getMessage());
-                } else {
+                }
+//                //交易密码错误4次提示框
+//                else if (resultCode.equals("999992")) {
+//                    showPwdError4Dialog(result.getMessage());
+//                }   删除交易密码操作
+                else {
                     Uihelper.showToast(mActivity, result.getMessage());
                 }
             }
@@ -429,39 +406,12 @@ public class RolloutActivity extends BaseActivity {
 
     }
 
-    private void showPwdError4Dialog(String message) {
-
-        if (dialogTips == null) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-                @Override
-                public void positionBtnClick() {
-                    MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-                    startActivity(intent);
-                    dismiss();
-                }
-
-                @Override
-                public void negativeBtnClick() {
-                    rollOutHttp();
-                }
-            };
-            dialogTips.setRemarks(message);
-            dialogTips.setNegative("继续尝试");
-            dialogTips.setPositive("找回密码");
-            dialogTips.setTitle("交易密码错误");
-            dialogTips.setCanceledOnTouchOutside(false);
-        }
-        dialogTips.show();
-
-    }
 
     private void rollOutHttp() {
-        if (userInfo.getPayPwdStatus() != null) {
-            int state = Integer.parseInt(userInfo.getPayPwdStatus());
-            initDialogTradePassword(state);
-        }
+//        if (userInfo.getPayPwdStatus() != null) {
+//            int state = Integer.parseInt(userInfo.getPayPwdStatus());
+//            initDialogTradePassword(state);
+//        }    删除交易密码操作
 
     }
 }

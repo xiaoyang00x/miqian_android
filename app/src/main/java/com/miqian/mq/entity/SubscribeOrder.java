@@ -5,18 +5,18 @@ package com.miqian.mq.entity;
  */
 public class SubscribeOrder {
 
-    private String orderNo;
+    private String seqNo;//流水号
     private String goldCoin;
     private String goldCoin_url;
     private ShareData shareLink;
     private Popup popup;
 
-    public String getOrderNo() {
-        return orderNo;
+    public String getSeqNo() {
+        return seqNo;
     }
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
+    public void setSeqNo(String seqNo) {
+        this.seqNo = seqNo;
     }
 
     public String getGoldCoin() {

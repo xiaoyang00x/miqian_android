@@ -1,11 +1,9 @@
 package com.miqian.mq.activity.current;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +12,10 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
+import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.UserCurrent;
@@ -28,14 +27,9 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTip;
-import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
-import com.mob.tools.utils.UIHandler;
-import com.umeng.analytics.MobclickAgent;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
@@ -43,20 +37,25 @@ import java.text.DecimalFormat;
  * 赎回
  * Created by TuLiangTan on 2015/10/9.
  */
-public class ActivityRedeem extends BaseActivity {
+public class ActivityRedeem extends BaseActivity implements View.OnClickListener {
     private EditText editMoney;
     private UserInfo userInfo;
-    private DialogTradePassword dialogTradePassword_input;
     private String money;
     private Button btnRollout;
-    private CustomDialog dialogTips;
     private TextViewEx tvTip;
     private TextViewEx tvExtra;
     private UserCurrent userCurrent;
     private BigDecimal resideMoney;//可赎回金额
-    private DialogTip mDialog;
     private BigDecimal curResidue;//本月剩余可赎回额度
     private DialogTip mDialogTip;
+    private TextView tvPhone;
+    private Button mBtn_sendCaptcha;
+    private  EditText mEt_Captcha;
+    private boolean isTimer;// 是否可以计时
+    private MyRunnable myRunnable;
+    private Thread thread;
+    private static Handler handler;
+    private String phone;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -66,6 +65,24 @@ public class ActivityRedeem extends BaseActivity {
 
     @Override
     public void obtainData() {
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                String timeInfo = msg.getData().getString("time");
+                mBtn_sendCaptcha.setText(timeInfo + "秒后重新获取");
+                if ("0".equals(timeInfo)) {
+                    mBtn_sendCaptcha.setEnabled(true);
+                    mBtn_sendCaptcha.setText("获取验证码");
+                }
+                super.handleMessage(msg);
+            }
+        };
+
+        if (!TextUtils.isEmpty(userInfo.getMobile())) {
+            phone = RSAUtils.decryptByPrivate(userInfo.getMobile());
+            tvPhone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
+        }
         DecimalFormat df = new java.text.DecimalFormat("0.00");
         if (userCurrent != null) {
             BigDecimal balance = userCurrent.getCurAsset();//活期待收金额
@@ -126,6 +143,11 @@ public class ActivityRedeem extends BaseActivity {
         btnRollout = (Button) findViewById(R.id.bt_redeem);
         tvExtra = (TextViewEx) findViewById(R.id.tv_extra);
         tvTip = (TextViewEx) findViewById(R.id.tv_tip);
+        tvPhone = (TextView) findViewById(R.id.tv_phone);
+        mBtn_sendCaptcha = (Button) findViewById(R.id.btn_send);
+        mEt_Captcha = (EditText) findViewById(R.id.et_captcha);
+        mBtn_sendCaptcha.setOnClickListener(this);
+
         editMoney.addTextChangedListener(new MyTextWatcher() {
 
             @Override
@@ -166,6 +188,8 @@ public class ActivityRedeem extends BaseActivity {
             return;
         }
         money = editMoney.getText().toString();
+        String captcha = mEt_Captcha.getText().toString();
+        money = editMoney.getText().toString();
         if (!TextUtils.isEmpty(money)) {
             BigDecimal moneyCurrent = new BigDecimal(money);
 
@@ -181,52 +205,26 @@ public class ActivityRedeem extends BaseActivity {
                 mDialogTip.setSureInfo("我知道了");
                 mDialogTip.show();
             } else {
-                if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
-                    int state = Integer.parseInt(userInfo.getPayPwdStatus());
-                    initDialogTradePassword(state);
+                if (!TextUtils.isEmpty(captcha)) {
+                    if (captcha.length() < 6) {
+                        Uihelper.showToast(mActivity, R.string.capthcha_num);
+                    } else {
+//                        if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
+//                            int state = Integer.parseInt(userInfo.getPayPwdStatus());
+//                            initDialogTradePassword(state);
+//                        }    删除交易密码操作
+                    }
+
+                } else {
+                    Uihelper.showToast(this, R.string.tip_captcha);
                 }
+
             }
         } else {
             initDialog();
             mDialogTip.setInfo("赎回金额不可为空\n  请修改赎回金额");
             mDialogTip.setSureInfo("我知道了");
             mDialogTip.show();
-        }
-    }
-
-    private void initDialogTradePassword(int type) {
-
-        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
-
-            Intent intent = new Intent(ActivityRedeem.this, SetPasswordActivity.class);
-            intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-            startActivityForResult(intent, 0);
-            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码");
-
-        } else {
-            if (dialogTradePassword_input == null) {
-                dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
-
-                    @Override
-                    public void positionBtnClick(String s) {
-                        dismiss();
-
-                        //赎回
-                        redoom(s);
-
-                    }
-                };
-            }
-            dialogTradePassword_input.show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //设置交易密码成功
-        if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
-            userInfo.setPayPwdStatus("1");
-            initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
         }
     }
 
@@ -246,7 +244,7 @@ public class ActivityRedeem extends BaseActivity {
                     mDialogTip.show();
                 }//交易密码错误4次提示框
                 else if (code.equals("999992")) {
-                    showPwdError4Dialog(result.getMessage());
+//                    showPwdError4Dialog(result.getMessage());  删除交易密码操作
                 } else {
                     if (code.equals("000000")) {
                         //刷新我的活期数据
@@ -282,33 +280,64 @@ public class ActivityRedeem extends BaseActivity {
         }
     }
 
-    private void showPwdError4Dialog(String message) {
 
-        if (dialogTips == null) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-                @Override
-                public void positionBtnClick() {
-                    MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-                    startActivity(intent);
-                    dismiss();
-                }
+    private void sendMessage() {
+        begin();
+        HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
+            @Override
+            public void onSucceed(Meta result) {
+                end();
+                mBtn_sendCaptcha.setEnabled(false);
+                myRunnable = new MyRunnable();
+                thread = new Thread(myRunnable);
+                thread.start(); // 启动线程，进行倒计时
+                isTimer = true;
+            }
 
-                @Override
-                public void negativeBtnClick() {
-                    initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
-                }
-            };
-            dialogTips.setNegative(View.VISIBLE);
-            dialogTips.setRemarks(message);
-            dialogTips.setNegative("继续尝试");
-            dialogTips.setPositive("找回密码");
-            dialogTips.setTitle("交易密码错误");
-            dialogTips.setCanceledOnTouchOutside(false);
+            @Override
+            public void onFail(String error) {
+                end();
+                Uihelper.showToast(mActivity, error);
+
+            }
+        }, phone, TypeUtil.CAPTCHA_REGISTER);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.btn_send){
+            sendMessage();
         }
-        dialogTips.show();
 
+    }
+    class MyRunnable implements Runnable {
+
+        @Override
+        public void run() {
+
+            for (int i = 60; i >= 0; i--) {
+                if (isTimer) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("time", i + "");
+                    Message message = Message.obtain();
+                    message.setData(bundle);
+                    handler.sendMessage(message);
+                    try {
+                        Thread.sleep(1000); // 休眠1秒钟
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            isTimer = false;
+
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isTimer = false;
     }
 
 }

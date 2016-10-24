@@ -87,7 +87,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
             }
-        }, "JH", String.valueOf(pageNo), pageSize);
+        }, "0", String.valueOf(pageNo), pageSize);
 
     }
 
@@ -147,7 +147,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
                     isLoading = false;
                     --pageNo;
                 }
-            }, "JH", String.valueOf(pageNo), pageSize);
+            }, "0", String.valueOf(pageNo), pageSize);
         }
     }
 

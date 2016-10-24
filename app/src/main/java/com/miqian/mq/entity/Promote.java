@@ -10,13 +10,14 @@ import java.math.BigDecimal;
 public class Promote {
 
     public enum TYPE { // 促销类型
-        SC("SC"), // 拾财券
-        HB("HB"), //红包
+
         TY("TY"), //体验金
-        JX("JX"), //加息券
         FXQ("FXQ"), //分享券
         DK("DK"), //抵扣券
-        SK("SK"); //双倍收益卡
+        HB("0"), //红包
+        SC("1"), //秒钱卡
+        JX("2"), //加息卡
+        SK("3"); //双倍收益卡
 
         private final String value;
 
@@ -29,102 +30,41 @@ public class Promote {
         }
     }
 
-    /**
-     * 促销产品类别的ID(核心cs_prom_prod_c表的ID)
-     */
-    private String promProdId;
-    /**
-     * 促销产品类别的名称
-     */
-    private String promProdName;
-    /**
-     * 客户促销余额的ID(核心cs_cust_prom_sa_b表的ID)
-     */
-    private String id;
-    /**
-     * 促销类型：SC:拾财券 HB:红包 JF:积分 LP:礼品卡 TY:体验金 JX:加息券 FXQ:分享券 DK:抵扣券  SK:双倍收益卡
-     */
-    private String type;
-    /**
-     * 转化比率
-     */
-    private String transformRate;
-    /**
-     * 总额(单位不一定是RMB，有可能是积分什么的，协同转化比率才能算出RMB)
-     */
-    private BigDecimal totalAmt;
-    /**
-     * 已用额度
-     */
-    private BigDecimal usedAmt;
-    /**
-     * 可用余额
-     */
-    private BigDecimal canUseAmt;
-    /**
-     * 抵用比率
-     */
-    private String toUseRate;
-    /**
-     * 加息券浮动利率
-     */
-    private String giveYrt;
-    /**
-     * 加息券额外收益
-     */
-    private BigDecimal extraIncome;
-    /**
-     * 开始时间
-     */
-    private String startTimestamp;
-    /**
-     * 结束时间
-     */
-    private String endTimestamp;
-    /**
-     * 认购时，如果选择本促销，将抵用的实际金额（根据客户认购金额，促销可用余额等计算出来）
-     */
-    private BigDecimal willUseAmt;
-    /**
-     * 促销使用的限制范围信息
-     */
-    private String limitMsg;
-    /**
-     * 适用最小金额信息
-     */
-    private String minBuyAmtMsg;
-    /**
-     * 促销状态
-     **/
-    private String status;
+    private String id;//用户促销券ID
+    private String couponsId;//促销券配置ID
+    private String name;//促销券名称
+    private String startTimestamp;//开始时间
+    private String endTimestamp;//结束时间
+    private String type;//促销券类型 0：红包 1：秒钱卡 2：加息卡 3：双倍加息卡
+    private BigDecimal totalAmt;//总额
+    private BigDecimal usedAmt;//已用额度
+    private BigDecimal usableAmt;//可用余额
+    private String toUseRate;//抵用比率
+    private BigDecimal toUseAmt;//抵用金额
+    private String addRate;//加息利率
+    private BigDecimal addInterest;//加息利息
+    private String minBuyAmtOrPerc;//投资最小金额和抵用比率
+    private String fitProdOrBdType;//适用渠道、产品类型和标的类型
+    private String fitBdTermOrYrt;//适用期限和适用年利率
 
-    private String minBuyAmtOrPerc;
-    private String fitBdTermOrYrt;
-    private String fitProdOrBdType;
     private String shareUrl;
-    /**
-     * 是否跳转状态:到h5
-     */
-    private String promState;
-    /**
-     * 跳转地址
-     **/
-    private String promUrl;
+    private String promState;//是否跳转状态:到h5
+    private String promUrl;//跳转地址
 
-    public String getPromProdId() {
-        return promProdId;
+    public String getCouponsId() {
+        return couponsId;
     }
 
-    public void setPromProdId(String promProdId) {
-        this.promProdId = promProdId;
+    public void setCouponsId(String couponsId) {
+        this.couponsId = couponsId;
     }
 
-    public String getPromProdName() {
-        return promProdName;
+    public String getName() {
+        return name;
     }
 
-    public void setPromProdName(String promProdName) {
-        this.promProdName = promProdName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getId() {
@@ -143,14 +83,6 @@ public class Promote {
         this.type = type;
     }
 
-    public String getTransformRate() {
-        return transformRate;
-    }
-
-    public void setTransformRate(String transformRate) {
-        this.transformRate = transformRate;
-    }
-
     public BigDecimal getTotalAmt() {
         return totalAmt;
     }
@@ -167,12 +99,12 @@ public class Promote {
         this.usedAmt = usedAmt;
     }
 
-    public BigDecimal getCanUseAmt() {
-        return canUseAmt;
+    public BigDecimal getUsableAmt() {
+        return usableAmt;
     }
 
-    public void setCanUseAmt(BigDecimal canUseAmt) {
-        this.canUseAmt = canUseAmt;
+    public void setUsableAmt(BigDecimal usableAmt) {
+        this.usableAmt = usableAmt;
     }
 
     public String getToUseRate() {
@@ -183,20 +115,20 @@ public class Promote {
         this.toUseRate = toUseRate;
     }
 
-    public String getGiveYrt() {
-        return giveYrt;
+    public String getAddRate() {
+        return addRate;
     }
 
-    public void setGiveYrt(String giveYrt) {
-        this.giveYrt = giveYrt;
+    public void setAddRate(String addRate) {
+        this.addRate = addRate;
     }
 
-    public BigDecimal getExtraIncome() {
-        return extraIncome;
+    public BigDecimal getAddInterest() {
+        return addInterest;
     }
 
-    public void setExtraIncome(BigDecimal extraIncome) {
-        this.extraIncome = extraIncome;
+    public void setAddInterest(BigDecimal addInterest) {
+        this.addInterest = addInterest;
     }
 
     public String getStartTimestamp() {
@@ -215,36 +147,12 @@ public class Promote {
         this.endTimestamp = endTimestamp;
     }
 
-    public BigDecimal getWillUseAmt() {
-        return willUseAmt;
+    public BigDecimal getToUseAmt() {
+        return toUseAmt;
     }
 
-    public void setWillUseAmt(BigDecimal willUseAmt) {
-        this.willUseAmt = willUseAmt;
-    }
-
-    public String getLimitMsg() {
-        return limitMsg;
-    }
-
-    public void setLimitMsg(String limitMsg) {
-        this.limitMsg = limitMsg;
-    }
-
-    public String getMinBuyAmtMsg() {
-        return minBuyAmtMsg;
-    }
-
-    public void setMinBuyAmtMsg(String minBuyAmtMsg) {
-        this.minBuyAmtMsg = minBuyAmtMsg;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setToUseAmt(BigDecimal toUseAmt) {
+        this.toUseAmt = toUseAmt;
     }
 
     public String getMinBuyAmtOrPerc() {

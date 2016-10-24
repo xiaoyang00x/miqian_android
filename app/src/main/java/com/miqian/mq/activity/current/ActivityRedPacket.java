@@ -37,7 +37,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         producedOrder = JsonUtil.parseObject(intent.getStringExtra("producedOrder"), ProducedOrder.class);
         position = intent.getIntExtra("position", -1);
-        promList = producedOrder.getPromList();
+        promList = producedOrder.getPromotionList();
         super.onCreate(bundle);
     }
 
