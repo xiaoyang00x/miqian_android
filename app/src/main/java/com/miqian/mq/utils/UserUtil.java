@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
@@ -32,13 +33,20 @@ public class UserUtil {
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userId), context);
     }
 
+    public static void saveHfInfo(Context context, UserInfo userInfo) {
+        Pref.saveString(getPrefKey(context, Pref.HF_CUSTID), RSAUtils.decryptByPrivate(userInfo.getHfCustId()), context);
+        Pref.saveBoolean(getPrefKey(context, Pref.HF_ACTIVATE_STATUS), userInfo.isStatus(), context);
+        Pref.saveBoolean(getPrefKey(context, Pref.HF_ACCOUNT_STATUS), userInfo.isHfAccountStatus(), context);
+        Pref.saveBoolean(getPrefKey(context, Pref.HF_AUTO_STATUS), userInfo.isHfAutoTenderPlanStatus(), context);
+    }
+
     public static void saveUserInfo(Context context, UserInfo userInfo) {
+        saveHfInfo(context, userInfo);
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
         Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobile()), context);
         Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getUserName()), context);
 //        Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getPayPwdStatus()), context);
-        Pref.saveString(Pref.CUSTLEVEL, userInfo.getCustLevel(), context);
 
         //设置GrowingIO用户信息
         GrowingIO growingIO = GrowingIO.getInstance();
@@ -116,6 +124,10 @@ public class UserUtil {
 
     public static String getUserId(Context context) {
         return Pref.getString(Pref.USERID, context, "");
+    }
+
+    public static String getHfCustId(Context context) {
+        return Pref.getString(getPrefKey(context, Pref.HF_CUSTID), context, "");
     }
 
     public static String getPrefKey(Context context, String name) {
@@ -240,13 +252,21 @@ public class UserUtil {
      * @param realMoney           实际支付金额（认购转让标的显示）
      */
     public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString, String realMoney) {
-        Intent intent = new Intent(activity, CurrentInvestment.class);
-        intent.putExtra("money", money);
-        intent.putExtra("prodId", prodId);
-        intent.putExtra("subjectId", subjectId);
-        intent.putExtra("interestRateString", interestRateString);
-        intent.putExtra("realMoney", realMoney);
-        activity.startActivity(intent);
+        boolean activateStatus = Pref.getBoolean(getPrefKey(activity, Pref.HF_ACTIVATE_STATUS), activity, false);
+        boolean accountStatus = Pref.getBoolean(getPrefKey(activity, Pref.HF_ACCOUNT_STATUS), activity, false);
+        if (!accountStatus) {
+            OpenHuiFuActivity.startActivity(activity, TypeUtil.TYPE_OPENHF_INVESTMENT);
+        } else if (!activateStatus) {
+
+        } else {
+            Intent intent = new Intent(activity, CurrentInvestment.class);
+            intent.putExtra("money", money);
+            intent.putExtra("prodId", prodId);
+            intent.putExtra("subjectId", subjectId);
+            intent.putExtra("interestRateString", interestRateString);
+            intent.putExtra("realMoney", realMoney);
+            activity.startActivity(intent);
+        }
     }
 
     //  显示认购额度

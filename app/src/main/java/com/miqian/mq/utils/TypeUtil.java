@@ -21,25 +21,11 @@ public class TypeUtil {
     public static final int CAPTCHA_MODIFYBNADCARD = 13006;
     public static final int CAPTCHA_WITHDRAW = 13007;
     public static final int CAPTCHA_TRADEPASSWORD = 13008;
-
-    //是否设置交易密码
-    public static final int TRADEPASS_NOSET = 20001;
-    public static final int TRADEPASS_SET = 20002;
-
-    //区分交易密码和登录密码
-    public static final int PASSWORD_LOGIN = 20003;
-    public static final int PASSWORD_TRADE = 20004;
     //发送验证码的类型
     public static final int SENDCAPTCHA_FORGETPSW =30001 ;
 
     //修改绑定手机
     public static final int MODIFY_PHONE =30002 ;
-
-    //设置交易密码
-    public static final int TRADEPASSWORD_FIRST_SETTING =40001 ;
-    //设置交易密密码成功
-    public static final int TRADEPASSWORD_SETTING_SUCCESS =40002 ;
-
     //认购跳到开通汇付界面
     public static final int TYPE_OPENHF_INVESTMENT =40003 ;
     //注册跳到开通汇付界面

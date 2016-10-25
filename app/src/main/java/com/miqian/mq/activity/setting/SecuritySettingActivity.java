@@ -18,13 +18,9 @@ import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
 
-public class SecuritySettingActivity extends BaseActivity implements OnClickListener, ExtendOperationController.ExtendOperationListener {
-
-    private String payPwdStatus;
+public class SecuritySettingActivity extends BaseActivity implements OnClickListener {
 
     private ImageView iv_switch;
-    private String realNameStatus;
-    private ExtendOperationController extendOperationController;
 
     @Override
     public void obtainData() {
@@ -36,26 +32,11 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
     public void initView() {
 
         Intent intent = getIntent();
-        payPwdStatus = intent.getStringExtra("payPwdStatus");
-        realNameStatus = intent.getStringExtra("realNameStatus");
 
         iv_switch = (ImageView) findViewById(R.id.iv_switch);
         findViewById(R.id.password_login).setOnClickListener(this);
-        findViewById(R.id.password_transaction).setOnClickListener(this);
         iv_switch.setOnClickListener(this);
-
-        extendOperationController = ExtendOperationController.getInstance();
-        extendOperationController.registerExtendOperationListener(this);
     }
-
-    @Override
-    protected void onDestroy() {
-        if (extendOperationController != null) {
-            extendOperationController.unRegisterExtendOperationListener(this);
-        }
-        super.onDestroy();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -97,18 +78,6 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
                 SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, true);
 
                 break;
-            case R.id.password_transaction:
-                if ("0".equals(payPwdStatus)) {//未设置
-                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-                    intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-                    startActivity(intent);
-                } else {
-                    MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", realNameStatus);
-                    startActivity(intent);
-                }
-                break;
             case R.id.iv_switch:
                 if (isGestureLockOpen()) {
                     setGestureLockState(false);
@@ -129,16 +98,4 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
         return "安全设置";
     }
 
-    @Override
-    public void excuteExtendOperation(int operationKey, Object data) {
-
-        switch (operationKey) {
-            case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
-                payPwdStatus = "1";
-                break;
-            default:
-                break;
-        }
-
-    }
 }

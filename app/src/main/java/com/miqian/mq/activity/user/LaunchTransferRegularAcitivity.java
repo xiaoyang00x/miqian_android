@@ -30,9 +30,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
-import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.DialogTransferTip;
 import com.miqian.mq.views.WFYTitle;
 
@@ -73,8 +71,6 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
     private BigDecimal profit;
     private String stringDiscountRate;
     private BigDecimal disCountMoney;
-    private UserInfo userInfo;
-    private DialogTradePassword dialogTradePassword_input;
     private String mMoney;
     private String transferRate;
     private TextView textFinalMoney;//转让成功后收入
@@ -117,20 +113,6 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
             public void onFail(String error) {
                 end();
                 Uihelper.showToast(LaunchTransferRegularAcitivity.this, error);
-            }
-        });
-
-        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
-            @Override
-            public void onSucceed(LoginResult result) {
-                end();
-                userInfo = result.getData();
-            }
-
-            @Override
-            public void onFail(String error) {
-                end();
-                Uihelper.showToast(mActivity, error);
             }
         });
     }
@@ -344,7 +326,6 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
                         public void positionBtnClick() {
                             dismiss();
                             //输入交易密码
-                            showTradeDialog();
                         }
                     };
                     dialogTips.show();
@@ -356,51 +337,21 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
                         public void positionBtnClick() {
                             //输入交易密码
                             dismiss();
-                            showTradeDialog();
 
                         }
                     };
                     dialogTips.show();
                 } else {
-                    //输入交易密码
-                    showTradeDialog();
+//                    //输入交易密码
+//                    showTradeDialog();
                 }
                 break;
             default:
                 break;
         }
+
     }
 
-    private void showTradeDialog() {
-        if (userInfo.getPayPwdStatus() != null) {
-            int state = Integer.parseInt(userInfo.getPayPwdStatus());
-            initDialogTradePassword(state);
-        }
-    }
-
-    private void initDialogTradePassword(int type) {
-
-        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
-
-            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-            intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-            startActivityForResult(intent, 0);
-            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码");
-
-        } else {
-            if (dialogTradePassword_input == null) {
-                dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD_LaunchTransfer) {
-                    @Override
-                    public void positionBtnClick(String s) {
-                        dismiss();
-                        //请求接口
-                        rollOut(s);
-                    }
-                };
-            }
-            dialogTradePassword_input.show();
-        }
-    }
 
     private void rollOut(String password) {
 

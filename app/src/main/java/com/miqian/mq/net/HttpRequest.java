@@ -143,14 +143,14 @@ public class HttpRequest {
      * 认购订单生成页面
      *
      * @param amt    金额
-     * @param prodId 0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      */
-    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId, String prodId) {
+    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(context))));
         mList.add(new Param("amt", amt));
         mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("prodId", prodId));
+//        mList.add(new Param("prodId", prodId));
         new MyAsyncTask(context, Urls.order_produced, mList, new ICallback<String>() {
 
             @Override
@@ -223,41 +223,9 @@ public class HttpRequest {
     }
 
     /**
-     * 充值失败原因上传
-     */
-    public static void rollInError(final Context context, String orderNo, String error) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("orderNo", orderNo));
-        mList.add(new Param("llJson", error));
-        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, IntoActivity.showErrorString(context, "llErrorCodeVersion"))));
-
-        new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                ErrorLianResult errorLianResult = JsonUtil.parseObject(result, ErrorLianResult.class);
-                String errorData = errorLianResult.getData();
-                Map<String, String> userMap = null;
-                if (!TextUtils.isEmpty(errorData)) {
-                    userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
-                    });
-                    if (userMap.size() > 0) {
-                        Pref.saveString(Pref.ERROR_LIAN, errorData, context);
-                        Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
-                    }
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
      * 获取用户信息
      */
-    public static void getUserInfo(Context context, final ICallback<LoginResult> callback) {
+    public static void getUserInfo(final Context context, final ICallback<LoginResult> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
@@ -267,6 +235,7 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
                 if (loginResult.getCode().equals("000000")) {
+                    UserUtil.saveHfInfo(context, loginResult.getData());
                     callback.onSucceed(loginResult);
                 } else {
                     callback.onFail(loginResult.getMessage());
@@ -313,7 +282,7 @@ public class HttpRequest {
     //登录
     public static void login(Context context, final ICallback<LoginResult> callback, String mobilePhone, String password) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
         new MyAsyncTask(context, Urls.login, mList, new ICallback<String>() {
@@ -593,23 +562,24 @@ public class HttpRequest {
     }
 
     //修改登录密码
-    public static void changePassword(Context context, final ICallback<LoginResult> callback,
-                                      String oldPassword, String newPassword, String confirmPassword) {
+    public static void changePassword(Context context, final ICallback<Meta> callback,
+                                      String oldPassword, String newPassword, String confirmPassword, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldPassword", RSAUtils.encryptURLEncode(oldPassword)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
+        mList.add(new Param("captcha", captcha));
 
         new MyAsyncTask(context, Urls.changePassword, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
-                if (loginResult.getCode().equals("000000")) {
-                    callback.onSucceed(loginResult);
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(loginResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
@@ -624,7 +594,7 @@ public class HttpRequest {
     public static void getPassword(Context context, final ICallback<Meta> callback,
                                    String mobilePhone, String newPassword, String confirmPassword, String captcha) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
         mList.add(new Param("captcha", captcha));
@@ -1073,15 +1043,13 @@ public class HttpRequest {
      * @param pageNo   页码(默认1)
      * @param pageSize 每页条数（默认20）
      * @param clearYn  默认为N  N：计息中  Y：已结息
-     * @param isForce  默认为0 1 强制刷新  0 不强制刷新
      */
-    public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn, String isForce) {
+    public static void getUserRegular(Context context, final ICallback<UserRegularResult> callback, String pageNo, String pageSize, String clearYn) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
         mList.add(new Param("clearYn", clearYn));
-        mList.add(new Param("isForce", isForce));
 
         new MyAsyncTask(context, Urls.user_regular, mList, new ICallback<String>() {
 
@@ -1229,51 +1197,17 @@ public class HttpRequest {
      * 认购接口
      *
      * @param amt       金额
-     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      * @param subjectId 0:活期
      */
-    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList, String prodList) {
+    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String subjectId, String promotionId) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("prodId", prodId));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+//        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
         mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("promList", promList));
-        mList.add(new Param("prodList", prodList));
+        mList.add(new Param("promotionId", promotionId));
         new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
-                callback.onSucceed(subscribeOrderResult);
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 活期、定期赚、定期计划
-     * 快捷认购接口
-     *
-     * @param amt       金额
-     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-     * @param subjectId 0:活期
-     */
-    public static void subscribeQuickOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String orderNo, String subjectId, String promList, String prodList) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("amt", amt));
-        mList.add(new Param("prodId", prodId));
-        mList.add(new Param("orderNo", orderNo));
-        mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("promList", promList));
-        mList.add(new Param("prodList", prodList));
-        new MyAsyncTask(context, Urls.quick_subscribe_order, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -1348,12 +1282,14 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    //我的促销接口，包括红包，拾财券等
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String state, String pageNum, String pageSize) {
+    /**
+     * 我的促销接口，包括红包，拾财券等
+     * 促销券使用状态status: 0可使用,1使用完,2已过期,3赠送
+     */
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String status, String pageNum, String pageSize) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("promTypCd", ""));
-        mList.add(new Param("sta", state));
+        mList.add(new Param("status", status));
         mList.add(new Param("pageNum", pageNum));
         mList.add(new Param("pageSize", pageSize));
         new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {
@@ -1621,12 +1557,13 @@ public class HttpRequest {
     /**
      * 汇付充值接口
      */
-    public static void rollinHf(final Context context, String amt) {
+    public static void rollinHf(final Context context, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 //        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
         WebHFActivity.startActivity(context, Urls.hf_rollin_url, params);
     }
@@ -1634,12 +1571,15 @@ public class HttpRequest {
     /**
      * 汇付提现接口
      */
-    public static void rolloutHf(final Context context, String amt) {
+    public static void rolloutHf(final Context context, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
 //        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
 //        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+//        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
         WebHFActivity.startActivity(context, Urls.hf_rollout_url, params);
     }
@@ -1652,6 +1592,16 @@ public class HttpRequest {
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 //        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
         WebHFActivity.startActivity(context, Urls.hf_register, params);
+    }
+
+    /**
+     * 汇付用户开通自动投标
+     */
+    public static void autoHf(final Context context) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+//        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
+        WebHFActivity.startActivity(context, Urls.hf_auto, params);
     }
 
 //    /**

@@ -40,7 +40,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private int pageNo = 1;
     private String pageSize = "10";
     private String isExpiry = "N";//是否结息 N：计息中 Y：已结息
-    private String isForce = "1";//是否强制刷新 1强制刷新 0不强制刷新
     private boolean isLoading = false;
     private int mType = 0;
 
@@ -63,7 +62,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void obtainData() {
         pageNo = 1;
-        isForce = "1";
         if (!swipeRefresh.isRefreshing()) {
             begin();
         }
@@ -82,7 +80,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                 end();
                 Uihelper.showToast(mActivity, error);
             }
-        }, String.valueOf(pageNo), pageSize, isExpiry, isForce);
+        }, String.valueOf(pageNo), pageSize, isExpiry);
     }
 
     private void loadMore() {
@@ -93,7 +91,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             }
             isLoading = true;
             pageNo += 1;
-            isForce = "0";
             HttpRequest.getUserRegular(mActivity, new ICallback<UserRegularResult>() {
                 @Override
                 public void onSucceed(UserRegularResult result) {
@@ -110,7 +107,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                     isLoading = false;
                     Uihelper.showToast(mActivity, error);
                 }
-            }, String.valueOf(pageNo), pageSize, isExpiry, isForce);
+            }, String.valueOf(pageNo), pageSize, isExpiry);
         }
     }
 
