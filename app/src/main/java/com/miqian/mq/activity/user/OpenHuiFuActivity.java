@@ -47,18 +47,6 @@ public class OpenHuiFuActivity extends BaseActivity {
 
             }
         });
-        mTitle.setOnLeftClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mType == TypeUtil.TYPE_OPENHF_REGISTER) {
-                    if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
-                        GestureLockSetActivity.startActivity(getBaseContext(), null);
-                    }
-                }
-                finish();
-            }
-        });
-
     }
 
     @Override
@@ -111,18 +99,6 @@ public class OpenHuiFuActivity extends BaseActivity {
 
     //暂不开通按钮
     public void btn_close(View v) {
-        onBackPressed();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (mType == TypeUtil.TYPE_OPENHF_REGISTER) {
-            if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
-                GestureLockSetActivity.startActivity(getBaseContext(), null);
-            }
-        }
         finish();
-        super.onBackPressed();
     }
 }
