@@ -6,7 +6,7 @@ package com.miqian.mq.entity;
 public class RegInvest {
 
     private String id;//投资ID(投资编号)
-    private String prodId;//产品ID 定期计划 “4”  定期赚“3”
+    private String prodId;//产品ID 定期计划 “4”  定期赚“3”   //已修改为 定期赚为 1  定期计划为2
     private String prodName;//产品名称
     private String bdNm;//标的名称
     private String bdTyp;//标的类型  00  标准标的 01  新手专属 02  众人拾财专属 03  老财主专享回馈 04 定向大额投资人 88 88专属
@@ -23,7 +23,7 @@ public class RegInvest {
     private String hasTransOper;//是否有转让标识
     private String payMeansName;//月付息，到期还本"
     private String limitCnt;//定期计划期限
-    private String projectState;//项目状态 0未结息 1转让中 2已转让 3已到期
+    private String projectState;//项目状态   1  未转让  2 转让中  3  已转让
     private String bearingStatus;//结息状态 Y:已结息 N：未结息
     private String regAmt;//待收本金
     private String regIncome;//待收收益
