@@ -53,10 +53,10 @@ public class Urls {
 
     //测试
 //    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/"; // 冰红茶本地地址
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.104:8080/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.115:8080/miaoqian-app/";
-    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/";
     //线上
     public static final String SERVER_ONLINE = "https://api.shicaidai.com/";
 
@@ -83,7 +83,9 @@ public class Urls {
 //    //充值失败错误原因上传接口
 //    public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
     //活期首页
-    public final static String current_home = base_server + "currentService/getCurrentMain";
+    public final static String current_home = base_server + "deposit/current/getCurrentList";
+    //活期详情
+    public final static String current_detail = base_server + "deposit/current/getCurrentDetail";
     //认购预处理
     public final static String order_produced = base_server + "tradeService/subscribePreprocess";//assetService/subscribePreprocess
     //认购
@@ -150,7 +152,9 @@ public class Urls {
     public final static String repayment_detail = base_server + "commonService/getRepaymentList";
 
     //定期首页
-    public final static String REGULA_PROJECT = base_server + "subjectService/regularList";
+    public final static String REGULA_PROJECT = base_server + "deposit/bidService/getProductList"; // subjectService/regularList
+    //定期详情
+    public final static String REGULA_PROJECT_DETAIL = base_server + "deposit/bidService/getProductDetail"; // subjectService/regularList
     //定期转让首页
     public final static String REGULA_PROJECT_TRANSFER = base_server + "transferService/regularList";
 

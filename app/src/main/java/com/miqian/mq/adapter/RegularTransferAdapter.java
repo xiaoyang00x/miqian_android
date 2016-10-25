@@ -133,7 +133,7 @@ public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             append(FormatUtil.formatAmount(info.getResidueAmt())));
 
             switch (info.getSubjectStatus()) {
-                case RegularBase.STATE_01:
+                case RegularBase.STATE_5:
                     tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));

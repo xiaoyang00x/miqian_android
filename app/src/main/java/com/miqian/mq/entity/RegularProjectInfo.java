@@ -19,17 +19,18 @@ public class RegularProjectInfo extends RegularBase {
 
     private BigDecimal continueInvestmentLimit; // 续投金额
 
+    private BigDecimal unitAmount; // 每份投资金额
+
     private String presentationYesNo; // 是否赠送收益
 
     private String limit; // 期限
 
     private String predictRate; // 预计年化收益率
 
-    private String subjectStatus; // 标的状态 00：待开标 01：已开标 02：已满标（已售罄）03：已到期 04：已撤销 05：已流标 06：审批中 07：还款中 08：正常还完
+    private int subjectStatus; // 标的状态 00：待开标 01：已开标 02：已满标（已售罄）03：已到期 04：已撤销 05：已流标 06：审批中 07：还款中 08：正常还完
 
-    private String subjectType; // 标的类型 00：标准标的 01：新手专属 02：众人拾财专属 03：老财主专享回馈 04：定向大额投资人 05：拼iPhone干货 06：加息专场 07：双倍收益卡 0IP6：0元购iPhone6 88：88专属(双倍收益标)
+    private String subjectType; // 标的类型 88:88-活动 00:标准标的 01:新手专属 02:众人拾财专属 03:老财主专享回馈 04:定向大额投资人
     public final static String TYPE_RATE = "88";
-    public final static String TYPE_CARD = "07";
 
     private int prodId; // 产品类型  1活期，2活期转让，3定期，4定期转让，5定期计划，6计划转让
 
@@ -113,6 +114,14 @@ public class RegularProjectInfo extends RegularBase {
         this.continueInvestmentLimit = continueInvestmentLimit;
     }
 
+    public BigDecimal getUnitAmount() {
+        return unitAmount;
+    }
+
+    public void setUnitAmount(BigDecimal unitAmount) {
+        this.unitAmount = unitAmount;
+    }
+
     public String getPresentationYesNo() {
         return presentationYesNo;
     }
@@ -137,11 +146,11 @@ public class RegularProjectInfo extends RegularBase {
         this.predictRate = predictRate;
     }
 
-    public String getSubjectStatus() {
+    public int getSubjectStatus() {
         return subjectStatus;
     }
 
-    public void setSubjectStatus(String subjectStatus) {
+    public void setSubjectStatus(int subjectStatus) {
         this.subjectStatus = subjectStatus;
     }
 
