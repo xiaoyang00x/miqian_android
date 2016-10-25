@@ -2,6 +2,8 @@ package com.miqian.mq.activity.current;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,15 +13,20 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.entity.UserCurrent;
+import com.miqian.mq.adapter.MyCurrentAdapter;
+import com.miqian.mq.adapter.RegularProjectAdapter;
+import com.miqian.mq.entity.UserCurrentData;
 import com.miqian.mq.entity.UserCurrentResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
+import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.ServerBusyView;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
@@ -31,22 +38,14 @@ import java.math.BigDecimal;
  */
 public class ActivityUserCurrent extends BaseActivity implements View.OnClickListener, ExtendOperationController.ExtendOperationListener {
 
-    private TextView textEarning;
-    private TextView textCaptial;
-    private TextView textTotalEarning;
-    private RelativeLayout frameCurrentRecord;
-    private RelativeLayout frameProjectMatch;
     private Button btRedeem;//赎回
     private Button btSubscribe;//认购
-    private TextView textInterest;
+    private MySwipeRefresh swipeRefresh;
+    private RecyclerView recyclerView;
 
-    private UserCurrent userCurrent;
-    private BigDecimal downLimit = BigDecimal.ONE;
-    private BigDecimal upLimit = new BigDecimal(9999999999L);
-    private BigDecimal balance;
-    private DialogPay dialogPay;
 
-    private String interestRateString = "";
+    private UserCurrentData userCurrentData;
+    private MyCurrentAdapter myCurrentAdapter;
     private ExtendOperationController operationController;
 
     @Override
@@ -64,20 +63,42 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         super.onDestroy();
     }
 
+    private boolean inProcess = false;
+    private final Object mLock = new Object();
+
     @Override
     public void obtainData() {
+
+        if (inProcess) {
+            return;
+        }
+        synchronized (mLock) {
+            inProcess = true;
+        }
+        swipeRefresh.setRefreshing(true);
         begin();
         HttpRequest.getUserCurrent(mActivity, new ICallback<UserCurrentResult>() {
             @Override
             public void onSucceed(UserCurrentResult result) {
+                synchronized (mLock) {
+                    inProcess = false;
+                }
+                swipeRefresh.setRefreshing(false);
                 end();
-                userCurrent = result.getData();
-                interestRateString = userCurrent.getCurrentYearRate();
+                if (result == null || result.getData() == null) {
+                    return;
+                }
+                userCurrentData = result.getData();
+//                interestRateString = userCurrentData.getUserCurrent().getYearInterest().toString();
                 refreshView();
             }
 
             @Override
             public void onFail(String error) {
+                synchronized (mLock) {
+                    inProcess = false;
+                }
+                swipeRefresh.setRefreshing(false);
                 end();
                 refreshView();
                 Uihelper.showToast(mActivity, error);
@@ -86,29 +107,15 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     }
 
     private void refreshView() {
-        if (userCurrent != null) {
-            textEarning.setText(userCurrent.getCurYesterDayAmt());
-            textCaptial.setText(userCurrent.getCurAsset()+"");
-            textTotalEarning.setText(userCurrent.getCurAmt()+"");
-            BigDecimal money = new BigDecimal(userCurrent.getCurAsset()+"");
-            downLimit = userCurrent.getCurrentBuyDownLimit();
-            upLimit = userCurrent.getCurrentBuyUpLimit();
-            balance = userCurrent.getBalance();
-            if (money.compareTo(BigDecimal.ZERO) <= 0) {
+        if (userCurrentData != null) {
+            myCurrentAdapter = new MyCurrentAdapter(mContext, userCurrentData);
+            recyclerView.setAdapter(myCurrentAdapter);
+
+            if (userCurrentData.getUserRedeem().getCurDayResidue().compareTo(BigDecimal.ZERO) <= 0) {
                 btRedeem.setEnabled(false);
                 btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
             }
-            if ("0".equals(userCurrent.getCurrentSwitch())) {//关闭认购开关
-                btSubscribe.setEnabled(false);
-                btSubscribe.setTextColor(getResources().getColor(R.color.mq_b5));
-            }
-            String tempInterest = userCurrent.getCurrentYearRate();
-            if (TextUtils.isEmpty(tempInterest)) {
-                textInterest.setVisibility(View.GONE);
-            } else {
-                textInterest.setVisibility(View.VISIBLE);
-                textInterest.setText(tempInterest+"%");
-            }
+
         } else {
             btRedeem.setEnabled(false);
             btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
@@ -116,53 +123,37 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
 
     }
 
+    private void initListener() {
+        swipeRefresh.setOnPullRefreshListener(mOnPullRefreshListener);
+    }
+
     @Override
     public void initView() {
-        textEarning = (TextView) findViewById(R.id.earning);
-        textCaptial = (TextView) findViewById(R.id.captial);
-        textTotalEarning = (TextView) findViewById(R.id.total_earning);
-
-        frameCurrentRecord = (RelativeLayout) findViewById(R.id.frame_current_record);
-        frameProjectMatch = (RelativeLayout) findViewById(R.id.frame_project_match);
         btRedeem = (Button) findViewById(R.id.bt_redeem);
         btSubscribe = (Button) findViewById(R.id.bt_subscribe);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
 
-        textInterest = (TextView) findViewById(R.id.text_interest);
 
-        frameCurrentRecord.setOnClickListener(this);
-        frameProjectMatch.setOnClickListener(this);
         btRedeem.setOnClickListener(this);
         btSubscribe.setOnClickListener(this);
 
-        dialogPay = new DialogPay(mActivity) {
-            @Override
-            public void positionBtnClick(String moneyString) {
-                if (!TextUtils.isEmpty(moneyString)) {
-                    BigDecimal money = new BigDecimal(moneyString);
-                    if (money.compareTo(downLimit) < 0) {
-                        this.setTipText("提示：" + downLimit + "元起投");
-                    } else if (money.compareTo(upLimit) > 0) {
-                        this.setTipText("提示：请输入小于等于" + upLimit + "元");
-                    } else {
-                        MobclickAgent.onEvent(mActivity, "1037_1");
-                        UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, TextUtils.isEmpty(interestRateString) ? "" : interestRateString + "%");
-                        this.setEditMoney("");
-                        this.setTipTextVisibility(View.GONE);
-                        this.dismiss();
-                    }
-                } else {
-                    this.setTipText("提示：请输入金额");
-                }
-            }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
-            @Override
-            public void negativeBtnClick() {
-                MobclickAgent.onEvent(mActivity, "1037_2");
-                this.setEditMoney("");
-                this.setTipTextVisibility(View.GONE);
-            }
-        };
+        initListener();
+
     }
+
+
+    private MySwipeRefresh.OnPullRefreshListener mOnPullRefreshListener = new MySwipeRefresh.OnPullRefreshListener() {
+        @Override
+        public void onRefresh() {
+            obtainData();
+        }
+    };
+
 
     @Override
     public int getLayoutId() {
@@ -171,44 +162,30 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("我的活期");
+        mTitle.setTitleText("秒钱宝");
     }
 
     @Override
     protected String getPageName() {
-        return "我的活期";
+        return "秒钱宝";
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.frame_current_record:
-                MobclickAgent.onEvent(mActivity, "1035");
-                startActivity(new Intent(mActivity, ActivityCurrentRecord.class));
-                break;
-            case R.id.frame_project_match:
-                MobclickAgent.onEvent(mActivity, "1036");
-                //项目匹配
-                WebActivity.startActivity(mActivity, Urls.project_match + "0");
-                break;
             case R.id.bt_redeem:
-                if (userCurrent!=null){
+                if (userCurrentData !=null){
                     MobclickAgent.onEvent(mActivity, "1038");
                     Intent intent = new Intent(mActivity, ActivityRedeem.class);
                     Bundle bundle=new Bundle();
-                    bundle.putSerializable("userCurrent",userCurrent);
+                    bundle.putSerializable("userCurrentData", userCurrentData);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
                 break;
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");
-                if (balance != null && balance.compareTo(downLimit) >= 0) {
-                    dialogPay.setEditMoneyHint("可用余额" + balance + "元");
-                } else {
-                    dialogPay.setEditMoneyHint(downLimit + "元起投");
-                }
-                UserUtil.loginPay(mActivity, dialogPay);
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_CURRENT, null);
                 break;
         }
     }

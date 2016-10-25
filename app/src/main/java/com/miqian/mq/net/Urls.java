@@ -52,10 +52,11 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+//    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.104:8080/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.115:8080/miaoqian-app/";
+    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/";
     //线上
     public static final String SERVER_ONLINE = "https://api.shicaidai.com/";
 
@@ -167,6 +168,8 @@ public class Urls {
     public final static String redeem = base_server + "assetService/redeem";
     //我的活期资金记录
     public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
+    //我的秒钱宝认购记录
+    public final static String getUserCurrentProduct = base_server + "deposit/current/getUserCurrentProduct";
     //修改绑定手机
     public final static String changePhone = base_server + "userService/changePhone";
     //提现预处理

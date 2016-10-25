@@ -39,6 +39,7 @@ import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.SubscribeOrderResult;
+import com.miqian.mq.entity.SubscriptionRecordsResult;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserCurrentResult;
@@ -953,7 +954,7 @@ public class HttpRequest {
     }
 
     /**
-     * 我的活期
+     * 我的秒钱宝
      */
     public static void getUserCurrent(Context context, final ICallback<UserCurrentResult> callback) {
         List<Param> mList = new ArrayList<>();
@@ -1560,4 +1561,32 @@ public class HttpRequest {
 //            }
 //        }).executeOnExecutor();
 //    }
+
+    /**
+     * 我的秒钱宝认购记录
+     * @param context
+     * @param callback
+     * @param projectCode 项目编号
+     */
+    public static void getUserCurrentProduct(Context context, final ICallback<SubscriptionRecordsResult> callback, String projectCode) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("projectCode", projectCode));
+        new MyAsyncTask(context, Urls.getUserCurrentProduct, mList, new ICallback<String>() {
+            @Override
+            public void onSucceed(String result) {
+                SubscriptionRecordsResult subscriptionRecordsResult = JsonUtil.parseObject(result, SubscriptionRecordsResult.class);
+                if (subscriptionRecordsResult.getCode().equals("000000")) {
+                    callback.onSucceed(subscriptionRecordsResult);
+                } else {
+                    callback.onFail(subscriptionRecordsResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
 }
