@@ -51,7 +51,7 @@ public class SubscriptionRecordsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        ((ProductsListHolder) holder).bindData(dataList.get(position - 1));
+        ((ProductsListHolder) holder).bindData(dataList.get(position));
 
     }
 
