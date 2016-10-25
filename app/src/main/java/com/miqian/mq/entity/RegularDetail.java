@@ -1,7 +1,5 @@
 package com.miqian.mq.entity;
 
-import java.util.ArrayList;
-
 /**
  * @author wangduo
  * @description: ${todo}
@@ -10,13 +8,14 @@ import java.util.ArrayList;
  */
 public class RegularDetail {
 
-    private ArrayList<RegularProjectInfo> subjectData;
+    private RegularProjectInfo subjectData;
 
-    public ArrayList<RegularProjectInfo> getSubjectData() {
+    public RegularProjectInfo getSubjectData() {
         return subjectData;
     }
 
-    public void setSubjectData(ArrayList<RegularProjectInfo> subjectData) {
+    public void setSubjectData(RegularProjectInfo subjectData) {
         this.subjectData = subjectData;
     }
+
 }

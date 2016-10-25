@@ -14,7 +14,9 @@ import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.ConfigResult;
+import com.miqian.mq.entity.CurrentDetailResult;
 import com.miqian.mq.entity.CurrentInfoResult;
+import com.miqian.mq.entity.CurrentProjectResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.ErrorLianResult;
 import com.miqian.mq.entity.GetHomeActivityResult;
@@ -757,7 +759,67 @@ public class HttpRequest {
     }
 
     /**
+     * 获取活期项目列表数据
+     *
+     * @param context
+     * @param callback
+     * @param pageNo   获取第*页数据
+     * @param pageSize 每页数据条数
+     */
+    public static void getCurrentProjectList(Context context, final ICallback<CurrentProjectResult> callback, int pageNo, int pageSize) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("pageNo", String.valueOf(pageNo)));
+        params.add(new Param("pageSize", String.valueOf(pageSize)));
+        new MyAsyncTask(context, Urls.current_home, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                CurrentProjectResult meta = JsonUtil.parseObject(result, CurrentProjectResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 获取活期详情
+     *
+     * @param subjectId 标的编号，如传入则返回改标的相关信息
+     */
+    public static void getCurrentDetail(Context context, String subjectId, final ICallback<CurrentDetailResult> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("productCode", subjectId));
+        new MyAsyncTask(context, Urls.current_detail, params, new ICallback<String>() {
+            @Override
+            public void onSucceed(String result) {
+                CurrentDetailResult meta = JsonUtil.parseObject(result, CurrentDetailResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
      * 获取定期首页列表数据
+     *
+     * @param context
+     * @param callback
      */
     public static void getRegularProjectList(Context context, final ICallback<RegularProjectListResult> callback) {
         ArrayList params = new ArrayList<>();
@@ -845,11 +907,8 @@ public class HttpRequest {
     public static void getRegularDetail(Context context, String subjectId, int prodId, final ICallback<RegularDetailResult> callback) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("subjectId", subjectId));
-        params.add(new Param("pageNo", "1"));
-        params.add(new Param("pageSize", "50"));
-        String url = prodId == RegularBase.REGULAR_03 || prodId == RegularBase.REGULAR_05 ?
-                Urls.REGULA_PROJECT : Urls.REGULA_PROJECT_TRANSFER;
-        new MyAsyncTask(context, url, params, new ICallback<String>() {
+        params.add(new Param("prodId", String.valueOf(prodId)));
+        new MyAsyncTask(context, Urls.REGULA_PROJECT_DETAIL, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
                 RegularDetailResult meta = JsonUtil.parseObject(result, RegularDetailResult.class);
@@ -1566,7 +1625,7 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
 //        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
 //        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
-        params.add(new Param("custId",  RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("amt", amt));
         WebHFActivity.startActivity(context, Urls.hf_rollin_url, params);
@@ -1579,7 +1638,7 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
 //        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
 //        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
-        params.add(new Param("custId",  RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("amt", amt));
         WebHFActivity.startActivity(context, Urls.hf_rollout_url, params);

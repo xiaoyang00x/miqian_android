@@ -15,12 +15,14 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.AnnounceResultActivity;
 import com.miqian.mq.activity.MainActivity;
-import com.miqian.mq.activity.RegularDetailActivity;
+import com.miqian.mq.activity.RegularPlanDetailActivity;
+import com.miqian.mq.activity.RegularProjectDetailActivity;
 import com.miqian.mq.activity.SplashActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
@@ -193,7 +195,11 @@ public class MyReceiver extends BroadcastReceiver {
                                     int prodId = jsonObject.getInt("prodId");
                                     String subjectId = jsonObject.getString("subjectId");
                                     if (!TextUtils.isEmpty(subjectId)) {
-                                        notificationIntent = new Intent(context, RegularDetailActivity.class);
+                                        if (RegularBase.REGULAR_03 == prodId) {
+                                            notificationIntent = new Intent(context, RegularProjectDetailActivity.class);
+                                        } else if (RegularBase.REGULAR_05 == prodId) {
+                                            notificationIntent = new Intent(context, RegularPlanDetailActivity.class);
+                                        }
                                         notificationIntent.putExtra(Constants.SUBJECTID, subjectId);
                                         notificationIntent.putExtra(Constants.PRODID, prodId);
                                     } else {
