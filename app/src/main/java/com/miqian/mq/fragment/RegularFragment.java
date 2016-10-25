@@ -15,6 +15,7 @@ import com.miqian.mq.views.RegularTransferView;
 
 /**
  * Created by guolei_wang on 15/9/16.
+ * 定期首页
  */
 public class RegularFragment extends BasicFragment {
 
@@ -34,9 +35,8 @@ public class RegularFragment extends BasicFragment {
     private View rootView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater mInflater, ViewGroup container, Bundle savedInstanceState) {
         if (null == rootView) {
-            LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rootView = mInflater.inflate(R.layout.fragment_regular, null);
             initView();
             initListener();

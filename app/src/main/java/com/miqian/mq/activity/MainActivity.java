@@ -25,9 +25,10 @@ import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MaintenanceResult;
 import com.miqian.mq.entity.Navigation;
+import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.UpdateInfo;
 import com.miqian.mq.entity.UpdateResult;
-import com.miqian.mq.fragment.FragmentCurrent;
+import com.miqian.mq.fragment.CurrentFragment;
 import com.miqian.mq.fragment.FragmentHome;
 import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.fragment.RegularFragment;
@@ -185,18 +186,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getBooleanExtra(Constants.VERIFYFAILED, false)) {
-            dialogPayDismiss();
             mTabHost.setCurrentTab(3);
-        }
-    }
-
-    /**
-     * 用户退出登录时将认购弹窗隐藏
-     */
-    private void dialogPayDismiss() {
-        if (mTabHost.getCurrentTab() == 1) {
-            FragmentCurrent fragmentCurrent = (FragmentCurrent) getSupportFragmentManager().findFragmentByTag(TAG_CURRENT);
-            fragmentCurrent.dialogPayDismiss();
         }
     }
 
@@ -443,7 +433,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
         FragmentTabHost.TabSpec tabSpecCurrent = mTabHost.newTabSpec(TAG_CURRENT);
         tabSpecCurrent.setIndicator(tabIndicator2.getTabIndicator());
-        mTabHost.addTab(tabSpecCurrent, FragmentCurrent.class, null);
+        mTabHost.addTab(tabSpecCurrent, CurrentFragment.class, null);
 
         FragmentTabHost.TabSpec tabSpecRegular = mTabHost.newTabSpec(TAG_REGULAR);
         tabSpecRegular.setIndicator(tabIndicator3.getTabIndicator());
@@ -646,7 +636,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 //清除Token
                 JpushInfo jpushInfo = (JpushInfo) data;
                 UserUtil.clearUserInfo(this);
-                dialogPayDismiss();
                 current_tab = 3;
                 ActivityStack.getActivityStack().clearActivity();
                 boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
