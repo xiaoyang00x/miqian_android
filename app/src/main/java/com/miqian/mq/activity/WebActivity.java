@@ -365,7 +365,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     /**
      * 判断当前网页是否有前一页，如果有则返回，否则 finish()
      */
-    protected void goBack() {
+    private void goBack() {
         if (webview != null && webview.canGoBack()) {
             webview.goBack();
         } else {

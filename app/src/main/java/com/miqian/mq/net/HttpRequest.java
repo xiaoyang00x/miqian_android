@@ -1,5 +1,6 @@
 package com.miqian.mq.net;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -1498,45 +1499,56 @@ public class HttpRequest {
     /**
      * 汇付充值接口
      */
-    public static void rollinHf(final Context context, String hfCustId, String amt) {
+    public static void rollinHf(final Activity activity, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
 //        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
-        WebHFActivity.startActivity(context, Urls.hf_rollin_url, params);
+        WebHFActivity.startActivity(activity, Urls.hf_rollin_url, params);
     }
 
     /**
      * 汇付提现接口
      */
-    public static void rolloutHf(final Context context, String hfCustId, String amt) {
+    public static void rolloutHf(final Activity activity, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
 //        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
-        WebHFActivity.startActivity(context, Urls.hf_rollout_url, params);
+        WebHFActivity.startActivity(activity, Urls.hf_rollout_url, params);
+    }
+
+    /**
+     * 汇付老用户激活
+     */
+    public static void activateHf(final Activity activity, String hfCustId) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
+        WebHFActivity.startActivity(activity, Urls.hf_activate, params);
     }
 
     /**
      * 汇付用户开户接口
      */
-    public static void registerHf(final Context context) {
+    public static void registerHf(final Activity activity, int type) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
 //        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
-        WebHFActivity.startActivity(context, Urls.hf_register, params);
+        WebHFActivity.startActivity(activity, Urls.hf_register, params, type);
+
     }
 
     /**
      * 汇付用户开通自动投标
      */
-    public static void autoHf(final Context context) {
+    public static void autoHf(final Activity activity) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
 //        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
-        WebHFActivity.startActivity(context, Urls.hf_auto, params);
+        WebHFActivity.startActivity(activity, Urls.hf_auto, params);
     }
 
 //    /**

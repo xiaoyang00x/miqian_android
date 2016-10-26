@@ -1,5 +1,6 @@
 package com.miqian.mq.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
@@ -36,15 +38,20 @@ public class WebHFActivity extends WebActivity {
     private String url_hf;
     private String sign;
 
-    public static void startActivity(Context context, String url, ArrayList<String> list) {
-        context.startActivity(getIntent(context, url, list));
+    public static void startActivity(Activity activity, String url, ArrayList<String> list) {
+        activity.startActivity(getIntent(activity, url, list));
+    }
+
+    public static void startActivity(Activity activity, String url, ArrayList<String> list, int type) {
+        activity.startActivityForResult(getIntent(activity, url, list), type);
+//        activity.startActivity(getIntent(activity, url, list));
     }
 
     public static Intent getIntent(Context context, String url, ArrayList<String> list) {
         Intent intent = new Intent(context, WebHFActivity.class);
         intent.putExtra(KEY_URL, url);
         intent.putStringArrayListExtra("list", list);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 
@@ -222,7 +229,12 @@ public class WebHFActivity extends WebActivity {
 
     @JavascriptInterface
     public void hfCallback() {
+        goBack();
+    }
 
+    @JavascriptInterface
+    public void getHfResult(int code) {
+        Log.e("", "code " + code);
     }
 
 //    @Override
@@ -234,26 +246,23 @@ public class WebHFActivity extends WebActivity {
 //        super.onDestroy();
 //    }
 //
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//            goBack();
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
-//    /**
-//     * 判断当前网页是否有前一页，如果有则返回，否则 finish()
-//     */
-//    private void goBack() {
-//        if (webview != null && webview.canGoBack()) {
-//            webview.goBack();
-//        } else {
-//            finish();
-//        }
-//    }
-
+    /**
+     * HF返回只能返回原生页面
+     */
+    private void goBack() {
+        Intent intent = new Intent();
+        setResult(0, intent);
+        finish();
+    }
 
 
 }
