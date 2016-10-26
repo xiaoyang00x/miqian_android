@@ -52,7 +52,8 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+//    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/"; // 冰红茶本地地址
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.104:8080/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.115:8080/miaoqian-app/";
@@ -82,7 +83,9 @@ public class Urls {
 //    //充值失败错误原因上传接口
 //    public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
     //活期首页
-    public final static String current_home = base_server + "currentService/getCurrentMain";
+    public final static String current_home = base_server + "deposit/current/getCurrentList";
+    //活期详情
+    public final static String current_detail = base_server + "deposit/current/getCurrentDetail";
     //认购预处理
     public final static String order_produced = base_server + "tradeService/subscribePreprocess";//assetService/subscribePreprocess
     //认购
@@ -135,10 +138,10 @@ public class Urls {
     public final static String loginOut = base_server + "userService/logout";
     //提现
     public final static String withdrawCash = base_server + "assetService/withdrawCash";
-    //我的活期
-    public final static String user_current = base_server + "userService/getMyCurrent";
+    //我的秒钱宝
+    public final static String user_current = base_server + "deposit/mine/getMineCurrentMain";
     //我的定期
-    public final static String user_regular = base_server + " deposit/mineService/getMineProductList";//userRegService/v2/getMyRegBuyList
+    public final static String user_regular = base_server + "deposit/mine/getMineProductList";//userRegService/v2/getMyRegBuyList
     //我的定期详情
     public final static String user_regular_detail = base_server + "userRegService/v2/getRegDetail";
     //项目匹配
@@ -149,7 +152,9 @@ public class Urls {
     public final static String repayment_detail = base_server + "commonService/getRepaymentList";
 
     //定期首页
-    public final static String REGULA_PROJECT = base_server + "subjectService/regularList";
+    public final static String REGULA_PROJECT = base_server + "deposit/bidService/getProductList"; // subjectService/regularList
+    //定期详情
+    public final static String REGULA_PROJECT_DETAIL = base_server + "deposit/bidService/getProductDetail"; // subjectService/regularList
     //定期转让首页
     public final static String REGULA_PROJECT_TRANSFER = base_server + "transferService/regularList";
 
@@ -167,6 +172,8 @@ public class Urls {
     public final static String redeem = base_server + "assetService/redeem";
     //我的活期资金记录
     public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
+    //我的秒钱宝认购记录
+    public final static String getUserCurrentProduct = base_server + "deposit/current/getUserCurrentProduct";
     //修改绑定手机
     public final static String changePhone = base_server + "userService/changePhone";
     //提现预处理

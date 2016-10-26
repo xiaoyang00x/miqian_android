@@ -5,13 +5,13 @@ package com.miqian.mq.entity;
  */
 public class UserCurrentResult extends Meta {
 
-    private UserCurrent data;
+    private UserCurrentData data;
 
-    public UserCurrent getData() {
+    public UserCurrentData getData() {
         return data;
     }
 
-    public void setData(UserCurrent data) {
+    public void setData(UserCurrentData data) {
         this.data = data;
     }
 }

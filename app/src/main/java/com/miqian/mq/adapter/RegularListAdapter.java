@@ -112,7 +112,10 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
             divider.setVisibility(position + 1 == getItemCount() ? View.GONE : View.VISIBLE);
             switch (info.getSubjectStatus()) {
-                case RegularBase.STATE_00:
+                case RegularBase.STATE_1:
+                case RegularBase.STATE_2:
+                case RegularBase.STATE_3:
+                case RegularBase.STATE_4:
                     tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
@@ -123,13 +126,11 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     btn_state.setText("待开标");
                     if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
                         iv_tag.setImageResource(R.drawable.double_rate_nobegin);
-                    } else if (info.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                        iv_tag.setImageResource(R.drawable.double_card_nobegin);
                     } else {
                         iv_tag.setImageResource(0);
                     }
                     break;
-                case RegularBase.STATE_01:
+                case RegularBase.STATE_5:
                     tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
@@ -139,8 +140,6 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     btn_state.setText("立即认购");
                     if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
                         iv_tag.setImageResource(R.drawable.double_rate_normal);
-                    } else if (info.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                        iv_tag.setImageResource(R.drawable.double_card_normal);
                     } else {
                         iv_tag.setImageResource(0);
                     }
@@ -155,8 +154,6 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     btn_state.setText("已满额");
                     if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
                         iv_tag.setImageResource(R.drawable.double_rate_hasdone);
-                    } else if (info.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                        iv_tag.setImageResource(R.drawable.double_card_hasdone);
                     } else {
                         iv_tag.setImageResource(0);
                     }

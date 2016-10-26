@@ -120,8 +120,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             btn_buy.setText("待开标");
             if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
                 iv_tag.setImageResource(R.drawable.double_rate_nobegin);
-            } else if (data.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                iv_tag.setImageResource(R.drawable.double_card_nobegin);
             } else {
                 iv_tag.setImageResource(0);
             }
@@ -137,8 +135,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             btn_buy.setText(R.string.buy_now);
             if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
                 iv_tag.setImageResource(R.drawable.double_rate_normal);
-            } else if (data.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                iv_tag.setImageResource(R.drawable.double_card_normal);
             } else {
                 iv_tag.setImageResource(0);
             }
@@ -154,8 +150,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             btn_buy.setText("已满额");
             if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
                 iv_tag.setImageResource(R.drawable.double_rate_hasdone);
-            } else if (data.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                iv_tag.setImageResource(R.drawable.double_card_hasdone);
             } else {
                 iv_tag.setImageResource(0);
             }

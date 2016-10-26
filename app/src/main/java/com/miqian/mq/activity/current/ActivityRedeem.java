@@ -12,13 +12,12 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
-import com.miqian.mq.entity.UserCurrent;
+import com.miqian.mq.entity.UserCurrentData;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
@@ -44,7 +43,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
     private Button btnRollout;
     private TextViewEx tvTip;
     private TextViewEx tvExtra;
-    private UserCurrent userCurrent;
+    private UserCurrentData userCurrentData;
     private BigDecimal resideMoney;//可赎回金额
     private BigDecimal curResidue;//本月剩余可赎回额度
     private DialogTip mDialogTip;
@@ -59,7 +58,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onCreate(Bundle arg0) {
-        userCurrent = (UserCurrent) getIntent().getExtras().getSerializable("userCurrent");
+        userCurrentData = (UserCurrentData) getIntent().getExtras().getSerializable("userCurrentData");
         super.onCreate(arg0);
     }
 
@@ -84,9 +83,9 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
             tvPhone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
         }
         DecimalFormat df = new java.text.DecimalFormat("0.00");
-        if (userCurrent != null) {
-            BigDecimal balance = userCurrent.getCurAsset();//活期待收金额
-            BigDecimal curDayResidue = userCurrent.getCurDayResidue();//当日剩余可赎回额度
+        if (userCurrentData != null && userCurrentData.getUserRedeem() != null && userCurrentData.getUserCurrent() != null) {
+            BigDecimal balance = userCurrentData.getUserCurrent().getPrnAmt();//活期待收金额
+            BigDecimal curDayResidue = userCurrentData.getUserRedeem().getCurDayResidue();//当日剩余可赎回额度
             if (curDayResidue.compareTo(balance) > 0) {
                 resideMoney = balance;
             } else {
@@ -100,8 +99,8 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
             }
 
             btnRollout.setEnabled(true);
-            BigDecimal curMonthAmt = userCurrent.getCurMonthAmt();//本月已赎回的金额
-            BigDecimal lmtMonthAmt = userCurrent.getLmtMonthAmt();//本月限制赎回额度
+            BigDecimal curMonthAmt = userCurrentData.getUserRedeem().getCurMonthAmt();//本月已赎回的金额
+            BigDecimal lmtMonthAmt = userCurrentData.getUserRedeem().getLmtMonthAmt();//本月限制赎回额度
             curResidue = lmtMonthAmt.subtract(curMonthAmt);//剩余可赎回额度
 
 
@@ -115,7 +114,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
             }
 
             tvExtra.setText("您剩余可赎回额度" + textCurResidue + "元" + "(本月已经赎回" + textCurMonthAmt + "元)");
-            String tip = userCurrent.getWarmPrompt();//温馨提示
+            String tip = userCurrentData.getUserRedeem().getWarmPrompt();//温馨提示
             if (!TextUtils.isEmpty(tip)) {
                 String limitTips = tip.replace("|n", "\n");
                 tvTip.setText(limitTips, true);
