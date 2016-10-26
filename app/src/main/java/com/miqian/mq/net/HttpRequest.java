@@ -1562,9 +1562,7 @@ public class HttpRequest {
     public static void rollinHf(final Activity activity, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
+//        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
         WebHFActivity.startActivity(activity, Urls.hf_rollin_url, params);
@@ -1575,10 +1573,6 @@ public class HttpRequest {
      */
     public static void rolloutHf(final Activity activity, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
-//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
 //        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));

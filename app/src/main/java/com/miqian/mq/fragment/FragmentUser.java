@@ -28,6 +28,7 @@ import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
+import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
@@ -420,46 +421,44 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 if (!userInfo.isHfAccountStatus()) {
                     OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROOLIN);
                     //开通汇付
-                } else if (!userInfo.isStatus()) {
-                    //激活账户
                 } else {
                     //已开通状态
-                    startActivity(new Intent(getActivity(), RolloutActivity.class));
+//                    startActivity(new Intent(getActivity(), RolloutActivity.class));
+                    String balance = userInfo.getUsableSa();
+                    if (!TextUtils.isEmpty(balance)) {
+                        if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
+
+                            if ("1".equals(userInfo.getBindCardStatus())) {
+                                Intent intent = new Intent(getActivity(), RolloutActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("userInfo", userInfoTemp);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            } else {//提示绑卡
+                                if (tipDialog == null) {
+                                    tipDialog = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
+                                        @Override
+                                        public void positionBtnClick() {
+                                            dismiss();
+                                        }
+
+                                        @Override
+                                        public void negativeBtnClick() {
+                                        }
+                                    };
+                                    tipDialog.setTitle("提示");
+                                    tipDialog.setRemarks("请先充值完成绑卡流程");
+                                }
+                                tipDialog.show();
+                            }
+
+
+                        } else {
+                            Uihelper.showToast(getActivity(), "账户无余额，无法提现");
+                        }
+
+                    }
                 }
-//                String balance = userInfo.getUsableSa();
-//                if (!TextUtils.isEmpty(balance)) {
-//                    if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
-//
-//                        if ("1".equals(userInfo.getBindCardStatus())) {
-//                            Intent intent = new Intent(getActivity(), RolloutActivity.class);
-//                            Bundle bundle = new Bundle();
-//                            bundle.putSerializable("userInfo", userInfoTemp);
-//                            intent.putExtras(bundle);
-//                            startActivity(intent);
-//                        } else {//提示绑卡
-//                            if (tipDialog == null) {
-//                                tipDialog = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
-//                                    @Override
-//                                    public void positionBtnClick() {
-//                                        dismiss();
-//                                    }
-//
-//                                    @Override
-//                                    public void negativeBtnClick() {
-//                                    }
-//                                };
-//                                tipDialog.setTitle("提示");
-//                                tipDialog.setRemarks("请先充值完成绑卡流程");
-//                            }
-//                            tipDialog.show();
-//                        }
-//
-//
-//                    } else {
-//                        Uihelper.showToast(getActivity(), "账户无余额，无法提现");
-//                    }
-//
-//                }
 
                 break;
             //我的活期
@@ -523,6 +522,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             }
         }
         onStart();
+    }
+
+    @Override
+    public void changeHomeData(HomePageInfoResult result) {
     }
 
     @Override

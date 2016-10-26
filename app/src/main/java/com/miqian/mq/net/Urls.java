@@ -255,7 +255,5 @@ public class Urls {
     public final static String hf_rollout_url = base_server + "tradeService/withdrawForJump";
     public final static String hf_register = base_server + "account/huifuCreateAccountForJump";
     public final static String hf_auto = base_server + "account/openAutoTenderPlanForJump";
-    public final static String hf_activate = base_server + "account/openAutoTenderPlanForJump";
-
-
+    public final static String hf_activate = base_server + "account/huifuActiveAccountForJump";
 }

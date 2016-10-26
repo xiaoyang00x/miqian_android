@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.adapter.HomeAdapter;
 import com.miqian.mq.entity.GetHomeActivity;
 import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomePageInfoResult;
+import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.listener.HomeDialogListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.net.HttpRequest;
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FragmentHome extends BasicFragment implements ImageLoadingListener, HomeDialogListener {
+public class FragmentHome extends BasicFragment implements MainActivity.RefeshDataListener, ImageLoadingListener, HomeDialogListener {
     public static final int REQ_SHOW_DIALOG = 0x1000;
     private View view;
     private RecyclerView recyclerView;
@@ -56,6 +58,8 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        MainActivity mainActivity = (MainActivity) getActivity();//.setReshListener(this);
+        mainActivity.setReshListener(this);
         view = inflater.inflate(R.layout.frame_home, null);
         findView(view);
         setView();
@@ -172,18 +176,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 }
                 end();
                 swipeRefresh.setRefreshing(false);
-                if (result == null) return;
-                mDatas = result.getData();
-                if (mDatas == null) return;
-//                if (null == adapter) {
-                adapter = new HomeAdapter(mActivity, mDatas);
-                recyclerView.setAdapter(adapter);
-//                } else {
-//                    adapter.notifyDataSetChanged(info);
-//                }
-                serverBusyView.hide();
-                isServerBusyPageShow = false;
-                isNoNetworkPageShow = false;
+                showView(result);
             }
 
             @Override
@@ -205,6 +198,26 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 }
             }
         });
+    }
+
+    @Override
+    public void changeData(JpushInfo jpushInfo) {
+    }
+
+    @Override
+    public void changeHomeData(HomePageInfoResult result) {
+        showView(result);
+    }
+
+    private void showView(HomePageInfoResult result) {
+        if (result == null) return;
+        mDatas = result.getData();
+        if (mDatas == null) return;
+        adapter = new HomeAdapter(mActivity, mDatas);
+        recyclerView.setAdapter(adapter);
+        serverBusyView.hide();
+        isServerBusyPageShow = false;
+        isNoNetworkPageShow = false;
     }
 
     private boolean inActivityProcess = false;
@@ -240,12 +253,12 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
 //                }
 
                 if (mHomeActivityData != null && GetHomeActivity.FLAG_SHOW.equals(mHomeActivityData.getShowFlag())) {
-                    if(GetHomeActivity.ACTIVITY_TYPE_HOME.equals(mHomeActivityData.getActivityType())) {
+                    if (GetHomeActivity.ACTIVITY_TYPE_HOME.equals(mHomeActivityData.getActivityType())) {
                         showActivityDialog();
-                    }else if(GetHomeActivity.ACTIVITY_TYPE_PROMOTION.equals(mHomeActivityData.getActivityType())) {
+                    } else if (GetHomeActivity.ACTIVITY_TYPE_PROMOTION.equals(mHomeActivityData.getActivityType())) {
                         Dialog dialogPromotion = new PromotionDialog(mActivity, mHomeActivityData);
                         dialogPromotion.show();
-                    }else if(GetHomeActivity.ACTIVITY_TYPE_PROMOTION_OVERDUE.equals(mHomeActivityData.getActivityType())) {
+                    } else if (GetHomeActivity.ACTIVITY_TYPE_PROMOTION_OVERDUE.equals(mHomeActivityData.getActivityType())) {
                         Dialog dialogPromotionOverdue = new PromotionDialogOverdue(mActivity, mHomeActivityData);
                         dialogPromotionOverdue.show();
                     }
@@ -267,7 +280,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         super.onDestroyView();
         ListenerManager.unregisterHomeDialogListener(FragmentHome.class.getSimpleName());
 
-        if(dialogPendingIntent != null) {
+        if (dialogPendingIntent != null) {
             alarmManager.cancel(dialogPendingIntent);
         }
     }
@@ -277,7 +290,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         if (currentTime >= mHomeActivityData.getBeginTime() && currentTime < mHomeActivityData.getEndTime()) {
             show();
         } else if (currentTime < mHomeActivityData.getBeginTime()) {
-            if(dialogPendingIntent == null) {
+            if (dialogPendingIntent == null) {
                 Intent intent = new Intent(getActivity(), HomeDialogReceiver.class);
                 intent.setAction(HomeDialogReceiver.ACTION_SHOW_DIALOG);
                 dialogPendingIntent = PendingIntent.getBroadcast(mContext, REQ_SHOW_DIALOG, intent, PendingIntent.FLAG_UPDATE_CURRENT);
