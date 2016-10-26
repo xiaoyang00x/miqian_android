@@ -58,7 +58,6 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
                 ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
                 ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getPeerCustLoginNm());
                 ((ItemVH) vh).tvTraOpNm.setText(item.getTraOpNm());
-                ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm());
                 ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm() + "(" + item.getRem() + ")");
             }
         } else if (vh instanceof ProgressViewHolder) {

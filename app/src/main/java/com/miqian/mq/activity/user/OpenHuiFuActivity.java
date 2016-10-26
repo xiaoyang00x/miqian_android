@@ -2,6 +2,7 @@ package com.miqian.mq.activity.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -93,12 +95,26 @@ public class OpenHuiFuActivity extends BaseActivity {
 
     //开通按钮
     public void btn_click(View v) {
-        HttpRequest.registerHf(this);
-        finish();
+        HttpRequest.registerHf(this, 0);
+//        finish();
     }
 
     //暂不开通按钮
     public void btn_close(View v) {
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if (resultCode == 0) {
+
+                finish();
+                Log.e("", "success");
+            } else {
+
+                Log.e("", "fail");
+            }
+        }
     }
 }

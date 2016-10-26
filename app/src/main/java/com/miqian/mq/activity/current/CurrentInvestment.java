@@ -53,14 +53,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private RelativeLayout frameExpect;
     private RelativeLayout frameFact;
     private RelativeLayout frameRedPackage;
-//    private RelativeLayout frameLianPay;
+    //    private RelativeLayout frameLianPay;
 //    private TextView textLian;
 //    private RelativeLayout framePayChoose;
     private TextView textPayType;
     private TextView textPayTip;
     private TextView textPayMoney;
     private TextView factMoney;
-//    private TextView textErrorLian;
+    //    private TextView textErrorLian;
     private ImageView imageType;
 
     private RelativeLayout frameTip;
@@ -70,7 +70,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private ProducedOrder producedOrder;
     private List<Promote> promList;
     private String promotionId = "";
-//    private String promListString = "";
+    //    private String promListString = "";
 //    private String prodListString = "";
     private String promoteType = "";
 
@@ -113,7 +113,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public static final String SUBJECTID_CURRENT = "0";
 
     public int payModeState = 0;
-//    private CustomDialog dialogTips;
+    //    private CustomDialog dialogTips;
     private CustomDialog packageTips;
     private DialogTip mDialogTip;
 
@@ -125,7 +125,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         realMoney = intent.getStringExtra("realMoney");
         prodId = intent.getStringExtra("prodId");
         subjectId = intent.getStringExtra("subjectId");
-//        subjectId = "CP16100816180000000000001";
+        subjectId = "CP16100816180000000000001";
+        subjectId = "DX16102115230000000000001";
+        subjectId = "MQ16102115330000000000001";
+        subjectId = "CP16101011310000000000005";
         interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
     }
@@ -244,14 +247,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //            textLian.setText("" + payMoney);
 //        } else {
 //            showLianView(false);
-            textPayMoney.setText("" + payMoney);
-            textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
-            textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b1_v2));
+        textPayMoney.setText("" + payMoney);
+        textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
+        textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b1_v2));
 //            if (payModeState == PAY_MODE_BALANCE) {
-                textPayType.setText("账户余额");
-                textPayTip.setText("可用" + producedOrder.getUsableAmt() + "元");
-                imageType.setImageResource(R.drawable.balance_enable);
-                showErrorView(producedOrder.getUsableAmt());
+        textPayType.setText("账户余额");
+        textPayTip.setText("可用" + producedOrder.getUsableAmt() + "元");
+        imageType.setImageResource(R.drawable.balance_enable);
+        showErrorView(producedOrder.getUsableAmt());
 //            } else if (payModeState == PAY_MODE_BANK) {
 //                String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
 //                textPayType.setText(producedOrder.getBankName() + "(" + bankNo + ")");
@@ -277,7 +280,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b5_v2));
             textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_b5_v2));
 //            if (payModeState == PAY_MODE_BALANCE) {
-                imageType.setImageResource(R.drawable.balance_disable);
+            imageType.setImageResource(R.drawable.balance_disable);
 //                textErrorLian.setText("账户余额不足，请充值后，再进行认购");
 //            } else if (payModeState == PAY_MODE_CURRENT) {
 //                imageType.setImageResource(R.drawable.current_disable);
@@ -291,9 +294,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
      */
     private boolean insufficeBalance() {
 //        if (payModeState == PAY_MODE_BALANCE) {
-            if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
-                return true;
-            }
+        if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
+            return true;
+        }
 //        } else if (payModeState == PAY_MODE_CURRENT) {
 //            if (payMoney.compareTo(producedOrder.getBalanceCurrent()) > 0) {
 //                return true;
@@ -313,11 +316,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         if (producedOrder != null) {
 //            if ("1".equals(producedOrder.getSupportStatus()) && "1".equals(producedOrder.getBindCardStatus())) {
 //                bankNumber = RSAUtils.decryptByPrivate(producedOrder.getBankCardNo());
-                if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
-                    payModeState = PAY_MODE_BANK;
-                } else {
-                    payModeState = PAY_MODE_BALANCE;
-                }
+            if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
+                payModeState = PAY_MODE_BANK;
+            } else {
+                payModeState = PAY_MODE_BALANCE;
+            }
 //            } else {
 //                payModeState = PAY_MODE_LIAN;
 //            }
