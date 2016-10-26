@@ -69,6 +69,12 @@ public class SubscriptionRecordsActivity extends BaseActivity {
     }
 
     @Override
+    protected void showEmptyView() {
+        super.showEmptyView();
+        getTvTips().setText("项目已还款");
+    }
+
+    @Override
     public void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         projectCode = getIntent().getStringExtra(PROJECT_CODE);
