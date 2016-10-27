@@ -20,10 +20,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class AccountInfoActivity extends BaseActivity implements View.OnClickListener, ExtendOperationController.ExtendOperationListener {
     private TextView tvName;
-    private TextView tvCardNum;
-    private TextView tvBankName;
     private UserInfo userInfo;
-    private View frame_bankcard;
     private View frame_name;
     private TextView tvTelephone;
     private ExtendOperationController extendOperationController;
@@ -44,16 +41,11 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
     public void initView() {
 
         View frameTelephone = findViewById(R.id.frame_telephone);
-        frame_bankcard = findViewById(R.id.frame_bankcard);
         frame_name = findViewById(R.id.frame_name);
-
         tvName = (TextView) findViewById(R.id.tv_name);
-        tvBankName = (TextView) findViewById(R.id.tv_bankname);
-        tvCardNum = (TextView) findViewById(R.id.tv_cardnum);
         tvTelephone = (TextView) findViewById(R.id.tv_phone);
 
         frameTelephone.setOnClickListener(this);
-        frame_bankcard.setOnClickListener(this);
         extendOperationController = ExtendOperationController.getInstance();
         extendOperationController.registerExtendOperationListener(this);
         setData();
@@ -83,18 +75,6 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
                     findViewById(R.id.divider_name).setVisibility(View.VISIBLE);
                     tvName.setText(RSAUtils.decryptByPrivate(userInfo.getUserName()));
                 }
-            }
-        }
-
-        if ("1".equals(userInfo.getBindCardStatus())) {
-            frame_bankcard.setVisibility(View.VISIBLE);
-            findViewById(R.id.divider_bank).setVisibility(View.VISIBLE);
-            String bankNo = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
-            if (!TextUtils.isEmpty(bankNo)) {
-                tvCardNum.setText(bankNo.substring(0, 4) + " **** **** " + bankNo.substring(bankNo.length() - 4, bankNo.length()));
-            }
-            if (!TextUtils.isEmpty(userInfo.getBankName())) {
-                tvBankName.setText(userInfo.getBankName());
             }
         }
     }
@@ -127,16 +107,6 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
                 intent_phone.putExtra("isModifyPhone", true);
                 startActivity(intent_phone);
 
-                break;
-            case R.id.frame_bankcard://设置银行卡
-                if (userInfo == null) {
-                    return;
-                }
-                Intent intent_bind = new Intent(mActivity, SetBankActivity.class);
-                Bundle extra = new Bundle();
-                extra.putSerializable("userInfo", userInfo);
-                intent_bind.putExtras(extra);
-                startActivity(intent_bind);
                 break;
             default:
                 break;

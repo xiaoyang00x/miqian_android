@@ -65,25 +65,6 @@
             android:id="@+id/view_divider3"
             style="@style/item_divider" />
 
-        <RelativeLayout
-            android:id="@+id/frame_interest"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_item"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/margin_left_right"
-            android:paddingRight="@dimen/margin_left_right">
-
-            <TextView
-                style="@style/f7_B1_V2"
-                android:text="对应利息" />
-
-            <TextView
-                android:id="@+id/text_interest"
-                style="@style/f7_B4_V2"
-                android:layout_alignParentRight="true" />
-        </RelativeLayout>
-
         <View
             android:id="@+id/view_divider1"
             style="@style/item_divider" />
@@ -99,11 +80,12 @@
 
             <TextView
                 style="@style/f7_B1_V2"
-                android:text="已到余额" />
+                android:text="预期到账时间" />
 
             <TextView
                 android:id="@+id/text_balance"
                 style="@style/f7_B4_V2"
+                android:text="2个工作日"
                 android:layout_alignParentRight="true" />
         </RelativeLayout>
 

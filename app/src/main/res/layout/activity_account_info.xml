@@ -69,42 +69,6 @@
                     android:layout_toLeftOf="@+id/arrow_2"
                     android:textColor="@color/miqian_gray" />
             </RelativeLayout>
-
-            <View
-                android:id="@+id/divider_bank"
-                style="@style/item_divider"
-                android:visibility="gone" />
-
-            <RelativeLayout
-                android:id="@+id/frame_bankcard"
-                style="@style/listItem"
-                android:visibility="gone">
-
-
-                <TextView
-                    android:id="@+id/tv_bankname"
-                    style="@style/text_black_item"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="3dp"
-                    android:text="银行名" />
-
-                <ImageView
-                    android:id="@+id/arrow_11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/right" />
-
-                <TextView
-                    android:id="@+id/tv_cardnum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@+id/arrow_11"
-                    android:textColor="@color/miqian_gray" />
-            </RelativeLayout>
         </LinearLayout>
 
     </LinearLayout>
