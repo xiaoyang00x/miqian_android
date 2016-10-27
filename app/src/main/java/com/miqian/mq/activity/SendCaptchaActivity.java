@@ -141,8 +141,14 @@ public class SendCaptchaActivity extends BaseActivity {
         int summitType = 0;
         switch (type) {
             case TypeUtil.SENDCAPTCHA_FORGETPSW:
+                if (isModify) {
+                    //修改手机号码
+                    summitType = TypeUtil.CAPTCHA_CHANGPWD;
+                } else {
+                    //找回密码
+                    summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
+                }
                 MobclickAgent.onEvent(mContext, "1049");
-                summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
                 break;
             case TypeUtil.MODIFY_PHONE:
                 MobclickAgent.onEvent(mContext, "1050");
@@ -202,7 +208,13 @@ public class SendCaptchaActivity extends BaseActivity {
         if (isModifyPhone) {
             summit(phone, captcha);
         } else {
-            type = TypeUtil.CAPTCHA_FINDPASSWORD;
+            if (isModify){
+                //修改登录密码
+                type = TypeUtil.CAPTCHA_CHANGPWD;
+            }else {
+                //忘记登录密码
+                type = TypeUtil.CAPTCHA_FINDPASSWORD;
+            }
             HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
                 @Override
                 public void onSucceed(Meta result) {

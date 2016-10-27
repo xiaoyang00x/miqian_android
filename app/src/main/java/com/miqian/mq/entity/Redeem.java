@@ -9,9 +9,17 @@ public class Redeem implements Serializable{
 
     private  String amt;//提现金额
     private  String arriAmt;//已到金额
-    private  String orderNo;//交易编号
+    private  String seqNo;//交易编号
     private  String addTime;//交易时间
     private  String interest;//利息
+
+    public String getSeqNo() {
+        return seqNo;
+    }
+
+    public void setSeqNo(String seqNo) {
+        this.seqNo = seqNo;
+    }
 
     public String getAmt() {
         return amt;
@@ -27,14 +35,6 @@ public class Redeem implements Serializable{
 
     public void setArriAmt(String arriAmt) {
         this.arriAmt = arriAmt;
-    }
-
-    public String getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
     }
 
     public String getAddTime() {

@@ -144,7 +144,7 @@ public class HttpRequest {
      * 活期、定期赚、定期计划
      * 认购订单生成页面
      *
-     * @param amt    金额
+     * @param amt 金额
      */
     public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId) {
         List<Param> mList = new ArrayList<>();
@@ -1314,11 +1314,13 @@ public class HttpRequest {
     }
 
     //赎回
-    public static void redeem(Context context, final ICallback<RedeemData> callback, String amt, String payPassword) {
+    public static void redeem(Context context, final ICallback<RedeemData> callback, String amt, String mobilePhone, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(context))));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("amt", amt));
+        mList.add(new Param("captcha", captcha));
         new MyAsyncTask(context, Urls.redeem, mList, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
@@ -1635,6 +1637,7 @@ public class HttpRequest {
 
     /**
      * 我的秒钱宝认购记录
+     *
      * @param context
      * @param callback
      * @param projectCode 项目编号

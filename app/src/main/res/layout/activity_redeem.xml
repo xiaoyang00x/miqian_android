@@ -6,8 +6,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top"
-        android:orientation="vertical">
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +48,7 @@
                 android:id="@+id/tv_phone"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
-                android:text="3333434"
+                android:text=""
                 android:gravity="center_vertical"
                 android:textSize="@dimen/mq_font2"
                 android:paddingLeft="5dp"></TextView>
@@ -83,6 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/bt_height"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right"
                 android:background="@drawable/btn_red"
                 android:paddingLeft="10dp"
@@ -116,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:text="ddd"
+            android:text=""
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font3_v2" />
 
@@ -127,7 +131,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:text="222"
+            android:text=""
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font3_v2" />
 
