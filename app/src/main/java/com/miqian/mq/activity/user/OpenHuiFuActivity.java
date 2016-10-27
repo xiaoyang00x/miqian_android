@@ -9,12 +9,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.GestureLockSetActivity;
-import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.utils.LogUtil;
-import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -62,7 +57,7 @@ public class OpenHuiFuActivity extends BaseActivity {
             case TypeUtil.TYPE_OPENHF_REGISTER:
                 mTitle.setTitleText("注册");
                 break;
-            case TypeUtil.TYPE_OPENHF_ROOLIN:
+            case TypeUtil.TYPE_OPENHF_ROLLIN:
                 mTitle.setTitleText("充值");
                 break;
             case TypeUtil.TYPE_OPENHF_INVESTMENT:
@@ -95,7 +90,8 @@ public class OpenHuiFuActivity extends BaseActivity {
 
     //开通按钮
     public void btn_click(View v) {
-        HttpRequest.registerHf(this, 0);
+        RealNameActivity.startActivity(mActivity);
+//        HttpRequest.registerHf(this, 0);
 //        finish();
     }
 

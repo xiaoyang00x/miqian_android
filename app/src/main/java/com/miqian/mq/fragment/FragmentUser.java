@@ -23,6 +23,7 @@ import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
+import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
@@ -402,10 +403,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 }
                 MobclickAgent.onEvent(getActivity(), "1017");
                 if (!userInfo.isHfAccountStatus()) {
-                    OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROOLIN);
+                    OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROLLIN);
                     //开通汇付
-                } else if (!userInfo.isStatus()) {
-                    //激活账户
                 } else {
                     //已开通状态
                     startActivity(new Intent(getActivity(), IntoActivity.class));
@@ -419,7 +418,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     return;
                 }
                 if (!userInfo.isHfAccountStatus()) {
-                    OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROOLIN);
+//                    HfUpdateActivity.startActivity(mActivity);
+                    OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROLLOUT);
                     //开通汇付
                 } else {
                     //已开通状态

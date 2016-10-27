@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.user.HfUpdateActivity;
 
 /**
  * 汇付账户升级提示
@@ -45,6 +46,7 @@ public abstract class DialogHfTip extends Dialog {
 
             public void onClick(View arg0) {
                 dismiss();
+                HfUpdateActivity.startActivity(arg0.getContext());
             }
         });
 

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/listItem">
+
+        <TextView
+            style="@style/WrapContent"
+            android:layout_gravity="center_vertical"
+            android:text="姓名"
+            android:textColor="@color/mq_b2_v2"
+            android:textSize="@dimen/mq_font7_v2" />
+
+        <EditText
+            android:id="@+id/edit_name"
+            style="@style/edittext_item"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="58dp"
+            android:hint="请输入您的真实姓名"
+            android:maxLength="16"
+            android:singleLine="true"
+            android:textColor="@color/mq_b4_v2" />
+    </LinearLayout>
+
+    <View style="@style/item_divider" />
+
+    <LinearLayout style="@style/listItem">
+        <TextView
+            style="@style/WrapContent"
+            android:layout_gravity="center_vertical"
+            android:text="身份证号码"
+            android:textColor="@color/mq_b2_v2"
+            android:textSize="@dimen/mq_font7_v2" />
+
+        <EditText
+            android:id="@+id/edit_card_id"
+            style="@style/edittext_item"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:digits="0123456789Xx"
+            android:hint="请输入您的身份证号码"
+            android:inputType="text"
+            android:maxLength="18"
+            android:singleLine="true"
+            android:textColor="@color/mq_b4_v2" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left_right"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_confirm"
+            style="@style/click_btn"
+            android:layout_gravity="center"
+            android:text="提交" />
+    </LinearLayout>
+</LinearLayout>

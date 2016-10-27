@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.net.HttpUtils;
 import com.miqian.mq.net.Param;
 import com.miqian.mq.utils.ChannelUtil;
@@ -37,6 +38,8 @@ public class WebHFActivity extends WebActivity {
 
     private String url_hf;
     private String sign;
+
+    private static int state = 0;
 
     public static void startActivity(Activity activity, String url, ArrayList<String> list) {
         activity.startActivity(getIntent(activity, url, list));
@@ -234,6 +237,11 @@ public class WebHFActivity extends WebActivity {
 
     @JavascriptInterface
     public void getHfResult(int code) {
+        if (code == 200) {
+            state = CurrentInvestment.SUCCESS;
+        } else {
+            state = CurrentInvestment.FAIL;
+        }
         Log.e("", "code " + code);
     }
 
@@ -260,7 +268,7 @@ public class WebHFActivity extends WebActivity {
      */
     private void goBack() {
         Intent intent = new Intent();
-        setResult(0, intent);
+        setResult(state, intent);
         finish();
     }
 

@@ -1,13 +1,7 @@
 package com.miqian.mq.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.text.Editable;
-import android.text.Selection;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,39 +9,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.Meta;
-import com.miqian.mq.entity.OrderLian;
-import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.PayOrder;
-import com.miqian.mq.entity.PayOrderResult;
-import com.miqian.mq.entity.SupportBankMsgResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
-import com.miqian.mq.pay.BaseHelper;
-import com.miqian.mq.pay.MobileSecurePayer;
-import com.miqian.mq.utils.Constants;
-import com.miqian.mq.utils.FormatUtil;
-import com.miqian.mq.utils.JsonUtil;
-import com.miqian.mq.utils.MyTextWatcher;
-import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
-import org.json.JSONObject;
-
-import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * Created by Joy on 2015/9/10.
@@ -66,7 +43,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //    private EditText editName;
 //    private EditText editCardId;
 //    private TextView textLimit;
-    private TextView textErrorLian;
+//    private TextView textErrorLian;
     private LinearLayout frameBind;
     private LinearLayout frameBound;
 
@@ -113,37 +90,37 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         btRollin = (Button) findViewById(R.id.bt_rollin);
         btRollin.setOnClickListener(this);
         editMoney = (EditText) findViewById(R.id.edit_money);
-        editMoney.addTextChangedListener(new MyTextWatcher() {
-
-            @Override
-            public void myAfterTextChanged(Editable s) {
-                try {
-                    textErrorLian.setVisibility(View.GONE);
-                    String temp = s.toString();
-                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-                        return;
-                    }
-                    s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
-                }
-            }
-        });
+//        editMoney.addTextChangedListener(new MyTextWatcher() {
+//
+//            @Override
+//            public void myAfterTextChanged(Editable s) {
+//                try {
+//                    textErrorLian.setVisibility(View.GONE);
+//                    String temp = s.toString();
+//                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
+//                        return;
+//                    }
+//                    s.delete(temp.length() - 1, temp.length());
+//                } catch (Exception e) {
+//                }
+//            }
+//        });
         editMoneyBound = (EditText) findViewById(R.id.edit_money_bound);
-        editMoneyBound.addTextChangedListener(new MyTextWatcher() {
-
-            @Override
-            public void myAfterTextChanged(Editable s) {
-                try {
-                    textErrorLian.setVisibility(View.GONE);
-                    String temp = s.toString();
-                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-                        return;
-                    }
-                    s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
-                }
-            }
-        });
+//        editMoneyBound.addTextChangedListener(new MyTextWatcher() {
+//
+//            @Override
+//            public void myAfterTextChanged(Editable s) {
+//                try {
+//                    textErrorLian.setVisibility(View.GONE);
+//                    String temp = s.toString();
+//                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
+//                        return;
+//                    }
+//                    s.delete(temp.length() - 1, temp.length());
+//                } catch (Exception e) {
+//                }
+//            }
+//        });
         if (rollType == 1 || rollType == 2) {
             money = intent.getStringExtra("money");
             editMoney.setText(money);
@@ -157,7 +134,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
 //        textLimit = (TextView) findViewById(R.id.text_limit);
-        textErrorLian = (TextView) findViewById(R.id.text_error_lian);
+//        textErrorLian = (TextView) findViewById(R.id.text_error_lian);
 
 //        frameRealName = (LinearLayout) findViewById(R.id.frame_real_name);
 //        editName = (EditText) frameRealName.findViewById(R.id.edit_name);
@@ -174,10 +151,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         hfAccountStatus = userInfo.isHfAccountStatus();
         activateStatus = userInfo.isStatus();
         if (!hfAccountStatus) {
-            OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROOLIN);
+            OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROLLIN);
             //开通汇付
-        } else if (!activateStatus) {
-            //激活账户
         } else {
             //已开通状态
         }
@@ -199,7 +174,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //        } else {
 //            frameRealName.setVisibility(View.VISIBLE);
 //        }
-        if ("1".equals(userInfo.getBindCardStatus()) && "1".equals(userInfo.getSupportStatus())) {
+        if ("1".equals(userInfo.getBindCardStatus())) {
             bindStatus = 1;
         }
         if (bindStatus == 1) {
@@ -235,7 +210,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
             BigDecimal tempMoney = new BigDecimal(money);
             BigDecimal minMoney = BigDecimal.ZERO;
-            if (userInfo.getAddRechargeMinValue() != null) {
+            if (!TextUtils.isEmpty(userInfo.getAddRechargeMinValue())) {
                 minMoney = new BigDecimal(userInfo.getAddRechargeMinValue());
             }
             if (minMoney.compareTo(tempMoney) > 0) {
@@ -243,6 +218,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 return;
             }
         }
+        HttpRequest.rollinHf(mActivity, RSAUtils.decryptByPrivate(userInfo.getHfCustId()), money);
 
 //        if (bindStatus == 0) {
 //            bankNumber = editBankNumber.getText().toString().replaceAll(" ", "");
@@ -276,7 +252,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //            }
 //        }
 //        begin();
-        HttpRequest.rollinHf(mActivity, RSAUtils.decryptByPrivate(userInfo.getHfCustId()), money);
+
 //        HttpRequest.rollIn(mActivity, new ICallback<String>() {
 //            @Override
 //            public void onSucceed(String result) {
@@ -336,6 +312,17 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == HfUpdateActivity.REQUEST_CODE_ROLLIN) {
+            if (resultCode == CurrentInvestment.SUCCESS) {
+                finish();
+            } else {
+                Uihelper.showToast(mActivity, "充值失败");
+            }
         }
     }
 
@@ -418,61 +405,61 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //        return null;
 //    }
 
-    private void checkOrder(String orderNo) {
-        begin();
-        HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
-            @Override
-            public void onSucceed(OrderLianResult orderLianResult) {
-                end();
-                OrderLian orderLian = orderLianResult.getData();
-                if (orderLianResult.getCode().equals("000000")) {
-                    jumpToResult(CurrentInvestment.SUCCESS, orderLian.getAmt(), orderLian.getOrderNo());
-                } else if (orderLianResult.getCode().equals("100096")) {
-                    jumpToResult(CurrentInvestment.FAIL, orderLian.getAmt(), orderLian.getOrderNo());
-                } else if (orderLianResult.getCode().equals("100097")) {
-                    jumpToResult(CurrentInvestment.PROCESSING, orderLian.getAmt(), orderLian.getOrderNo());
-                }
-            }
+//    private void checkOrder(String orderNo) {
+//        begin();
+//        HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
+//            @Override
+//            public void onSucceed(OrderLianResult orderLianResult) {
+//                end();
+//                OrderLian orderLian = orderLianResult.getData();
+//                if (orderLianResult.getCode().equals("000000")) {
+//                    jumpToResult(CurrentInvestment.SUCCESS, orderLian.getAmt(), orderLian.getOrderNo());
+//                } else if (orderLianResult.getCode().equals("100096")) {
+//                    jumpToResult(CurrentInvestment.FAIL, orderLian.getAmt(), orderLian.getOrderNo());
+//                } else if (orderLianResult.getCode().equals("100097")) {
+//                    jumpToResult(CurrentInvestment.PROCESSING, orderLian.getAmt(), orderLian.getOrderNo());
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//                end();
+//                Uihelper.showToast(mActivity, error);
+//            }
+//        }, orderNo);
+//    }
 
-            @Override
-            public void onFail(String error) {
-                end();
-                Uihelper.showToast(mActivity, error);
-            }
-        }, orderNo);
-    }
+//    /**
+//     * 返回订单页面认购
+//     *
+//     * @param orderNo
+//     */
+//    private void backSubscribePage(String orderNo) {
+//        Intent intent = new Intent();
+//        intent.putExtra("orderNo", orderNo);
+//        setResult(CurrentInvestment.SUCCESS, intent);
+//        IntoActivity.this.finish();
+//    }
 
-    /**
-     * 返回订单页面认购
-     *
-     * @param orderNo
-     */
-    private void backSubscribePage(String orderNo) {
-        Intent intent = new Intent();
-        intent.putExtra("orderNo", orderNo);
-        setResult(CurrentInvestment.SUCCESS, intent);
-        IntoActivity.this.finish();
-    }
-
-    /**
-     * 跳转充值结果
-     *
-     * @param orderNo
-     */
-    private void jumpToResult(int status, String money, String orderNo) {
-        if (rollType == 0 || status == CurrentInvestment.PROCESSING) {
-            Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-            intent.putExtra("status", status);
-            intent.putExtra("money", money);
-            intent.putExtra("orderNo", orderNo);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent();
-            intent.putExtra("orderNo", orderNo);
-            setResult(status, intent);
-        }
-        IntoActivity.this.finish();
-    }
+//    /**
+//     * 跳转充值结果
+//     *
+//     * @param orderNo
+//     */
+//    private void jumpToResult(int status, String money, String orderNo) {
+//        if (rollType == 0 || status == CurrentInvestment.PROCESSING) {
+//            Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
+//            intent.putExtra("status", status);
+//            intent.putExtra("money", money);
+//            intent.putExtra("orderNo", orderNo);
+//            startActivity(intent);
+//        } else {
+//            Intent intent = new Intent();
+//            intent.putExtra("orderNo", orderNo);
+//            setResult(status, intent);
+//        }
+//        IntoActivity.this.finish();
+//    }
 
     @Override
     protected String getPageName() {
