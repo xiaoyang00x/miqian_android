@@ -5,29 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.adapter.AdapterCurrrentRecord;
 import com.miqian.mq.adapter.SubscriptionRecordsAdapter;
-import com.miqian.mq.entity.CurSubRecord;
-import com.miqian.mq.entity.CurrentRecordResult;
-import com.miqian.mq.entity.Page;
-import com.miqian.mq.entity.RecordCurrent;
-import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.SubscriptionRecords;
 import com.miqian.mq.entity.SubscriptionRecordsResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wgl on 2016/10/25.

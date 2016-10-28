@@ -172,8 +172,8 @@ public class Urls {
     public final static String getCustPromotion = base_server + "deposit/mine/getMinePromList";//userService/getCustPromotion
     //赎回
     public final static String redeem = base_server + "assetService/redeem";
-    //我的活期资金记录
-    public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
+    //资金记录/活期交易记录
+    public final static String getFundFlow = base_server + "deposit/mine/getFundFlow";
     //我的秒钱宝认购记录
     public final static String getUserCurrentProduct = base_server + "deposit/current/getUserCurrentProduct";
     //修改绑定手机

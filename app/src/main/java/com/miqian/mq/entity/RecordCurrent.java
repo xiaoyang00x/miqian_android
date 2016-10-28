@@ -3,35 +3,19 @@ package com.miqian.mq.entity;
 import java.util.List;
 
 /**
- * Created by Administrator on 2015/10/10.
+ * Created by guolei_wang on 16/10/28.
+ * 资金记录服务器返回结果Data
  */
 public class RecordCurrent {
 
-    private Page page;
-    private List<CurSubRecord> curSubRecord;
-    private String curAmt;//历史收益
+    private List<FundFlow> fundFlowList;
 
-    public String getCurAmt() {
-        return curAmt;
+
+    public List<FundFlow> getFundFlowList() {
+        return fundFlowList;
     }
 
-    public void setCurAmt(String curAmt) {
-        this.curAmt = curAmt;
-    }
-
-    public Page getPage() {
-        return page;
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
-    }
-
-    public List<CurSubRecord> getCurSubRecord() {
-        return curSubRecord;
-    }
-
-    public void setCurSubRecord(List<CurSubRecord> curSubRecord) {
-        this.curSubRecord = curSubRecord;
+    public void setFundFlowList(List<FundFlow> fundFlowList) {
+        this.fundFlowList = fundFlowList;
     }
 }

@@ -11,13 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.CurSubRecord;
 import com.miqian.mq.entity.SubscriptionRecords;
-import com.miqian.mq.entity.UserCurrentData;
 import com.miqian.mq.utils.FormatUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wgl on 2016/10/25.
