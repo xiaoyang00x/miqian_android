@@ -96,7 +96,7 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
         if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
             profit_rate.setText((new BigDecimal(data.getYearInterest()).multiply(new BigDecimal("2")).toString()));
             tv_add_interest.setText("%");
-        } else if (1 == data.getPresentationYesNo()) {
+        } else if ("Y".equals(data.getPresentationYesNo())) {
             tv_add_interest.setText("+ " + data.getPresentationYearInterest() + "%");
         }else {
             tv_add_interest.setText("%");

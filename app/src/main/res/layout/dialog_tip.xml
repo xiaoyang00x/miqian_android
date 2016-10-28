@@ -11,17 +11,17 @@
         android:layout_marginRight="28dp"
         android:layout_marginTop="28dp"
         android:background="@drawable/shape_dialog_background"
+        android:paddingTop="20dp"
         android:orientation="vertical">
 
 
         <ImageView
+            android:id="@+id/image_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="15dp"
-            android:src="@drawable/icon_tip"
-            />
+            android:src="@drawable/icon_tip"/>
 
 
         <TextView
@@ -43,7 +43,6 @@
             android:layout_marginRight="25dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text=""
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font6_v2" />
 

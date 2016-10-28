@@ -41,7 +41,7 @@ public class UserCurrentData implements Serializable{
     /**
      * 用户活期金额数据
      */
-    public class UserCurrent {
+    public class UserCurrent implements Serializable{
         private BigDecimal prnAmt;                          //在投本金
         private BigDecimal yesterdayInterest;               //昨日收益
         private BigDecimal regIncome;                       //在投收益
@@ -83,7 +83,7 @@ public class UserCurrentData implements Serializable{
     /**
      * 可赎回数据
      */
-    public class UserRedeem {
+    public class UserRedeem implements Serializable{
         private int curDayCount;                            //当日已赎回次数
         private int lmtDayCount;                            //赎回限制每日次数
         private BigDecimal curDayAmt;                       //当日已赎回总额
@@ -161,7 +161,7 @@ public class UserCurrentData implements Serializable{
     /**
      * 匹配项目
      */
-    public class MatchProject {
+    public class MatchProject implements Serializable{
         private long nextRepayDate;                          //下次还款时间
         private String projectCode;                            //项目编号
         private String projectName;                          //项目名

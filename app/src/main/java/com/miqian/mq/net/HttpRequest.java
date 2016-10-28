@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.WebHFActivity;
+import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -144,7 +145,7 @@ public class HttpRequest {
      * 活期、定期赚、定期计划
      * 认购订单生成页面
      *
-     * @param amt    金额
+     * @param amt 金额
      */
     public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId) {
         List<Param> mList = new ArrayList<>();
@@ -1314,11 +1315,13 @@ public class HttpRequest {
     }
 
     //赎回
-    public static void redeem(Context context, final ICallback<RedeemData> callback, String amt, String payPassword) {
+    public static void redeem(Context context, final ICallback<RedeemData> callback, String amt, String mobilePhone, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
+        mList.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(context))));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("amt", amt));
+        mList.add(new Param("captcha", captcha));
         new MyAsyncTask(context, Urls.redeem, mList, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
@@ -1571,12 +1574,9 @@ public class HttpRequest {
     public static void rollinHf(final Activity activity, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
-        WebHFActivity.startActivity(activity, Urls.hf_rollin_url, params);
+        WebHFActivity.startActivity(activity, Urls.hf_rollin_url, params, HfUpdateActivity.REQUEST_CODE_ROLLIN);
     }
 
     /**
@@ -1584,15 +1584,10 @@ public class HttpRequest {
      */
     public static void rolloutHf(final Activity activity, String hfCustId, String amt) {
         ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId",  RSAUtils.encryptURLEncode("1474359996516565575")));
-//        params.add(new Param("hfCustId",  RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-//        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
-        WebHFActivity.startActivity(activity, Urls.hf_rollout_url, params);
+        WebHFActivity.startActivity(activity, Urls.hf_rollout_url, params, HfUpdateActivity.REQUEST_CODE_ROLLOUT);
     }
 
     /**
@@ -1602,17 +1597,18 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
-        WebHFActivity.startActivity(activity, Urls.hf_activate, params);
+        WebHFActivity.startActivity(activity, Urls.hf_activate, params, HfUpdateActivity.REQUEST_CODE_ACTIVATE);
     }
 
     /**
      * 汇付用户开户接口
      */
-    public static void registerHf(final Activity activity, int type) {
+    public static void registerHf(final Activity activity, String userName, String idCard) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-//        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
-        WebHFActivity.startActivity(activity, Urls.hf_register, params, type);
+        params.add(new Param("userName", RSAUtils.encryptURLEncode(userName)));
+        params.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
+        WebHFActivity.startActivity(activity, Urls.hf_register, params, HfUpdateActivity.REQUEST_CODE_REGISTER);
 
     }
 
@@ -1622,34 +1618,12 @@ public class HttpRequest {
     public static void autoHf(final Activity activity) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-//        params.add(new Param("custId", RSAUtils.encryptURLEncode("1476438455934183995")));
-        WebHFActivity.startActivity(activity, Urls.hf_auto, params);
+        WebHFActivity.startActivity(activity, Urls.hf_auto, params, HfUpdateActivity.REQUEST_CODE_AUTO);
     }
-
-//    /**
-//     * 测试接口
-//     */
-//    public static void testView(Context context, final ICallback<String> callback) {
-//        ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId", RSAUtils.encryptURLEncode("1474359996516565575")));
-//        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode("6000060005307457")));
-//        params.add(new Param("amt", "100"));
-//
-//        new MyAsyncTask(context, Urls.hf_register, params, new ICallback<String>() {
-//
-//            @Override
-//            public void onSucceed(String result) {
-//                callback.onSucceed(result);
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//            }
-//        }).executeOnExecutor();
-//    }
 
     /**
      * 我的秒钱宝认购记录
+     *
      * @param context
      * @param callback
      * @param projectCode 项目编号

@@ -11,8 +11,11 @@ public class TypeUtil {
 //    13004——重新绑定手机号第二次获取验证码
 //    13005——银行卡信息补全
 //    13006——修改银行卡
-//    13007——非首次提现
-//    13008——找回交易密码
+//    13007——非首次提
+//    13009——修改登录密码
+//    13010——赎回
+
+
     public static final int CAPTCHA_REGISTER = 13001;
     public static final int CAPTCHA_FINDPASSWORD = 13002;
     public static final int CAPTCHA_BINDTEL_FIRST = 13003;
@@ -20,9 +23,12 @@ public class TypeUtil {
     public static final int CAPTCHA_BANDINFO = 13005;
     public static final int CAPTCHA_MODIFYBNADCARD = 13006;
     public static final int CAPTCHA_WITHDRAW = 13007;
-    public static final int CAPTCHA_TRADEPASSWORD = 13008;
+
+    public static final int CAPTCHA_CHANGPWD = 13009;
+    public static final int CAPTCHA_REDEEM = 13010;
+
     //发送验证码的类型
-    public static final int SENDCAPTCHA_FORGETPSW =30001 ;
+    public static final int SENDCAPTCHA_FORGETPSW = 30001;
 
     //修改绑定手机
     public static final int MODIFY_PHONE =30002 ;
@@ -31,7 +37,7 @@ public class TypeUtil {
     //注册跳到开通汇付界面
     public static final int TYPE_OPENHF_REGISTER =40004 ;
     //充值跳到开通汇付界面
-    public static final int TYPE_OPENHF_ROOLIN =40005 ;
+    public static final int TYPE_OPENHF_ROLLIN =40005 ;
     //提现跳到开通汇付界面
     public static final int TYPE_OPENHF_ROLLOUT=40006 ;
 

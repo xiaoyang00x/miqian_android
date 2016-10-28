@@ -10,8 +10,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
-import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.views.WFYTitle;

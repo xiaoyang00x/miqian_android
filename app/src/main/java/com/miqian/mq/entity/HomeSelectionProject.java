@@ -15,7 +15,7 @@ public class HomeSelectionProject {
     private String limit;                                       //项目期限
     private String presentationYearInterest;                    //赠送年化收益
     private String yearInterest;                                //年化收益
-    private int presentationYesNo;                              //是否赠送收益  1 赠送  0不赠送
+    private String presentationYesNo;                              //是否赠送收益  Y 赠送  N不赠送
     private String subjectId;                                   //标的ID
     private int prodId;                                      //产品类型：定期赚 3、定期计划4
     private String subscript;                                   //右上角角标
@@ -72,11 +72,11 @@ public class HomeSelectionProject {
         this.yearInterest = yearInterest;
     }
 
-    public int getPresentationYesNo() {
+    public String getPresentationYesNo() {
         return presentationYesNo;
     }
 
-    public void setPresentationYesNo(int presentationYesNo) {
+    public void setPresentationYesNo(String presentationYesNo) {
         this.presentationYesNo = presentationYesNo;
     }
 
