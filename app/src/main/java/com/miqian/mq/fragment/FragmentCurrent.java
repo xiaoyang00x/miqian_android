@@ -100,7 +100,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                     } else if (money.compareTo(upLimit) > 0) {
                         this.setTipText("提示：请输入小于等于" + upLimit + "元");
                     } else {
-                        UserUtil.currenPay(mContext, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, TextUtils.isEmpty(interestRateString) ? "" : interestRateString + "%");
+                        UserUtil.currenPay(mContext, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.PRODID_CURRENT, TextUtils.isEmpty(interestRateString) ? "" : interestRateString + "%");
                         this.setEditMoney("");
                         this.setTipTextVisibility(View.GONE);
                         this.dismiss();
