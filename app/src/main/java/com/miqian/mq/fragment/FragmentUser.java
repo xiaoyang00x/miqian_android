@@ -133,13 +133,13 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 userInfo = result.getData();
                 if (userInfo != null) {
                     userInfoTemp = new UserInfo();
-                    userInfoTemp.setBindCardStatus(userInfo.getBindCardStatus());
+                    userInfoTemp.setBindCardStatus(userInfo.isBindCardStatus());
                     userInfoTemp.setBankCardNo(userInfo.getBankCardNo());
                     userInfoTemp.setBankName(userInfo.getBankName());
                     userInfoTemp.setBankUrlSmall(userInfo.getBankUrlSmall());
                     userInfoTemp.setBankCode(userInfo.getBankCode());
                     userInfoTemp.setUsableSa(userInfo.getUsableSa());
-                    userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
+//                    userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
                     userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
                     userInfoTemp.setMobile(userInfo.getMobile());
                     userInfoTemp.setUserName(userInfo.getUserName());
@@ -428,7 +428,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     if (!TextUtils.isEmpty(balance)) {
                         if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
 
-                            if ("1".equals(userInfo.getBindCardStatus())) {
+                            if (userInfo.isBindCardStatus()) {
                                 Intent intent = new Intent(getActivity(), RolloutActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("userInfo", userInfoTemp);

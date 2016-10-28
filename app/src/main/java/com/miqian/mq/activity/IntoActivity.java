@@ -150,18 +150,10 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         btRollin.setEnabled(true);
         hfAccountStatus = userInfo.isHfAccountStatus();
         activateStatus = userInfo.isStatus();
-        if (!hfAccountStatus) {
-            OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROLLIN);
-            //开通汇付
-        } else {
-            //已开通状态
-        }
-
-        if ("1".equals(userInfo.getBindCardStatus())) {
-
-        }
-
-
+//        if (!hfAccountStatus) {
+//            OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROLLIN);
+//            //开通汇付
+//        }
 
 //        relaNameStatus = userInfo.getRealNameStatus();
 //        if ("1".equals(relaNameStatus)) {
@@ -174,7 +166,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //        } else {
 //            frameRealName.setVisibility(View.VISIBLE);
 //        }
-        if ("1".equals(userInfo.getBindCardStatus())) {
+        if (userInfo.isBindCardStatus()) {
             bindStatus = 1;
         }
         if (bindStatus == 1) {

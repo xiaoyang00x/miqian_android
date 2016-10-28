@@ -20,6 +20,7 @@ import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.SubscribeOrderResult;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -127,7 +128,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         realMoney = intent.getStringExtra("realMoney");
         prodId = intent.getStringExtra("prodId");
         subjectId = intent.getStringExtra("subjectId");
-//        subjectId = "CP16100816180000000000001";
+        subjectId = "MQ16102417390000000000001";
 //        subjectId = "DX16102115230000000000001";
 //        subjectId = "MQ16102115330000000000001";
 //        subjectId = "CP16101011310000000000005";
@@ -147,12 +148,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         promoteMoney = BigDecimal.ZERO;
         increaseMoney = BigDecimal.ZERO;
         if (!swipeRefresh.isRefreshing()) {
-            mWaitingDialog.show();
+            begin();
         }
         HttpRequest.getProduceOrder(mActivity, new ICallback<ProducedOrderResult>() {
             @Override
             public void onSucceed(ProducedOrderResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 swipeRefresh.setRefreshing(false);
                 if ("996633".equals(result.getCode())) {
                     showTips(true, result);
@@ -166,7 +167,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 swipeRefresh.setRefreshing(false);
                 btPay.setEnabled(false);
                 Uihelper.showToast(mActivity, error);
@@ -260,11 +261,17 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             showErrorView(producedOrder.getUsableAmt());
         } else if (payModeState == PAY_MODE_BANK) {
             btPay.setEnabled(false);
-//            String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
-//            textPayType.setText(producedOrder.getBankName() + "(" + bankNo + ")");
-//            textPayTip.setText("单笔限额" + producedOrder.getSingleAmtLimit() + "元， 单日限额" + producedOrder.getDayAmtLimit() + "元");
-//            imageType.setImageResource(R.drawable.icon_bank);
-//            imageLoader.displayImage(producedOrder.getBankUrlSmall(), imageType, options);
+            UserInfo userInfo = new UserInfo();
+            if (userInfo != null && userInfo.isBindCardStatus()) {
+                String bankNumber = userInfo.getBankCardNo();
+                String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
+                textPayType.setText(userInfo.getBankName() + "(" + bankNo + ")");
+                textPayTip.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
+                imageType.setImageResource(R.drawable.icon_bank);
+                imageLoader.displayImage(userInfo.getBankUrlSmall(), imageType, options);
+            } else {
+                textPayType.setText("账户无余额，请先充值");
+            }
         }
 //            else if (payModeState == PAY_MODE_CURRENT) {
 //                textPayType.setText("活期资产");
@@ -293,21 +300,21 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * 余额不足的toast提示
-     */
-    private boolean insufficeBalance() {
-//        if (payModeState == PAY_MODE_BALANCE) {
-        if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
-            return true;
-        }
-//        } else if (payModeState == PAY_MODE_CURRENT) {
-//            if (payMoney.compareTo(producedOrder.getBalanceCurrent()) > 0) {
-//                return true;
-//            }
+//    /**
+//     * 余额不足的toast提示
+//     */
+//    private boolean insufficeBalance() {
+////        if (payModeState == PAY_MODE_BALANCE) {
+//        if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
+//            return true;
 //        }
-        return false;
-    }
+////        } else if (payModeState == PAY_MODE_CURRENT) {
+////            if (payMoney.compareTo(producedOrder.getBalanceCurrent()) > 0) {
+////                return true;
+////            }
+////        }
+//        return false;
+//    }
 
     /**
      * 根据服务端返回数据判断支付状态
@@ -651,11 +658,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     private void payOrder() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.subscribeOrder(mActivity, new ICallback<SubscribeOrderResult>() {
             @Override
             public void onSucceed(SubscribeOrderResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 SubscribeOrder subscribeOrder = result.getData();
                 if (result.getCode().equals("996633")) {
                     Uihelper.showToast(mActivity, result.getMessage());
@@ -680,7 +687,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, money, subjectId, promotionId);
