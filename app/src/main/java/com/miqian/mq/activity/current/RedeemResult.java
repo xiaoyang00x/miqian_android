@@ -77,7 +77,6 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
 
         } else {
             findViewById(R.id.view_divider3).setVisibility(View.GONE);
-            findViewById(R.id.frame_interest).setVisibility(View.GONE);
             findViewById(R.id.view_divider1).setVisibility(View.GONE);
             findViewById(R.id.frame_arriveAmt).setVisibility(View.GONE);
             findViewById(R.id.view_divider2).setVisibility(View.GONE);
