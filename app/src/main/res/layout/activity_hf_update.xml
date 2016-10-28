@@ -184,7 +184,8 @@
                 style="@style/click_btn"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
-                android:onClick="btn_click" />
+                android:onClick="btn_click"
+                android:text="开始升级"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

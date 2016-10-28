@@ -253,6 +253,33 @@ public class HttpRequest {
     }
 
     /**
+     * 获取汇付账户信息
+     */
+    public static void getHfUserInfo(final Context context, final ICallback<LoginResult> callback) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.hf_user_info, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
+                if (loginResult.getCode().equals("000000")) {
+                    UserUtil.saveHfInfo(context, loginResult.getData());
+                    callback.onSucceed(loginResult);
+                } else {
+                    callback.onFail(loginResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
      * 注册
      */
     public static void register(Context context, final ICallback<RegisterResult> callback,

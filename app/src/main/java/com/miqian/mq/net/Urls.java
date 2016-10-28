@@ -92,6 +92,8 @@ public class Urls {
     public final static String subscribe_order = base_server + "tradeService/subscribe";//assetService/subscribe
     //获取用户信息
     public final static String user_info = base_server + "account/getAccountProfile";// userService/getUserInfo
+    //获取汇付账户信息
+    public final static String hf_user_info = base_server + "account/checkUserAccountStatus";
 
     //获取APP配置：广告、tab
     public final static String app_config = base_server + "commonService/getAdverts";
@@ -246,6 +248,8 @@ public class Urls {
     public final static String web_aboutus_introduce = "https://res.shicaidai.com/miaoqian/about/miaoqianjianjie.html";
     //战略团队
     public final static String web_aboutus_zhanlue = "https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
+    //汇付账户升级帮助
+    public final static String web_hf_help = "https://res.shicaidai.com/miaoqian/webView/huifuHelp.html";
 
     //我的邀请
     public final static String web_my_invite = base_server + "activityService/inviteMain";

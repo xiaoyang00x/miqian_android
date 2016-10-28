@@ -42,7 +42,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //    private LinearLayout frameRealName;
 //    private EditText editName;
 //    private EditText editCardId;
-//    private TextView textLimit;
+    private TextView textLimit;
 //    private TextView textErrorLian;
     private LinearLayout frameBind;
     private LinearLayout frameBound;
@@ -133,7 +133,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //        editBankNumber.addTextChangedListener(textWatcher);
         bindBankName = (TextView) findViewById(R.id.bind_bank_name);
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
-//        textLimit = (TextView) findViewById(R.id.text_limit);
+        textLimit = (TextView) findViewById(R.id.text_limit);
 //        textErrorLian = (TextView) findViewById(R.id.text_error_lian);
 
 //        frameRealName = (LinearLayout) findViewById(R.id.frame_real_name);
@@ -187,7 +187,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             }
             bindBankNumber.setText(bankNumber);
             bindBankName.setText(userInfo.getBankName());
-//            textLimit.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
+            textLimit.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
             imageLoader.displayImage(userInfo.getBankUrlSmall(), imageBank, options);
         } else {
 //            frameRealName.setVisibility(View.VISIBLE);

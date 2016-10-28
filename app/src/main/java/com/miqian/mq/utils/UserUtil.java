@@ -35,7 +35,6 @@ public class UserUtil {
 
     public static void saveHfInfo(Context context, UserInfo userInfo) {
         Pref.saveString(getPrefKey(context, Pref.HF_CUSTID), RSAUtils.decryptByPrivate(userInfo.getHfCustId()), context);
-        Pref.saveBoolean(getPrefKey(context, Pref.HF_ACTIVATE_STATUS), userInfo.isStatus(), context);
         Pref.saveBoolean(getPrefKey(context, Pref.HF_ACCOUNT_STATUS), userInfo.isHfAccountStatus(), context);
         Pref.saveBoolean(getPrefKey(context, Pref.HF_AUTO_STATUS), userInfo.isHfAutoTenderPlanStatus(), context);
     }
@@ -252,12 +251,9 @@ public class UserUtil {
      * @param realMoney           实际支付金额（认购转让标的显示）
      */
     public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString, String realMoney) {
-        boolean activateStatus = Pref.getBoolean(getPrefKey(activity, Pref.HF_ACTIVATE_STATUS), activity, false);
         boolean accountStatus = Pref.getBoolean(getPrefKey(activity, Pref.HF_ACCOUNT_STATUS), activity, false);
         if (!accountStatus) {
             OpenHuiFuActivity.startActivity(activity, TypeUtil.TYPE_OPENHF_INVESTMENT);
-        } else if (!activateStatus) {
-
         } else {
             Intent intent = new Intent(activity, CurrentInvestment.class);
             intent.putExtra("money", money);

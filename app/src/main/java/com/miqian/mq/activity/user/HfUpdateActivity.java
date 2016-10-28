@@ -3,7 +3,7 @@ package com.miqian.mq.activity.user;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,12 +11,14 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -54,7 +56,7 @@ public class HfUpdateActivity extends BaseActivity implements View.OnClickListen
 
     private void getData() {
         begin();
-        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+        HttpRequest.getHfUserInfo(mActivity, new ICallback<LoginResult>() {
             @Override
             public void onSucceed(LoginResult result) {
                 end();
@@ -151,7 +153,12 @@ public class HfUpdateActivity extends BaseActivity implements View.OnClickListen
         mTitle.setTitleText("账户升级");
         mTitle.setIvLeftVisiable(View.GONE);
         mTitle.setRightImage(R.drawable.hf_update_question);
-        mTitle.setOnRightClickListener(this);
+        mTitle.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.startActivity(mActivity, Urls.web_hf_help);
+            }
+        });
     }
 
     @Override
@@ -172,37 +179,34 @@ public class HfUpdateActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        if (requestCode == REQUEST_CODE_REGISTER) {
-            if (resultCode == CurrentInvestment.SUCCESS) {
-
-                finish();
-                Log.e("", "success");
-            } else {
-
-                Log.e("", "fail");
-            }
+        if (resultCode == CurrentInvestment.SUCCESS) {
+            getData();
+        } else {
+        }
 //        }
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_update:
-                if (state == 0) {
-                    RealNameActivity.startActivity(mActivity);
-                } else if (state == 1) {
-                    HttpRequest.activateHf(mActivity, RSAUtils.decryptByPrivate(userInfo.getHfCustId()));
-                } else if (state == 2) {
-                    HttpRequest.rollinHf(mActivity, RSAUtils.decryptByPrivate(userInfo.getHfCustId()), "1");
-                } else if (state == 3) {
-                    HttpRequest.autoHf(mActivity);
-                } else if (state == 4) {
-                    finish();
-                }
-                break;
-            default:
-
-                break;
+        if (state == 0) {
+            RealNameActivity.startActivity(mActivity);
+        } else if (state == 1) {
+            HttpRequest.activateHf(mActivity, RSAUtils.decryptByPrivate(userInfo.getHfCustId()));
+        } else if (state == 2) {
+            HttpRequest.rollinHf(mActivity, RSAUtils.decryptByPrivate(userInfo.getHfCustId()), "1");
+        } else if (state == 3) {
+            HttpRequest.autoHf(mActivity);
+        } else if (state == 4) {
+            finish();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
