@@ -1,4 +1,5 @@
 package com.miqian.mq.activity.user;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,12 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.RollOut;
-import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.entity.WithdrawItem;
@@ -25,6 +26,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -34,14 +36,14 @@ import java.util.List;
 public class RolloutActivity extends BaseActivity {
     private UserInfo userInfo;
     private TextView bindBankId;
-    private TextView  bindBankName;
+    private TextView bindBankName;
     private EditText editMoney;
-    private String    moneyString;
-    private String     cardNum;
-    private String     totalMoney;
+    private String moneyString;
+    private String cardNum;
+    private String totalMoney;
     private CustomDialog dialogTips, dialogTipsReput;
     private View btnRollout;
-    private BigDecimal mLimitLowestMoney = BigDecimal.TEN;  //最低提现金额，默认10元
+    private BigDecimal mLimitLowestMoney = BigDecimal.ONE;  //最低提现金额，默认1元
     private TextViewEx tvTips;
     private ImageView imageBank;
 
@@ -54,6 +56,7 @@ public class RolloutActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
+        tvTips.setText(getResources().getString(R.string.rollout_rule), true);
 
     }
 
@@ -126,6 +129,17 @@ public class RolloutActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == HfUpdateActivity.REQUEST_CODE_ROLLOUT) {
+            if (resultCode == CurrentInvestment.SUCCESS) {
+                finish();
+            } else {
+                Uihelper.showToast(mActivity, "提现失败");
+            }
+        }
     }
 
     @Override
@@ -221,71 +235,8 @@ public class RolloutActivity extends BaseActivity {
         }
     }
 
-
-    private void rollOut(String password) {
-        mWaitingDialog.show();
-        HttpRequest.withdrawCash(mActivity, new ICallback<RollOutResult>() {
-            @Override
-            public void onSucceed(RollOutResult result) {
-                mWaitingDialog.dismiss();
-                String resultCode = result.getCode();
-                //999999为失败
-                if (resultCode.equals("999999")) {
-                    RollOut rollOut = new RollOut();
-                    rollOut.setBankName(userInfo.getBankName());
-                    if (!TextUtils.isEmpty(cardNum)) {
-                        rollOut.setCardNum(cardNum);
-                    }
-                    rollOut.setMoneyOrder(moneyString);
-                    rollOut.setState("0");//失败
-                    Intent intent = new Intent(mActivity, RollOutResultActivity.class);
-                    Bundle extra = new Bundle();
-                    extra.putSerializable("rollOutResult", rollOut);
-                    intent.putExtras(extra);
-                    startActivity(intent);
-                    finish();
-                } else if (resultCode.equals("000000")) {
-                    RollOut rollOut = result.getData();
-                    if (rollOut == null) {
-                        return;
-                    }
-                    rollOut.setBankName(userInfo.getBankName());
-                    if (!TextUtils.isEmpty(cardNum)) {
-                        rollOut.setCardNum(cardNum);
-                    }
-                    rollOut.setState("1");//成功
-                    Intent intent = new Intent(mActivity, RollOutResultActivity.class);
-                    Bundle extra = new Bundle();
-                    extra.putSerializable("rollOutResult", rollOut);
-                    intent.putExtras(extra);
-                    startActivity(intent);
-                    finish();
-                }
-//                //交易密码错误4次提示框
-//                else if (resultCode.equals("999992")) {
-//                    showPwdError4Dialog(result.getMessage());
-//                }   删除交易密码操作
-                else {
-                    Uihelper.showToast(mActivity, result.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                mWaitingDialog.dismiss();
-                Uihelper.showToast(mActivity, error);
-            }
-        }, moneyString, userInfo.getBankCode(), cardNum, password);
-
-
-    }
-
-
     private void rollOutHttp() {
-//        if (userInfo.getPayPwdStatus() != null) {
-//            int state = Integer.parseInt(userInfo.getPayPwdStatus());
-//            initDialogTradePassword(state);
-//        }    删除交易密码操作
+        HttpRequest.rolloutHf(mActivity, moneyString);
 
     }
 }
