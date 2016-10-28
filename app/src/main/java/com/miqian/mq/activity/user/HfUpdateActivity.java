@@ -117,7 +117,7 @@ public class HfUpdateActivity extends BaseActivity implements View.OnClickListen
             state = 0;
         } else if (!userInfo.isStatus()) {
             state = 1;
-        } else if ("0".equals(userInfo.getBindCardStatus())) {
+        } else if (!userInfo.isBindCardStatus()) {
             state = 2;
         } else if (!userInfo.isHfAutoTenderPlanStatus()) {
             state = 3;

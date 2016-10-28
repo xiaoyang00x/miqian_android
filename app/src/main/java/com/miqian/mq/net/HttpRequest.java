@@ -5,8 +5,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.WebHFActivity;
 import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -20,7 +18,6 @@ import com.miqian.mq.entity.CurrentDetailResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentProjectResult;
 import com.miqian.mq.entity.CurrentRecordResult;
-import com.miqian.mq.entity.ErrorLianResult;
 import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.HomePageInfoResult;
@@ -36,7 +33,6 @@ import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.RegTransDetailResult;
 import com.miqian.mq.entity.RegTransFerredDetailResult;
 import com.miqian.mq.entity.RegisterResult;
-import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.entity.RegularTransferListResult;
@@ -57,7 +53,6 @@ import com.miqian.mq.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Jackie on 2015/9/4.
@@ -310,7 +305,7 @@ public class HttpRequest {
     }
 
     //登录
-    public static void login(Context context, final ICallback<LoginResult> callback, String mobilePhone, String password) {
+    public static void login(final Context context, final ICallback<LoginResult> callback, String mobilePhone, String password) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
@@ -321,6 +316,7 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
                 if (loginResult.getCode().equals("000000")) {
+                    UserUtil.saveHfInfo(context, loginResult.getData());
                     callback.onSucceed(loginResult);
                 } else {
                     callback.onFail(loginResult.getMessage());
