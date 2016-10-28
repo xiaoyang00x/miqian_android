@@ -1336,15 +1336,24 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    //getMyCurrentRecord
-    public static void getMyCurrentRecord(Context context, final ICallback<CurrentRecordResult> callback,
-                                          String pageNo, String pageSize, String isForce) {
+    /**
+     * API-资金记录/活期交易记录
+     * @param context
+     * @param callback
+     * @param pageNo
+     * @param pageSize
+     * @param billType 资金记录类型 00 全部 01 充值 02 提现 03 认购 04 赎回 05 转让 06 到期还款
+     * @param productCode 资金产品类型 0 全部 3 活期
+     */
+    public static void getFundFlow(Context context, final ICallback<CurrentRecordResult> callback,
+                                          String pageNo, String pageSize, String billType, String productCode) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
-        mList.add(new Param("isForce", isForce));
-        new MyAsyncTask(context, Urls.getMyCurrentRecord, mList, new ICallback<String>() {
+        mList.add(new Param("billType", billType));
+        mList.add(new Param("productCode", productCode));
+        new MyAsyncTask(context, Urls.getFundFlow, mList, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
                 CurrentRecordResult currentRecordResult = JsonUtil.parseObject(result, CurrentRecordResult.class);
