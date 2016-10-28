@@ -43,6 +43,7 @@ import com.miqian.mq.entity.SubscriptionRecordsResult;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserCurrentResult;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.UserRegularResult;
@@ -316,6 +317,7 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
                 if (loginResult.getCode().equals("000000")) {
+                    UserUtil.saveUserInfo(context, loginResult.getData());
                     UserUtil.saveHfInfo(context, loginResult.getData());
                     callback.onSucceed(loginResult);
                 } else {

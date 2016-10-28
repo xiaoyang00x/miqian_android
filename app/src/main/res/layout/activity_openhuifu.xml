@@ -14,6 +14,7 @@
         android:paddingRight="@dimen/margin_left_right">
 
         <TextView
+            android:id="@+id/hf_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -24,14 +25,14 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/hf_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="@string/open_ensure"
             android:textColor="@color/mq_r1_v2"
-            android:textSize="@dimen/mq_font6_v2"
-            />
+            android:textSize="@dimen/mq_font6_v2" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,10 +53,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:gravity="center"
                 android:text="温馨提示"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
                 android:textColor="@color/mq_b2_v2"
                 android:textSize="@dimen/mq_font3_v2" />
 
@@ -68,6 +69,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/hf_tip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -94,13 +96,13 @@
 
             <Button
                 android:id="@+id/bt_close"
-                android:visibility="gone"
                 style="@style/click_btn"
-                android:background="@drawable/btn_cancel_normal"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/btn_cancel_normal"
                 android:onClick="btn_close"
-                android:text="暂不开通" />
+                android:text="暂不开通"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
