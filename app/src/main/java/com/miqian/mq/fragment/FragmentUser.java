@@ -268,13 +268,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         View frame_regular = view.findViewById(R.id.frame_regular);
         View frame_record = view.findViewById(R.id.frame_record);
         View frame_ticket = view.findViewById(R.id.frame_ticket);
-        View frame_invite = view.findViewById(R.id.frame_invite);
 
         frame_current.setOnClickListener(this);
         frame_regular.setOnClickListener(this);
         frame_record.setOnClickListener(this);
         frame_ticket.setOnClickListener(this);
-        frame_invite.setOnClickListener(this);
 
 
         //*********未登录的的Ui***************
@@ -497,10 +495,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 extra.putSerializable("userInfo", userInfoTemp);
                 intent_setting.putExtras(extra);
                 startActivity(intent_setting);
-                break;
-            //我的邀请
-            case R.id.frame_invite:
-                WebActivity.startActivity(mContext, Urls.web_my_invite);
                 break;
             default:
                 break;

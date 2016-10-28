@@ -1017,14 +1017,11 @@ public class HttpRequest {
     /**
      * 提现
      */
-    public static void withdrawCash(Context context, final ICallback<RollOutResult> callback, String amt,
-                                    String bankCode, String bankNo, String payPassword) {
+    public static void withdrawCash(Context context, final ICallback<RollOutResult> callback, String amt) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("bankCode", bankCode));
+        mList.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(context))));
 
         new MyAsyncTask(context, Urls.withdrawCash, mList, new ICallback<String>() {
 
@@ -1365,15 +1362,16 @@ public class HttpRequest {
 
     /**
      * API-资金记录/活期交易记录
+     *
      * @param context
      * @param callback
      * @param pageNo
      * @param pageSize
-     * @param billType 资金记录类型 00 全部 01 充值 02 提现 03 认购 04 赎回 05 转让 06 到期还款
+     * @param billType    资金记录类型 00 全部 01 充值 02 提现 03 认购 04 赎回 05 转让 06 到期还款
      * @param productCode 资金产品类型 0 全部 3 活期
      */
     public static void getFundFlow(Context context, final ICallback<CurrentRecordResult> callback,
-                                          String pageNo, String pageSize, String billType, String productCode) {
+                                   String pageNo, String pageSize, String billType, String productCode) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("pageNo", pageNo));
@@ -1609,10 +1607,10 @@ public class HttpRequest {
     /**
      * 汇付提现接口
      */
-    public static void rolloutHf(final Activity activity, String hfCustId, String amt) {
+    public static void rolloutHf(final Activity activity,String amt) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
+        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(activity))));
         params.add(new Param("amt", amt));
         WebHFActivity.startActivity(activity, Urls.hf_rollout_url, params, HfUpdateActivity.REQUEST_CODE_ROLLOUT);
     }
