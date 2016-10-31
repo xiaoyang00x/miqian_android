@@ -139,8 +139,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     userInfoTemp.setBankUrlSmall(userInfo.getBankUrlSmall());
                     userInfoTemp.setBankCode(userInfo.getBankCode());
                     userInfoTemp.setUsableSa(userInfo.getUsableSa());
-//                    userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
-                    userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
                     userInfoTemp.setMobile(userInfo.getMobile());
                     userInfoTemp.setUserName(userInfo.getUserName());
                     setData(userInfo);

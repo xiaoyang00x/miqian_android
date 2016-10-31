@@ -1,7 +1,5 @@
 package com.miqian.mq.activity.setting;
 
-import android.content.Intent;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -22,15 +20,10 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
 
     @Override
     public void obtainData() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void initView() {
-
-        Intent intent = getIntent();
-
         iv_switch = (ImageView) findViewById(R.id.iv_switch);
         findViewById(R.id.password_login).setOnClickListener(this);
         iv_switch.setOnClickListener(this);

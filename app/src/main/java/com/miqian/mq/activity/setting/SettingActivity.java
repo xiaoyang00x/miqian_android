@@ -132,7 +132,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 MobclickAgent.onEvent(mActivity, "1026");
                 if (userInfo != null) {
                     Intent intent = new Intent(mActivity, SecuritySettingActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
                     startActivity(intent);
                 }
 
