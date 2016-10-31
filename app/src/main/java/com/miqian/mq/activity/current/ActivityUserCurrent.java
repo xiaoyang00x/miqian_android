@@ -111,7 +111,10 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             myCurrentAdapter = new MyCurrentAdapter(mContext, userCurrentData);
             recyclerView.setAdapter(myCurrentAdapter);
 
-            if (userCurrentData.getUserRedeem().getCurDayResidue().compareTo(BigDecimal.ZERO) <= 0) {
+
+            if (userCurrentData.getUserRedeem() != null
+                    && userCurrentData.getUserRedeem().getCurDayResidue() != null
+                    && BigDecimal.ZERO.compareTo(userCurrentData.getUserRedeem().getCurDayResidue()) >= 0) {
                 btRedeem.setEnabled(false);
                 btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
             }

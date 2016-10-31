@@ -52,8 +52,8 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-//    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
-    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/"; // 冰红茶本地地址
+    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+//    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/"; // 冰红茶本地地址
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.104:8080/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.115:8080/miaoqian-app/";
