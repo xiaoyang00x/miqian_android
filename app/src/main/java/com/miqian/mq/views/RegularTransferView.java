@@ -14,6 +14,7 @@ import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.MyAsyncTask;
+import com.miqian.mq.utils.Uihelper;
 
 /**
  * @author wangduo
@@ -184,7 +185,7 @@ public class RegularTransferView {
                 }
                 swipeRefresh.setRefreshing(false);
                 iCallback.onFail(error);
-                Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
+                Uihelper.showToast(mContext, error);
             }
         }, nextPage);
     }

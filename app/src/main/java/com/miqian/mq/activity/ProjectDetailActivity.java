@@ -38,6 +38,9 @@ public abstract class ProjectDetailActivity extends BaseActivity {
 
     protected MySwipeRefresh swipeRefresh;
 
+    // 最大可认购金额 如果为12个9 代表 无限购
+    protected final BigDecimal MAXBUYAMT = new BigDecimal("999999999");
+
     /* 标的基本信息 */
     protected TextView tv_begin_countdown; // 开标倒计时
     protected TextView tv_name; // 标的名称
@@ -302,15 +305,19 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 获取最大可认购金额
      *
-     * @param upLimit   最大可认购金额
-     * @param leftLimit 剩余金额
+     * @param amountA
+     * @param amountB
      * @return
      */
-    protected BigDecimal getUpLimit(BigDecimal upLimit, BigDecimal leftLimit) {
-        if (upLimit == null) {
-            return leftLimit;
+    protected BigDecimal getUpLimit(BigDecimal amountA, BigDecimal amountB) {
+        if (amountA == null && amountB == null) {
+            return null;
+        } else if (amountA == null) {
+            return amountB;
+        } else if (amountB == null) {
+            return amountA;
         } else {
-            return leftLimit.compareTo(upLimit) < 0 ? leftLimit : upLimit;
+            return amountA.compareTo(amountB) < 0 ? amountA : amountB;
         }
     }
 

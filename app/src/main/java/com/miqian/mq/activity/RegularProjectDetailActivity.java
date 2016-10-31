@@ -47,7 +47,7 @@ public class RegularProjectDetailActivity extends RegularDetailActivity {
     @Override
     public void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        prodId = RegularBase.REGULAR_03;
+        prodId = RegularBase.REGULAR_PROJECT;
     }
 
     @Override
@@ -60,60 +60,11 @@ public class RegularProjectDetailActivity extends RegularDetailActivity {
         return "定期赚详情";
     }
 
-    // 获取数据:定期项目
-    @Override
-    public void obtainData() {
-        if (inProcess) {
-            return;
-        }
-        synchronized (mLock) {
-            inProcess = true;
-        }
-        begin();
-        swipeRefresh.setRefreshing(true);
-        HttpRequest.getRegularDetail(mContext, subjectId, prodId, new ICallback<RegularDetailResult>() {
-
-            @Override
-            public void onSucceed(RegularDetailResult result) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                swipeRefresh.setRefreshing(false);
-                end();
-                if (result == null || result.getData() == null
-                        || result.getData().getSubjectData() == null) {
-                    return;
-                }
-                showContentView();
-                mInfo = result.getData().getSubjectData();
-                updateUI();
-            }
-
-            @Override
-            public void onFail(String error) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                swipeRefresh.setRefreshing(false);
-                end();
-                Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
-                showErrorView();
-            }
-        });
-    }
-
-    protected void updateUI() {
-        updateProjectInfo();
-        updateFestivalInfo(mInfo.getFestival88(), mInfo.getFestival88_url());
-        updateMoreInfo();
-        updateProjectFeature();
-        updateProjectStatus();
-    }
-
     /**
      * 标的更多信息
      */
-    private void updateMoreInfo() {
+    @Override
+    public void updateMoreInfo() {
         ArrayList<RegularEarnDetail> mList = mInfo.getSubjectBar();
         if (mList == null || mList.size() <= 0) {
             return;
@@ -133,7 +84,7 @@ public class RegularProjectDetailActivity extends RegularDetailActivity {
         int count = mList.size() > 4 ? 4 : mList.size();
         for (int index = 0; index < count; index++) {
             RegularEarnDetail detail = mList.get(index);
-            View mView = mInflater.inflate(R.layout.item_regular_project_detail, null);
+            View mView = mInflater.inflate(R.layout.item_project_detail, null);
             ((TextView) mView.findViewById(R.id.tv_left)).setText(detail.getTitle());
             ((TextView) mView.findViewById(R.id.tv_right)).setText(detail.getName());
             content.addView(mView);

@@ -26,8 +26,8 @@ public class CurrentProjectInfo {
     private String securityGuarantee; // 安全保障 该字段暂没有用
     private String personTime; // 认购人数
     private String description; // 产品描述
-    private String unitAmount; // 每份投资金额
-    private String nextInvestAmount; // 续投金额 这个是自动续投时用到的
+    private BigDecimal unitAmount; // 每份投资金额
+    private BigDecimal nextInvestAmount; // 续投金额 这个是自动续投时用到的
     private String addInterestRate; // 加息产品 后台有做乘以100操作
     private long startTimestamp; // 投标开始时间 时间戳
     private long endTimestamp; // 投标结束时间 时间戳
@@ -35,6 +35,8 @@ public class CurrentProjectInfo {
     private String interestAccrualMode; // 计息模式 MB:满标 BMB:不满标
     private String interestStartDay; // 计息开始时间 0:为当日计息 1:为次日计息
     private String subjectType; // 标的类型 00：标准标的 01：新手专属 02：众人拾财专属 03：老财主专享回馈 04：定向大额投资人
+    private BigDecimal userSubjectRemainAmt; // 用户对于该标的剩余认购额度
+    private BigDecimal userCurRemainAmt; // 用户对于这类产品的剩余认购额度
 
     public String getProductCode() {
         return productCode;
@@ -164,19 +166,19 @@ public class CurrentProjectInfo {
         this.description = description;
     }
 
-    public String getUnitAmount() {
+    public BigDecimal getUnitAmount() {
         return unitAmount;
     }
 
-    public void setUnitAmount(String unitAmount) {
+    public void setUnitAmount(BigDecimal unitAmount) {
         this.unitAmount = unitAmount;
     }
 
-    public String getNextInvestAmount() {
+    public BigDecimal getNextInvestAmount() {
         return nextInvestAmount;
     }
 
-    public void setNextInvestAmount(String nextInvestAmount) {
+    public void setNextInvestAmount(BigDecimal nextInvestAmount) {
         this.nextInvestAmount = nextInvestAmount;
     }
 
@@ -234,5 +236,21 @@ public class CurrentProjectInfo {
 
     public void setSubjectType(String subjectType) {
         this.subjectType = subjectType;
+    }
+
+    public BigDecimal getUserSubjectRemainAmt() {
+        return userSubjectRemainAmt;
+    }
+
+    public void setUserSubjectRemainAmt(BigDecimal userSubjectRemainAmt) {
+        this.userSubjectRemainAmt = userSubjectRemainAmt;
+    }
+
+    public BigDecimal getUserCurRemainAmt() {
+        return userCurRemainAmt;
+    }
+
+    public void setUserCurRemainAmt(BigDecimal userCurRemainAmt) {
+        this.userCurRemainAmt = userCurRemainAmt;
     }
 }

@@ -21,6 +21,8 @@ public class RegularProjectInfo extends RegularBase {
 
     private BigDecimal unitAmount; // 每份投资金额
 
+    private BigDecimal userSubjectRemainAmt; // 登录用户剩余可认购金额
+
     private String presentationYesNo; // 是否赠送收益
 
     private String limit; // 期限
@@ -120,6 +122,14 @@ public class RegularProjectInfo extends RegularBase {
 
     public void setUnitAmount(BigDecimal unitAmount) {
         this.unitAmount = unitAmount;
+    }
+
+    public BigDecimal getUserSubjectRemainAmt() {
+        return userSubjectRemainAmt;
+    }
+
+    public void setUserSubjectRemainAmt(BigDecimal userSubjectRemainAmt) {
+        this.userSubjectRemainAmt = userSubjectRemainAmt;
     }
 
     public String getPresentationYesNo() {

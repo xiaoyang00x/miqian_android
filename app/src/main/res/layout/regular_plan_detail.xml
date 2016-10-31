@@ -29,7 +29,6 @@
             android:background="@color/white"
             android:orientation="vertical" />
 
-        <include layout="@layout/divide_line" />
     </LinearLayout>
 
     <View
@@ -37,7 +36,10 @@
         android:layout_height="10dp"
         android:background="@color/mq_b7_v2" />
 
-    <include layout="@layout/divide_line" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mq_b6_v2" />
 
     <TextView
         android:id="@+id/tv_seemore"
@@ -49,14 +51,20 @@
         android:textSize="@dimen/mq_font7_v2"
         android:textStyle="bold" />
 
-    <include layout="@layout/divide_line" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mq_b6_v2" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/mq_b7_v2" />
 
-    <include layout="@layout/divide_line" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mq_b6_v2" />
 
 </LinearLayout>
 

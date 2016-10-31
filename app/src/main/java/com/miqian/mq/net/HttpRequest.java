@@ -142,7 +142,7 @@ public class HttpRequest {
      * 活期、定期赚、定期计划
      * 认购订单生成页面
      *
-     * @param amt    金额
+     * @param amt 金额
      */
     public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId) {
         List<Param> mList = new ArrayList<>();
@@ -764,9 +764,12 @@ public class HttpRequest {
      *
      * @param subjectId 标的编号，如传入则返回改标的相关信息
      */
-    public static void getCurrentDetail(Context context, String subjectId, final ICallback<CurrentDetailResult> callback) {
+    public static void getCurrentDetail(Context context, String subjectId, String custId, final ICallback<CurrentDetailResult> callback) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("productCode", subjectId));
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
         new MyAsyncTask(context, Urls.current_detail, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
@@ -870,14 +873,21 @@ public class HttpRequest {
     }
 
     /**
-     * 获取定期详情
+     * 定期详情（定期项目、定期计划）
      *
+     * @param context
      * @param subjectId 标的编号，如传入则返回改标的相关信息
+     * @param prodId    产品编号
+     * @param custId    用户id
+     * @param callback
      */
-    public static void getRegularDetail(Context context, String subjectId, int prodId, final ICallback<RegularDetailResult> callback) {
+    public static void getRegularDetail(Context context, String subjectId, int prodId, String custId, final ICallback<RegularDetailResult> callback) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("subjectId", subjectId));
         params.add(new Param("prodId", String.valueOf(prodId)));
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
         new MyAsyncTask(context, Urls.REGULA_PROJECT_DETAIL, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {

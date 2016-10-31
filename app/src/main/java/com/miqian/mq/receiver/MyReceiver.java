@@ -195,9 +195,9 @@ public class MyReceiver extends BroadcastReceiver {
                                     int prodId = jsonObject.getInt("prodId");
                                     String subjectId = jsonObject.getString("subjectId");
                                     if (!TextUtils.isEmpty(subjectId)) {
-                                        if (RegularBase.REGULAR_03 == prodId) {
+                                        if (RegularBase.REGULAR_PROJECT == prodId) {
                                             notificationIntent = new Intent(context, RegularProjectDetailActivity.class);
-                                        } else if (RegularBase.REGULAR_05 == prodId) {
+                                        } else if (RegularBase.REGULAR_PLAN == prodId) {
                                             notificationIntent = new Intent(context, RegularPlanDetailActivity.class);
                                         }
                                         notificationIntent.putExtra(Constants.SUBJECTID, subjectId);

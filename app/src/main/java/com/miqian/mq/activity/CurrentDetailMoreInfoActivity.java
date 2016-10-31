@@ -42,7 +42,7 @@ public class CurrentDetailMoreInfoActivity extends BaseActivity {
         LayoutInflater mInflater = LayoutInflater.from(getBaseContext());
         for (int index = 0; index < size; index++) {
             CurrentDetailMoreInfoItem item = mList.get(index);
-            View mView = mInflater.inflate(R.layout.item_current_project_detail_more, null);
+            View mView = mInflater.inflate(R.layout.item_project_detail, null);
             ((TextView) mView.findViewById(R.id.tv_left)).setText(item.getTitle());
             if (TextUtils.isEmpty(item.getJumpUrl())) {
                 ((TextView) mView.findViewById(R.id.tv_right)).setText(">");

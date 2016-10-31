@@ -14,6 +14,7 @@ import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.MyAsyncTask;
+import com.miqian.mq.utils.Uihelper;
 
 /**
  * @author wangduo
@@ -115,7 +116,7 @@ public class RegularProjectView {
                 } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {
                     serverBusyView.showNoNetwork();
                 } else {
-                    Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
+                    Uihelper.showToast(mContext, error);
                 }
             }
         });

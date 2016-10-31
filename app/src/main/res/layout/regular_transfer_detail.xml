@@ -58,11 +58,11 @@
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
 
-        <include
-            layout="@layout/divide_line"
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:background="@color/mq_b6_v2" />
 
     </RelativeLayout>
 
@@ -109,11 +109,11 @@
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
 
-        <include
-            layout="@layout/divide_line"
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:background="@color/mq_b6_v2" />
 
     </RelativeLayout>
 
@@ -159,11 +159,11 @@
             android:textSize="@dimen/mq_font7_v2"
             android:textStyle="bold" />
 
-        <include
-            layout="@layout/divide_line"
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:background="@color/mq_b6_v2" />
 
     </RelativeLayout>
 
@@ -252,7 +252,10 @@
         android:layout_height="10dp"
         android:background="@color/mq_b7_v2" />
 
-    <include layout="@layout/divide_line" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mq_b6_v2" />
 
 </LinearLayout>
 

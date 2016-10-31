@@ -305,13 +305,13 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     //定期赚详情页面
     @JavascriptInterface
     public void startRegularEarn(String subjectId) {
-        RegularDetailActivity.startActivity(this, subjectId, RegularBase.REGULAR_03);
+        RegularDetailActivity.startActivity(this, subjectId, RegularBase.REGULAR_PROJECT);
     }
 
     //定期计划详情页面
     @JavascriptInterface
     public void startRegularPlan(String subjectId) {
-        RegularDetailActivity.startActivity(this, subjectId, RegularBase.REGULAR_05);
+        RegularDetailActivity.startActivity(this, subjectId, RegularBase.REGULAR_PLAN);
     }
 
     //定期详情页面

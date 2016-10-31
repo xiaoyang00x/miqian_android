@@ -42,7 +42,7 @@ public class CurrentFragment extends BasicFragment {
     @Override
     public View onCreateView(LayoutInflater mInflater, ViewGroup container, Bundle savedInstanceState) {
         if (null == rootView) {
-            rootView = mInflater.inflate(R.layout.fragment_current1, null);
+            rootView = mInflater.inflate(R.layout.fragment_current, null);
             findView();
             initTitle();
             initView();
@@ -143,9 +143,10 @@ public class CurrentFragment extends BasicFragment {
 
             @Override
             public void onSucceed(CurrentProjectResult result) {
-                int size = mAdapter.getItemCount() - 1;
+                int size = mAdapter.getItemCount() - 2;
                 mAdapter.addAll(result.getData().getCurrentList());
-                mAdapter.notifyItemRangeChanged(size, result.getData().getCurrentList().size());
+                // 刷新当前页面数据 － 从倒数第二条数据开始刷新（倒数第一条是loadingMoreView）
+                mAdapter.notifyItemRangeChanged(size, result.getData().getCurrentList().size() + 1);
             }
 
             @Override
