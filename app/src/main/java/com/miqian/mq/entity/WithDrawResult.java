@@ -7,13 +7,13 @@ import java.util.List;
  */
 public class WithDrawResult extends Meta {
 
-    private List<WithdrawItem>  data;
+    private WithdrawItem  data;
 
-    public List<WithdrawItem> getData() {
+    public WithdrawItem getData() {
         return data;
     }
 
-    public void setData(List<WithdrawItem> data) {
+    public void setData(WithdrawItem data) {
         this.data = data;
     }
 }

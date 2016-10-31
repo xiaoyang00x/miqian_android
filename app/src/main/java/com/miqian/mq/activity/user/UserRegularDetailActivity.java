@@ -333,11 +333,11 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.layout_originproject:
                 if (userRegularDetail != null) {
-                    String subjectId = regInvest.getSysbdId();
-                    if (RegularBase.REGULAR_04 == Integer.parseInt(regInvest.getProdId())) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                    } else if (RegularBase.REGULAR_06 == Integer.parseInt(regInvest.getProdId())) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
+                    String subjectId = regInvest.getBdId();
+                    if (3 == Integer.parseInt(regInvest.getProdId())) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + regInvest.getBdId() + "/" + regInvest.getProjectCode() + "/0");
+                    } else if (4 == Integer.parseInt(regInvest.getProdId())) {
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + regInvest.getBdId() + "/0");
                     }
                 }
                 break;
