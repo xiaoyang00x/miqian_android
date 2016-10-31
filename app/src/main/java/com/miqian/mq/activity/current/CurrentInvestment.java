@@ -17,7 +17,6 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.HfAutoActivity;
 import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.Promote;
@@ -87,7 +86,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private String subjectId; //标的id，活期默认为0
     private String interestRateString; //年化收益和期限
     private int position = -1;//使用的红包位置，用于获取list
-    private PayOrder payOrder;
 //    private String bankNumber;
 
     private BigDecimal orderMoney;//订单金额
