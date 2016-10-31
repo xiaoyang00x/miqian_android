@@ -27,7 +27,7 @@
                     android:background="@drawable/bind_card_bg"
                     android:orientation="vertical"
                     android:padding="25dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                     android:background="@drawable/bound_card_bg"
                     android:orientation="vertical"
                     android:padding="25dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -179,70 +179,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/frame_real_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingBottom="10dp"
-                    android:text="为了保证您的资金安全，首次充值需要填写实名信息"
-                    android:textColor="@color/mq_b2_v2"
-                    android:textSize="@dimen/mq_font5_v2" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/frame_white_bg"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:id="@+id/frame_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/edit_item">
-
-                        <EditText
-                            android:id="@+id/edit_name"
-                            style="@style/edittext_item"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:hint="请输入姓名"
-                            android:maxLength="16"
-                            android:singleLine="true"
-                            android:textColor="@color/mq_b4_v2"
-                            android:textSize="@dimen/mq_font7_v2" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/frame_id_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/edit_item">
-
-                        <EditText
-                            android:id="@+id/edit_card_id"
-                            style="@style/edittext_item"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:digits="0123456789Xx"
-                            android:hint="请输入身份证号"
-                            android:inputType="text"
-                            android:maxLength="18"
-                            android:singleLine="true"
-                            android:textColor="@color/mq_b4_v2"
-                            android:textSize="@dimen/mq_font7_v2" />
-
-                        <View style="@style/item_divider" />
-
-                    </RelativeLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_left_right"
@@ -250,14 +186,14 @@
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_error_lian"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="3dp"
-                    android:textColor="@color/mq_r1"
-                    android:visibility="gone" />
+                <!--<TextView-->
+                    <!--android:id="@+id/text_error_lian"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:paddingBottom="3dp"-->
+                    <!--android:textColor="@color/mq_r1"-->
+                    <!--android:visibility="gone" />-->
 
                 <Button
                     android:id="@+id/bt_rollin"
@@ -303,7 +239,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_left_right"
                     android:layout_marginRight="@dimen/margin_left_right"
-                    android:text="温馨提示：\n为了保证您的资金安全使用连连支付成功充值后，您的充值银行卡和提现银行卡将自动绑定为首次使用连连支付充值的银行卡，不可解除绑定。"
+                    android:text="温馨提示：\n为了保证您的资金安全,使用汇付成功充值后，您的充值银行卡和提现银行卡将自动绑定为首次使用汇付充值的银行卡，不可解除绑定。"
                     android:textColor="@color/mq_b4_v2"
                     android:textSize="@dimen/mq_font3_v2" />
             </RelativeLayout>

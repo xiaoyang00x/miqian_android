@@ -299,7 +299,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
-                            android:layout_toLeftOf="@+id/text_pay_money"
+                            android:layout_toLeftOf="@+id/frame_pay_money"
                             android:layout_toRightOf="@+id/image_type"
                             android:orientation="vertical">
 
@@ -320,28 +320,46 @@
                                 android:textSize="@dimen/mq_font3_v2" />
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/text_pay_money_unit"
-                            style="@style/f7_B4_V2"
+                        <RelativeLayout
+                            android:id="@+id/frame_pay_money"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true">
+
+                            <TextView
+                                android:id="@+id/text_pay_money_unit"
+                                style="@style/f7_B4_V2"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="15dp"
+                                android:layout_alignParentRight="true"
+                                android:text="元" />
+
+                            <TextView
+                                android:id="@+id/text_pay_money"
+                                style="@style/f9_R1_V2"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@id/text_pay_money_unit"
+                                android:lines="1"
+                                android:text="--.--" />
+
+                            <ImageView
+                                android:id="@+id/image_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/right" />
+                        </RelativeLayout>
+
+                        <Button
+                            android:id="@+id/bt_rollin"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="15dp"
-                            android:text="元" />
+                            android:text="充值"
+                            android:visibility="gone"/>
 
-                        <TextView
-                            android:id="@+id/text_pay_money"
-                            style="@style/f9_R1_V2"
-                            android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@id/text_pay_money_unit"
-                            android:text="--.--" />
-
-                        <ImageView
-                            android:id="@+id/image_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/right" />
                     </RelativeLayout>
 
                 </LinearLayout>

@@ -92,6 +92,8 @@ public class Urls {
     public final static String subscribe_order = base_server + "tradeService/subscribe";//assetService/subscribe
     //获取用户信息
     public final static String user_info = base_server + "account/getAccountProfile";// userService/getUserInfo
+    //获取汇付账户信息
+    public final static String hf_user_info = base_server + "account/checkUserAccountStatus";
 
     //获取APP配置：广告、tab
     public final static String app_config = base_server + "commonService/getAdverts";
@@ -138,10 +140,10 @@ public class Urls {
     public final static String loginOut = base_server + "userService/logout";
     //提现
     public final static String withdrawCash = base_server + "assetService/withdrawCash";
-    //我的活期
-    public final static String user_current = base_server + "userService/getMyCurrent";
+    //我的秒钱宝
+    public final static String user_current = base_server + "deposit/mine/getMineCurrentMain";
     //我的定期
-    public final static String user_regular = base_server + " deposit/mineService/getMineProductList";//userRegService/v2/getMyRegBuyList
+    public final static String user_regular = base_server + "deposit/mine/getMineProductList";//userRegService/v2/getMyRegBuyList
     //我的定期详情
     public final static String user_regular_detail = base_server + "userRegService/v2/getRegDetail";
     //项目匹配
@@ -162,7 +164,7 @@ public class Urls {
     public final static String getFitSubject = base_server + "subjectService/getFitSubject";
 
     //home
-    public final static String homeInfo = base_server + "commonService/v3/getHome";
+    public final static String homeInfo = base_server + "deposit/common/getHome";
     //records of capital
     public final static String recordsCapital = base_server + "userService/getAssetRecord";
 
@@ -170,12 +172,14 @@ public class Urls {
     public final static String getCustPromotion = base_server + "deposit/mine/getMinePromList";//userService/getCustPromotion
     //赎回
     public final static String redeem = base_server + "assetService/redeem";
-    //我的活期资金记录
-    public final static String getMyCurrentRecord = base_server + "userService/getMyCurrentRecord";
+    //资金记录/活期交易记录
+    public final static String getFundFlow = base_server + "deposit/mine/getFundFlow";
+    //我的秒钱宝认购记录
+    public final static String getUserCurrentProduct = base_server + "deposit/current/getUserCurrentProduct";
     //修改绑定手机
     public final static String changePhone = base_server + "userService/changePhone";
     //提现预处理
-    public final static String withdrawPreprocess = base_server + "assetService/withdrawPreprocess";
+    public final static String withdrawPreprocess = base_server + "tradeService/queryWithdrawPreprocess";  //tradeService/queryWithdrawPreprocess
     //版本更新
     public final static String forceUpdate = base_server + "commonService/v2/forceUpdate";
     //查询标的相关记录
@@ -244,6 +248,8 @@ public class Urls {
     public final static String web_aboutus_introduce = "https://res.shicaidai.com/miaoqian/about/miaoqianjianjie.html";
     //战略团队
     public final static String web_aboutus_zhanlue = "https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
+    //汇付账户升级帮助
+    public final static String web_hf_help = "https://res.shicaidai.com/miaoqian/webView/huifuHelp.html";
 
     //我的邀请
     public final static String web_my_invite = base_server + "activityService/inviteMain";
@@ -253,6 +259,5 @@ public class Urls {
     public final static String hf_rollout_url = base_server + "tradeService/withdrawForJump";
     public final static String hf_register = base_server + "account/huifuCreateAccountForJump";
     public final static String hf_auto = base_server + "account/openAutoTenderPlanForJump";
-
-
+    public final static String hf_activate = base_server + "account/huifuActiveAccountForJump";
 }

@@ -1,7 +1,8 @@
 package com.miqian.mq.entity;
 
 /**
- * Created by Administrator on 2015/10/10.
+ * Created by guolei_wang on 16/10/28.
+ * 资金记录服务器返回结果
  */
 public class CurrentRecordResult extends Meta{
 

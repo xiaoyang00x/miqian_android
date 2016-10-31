@@ -4,40 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <RelativeLayout
-        android:id="@+id/frame_interest"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-        <TextView
-            android:id="@+id/text_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/mq_b1"
-            android:textSize="@dimen/mq_font3" />
-
-        <TextView
-            android:id="@+id/tv_interest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text_history"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:textColor="@color/mq_r1"
-            android:textSize="@dimen/mq_font11" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/item"
-        style="@style/item_divider"
-        android:layout_below="@+id/frame_interest" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/item"
         android:orientation="vertical"
         android:scrollbars="none" />
 </RelativeLayout>

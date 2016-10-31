@@ -13,22 +13,25 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.IntoResultActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.user.HfAutoActivity;
+import com.miqian.mq.activity.user.HfUpdateActivity;
+import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.SubscribeOrderResult;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
-import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -40,6 +43,10 @@ import java.util.List;
  * Created by Jackie on 2015/9/19.
  */
 public class CurrentInvestment extends BaseActivity implements View.OnClickListener {
+
+    private RelativeLayout framePayMoney;
+    private Button btRollin;
+
 
     private TextView textProjectType;
     private TextView textInterestRate;
@@ -53,14 +60,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private RelativeLayout frameExpect;
     private RelativeLayout frameFact;
     private RelativeLayout frameRedPackage;
-//    private RelativeLayout frameLianPay;
+    //    private RelativeLayout frameLianPay;
 //    private TextView textLian;
 //    private RelativeLayout framePayChoose;
     private TextView textPayType;
     private TextView textPayTip;
     private TextView textPayMoney;
     private TextView factMoney;
-//    private TextView textErrorLian;
+    //    private TextView textErrorLian;
     private ImageView imageType;
 
     private RelativeLayout frameTip;
@@ -70,7 +77,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private ProducedOrder producedOrder;
     private List<Promote> promList;
     private String promotionId = "";
-//    private String promListString = "";
+    //    private String promListString = "";
 //    private String prodListString = "";
     private String promoteType = "";
 
@@ -87,12 +94,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private BigDecimal promoteMoney = BigDecimal.ZERO;//优惠金额： 红包、拾财券
     private BigDecimal increaseMoney = BigDecimal.ZERO;//加息金额
     private BigDecimal payMoney;//需支付的金额
+    private BigDecimal rollinMoney;//需充值的金额
     private BigDecimal bFlag = BigDecimal.ZERO;
 
-    public static final int REQUEST_CODE_ROLLIN = 1;
+//    public static final int REQUEST_CODE_ROLLIN = 1;
     private static final int REQUEST_CODE_REDPACKET = 2;
-    private static final int REQUEST_CODE_PAYMODE = 3;
-    private static final int REQUEST_CODE_PASSWORD = 4;
+//    private static final int REQUEST_CODE_PAYMODE = 3;
+//    private static final int REQUEST_CODE_PASSWORD = 4;
 
     public static final int FAIL = 0;
     public static final int SUCCESS = 1;
@@ -110,12 +118,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //    public static final String PRODID_REGULAR_TRANSFER = "4";
 //    public static final String PRODID_REGULAR_PLAN_TRANSFER = "6";
 
-    public static final String SUBJECTID_CURRENT = "0";
+//    public static final String SUBJECTID_CURRENT = "0";
 
     public int payModeState = 0;
-//    private CustomDialog dialogTips;
+    //    private CustomDialog dialogTips;
     private CustomDialog packageTips;
-    private DialogTip mDialogTip;
+//    private DialogTip mDialogTip;
+
+    private String bankString = "";
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -125,7 +135,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         realMoney = intent.getStringExtra("realMoney");
         prodId = intent.getStringExtra("prodId");
         subjectId = intent.getStringExtra("subjectId");
-//        subjectId = "CP16100816180000000000001";
+//        subjectId = "MQ16102417390000000000001";
+//        subjectId = "DX16102115230000000000001";
+//        subjectId = "MQ16102115330000000000001";
+//        subjectId = "CP16101011310000000000005";
         interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
     }
@@ -142,12 +155,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         promoteMoney = BigDecimal.ZERO;
         increaseMoney = BigDecimal.ZERO;
         if (!swipeRefresh.isRefreshing()) {
-            mWaitingDialog.show();
+            begin();
         }
         HttpRequest.getProduceOrder(mActivity, new ICallback<ProducedOrderResult>() {
             @Override
             public void onSucceed(ProducedOrderResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 swipeRefresh.setRefreshing(false);
                 if ("996633".equals(result.getCode())) {
                     showTips(true, result);
@@ -155,13 +168,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     showTips(false, result);
                     producedOrder = result.getData();
                     promList = producedOrder.getPromotionList();
-                    refreshView(true);
+                    refreshView();
                 }
             }
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 swipeRefresh.setRefreshing(false);
                 btPay.setEnabled(false);
                 Uihelper.showToast(mActivity, error);
@@ -182,10 +195,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void refreshView(boolean initFlag) {
+    private void refreshView() {
         expectMoney.setText(producedOrder.getPredictInterest());
         factMoney.setText(realMoney);
-        initPayMode(initFlag);
+        initPayMode();
         refreshPromoteView();
         refreshPayView();
     }
@@ -244,21 +257,36 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //            textLian.setText("" + payMoney);
 //        } else {
 //            showLianView(false);
-            textPayMoney.setText("" + payMoney);
-            textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
-            textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b1_v2));
-//            if (payModeState == PAY_MODE_BALANCE) {
-                textPayType.setText("账户余额");
-                textPayTip.setText("可用" + producedOrder.getUsableAmt() + "元");
-                imageType.setImageResource(R.drawable.balance_enable);
-                showErrorView(producedOrder.getUsableAmt());
-//            } else if (payModeState == PAY_MODE_BANK) {
-//                String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
-//                textPayType.setText(producedOrder.getBankName() + "(" + bankNo + ")");
-//                textPayTip.setText("单笔限额" + producedOrder.getSingleAmtLimit() + "元， 单日限额" + producedOrder.getDayAmtLimit() + "元");
-//                imageType.setImageResource(R.drawable.icon_bank);
-//                imageLoader.displayImage(producedOrder.getBankUrlSmall(), imageType, options);
-//            }
+        textPayMoney.setText("" + payMoney);
+        textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
+        textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b1_v2));
+        if (payModeState == PAY_MODE_BALANCE) {
+            btPay.setEnabled(true);
+            btRollin.setVisibility(View.GONE);
+            framePayMoney.setVisibility(View.VISIBLE);
+            textPayType.setText("账户余额");
+            textPayTip.setText("可用" + producedOrder.getUsableAmt() + "元");
+            imageType.setImageResource(R.drawable.balance_enable);
+            showErrorView(producedOrder.getUsableAmt());
+        } else if (payModeState == PAY_MODE_BANK) {
+            btPay.setEnabled(false);
+            btRollin.setVisibility(View.VISIBLE);
+            framePayMoney.setVisibility(View.GONE);
+            if (TextUtils.isEmpty(bankString)) {
+                bankString = Pref.getString(UserUtil.getPrefKey(mActivity, Pref.HF_BANK_STATUS), mActivity, "");
+            }
+            UserInfo userInfo = JsonUtil.parseObject(bankString, UserInfo.class);
+            if (userInfo != null && userInfo.isBindCardStatus()) {
+                String bankNumber = "0000" + RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+                String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
+                textPayType.setText(userInfo.getBankName() + "(" + bankNo + ")");
+                textPayTip.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
+                imageType.setImageResource(R.drawable.icon_bank);
+                imageLoader.displayImage(userInfo.getBankUrlSmall(), imageType, options);
+            } else {
+                textPayType.setText("账户无余额，请先充值");
+            }
+        }
 //            else if (payModeState == PAY_MODE_CURRENT) {
 //                textPayType.setText("活期资产");
 //                textPayTip.setText("可用" + producedOrder.getBalanceCurrent() + "元");
@@ -277,7 +305,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b5_v2));
             textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_b5_v2));
 //            if (payModeState == PAY_MODE_BALANCE) {
-                imageType.setImageResource(R.drawable.balance_disable);
+            imageType.setImageResource(R.drawable.balance_disable);
 //                textErrorLian.setText("账户余额不足，请充值后，再进行认购");
 //            } else if (payModeState == PAY_MODE_CURRENT) {
 //                imageType.setImageResource(R.drawable.current_disable);
@@ -286,38 +314,39 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * 余额不足的toast提示
-     */
-    private boolean insufficeBalance() {
-//        if (payModeState == PAY_MODE_BALANCE) {
-            if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
-                return true;
-            }
-//        } else if (payModeState == PAY_MODE_CURRENT) {
-//            if (payMoney.compareTo(producedOrder.getBalanceCurrent()) > 0) {
-//                return true;
-//            }
+//    /**
+//     * 余额不足的toast提示
+//     */
+//    private boolean insufficeBalance() {
+////        if (payModeState == PAY_MODE_BALANCE) {
+//        if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
+//            return true;
 //        }
-        return false;
-    }
+////        } else if (payModeState == PAY_MODE_CURRENT) {
+////            if (payMoney.compareTo(producedOrder.getBalanceCurrent()) > 0) {
+////                return true;
+////            }
+////        }
+//        return false;
+//    }
 
     /**
      * 根据服务端返回数据判断支付状态
      */
-    private void initPayMode(boolean initFlag) {
+    private void initPayMode() {
         payMoney = needPayMoney();
-        if (!initFlag) {
-            return;
-        }
+//        if (!initFlag) {
+//            return;
+//        }
         if (producedOrder != null) {
 //            if ("1".equals(producedOrder.getSupportStatus()) && "1".equals(producedOrder.getBindCardStatus())) {
 //                bankNumber = RSAUtils.decryptByPrivate(producedOrder.getBankCardNo());
-                if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
-                    payModeState = PAY_MODE_BANK;
-                } else {
-                    payModeState = PAY_MODE_BALANCE;
-                }
+            if (payMoney.compareTo(producedOrder.getUsableAmt()) > 0) {
+                payModeState = PAY_MODE_BANK;
+                rollinMoney = payMoney.subtract(producedOrder.getUsableAmt());
+            } else {
+                payModeState = PAY_MODE_BALANCE;
+            }
 //            } else {
 //                payModeState = PAY_MODE_LIAN;
 //            }
@@ -352,6 +381,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 onBackPressed();
             }
         });
+        framePayMoney = (RelativeLayout) findViewById(R.id.frame_pay_money);
+        btRollin = (Button) findViewById(R.id.bt_rollin);
+        btRollin.setOnClickListener(this);
+
         textTip = (TextView) findViewById(R.id.text_tip);
         frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
         frameSpace = findViewById(R.id.frame_space);
@@ -471,12 +504,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     private void clickToPayOrder() {
-        if (payModeState == PAY_MODE_BANK && payMoney != BigDecimal.ZERO) {
-            rollIn();
-        } else {
+//        if (payModeState == PAY_MODE_BANK && payMoney != BigDecimal.ZERO) {
+//            rollIn();
+//        } else {
             MobclickAgent.onEvent(mContext, "1068");
             payOrder();
-        }
+//        }
 
 //        if (payModeState == PAY_MODE_LIAN && payMoney != BigDecimal.ZERO) {
 //            MobclickAgent.onEvent(mContext, "1067");
@@ -505,7 +538,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             case R.id.bt_pay:
                 boolean autoStatus = Pref.getBoolean(UserUtil.getPrefKey(mActivity, Pref.HF_AUTO_STATUS), mActivity, false);
                 if (!autoStatus) {
-                    HttpRequest.autoHf(mActivity);
+                    HfAutoActivity.startActivity(mActivity);
                 } else {
                     if ((PRODID_REGULAR_PLAN.equals(prodId) || PRODID_REGULAR.equals(prodId)) && promList != null && promList.size() > 0 && position < 0) {
                         showPackageTips();
@@ -535,6 +568,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //                    clickToPayOrder();
 //                }
                 break;
+            case R.id.bt_rollin:
+                HttpRequest.rollinHf(mActivity, UserUtil.getHfCustId(mActivity), rollinMoney.toString());
+                break;
             case R.id.frame_red_package:
                 MobclickAgent.onEvent(mContext, "1066");
                 if (promList != null && promList.size() > 0) {
@@ -561,12 +597,14 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_ROLLIN) {
+        if (requestCode == HfUpdateActivity.REQUEST_CODE_ROLLIN) {
             if (resultCode == SUCCESS) {
-                String orderNo = data.getStringExtra("orderNo");
+                producedOrder.setUsableAmt(producedOrder.getUsableAmt().add(rollinMoney));
+//                String orderNo = data.getStringExtra("orderNo");
 //                payQuickOrder(orderNo);
-            } else if (resultCode == PROCESSING) {
-                CurrentInvestment.this.finish();
+//            } else if (resultCode == PROCESSING) {
+//                CurrentInvestment.this.finish();
+                refreshView();
             } else if (resultCode == FAIL) {
                 Uihelper.showToast(mActivity, "充值失败，请重新充值");
             }
@@ -590,25 +628,25 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                         promoteMoney = promote.getToUseAmt();
                     }
                 }
-                refreshView(false);
+                refreshView();
             }
-        } else if (requestCode == REQUEST_CODE_PAYMODE) {
-            if (resultCode == SUCCESS) {
-                payModeState = data.getIntExtra("payModeState", payModeState);
-                String balanceTemp = data.getStringExtra("balanceMoney");
-                if (!TextUtils.isEmpty(balanceTemp)) {
-                    producedOrder.setUsableAmt(new BigDecimal(balanceTemp));
-                }
-                refreshPayView();
-            } else if (resultCode == PROCESSING) {
-                CurrentInvestment.this.finish();
-            }
-        }
+//        } else if (requestCode == REQUEST_CODE_PAYMODE) {
+//            if (resultCode == SUCCESS) {
+//                payModeState = data.getIntExtra("payModeState", payModeState);
+//                String balanceTemp = data.getStringExtra("balanceMoney");
+//                if (!TextUtils.isEmpty(balanceTemp)) {
+//                    producedOrder.setUsableAmt(new BigDecimal(balanceTemp));
+//                }
+//                refreshPayView();
+//            } else if (resultCode == PROCESSING) {
+//                CurrentInvestment.this.finish();
+//            }
+//        }
 //        else if (requestCode == REQUEST_CODE_PASSWORD) {
 //            if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
 //                showTradeDialog(DialogTradePassword.TYPE_INPUTPASSWORD);
 //            }
-//        }
+        }
     }
 
     private void showPackageTips() {
@@ -637,11 +675,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     private void payOrder() {
-        mWaitingDialog.show();
+        begin();
         HttpRequest.subscribeOrder(mActivity, new ICallback<SubscribeOrderResult>() {
             @Override
             public void onSucceed(SubscribeOrderResult result) {
-                mWaitingDialog.dismiss();
+                end();
                 SubscribeOrder subscribeOrder = result.getData();
                 if (result.getCode().equals("996633")) {
                     Uihelper.showToast(mActivity, result.getMessage());
@@ -666,7 +704,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(mActivity, error);
             }
         }, money, subjectId, promotionId);
@@ -818,12 +856,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //        }, money, prodId, orderNo, subjectId, promListString);
 //    }
 
-    /**
-     * 充值后调用快捷认购
-     */
-    private void rollIn() {
+//    /**
+//     * 充值后调用快捷认购
+//     */
+//    private void rollIn() {
 //        begin();
-//        HttpRequest.rollinHf(mActivity, payMoney.toString());
+//        HttpRequest.rollinHf(mActivity, UserUtil.getHfCustId(mActivity), payMoney.toString());
 //        HttpRequest.rollIn(mActivity, new ICallback<String>() {
 //            @Override
 //            public void onSucceed(String result) {
@@ -849,7 +887,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //                Uihelper.showToast(mActivity, error);
 //            }
 //        }, payMoney.toString(), bankNumber, "", "");
-    }
+//    }
 
 //    class MyHandler extends Handler {
 //        WeakReference<CurrentInvestment> weakActivity;
@@ -899,19 +937,19 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //        }
 //    }
 
-    /**
-     * 跳转充值结果
-     *
-     * @param orderNo
-     */
-    private void jumpToResult(int status, String money, String orderNo) {
-        Intent intent = new Intent(CurrentInvestment.this, IntoResultActivity.class);
-        intent.putExtra("status", status);
-        intent.putExtra("money", money);
-        intent.putExtra("orderNo", orderNo);
-        startActivity(intent);
-        CurrentInvestment.this.finish();
-    }
+//    /**
+//     * 跳转充值结果
+//     *
+//     * @param orderNo
+//     */
+//    private void jumpToResult(int status, String money, String orderNo) {
+//        Intent intent = new Intent(CurrentInvestment.this, IntoResultActivity.class);
+//        intent.putExtra("status", status);
+//        intent.putExtra("money", money);
+//        intent.putExtra("orderNo", orderNo);
+//        startActivity(intent);
+//        CurrentInvestment.this.finish();
+//    }
 
     @Override
     public void onBackPressed() {

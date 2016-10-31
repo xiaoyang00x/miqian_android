@@ -10,8 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.views.GestureCueView;
 import com.miqian.mq.views.GestureLockView;
 import com.miqian.mq.views.WFYTitle;
@@ -81,6 +83,7 @@ public class GestureLockSetActivity extends BaseActivity {
                 if (null != desClass) {
                     startActivity(desClass);
                 }
+                OpenHuiFuActivity.startActivity(mActivity,TypeUtil.TYPE_OPENHF_REGISTER);
                 finish();
             }
         });
@@ -126,6 +129,7 @@ public class GestureLockSetActivity extends BaseActivity {
                     if (null != desClass) {
                         startActivity(desClass);
                     }
+                    OpenHuiFuActivity.startActivity(mActivity,TypeUtil.TYPE_OPENHF_REGISTER);
                     Toast.makeText(getBaseContext(), "手势密码设置成功", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {

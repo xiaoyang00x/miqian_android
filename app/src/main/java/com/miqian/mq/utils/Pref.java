@@ -46,12 +46,13 @@ public class Pref {
 
     //用户的汇付id
     public static final String HF_CUSTID = "HfCustId";
-    //汇付用户的激活状态
-    public static final String HF_ACTIVATE_STATUS = "HfActivateStatus";
     //汇付用户账户状态
     public static final String HF_ACCOUNT_STATUS = "HfAccountStatus";
     //汇付用户的自动投标状态
     public static final String HF_AUTO_STATUS = "HfAutoStatus";
+
+    //用户银行卡状态
+    public static final String HF_BANK_STATUS = "HfBankStatus";
 
     // 是否退出应用
     public static final String EXIT = "Exit";

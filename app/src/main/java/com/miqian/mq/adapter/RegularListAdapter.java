@@ -98,7 +98,7 @@ public class RegularListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tv_profit_rate_unit.setText("%");
             if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
                 tv_profit_rate.setText((new BigDecimal(info.getYearInterest()).multiply(new BigDecimal("2")).toString()));
-            } else if (1 == info.getPresentationYesNo()) {
+            } else if ("Y".equals(info.getPresentationYesNo())) {
                 tv_profit_rate_unit.setText(
                         new StringBuilder("+").
                                 append(info.getPresentationYearInterest()).

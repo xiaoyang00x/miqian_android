@@ -1,4 +1,5 @@
 package com.miqian.mq.activity.current;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,24 +13,25 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
-import com.miqian.mq.entity.UserCurrent;
+import com.miqian.mq.entity.UserCurrentData;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MyTextWatcher;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
@@ -39,18 +41,17 @@ import java.text.DecimalFormat;
  */
 public class ActivityRedeem extends BaseActivity implements View.OnClickListener {
     private EditText editMoney;
-    private UserInfo userInfo;
     private String money;
     private Button btnRollout;
     private TextViewEx tvTip;
     private TextViewEx tvExtra;
-    private UserCurrent userCurrent;
+    private UserCurrentData userCurrentData;
     private BigDecimal resideMoney;//可赎回金额
     private BigDecimal curResidue;//本月剩余可赎回额度
     private DialogTip mDialogTip;
     private TextView tvPhone;
     private Button mBtn_sendCaptcha;
-    private  EditText mEt_Captcha;
+    private EditText mEt_Captcha;
     private boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;
     private Thread thread;
@@ -59,7 +60,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onCreate(Bundle arg0) {
-        userCurrent = (UserCurrent) getIntent().getExtras().getSerializable("userCurrent");
+        userCurrentData = (UserCurrentData) getIntent().getExtras().getSerializable("userCurrentData");
         super.onCreate(arg0);
     }
 
@@ -78,15 +79,14 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                 super.handleMessage(msg);
             }
         };
-
-        if (!TextUtils.isEmpty(userInfo.getMobile())) {
-            phone = RSAUtils.decryptByPrivate(userInfo.getMobile());
+        phone = Pref.getString(Pref.TELEPHONE, mActivity, "");
+        if (!TextUtils.isEmpty(phone)) {
             tvPhone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
         }
         DecimalFormat df = new java.text.DecimalFormat("0.00");
-        if (userCurrent != null) {
-            BigDecimal balance = userCurrent.getCurAsset();//活期待收金额
-            BigDecimal curDayResidue = userCurrent.getCurDayResidue();//当日剩余可赎回额度
+        if (userCurrentData != null && userCurrentData.getUserRedeem() != null && userCurrentData.getUserCurrent() != null) {
+            BigDecimal balance = userCurrentData.getUserCurrent().getPrnAmt();//活期待收金额
+            BigDecimal curDayResidue = userCurrentData.getUserRedeem().getCurDayResidue();//当日剩余可赎回额度
             if (curDayResidue.compareTo(balance) > 0) {
                 resideMoney = balance;
             } else {
@@ -100,8 +100,8 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
             }
 
             btnRollout.setEnabled(true);
-            BigDecimal curMonthAmt = userCurrent.getCurMonthAmt();//本月已赎回的金额
-            BigDecimal lmtMonthAmt = userCurrent.getLmtMonthAmt();//本月限制赎回额度
+            BigDecimal curMonthAmt = userCurrentData.getUserRedeem().getCurMonthAmt();//本月已赎回的金额
+            BigDecimal lmtMonthAmt = userCurrentData.getUserRedeem().getLmtMonthAmt();//本月限制赎回额度
             curResidue = lmtMonthAmt.subtract(curMonthAmt);//剩余可赎回额度
 
 
@@ -115,26 +115,12 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
             }
 
             tvExtra.setText("您剩余可赎回额度" + textCurResidue + "元" + "(本月已经赎回" + textCurMonthAmt + "元)");
-            String tip = userCurrent.getWarmPrompt();//温馨提示
+            String tip = userCurrentData.getUserRedeem().getWarmPrompt();//温馨提示
             if (!TextUtils.isEmpty(tip)) {
                 String limitTips = tip.replace("|n", "\n");
                 tvTip.setText(limitTips, true);
             }
         }
-        begin();
-        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
-            @Override
-            public void onSucceed(LoginResult result) {
-                end();
-                userInfo = result.getData();
-            }
-
-            @Override
-            public void onFail(String error) {
-                end();
-                Uihelper.showToast(mActivity, error);
-            }
-        });
     }
 
     @Override
@@ -183,11 +169,6 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
     }
 
     public void btn_click(View v) {
-
-        if (userInfo == null) {
-            return;
-        }
-        money = editMoney.getText().toString();
         String captcha = mEt_Captcha.getText().toString();
         money = editMoney.getText().toString();
         if (!TextUtils.isEmpty(money)) {
@@ -209,10 +190,8 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                     if (captcha.length() < 6) {
                         Uihelper.showToast(mActivity, R.string.capthcha_num);
                     } else {
-//                        if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
-//                            int state = Integer.parseInt(userInfo.getPayPwdStatus());
-//                            initDialogTradePassword(state);
-//                        }    删除交易密码操作
+                        summit(captcha, money);
+
                     }
 
                 } else {
@@ -228,23 +207,19 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
         }
     }
 
-    private void redoom(String password) {
+    private void summit(String captcha, final String money) {
+
         mWaitingDialog.show();
         HttpRequest.redeem(mActivity, new ICallback<RedeemData>() {
             @Override
             public void onSucceed(RedeemData result) {
                 mWaitingDialog.dismiss();
                 String code = result.getCode();
-
                 Intent intent = new Intent(mActivity, RedeemResult.class);
-
                 if (code.equals("999993") || code.equals("999988") || code.equals("996633")) {
                     initDialog();
                     mDialogTip.setInfo(result.getMessage());
                     mDialogTip.show();
-                }//交易密码错误4次提示框
-                else if (code.equals("999992")) {
-//                    showPwdError4Dialog(result.getMessage());  删除交易密码操作
                 } else {
                     if (code.equals("000000")) {
                         //刷新我的活期数据
@@ -270,13 +245,19 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                 mWaitingDialog.dismiss();
                 Uihelper.showToast(ActivityRedeem.this, error);
             }
-        }, money, password);
+        }, money, phone, captcha);
+
+    }
+
+    private void redoom(String password) {
+
 
     }
 
     private void initDialog() {
         if (mDialogTip == null) {
-            mDialogTip = new DialogTip(ActivityRedeem.this) {};
+            mDialogTip = new DialogTip(ActivityRedeem.this) {
+            };
         }
     }
 
@@ -300,17 +281,18 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, phone, TypeUtil.CAPTCHA_REGISTER);
+        }, phone, TypeUtil.CAPTCHA_REDEEM);
 
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.btn_send){
+        if (v.getId() == R.id.btn_send) {
             sendMessage();
         }
 
     }
+
     class MyRunnable implements Runnable {
 
         @Override
@@ -334,6 +316,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
 
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

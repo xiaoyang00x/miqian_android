@@ -108,8 +108,6 @@ public class PromotionDialog extends Dialog implements View.OnClickListener {
                     HttpRequest.login(context, new ICallback<LoginResult>() {
                         @Override
                         public void onSucceed(LoginResult result) {
-                            UserInfo userInfo = result.getData();
-                            UserUtil.saveUserInfo(context, userInfo);
                             if (Pref.getBoolean(Pref.GESTURESTATE, getContext(), true)) {
                                 GestureLockSetActivity.startActivity(context, cls);
                             } else if (null != cls) {

@@ -56,6 +56,8 @@ public class ExtendOperationController {
 		int REFRESH_CURRENTINFO = 1013;
 		/**系统维护*/
 		int SYSTEM_MAINTENANCE = 1014;
+		/**汇付用户升级*/
+		int HF_UPDATE = 1015;
 	}
 
 	/**

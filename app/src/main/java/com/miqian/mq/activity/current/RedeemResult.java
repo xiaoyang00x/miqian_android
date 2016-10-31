@@ -19,8 +19,6 @@ import com.miqian.mq.views.WFYTitle;
  */
 public class RedeemResult extends BaseActivity implements View.OnClickListener {
 
-    private TextView textInterest;
-    private TextView textBalance;
     private TextView textCapital;
     private TextView tradeNumber;
     private TextView textState;
@@ -58,9 +56,7 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         textState = (TextView) findViewById(R.id.text_status);
-        textBalance = (TextView) findViewById(R.id.text_balance);
         textCapital = (TextView) findViewById(R.id.text_capital);
-        textInterest = (TextView) findViewById(R.id.text_interest);
         tradeNumber = (TextView) findViewById(R.id.trade_number);
         btBack = (Button) findViewById(R.id.bt_back);
         btBack.setOnClickListener(this);
@@ -71,14 +67,8 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
 
     private void refreshView() {
         if (status == 1) {
-            if (!TextUtils.isEmpty(redeem.getOrderNo())) {
-                tradeNumber.setText(redeem.getOrderNo());
-            }
-            if (!TextUtils.isEmpty(redeem.getArriAmt())) {
-                textBalance.setText(redeem.getArriAmt() + "元");
-            }
-            if (!TextUtils.isEmpty(redeem.getInterest())) {
-                textInterest.setText(redeem.getInterest() + "元");
+            if (!TextUtils.isEmpty(redeem.getSeqNo())) {
+                tradeNumber.setText(redeem.getSeqNo());
             }
             if (!TextUtils.isEmpty(redeem.getAmt())) {
                 textCapital.setText(redeem.getAmt() + "元");
@@ -87,7 +77,6 @@ public class RedeemResult extends BaseActivity implements View.OnClickListener {
 
         } else {
             findViewById(R.id.view_divider3).setVisibility(View.GONE);
-            findViewById(R.id.frame_interest).setVisibility(View.GONE);
             findViewById(R.id.view_divider1).setVisibility(View.GONE);
             findViewById(R.id.frame_arriveAmt).setVisibility(View.GONE);
             findViewById(R.id.view_divider2).setVisibility(View.GONE);

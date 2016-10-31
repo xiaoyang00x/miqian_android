@@ -114,12 +114,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
 
     private void sendMessage() {
         int captchaType;
-        if (isModifyPhone) {
-            captchaType = TypeUtil.CAPTCHA_BINDTEL_FIRST;
-        } else {
-            captchaType = TypeUtil.CAPTCHA_TRADEPASSWORD;
-
-        }
+        captchaType = TypeUtil.CAPTCHA_BINDTEL_FIRST;
         begin();
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
             @Override

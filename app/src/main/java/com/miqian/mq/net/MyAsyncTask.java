@@ -3,6 +3,8 @@ package com.miqian.mq.net;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MaintenanceResult;
 import com.miqian.mq.entity.Meta;
@@ -72,13 +74,20 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, jpushInfo);
                         callback.onFail("");
                         return;
-                    } else if (response.getCode().equals("899999")) {
+                    } else if (response.getCode().equals("899999")) {//系统维护
                         MaintenanceResult maintenanceResult = JsonUtil.parseObject(result, MaintenanceResult.class);
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.SYSTEM_MAINTENANCE, maintenanceResult);
                         callback.onFail("");
                         return;
-                    } else if (response.getCode().equals("900000")) {
+                    } else if (response.getCode().equals("900000")) {//强制升级
 //                        UmengUpdateAgent.forceUpdate(mContext);
+                        callback.onFail("当前版本不可用，请升级应用");
+                        return;
+                    } else if (response.getCode().equals("999888")) {//汇付用户升级提示
+                        HomePageInfoResult homePageInfoResult = JSON.parseObject(result, HomePageInfoResult.class);
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.HF_UPDATE, homePageInfoResult);
+                        callback.onFail("");
+                        return;
                     }
                     callback.onSucceed(result);
                 }

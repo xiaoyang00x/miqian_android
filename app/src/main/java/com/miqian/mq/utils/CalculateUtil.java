@@ -29,7 +29,7 @@ public class CalculateUtil {
         int showType = 0;
         BigDecimal bdRealInterest = new BigDecimal(realInterest);
         BigDecimal bdPresentInterest = new BigDecimal(presentInterest);
-        if ("0".equals(projectState) || "1".equals(projectState) || "2".equals(projectState)) {
+        if ("2".equals(projectState) || "3".equals(projectState)) {
             showType = isTransfer(subjectType, bdRealInterest, bdPresentInterest, transedAmt);
         } else {
             showType = isOirigin(subjectType, bdRealInterest, bdPresentInterest, transedAmt);

@@ -149,6 +149,14 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         ivData.setBackgroundResource(R.drawable.nodata);
     }
 
+    public TextView getTvTips() {
+        return tvTips;
+    }
+
+    public ImageView getIvData() {
+        return ivData;
+    }
+
     /**
      * 显示数据
      */

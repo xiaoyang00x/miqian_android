@@ -242,8 +242,6 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
                     HttpRequest.login(context, new ICallback<LoginResult>() {
                         @Override
                         public void onSucceed(LoginResult result) {
-                            UserInfo userInfo = result.getData();
-                            UserUtil.saveUserInfo(context, userInfo);
                             if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
                                 GestureLockSetActivity.startActivity(context, cls);
                             } else if (null != cls) {
@@ -365,7 +363,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     /**
      * 判断当前网页是否有前一页，如果有则返回，否则 finish()
      */
-    protected void goBack() {
+    private void goBack() {
         if (webview != null && webview.canGoBack()) {
             webview.goBack();
         } else {

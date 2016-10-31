@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_hf_update"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/hf_update_bag" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="为保障您的账户资金安全，秒钱已全面接入资金存管需您对账户进行升级，以保证您的资金安全"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/mq_font4_v2" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image_register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/hf_update_unregister" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/image_register"
+                        android:layout_marginLeft="43dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/mq_b1_v2"
+                        android:src="@drawable/hf_update_unregister" />
+
+                    <TextView
+                        android:id="@+id/text_register_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/image_register"
+                        android:text="1.开通存管"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font7_v2"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_register_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_register_title"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/image_register"
+                        android:text="开通资金存管账户，由第三方银行监管您的资金，确保您的资金安全"
+                        android:textColor="@color/mq_b4_v2"
+                        android:textSize="@dimen/mq_font4_v2"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/image_bind"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/hf_update_unbind" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/image_bind"
+                        android:layout_marginLeft="43dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/mq_b1_v2"
+                        android:paddingBottom="10dp"
+                        android:src="@drawable/hf_update_unregister" />
+
+                    <TextView
+                        android:id="@+id/text_bind_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/image_bind"
+                        android:text="2.绑定银行卡"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font7_v2"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_bind_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_bind_title"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/image_bind"
+                        android:text="开通资金存管账户，由第三方银行监管您的资金，确保您的资金安全"
+                        android:textColor="@color/mq_b4_v2"
+                        android:textSize="@dimen/mq_font4_v2"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/image_auto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/hf_update_unauto" />
+
+                    <TextView
+                        android:id="@+id/text_auto_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/image_auto"
+                        android:text="3.开通自动投标"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font7_v2"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_auto_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_auto_title"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/image_auto"
+                        android:text="开通资金存管账户，由第三方银行监管您的资金，确保您的资金安全"
+                        android:textColor="@color/mq_b4_v2"
+                        android:textSize="@dimen/mq_font4_v2"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_update"
+                style="@style/click_btn"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:onClick="btn_click"
+                android:text="开始升级"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

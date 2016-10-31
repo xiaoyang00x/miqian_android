@@ -13,7 +13,7 @@ public class UserInfo implements Serializable {
     private String mobile;//手机号
     private boolean status;//用户状态 true 激活 false 未激活
     private String curAmt;//活期总额
-    private String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
+    private boolean bindCardStatus;//银行卡绑定状态 false未绑定 true 已绑定
     private String usableSa;//可用余额
     private String totalProfit;//历史收益
     private String regTotal;//定期认购笔数
@@ -31,19 +31,18 @@ public class UserInfo implements Serializable {
     private String addRechargeMinValue;//充值最小额度
     private boolean hfAccountStatus;//汇付账户状态 true 开通 false 未开通
     private boolean hfAutoTenderPlanStatus;//汇付自动投标计划状态 true 开通 false 未开通
-    private String token;
-
-
-// TODO: 2016/10/16
-    /**
-     * 需要删除的
-     */
-    private String supportStatus;//是否支持连连绑卡
     private String singleAmtLimit; //单笔限额
     private String dayAmtLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
-    private String realNameStatus;//实名认证状态
-    private String idCard;//身份证号
+    private String token;
+
+
+    /**
+     * 需要删除的
+     */
+//    private String supportStatus;//是否支持连连绑卡
+//    private String realNameStatus;//实名认证状态
+//    private String idCard;//身份证号
 
     public String getCustLevel() {
         return custLevel;
@@ -101,13 +100,13 @@ public class UserInfo implements Serializable {
         this.userName = userName;
     }
 
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
+//    public String getIdCard() {
+//        return idCard;
+//    }
+//
+//    public void setIdCard(String idCard) {
+//        this.idCard = idCard;
+//    }
 
     public String getBankCardNo() {
         return bankCardNo;
@@ -133,11 +132,11 @@ public class UserInfo implements Serializable {
         this.curAmt = curAmt;
     }
 
-    public String getBindCardStatus() {
+    public boolean isBindCardStatus() {
         return bindCardStatus;
     }
 
-    public void setBindCardStatus(String bindCardStatus) {
+    public void setBindCardStatus(boolean bindCardStatus) {
         this.bindCardStatus = bindCardStatus;
     }
 
@@ -173,13 +172,13 @@ public class UserInfo implements Serializable {
         this.nickName = nickName;
     }
 
-    public String getRealNameStatus() {
-        return realNameStatus;
-    }
-
-    public void setRealNameStatus(String realNameStatus) {
-        this.realNameStatus = realNameStatus;
-    }
+//    public String getRealNameStatus() {
+//        return realNameStatus;
+//    }
+//
+//    public void setRealNameStatus(String realNameStatus) {
+//        this.realNameStatus = realNameStatus;
+//    }
 
     public int getTotalPromotion() {
         return totalPromotion;
@@ -221,13 +220,13 @@ public class UserInfo implements Serializable {
         this.bankCode = bankCode;
     }
 
-    public String getSupportStatus() {
-        return supportStatus;
-    }
-
-    public void setSupportStatus(String supportStatus) {
-        this.supportStatus = supportStatus;
-    }
+//    public String getSupportStatus() {
+//        return supportStatus;
+//    }
+//
+//    public void setSupportStatus(String supportStatus) {
+//        this.supportStatus = supportStatus;
+//    }
 
     public String getAddRechargeMinValue() {
         return addRechargeMinValue;

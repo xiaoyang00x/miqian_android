@@ -22,10 +22,10 @@ import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
+import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.MaintenanceResult;
 import com.miqian.mq.entity.Navigation;
-import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.UpdateInfo;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.fragment.CurrentFragment;
@@ -47,6 +47,7 @@ import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.DialogHfTip;
 import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.FragmentTabHost;
@@ -84,6 +85,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     private int current_tab = 0;
     private RefeshDataListener mRefeshDataListener;
     private DialogTip dialogTips;
+    private DialogHfTip dialogHfTip;
     private CustomDialog jpushDialog;
     private ImageView imgRedPointer;
     private DisplayImageOptions options;
@@ -255,7 +257,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, mApplicationContext, 0);
         final String navigationStr = Pref.getString(Pref.TAB_NAVIGATION_STR, mApplicationContext, "");
         final boolean isChangeTab = Pref.getBoolean(Pref.TAB_NAVIGATION_ON_OFF, mApplicationContext, false);
-        if(tabImageCount == 8 && !TextUtils.isEmpty(navigationStr) && isChangeTab) {
+        if (tabImageCount == 8 && !TextUtils.isEmpty(navigationStr) && isChangeTab) {
             navigation = JsonUtil.parseObject(navigationStr, Navigation.class);
             tabIndicator1 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(0).getImgClick(), R.string.main_tab_home);
             tabIndicator2 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(1).getImg(), R.string.main_tab_current);
@@ -263,14 +265,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             tabIndicator4 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(3).getImg(), R.string.main_tab_user);
 
 
-
             tabIndicator1.getTabName().setTextColor(Color.parseColor(navigation.getColorClick()));
             tabIndicator2.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
             tabIndicator3.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
             tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
 
-        }else {
-            tabIndicator1 = new TabIndicator(mContext, tw,R.drawable.tab_home_selector, R.string.main_tab_home);
+        } else {
+            tabIndicator1 = new TabIndicator(mContext, tw, R.drawable.tab_home_selector, R.string.main_tab_home);
             tabIndicator2 = new TabIndicator(mContext, tw, R.drawable.tab_current_selector, R.string.main_tab_current);
             tabIndicator3 = new TabIndicator(mContext, tw, R.drawable.tab_regular_selector, R.string.main_tab_regular);
             tabIndicator4 = new TabIndicator(mContext, tw, R.drawable.tab_user_selector, R.string.main_tab_user);
@@ -285,14 +286,14 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 if (current_tab == 3) {
                     imgRedPointer.setVisibility(View.GONE);
                 }
-                if(!isChangeTab) return;
-                if(options == null) {
+                if (!isChangeTab) return;
+                if (options == null) {
                     options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
                 }
-                if(imageLoader == null) {
+                if (imageLoader == null) {
                     imageLoader = ImageLoader.getInstance();
                 }
-                if(navigation == null) return;
+                if (navigation == null) return;
                 switch (current_tab) {
                     case 0:
                         imageLoader.displayImage(navigation.getNavigationList().get(0).getImgClick(), tabIndicator1.getTabIcon());
@@ -362,6 +363,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
             setView(drawbleId, nameResId);
         }
+
         private TabIndicator(Context ctx, TabWidget tw, String url, int nameResId) {
             this.ctx = ctx;
             tabIndicator = (MyRelativeLayout) LayoutInflater.from(ctx).inflate(R.layout.tab_indicator, tw, false);
@@ -378,11 +380,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             tabIcon.setImageResource(drawbleId);
             tabName.setText(nameResId);
         }
+
         public void setView(String url, int nameResId) {
-            if(options == null) {
+            if (options == null) {
                 options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
             }
-            if(imageLoader == null) {
+            if (imageLoader == null) {
                 imageLoader = ImageLoader.getInstance();
             }
             imageLoader.displayImage(url, tabIcon);
@@ -601,6 +604,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     public interface RefeshDataListener {
         void changeData(JpushInfo jpushInfo);
+
+        void changeHomeData(HomePageInfoResult result);
     }
 
     public void setReshListener(RefeshDataListener refeshDataListener) {
@@ -673,6 +678,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     ActivityStack.getActivityStack().clearActivity();
                 }
                 break;
+            case OperationKey.HF_UPDATE:
+                current_tab = 0;
+                ActivityStack.getActivityStack().clearActivity();
+                mTabHost.setCurrentTab(current_tab);
+                mRefeshDataListener.changeHomeData((HomePageInfoResult) data);
+                showHfDialog(null);
+                break;
             default:
                 break;
         }
@@ -680,12 +692,29 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     private void showDialog(JpushInfo jpushInfo) {
         if (dialogTips == null) {
-            dialogTips = new DialogTip(MainActivity.this) {};
+            dialogTips = new DialogTip(MainActivity.this) {
+            };
         }
         if (jpushInfo != null) {
             dialogTips.setInfo(jpushInfo.getContent());
             dialogTips.setTitle(jpushInfo.getTitle());
             dialogTips.show();
+        }
+    }
+
+    /**
+     * 汇付账户升级窗口
+     * @param jpushInfo
+     */
+    private void showHfDialog(JpushInfo jpushInfo) {
+        if (dialogHfTip == null) {
+            dialogHfTip = new DialogHfTip(MainActivity.this) {
+            };
+        }
+        dialogHfTip.setCancelable(false);
+        dialogHfTip.setCanceledOnTouchOutside(false);
+        dialogHfTip.show();
+        if (jpushInfo != null) {
         }
     }
 

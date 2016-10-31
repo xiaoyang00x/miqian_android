@@ -1,6 +1,5 @@
 package com.miqian.mq.activity.user;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -52,7 +51,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     private String investId;//投资产品id
     private String clearYn;//Y:已结息  N:未结息
-    private String projectType;//Y:已结息  N:未结息
+    private String projectType;//  1 为定期赚 2 为定期计划
     private String subjectId;//标的id
     private TextView textProject;
     private TextView textInterestRatePresent;
@@ -85,7 +84,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected String getPageName() {
-        if (projectType.equals("3") || projectType.equals("4")) {
+        if (projectType.equals("1")) {
             return "定期项目详情";
         } else {
             return "定期计划详情";
@@ -213,8 +212,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 } else {
                     ivProcess.setImageResource(R.drawable.process_red);
                     view.setBackgroundResource(R.color.mq_r1_v2);
-                    tvDate.setTextColor(ContextCompat.getColor(this,R.color.mq_r1_v2));
-                    tvContent.setTextColor(ContextCompat.getColor(this,R.color.mq_r1_v2));
+                    tvDate.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
+                    tvContent.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
                 }
                 tvContent.setText(operationList.get(i).getOperationContent());
                 if (i == operationList.size() - 1) {
@@ -293,11 +292,9 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     private void showProjectImage(String projectState, ImageView ivProjectState) {
         ivProjectState.setVisibility(View.VISIBLE);
-        if ("0".equals(projectState)) {
+        if ("2".equals(projectState)) {
             ivProjectState.setImageResource(R.drawable.transfer_detail_ing);
-        } else if ("1".equals(projectState)) {
-            ivProjectState.setImageResource(R.drawable.transfer_detail_wjx);
-        } else {
+        } else if ("3".equals(projectState)) {
             ivProjectState.setImageResource(R.drawable.transfer_detail_ed);
         }
     }
@@ -309,7 +306,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        if (projectType.equals("3") || projectType.equals("4")) {
+        if (projectType.equals("1")) {
             mTitle.setTitleText("定期项目详情");
         } else {
             mTitle.setTitleText("定期计划详情");

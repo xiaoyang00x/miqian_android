@@ -11,17 +11,17 @@
         android:layout_marginRight="28dp"
         android:layout_marginTop="28dp"
         android:background="@drawable/shape_dialog_background"
+        android:paddingTop="20dp"
         android:orientation="vertical">
 
 
         <ImageView
+            android:id="@+id/image_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="15dp"
-            android:src="@drawable/icon_tip"
-            />
+            android:src="@drawable/icon_tip"/>
 
 
         <TextView
@@ -38,23 +38,23 @@
             android:id="@+id/tv_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="45dp"
+            android:layout_marginBottom="35dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text=""
             android:textColor="@color/mq_b4_v2"
             android:textSize="@dimen/mq_font6_v2" />
 
 
         <TextView
             android:id="@+id/tv_sure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/bt_height"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="确定"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="25dp"
             android:textColor="@drawable/btn_cancel_font"
             android:textSize="@dimen/mq_font7_v2" />
     </LinearLayout>

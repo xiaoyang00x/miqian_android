@@ -57,4 +57,8 @@
   <string name="open_btn">开通资金存管</string>
   <string name="open_rule">了解《资金存管明细》</string>
 
+
+  <!-- 提现-->
+  <string name="rollout_rule">温馨提示：\n最低提现金额为1元。每月8次免费提现，超过8次后提现收取0.2%手续费(最低1元)。每日提现限2次。提现提交银行处理后2工作日内到账，法定节日(如春节、国庆)以平台公告为准。</string>
+
 </resources>
