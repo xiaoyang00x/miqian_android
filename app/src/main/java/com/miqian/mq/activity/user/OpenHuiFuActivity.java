@@ -2,7 +2,6 @@ package com.miqian.mq.activity.user;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.utils.TypeUtil;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -91,8 +91,6 @@ public class OpenHuiFuActivity extends BaseActivity {
     //开通按钮
     public void btn_click(View v) {
         RealNameActivity.startActivity(mActivity);
-//        HttpRequest.registerHf(this, 0);
-//        finish();
     }
 
     //暂不开通按钮
@@ -102,14 +100,11 @@ public class OpenHuiFuActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0) {
+        if (requestCode == HfUpdateActivity.REQUEST_CODE_REGISTER) {
             if (resultCode == 0) {
-
                 finish();
-                Log.e("", "success");
             } else {
-
-                Log.e("", "fail");
+                Uihelper.showToast(mActivity, "开户失败，请重试");
             }
         }
     }

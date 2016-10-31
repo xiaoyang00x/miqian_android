@@ -51,6 +51,9 @@ public class Pref {
     //汇付用户的自动投标状态
     public static final String HF_AUTO_STATUS = "HfAutoStatus";
 
+    //用户银行卡状态
+    public static final String HF_BANK_STATUS = "HfBankStatus";
+
     // 是否退出应用
     public static final String EXIT = "Exit";
 //	// app是否在后台

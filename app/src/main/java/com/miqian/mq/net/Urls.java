@@ -52,8 +52,8 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-//    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
-    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/"; // 冰红茶本地地址
+    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+//    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/"; // 冰红茶本地地址
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.104:8080/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.115:8080/miaoqian-app/";
@@ -218,10 +218,6 @@ public class Urls {
     public final static String web_rollout = "https://res.shicaidai.com/miaoqian/webView/presentDescription.html";
     //红包、拾财券使用规则(认购页面)
     public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
-
-
-//    //连连支付支持绑定的银行界面
-//    public final static String web_support_bank = base_server + "webView/querySupportBankLianLian";
 
     //活期详情
     public final static String web_current = base_server + "webView/currentDetail";

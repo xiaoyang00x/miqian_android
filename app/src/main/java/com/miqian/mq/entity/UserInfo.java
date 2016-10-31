@@ -36,15 +36,6 @@ public class UserInfo implements Serializable {
     private String monthAmtLimit ; // 每月限额
     private String token;
 
-
-// TODO: 2016/10/16
-    /**
-     * 需要删除的
-     */
-//    private String supportStatus;//是否支持连连绑卡
-    private String realNameStatus;//实名认证状态
-    private String idCard;//身份证号
-
     public String getCustLevel() {
         return custLevel;
     }
@@ -99,14 +90,6 @@ public class UserInfo implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
     }
 
     public String getBankCardNo() {
@@ -173,14 +156,6 @@ public class UserInfo implements Serializable {
         this.nickName = nickName;
     }
 
-    public String getRealNameStatus() {
-        return realNameStatus;
-    }
-
-    public void setRealNameStatus(String realNameStatus) {
-        this.realNameStatus = realNameStatus;
-    }
-
     public int getTotalPromotion() {
         return totalPromotion;
     }
@@ -220,14 +195,6 @@ public class UserInfo implements Serializable {
     public void setBankCode(String bankCode) {
         this.bankCode = bankCode;
     }
-
-//    public String getSupportStatus() {
-//        return supportStatus;
-//    }
-//
-//    public void setSupportStatus(String supportStatus) {
-//        this.supportStatus = supportStatus;
-//    }
 
     public String getAddRechargeMinValue() {
         return addRechargeMinValue;

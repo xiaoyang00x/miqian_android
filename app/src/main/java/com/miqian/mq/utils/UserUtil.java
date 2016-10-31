@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
@@ -37,6 +38,17 @@ public class UserUtil {
         Pref.saveString(getPrefKey(context, Pref.HF_CUSTID), RSAUtils.decryptByPrivate(userInfo.getHfCustId()), context);
         Pref.saveBoolean(getPrefKey(context, Pref.HF_ACCOUNT_STATUS), userInfo.isHfAccountStatus(), context);
         Pref.saveBoolean(getPrefKey(context, Pref.HF_AUTO_STATUS), userInfo.isHfAutoTenderPlanStatus(), context);
+
+        if (userInfo.isBindCardStatus()) {
+            UserInfo userInfoTemp = new UserInfo();
+            userInfoTemp.setBindCardStatus(userInfo.isBindCardStatus());
+            userInfoTemp.setBankCardNo(userInfo.getBankCardNo());
+            userInfoTemp.setBankName(userInfo.getBankName());
+            userInfoTemp.setSingleAmtLimit(userInfo.getSingleAmtLimit());
+            userInfoTemp.setDayAmtLimit(userInfo.getDayAmtLimit());
+            userInfoTemp.setBankUrlSmall(userInfo.getBankUrlSmall());
+            Pref.saveString(getPrefKey(context, Pref.HF_BANK_STATUS), JSON.toJSONString(userInfoTemp), context);
+        }
     }
 
     public static void saveUserInfo(Context context, UserInfo userInfo) {
@@ -180,9 +192,6 @@ public class UserUtil {
                         @Override
                         public void onSucceed(LoginResult result) {
                             dismiss();
-                            UserInfo userInfo = result.getData();
-                            saveUserInfo(context, userInfo);
-
                             dialogPay.show();
                             if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
                                 GestureLockSetActivity.startActivity(context, null);
@@ -211,9 +220,6 @@ public class UserUtil {
                     @Override
                     public void onSucceed(LoginResult result) {
                         dismiss();
-                        UserInfo userInfo = result.getData();
-                        saveUserInfo(context, userInfo);
-
                         if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
                             GestureLockSetActivity.startActivity(context, null);
                         }
