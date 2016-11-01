@@ -33,6 +33,7 @@
 
 
 -keep class com.miqian.mq.activity.WebActivity { *;}
+-keep class com.miqian.mq.activity.WebHFActivity { *;}
 
 -keep class com.miqian.mq.entity.** { *;}
 
@@ -116,23 +117,6 @@ public static final int *;
     }
     #友盟分享
 -dontwarn com.tencent.weibo.sdk -dontwarn com.tencent.**
-
-##-------------------Begin proguard configuration for 连连支付-------------------------
--keep public class com.yintong.pay.utils.** {
-    <fields>;
-    <methods>;
-}
--keep class com.yintong.secure.activityproxy.PayIntro$LLJavascriptInterface{*;}
-
--keep public class com.yintong.** {
-    <fields>;
-    <methods>;
-}
--dontwarn com.yintong.**
--keep public class com.yintong.** {*;
-}
-##-------------------Begin proguard configuration for 连连支付-------------------------
-
 
 ##-------------------Begin proguard configuration for ShareSdk-------------------------
 -libraryjars ../ShareSDK/libs/MobCommons-2016.0707.1708.jar

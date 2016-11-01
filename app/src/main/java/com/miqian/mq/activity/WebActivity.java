@@ -243,7 +243,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
                         @Override
                         public void onSucceed(LoginResult result) {
                             if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
-                                GestureLockSetActivity.startActivity(context, cls);
+                                GestureLockSetActivity.startActivity(context, cls,false);
                             } else if (null != cls) {
                                 startActivity(new Intent(context, cls));
                             }

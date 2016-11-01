@@ -109,7 +109,7 @@ public class PromotionDialog extends Dialog implements View.OnClickListener {
                         @Override
                         public void onSucceed(LoginResult result) {
                             if (Pref.getBoolean(Pref.GESTURESTATE, getContext(), true)) {
-                                GestureLockSetActivity.startActivity(context, cls);
+                                GestureLockSetActivity.startActivity(context, cls,false);
                             } else if (null != cls) {
                                 getOwnerActivity().startActivity(new Intent(context, cls));
                             }

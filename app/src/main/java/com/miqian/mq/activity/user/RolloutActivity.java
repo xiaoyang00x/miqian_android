@@ -72,7 +72,7 @@ public class RolloutActivity extends BaseActivity {
             return;
         }
         if (!TextUtils.isEmpty(userInfo.getBankCardNo())) {
-            cardNum = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+            cardNum = userInfo.getBankCardNo();
             bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
         }
         if (!TextUtils.isEmpty(userInfo.getBankName())) {
@@ -174,22 +174,23 @@ public class RolloutActivity extends BaseActivity {
             HttpRequest.withdrawPreprocess(mActivity, new ICallback<WithDrawResult>() {
                 @Override
                 public void onSucceed(WithDrawResult result) {
-                    List<WithdrawItem> data = result.getData();
+                    WithdrawItem data = result.getData();
                     StringBuilder tip = new StringBuilder();
-                    for (WithdrawItem item : data) {
-                        if (!"0".equals(item.getFeeAmt())) {
-                            tip.append("；").append(item.getName()).append(item.getFeeAmt()).append("元");
+                    String feeAmt = data.getFeeAmt();
+                    BigDecimal bdFeeamt=null;
+                    if(!TextUtils.isEmpty(feeAmt)){
+                        bdFeeamt=new BigDecimal(feeAmt);
+                        if (bdFeeamt.compareTo(BigDecimal.ZERO)>0){
+                            tip.append("提现手续费"+feeAmt+"元");
+                            initTipDialog(1);
+                            dialogTipsReput.setRemarks(tip.toString());
+                            dialogTipsReput.show();
+                        }else {
+                            rollOutHttp();
                         }
-                    }
-                    if (!TextUtils.isEmpty(tip)) {
-                        tip.deleteCharAt(0);
-                        initTipDialog(1);
-                        dialogTipsReput.setRemarks(tip.toString());
-                        dialogTipsReput.show();
-                    } else {
+                    }else {
                         rollOutHttp();
                     }
-
                 }
 
                 @Override

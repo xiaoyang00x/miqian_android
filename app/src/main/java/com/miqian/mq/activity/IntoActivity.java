@@ -12,15 +12,12 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.activity.user.HfUpdateActivity;
-import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
-import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -49,7 +46,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
 //    private MyHandler mHandler;
     private UserInfo userInfo;
-    private PayOrder payOrder;
 
     private String money;
     private String bankNumber;

@@ -15,7 +15,6 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.entity.GetHomeActivity;
 import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -107,7 +106,7 @@ public class PromotionDialogOverdue extends Dialog implements View.OnClickListen
                         @Override
                         public void onSucceed(LoginResult result) {
                             if (Pref.getBoolean(Pref.GESTURESTATE, getContext(), true)) {
-                                GestureLockSetActivity.startActivity(context, cls);
+                                GestureLockSetActivity.startActivity(context, cls,false);
                             } else if (null != cls) {
                                 getOwnerActivity().startActivity(new Intent(context, cls));
                             }

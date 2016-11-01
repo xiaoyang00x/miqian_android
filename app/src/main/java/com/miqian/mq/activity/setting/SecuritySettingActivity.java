@@ -74,7 +74,7 @@ public class SecuritySettingActivity extends BaseActivity implements OnClickList
                     setGestureLockState(false);
                     changeGestureSwitchState();
                 } else {
-                    GestureLockSetActivity.startActivity(getBaseContext(), null);
+                    GestureLockSetActivity.startActivity(getBaseContext(), null,false);
                 }
                 break;
 
