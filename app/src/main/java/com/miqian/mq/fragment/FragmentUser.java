@@ -20,10 +20,8 @@ import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
-import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
@@ -35,7 +33,6 @@ import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
@@ -372,7 +369,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onSucceed(LoginResult result) {
                 end();
                 if (Pref.getBoolean(Pref.GESTURESTATE, getActivity(), true)) {
-                    GestureLockSetActivity.startActivity(getActivity(), null);
+                    GestureLockSetActivity.startActivity(getActivity(), null,false);
                 } else {
                     onStart();
                 }

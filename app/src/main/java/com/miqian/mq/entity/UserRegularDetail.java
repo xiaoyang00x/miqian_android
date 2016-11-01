@@ -57,6 +57,15 @@ public class UserRegularDetail implements Serializable{
         private String sysbdId;      //原始标的的ID
         private String transedAmt;      //已转让金额
         private String subjectType;//标的类型      "88": 88专属  "07":双倍收益卡
+        private String projectCode;
+
+        public String getProjectCode() {
+            return projectCode;
+        }
+
+        public void setProjectCode(String projectCode) {
+            this.projectCode = projectCode;
+        }
 
         public String getSubjectType() {
             return subjectType;

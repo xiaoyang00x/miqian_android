@@ -197,7 +197,7 @@ public class RegisterActivity extends BaseActivity {
                         UserUtil.saveUserInfo(mActivity, userInfo);
 
                         if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
-                            GestureLockSetActivity.startActivity(getBaseContext(),null);
+                            GestureLockSetActivity.startActivity(getBaseContext(),null,true);
                         }
                         finish();
                     }

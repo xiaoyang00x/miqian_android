@@ -179,7 +179,7 @@ public class Urls {
     //修改绑定手机
     public final static String changePhone = base_server + "userService/changePhone";
     //提现预处理
-    public final static String withdrawPreprocess = base_server + "tradeService/queryWithdrawPreprocess";  //tradeService/queryWithdrawPreprocess
+    public final static String withdrawPreprocess = base_server + "tradeService/withdrawPreprocess";  //tradeService/queryWithdrawPreprocess
     //版本更新
     public final static String forceUpdate = base_server + "commonService/v2/forceUpdate";
     //查询标的相关记录
@@ -209,9 +209,10 @@ public class Urls {
     //发起转让页面：可转金额说明
     public final static String web_transferamt_expaint = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //定期赚详情
-    public final static String web_regular_earn_detail = base_server + "webView/getRegDetail/";
+    public final static String web_regular_earn_detail = base_server + "deposit/webView/projectInfo/"; ///deposit/webView/projectInfo/{productCode}/{projectCode}/0
+
     //定期计划详情
-    public final static String web_regular_plan_detail = base_server + "webView/regPlanDetail/";
+    public final static String web_regular_plan_detail = base_server + "deposit/webView/productInfo/";
 
     //提现说明
     public final static String web_rollout = "https://res.shicaidai.com/miaoqian/webView/presentDescription.html";
