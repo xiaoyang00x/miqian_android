@@ -48,7 +48,9 @@ public class CurrentFragment extends BasicFragment {
             initView();
             initListener();
         }
-        obtainFirstPageData();
+        if (null == mData) {
+            obtainFirstPageData();
+        }
         return rootView;
     }
 
@@ -114,6 +116,7 @@ public class CurrentFragment extends BasicFragment {
     // 获取第一页数据/刷新数据
     public void obtainFirstPageData() {
         pageNo = STARTPAGE;
+        swipeRefresh.setRefreshing(true);
         obtainData(new ICallback<CurrentProjectResult>() {
 
             @Override
@@ -123,10 +126,12 @@ public class CurrentFragment extends BasicFragment {
                 mAdapter.addAll(mData);
                 mAdapter.notifyDataSetChanged();
                 serverBusyView.hide();
+                swipeRefresh.setRefreshing(false);
             }
 
             @Override
             public void onFail(String error) {
+                swipeRefresh.setRefreshing(false);
                 if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
                     serverBusyView.showServerBusy();
                 } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {

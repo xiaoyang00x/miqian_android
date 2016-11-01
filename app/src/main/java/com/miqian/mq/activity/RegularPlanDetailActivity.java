@@ -46,8 +46,8 @@ public class RegularPlanDetailActivity extends RegularDetailActivity {
 
     @Override
     public void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
         prodId = RegularBase.REGULAR_PLAN;
+        super.onCreate(arg0);
     }
 
     @Override

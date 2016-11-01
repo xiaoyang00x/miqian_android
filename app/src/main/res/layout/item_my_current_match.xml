@@ -145,14 +145,14 @@
         android:layout_below="@id/tv_next_due_date"
         android:background="@color/mq_b7_v2">
 
-        <include
-            layout="@layout/divide_line"
+        <View
+            android:background="@color/mq_b6_v2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentTop="true" />
 
-        <include
-            layout="@layout/divide_line"
+        <View
+            android:background="@color/mq_b6_v2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true" />

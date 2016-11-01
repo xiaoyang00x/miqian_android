@@ -46,8 +46,8 @@ public class RegularProjectDetailActivity extends RegularDetailActivity {
 
     @Override
     public void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
         prodId = RegularBase.REGULAR_PROJECT;
+        super.onCreate(arg0);
     }
 
     @Override
