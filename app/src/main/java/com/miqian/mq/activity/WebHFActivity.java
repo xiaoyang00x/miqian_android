@@ -39,7 +39,7 @@ public class WebHFActivity extends WebActivity {
     private String url_hf;
     private String sign;
 
-    private static int state = 0;
+    private int state;
 
     public static void startActivity(Activity activity, String url, ArrayList<String> list) {
         activity.startActivity(getIntent(activity, url, list));
@@ -47,7 +47,6 @@ public class WebHFActivity extends WebActivity {
 
     public static void startActivity(Activity activity, String url, ArrayList<String> list, int type) {
         activity.startActivityForResult(getIntent(activity, url, list), type);
-//        activity.startActivity(getIntent(activity, url, list));
     }
 
     public static Intent getIntent(Context context, String url, ArrayList<String> list) {
@@ -60,7 +59,7 @@ public class WebHFActivity extends WebActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+        state = 0;
         ArrayList list = getIntent().getStringArrayListExtra("list");
         if (list == null) {
             list = new ArrayList<>();
@@ -192,16 +191,6 @@ public class WebHFActivity extends WebActivity {
         });
     }
 
-//    @Override
-//    public int getLayoutId() {
-//        return R.layout.activity_web;
-//    }
-//
-//    @Override
-//    public void initTitle(WFYTitle mTitle) {
-//
-//    }
-
     private void loadUrl(String url) {
         if (MobileOS.getNetworkType(this) == -1 && !url.startsWith("file:///android_asset/")) {
             webview.setVisibility(View.GONE);
@@ -231,29 +220,19 @@ public class WebHFActivity extends WebActivity {
     }
 
     @JavascriptInterface
-    public void hfCallback() {
+    public void hfCallback(String code) {
         goBack();
     }
 
     @JavascriptInterface
-    public void getHfResult(int code) {
-        if (code == 200) {
+    public void getHfResult(String code) {
+        if ("200".equals(code)) {
             state = CurrentInvestment.SUCCESS;
         } else {
             state = CurrentInvestment.FAIL;
         }
-        Log.e("", "code " + code);
     }
 
-//    @Override
-//    public void onDestroy() {
-//        ListenerManager.unregisterLoginListener(WebHFActivity.class.getSimpleName());
-//        webview.removeAllViews();
-//        webview.destroy();
-//        dialog_login = null;
-//        super.onDestroy();
-//    }
-//
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
