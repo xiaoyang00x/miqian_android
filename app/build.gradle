@@ -5,7 +5,7 @@ android {
     buildToolsVersion '23.0.3'
     defaultConfig {
         applicationId "com.miqian.mq"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 13
         versionName '2.4.0'
