@@ -33,6 +33,7 @@
 
 
 -keep class com.miqian.mq.activity.WebActivity { *;}
+-keep class com.miqian.mq.activity.WebHFActivity { *;}
 
 -keep class com.miqian.mq.entity.** { *;}
 
