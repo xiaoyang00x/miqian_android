@@ -38,8 +38,6 @@ public class CapitalRecordActivity extends BaseActivity {
     RecyclerView recyclerView;
     CapitalRecordAdapter adapter;
     List<CapitalItem> list = new ArrayList<>();
-    RelativeLayout data_view;
-    TextView empty_view;
 
     CircleButton all;
     CircleButton saving;
@@ -146,7 +144,6 @@ public class CapitalRecordActivity extends BaseActivity {
                 }
             }
         });
-        data_view = (RelativeLayout) findViewById(R.id.data_view);
 
         all = (CircleButton) findViewById(R.id.all);
         all.setColor(0xdddddd);

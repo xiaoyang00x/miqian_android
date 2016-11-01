@@ -7,9 +7,16 @@ import java.util.List;
  * 资金记录服务器返回结果Data
  */
 public class RecordCurrent {
-
+    private Page page;
     private List<FundFlow> fundFlowList;
 
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
 
     public List<FundFlow> getFundFlowList() {
         return fundFlowList;

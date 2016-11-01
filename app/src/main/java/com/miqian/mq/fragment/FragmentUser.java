@@ -21,6 +21,7 @@ import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.HfUpdateActivity;
@@ -29,6 +30,7 @@ import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
+import com.miqian.mq.entity.FundFlow;
 import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.LoginResult;
@@ -468,8 +470,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             //资金记录
             case R.id.frame_record:
                 MobclickAgent.onEvent(getActivity(), "1021");
-                startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
-
+                ActivityCurrentRecord.startActivity(mContext, FundFlow.BILL_TYPE_ALL, "0");
                 break;
             //优惠券
             case R.id.frame_ticket:

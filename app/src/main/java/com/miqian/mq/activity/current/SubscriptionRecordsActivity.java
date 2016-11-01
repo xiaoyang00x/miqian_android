@@ -66,8 +66,8 @@ public class SubscriptionRecordsActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
         projectCode = getIntent().getStringExtra(PROJECT_CODE);
+        super.onCreate(arg0);
     }
 
     public static void startActivity(Context context, String projectCode) {

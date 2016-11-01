@@ -56,7 +56,7 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if (dataList != null) {
+        if (dataList != null && dataList.size() != 0) {
             return dataList.size() + 1;//+1 尾部：加载更多
         }
         return 0;
@@ -85,24 +85,25 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
 
                 switch (traCd) {
                     case FundFlow.BILL_TYPE_RG://认购交易
-                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
+                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_subscribe);
                         break;
                     case FundFlow.BILL_TYPE_SH://赎回交易
                         ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
                         break;
                     case FundFlow.BILL_TYPE_ZR://转让交易
-                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
+                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_zr);
                         break;
                     case FundFlow.BILL_TYPE_TX://提现
-//                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
+                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_tx);
                         break;
                     case FundFlow.BILL_TYPE_HK://到期还款
-//                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
+                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_hk);
                         break;
                     case FundFlow.BILL_TYPE_CZ://充值
-//                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_redem);
+                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_cz);
                         break;
                     default:
+                        ((ViewHolderRecord) holder).ivState.setImageResource(R.drawable.record_other);
                         break;
                 }
 
@@ -123,6 +124,7 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
         }
 
     }
+
 
     class ViewHolderRecord extends RecyclerView.ViewHolder {
 
