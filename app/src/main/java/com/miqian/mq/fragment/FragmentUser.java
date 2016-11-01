@@ -372,7 +372,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onSucceed(LoginResult result) {
                 end();
                 if (Pref.getBoolean(Pref.GESTURESTATE, getActivity(), true)) {
-                    GestureLockSetActivity.startActivity(getActivity(), null);
+                    GestureLockSetActivity.startActivity(getActivity(), null,false);
                 } else {
                     onStart();
                 }

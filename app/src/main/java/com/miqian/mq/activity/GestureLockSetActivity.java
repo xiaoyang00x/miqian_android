@@ -31,6 +31,7 @@ public class GestureLockSetActivity extends BaseActivity {
     private boolean isFirstSet; // 是否第一次设置密码
 
     private static final int MINLENGTH_PSW = 4; // 密码最小长度
+    private boolean isRegister;
 
     @Override
     public void obtainData() {
@@ -39,9 +40,10 @@ public class GestureLockSetActivity extends BaseActivity {
 
     private static Class<?> desClass; // 设置完手势密码后跳转页面
 
-    public static void startActivity(Context context, Class cl) {
+    public static void startActivity(Context context, Class cl, boolean isRegister) {
         desClass = cl;
         Intent intent = new Intent(context, GestureLockSetActivity.class);
+        intent.putExtra("isRegister", isRegister);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -83,7 +85,9 @@ public class GestureLockSetActivity extends BaseActivity {
                 if (null != desClass) {
                     startActivity(desClass);
                 }
-                OpenHuiFuActivity.startActivity(mActivity,TypeUtil.TYPE_OPENHF_REGISTER);
+                if (isRegister) {
+                    OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_REGISTER);
+                }
                 finish();
             }
         });
@@ -91,6 +95,9 @@ public class GestureLockSetActivity extends BaseActivity {
     }
 
     private void initData() {
+
+        isRegister = getIntent().getBooleanExtra("isRegister", false);
+
         isFirstSet = true;
         firstEnterPsw = null;
     }
@@ -129,7 +136,9 @@ public class GestureLockSetActivity extends BaseActivity {
                     if (null != desClass) {
                         startActivity(desClass);
                     }
-                    OpenHuiFuActivity.startActivity(mActivity,TypeUtil.TYPE_OPENHF_REGISTER);
+                    if (isRegister) {
+                        OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_REGISTER);
+                    }
                     Toast.makeText(getBaseContext(), "手势密码设置成功", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {

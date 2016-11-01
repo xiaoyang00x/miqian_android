@@ -194,7 +194,7 @@ public class UserUtil {
                             dismiss();
                             dialogPay.show();
                             if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                                GestureLockSetActivity.startActivity(context, null);
+                                GestureLockSetActivity.startActivity(context, null,false);
                             }
                         }
 
@@ -221,7 +221,7 @@ public class UserUtil {
                     public void onSucceed(LoginResult result) {
                         dismiss();
                         if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                            GestureLockSetActivity.startActivity(context, null);
+                            GestureLockSetActivity.startActivity(context, null,false);
                         }
                     }
 
