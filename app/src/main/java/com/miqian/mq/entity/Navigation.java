@@ -29,11 +29,7 @@ public class Navigation {
     }
 
     public boolean isNavigationOnOff() {
-        if (navigationOnOff.equals("1")) {
-            return true;
-        } else {
-            return false;
-        }
+        return navigationOnOff.equals("1");
     }
 
     public String getNavigationOnOff() {

@@ -88,7 +88,7 @@ public class OperationRecordAcitivity extends BaseActivity {
 //                TextView tvTime = (TextView) itemRecord.findViewById(R.id.tv_time);
                 TextView tvContent = (TextView) itemRecord.findViewById(R.id.tv_content);
                 ImageView ivProcess = (ImageView) itemRecord.findViewById(R.id.iv_process);
-                View view = (View) itemRecord.findViewById(R.id.view);
+                View view = itemRecord.findViewById(R.id.view);
                 String operationDt = mOperationList.get(i).getOperationDt();
                 if (!TextUtils.isEmpty(operationDt)) {
                     String dt = Uihelper.timestampToDateStr_other(Long.parseLong(operationDt));

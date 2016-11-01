@@ -24,7 +24,10 @@
             android:textSize="@dimen/mq_font3" />
     </RelativeLayout>
 
-    <include layout="@layout/divide_line" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mq_b6_v2" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

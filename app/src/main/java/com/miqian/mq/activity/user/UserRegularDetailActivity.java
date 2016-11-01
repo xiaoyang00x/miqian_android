@@ -196,7 +196,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 TextView tvDate = (TextView) itemRecord.findViewById(R.id.tv_date);
 //                TextView tvTime = (TextView) itemRecord.findViewById(R.id.tv_time);
                 TextView tvContent = (TextView) itemRecord.findViewById(R.id.tv_content);
-                View view = (View) itemRecord.findViewById(R.id.view);
+                View view = itemRecord.findViewById(R.id.view);
                 ImageView ivProcess = (ImageView) itemRecord.findViewById(R.id.iv_process);
                 String operationDt = operationList.get(i).getOperationDt();
                 if (!TextUtils.isEmpty(operationDt)) {
@@ -320,9 +320,9 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 MobclickAgent.onEvent(mActivity, "1045");
                 if (userRegularDetail != null) {
                     subjectId = regInvest.getBdId();
-                    if (RegularBase.REGULAR_03 == Integer.parseInt(regInvest.getProdId())) {//定期项目
+                    if (RegularBase.REGULAR_PROJECT == Integer.parseInt(regInvest.getProdId())) {//定期项目
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                    } else if (RegularBase.REGULAR_05 == Integer.parseInt(regInvest.getProdId())) {
+                    } else if (RegularBase.REGULAR_PLAN == Integer.parseInt(regInvest.getProdId())) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");//定期计划
                     } else if (RegularBase.REGULAR_04 == Integer.parseInt(regInvest.getProdId())) {//定期项目转让
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + regInvest.getSysbdId() + "/3");

@@ -46,8 +46,8 @@ public class RegularPlanDetailActivity extends RegularDetailActivity {
 
     @Override
     public void onCreate(Bundle arg0) {
+        prodId = RegularBase.REGULAR_PLAN;
         super.onCreate(arg0);
-        prodId = RegularBase.REGULAR_05;
     }
 
     @Override
@@ -60,60 +60,11 @@ public class RegularPlanDetailActivity extends RegularDetailActivity {
         return "定期计划详情";
     }
 
-    // 获取数据:定期项目
-    @Override
-    public void obtainData() {
-        if (inProcess) {
-            return;
-        }
-        synchronized (mLock) {
-            inProcess = true;
-        }
-        begin();
-        swipeRefresh.setRefreshing(true);
-        HttpRequest.getRegularDetail(mContext, subjectId, prodId, new ICallback<RegularDetailResult>() {
-
-            @Override
-            public void onSucceed(RegularDetailResult result) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                swipeRefresh.setRefreshing(false);
-                end();
-                if (result == null || result.getData() == null
-                        || result.getData().getSubjectData() == null) {
-                    return;
-                }
-                showContentView();
-                mInfo = result.getData().getSubjectData();
-                updateUI();
-            }
-
-            @Override
-            public void onFail(String error) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                swipeRefresh.setRefreshing(false);
-                end();
-                Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
-                showErrorView();
-            }
-        });
-    }
-
-    protected void updateUI() {
-        updateProjectInfo();
-        updateFestivalInfo(mInfo.getFestival88(), mInfo.getFestival88_url());
-        updateMoreInfo();
-        updateProjectFeature();
-        updateProjectStatus();
-    }
-
     /**
      * 标的更多信息
      */
-    private void updateMoreInfo() {
+    @Override
+    public void updateMoreInfo() {
         ArrayList<RegularProjectMatch> mList = mInfo.getMatchItem();
 
         if (null == viewDetail) {
@@ -136,11 +87,12 @@ public class RegularPlanDetailActivity extends RegularDetailActivity {
         int count = mList.size() > 3 ? 3 : mList.size();
         for (int index = 0; index < count; index++) {
             RegularProjectMatch projectMatch = mList.get(index);
-            View mView = mInflater.inflate(R.layout.item_regular_plan_detail, null);
-            ((TextView) mView.findViewById(R.id.tv_content)).setText(projectMatch.getName());
-            if (index == count - 1) {
-                mView.findViewById(R.id.line).setVisibility(View.GONE);
-            }
+            View mView = mInflater.inflate(R.layout.item_project_detail, null);
+            ((TextView) mView.findViewById(R.id.tv_left)).setText(projectMatch.getName());
+            ((TextView) mView.findViewById(R.id.tv_right)).setText(
+                    new StringBuilder("金额:￥")
+                            .append(FormatUtil.formatAmount(projectMatch.getOccupyAmount()))
+                            .append("元"));
             content.addView(mView);
         }
     }

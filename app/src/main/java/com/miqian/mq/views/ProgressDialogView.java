@@ -39,6 +39,8 @@ public class ProgressDialogView {
 //		lp.height = Uihelper.px2dip(context, 80); // 高度
 		lp.alpha = 0.8f; // 透明度
 		dialogWindow.setAttributes(lp);
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 		dialogWindow.setContentView(view, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		return dialog;
 	}

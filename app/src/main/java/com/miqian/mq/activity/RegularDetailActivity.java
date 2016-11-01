@@ -9,9 +9,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.CurrentProjectInfo;
 import com.miqian.mq.entity.RegularBase;
+import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularProjectFeature;
 import com.miqian.mq.entity.RegularProjectInfo;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -31,11 +35,12 @@ import java.util.ArrayList;
 public abstract class RegularDetailActivity extends ProjectDetailActivity {
 
     protected RegularProjectInfo mInfo;
+    private BigDecimal userMaxBuyAmount; // 当前用户对于该标的最大可认购金额
 
     public static void startActivity(Context context, String subjectId, int prodId) {
-        if (RegularBase.REGULAR_03 == prodId) {
+        if (RegularBase.REGULAR_PROJECT == prodId) {
             RegularProjectDetailActivity.startActivity(context, subjectId);
-        } else if (RegularBase.REGULAR_05 == prodId) {
+        } else if (RegularBase.REGULAR_PLAN == prodId) {
             RegularPlanDetailActivity.startActivity(context, subjectId);
         }
     }
@@ -45,22 +50,22 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tv_festival:
-//                    WebActivity.startActivity(mActivity, mInfo.getFestival88_url());
+                    WebActivity.startActivity(mActivity, mInfo.getFestival88_url());
                     break;
                 case R.id.tv_seemore:
                     MobclickAgent.onEvent(mContext, "1071");
-                    if (RegularBase.REGULAR_03 == prodId) {
+                    if (RegularBase.REGULAR_PROJECT == prodId) {
                         // tab说明：0-项目匹配  1-安全保障 2-认购记录
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                    } else if (RegularBase.REGULAR_05 == prodId) {
+                    } else if (RegularBase.REGULAR_PLAN == prodId) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
                     }
                     break;
                 case R.id.tv_info_right:
                 case R.id.rlyt_buy_record:
-                    if (RegularBase.REGULAR_03 == prodId) {
+                    if (RegularBase.REGULAR_PROJECT == prodId) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3" + "/2");
-                    } else if (RegularBase.REGULAR_05 == prodId) {
+                    } else if (RegularBase.REGULAR_PLAN == prodId) {
                         WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5" + "/2");
                     }
                     break;
@@ -77,6 +82,57 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
             }
         }
     };
+
+    // 获取数据:定期项目
+    @Override
+    public void obtainData() {
+        if (inProcess) {
+            return;
+        }
+        synchronized (mLock) {
+            inProcess = true;
+        }
+        begin();
+        swipeRefresh.setRefreshing(true);
+        HttpRequest.getRegularDetail(mContext, subjectId, prodId, UserUtil.getUserId(RegularDetailActivity.this), new ICallback<RegularDetailResult>() {
+
+            @Override
+            public void onSucceed(RegularDetailResult result) {
+                synchronized (mLock) {
+                    inProcess = false;
+                }
+                if (null != result || null != result.getData()
+                        || null != result.getData().getSubjectData()) {
+                    showContentView();
+                    mInfo = result.getData().getSubjectData();
+                    updateUI();
+                }
+                swipeRefresh.setRefreshing(false);
+                end();
+            }
+
+            @Override
+            public void onFail(String error) {
+                synchronized (mLock) {
+                    inProcess = false;
+                }
+                swipeRefresh.setRefreshing(false);
+                end();
+                Uihelper.showToast(mContext, error);
+                showErrorView();
+            }
+        });
+    }
+
+    protected void updateUI() {
+        updateProjectInfo();
+        updateFestivalInfo(mInfo.getFestival88(), mInfo.getFestival88_url());
+        updateMoreInfo();
+        updateProjectFeature();
+        updateProjectStatus();
+    }
+
+    protected abstract void updateMoreInfo();
 
     /**
      * 标的基本信息
@@ -103,7 +159,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
             sb.append(mInfo.getFromInvestmentAmount().equals(new BigDecimal(0)) ? 1 : mInfo.getFromInvestmentAmount());
             sb.append("元起投").append(" | ");
         }
-        if (mInfo.getSubjectMaxBuy() == null || mInfo.getSubjectMaxBuy().compareTo(new BigDecimal("999999999999")) == 0) {
+        if (mInfo.getSubjectMaxBuy() == null || mInfo.getSubjectMaxBuy().compareTo(MAXBUYAMT) == 0) {
             sb.append("无限购");
         } else {
             sb.append("限购");
@@ -160,10 +216,10 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
     protected void updateProjectFeature() {
         llyt_project_feature.setVisibility(View.VISIBLE);
 
-        if (RegularBase.REGULAR_03 == prodId) {
+        if (RegularBase.REGULAR_PROJECT == prodId) {
             tv1.setText("严格风控");
             iv1.setImageResource(R.drawable.ic_ygfk);
-        } else if (RegularBase.REGULAR_05 == prodId) {
+        } else if (RegularBase.REGULAR_PLAN == prodId) {
             tv1.setText("分散投资");
             iv1.setImageResource(R.drawable.ic_fstz);
         }
@@ -229,6 +285,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 btn_state.setText("待开标");
                 break;
             case RegularBase.STATE_5:
+                refreshUserMaxBuyAmount();
                 tv_begin_countdown.setVisibility(View.GONE);
                 rlyt_dialog.setOnTouchListener(mOnTouchListener);
                 rlyt_input.setOnTouchListener(mOnTouchListener);
@@ -239,8 +296,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 et_input.setHint(new StringBuilder("输入").append(mInfo.getUnitAmount()).append("的整数倍"));
                 tv_dialog_max_amount_tip.setText("最大可认购金额");
 
-                tv_dialog_max_amount.setText(FormatUtil.formatAmount(
-                        getUpLimit(mInfo.getSubjectMaxBuy(), mInfo.getResidueAmt())));
+                tv_dialog_max_amount.setText(FormatUtil.formatAmount(userMaxBuyAmount));
                 addUnit(tv_dialog_max_amount); // 增加 元 单位符号
                 tv_dialog_max_amount.setOnClickListener(mOnclickListener);
                 // 限制输入长度
@@ -259,27 +315,109 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
     @Override
     public void jumpToNextPageIfInputValid() {
         input = et_input.getText().toString().trim();
-        if (!TextUtils.isEmpty(input)) {
-            BigDecimal downLimit = mInfo.getFromInvestmentAmount(); // 最低认购金额
-            BigDecimal remainderLimit = mInfo.getUnitAmount(); // 每份投资金额
-            BigDecimal upLimit = getUpLimit(mInfo.getSubjectMaxBuy(), mInfo.getResidueAmt()); // 最大可认购金额
 
-            BigDecimal money = new BigDecimal(input);
-            BigDecimal remainder = money.remainder(remainderLimit);
-            if (money.compareTo(downLimit) == -1) {
-                Toast.makeText(getBaseContext(), "提示：" + downLimit + "元起投", Toast.LENGTH_SHORT).show();
-            } else if (money.compareTo(upLimit) == 1) {
-                Toast.makeText(getBaseContext(), "提示：请输入小于等于" + upLimit + "元", Toast.LENGTH_SHORT).show();
-            } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
-                Toast.makeText(getBaseContext(), "提示：请输入" + remainderLimit + "的整数倍", Toast.LENGTH_SHORT).show();
-            } else {
-                String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
-                UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString, input);
-                et_input.setText("");
-            }
-        } else {
-            Toast.makeText(getBaseContext(), "提示：请输入金额", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(input)) {
+            Toast.makeText(getBaseContext(), "认购金额不能为空", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        /**
+         * 先判断该标的是否有限购
+         * 1、有限购的话则 检查 当前用户对于该标的剩余认购额度 这个字段 是否为空,为空的话则去服务器请求 取得该字段的值
+         * 2、无限购的话则 进入后续操作
+         **/
+        if (mInfo.getSubjectMaxBuy().compareTo(MAXBUYAMT) != 0) {
+            if (mInfo.getUserSubjectRemainAmt() == null) {
+                refreshUserRegularProjectInfo();
+                return;
+            }
+        }
+
+        /** 最低认购金额(左限额) **/
+        BigDecimal leftLimit = mInfo.getFromInvestmentAmount();
+        /** 最高认购金额(右限额) **/
+        BigDecimal rightLimit = userMaxBuyAmount;
+        /** 用户输入的认购金额 **/
+        BigDecimal inputAmount = new BigDecimal(input);
+        /** 每份投资金额 **/
+        BigDecimal perAmount = mInfo.getUnitAmount();
+        /** 用户认购金额 ％ 每份投资金额 **/
+        BigDecimal remainder = inputAmount.remainder(perAmount);
+
+        /** 用户认购额度小于起始金额 **/
+        if (inputAmount.compareTo(leftLimit) == -1) {
+            /** 用户认购额度 为当前可认购的最大金额时（此额度小于起始金额） 则可以让用户认购 **/
+            if (inputAmount.compareTo(rightLimit) == 0) {
+            } else {
+                Toast.makeText(getBaseContext(), "提示：" + leftLimit + "元起投", Toast.LENGTH_SHORT).show();
+            }
+        }
+        /** 用户认购额度大于最大可认购金额 **/
+        else if (inputAmount.compareTo(rightLimit) == 1) {
+            Toast.makeText(getBaseContext(), "提示：请输入小于等于" + rightLimit + "元", Toast.LENGTH_SHORT).show();
+        }
+        /** 用户认购额度是否为 每份金额 的整数倍 **/
+        else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
+            Toast.makeText(getBaseContext(), "提示：请输入" + perAmount + "的整数倍", Toast.LENGTH_SHORT).show();
+        }
+        /** 用户认购额度满足条件 进入下个页面 **/
+        else {
+            String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
+            UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString);
+            et_input.setText("");
+        }
+    }
+
+    /**
+     * 更新 当前用户 对于 该标的 最大可认购额度
+     * 取该标的 最大可认购金额、剩余金额、用户限额 该类产品限额的最小值
+     */
+    private void refreshUserMaxBuyAmount() {
+        if (null == mInfo) {
+            return;
+        }
+        userMaxBuyAmount = getUpLimit(mInfo.getSubjectMaxBuy(), mInfo.getResidueAmt());
+        userMaxBuyAmount = getUpLimit(userMaxBuyAmount, mInfo.getUserSubjectRemainAmt());
+    }
+
+    protected void refreshUserRegularProjectInfo() {
+        if (inProcess) {
+            return;
+        }
+        synchronized (mLock) {
+            inProcess = true;
+        }
+        begin();
+        swipeRefresh.setRefreshing(true);
+        HttpRequest.getRegularDetail(mContext, subjectId, prodId, UserUtil.getUserId(RegularDetailActivity.this), new ICallback<RegularDetailResult>() {
+
+            @Override
+            public void onSucceed(RegularDetailResult result) {
+                synchronized (mLock) {
+                    inProcess = false;
+                }
+                if (null != result || null != result.getData()
+                        || null != result.getData().getSubjectData()) {
+                    showContentView();
+                    mInfo = result.getData().getSubjectData();
+                    updateUI();
+                    jumpToNextPageIfInputValid();
+                }
+                swipeRefresh.setRefreshing(false);
+                end();
+            }
+
+            @Override
+            public void onFail(String error) {
+                synchronized (mLock) {
+                    inProcess = false;
+                }
+                swipeRefresh.setRefreshing(false);
+                end();
+                Uihelper.showToast(mContext, error);
+                showErrorView();
+            }
+        });
     }
 
 }

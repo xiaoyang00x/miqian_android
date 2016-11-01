@@ -42,13 +42,15 @@ public class CurrentFragment extends BasicFragment {
     @Override
     public View onCreateView(LayoutInflater mInflater, ViewGroup container, Bundle savedInstanceState) {
         if (null == rootView) {
-            rootView = mInflater.inflate(R.layout.fragment_current1, null);
+            rootView = mInflater.inflate(R.layout.fragment_current, null);
             findView();
             initTitle();
             initView();
             initListener();
         }
-        obtainFirstPageData();
+        if (null == mData) {
+            obtainFirstPageData();
+        }
         return rootView;
     }
 
@@ -114,6 +116,7 @@ public class CurrentFragment extends BasicFragment {
     // 获取第一页数据/刷新数据
     public void obtainFirstPageData() {
         pageNo = STARTPAGE;
+        swipeRefresh.setRefreshing(true);
         obtainData(new ICallback<CurrentProjectResult>() {
 
             @Override
@@ -123,10 +126,12 @@ public class CurrentFragment extends BasicFragment {
                 mAdapter.addAll(mData);
                 mAdapter.notifyDataSetChanged();
                 serverBusyView.hide();
+                swipeRefresh.setRefreshing(false);
             }
 
             @Override
             public void onFail(String error) {
+                swipeRefresh.setRefreshing(false);
                 if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
                     serverBusyView.showServerBusy();
                 } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {
@@ -143,9 +148,10 @@ public class CurrentFragment extends BasicFragment {
 
             @Override
             public void onSucceed(CurrentProjectResult result) {
-                int size = mAdapter.getItemCount() - 1;
+                int size = mAdapter.getItemCount() - 2;
                 mAdapter.addAll(result.getData().getCurrentList());
-                mAdapter.notifyItemRangeChanged(size, result.getData().getCurrentList().size());
+                // 刷新当前页面数据 － 从倒数第二条数据开始刷新（倒数第一条是loadingMoreView）
+                mAdapter.notifyItemRangeChanged(size, result.getData().getCurrentList().size() + 1);
             }
 
             @Override
