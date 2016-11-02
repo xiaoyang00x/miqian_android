@@ -53,7 +53,7 @@ public class Urls {
 
     //测试
     public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
-//    public static final String SERVER_TEST = "http://172.20.8.69:8080/miaoqian-app/"; // 冰红茶本地地址
+//    public static final String SERVER_TEST = "172.20.50.64:8080/miaoqian-app/"; // 冰红茶本地地址
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.104:8080/miaoqian-app/";
 //    public static final String SERVER_TEST = "http://172.20.50.115:8080/miaoqian-app/";
@@ -145,7 +145,7 @@ public class Urls {
     //我的定期
     public final static String user_regular = base_server + "deposit/mine/getMineProductList";//userRegService/v2/getMyRegBuyList
     //我的定期详情
-    public final static String user_regular_detail = base_server + "userRegService/v2/getRegDetail";
+    public final static String user_regular_detail = base_server + "deposit/mine/getMineProductDetail";  // userRegService/v2/getRegDetail"
     //项目匹配
     public final static String project_match = base_server + "webView/getProjMatchList/";
     //我的定期转让情况
@@ -208,9 +208,11 @@ public class Urls {
     public final static String web_transfer_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //发起转让页面：可转金额说明
     public final static String web_transferamt_expaint = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
+
+    //秒钱包详情
+    public final static String web_current_detail = base_server + "deposit/webView/productInfo/";
     //定期赚详情
     public final static String web_regular_earn_detail = base_server + "deposit/webView/projectInfo/"; ///deposit/webView/projectInfo/{productCode}/{projectCode}/0
-
     //定期计划详情
     public final static String web_regular_plan_detail = base_server + "deposit/webView/productInfo/";
 

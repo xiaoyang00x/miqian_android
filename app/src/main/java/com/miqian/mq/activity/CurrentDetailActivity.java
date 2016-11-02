@@ -20,6 +20,7 @@ import com.miqian.mq.entity.CurrentProjectInfo;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -49,8 +50,8 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
 
     @Override
     public void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
         prodId = RegularBase.CURRENT_PROJECT;
+        super.onCreate(arg0);
     }
 
     @Override
@@ -173,7 +174,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
         tv_info_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                WebActivity.startActivity(mActivity, Urls.web_current_detail + "/" + subjectId + "/2");
             }
         });
         /** 标的已认购人数 **/
@@ -330,7 +331,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
         /** 用户认购额度满足条件 进入下个页面 **/
         else {
             String interestRateString = total_profit_rate + "%";
-            UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(RegularBase.REGULAR_PROJECT), subjectId, interestRateString);
+            UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString);
             et_input.setText("");
         }
     }
