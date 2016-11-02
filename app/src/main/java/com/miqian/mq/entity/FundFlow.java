@@ -18,6 +18,7 @@ public class FundFlow {
     public static final String BILL_TYPE_SH = "04";
     public static final String BILL_TYPE_ZR = "05";
     public static final String BILL_TYPE_HK = "06";
+    public static final String BILL_TYPE_OTHER = "99";
 
     private long operateTIme;                   //操作时间
     private String operateName;                 //操作内容

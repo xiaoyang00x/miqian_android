@@ -19,6 +19,7 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.current.ActivityRedeem;
 import com.miqian.mq.activity.current.SubscriptionRecordsActivity;
+import com.miqian.mq.entity.FundFlow;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularProjectData;
 import com.miqian.mq.entity.RegularProjectHeader;
@@ -143,7 +144,7 @@ public class MyCurrentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             switch (v.getId()) {
                 case R.id.frame_current_record:
                     MobclickAgent.onEvent(v.getContext(), "1035");
-                    v.getContext().startActivity(new Intent(v.getContext(), ActivityCurrentRecord.class));
+                    ActivityCurrentRecord.startActivity(v.getContext(), FundFlow.BILL_TYPE_ALL, "3");
                     break;
                 default:
                     break;

@@ -20,19 +20,24 @@ import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
+import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.OpenHuiFuActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
+import com.miqian.mq.entity.FundFlow;
 import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
@@ -369,7 +374,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onSucceed(LoginResult result) {
                 end();
                 if (Pref.getBoolean(Pref.GESTURESTATE, getActivity(), true)) {
-                    GestureLockSetActivity.startActivity(getActivity(), null,false);
+                    GestureLockSetActivity.startActivity(getActivity(), null, false);
                 } else {
                     onStart();
                 }
@@ -465,8 +470,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             //资金记录
             case R.id.frame_record:
                 MobclickAgent.onEvent(getActivity(), "1021");
-                startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
-
+                ActivityCurrentRecord.startActivity(mContext, FundFlow.BILL_TYPE_ALL, "0");
                 break;
             //优惠券
             case R.id.frame_ticket:
