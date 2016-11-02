@@ -47,7 +47,7 @@
                 android:layout_alignLeft="@id/lable_principal"
                 android:layout_below="@id/lable_principal"
                 android:textColor="@color/mq_r1_v2"
-                android:textSize="@dimen/mq_font13_v2"
+                android:textSize="@dimen/mq_font9_v2"
                 android:textStyle="bold" />
 
             <TextView
@@ -84,7 +84,7 @@
                 android:layout_alignLeft="@id/lable_collect_earnings"
                 android:layout_below="@id/lable_collect_earnings"
                 android:textColor="@color/mq_r1_v2"
-                android:textSize="@dimen/mq_font13_v2"
+                android:textSize="@dimen/mq_font9_v2"
                 android:textStyle="bold" />
 
             <TextView
