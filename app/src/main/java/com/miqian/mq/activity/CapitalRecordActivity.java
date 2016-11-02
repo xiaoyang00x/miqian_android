@@ -123,7 +123,7 @@ public class CapitalRecordActivity extends BaseActivity {
 
     private void refreshView() {
         adapter = new CapitalRecordAdapter(list);
-        adapter.setMaxItem(page.getCount());
+        adapter.setMaxItem(page.getTotalRows());
         recyclerView.setAdapter(adapter);
     }
 
@@ -210,7 +210,7 @@ public class CapitalRecordActivity extends BaseActivity {
 
     private void loadMore() {
         if (!isLoading) {
-            if (list.size() >= page.getCount()) {
+            if (list.size() >= page.getTotalRows()) {
                 return;
             }
             isLoading = true;

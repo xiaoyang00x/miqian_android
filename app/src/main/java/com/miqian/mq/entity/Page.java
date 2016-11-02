@@ -5,45 +5,15 @@ package com.miqian.mq.entity;
  */
 public class Page {
 
-    private int total;//共几页
-    private int count;//总记录数
-    private String sortField;//排序字段
-    private int start;//开始查询页码
-    private String sortOrder;//排序属性
+    private int totalRows;//总条数
+//    private int totalPages;//总页数
+//    private int pageIndex;//当前页
 
-    public int getTotal() {
-        return total;
+    public int getTotalRows() {
+        return totalRows;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public String getSortField() {
-        return sortField;
-    }
-
-    public void setSortField(String sortField) {
-        this.sortField = sortField;
-    }
-
-    public String getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(String sortOrder) {
-        this.sortOrder = sortOrder;
+    public void setTotalRows(int totalRows) {
+        this.totalRows = totalRows;
     }
 }

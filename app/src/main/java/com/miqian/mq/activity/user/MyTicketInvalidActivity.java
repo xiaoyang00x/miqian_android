@@ -128,7 +128,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
     private void loadMore() {
         if (!isLoading) {
-            if (promList.size() >= page.getCount()) {
+            if (promList.size() >= page.getTotalRows()) {
                 return;
             }
             isLoading = true;
@@ -158,7 +158,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
     private void refreshView() {
         adapterMyTicket = new AdapterMyTicket(mActivity, promList, false);
-        adapterMyTicket.setMaxItem(page.getCount());
+        adapterMyTicket.setMaxItem(page.getTotalRows());
         recyclerView.setAdapter(adapterMyTicket);
     }
 

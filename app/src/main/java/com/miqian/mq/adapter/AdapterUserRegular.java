@@ -174,7 +174,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             }
         } else if (holder instanceof HeaderViewHolder) {
 
-            ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getCount() + "");
+            ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getTotalRows() + "");
             if (mType == 1) {
                 ((HeaderViewHolder) holder).textCapitalName.setText("投资本金(元)");
                 ((HeaderViewHolder) holder).textEarningName.setText("已获收益(元)");
