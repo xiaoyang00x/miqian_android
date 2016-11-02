@@ -52,6 +52,8 @@ public class RegularProjectInfo extends RegularBase {
 
     private String subjectName; // 标的名称
 
+    private String projectCode; // 项目编号
+
     private long startTimestamp; // 开始时间戳
 
     private String residueTimestamp; // 剩余时间
@@ -362,6 +364,14 @@ public class RegularProjectInfo extends RegularBase {
 
     public void setTransferFlag(String transferFlag) {
         this.transferFlag = transferFlag;
+    }
+
+    public String getProjectCode() {
+        return projectCode;
+    }
+
+    public void setProjectCode(String projectCode) {
+        this.projectCode = projectCode;
     }
 
     public String getSubjectType() {
