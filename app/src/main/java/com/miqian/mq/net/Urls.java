@@ -208,9 +208,11 @@ public class Urls {
     public final static String web_transfer_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //发起转让页面：可转金额说明
     public final static String web_transferamt_expaint = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
+
+    //秒钱包详情
+    public final static String web_current_detail = base_server + "deposit/webView/productInfo/";
     //定期赚详情
     public final static String web_regular_earn_detail = base_server + "deposit/webView/projectInfo/"; ///deposit/webView/projectInfo/{productCode}/{projectCode}/0
-
     //定期计划详情
     public final static String web_regular_plan_detail = base_server + "deposit/webView/productInfo/";
 

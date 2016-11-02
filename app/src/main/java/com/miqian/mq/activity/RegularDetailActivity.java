@@ -49,24 +49,21 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.tv_festival:
-                    WebActivity.startActivity(mActivity, mInfo.getFestival88_url());
-                    break;
                 case R.id.tv_seemore:
                     MobclickAgent.onEvent(mContext, "1071");
                     if (RegularBase.REGULAR_PROJECT == prodId) {
                         // tab说明：0-项目匹配  1-安全保障 2-认购记录
-                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + mInfo.getProjectCode() + "/0");
                     } else if (RegularBase.REGULAR_PLAN == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/0");
                     }
                     break;
                 case R.id.tv_info_right:
                 case R.id.rlyt_buy_record:
                     if (RegularBase.REGULAR_PROJECT == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3" + "/2");
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + mInfo.getProjectCode() + "/0" + "/2");
                     } else if (RegularBase.REGULAR_PLAN == prodId) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5" + "/2");
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/0" + "/2");
                     }
                     break;
                 case R.id.tv_dialog_max_amount:
