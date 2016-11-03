@@ -427,64 +427,6 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    //删除消息
-    public static void deleteMessage(Context context, final ICallback<Meta> callback, int startId, String endId, int isAll) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("startId", startId + ""));
-        mList.add(new Param("endId", endId + ""));
-        mList.add(new Param("isAll", isAll + ""));
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        new MyAsyncTask(context, Urls.deleteMessage, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    //修改交易密码
-    public static void changePayPassword(Context context, final ICallback<Meta> callback,
-                                         String tradeType, String idCard, String mobilePhone, String captcha, String payPassword,
-                                         String confirmPayPassword) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("tradeType", tradeType));
-        mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
-        mList.add(new Param("captcha", captcha));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
-        mList.add(new Param("confirmPayPassword", RSAUtils.encryptURLEncode(confirmPayPassword)));
-
-        new MyAsyncTask(context, Urls.changePayPassword, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
     //修改登录密码
     public static void changePassword(Context context, final ICallback<Meta> callback,
                                       String oldPassword, String newPassword, String confirmPassword, String captcha) {

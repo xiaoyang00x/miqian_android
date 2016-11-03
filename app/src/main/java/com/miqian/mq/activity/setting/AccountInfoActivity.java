@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
+import com.miqian.mq.activity.PhoneCaptchaActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -98,8 +98,7 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
             case R.id.frame_telephone://修改绑定手机
 
                 MobclickAgent.onEvent(mActivity, "1025");
-                Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
-                intent_phone.putExtra("isModifyPhone", true);
+                Intent intent_phone = new Intent(mActivity, PhoneCaptchaActivity.class);
                 startActivity(intent_phone);
 
                 break;

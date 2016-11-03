@@ -174,7 +174,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.TradePsCaptchaActivity"
+            android:name=".activity.PhoneCaptchaActivity"
             android:launchMode="singleTask" />
         <activity
             android:name=".activity.user.RolloutActivity"
