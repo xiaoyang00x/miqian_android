@@ -27,8 +27,8 @@ public class CalculateUtil {
     public static int getShowInterest(String projectState, String subjectType
             , String realInterest, String presentInterest, String transedAmt) {
         int showType = 0;
-        BigDecimal bdRealInterest = new BigDecimal(realInterest);
-        BigDecimal bdPresentInterest = new BigDecimal(presentInterest);
+        BigDecimal bdRealInterest = new BigDecimal("0"+realInterest);
+        BigDecimal bdPresentInterest = new BigDecimal("0"+presentInterest);
         if ("2".equals(projectState) || "3".equals(projectState)) {
             showType = isTransfer(subjectType, bdRealInterest, bdPresentInterest, transedAmt);
         } else {
