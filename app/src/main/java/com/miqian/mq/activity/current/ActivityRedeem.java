@@ -85,13 +85,8 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
         }
         DecimalFormat df = new java.text.DecimalFormat("0.00");
         if (userCurrentData != null && userCurrentData.getUserRedeem() != null && userCurrentData.getUserCurrent() != null) {
-            BigDecimal balance = userCurrentData.getUserCurrent().getPrnAmt();//活期待收金额
-            BigDecimal curDayResidue = userCurrentData.getUserRedeem().getCurDayResidue();//当日剩余可赎回额度
-            if (curDayResidue.compareTo(balance) > 0) {
-                resideMoney = balance;
-            } else {
-                resideMoney = curDayResidue;
-            }
+            resideMoney = new BigDecimal(0);
+            resideMoney = userCurrentData.getUserRedeem().getCurDayResidue();//当日剩余可赎回额度
             String format = df.format(resideMoney);
             if (format.equals(".00")) {
                 editMoney.setHint("可赎回0.00元");
@@ -255,12 +250,14 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
         }, money, phone, captcha);
 
     }
+
     private void initDialog() {
         if (mDialogTip == null) {
             mDialogTip = new DialogTip(ActivityRedeem.this) {
             };
         }
     }
+
     private void sendMessage() {
         begin();
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
@@ -287,10 +284,10 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_send) {
-            if (!TextUtils.isEmpty(phone)){
+            if (!TextUtils.isEmpty(phone)) {
                 sendMessage();
-            }else {
-                Uihelper.showToast(mActivity,"手机号码为空");
+            } else {
+                Uihelper.showToast(mActivity, "手机号码为空");
             }
         }
 
