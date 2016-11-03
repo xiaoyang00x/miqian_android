@@ -173,6 +173,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
         money = editMoney.getText().toString();
         if (!TextUtils.isEmpty(money)) {
             BigDecimal moneyCurrent = new BigDecimal(money);
+            BigDecimal remainder = moneyCurrent.remainder(new BigDecimal("100"));
 
             if (moneyCurrent.compareTo(resideMoney) > 0) {
                 initDialog();
@@ -183,6 +184,12 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
             } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
                 initDialog();
                 mDialogTip.setInfo("金额不能小于0.01");
+                mDialogTip.setSureInfo("我知道了");
+                mDialogTip.show();
+            } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
+                //赎回要一百的整数倍
+                initDialog();
+                mDialogTip.setInfo("请输入一百的整数倍");
                 mDialogTip.setSureInfo("我知道了");
                 mDialogTip.show();
             } else {
@@ -248,20 +255,12 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
         }, money, phone, captcha);
 
     }
-
-    private void redoom(String password) {
-
-
-    }
-
     private void initDialog() {
         if (mDialogTip == null) {
             mDialogTip = new DialogTip(ActivityRedeem.this) {
             };
         }
     }
-
-
     private void sendMessage() {
         begin();
         HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
@@ -288,7 +287,11 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_send) {
-            sendMessage();
+            if (!TextUtils.isEmpty(phone)){
+                sendMessage();
+            }else {
+                Uihelper.showToast(mActivity,"手机号码为空");
+            }
         }
 
     }

@@ -172,7 +172,7 @@ public class Urls {
     //我的促销接口
     public final static String getCustPromotion = base_server + "deposit/mine/getMinePromList";//userService/getCustPromotion
     //赎回
-    public final static String redeem = base_server + "assetService/redeem";
+    public final static String redeem = base_server + "tradeService/redeem";// assetService/redeem
     //资金记录/活期交易记录
     public final static String getFundFlow = base_server + "deposit/mine/getFundFlow";
     //我的秒钱宝认购记录
@@ -184,7 +184,7 @@ public class Urls {
     //版本更新
     public final static String forceUpdate = base_server + "commonService/v2/forceUpdate";
     //查询标的相关记录
-    public final static String findInvestInfo = base_server + "userRegService/v2/findInvestInfo";
+    public final static String findInvestInfo = base_server + "deposit/mine/findInvestInfo";// userRegService/v2/findInvestInfo
     //查询标的相关记录
     public final static String getRegTransDetail = base_server + "userRegService/v2/getRegTransDetail";
     //我的转让详情

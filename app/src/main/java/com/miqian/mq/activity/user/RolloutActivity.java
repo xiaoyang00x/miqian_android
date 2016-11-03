@@ -72,7 +72,7 @@ public class RolloutActivity extends BaseActivity {
             return;
         }
         if (!TextUtils.isEmpty(userInfo.getBankCardNo())) {
-            cardNum = userInfo.getBankCardNo();
+            cardNum = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
             bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
         }
         if (!TextUtils.isEmpty(userInfo.getBankName())) {
