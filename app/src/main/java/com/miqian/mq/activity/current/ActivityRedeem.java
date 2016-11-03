@@ -165,47 +165,16 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
 
     public void btn_click(View v) {
         String captcha = mEt_Captcha.getText().toString();
-        money = editMoney.getText().toString();
-        if (!TextUtils.isEmpty(money)) {
-            BigDecimal moneyCurrent = new BigDecimal(money);
-            BigDecimal remainder = moneyCurrent.remainder(new BigDecimal("100"));
-
-            if (moneyCurrent.compareTo(resideMoney) > 0) {
-                initDialog();
-                mDialogTip.setInfo("您当日赎回金额已超限\n      请修改赎回金额");
-                mDialogTip.setSureInfo("我知道了");
-                mDialogTip.show();
-
-            } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
-                initDialog();
-                mDialogTip.setInfo("金额不能小于0.01");
-                mDialogTip.setSureInfo("我知道了");
-                mDialogTip.show();
-            } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
-                //赎回要一百的整数倍
-                initDialog();
-                mDialogTip.setInfo("请输入一百的整数倍");
-                mDialogTip.setSureInfo("我知道了");
-                mDialogTip.show();
-            } else {
-                if (!TextUtils.isEmpty(captcha)) {
-                    if (captcha.length() < 6) {
-                        Uihelper.showToast(mActivity, R.string.capthcha_num);
-                    } else {
-                        summit(captcha, money);
-
-                    }
-
+        if (isRightMoney()) {
+            if (!TextUtils.isEmpty(captcha)) {
+                if (captcha.length() < 6) {
+                    Uihelper.showToast(mActivity, R.string.capthcha_num);
                 } else {
-                    Uihelper.showToast(this, R.string.tip_captcha);
+                    summit(captcha, money);
                 }
-
+            } else {
+                Uihelper.showToast(this, R.string.tip_captcha);
             }
-        } else {
-            initDialog();
-            mDialogTip.setInfo("赎回金额不可为空\n  请修改赎回金额");
-            mDialogTip.setSureInfo("我知道了");
-            mDialogTip.show();
         }
     }
 
@@ -251,6 +220,41 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
 
     }
 
+    private boolean isRightMoney() {
+        money = editMoney.getText().toString();
+        if (!TextUtils.isEmpty(money)) {
+            BigDecimal moneyCurrent = new BigDecimal(money);
+            BigDecimal remainder = moneyCurrent.remainder(new BigDecimal("100"));
+
+            if (moneyCurrent.compareTo(resideMoney) > 0) {
+                initDialog();
+                mDialogTip.setInfo("您当日赎回金额已超限\n      请修改赎回金额");
+                mDialogTip.setSureInfo("我知道了");
+                mDialogTip.show();
+
+            } else if (moneyCurrent.compareTo(BigDecimal.ZERO) == 0) {
+                initDialog();
+                mDialogTip.setInfo("金额不能小于0.01");
+                mDialogTip.setSureInfo("我知道了");
+                mDialogTip.show();
+            } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
+                //赎回要一百的整数倍
+                initDialog();
+                mDialogTip.setInfo("请输入一百的整数倍");
+                mDialogTip.setSureInfo("我知道了");
+                mDialogTip.show();
+            } else {
+                return true;
+            }
+        } else {
+            initDialog();
+            mDialogTip.setInfo("赎回金额不可为空\n  请修改赎回金额");
+            mDialogTip.setSureInfo("我知道了");
+            mDialogTip.show();
+        }
+        return false;
+    }
+
     private void initDialog() {
         if (mDialogTip == null) {
             mDialogTip = new DialogTip(ActivityRedeem.this) {
@@ -277,7 +281,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, phone, TypeUtil.CAPTCHA_REDEEM);
+        }, phone, TypeUtil.CAPTCHA_REDEEM, money);
 
     }
 
@@ -285,12 +289,13 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         if (v.getId() == R.id.btn_send) {
             if (!TextUtils.isEmpty(phone)) {
-                sendMessage();
+                if (isRightMoney()) {
+                    sendMessage();
+                }
             } else {
                 Uihelper.showToast(mActivity, "手机号码为空");
             }
         }
-
     }
 
     class MyRunnable implements Runnable {
