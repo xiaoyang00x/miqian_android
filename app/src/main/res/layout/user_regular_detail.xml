@@ -238,6 +238,8 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/layout_payment"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/listitem_height"
                     android:background="@color/white">
@@ -263,6 +265,8 @@
                         android:text="" />
 
                     <View
+                        android:id="@+id/divider_payment"
+                        android:visibility="gone"
                         style="@style/item_divider"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="0dp"

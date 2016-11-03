@@ -175,7 +175,7 @@ public class SendCaptchaActivity extends BaseActivity {
                 end();
                 Uihelper.showToast(mActivity, error);
             }
-        }, phone, summitType);
+        }, phone, summitType,"");
 
     }
 

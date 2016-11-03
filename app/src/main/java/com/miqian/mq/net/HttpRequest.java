@@ -50,6 +50,7 @@ import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.UserUtil;
 
 import java.util.ArrayList;
@@ -290,12 +291,14 @@ public class HttpRequest {
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
+    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String money) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-
+        if (operationType == TypeUtil.CAPTCHA_REDEEM) {
+            mList.add(new Param("extra", money));
+        }
         new MyAsyncTask(context, Urls.getCaptcha, mList, new ICallback<String>() {
 
             @Override
@@ -1342,7 +1345,7 @@ public class HttpRequest {
     /**
      * 汇付提现接口
      */
-    public static void rolloutHf(final Activity activity,String amt) {
+    public static void rolloutHf(final Activity activity, String amt) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(activity))));

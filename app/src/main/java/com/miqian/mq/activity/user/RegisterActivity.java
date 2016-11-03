@@ -130,7 +130,7 @@ public class RegisterActivity extends BaseActivity {
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, phone, TypeUtil.CAPTCHA_REGISTER);
+        }, phone, TypeUtil.CAPTCHA_REGISTER,"");
 
     }
 

@@ -132,7 +132,7 @@ public class TradePsCaptchaActivity extends BaseActivity {
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, telephone, captchaType);
+        }, telephone, captchaType,"");
 
     }
 
