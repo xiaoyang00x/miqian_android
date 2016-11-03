@@ -14,6 +14,7 @@ import com.miqian.mq.activity.RegularDetailActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomeSelectionProject;
+import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularProjectInfo;
 import com.miqian.mq.utils.FormatUtil;
 
@@ -111,50 +112,56 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
         tv_remain_amount.setText("可认购金额:￥"+ FormatUtil.formatAmount(data.getResidueAmt())+"/" + FormatUtil.formatAmount(data.getSubjectTotalPrice()));
 
         //待开标
-        if ("00".equals(data.getSubjectStatus())) {
-            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
-            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
-            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
-            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
-            btn_buy.setBackgroundResource(R.drawable.btn_no_begin);
-            btn_buy.setText("待开标");
-            if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                iv_tag.setImageResource(R.drawable.double_rate_nobegin);
-            } else {
-                iv_tag.setImageResource(0);
-            }
+        switch (data.getSubjectStatus()) {
+            case RegularBase.STATE_1:
+            case RegularBase.STATE_2:
+            case RegularBase.STATE_3:
+            case RegularBase.STATE_4:
+                profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+                tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+                tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+                btn_buy.setBackgroundResource(R.drawable.btn_no_begin);
+                btn_buy.setText("待开标");
+                if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
+                    iv_tag.setImageResource(R.drawable.double_rate_nobegin);
+                } else {
+                    iv_tag.setImageResource(0);
+                }
 
-            tv_begin_time.setText(FormatUtil.formatDate(data.getStartTimestamp(), "MM月dd日 HH:mm发售"));
-            tv_begin_time.setVisibility(View.VISIBLE);
-        } else if ("01".equals(data.getSubjectStatus())) {
-            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-            btn_buy.setBackgroundResource(R.drawable.btn_default_selector);
-            btn_buy.setText(R.string.buy_now);
-            if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                iv_tag.setImageResource(R.drawable.double_rate_normal);
-            } else {
-                iv_tag.setImageResource(0);
-            }
+                tv_begin_time.setText(FormatUtil.formatDate(data.getStartTimestamp(), "MM月dd日 HH:mm发售"));
+                tv_begin_time.setVisibility(View.VISIBLE);
+                break;
+            case RegularBase.STATE_5:
+                profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                btn_buy.setBackgroundResource(R.drawable.btn_default_selector);
+                btn_buy.setText(R.string.buy_now);
+                if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
+                    iv_tag.setImageResource(R.drawable.double_rate_normal);
+                } else {
+                    iv_tag.setImageResource(0);
+                }
 
-            tv_begin_time.setVisibility(View.GONE);
+                tv_begin_time.setVisibility(View.GONE);
+                break;
+            default:
+                profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                btn_buy.setBackgroundResource(R.drawable.btn_has_done);
+                btn_buy.setText("已满额");
+                if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
+                    iv_tag.setImageResource(R.drawable.double_rate_hasdone);
+                } else {
+                    iv_tag.setImageResource(0);
+                }
 
-        } else {
-            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-            btn_buy.setBackgroundResource(R.drawable.btn_has_done);
-            btn_buy.setText("已满额");
-            if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                iv_tag.setImageResource(R.drawable.double_rate_hasdone);
-            } else {
-                iv_tag.setImageResource(0);
-            }
-
-            tv_begin_time.setVisibility(View.GONE);
+                tv_begin_time.setVisibility(View.GONE);
+                break;
         }
         View.OnClickListener onClickListener = new View.OnClickListener() {
 
