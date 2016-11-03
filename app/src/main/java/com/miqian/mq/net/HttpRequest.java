@@ -62,34 +62,6 @@ import java.util.List;
 public class HttpRequest {
 
     /**
-     * 身份认证
-     */
-    public static void setIDCardCheck(Context context, final ICallback<Meta> callback, String idNo, final String realName) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("idNo", RSAUtils.encryptURLEncode(idNo)));
-        mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
-
-        new MyAsyncTask(context, Urls.idcard_check, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
      * APP的配置：广告，tab图标
      */
     public static void getConfig(Context context, final ICallback<ConfigResult> callback) {
@@ -161,58 +133,6 @@ public class HttpRequest {
                 } else {
                     callback.onFail(producedOrderResult.getMessage());
                 }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 充值
-     */
-    public static void rollIn(Context context, final ICallback<String> callback, String amt, String bankNo, String realName, String idCard) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("amt", amt));
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
-        mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
-        mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
-
-        new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if ("999991".equals(meta.getCode()) || "000000".equals(meta.getCode()) || "996633".equals(meta.getCode())) {
-                    callback.onSucceed(result);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 充值结果查询
-     */
-    public static void rollInResult(Context context, final ICallback<OrderLianResult> callback, String orderNo) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("orderNo", orderNo));
-
-        new MyAsyncTask(context, Urls.rollin_result, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                OrderLianResult orderLianResult = JsonUtil.parseObject(result, OrderLianResult.class);
-                callback.onSucceed(orderLianResult);
             }
 
             @Override

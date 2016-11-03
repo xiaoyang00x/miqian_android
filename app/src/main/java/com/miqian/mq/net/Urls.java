@@ -75,14 +75,6 @@ public class Urls {
 //    public static final String RSA_PUBLICE = RSA_PUBLICE_ONLINE;
 //    public static final String RSA_PRIVATE = RSA_PRIVATE_ONLINE;
 
-    //身份认证
-    public final static String idcard_check = base_server + "commonService/idCardAuth";
-    //充值转入接口
-    public final static String roll_in = base_server + "assetService/v2/recharge";
-    //充值转入结果查询接口
-    public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
-//    //充值失败错误原因上传接口
-//    public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
     //活期首页
     public final static String current_home = base_server + "deposit/current/getCurrentList";
     //活期详情
