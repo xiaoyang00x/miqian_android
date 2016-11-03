@@ -275,8 +275,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             }
             UserInfo userInfo = JsonUtil.parseObject(bankString, UserInfo.class);
             if (userInfo != null && userInfo.isBindCardStatus()) {
-                String bankNumber = "0000" + RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
-                String bankNo = bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
+                String bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
+                String bankNo = "";
+                if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
+                    bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
+                }
                 textPayType.setText(userInfo.getBankName() + "(" + bankNo + ")");
                 textPayTip.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
                 imageType.setImageResource(R.drawable.icon_bank);

@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.miqian.mq.R;
@@ -20,7 +18,6 @@ import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -85,7 +82,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     private void loadMore() {
         if (!isLoading) {
-            if (regInvestList.size() >= userRegular.getPage().getCount()) {
+            if (regInvestList.size() >= userRegular.getPage().getTotalRows()) {
 //                mAdapter.notifyItemChanged(regInvestList.size() + 1);
                 return;
             }
@@ -150,7 +147,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private void refreshView() {
         mAdapter = new AdapterUserRegular(this, regInvestList, userRegular.getReg(), userRegular.getPage(), mType);
         mAdapter.setOnItemClickListener(this);
-        mAdapter.setMaxItem(userRegular.getPage().getCount());
+        mAdapter.setMaxItem(userRegular.getPage().getTotalRows());
         mRecyclerView.setAdapter(mAdapter);
     }
 

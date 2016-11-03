@@ -174,7 +174,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
         tv_info_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebActivity.startActivity(mActivity, Urls.web_current_detail + subjectId + "/2");
+                WebActivity.startActivity(mActivity, Urls.web_current_detail + "/" + subjectId + "/2");
             }
         });
         /** 标的已认购人数 **/

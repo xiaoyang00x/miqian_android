@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.RegularTransferAdapter;
@@ -113,7 +112,7 @@ public class RegularTransferView {
                 if (result == null || (mData = result.getData()) == null) { // 缓存第一页数据
                     return;
                 }
-                mAdapter.setTotalCount(result.getData().getPage().getCount());
+                mAdapter.setTotalCount(result.getData().getPage().getTotalRows());
                 mAdapter.clear();
                 mAdapter.addAll(result.getData().getSubjectData());
                 mAdapter.notifyDataSetChanged();
