@@ -66,7 +66,7 @@
                 android:id="@+id/tv_profit_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6.5"
+                android:text="6"
                 android:textColor="@color/mq_r1_v2"
                 android:textSize="@dimen/mq_font17_v2"
                 android:textStyle="bold" />

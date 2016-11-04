@@ -1615,7 +1615,7 @@ public class HttpRequest {
     /**
      * 汇付提现接口
      */
-    public static void rolloutHf(final Activity activity,String amt) {
+    public static void rolloutHf(final Activity activity, String amt) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(UserUtil.getHfCustId(activity))));

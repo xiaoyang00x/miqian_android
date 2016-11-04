@@ -90,7 +90,7 @@
                         android:layout_below="@+id/tv_description"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="35dp"
+                        android:layout_marginLeft="45dp"
                         android:layout_marginRight="35dp"
                         android:layout_marginTop="5dp"
                         android:background="@color/white" />
@@ -99,9 +99,9 @@
                         android:id="@+id/temp1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/tv_profit_rate"
                         android:layout_below="@+id/tv_description"
                         android:layout_marginTop="30dp"
+                        android:layout_toLeftOf="@+id/line_vertial"
                         android:text="年化收益"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mq_font3_v2" />
@@ -110,9 +110,9 @@
                         android:id="@+id/tv_profit_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/temp1"
                         android:layout_below="@+id/temp1"
-                        android:layout_toLeftOf="@+id/tv_profit_rate_unit"
-                        android:text="8.5"
+                        android:text="6"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mq_font15_v2"
                         android:textStyle="bold" />
@@ -122,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tv_profit_rate"
-                        android:layout_toLeftOf="@+id/line_vertial"
+                        android:layout_toRightOf="@+id/tv_profit_rate"
                         android:text="%"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mq_font5_v2" />

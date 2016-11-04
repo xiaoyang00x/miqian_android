@@ -162,7 +162,7 @@ public class Urls {
     public final static String REGULA_PROJECT_TRANSFER = base_server + "transferService/regularList";
 
     //红包定期列表
-    public final static String getFitSubject = base_server + "subjectService/getFitSubject";
+    public final static String getFitSubject = base_server + "deposit/bidService/getProductListByPromId"; // subjectService/getFitSubject
 
     //home
     public final static String homeInfo = base_server + "deposit/common/getHome";

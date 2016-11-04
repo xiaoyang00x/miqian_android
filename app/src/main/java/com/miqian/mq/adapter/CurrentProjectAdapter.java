@@ -88,7 +88,13 @@ public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        return size() == 0 ? 0 : size() + 1;
+        int size = size();
+        /**
+         *  1、如果返回 0  条数据 则返回0
+         *  2、如果返回 1  条数据 则返回1
+         *  3、如果返回 2+ 条数据 则返回数据条目＋2（增加 "活期项目文字条目" 和 "加载更多条目"）
+         **/
+        return size == 0 ? 0 : size == 1 ? 1 : size + 2;
     }
 
     @Override
@@ -139,17 +145,17 @@ public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 case RegularBase.STATE_4:
                     tv_time.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
                     btn_state.setText("待开标");
-                    btn_state.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                    btn_state.setBackgroundResource(R.drawable.btn_default_selector);
                     break;
                 case RegularBase.STATE_5:
                     tv_time.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     btn_state.setText("立即认购");
-                    btn_state.setBackgroundColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                    btn_state.setBackgroundResource(R.drawable.btn_no_begin);
                     break;
                 default:
                     tv_time.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
                     btn_state.setText("已满额");
-                    btn_state.setBackgroundColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                    btn_state.setBackgroundResource(R.drawable.btn_has_done);
                     break;
             }
             tv_name.setText(info.getSubjectName());
@@ -200,7 +206,8 @@ public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             divider = itemView.findViewById(R.id.divider);
         }
 
-        public void bindData(final int position) {
+        public void bindData(int position) {
+            position = position - 1 < 0 ? 0 : position - 1;
             final CurrentProjectInfo info = mList.get(position);
             tv_name.setText(info.getSubjectName());
             tv_amount.setText(FormatUtil.formatAmount(info.getSubjectTotalPrice()));
