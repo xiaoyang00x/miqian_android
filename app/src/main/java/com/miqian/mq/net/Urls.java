@@ -156,7 +156,7 @@ public class Urls {
     //我的秒钱宝认购记录
     public final static String getUserCurrentProduct = base_server + "deposit/current/getUserCurrentProduct";
     //修改绑定手机
-    public final static String changePhone = base_server + "userService/changePhone";
+    public final static String changePhone = base_server + "account/changeMobilePhone";// userService/changePhone
     //提现预处理
     public final static String withdrawPreprocess = base_server + "tradeService/withdrawPreprocess";  //tradeService/queryWithdrawPreprocess
     //版本更新
