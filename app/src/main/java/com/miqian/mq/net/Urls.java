@@ -52,7 +52,7 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testdepositapi.shicaidai.com/";
+    public static final String SERVER_TEST = "https://testdepositapi.shicaidai.com/";//需要配置dns 172.20.1.14
 //    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
 //    public static final String SERVER_TEST = "172.20.50.64:8080/miaoqian-app/"; // 冰红茶本地地址
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
@@ -75,14 +75,6 @@ public class Urls {
 //    public static final String RSA_PUBLICE = RSA_PUBLICE_ONLINE;
 //    public static final String RSA_PRIVATE = RSA_PRIVATE_ONLINE;
 
-    //身份认证
-    public final static String idcard_check = base_server + "commonService/idCardAuth";
-    //充值转入接口
-    public final static String roll_in = base_server + "assetService/v2/recharge";
-    //充值转入结果查询接口
-    public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
-//    //充值失败错误原因上传接口
-//    public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
     //活期首页
     public final static String current_home = base_server + "deposit/current/getCurrentList";
     //活期详情
@@ -115,32 +107,14 @@ public class Urls {
     public final static String getMessageDetail = base_server + "pushService/v2/getMessageDetail";
     //设置消息已读
     public final static String setMessageReaded = base_server + "pushService/setMessageReaded";
-    //删除消息
-    public final static String deleteMessage = base_server + "pushService/deleteMessage";
-    //设置交易密码
-    public final static String changePayPassword = base_server + "userService/changePayPassword";
-    //修改交易密码
-    public final static String setPayPassword = base_server + "userService/setPayPassword";
     //修改登录密码
     public final static String changePassword = base_server + "account/passwordChange ";// userService/changePassword
     //找回登录密码
     public final static String getPassword = base_server + "account/passwordReset";   // userService/getPassword
     //检验验证码
     public final static String checkCaptcha = base_server + "commonService/checkCaptcha";
-    //获取用户的银行卡
-    public final static String getUserBankCard = base_server + "userService/getUserBankCard";
-    //自动识别银行卡
-    public final static String autoIdentifyBankCard = base_server + "assetService/autoIdentifyBankCard";
-    //绑定银行卡
-    public final static String bindBank = base_server + "commonService/bindBank";
-    //获取城市接口
-    public final static String getAllCity = base_server + "commonService/getAllCity";
-    //获取支行
-    public final static String getSubBranch = base_server + "commonService/getSubBranch";
     //登出
     public final static String loginOut = base_server + "userService/logout";
-    //提现
-    public final static String withdrawCash = base_server + "assetService/withdrawCash";
     //我的秒钱宝
     public final static String user_current = base_server + "deposit/mine/getMineCurrentMain";
     //我的定期
@@ -166,8 +140,6 @@ public class Urls {
 
     //home
     public final static String homeInfo = base_server + "deposit/common/getHome";
-    //records of capital
-    public final static String recordsCapital = base_server + "userService/getAssetRecord";
 
     //我的促销接口
     public final static String getCustPromotion = base_server + "deposit/mine/getMinePromList";//userService/getCustPromotion
@@ -178,7 +150,7 @@ public class Urls {
     //我的秒钱宝认购记录
     public final static String getUserCurrentProduct = base_server + "deposit/current/getUserCurrentProduct";
     //修改绑定手机
-    public final static String changePhone = base_server + "userService/changePhone";
+    public final static String changePhone = base_server + "account/changeMobilePhone";// userService/changePhone
     //提现预处理
     public final static String withdrawPreprocess = base_server + "tradeService/withdrawPreprocess";  //tradeService/queryWithdrawPreprocess
     //版本更新

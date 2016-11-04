@@ -72,6 +72,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private View layoutTransferDetail;
     private TextView tvTransferedMoney;
     private LinearLayout layoutFirst;
+    private View layoutPayment;
+    private View dividerPayment;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -138,6 +140,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
         //购买转让的Ui
         layoutPriginproject = findViewById(R.id.layout_originproject);
+        layoutPayment = findViewById(R.id.layout_payment);
         tvOriginproject = (TextView) findViewById(R.id.tv_originproject);
         tvOriginprojectName = (TextView) findViewById(R.id.tv_originproject_name);
         ivProjectState = (ImageView) findViewById(R.id.image_project_status);
@@ -145,6 +148,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         //转让记录
         layoutTransferDetail = findViewById(R.id.layout_transfer_detail);
         tvTransferedMoney = (TextView) findViewById(R.id.tv_transfered_money);
+
+        dividerPayment = findViewById(R.id.divider_payment);
 
 
         frameProjectMatch.setOnClickListener(this);
@@ -175,7 +180,12 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         }
         textDateStart.setText("认购日期:" + regInvest.getCrtDt());
         textDateEnd.setText("结束日期:" + regInvest.getDueDt());
-        textRepayment.setText(regInvest.getPayMeansName());
+        if (!TextUtils.isEmpty(regInvest.getPayMeansName())){
+            layoutPayment.setVisibility(View.VISIBLE);
+            dividerPayment.setVisibility(View.VISIBLE);
+            textRepayment.setText(regInvest.getPayMeansName());
+        }
+
 
         //标的相关记录
         layoutFirst.setVisibility(View.VISIBLE);
@@ -225,12 +235,12 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             }
         }
         if ("N".equals(regInvest.getBearingStatus())) {
-            if ("5".equals(regInvest.getProdId()) || "6".equals(regInvest.getProdId())) {//定期计划和定期计划转让
+            if ("2".equals(projectType)) {//定期计划
                 frameProjectMatch.setVisibility(View.VISIBLE);
                 textProject.setText("项目匹配");
             }
         }
-        if ("3".equals(regInvest.getProdId()) || "4".equals(regInvest.getProdId())) {//定期赚和定期赚转让详情
+        if ("1".equals(projectType)) {//定期赚
             frameProjectMatch.setVisibility(View.VISIBLE);
             textProject.setText("项目详情");
         }
@@ -319,24 +329,18 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             case R.id.frame_project_match:
                 MobclickAgent.onEvent(mActivity, "1045");
                 if (userRegularDetail != null) {
-                    subjectId = regInvest.getBdId();
-                    if (RegularBase.REGULAR_PROJECT == Integer.parseInt(regInvest.getProdId())) {//定期项目
-                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + subjectId + "/3");
-                    } else if (RegularBase.REGULAR_PLAN == Integer.parseInt(regInvest.getProdId())) {
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + subjectId + "/5");//定期计划
-                    } else if (RegularBase.REGULAR_04 == Integer.parseInt(regInvest.getProdId())) {//定期项目转让
-                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + regInvest.getSysbdId() + "/3");
-                    } else if (RegularBase.REGULAR_06 == Integer.parseInt(regInvest.getProdId())) {//定期计划转让
-                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + regInvest.getSysbdId() + "/5");
+                    if ("1".equals(projectType)) {//定期赚
+                        WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + regInvest.getBdId() + "/" + regInvest.getProjectCode() + "/0");
+                    } else{//定期计划
+                        WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + regInvest.getBdId() + "/0");
                     }
                 }
                 break;
             case R.id.layout_originproject:
                 if (userRegularDetail != null) {
-                    String subjectId = regInvest.getBdId();
-                    if (3 == Integer.parseInt(regInvest.getProdId())) {
+                    if ("1".equals(projectType)) {//定期赚
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + regInvest.getBdId() + "/" + regInvest.getProjectCode() + "/0");
-                    } else if (4 == Integer.parseInt(regInvest.getProdId())) {
+                    } else{//定期计划
                         WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + regInvest.getBdId() + "/0");
                     }
                 }
