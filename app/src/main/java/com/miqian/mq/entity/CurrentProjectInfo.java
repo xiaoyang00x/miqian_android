@@ -37,6 +37,7 @@ public class CurrentProjectInfo {
     private String subjectType; // 标的类型 00：标准标的 01：新手专属 02：众人拾财专属 03：老财主专享回馈 04：定向大额投资人
     private BigDecimal userSubjectRemainAmt; // 用户对于该标的剩余认购额度
     private BigDecimal userCurRemainAmt; // 用户对于这类产品的剩余认购额度
+    private String currentMaxAmt; // 整个秒钱宝的限制额度 直接显示用
 
     public String getProductCode() {
         return productCode;
@@ -252,5 +253,13 @@ public class CurrentProjectInfo {
 
     public void setUserCurRemainAmt(BigDecimal userCurRemainAmt) {
         this.userCurRemainAmt = userCurRemainAmt;
+    }
+
+    public String getCurrentMaxAmt() {
+        return currentMaxAmt;
+    }
+
+    public void setCurrentMaxAmt(String currentMaxAmt) {
+        this.currentMaxAmt = currentMaxAmt;
     }
 }

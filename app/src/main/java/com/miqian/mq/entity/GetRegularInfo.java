@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class GetRegularInfo {
 
-    private ArrayList<SubjectCategoryData> subjectData; // 标的数据
+    private ArrayList<RegularBaseData> subjectData; // 标的数据
 
     private Page page;
 
@@ -21,11 +21,11 @@ public class GetRegularInfo {
         this.fitSubjectDesc = fitSubjectDesc;
     }
 
-    public ArrayList<SubjectCategoryData> getSubjectData() {
+    public ArrayList<RegularBaseData> getSubjectData() {
         return subjectData;
     }
 
-    public void setSubjectData(ArrayList<SubjectCategoryData> subjectData) {
+    public void setSubjectData(ArrayList<RegularBaseData> subjectData) {
         this.subjectData = subjectData;
     }
 

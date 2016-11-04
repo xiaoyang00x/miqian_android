@@ -637,7 +637,7 @@ public class HttpRequest {
      */
     public static void getFitSubject(Context context, String promId, final ICallback<GetRegularResult> callback) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("promId", promId));
+        params.add(new Param("couponsId", promId));
         new MyAsyncTask(context, Urls.getFitSubject, params, new ICallback<String>() {
 
             @Override

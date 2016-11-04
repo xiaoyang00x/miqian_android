@@ -98,7 +98,7 @@ public class RegularListActivity extends BaseActivity {
         });
     }
 
-    private ArrayList<SubjectCategoryData> mList;
+    private ArrayList<RegularBaseData> mList;
 
     private void handleSuccessResult(GetRegularResult result) {
         if (result == null || result.getData() == null ||
@@ -106,14 +106,8 @@ public class RegularListActivity extends BaseActivity {
                 mList.size() <= 0) {
             return;
         }
-        for (SubjectCategoryData data : mList) {
-            ArrayList<RegularBaseData> tempList;
-            if ((tempList = data.getSubjectInfo()) == null || tempList.size() <= 0) {
-                continue;
-            }
-            for (RegularBaseData info : tempList) {
-                mAdapter.add(info);
-            }
+        for (RegularBaseData info : mList) {
+            mAdapter.add(info);
         }
         tv_description.setText(result.getData().getFitSubjectDesc());
         mAdapter.notifyDataSetChanged();

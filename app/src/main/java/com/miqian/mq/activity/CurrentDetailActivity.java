@@ -312,8 +312,12 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
         /** 用户认购金额 ％ 每份投资金额 **/
         BigDecimal remainder = inputAmount.remainder(perAmount);
 
+        /** 用户对于这类产品的剩余认购额度为0 **/
+        if (projectInfo.getUserCurRemainAmt().compareTo(BigDecimal.ZERO) == 0) {
+            Toast.makeText(getBaseContext(), "提示：活期认购总额不可大于" + projectInfo.getCurrentMaxAmt() + "元", Toast.LENGTH_SHORT).show();
+        }
         /** 用户认购额度小于起始金额 **/
-        if (inputAmount.compareTo(leftLimit) == -1) {
+        else if (inputAmount.compareTo(leftLimit) == -1) {
             /** 用户认购额度 为当前可认购的最大金额时（此额度小于起始金额） 则可以让用户认购 **/
             if (inputAmount.compareTo(rightLimit) == 0) {
             } else {
