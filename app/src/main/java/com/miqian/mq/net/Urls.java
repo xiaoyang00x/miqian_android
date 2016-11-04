@@ -52,7 +52,7 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testdepositapi.shicaidai.com/";
+    public static final String SERVER_TEST = "https://testdepositapi.shicaidai.com/";//需要配置dns 172.20.1.14
 //    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
 //    public static final String SERVER_TEST = "172.20.50.64:8080/miaoqian-app/"; // 冰红茶本地地址
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
@@ -107,10 +107,6 @@ public class Urls {
     public final static String getMessageDetail = base_server + "pushService/v2/getMessageDetail";
     //设置消息已读
     public final static String setMessageReaded = base_server + "pushService/setMessageReaded";
-    //删除消息
-    public final static String deleteMessage = base_server + "pushService/deleteMessage";
-    //设置交易密码
-    public final static String changePayPassword = base_server + "userService/changePayPassword";
     //修改登录密码
     public final static String changePassword = base_server + "account/passwordChange ";// userService/changePassword
     //找回登录密码
@@ -144,8 +140,6 @@ public class Urls {
 
     //home
     public final static String homeInfo = base_server + "deposit/common/getHome";
-    //records of capital
-    public final static String recordsCapital = base_server + "userService/getAssetRecord";
 
     //我的促销接口
     public final static String getCustPromotion = base_server + "deposit/mine/getMinePromList";//userService/getCustPromotion
