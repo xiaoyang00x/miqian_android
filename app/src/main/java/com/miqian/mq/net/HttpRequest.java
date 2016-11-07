@@ -10,7 +10,6 @@ import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.ConfigResult;
 import com.miqian.mq.entity.CurrentDetailResult;
-import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentProjectResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.GetHomeActivityResult;
@@ -67,31 +66,6 @@ public class HttpRequest {
                     callback.onSucceed(configResult);
                 } else {
                     callback.onFail(configResult.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 活期首页
-     */
-    public static void getCurrentHome(Context context, final ICallback<CurrentInfoResult> callback) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        new MyAsyncTask(context, Urls.current_home, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                CurrentInfoResult currentInfoResult = JsonUtil.parseObject(result, CurrentInfoResult.class);
-                if (currentInfoResult.getCode().equals("000000")) {
-                    callback.onSucceed(currentInfoResult);
-                } else {
-                    callback.onFail(currentInfoResult.getMessage());
                 }
             }
 

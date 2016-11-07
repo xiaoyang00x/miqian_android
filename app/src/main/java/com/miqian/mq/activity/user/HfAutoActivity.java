@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -39,7 +41,7 @@ public class HfAutoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //了解自动投标
-
+                WebActivity.startActivity(mActivity, Urls.web_hf_help);
             }
         });
 

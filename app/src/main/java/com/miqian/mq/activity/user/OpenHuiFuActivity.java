@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
@@ -41,7 +43,7 @@ public class OpenHuiFuActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //了解资金存管明细
-
+                WebActivity.startActivity(mActivity, Urls.web_hf_help);
             }
         });
     }
