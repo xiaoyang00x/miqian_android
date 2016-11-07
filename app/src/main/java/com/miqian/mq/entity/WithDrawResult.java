@@ -1,7 +1,5 @@
 package com.miqian.mq.entity;
 
-import java.util.List;
-
 /**
  * Created by Administrator on 2015/10/14.
  */
