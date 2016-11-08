@@ -198,6 +198,8 @@ public class RegisterActivity extends BaseActivity {
 
                         if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
                             GestureLockSetActivity.startActivity(getBaseContext(),null,true);
+                        }else {
+                            OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_REGISTER);
                         }
                         finish();
                     }
