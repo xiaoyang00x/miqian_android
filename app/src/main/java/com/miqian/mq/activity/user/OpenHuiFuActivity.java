@@ -11,8 +11,10 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -105,6 +107,7 @@ public class OpenHuiFuActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == HfUpdateActivity.REQUEST_CODE_REGISTER) {
             if (resultCode == CurrentInvestment.SUCCESS) {
+                Pref.saveBoolean(UserUtil.getPrefKey(mActivity, Pref.HF_ACCOUNT_STATUS), true, mActivity);
                 finish();
             } else {
                 Uihelper.showToast(mActivity, "开户失败，请重试");

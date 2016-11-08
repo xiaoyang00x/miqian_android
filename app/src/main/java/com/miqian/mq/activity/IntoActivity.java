@@ -1,6 +1,7 @@
 package com.miqian.mq.activity;
 
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -54,8 +57,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private int rollType;//为1时传入充值金额，为0时不传
     private int bindStatus;
 //    private String relaNameStatus;
-    private boolean hfAccountStatus;
-    private boolean activateStatus;
 
     @Override
     public void obtainData() {
@@ -86,37 +87,35 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         btRollin = (Button) findViewById(R.id.bt_rollin);
         btRollin.setOnClickListener(this);
         editMoney = (EditText) findViewById(R.id.edit_money);
-//        editMoney.addTextChangedListener(new MyTextWatcher() {
-//
-//            @Override
-//            public void myAfterTextChanged(Editable s) {
-//                try {
-//                    textErrorLian.setVisibility(View.GONE);
-//                    String temp = s.toString();
-//                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-//                        return;
-//                    }
-//                    s.delete(temp.length() - 1, temp.length());
-//                } catch (Exception e) {
-//                }
-//            }
-//        });
+        editMoney.addTextChangedListener(new MyTextWatcher() {
+
+            @Override
+            public void myAfterTextChanged(Editable s) {
+                try {
+                    String temp = s.toString();
+                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
+                        return;
+                    }
+                    s.delete(temp.length() - 1, temp.length());
+                } catch (Exception e) {
+                }
+            }
+        });
         editMoneyBound = (EditText) findViewById(R.id.edit_money_bound);
-//        editMoneyBound.addTextChangedListener(new MyTextWatcher() {
-//
-//            @Override
-//            public void myAfterTextChanged(Editable s) {
-//                try {
-//                    textErrorLian.setVisibility(View.GONE);
-//                    String temp = s.toString();
-//                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-//                        return;
-//                    }
-//                    s.delete(temp.length() - 1, temp.length());
-//                } catch (Exception e) {
-//                }
-//            }
-//        });
+        editMoneyBound.addTextChangedListener(new MyTextWatcher() {
+
+            @Override
+            public void myAfterTextChanged(Editable s) {
+                try {
+                    String temp = s.toString();
+                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
+                        return;
+                    }
+                    s.delete(temp.length() - 1, temp.length());
+                } catch (Exception e) {
+                }
+            }
+        });
         if (rollType == 1 || rollType == 2) {
             money = intent.getStringExtra("money");
             editMoney.setText(money);
@@ -144,12 +143,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private void refreshView() {
         btRollin.setEnabled(true);
-        hfAccountStatus = userInfo.isHfAccountStatus();
-        activateStatus = userInfo.isStatus();
-//        if (!hfAccountStatus) {
-//            OpenHuiFuActivity.startActivity(mActivity, TypeUtil.TYPE_OPENHF_ROLLIN);
-//            //开通汇付
-//        }
 
 //        relaNameStatus = userInfo.getRealNameStatus();
 //        if ("1".equals(relaNameStatus)) {
