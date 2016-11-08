@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -103,7 +104,7 @@ public class OpenHuiFuActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == HfUpdateActivity.REQUEST_CODE_REGISTER) {
-            if (resultCode == 0) {
+            if (resultCode == CurrentInvestment.SUCCESS) {
                 finish();
             } else {
                 Uihelper.showToast(mActivity, "开户失败，请重试");
