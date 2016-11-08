@@ -165,12 +165,12 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("秒钱宝");
+        mTitle.setTitleText("我的秒钱宝");
     }
 
     @Override
     protected String getPageName() {
-        return "秒钱宝";
+        return "我的秒钱宝";
     }
 
     @Override
