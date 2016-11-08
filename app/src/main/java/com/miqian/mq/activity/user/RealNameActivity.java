@@ -1,5 +1,6 @@
 package com.miqian.mq.activity.user;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -57,11 +58,11 @@ public class RealNameActivity extends BaseActivity implements View.OnClickListen
     /**
      * 进入填写身份证号码
      *
-     * @param context
+     * @param activity
      */
-    public static void startActivity(Context context) {
-        Intent intent = new Intent(context, RealNameActivity.class);
-        context.startActivity(intent);
+    public static void startActivity(Activity activity, int type) {
+        Intent intent = new Intent(activity, RealNameActivity.class);
+        activity.startActivityForResult(intent, type);
     }
 
     @Override

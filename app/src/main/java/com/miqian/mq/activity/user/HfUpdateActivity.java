@@ -190,7 +190,7 @@ public class HfUpdateActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (state == 0) {
-            RealNameActivity.startActivity(mActivity);
+            RealNameActivity.startActivity(mActivity, REQUEST_CODE_REGISTER);
         } else if (state == 1) {
             HttpRequest.activateHf(mActivity, RSAUtils.decryptByPrivate(userInfo.getHfCustId()));
         } else if (state == 2) {

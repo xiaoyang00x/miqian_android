@@ -95,7 +95,7 @@ public class OpenHuiFuActivity extends BaseActivity {
 
     //开通按钮
     public void btn_click(View v) {
-        RealNameActivity.startActivity(mActivity);
+        RealNameActivity.startActivity(mActivity, HfUpdateActivity.REQUEST_CODE_REGISTER);
     }
 
     //暂不开通按钮
