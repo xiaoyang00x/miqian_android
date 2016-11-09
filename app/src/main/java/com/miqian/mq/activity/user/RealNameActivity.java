@@ -1,7 +1,6 @@
 package com.miqian.mq.activity.user;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,7 +12,9 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -25,6 +26,7 @@ public class RealNameActivity extends BaseActivity implements View.OnClickListen
     private Button btConfirm;
     private EditText editCardId;
     private EditText editName;
+    private String realName;
 
     @Override
     public void obtainData() {
@@ -69,6 +71,7 @@ public class RealNameActivity extends BaseActivity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == HfUpdateActivity.REQUEST_CODE_REGISTER) {
             if (resultCode == CurrentInvestment.SUCCESS) {
+                Pref.saveString(UserUtil.getPrefKey(mActivity, Pref.REAL_NAME), realName, mActivity);
                 Intent intent = new Intent();
                 setResult(CurrentInvestment.SUCCESS, intent);
                 finish();
@@ -88,7 +91,7 @@ public class RealNameActivity extends BaseActivity implements View.OnClickListen
      * 开通汇付
      */
     private void openHf() {
-        String realName = editName.getText().toString();
+        realName = editName.getText().toString();
         String idCard = editCardId.getText().toString();
         if (TextUtils.isEmpty(realName)) {
             Uihelper.showToast(mActivity, "姓名不能为空");

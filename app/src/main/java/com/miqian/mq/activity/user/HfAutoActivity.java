@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Pref;
@@ -89,7 +90,7 @@ public class HfAutoActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == HfUpdateActivity.REQUEST_CODE_AUTO) {
-            if (resultCode == 0) {
+            if (resultCode == CurrentInvestment.SUCCESS) {
                 Pref.saveBoolean(UserUtil.getPrefKey(mActivity, Pref.HF_AUTO_STATUS), true, mActivity);
                 finish();
             } else {
