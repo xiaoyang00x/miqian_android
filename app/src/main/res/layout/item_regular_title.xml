@@ -4,18 +4,6 @@
     android:layout_height="33dp"
     android:background="@color/mq_b7_v2">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/mq_b6_v2" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/mq_b6_v2" />
-
     <ImageView
         android:id="@+id/iv_left"
         android:layout_width="wrap_content"
@@ -43,6 +31,5 @@
         android:gravity="center_vertical"
         android:textColor="@color/mq_b3_v2"
         android:textSize="@dimen/mq_font3_v2" />
-
 
 </RelativeLayout>
