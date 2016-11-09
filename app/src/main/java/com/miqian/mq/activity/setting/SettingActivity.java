@@ -3,7 +3,6 @@ package com.miqian.mq.activity.setting;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +18,6 @@ import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
-import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileDeviceUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
@@ -281,7 +279,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
         info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, userId);
         //以下注释的字段都是可选的字段， 有邮箱建议填写
-        info.put(UdeskConst.UdeskUserInfo.NICK_NAME, Pref.getString(Pref.REAL_NAME, mApplicationContext, ""));
+        info.put(UdeskConst.UdeskUserInfo.NICK_NAME, Pref.getString(UserUtil.getPrefKey(mApplicationContext, Pref.REAL_NAME), mApplicationContext, ""));
         info.put(UdeskConst.UdeskUserInfo.CELLPHONE, Pref.getString(Pref.TELEPHONE, mApplicationContext, MobileDeviceUtil.getInstance(mApplicationContext).getPhoneNum()));
 
         UdeskSDKManager.getInstance().setUserInfo(this, userId, info);

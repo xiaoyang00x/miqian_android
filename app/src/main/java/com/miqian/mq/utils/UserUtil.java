@@ -56,7 +56,7 @@ public class UserUtil {
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
         Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobile()), context);
-        Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getUserName()), context);
+        Pref.saveString(getPrefKey(context, Pref.REAL_NAME), RSAUtils.decryptByPrivate(userInfo.getUserName()), context);
 //        Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getPayPwdStatus()), context);
 
         //设置GrowingIO用户信息
@@ -155,7 +155,7 @@ public class UserUtil {
         Pref.saveString(Pref.GESTUREPSW, null, context);
         Pref.saveString(Pref.TOKEN, "", context);
         Pref.saveString(Pref.USERID, "", context);
-        Pref.saveString(Pref.REAL_NAME, "", context);
+        Pref.saveString(getPrefKey(context, Pref.REAL_NAME), "", context);
         //token值为"",表示取消之前设置的别名
         JpushHelper.setAlias(context);
         // 通知消息更新
