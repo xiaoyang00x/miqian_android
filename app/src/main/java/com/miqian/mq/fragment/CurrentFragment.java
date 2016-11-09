@@ -151,7 +151,7 @@ public class CurrentFragment extends BasicFragment {
                 int size = mAdapter.getItemCount() - 2;
                 mAdapter.addAll(result.getData().getCurrentList());
                 // 刷新当前页面数据 － 从倒数第二条数据开始刷新（倒数第一条是loadingMoreView）
-                mAdapter.notifyItemRangeChanged(size, result.getData().getCurrentList().size() + 1);
+                mAdapter.notifyItemRangeChanged(size, result.getData().getCurrentList().size() + 2);
             }
 
             @Override
@@ -180,13 +180,15 @@ public class CurrentFragment extends BasicFragment {
                     inProcess = false;
                 }
                 swipeRefresh.setRefreshing(false);
-                if (result == null || result.getData() == null
-                        || result.getData().getCurrentList() == null
-                        || result.getData().getCurrentList().size() <= 0) {
+                if (result == null || result.getData() == null) {
                     return;
                 }
-                isFinished = result.getData().getCurrentList().size() < pageSize;
-                mAdapter.hasLoadAllData(isFinished);
+                if (result.getData().getCurrentList() == null) {
+                    mAdapter.hasLoadAllData(true);
+                } else {
+                    isFinished = result.getData().getCurrentList().size() < pageSize;
+                    mAdapter.hasLoadAllData(isFinished);
+                }
                 serverBusyView.hide();
                 iCallback.onSucceed(result);
             }

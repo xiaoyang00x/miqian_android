@@ -145,12 +145,12 @@ public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 case RegularBase.STATE_4:
                     tv_time.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
                     btn_state.setText("待开标");
-                    btn_state.setBackgroundResource(R.drawable.btn_default_selector);
+                    btn_state.setBackgroundResource(R.drawable.btn_no_begin);
                     break;
                 case RegularBase.STATE_5:
                     tv_time.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     btn_state.setText("立即认购");
-                    btn_state.setBackgroundResource(R.drawable.btn_no_begin);
+                    btn_state.setBackgroundResource(R.drawable.btn_default_selector);
                     break;
                 default:
                     tv_time.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
