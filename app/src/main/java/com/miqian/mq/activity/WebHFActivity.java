@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.DownloadListener;
@@ -21,6 +20,7 @@ import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.net.HttpUtils;
 import com.miqian.mq.net.Param;
 import com.miqian.mq.utils.ChannelUtil;
+import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
@@ -69,7 +69,7 @@ public class WebHFActivity extends WebActivity {
         sign = HttpUtils.getSign(list);
         url_hf = getIntent().getStringExtra(KEY_URL);
         url_hf += HttpUtils.getUrl(list);
-        Log.e("", "url : " + url_hf);
+        LogUtil.e("", "url : " + url_hf);
         Uri uri = Uri.parse(url_hf);
         isRefresh = "1".equals(uri.getQueryParameter("refresh"));
         super.onCreate(savedInstanceState);
@@ -221,11 +221,18 @@ public class WebHFActivity extends WebActivity {
 
     @JavascriptInterface
     public void hfCallback(String code) {
+        LogUtil.e("", "getHfResult : " + code);
+        if ("200".equals(code)) {
+            state = CurrentInvestment.SUCCESS;
+        } else {
+            state = CurrentInvestment.FAIL;
+        }
         goBack();
     }
 
     @JavascriptInterface
     public void getHfResult(String code) {
+        LogUtil.e("", "getHfResult : " + code);
         if ("200".equals(code)) {
             state = CurrentInvestment.SUCCESS;
         } else {
@@ -246,6 +253,7 @@ public class WebHFActivity extends WebActivity {
      * HF返回只能返回原生页面
      */
     private void goBack() {
+        LogUtil.e("", "getHfResult : " + state);
         Intent intent = new Intent();
         setResult(state, intent);
         finish();

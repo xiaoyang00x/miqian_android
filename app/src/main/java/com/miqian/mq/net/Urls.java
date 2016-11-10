@@ -222,6 +222,10 @@ public class Urls {
     public final static String web_aboutus_zhanlue = "https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
     //汇付账户升级帮助
     public final static String web_hf_help = "https://res.shicaidai.com/miaoqian/webView/huifuHelp.html";
+    //什么是资金存管
+    public final static String web_hf_account = "https://res.shicaidai.com/miaoqian/webView/huifuCreateAccount.html";
+    //什么是自动投标
+    public final static String web_hf_auto = "https://res.shicaidai.com/miaoqian/webView/huifuOpenAuto.html";
 
     //我的邀请
     public final static String web_my_invite = base_server + "activityService/inviteMain";
