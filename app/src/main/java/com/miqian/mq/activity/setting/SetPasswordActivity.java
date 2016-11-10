@@ -52,10 +52,10 @@ public class SetPasswordActivity extends BaseActivity {
 
     @Override
     public void obtainData() {
-            if (!isModify){
-                layoutOldpassword.setVisibility(View.GONE);
-                dividerOldpassword.setVisibility(View.GONE);
-            }
+        if (!isModify) {
+            layoutOldpassword.setVisibility(View.GONE);
+            dividerOldpassword.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -66,6 +66,7 @@ public class SetPasswordActivity extends BaseActivity {
         layoutOldpassword = findViewById(R.id.layout_oldpassword);
         dividerOldpassword = findViewById(R.id.divider_oldpassword);
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_setpassword;
@@ -76,9 +77,9 @@ public class SetPasswordActivity extends BaseActivity {
         String password = et_password.getText().toString();
         String oldpassword = et_oldpassword.getText().toString();
         String password_confirm = et_password_confirm.getText().toString();
-        if (isModify){
-            if (TextUtils.isEmpty(oldpassword)){
-                Uihelper.showToast(mActivity,"请填写旧密码");
+        if (isModify) {
+            if (TextUtils.isEmpty(oldpassword)) {
+                Uihelper.showToast(mActivity, "请填写旧密码");
                 return;
             }
         }
@@ -88,7 +89,7 @@ public class SetPasswordActivity extends BaseActivity {
             } else {
                 if (!TextUtils.isEmpty(password_confirm)) {
                     if (password_confirm.equals(password)) {
-                        summit(oldpassword,password);
+                        summit(oldpassword, password);
                     } else {
                         Uihelper.showToast(this, "两次密码不一致，请重新填写");
                     }
@@ -103,7 +104,7 @@ public class SetPasswordActivity extends BaseActivity {
 
     }
 
-    private void summit(String oldpassword,String password) {
+    private void summit(String oldpassword, String password) {
         //设置登录密码
         if (!isModify) {
             begin();
@@ -121,8 +122,7 @@ public class SetPasswordActivity extends BaseActivity {
                     Uihelper.showToast(mActivity, error);
                 }
             }, phone, password, password, captcha);
-        }else {
-
+        } else {
             begin();
             HttpRequest.changePassword(this, new ICallback<Meta>() {
                 @Override
@@ -144,11 +144,21 @@ public class SetPasswordActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("设置登录密码");
+        if (isModify) {
+            mTitle.setTitleText("修改登录密码");
+        } else {
+            mTitle.setTitleText("设置登录密码");
+        }
+
     }
 
     @Override
     protected String getPageName() {
-        return "设置登录密码";
+        if (isModify) {
+            return "修改登录密码";
+        } else {
+            return "设置登录密码";
+        }
+
     }
 }
