@@ -17,6 +17,7 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.HfAutoActivity;
 import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.Promote;
@@ -57,7 +58,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private TextView textPromoteMoney;
     private TextView textPromoteUnit;
     private RelativeLayout frameExpect;
-    private RelativeLayout frameFact;
+//    private RelativeLayout frameFact;
     private RelativeLayout frameRedPackage;
     //    private RelativeLayout frameLianPay;
 //    private TextView textLian;
@@ -95,7 +96,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private BigDecimal rollinMoney;//需充值的金额
     private BigDecimal bFlag = BigDecimal.ZERO;
 
-//    public static final int REQUEST_CODE_ROLLIN = 1;
+    //    public static final int REQUEST_CODE_ROLLIN = 1;
     private static final int REQUEST_CODE_REDPACKET = 2;
 //    private static final int REQUEST_CODE_PAYMODE = 3;
 //    private static final int REQUEST_CODE_PASSWORD = 4;
@@ -124,6 +125,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //    private DialogTip mDialogTip;
 
     private String bankString = "";
+    private boolean bindCardStatus = true;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -133,10 +135,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         realMoney = intent.getStringExtra("realMoney");
         prodId = intent.getStringExtra("prodId");
         subjectId = intent.getStringExtra("subjectId");
-//        subjectId = "MQ16102417390000000000001";
-//        subjectId = "DX16102115230000000000001";
-//        subjectId = "MQ16102115330000000000001";
-//        subjectId = "CP16101011310000000000005";
         interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
     }
@@ -275,6 +273,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             }
             UserInfo userInfo = JsonUtil.parseObject(bankString, UserInfo.class);
             if (userInfo != null && userInfo.isBindCardStatus()) {
+                bindCardStatus = true;
                 String bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankCardNo());
                 String bankNo = "";
                 if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
@@ -285,6 +284,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 imageType.setImageResource(R.drawable.icon_bank);
                 imageLoader.displayImage(userInfo.getBankUrlSmall(), imageType, options);
             } else {
+                bindCardStatus = false;
                 textPayType.setText("账户无余额，请先充值");
             }
         }
@@ -390,7 +390,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
         frameSpace = findViewById(R.id.frame_space);
 //        frameLianPay = (RelativeLayout) findViewById(R.id.frame_lian_pay);
-        frameFact = (RelativeLayout) findViewById(R.id.frame_fact);
+//        frameFact = (RelativeLayout) findViewById(R.id.frame_fact);
         factMoney = (TextView) findViewById(R.id.fact_money);
         frameExpect = (RelativeLayout) findViewById(R.id.frame_expect);
 //        textLian = (TextView) findViewById(R.id.text_lian);
@@ -508,8 +508,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //        if (payModeState == PAY_MODE_BANK && payMoney != BigDecimal.ZERO) {
 //            rollIn();
 //        } else {
-            MobclickAgent.onEvent(mContext, "1068");
-            payOrder();
+        MobclickAgent.onEvent(mContext, "1068");
+        payOrder();
 //        }
 
 //        if (payModeState == PAY_MODE_LIAN && payMoney != BigDecimal.ZERO) {
@@ -601,11 +601,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         if (requestCode == HfUpdateActivity.REQUEST_CODE_ROLLIN) {
             if (resultCode == SUCCESS) {
                 producedOrder.setUsableAmt(producedOrder.getUsableAmt().add(rollinMoney));
-//                String orderNo = data.getStringExtra("orderNo");
-//                payQuickOrder(orderNo);
-//            } else if (resultCode == PROCESSING) {
-//                CurrentInvestment.this.finish();
                 refreshView();
+                saveUserInfo();
             } else if (resultCode == FAIL) {
                 Uihelper.showToast(mActivity, "充值失败，请重新充值");
             }
@@ -709,234 +706,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 Uihelper.showToast(mActivity, error);
             }
         }, money, subjectId, promotionId);
-
-//        int status = Pref.getInt(UserUtil.getPrefKey(mActivity, Pref.PAY_STATUS), mActivity, 0);
-//        if (status == 0) {
-//            mWaitingDialog.show();
-//            HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
-//                @Override
-//                public void onSucceed(LoginResult result) {
-//                    mWaitingDialog.dismiss();
-//                    int status = Integer.parseInt(result.getData().getPayPwdStatus());
-//                    showTradeDialog(status);
-//                }
-//
-//                @Override
-//                public void onFail(String error) {
-//                    mWaitingDialog.dismiss();
-//                    Uihelper.showToast(mActivity, error);
-//                }
-//            });
-//        } else {
-//            showTradeDialog(status);
-//        }
     }
-
-//    private void showTradeDialog(int type) {
-//        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
-//            Intent intent = new Intent(CurrentInvestment.this, SetPasswordActivity.class);
-//            intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-//            startActivityForResult(intent, REQUEST_CODE_PASSWORD);
-//            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码");
-//        } else {
-//            initDialogTradePassword();
-//            dialogTradePasswordInput.show();
-//        }
-//    }
-
-//    private void initDialogTradePassword() {
-//        if (dialogTradePasswordInput == null) {
-//            dialogTradePasswordInput = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
-//
-//                @Override
-//                public void positionBtnClick(String payPassword) {
-//                    dismiss();
-//                    //支付
-//                    mWaitingDialog.show();
-//                    HttpRequest.subscribeOrder(mActivity, new ICallback<SubscribeOrderResult>() {
-//                        @Override
-//                        public void onSucceed(SubscribeOrderResult result) {
-//                            mWaitingDialog.dismiss();
-//                            SubscribeOrder subscribeOrder = result.getData();
-//                            if (result.getCode().equals("996633")) {
-//                                Uihelper.showToast(mActivity, result.getMessage());
-//                            } else if (result.getCode().equals("999992")) {
-//                                showPwdError4Dialog(result.getMessage());
-//                            } else {
-//                                Intent intent = new Intent(CurrentInvestment.this, SubscribeResult.class);
-//                                intent.putExtra("money", money);
-//                                intent.putExtra("payMoney", payMoney.toString());
-//                                intent.putExtra("payModeState", payModeState);
-//                                intent.putExtra("promoteMoney", promoteMoney.toString());
-//                                if (result.getCode().equals("000000")) {
-//                                    intent.putExtra("status", 1);
-//                                    intent.putExtra("subscribeOrder", JSON.toJSONString(subscribeOrder));
-//                                } else {
-//                                    intent.putExtra("status", 0);
-//                                }
-//                                startActivity(intent);
-//                                if (result.getCode().equals("000000")) {
-//                                    CurrentInvestment.this.finish();
-//                                }
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFail(String error) {
-//                            mWaitingDialog.dismiss();
-//                            Uihelper.showToast(mActivity, error);
-//                        }
-//                    }, money, subjectId, promListString);
-//                }
-//            };
-//        }
-//    }
-
-//    private void showPwdError4Dialog(String message) {
-//
-//        if (dialogTips == null) {
-//            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-//                @Override
-//                public void positionBtnClick() {
-//                    MobclickAgent.onEvent(mActivity, "1028");
-//                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-//                    intent.putExtra("realNameStatus", "1");
-//                    startActivity(intent);
-//                    dismiss();
-//                }
-//
-//                @Override
-//                public void negativeBtnClick() {
-//                    showTradeDialog(DialogTradePassword.TYPE_INPUTPASSWORD);
-//                }
-//            };
-//            dialogTips.setNegative(View.VISIBLE);
-//            dialogTips.setRemarks(message);
-//            dialogTips.setNegative("继续尝试");
-//            dialogTips.setPositive("找回密码");
-//            dialogTips.setTitle("交易密码错误");
-//            dialogTips.setCanceledOnTouchOutside(false);
-//        }
-//        dialogTips.show();
-//
-//    }
-
-//    private void payQuickOrder(String orderNo) {
-//        begin();
-//        HttpRequest.subscribeQuickOrder(mActivity, new ICallback<SubscribeOrderResult>() {
-//            @Override
-//            public void onSucceed(SubscribeOrderResult result) {
-//                end();
-//                Intent intent = new Intent(CurrentInvestment.this, SubscribeResult.class);
-//                SubscribeOrder subscribeOrder = result.getData();
-//                if (result.getCode().equals("996633")) {
-//                    Uihelper.showToast(mActivity, result.getMessage());
-//                } else {
-//                    intent.putExtra("money", money);
-//                    intent.putExtra("payMoney", payMoney.toString());
-//                    intent.putExtra("payModeState", payModeState);
-//                    intent.putExtra("promoteMoney", promoteMoney.toString());
-//                    if (result.getCode().equals("000000")) {
-//                        intent.putExtra("status", 1);
-//                        intent.putExtra("subscribeOrder", JSON.toJSONString(subscribeOrder));
-//                    } else {
-//                        intent.putExtra("status", 0);
-//                    }
-//                    startActivity(intent);
-//                    if (result.getCode().equals("000000")) {
-//                        CurrentInvestment.this.finish();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//                end();
-//                Uihelper.showToast(mActivity, error);
-//            }
-//        }, money, prodId, orderNo, subjectId, promListString);
-//    }
-
-//    /**
-//     * 充值后调用快捷认购
-//     */
-//    private void rollIn() {
-//        begin();
-//        HttpRequest.rollinHf(mActivity, UserUtil.getHfCustId(mActivity), payMoney.toString());
-//        HttpRequest.rollIn(mActivity, new ICallback<String>() {
-//            @Override
-//            public void onSucceed(String result) {
-//                end();
-//                Meta meta = JsonUtil.parseObject(result, Meta.class);
-//                if ("000000".equals(meta.getCode())) {
-//                    PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
-//                    payOrder = IntoActivity.constructPreCardPayOrder(payOrderResult.getData());
-//                    String content4Pay = JSON.toJSONString(payOrder);
-//                    MobileSecurePayer msp = new MobileSecurePayer();
-//                    msp.pay(content4Pay, new MyHandler(CurrentInvestment.this), Constants.RQF_PAY, mActivity, false);
-//                } else if ("999991".equals(meta.getCode())) {
-//                    SupportBankMsgResult supportBankMsgResult = JsonUtil.parseObject(result, SupportBankMsgResult.class);
-//                    Uihelper.showToast(mActivity, supportBankMsgResult.getMessage());
-//                } else if ("996633".equals(meta.getCode())) {
-//                    Uihelper.showToast(mActivity, meta.getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//                end();
-//                Uihelper.showToast(mActivity, error);
-//            }
-//        }, payMoney.toString(), bankNumber, "", "");
-//    }
-
-//    class MyHandler extends Handler {
-//        WeakReference<CurrentInvestment> weakActivity;
-//
-//        public MyHandler(CurrentInvestment activity) {
-//            weakActivity = new WeakReference<>(activity);
-//        }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            textErrorLian.setVisibility(View.GONE);
-//            String strRet = (String) msg.obj;
-//            switch (msg.what) {
-//                case Constants.RQF_PAY:
-//                    JSONObject objContent = BaseHelper.string2JSON(strRet);
-//                    String retCode = objContent.optString("ret_code");
-//                    String retMsg = objContent.optString("ret_msg");
-//                    String orderNo = payOrder.getNo_order();
-//                    // //先判断状态码，状态码为 成功或处理中 的需要 验签
-//                    if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
-//                        String resulPay = objContent.optString("result_pay");
-//                        if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
-//                            // 支付成功后续处理
-//                            payQuickOrder(orderNo);
-//                        } else {
-//                            Uihelper.showToast(mActivity, retMsg);
-//                        }
-//                    } else if (Constants.RET_CODE_PROCESS.equals(retCode)) {
-//                        String resulPay = objContent.optString("result_pay");
-//                        if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
-//                            jumpToResult(CurrentInvestment.PROCESSING, money, orderNo);
-//                        }
-//                    } else if (retCode.equals("1006")) {
-//                        Uihelper.showToast(mActivity, "您已取消当前交易");
-//                    } else {
-//                        IntoActivity.rollInError(mActivity, orderNo, strRet);
-//                        textErrorLian.setVisibility(View.VISIBLE);
-//                        String errorString = IntoActivity.showErrorString(mActivity, retCode);
-//                        if (TextUtils.isEmpty(errorString)) {
-//                            errorString = retMsg;
-//                        }
-//                        textErrorLian.setText(errorString);
-//                    }
-//                    break;
-//            }
-//            super.handleMessage(msg);
-//        }
-//    }
 
 //    /**
 //     * 跳转充值结果
@@ -951,6 +721,20 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //        startActivity(intent);
 //        CurrentInvestment.this.finish();
 //    }
+
+    private void saveUserInfo() {
+        if (!bindCardStatus) {
+            HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+                @Override
+                public void onSucceed(LoginResult result) {
+                }
+
+                @Override
+                public void onFail(String error) {
+                }
+            });
+        }
+    }
 
     @Override
     public void onBackPressed() {
