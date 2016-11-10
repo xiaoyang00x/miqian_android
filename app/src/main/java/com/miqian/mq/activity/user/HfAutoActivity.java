@@ -42,7 +42,7 @@ public class HfAutoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //了解自动投标
-                WebActivity.startActivity(mActivity, Urls.web_hf_help);
+                WebActivity.startActivity(mActivity, Urls.web_hf_auto);
             }
         });
 

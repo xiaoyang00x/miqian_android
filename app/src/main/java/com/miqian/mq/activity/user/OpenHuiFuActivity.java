@@ -46,7 +46,7 @@ public class OpenHuiFuActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //了解资金存管明细
-                WebActivity.startActivity(mActivity, Urls.web_hf_help);
+                WebActivity.startActivity(mActivity, Urls.web_hf_account);
             }
         });
     }
