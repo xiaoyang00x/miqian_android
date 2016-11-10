@@ -221,7 +221,7 @@ public class WebHFActivity extends WebActivity {
 
     @JavascriptInterface
     public void hfCallback(String code) {
-        LogUtil.e("", "getHfResult : " + code);
+        LogUtil.e("", "hfCallback : " + code);
         if ("200".equals(code)) {
             state = CurrentInvestment.SUCCESS;
         } else {
@@ -253,7 +253,7 @@ public class WebHFActivity extends WebActivity {
      * HF返回只能返回原生页面
      */
     private void goBack() {
-        LogUtil.e("", "getHfResult : " + state);
+        LogUtil.e("", "goBack : " + state);
         Intent intent = new Intent();
         setResult(state, intent);
         finish();
