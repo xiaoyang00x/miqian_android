@@ -156,14 +156,20 @@ public class MobileDeviceUtil {
      * @return
      */
     public String getPhoneNum() {
-        if (TextUtils.isEmpty(phoneNo)) {
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (null != tm) {
-                phoneNo = tm.getLine1Number();
+        try {
+            if (TextUtils.isEmpty(phoneNo)) {
+                TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                if (null != tm) {
+                    phoneNo = tm.getLine1Number();
+                }
+                if (TextUtils.isEmpty(phoneNo))
+                    phoneNo = "";
             }
-            if (TextUtils.isEmpty(phoneNo))
-                phoneNo = "";
+        }catch (Exception e) {
+            e.printStackTrace();
+            phoneNo = "";
         }
+
         return phoneNo;
 
     }
