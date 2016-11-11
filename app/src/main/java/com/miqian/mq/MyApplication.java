@@ -1,8 +1,12 @@
 package com.miqian.mq;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.support.multidex.MultiDexApplication;
 
+import com.growingio.android.sdk.collection.Configuration;
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.utils.ChannelUtil;
 import com.miqian.mq.utils.Config;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -98,6 +102,20 @@ public class MyApplication extends MultiDexApplication {
 
         //Udesk 初始化
         UdeskSDKManager.getInstance().initApiKey(this, Config.UDESK_DOMAIN, Config.UDESK_SECRETKEY);
+
+        try {
+            ApplicationInfo appInfo = this.getPackageManager()
+                    .getApplicationInfo(getPackageName(),
+                            PackageManager.GET_META_DATA);
+            String channelValue=appInfo.metaData.getString("com.growingio.android.GConfig.Channel");
+            GrowingIO.startWithConfiguration(this, new Configuration()
+                    .useID()
+                    .trackAllFragments()
+                    .setChannel(channelValue));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
