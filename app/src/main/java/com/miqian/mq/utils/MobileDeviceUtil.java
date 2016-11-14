@@ -14,6 +14,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import java.util.UUID;
+
 
 public class MobileDeviceUtil {
     /**
@@ -479,14 +481,19 @@ public class MobileDeviceUtil {
 
     /**
      * 自动生成一个UUID来记录安装量
-     * 
-     * @return
      */
-    public String getUUID() {
+    public String getUUID(){
+        uuid = Pref.getString("sysCacheMap",context, "");
+
+        if(TextUtils.isEmpty(uuid)){
+            uuid = UUID.randomUUID().toString();
+            Pref.saveString("sysCacheMap", uuid, context);
+        }
+
         return uuid;
     }
 
-    /**
+     /**
      * 读取渠道名称
      * 
      * @return
