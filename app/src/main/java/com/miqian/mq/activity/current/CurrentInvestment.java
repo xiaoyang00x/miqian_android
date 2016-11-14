@@ -602,7 +602,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             if (resultCode == SUCCESS) {
                 producedOrder.setUsableAmt(producedOrder.getUsableAmt().add(rollinMoney));
                 refreshView();
-                saveUserInfo();
+                if (!bindCardStatus) {
+                    UserUtil.updateFromServer(mActivity);
+                }
             } else if (resultCode == FAIL) {
                 Uihelper.showToast(mActivity, "充值失败，请重新充值");
             }
@@ -721,20 +723,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //        startActivity(intent);
 //        CurrentInvestment.this.finish();
 //    }
-
-    private void saveUserInfo() {
-        if (!bindCardStatus) {
-            HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
-                @Override
-                public void onSucceed(LoginResult result) {
-                }
-
-                @Override
-                public void onFail(String error) {
-                }
-            });
-        }
-    }
 
     @Override
     public void onBackPressed() {
