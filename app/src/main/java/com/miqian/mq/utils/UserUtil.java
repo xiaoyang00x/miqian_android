@@ -271,6 +271,18 @@ public class UserUtil {
         }
     }
 
+    public static void updateFromServer(Context context) {
+        HttpRequest.getUserInfo(context, new ICallback<LoginResult>() {
+            @Override
+            public void onSucceed(LoginResult result) {
+            }
+
+            @Override
+            public void onFail(String error) {
+            }
+        });
+    }
+
     //  显示认购额度
 //    public static void showDialog(Activity activity) {
 //        initDialog(activity);
