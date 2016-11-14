@@ -25,6 +25,7 @@ import cn.udesk.UdeskSDKManager;
  * Created by Joy on 2015/8/31.
  */
 public class MyApplication extends MultiDexApplication {
+
     private static MyApplication myApplication;
     private static boolean isCurrent;
     private static boolean isOnMainAcitivity;
@@ -86,23 +87,51 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        myApplication = this;
+        initAsyncTask();
+        initJpush();
+        initImageLoader();
+        initMobclickAgent();
+        initUdeskSDK();
+        initGrowingIO();
+    }
+
+    /**
+     * 问题描述及解决方法：
+     * http://stackoverflow.com/questions/6968744/getting-noclassdeffounderror-android-os-asynctask
+     */
+    private void initAsyncTask() {
         try {
             Class.forName("android.os.AsyncTask");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initJpush() {
         JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
-        initImageLoader(getApplicationContext());
+    }
 
+    private void initImageLoader() {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+                .memoryCache(new WeakMemoryCache()).diskCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.FIFO).build();
+        ImageLoader.getInstance().init(config);
+    }
+
+    private void initMobclickAgent() {
         //设置友盟渠道号
         MobclickAgent.startWithConfigure(new MobclickAgent.UMAnalyticsConfig(this, "54cc3aedfd98c5b1d000039a", ChannelUtil.getChannel(this)));
         //友盟  禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.openActivityDurationTrack(false);
+    }
 
+    private void initUdeskSDK() {
         //Udesk 初始化
         UdeskSDKManager.getInstance().initApiKey(this, Config.UDESK_DOMAIN, Config.UDESK_SECRETKEY);
+    }
 
+    private void initGrowingIO() {
         try {
             ApplicationInfo appInfo = this.getPackageManager()
                     .getApplicationInfo(getPackageName(),
@@ -115,21 +144,10 @@ public class MyApplication extends MultiDexApplication {
         }catch (Exception e) {
             e.printStackTrace();
         }
-
-
-    }
-
-    public static void initImageLoader(Context context) {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new WeakMemoryCache()).diskCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.FIFO).build();
-        ImageLoader.getInstance().init(config);
     }
 
     public static MyApplication getInstance() {
-        if (myApplication == null) {
-            myApplication = new MyApplication();
-        }
-
         return myApplication;
     }
+
 }

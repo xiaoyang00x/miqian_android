@@ -180,11 +180,11 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
 
     private void summit(String captcha, final String money) {
 
-        mWaitingDialog.show();
+        begin();
         HttpRequest.redeem(mActivity, new ICallback<RedeemData>() {
             @Override
             public void onSucceed(RedeemData result) {
-                mWaitingDialog.dismiss();
+                end();
                 String code = result.getCode();
                 Intent intent = new Intent(mActivity, RedeemResult.class);
                 if (code.equals("999993") || code.equals("999988") || code.equals("996633")) {
@@ -213,7 +213,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onFail(String error) {
-                mWaitingDialog.dismiss();
+                end();
                 Uihelper.showToast(ActivityRedeem.this, error);
             }
         }, money, phone, captcha);
