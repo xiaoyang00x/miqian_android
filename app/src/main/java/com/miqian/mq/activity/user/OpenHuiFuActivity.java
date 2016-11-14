@@ -108,6 +108,7 @@ public class OpenHuiFuActivity extends BaseActivity {
         if (requestCode == HfUpdateActivity.REQUEST_CODE_REGISTER) {
             if (resultCode == CurrentInvestment.SUCCESS) {
                 Pref.saveBoolean(UserUtil.getPrefKey(mActivity, Pref.HF_ACCOUNT_STATUS), true, mActivity);
+                UserUtil.updateFromServer(mActivity);
                 finish();
             } else {
                 Uihelper.showToast(mActivity, "开户失败，请重试");
