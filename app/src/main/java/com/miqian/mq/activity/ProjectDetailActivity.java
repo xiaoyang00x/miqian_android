@@ -18,9 +18,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.Dialog_Login;
 import com.miqian.mq.views.MQMarqueeTextView;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -78,6 +84,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     protected EditText et_input;
     protected Button btn_buy;
     protected View view_close_keyboard;
+    protected View view_to_login; // 未登录情况下底部显示透明view 点击触发引导登录
     protected RelativeLayout rlyt_input; // 底部状态:立即认购输入框
     protected RelativeLayout rlyt_dialog;
     protected TextView tv_dialog_min_amount; // 起投金额
@@ -113,6 +120,8 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         // 关于Android收起输入法时会出现屏幕部分黑屏解决
         // http://blog.csdn.net/lytxyc/article/details/44622367
         mContentView.getRootView().setBackgroundColor(getResources().getColor(R.color.white));
+
+        view_to_login.setVisibility(UserUtil.hasLogin(ProjectDetailActivity.this) ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -165,6 +174,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         rlyt_input = (RelativeLayout) findViewById(R.id.rlyt_input);
         btn_buy = (Button) findViewById(R.id.btn_buy);
         view_close_keyboard = findViewById(R.id.view_close_keyboard);
+        view_to_login = findViewById(R.id.view_to_login);
         btn_state = (Button) findViewById(R.id.btn_state);
         btn_buy = (Button) findViewById(R.id.btn_buy);
         tv_dialog_min_amount = (TextView) findViewById(R.id.tv_dialog_min_amount);
@@ -188,10 +198,39 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (!UserUtil.hasLogin(ProjectDetailActivity.this)) {
+//                    UserUtil.showLoginDialog(ProjectDetailActivity.this);
+//                } else {
+                jumpToNextPageIfInputValid();
+//                }
+            }
+        });
+        view_to_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (!UserUtil.hasLogin(ProjectDetailActivity.this)) {
-                    UserUtil.showLoginDialog(ProjectDetailActivity.this);
-                } else {
-                    jumpToNextPageIfInputValid();
+                    Dialog_Login dialog_login = new Dialog_Login(ProjectDetailActivity.this) {
+                        @Override
+                        public void login(String telephone, String password) {
+                            HttpRequest.login(ProjectDetailActivity.this, new ICallback<LoginResult>() {
+                                @Override
+                                public void onSucceed(LoginResult result) {
+                                    dismiss();
+                                    view_to_login.setVisibility(View.GONE);
+                                    if (Pref.getBoolean(Pref.GESTURESTATE, ProjectDetailActivity.this, true)) {
+                                        GestureLockSetActivity.startActivity(ProjectDetailActivity.this, null, false);
+                                    }
+                                    obtainData();
+                                }
+
+                                @Override
+                                public void onFail(String error) {
+                                    Uihelper.showToast(ProjectDetailActivity.this, error);
+                                }
+                            }, telephone, password);
+                        }
+                    };
+                    dialog_login.show();
                 }
             }
         });
@@ -216,7 +255,6 @@ public abstract class ProjectDetailActivity extends BaseActivity {
             }
         }
     };
-
 
     protected MySwipeRefresh.OnPullRefreshListener mOnPullRefreshListener = new MySwipeRefresh.OnPullRefreshListener() {
         @Override

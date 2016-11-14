@@ -109,7 +109,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         MyApplication.getInstance().setIsOnMainAcitivity(true);
         MyApplication.getInstance().setIsCurrent(true);
         //设置别名
-        JpushHelper.setAlias(this);
+        JpushHelper.setAlias(getApplicationContext());
 //        handleJpush();
         setExsitFragment(true);
 
