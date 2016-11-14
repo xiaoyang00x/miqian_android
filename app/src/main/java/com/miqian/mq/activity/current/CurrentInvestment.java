@@ -262,6 +262,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             framePayMoney.setVisibility(View.VISIBLE);
             textPayType.setText("账户余额");
             textPayTip.setText("可用" + producedOrder.getUsableAmt() + "元");
+            textPayTip.setVisibility(View.VISIBLE);
             imageType.setImageResource(R.drawable.balance_enable);
             showErrorView(producedOrder.getUsableAmt());
         } else if (payModeState == PAY_MODE_BANK) {
@@ -281,11 +282,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 }
                 textPayType.setText(userInfo.getBankName() + "(" + bankNo + ")");
                 textPayTip.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
+                textPayTip.setVisibility(View.VISIBLE);
                 imageType.setImageResource(R.drawable.icon_bank);
                 imageLoader.displayImage(userInfo.getBankUrlSmall(), imageType, options);
             } else {
                 bindCardStatus = false;
                 textPayType.setText("账户无余额，请先充值");
+                textPayTip.setVisibility(View.GONE);
             }
         }
 //            else if (payModeState == PAY_MODE_CURRENT) {
