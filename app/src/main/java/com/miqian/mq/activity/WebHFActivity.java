@@ -167,7 +167,6 @@ public class WebHFActivity extends WebActivity {
         tv_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                begin();
                 loadUrl(url_hf);
             }
         });
@@ -176,7 +175,6 @@ public class WebHFActivity extends WebActivity {
         swipe_refresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
-                begin();
                 loadUrl(url_hf);
             }
         });
@@ -197,6 +195,7 @@ public class WebHFActivity extends WebActivity {
             load_webview_error.setVisibility(View.VISIBLE);
             mTitle.setTitleText("无网络");
         } else {
+            begin();
             webview.setVisibility(View.VISIBLE);
             load_webview_error.setVisibility(View.GONE);
             webview.loadUrl(url, getHeader(sign));

@@ -412,7 +412,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         if (PRODID_CURRENT.equals(prodId)) {
             frameRedPackage.setVisibility(View.GONE);
             frameExpect.setVisibility(View.GONE);
-            textProjectType.setText("活期赚");
+            textProjectType.setText("秒钱宝");
             if (TextUtils.isEmpty(interestRateString)) {
                 textInterestRate.setText("年化收益：8%");
             } else {
