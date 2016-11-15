@@ -98,7 +98,6 @@ public class RoundImageView extends ImageView {
             mRadius = mWidth / 2;
             setMeasuredDimension(mWidth, mWidth);
         }
-
     }
 
     /**

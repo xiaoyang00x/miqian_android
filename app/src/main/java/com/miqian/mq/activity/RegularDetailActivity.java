@@ -107,7 +107,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
             inProcess = true;
         }
         begin();
-        HttpRequest.getRegularDetail(mContext, subjectId, prodId, UserUtil.getUserId(RegularDetailActivity.this), new ICallback<RegularDetailResult>() {
+        HttpRequest.getRegularDetail(getApplicationContext(), subjectId, prodId, UserUtil.getUserId(RegularDetailActivity.this), new ICallback<RegularDetailResult>() {
 
             @Override
             public void onSucceed(RegularDetailResult result) {
@@ -316,6 +316,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
                 btn_state.setText("待开标");
+                disableViewToLogin();
                 break;
             case RegularBase.STATE_5:
                 refreshUserMaxBuyAmount();
@@ -334,12 +335,14 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 tv_dialog_max_amount.setOnClickListener(mOnclickListener);
                 // 限制输入长度
                 et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
+                enableViewToLogin();
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
                 btn_state.setText("已满额");
+                disableViewToLogin();
                 break;
         }
     }
@@ -379,9 +382,8 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
 
         /** 用户认购额度小于起始金额 **/
         if (inputAmount.compareTo(leftLimit) == -1) {
-            /** 用户认购额度 为当前可认购的最大金额时（此额度小于起始金额） 则可以让用户认购 **/
-            if (inputAmount.compareTo(rightLimit) == 0) {
-            } else {
+            /** 用户认购额度 为当前可认购的最大金额时（此额度小于起始金额） 则可以让用户认购 否则提示错误**/
+            if (inputAmount.compareTo(rightLimit) != 0) {
                 Toast.makeText(getBaseContext(), "提示：" + leftLimit + "元起投", Toast.LENGTH_SHORT).show();
             }
         }

@@ -194,7 +194,7 @@ public class RegisterActivity extends BaseActivity {
                         end();
                         Uihelper.showToast(mActivity, "注册成功");
                         UserInfo userInfo = result.getData();
-                        UserUtil.saveUserInfo(mActivity, userInfo);
+                        UserUtil.saveUserInfo(getApplicationContext(), userInfo);
 
                         if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
                             GestureLockSetActivity.startActivity(getBaseContext(),null,true);

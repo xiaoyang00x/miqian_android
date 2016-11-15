@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.squareup.leakcanary.LeakCanary;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -94,6 +95,14 @@ public class MyApplication extends MultiDexApplication {
         initMobclickAgent();
         initUdeskSDK();
         initGrowingIO();
+        initCanary();
+    }
+
+    private void initCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     /**
@@ -136,12 +145,12 @@ public class MyApplication extends MultiDexApplication {
             ApplicationInfo appInfo = this.getPackageManager()
                     .getApplicationInfo(getPackageName(),
                             PackageManager.GET_META_DATA);
-            String channelValue=appInfo.metaData.getString("com.growingio.android.GConfig.Channel");
+            String channelValue = appInfo.metaData.getString("com.growingio.android.GConfig.Channel");
             GrowingIO.startWithConfiguration(this, new Configuration()
                     .useID()
                     .trackAllFragments()
                     .setChannel(channelValue));
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

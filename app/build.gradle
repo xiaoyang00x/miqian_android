@@ -96,4 +96,7 @@ dependencies {
     compile 'com.growingio.android:vds-android-agent:0.9.99@aar'
     compile project(path: ':Udesk_Separate_UI')
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
 }

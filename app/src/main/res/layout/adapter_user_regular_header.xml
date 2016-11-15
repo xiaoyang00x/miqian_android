@@ -116,7 +116,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_toRightOf="@+id/liyout"
-            android:background="@color/mq_b4_v2"></View>
+            android:background="@color/mq_b4_v2"/>
 
         <LinearLayout
             android:layout_width="match_parent"

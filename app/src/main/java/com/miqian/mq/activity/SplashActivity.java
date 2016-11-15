@@ -380,5 +380,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         ShareSDK.stopSDK(this);
         myHandler.removeCallbacks(mRunnable);
         myHandler = null;
+        mRunnable = null;
     }
 }

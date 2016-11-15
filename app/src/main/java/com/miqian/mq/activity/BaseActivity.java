@@ -72,7 +72,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         //增加栈管理器
         ActivityStack.getActivityStack().pushActivity(this);
         //设置不在主页
-        MyApplication.getInstance().setIsOnMainAcitivity(false);
+        MyApplication.setIsOnMainAcitivity(false);
     }
 
     //获得数据

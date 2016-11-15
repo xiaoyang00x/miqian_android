@@ -496,8 +496,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void changeData(JpushInfo jpushInfo) {
-        if (MyApplication.getInstance().isShowTips()) {
-            MyApplication.getInstance().setShowTips(false);
+        if (MyApplication.isShowTips()) {
+            MyApplication.setShowTips(false);
             if (dialogTips == null) {
                 dialogTips = new DialogTip(getActivity()) {
                 };

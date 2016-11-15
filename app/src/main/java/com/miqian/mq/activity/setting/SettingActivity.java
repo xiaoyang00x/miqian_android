@@ -248,14 +248,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onSucceed(Meta result) {
                 end();
-                UserUtil.clearUserInfo(mActivity);
+                UserUtil.clearUserInfo(getApplicationContext());
                 finish();
             }
 
             @Override
             public void onFail(String error) {
                 end();
-                UserUtil.clearUserInfo(mActivity);
+                UserUtil.clearUserInfo(getApplicationContext());
                 finish();
             }
         });

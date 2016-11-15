@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.activity.WebHFActivity;
 import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -204,7 +205,7 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
                 if (loginResult.getCode().equals("000000")) {
-                    UserUtil.saveUserInfo(context, loginResult.getData());
+                    UserUtil.saveUserInfo(MyApplication.getInstance(), loginResult.getData());
                     UserUtil.saveHfInfo(context, loginResult.getData());
                     callback.onSucceed(loginResult);
                 } else {

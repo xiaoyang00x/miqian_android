@@ -79,7 +79,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
             inProcess = true;
         }
         begin();
-        HttpRequest.getCurrentDetail(mContext, subjectId, UserUtil.getUserId(CurrentDetailActivity.this), new ICallback<CurrentDetailResult>() {
+        HttpRequest.getCurrentDetail(getApplicationContext(), subjectId, UserUtil.getUserId(CurrentDetailActivity.this), new ICallback<CurrentDetailResult>() {
 
             @Override
             public void onSucceed(CurrentDetailResult result) {
@@ -280,6 +280,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
                 btn_state.setText("待开标");
+                disableViewToLogin();
                 break;
             case RegularBase.STATE_5:
                 refreshUserMaxBuyAmount();
@@ -297,12 +298,14 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
                 tv_dialog_max_amount.setOnClickListener(null);
                 // 限制输入长度
                 et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getCurrentInfo().getResidueAmt().toString().length())});
+                enableViewToLogin();
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
                 btn_state.setText("已满额");
+                disableViewToLogin();
                 break;
         }
     }

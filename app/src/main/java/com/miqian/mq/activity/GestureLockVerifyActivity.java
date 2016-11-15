@@ -138,7 +138,7 @@ public class GestureLockVerifyActivity extends BaseActivity {
     private void logout() {
         Toast.makeText(getBaseContext(), "已退出登录", Toast.LENGTH_LONG).show();
         Pref.saveInt(Pref.UNLOCKCOUNT, 0, getBaseContext());
-        UserUtil.clearUserInfo(getBaseContext());
+        UserUtil.clearUserInfo(getApplicationContext());
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Constants.VERIFYFAILED, true);
         startActivity(intent);

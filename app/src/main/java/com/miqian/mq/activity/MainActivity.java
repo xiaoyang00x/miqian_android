@@ -106,8 +106,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         setContentView(R.layout.activity_main);
         findTabView();
         initTab();
-        MyApplication.getInstance().setIsOnMainAcitivity(true);
-        MyApplication.getInstance().setIsCurrent(true);
+        MyApplication.setIsOnMainAcitivity(true);
+        MyApplication.setIsCurrent(true);
         //设置别名
         JpushHelper.setAlias(getApplicationContext());
 //        handleJpush();
@@ -129,7 +129,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         super.onResume();
         Config.init(this);
         //设置在主页的状态
-        MyApplication.getInstance().setIsOnMainAcitivity(true);
+        MyApplication.setIsOnMainAcitivity(true);
         MyApplication.setIsBackStage(false);
         if (!isVerify) {
             showWeb();
@@ -197,7 +197,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (Pref.getBoolean(Pref.IsPush, mContext, false)) {
             return;
         }
-        HashMap<String, Boolean> jpushList = MyApplication.getInstance().getPushList();
+        HashMap<String, Boolean> jpushList = MyApplication.getPushList();
         if (jpushList.size() > 0) {
             Set set = jpushList.entrySet();
             java.util.Iterator it = jpushList.entrySet().iterator();
@@ -219,7 +219,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     if ("0".equals(pushSource) || (UserUtil.hasLogin(context) && token.equals(jpushToken))) {
                         showTipDialog(jpushInfo);
                         jpushList.put(noticeId, true);
-                        MyApplication.getInstance().setPushList(jpushList);
+                        MyApplication.setPushList(jpushList);
                     }
                     break;
                 }
@@ -245,7 +245,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     protected void onPause() {
         super.onPause();
         //设置不在主页
-        MyApplication.getInstance().setIsOnMainAcitivity(false);
+        MyApplication.setIsOnMainAcitivity(false);
     }
 
     public void findTabView() {
@@ -450,8 +450,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            MyApplication.getInstance().setIsCurrent(false);
-            MyApplication.getInstance().setIsBackStage(true);
+            MyApplication.setIsCurrent(false);
+            MyApplication.setIsBackStage(true);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -564,7 +564,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     String subjectId = jsonObject.getString("subjectId");
                     if (!TextUtils.isEmpty(subjectId)) {
                         RegularDetailActivity.startActivity(mContext, subjectId, prodId);
-                        MyApplication.getInstance().getPushList().clear();
+                        MyApplication.getPushList().clear();
                     }
                 }
             } catch (JSONException e) {
@@ -640,13 +640,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             case OperationKey.CHANGE_TOKEN:
                 //清除Token
                 JpushInfo jpushInfo = (JpushInfo) data;
-                UserUtil.clearUserInfo(this);
+                UserUtil.clearUserInfo(getApplicationContext());
                 current_tab = 3;
                 ActivityStack.getActivityStack().clearActivity();
-                boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
+                boolean currentActivity = MyApplication.isOnMainAcitivity();
                 if (currentActivity) {
                     if (mTabHost.getCurrentTab() == 3) {
-                        MyApplication.getInstance().setShowTips(true);
+                        MyApplication.setShowTips(true);
                         mRefeshDataListener.changeData(jpushInfo);
                     } else {
                         mTabHost.setCurrentTab(current_tab);
@@ -654,7 +654,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     }
                 } else {
                     if (mTabHost.getCurrentTab() == 3) {
-                        MyApplication.getInstance().setShowTips(true);
+                        MyApplication.setShowTips(true);
                         mRefeshDataListener.changeData(jpushInfo);
                     } else {
                         showDialog(jpushInfo);
@@ -673,7 +673,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 showJushTip();
                 break;
             case OperationKey.ChangeTab:
-                if (MyApplication.getInstance().isBackStage()) {
+                if (MyApplication.isBackStage()) {
                     current_tab = (int) data;
                     ActivityStack.getActivityStack().clearActivity();
                 }
@@ -731,9 +731,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 if (TextUtils.equals(reason, SYSTEM_HOME_KEY)) {
                     // 设置为在后台运行的标志
                     // 表示按了home键,程序到了后台
-                    MyApplication.getInstance().setIsBackStage(true);
+                    MyApplication.setIsBackStage(true);
                     //设置不在主页
-                    MyApplication.getInstance().setIsOnMainAcitivity(false);
+                    MyApplication.setIsOnMainAcitivity(false);
 
                 }
             }

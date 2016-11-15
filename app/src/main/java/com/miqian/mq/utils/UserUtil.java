@@ -166,7 +166,6 @@ public class UserUtil {
         growingIO.setCS1("user_id", "");
         growingIO.setCS2("user_class", "");
 
-
         logout();
     }
 
