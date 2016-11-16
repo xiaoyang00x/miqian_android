@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Jackie on 2015/9/19.
@@ -25,7 +26,7 @@ public class FormatUtil {
         if (!TextUtils.isEmpty(money)) {
             try {
                 float floatTemp = Float.parseFloat(money);
-                moneyString = String.format("%.2f", floatTemp);
+                moneyString = String.format(Locale.getDefault(), "%.2f", floatTemp);
             } catch (Exception e) {
             }
         }
@@ -39,7 +40,7 @@ public class FormatUtil {
      * @return
      */
     public static String formatDate(long time, String formatStr) {
-        SimpleDateFormat sdf1 = new SimpleDateFormat(formatStr);
+        SimpleDateFormat sdf1 = new SimpleDateFormat(formatStr, Locale.getDefault());
         return sdf1.format(time);
     }
 

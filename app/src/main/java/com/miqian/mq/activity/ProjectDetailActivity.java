@@ -1,5 +1,6 @@
 package com.miqian.mq.activity;
 
+import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -183,28 +184,11 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     }
 
     private void initListener() {
-        et_input.setOnFocusChangeListener(mOnFousChangeListener);
         swipeRefresh.setOnPullRefreshListener(mOnPullRefreshListener);
         view_close_keyboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeKeyboard();
-            }
-        });
-        btn_buy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (!UserUtil.hasLogin(ProjectDetailActivity.this)) {
-//                    UserUtil.showLoginDialog(ProjectDetailActivity.this);
-//                } else {
-                jumpToNextPageIfInputValid();
-//                }
-            }
-        });
-        et_input.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showKeyBoardView();
             }
         });
     }
@@ -214,7 +198,9 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     protected View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
         @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-            if (btn_state.getVisibility() == View.VISIBLE) { // 输入框未显示（被按钮覆盖了）
+            if (btn_state.getVisibility() == View.VISIBLE
+                    || view_to_login.getVisibility() == View.VISIBLE) {
+                // 输入框未显示
                 return;
             }
             if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > screenHeight / 3)) {
@@ -267,9 +253,24 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         rlyt_dialog.setVisibility(View.GONE);
     }
 
+    /**
+     * 此方法为不得已而为之之法 不可轻易尝试 其中有何风险待测试
+     */
     protected void closeKeyboard() {
         if (null != imm) {
-            imm.hideSoftInputFromWindow(et_input.getWindowToken(), 0);
+            begin();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        end();
+                    }
+                }
+            }).start();
         }
     }
 
@@ -302,15 +303,15 @@ public abstract class ProjectDetailActivity extends BaseActivity {
      * 用户未登录状态下 已开标 未满额状态下 在输入框上蒙一层view，点击view先去登录
      * 用户已登录状态下 则没有此view
      */
-    protected void enableViewToLogin() {
-        if (UserUtil.hasLogin(ProjectDetailActivity.this)) {
-            return;
-        }
+    protected void showViewToLogin() {
         view_to_login.setVisibility(View.VISIBLE);
         view_to_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (UserUtil.hasLogin(ProjectDetailActivity.this)) {
+                    enableInputEditText();
+                    hideViewToLogin();
+                    hideStateButton();
                     return;
                 }
                 showLoginDialog();
@@ -319,39 +320,110 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     }
 
     /**
-     * 已满额 待开标状态下隐藏view
+     * 已登录 已满额 待开标状态下隐藏view
      */
-    protected void disableViewToLogin() {
+    protected void hideViewToLogin() {
         view_to_login.setVisibility(View.GONE);
         view_to_login.setOnClickListener(null);
     }
 
     /**
-     * 显示登录对话框 提示用户登录
+     * 显示底部输入框 并使功能生效
+     */
+    protected void enableInputEditText() {
+        rlyt_input.setVisibility(View.VISIBLE);
+        rlyt_dialog.setOnTouchListener(mOnTouchListener);
+        rlyt_input.setOnTouchListener(mOnTouchListener);
+        btn_buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumpToNextPageIfInputValid();
+            }
+        });
+        et_input.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showKeyBoardView();
+            }
+        });
+        et_input.setOnFocusChangeListener(mOnFousChangeListener);
+    }
+
+    /**
+     * 显示底部输入框 但使功能生效
+     */
+    protected void disableInputEditText() {
+        rlyt_input.setVisibility(View.VISIBLE);
+        rlyt_dialog.setOnTouchListener(null);
+        rlyt_input.setOnTouchListener(null);
+        btn_buy.setOnClickListener(null);
+        et_input.setOnClickListener(null);
+        et_input.setOnFocusChangeListener(null);
+    }
+
+    /**
+     * 隐藏底部输入框
+     */
+    protected void hideInputEditText() {
+        rlyt_input.setVisibility(View.GONE);
+    }
+
+    /**
+     * 显示底部状态按钮(如：待开标、已满额)
+     */
+    protected void showStateButton() {
+        btn_state.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 隐藏底部状态按钮(如：待开标、已满额)
+     */
+    protected void hideStateButton() {
+        btn_state.setVisibility(View.GONE);
+    }
+
+    private Dialog_Login dialog_login;
+
+    /**
+     * 显示登录对话框 引导用户登录
      */
     protected void showLoginDialog() {
-        Dialog_Login dialog_login = new Dialog_Login(ProjectDetailActivity.this) {
-            @Override
-            public void login(String telephone, String password) {
-                HttpRequest.login(getApplicationContext(), new ICallback<LoginResult>() {
-                    @Override
-                    public void onSucceed(LoginResult result) {
-                        dismiss();
-                        view_to_login.setVisibility(View.GONE);
-                        if (Pref.getBoolean(Pref.GESTURESTATE, ProjectDetailActivity.this, true)) {
-                            GestureLockSetActivity.startActivity(ProjectDetailActivity.this, null, false);
+        if (null == dialog_login) {
+            dialog_login = new Dialog_Login(ProjectDetailActivity.this) {
+                @Override
+                public void login(String telephone, String password) {
+                    begin();
+                    HttpRequest.login(getApplicationContext(), new ICallback<LoginResult>() {
+                        @Override
+                        public void onSucceed(LoginResult result) {
+                            enableInputEditText();
+                            hideViewToLogin();
+                            hideStateButton();
+                            if (Pref.getBoolean(Pref.GESTURESTATE, ProjectDetailActivity.this, true)) {
+                                GestureLockSetActivity.startActivity(ProjectDetailActivity.this, null, false);
+                            }
+                            obtainData();
+                            end();
                         }
-                        obtainData();
-                    }
 
-                    @Override
-                    public void onFail(String error) {
-                        Uihelper.showToast(ProjectDetailActivity.this, error);
-                    }
-                }, telephone, password);
-            }
-        };
-        dialog_login.show();
+                        @Override
+                        public void onFail(String error) {
+                            end();
+                            Uihelper.showToast(ProjectDetailActivity.this, error);
+                        }
+                    }, telephone, password);
+                }
+            };
+            dialog_login.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    closeKeyboard();
+                }
+            });
+        }
+        if (!dialog_login.isShowing()) {
+            dialog_login.show();
+        }
     }
 
     /**
