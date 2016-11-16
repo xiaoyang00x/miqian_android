@@ -96,7 +96,7 @@ public class MyReceiver extends BroadcastReceiver {
             if (TextUtils.isEmpty(noticeId)) {
                 return;
             }
-            if (!MyApplication.getInstance().isCurrent()) {
+            if (!MyApplication.isCurrent()) {
                 notificationIntent = new Intent(context, SplashActivity.class);
                 Pref.saveBoolean(Pref.IsPush, true, context);
                 if ("2".equals(response.getPushSource())) {//未登录的用户,从本地读取消息
@@ -182,7 +182,7 @@ public class MyReceiver extends BroadcastReceiver {
                         notificationIntent = new Intent(context, MainActivity.class);
                         break;
                     case 62://跳标的详情
-                        if (!MyApplication.getInstance().isBackStage()) {
+                        if (!MyApplication.isBackStage()) {
                             MyApplication.getInstance().addJpushList(noticeId, false);
                         }
                         if (MyApplication.isOnMainAcitivity()) {
@@ -243,8 +243,8 @@ public class MyReceiver extends BroadcastReceiver {
                 // 定义NotificationManager
                 NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 //判断是否在后台,在后台则发送通知
-                boolean isBackStage = MyApplication.getInstance().isBackStage();
-                boolean isCurrent = MyApplication.getInstance().isCurrent();
+                boolean isBackStage = MyApplication.isBackStage();
+                boolean isCurrent = MyApplication.isCurrent();
                 if (!isBackStage && isCurrent) {
                 } else {
                     mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());

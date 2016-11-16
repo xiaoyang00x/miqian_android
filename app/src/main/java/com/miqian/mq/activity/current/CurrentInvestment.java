@@ -262,6 +262,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             framePayMoney.setVisibility(View.VISIBLE);
             textPayType.setText("账户余额");
             textPayTip.setText("可用" + producedOrder.getUsableAmt() + "元");
+            textPayTip.setVisibility(View.VISIBLE);
             imageType.setImageResource(R.drawable.balance_enable);
             showErrorView(producedOrder.getUsableAmt());
         } else if (payModeState == PAY_MODE_BANK) {
@@ -281,11 +282,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 }
                 textPayType.setText(userInfo.getBankName() + "(" + bankNo + ")");
                 textPayTip.setText("单笔限额" + userInfo.getSingleAmtLimit() + "元， 单日限额" + userInfo.getDayAmtLimit() + "元");
+                textPayTip.setVisibility(View.VISIBLE);
                 imageType.setImageResource(R.drawable.icon_bank);
                 imageLoader.displayImage(userInfo.getBankUrlSmall(), imageType, options);
             } else {
                 bindCardStatus = false;
                 textPayType.setText("账户无余额，请先充值");
+                textPayTip.setVisibility(View.GONE);
             }
         }
 //            else if (payModeState == PAY_MODE_CURRENT) {
@@ -409,7 +412,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         if (PRODID_CURRENT.equals(prodId)) {
             frameRedPackage.setVisibility(View.GONE);
             frameExpect.setVisibility(View.GONE);
-            textProjectType.setText("活期赚");
+            textProjectType.setText("秒钱宝");
             if (TextUtils.isEmpty(interestRateString)) {
                 textInterestRate.setText("年化收益：8%");
             } else {
@@ -602,7 +605,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             if (resultCode == SUCCESS) {
                 producedOrder.setUsableAmt(producedOrder.getUsableAmt().add(rollinMoney));
                 refreshView();
-                saveUserInfo();
+                if (!bindCardStatus) {
+                    UserUtil.updateFromServer(mActivity);
+                }
             } else if (resultCode == FAIL) {
                 Uihelper.showToast(mActivity, "充值失败，请重新充值");
             }
@@ -721,20 +726,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //        startActivity(intent);
 //        CurrentInvestment.this.finish();
 //    }
-
-    private void saveUserInfo() {
-        if (!bindCardStatus) {
-            HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
-                @Override
-                public void onSucceed(LoginResult result) {
-                }
-
-                @Override
-                public void onFail(String error) {
-                }
-            });
-        }
-    }
 
     @Override
     public void onBackPressed() {

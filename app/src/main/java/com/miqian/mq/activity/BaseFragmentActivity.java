@@ -116,7 +116,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
                 if (TextUtils.equals(reason, SYSTEM_HOME_KEY)) {
                     // 设置为在后台运行的标志
                     // 表示按了home键,程序到了后台
-                    MyApplication.getInstance().setIsBackStage(true);
+                    MyApplication.setIsBackStage(true);
                 }
             }
         }
@@ -128,7 +128,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
         public void onReceive(Context context, Intent intent) {
             // 设置为在后台运行的标志
             // 表示按了home键,程序到了后台
-            MyApplication.getInstance().setIsBackStage(true);
+            MyApplication.setIsBackStage(true);
         }
     };
 

@@ -29,7 +29,6 @@ import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.ShareData;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.JsShareListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
@@ -183,7 +182,6 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         tv_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                begin();
                 loadUrl(url);
             }
         });
@@ -192,7 +190,6 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         swipe_refresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
-                begin();
                 loadUrl(url);
             }
         });
@@ -225,6 +222,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
             load_webview_error.setVisibility(View.VISIBLE);
             mTitle.setTitleText("无网络");
         } else {
+            begin();
             webview.setVisibility(View.VISIBLE);
             load_webview_error.setVisibility(View.GONE);
             webview.loadUrl(url);

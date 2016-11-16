@@ -19,6 +19,7 @@ import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
@@ -34,6 +35,7 @@ import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
@@ -264,11 +266,13 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         View frame_regular = view.findViewById(R.id.frame_regular);
         View frame_record = view.findViewById(R.id.frame_record);
         View frame_ticket = view.findViewById(R.id.frame_ticket);
+        View frame_invite = view.findViewById(R.id.frame_invite);
 
         frame_current.setOnClickListener(this);
         frame_regular.setOnClickListener(this);
         frame_record.setOnClickListener(this);
         frame_ticket.setOnClickListener(this);
+        frame_invite.setOnClickListener(this);
 
 
         //*********未登录的的Ui***************
@@ -489,6 +493,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 intent_setting.putExtras(extra);
                 startActivity(intent_setting);
                 break;
+            //我的邀请
+            case R.id.frame_invite:
+                WebActivity.startActivity(mContext, Urls.web_my_invite);
+                break;
             default:
                 break;
         }
@@ -496,8 +504,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void changeData(JpushInfo jpushInfo) {
-        if (MyApplication.getInstance().isShowTips()) {
-            MyApplication.getInstance().setShowTips(false);
+        if (MyApplication.isShowTips()) {
+            MyApplication.setShowTips(false);
             if (dialogTips == null) {
                 dialogTips = new DialogTip(getActivity()) {
                 };

@@ -1,8 +1,11 @@
 package com.miqian.mq;
 
-import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.support.multidex.MultiDexApplication;
 
+import com.growingio.android.sdk.collection.Configuration;
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.utils.ChannelUtil;
 import com.miqian.mq.utils.Config;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -10,6 +13,7 @@ import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.squareup.leakcanary.LeakCanary;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -21,6 +25,7 @@ import cn.udesk.UdeskSDKManager;
  * Created by Joy on 2015/8/31.
  */
 public class MyApplication extends MultiDexApplication {
+
     private static MyApplication myApplication;
     private static boolean isCurrent;
     private static boolean isOnMainAcitivity;
@@ -82,36 +87,75 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        myApplication = this;
+        initAsyncTask();
+        initJpush();
+        initImageLoader();
+        initMobclickAgent();
+        initUdeskSDK();
+        initGrowingIO();
+        initCanary();
+    }
+
+    private void initCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
+    }
+
+    /**
+     * 问题描述及解决方法：
+     * http://stackoverflow.com/questions/6968744/getting-noclassdeffounderror-android-os-asynctask
+     */
+    private void initAsyncTask() {
         try {
             Class.forName("android.os.AsyncTask");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        JPushInterface.setDebugMode(false);
-        JPushInterface.init(this);
-        initImageLoader(getApplicationContext());
-
-        //设置友盟渠道号
-        MobclickAgent.startWithConfigure(new MobclickAgent.UMAnalyticsConfig(this, "54cc3aedfd98c5b1d000039a", ChannelUtil.getChannel(this)));
-        //友盟  禁止默认的页面统计方式，这样将不会再自动统计Activity
-        MobclickAgent.openActivityDurationTrack(false);
-
-        //Udesk 初始化
-        UdeskSDKManager.getInstance().initApiKey(this, Config.UDESK_DOMAIN, Config.UDESK_SECRETKEY);
-
     }
 
-    public static void initImageLoader(Context context) {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+    private void initJpush() {
+        JPushInterface.setDebugMode(false);
+        JPushInterface.init(this);
+    }
+
+    private void initImageLoader() {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
                 .memoryCache(new WeakMemoryCache()).diskCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.FIFO).build();
         ImageLoader.getInstance().init(config);
     }
 
-    public static MyApplication getInstance() {
-        if (myApplication == null) {
-            myApplication = new MyApplication();
-        }
+    private void initMobclickAgent() {
+        //设置友盟渠道号
+        MobclickAgent.startWithConfigure(new MobclickAgent.UMAnalyticsConfig(this, "54cc3aedfd98c5b1d000039a", ChannelUtil.getChannel(this)));
+        //友盟  禁止默认的页面统计方式，这样将不会再自动统计Activity
+        MobclickAgent.openActivityDurationTrack(false);
+    }
 
+    private void initUdeskSDK() {
+        //Udesk 初始化
+        UdeskSDKManager.getInstance().initApiKey(this, Config.UDESK_DOMAIN, Config.UDESK_SECRETKEY);
+    }
+
+    private void initGrowingIO() {
+        try {
+            ApplicationInfo appInfo = this.getPackageManager()
+                    .getApplicationInfo(getPackageName(),
+                            PackageManager.GET_META_DATA);
+            String channelValue = appInfo.metaData.getString("com.growingio.android.GConfig.Channel");
+            GrowingIO.startWithConfiguration(this, new Configuration()
+                    .useID()
+                    .trackAllFragments()
+                    .setChannel(channelValue));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static MyApplication getInstance() {
         return myApplication;
     }
+
 }

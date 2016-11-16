@@ -56,6 +56,22 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
 
     @Override
     public void obtainData() {
+        // 暂预留
+        ICallback<CurrentDetailResult> iCallback = new ICallback<CurrentDetailResult>() {
+
+            @Override
+            public void onSucceed(CurrentDetailResult result) {
+            }
+
+            @Override
+            public void onFail(String error) {
+            }
+        };
+        swipeRefresh.setRefreshing(true);
+        requestData(iCallback);
+    }
+
+    public void requestData(final ICallback<CurrentDetailResult> iCallback) {
         if (inProcess) {
             return;
         }
@@ -63,8 +79,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
             inProcess = true;
         }
         begin();
-        swipeRefresh.setRefreshing(true);
-        HttpRequest.getCurrentDetail(mContext, subjectId, UserUtil.getUserId(CurrentDetailActivity.this), new ICallback<CurrentDetailResult>() {
+        HttpRequest.getCurrentDetail(getApplicationContext(), subjectId, UserUtil.getUserId(CurrentDetailActivity.this), new ICallback<CurrentDetailResult>() {
 
             @Override
             public void onSucceed(CurrentDetailResult result) {
@@ -75,6 +90,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
                     mInfo = result.getData();
                     showContentView();
                     updateUI();
+                    iCallback.onSucceed(result);
                 }
                 swipeRefresh.setRefreshing(false);
                 end();
@@ -85,12 +101,32 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                Uihelper.showToast(mContext, error);
+                if (null == mInfo) {
+                    showErrorView();
+                }
                 swipeRefresh.setRefreshing(false);
                 end();
-                Uihelper.showToast(mContext, error);
-                showErrorView();
             }
         });
+    }
+
+    /**
+     * 刷新 (已登录)用户在 该秒钱宝标的 下的 认购额度
+     */
+    public void refreshUserCurrentProjectInfo() {
+        ICallback<CurrentDetailResult> iCallback = new ICallback<CurrentDetailResult>() {
+
+            @Override
+            public void onSucceed(CurrentDetailResult result) {
+                jumpToNextPageIfInputValid();
+            }
+
+            @Override
+            public void onFail(String error) {
+            }
+        };
+        requestData(iCallback);
     }
 
     @Override
@@ -153,8 +189,8 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
 
         /** 标的项目期限 **/
         tv_time_limit.setTextSize(
-                TypedValue.COMPLEX_UNIT_SP,
-                getResources().getDimensionPixelSize(R.dimen.mq_font1_v2));
+                TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.mq_font8_v2));
         tv_time_limit.setText(projectInfo.getLimit());
         tv_time_limit_unit.setVisibility(View.GONE);
         /** 标的项目期限 **/
@@ -244,6 +280,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
                 btn_state.setText("待开标");
+                disableViewToLogin();
                 break;
             case RegularBase.STATE_5:
                 refreshUserMaxBuyAmount();
@@ -261,12 +298,14 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
                 tv_dialog_max_amount.setOnClickListener(null);
                 // 限制输入长度
                 et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getCurrentInfo().getResidueAmt().toString().length())});
+                enableViewToLogin();
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
                 btn_state.setText("已满额");
+                disableViewToLogin();
                 break;
         }
     }
@@ -326,7 +365,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
         }
         /** 用户认购额度大于最大可认购金额 **/
         else if (inputAmount.compareTo(rightLimit) == 1) {
-            Toast.makeText(getBaseContext(), "提示：请输入小于等于" + rightLimit + "元", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "提示：您的认购额已超过该标的最大限购额", Toast.LENGTH_SHORT).show();
         }
         /** 用户认购额度是否为 每份金额 的整数倍 **/
         else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
@@ -355,44 +394,6 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
         userMaxBuyAmount = getUpLimit(projectInfo.getSubjectMaxBuy(), projectInfo.getResidueAmt());
         userMaxBuyAmount = getUpLimit(userMaxBuyAmount, projectInfo.getUserSubjectRemainAmt());
         userMaxBuyAmount = getUpLimit(userMaxBuyAmount, projectInfo.getUserCurRemainAmt());
-    }
-
-    /**
-     * 刷新 (已登录)用户在 该秒钱宝标的 下的 认购额度
-     */
-    public void refreshUserCurrentProjectInfo() {
-        if (inProcess) {
-            return;
-        }
-        synchronized (mLock) {
-            inProcess = true;
-        }
-        begin();
-        HttpRequest.getCurrentDetail(mContext, subjectId, UserUtil.getUserId(CurrentDetailActivity.this), new ICallback<CurrentDetailResult>() {
-
-            @Override
-            public void onSucceed(CurrentDetailResult result) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                if (null != result && null != result.getData()) {
-                    mInfo = result.getData();
-                    showContentView();
-                    updateUI();
-                    jumpToNextPageIfInputValid();
-                }
-                end();
-            }
-
-            @Override
-            public void onFail(String error) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                end();
-                Uihelper.showToast(mContext, error);
-            }
-        });
     }
 
 }

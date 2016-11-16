@@ -3,6 +3,7 @@ package com.miqian.mq.activity.setting;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -247,14 +248,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onSucceed(Meta result) {
                 end();
-                UserUtil.clearUserInfo(mActivity);
+                UserUtil.clearUserInfo(getApplicationContext());
                 finish();
             }
 
             @Override
             public void onFail(String error) {
                 end();
-                UserUtil.clearUserInfo(mActivity);
+                UserUtil.clearUserInfo(getApplicationContext());
                 finish();
             }
         });
@@ -276,6 +277,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             userId = UserUtil.getUserId(mApplicationContext);
         } else {
             userId = MobileDeviceUtil.getInstance(mApplicationContext).getMobileImei();
+        }
+        if(TextUtils.isEmpty(userId)) {
+            userId = MobileDeviceUtil.getInstance(mApplicationContext).getUUID();
         }
         info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, userId);
         //以下注释的字段都是可选的字段， 有邮箱建议填写

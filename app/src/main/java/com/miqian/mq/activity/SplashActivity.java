@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.growingio.android.sdk.collection.GrowingIO;
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Advert;
 import com.miqian.mq.entity.ConfigInfo;
@@ -72,16 +73,20 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
     private void start() {
         loadConfig();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadFinish();
-            }
-        }, 1500);
+        myHandler.postDelayed(mRunnable, 1500);
     }
 
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            loadFinish();
+        }
+    };
+
+    private Handler myHandler = new Handler();
+
     private void loadConfig() {
-        HttpRequest.getConfig(SplashActivity.this, new ICallback<ConfigResult>() {
+        HttpRequest.getConfig(getApplicationContext(), new ICallback<ConfigResult>() {
             @Override
             public void onSucceed(ConfigResult result) {
                 ConfigInfo configInfo = result.getData();
@@ -91,12 +96,12 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                         String imgUrl;
                         if (Config.HEIGHT <= 1280) {
                             imgUrl = advert.getImgUrl_android1x();
-				        } else {
+                        } else {
                             imgUrl = advert.getImgUrl_android2x();
                         }
-                        Pref.saveString(Pref.CONFIG_ADS + "ImgUrl", imgUrl, SplashActivity.this);
+                        Pref.saveString(Pref.CONFIG_ADS + "ImgUrl", imgUrl, MyApplication.getInstance());
                         Pref.saveString(Pref.CONFIG_ADS + "JumpUrl", advert.getJumpUrl(), SplashActivity.this);
-                        loadImageAds(imgUrl, SplashActivity.this);
+                        loadImageAds(imgUrl);
                     } else {
                         Pref.saveInt(Pref.CONFIG_ADS, 0, SplashActivity.this);
                     }
@@ -118,7 +123,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onFail(String error) {
-
             }
         });
     }
@@ -156,22 +160,19 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onLoadingCancelled(String s, View view) {
-
             }
         });
     }
 
-    public void loadImageAds(String url, final Context context) {
+    public void loadImageAds(String url) {
         initImageLoader();
         imageLoader.loadImage(url, options, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
-
             }
 
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
-
             }
 
             @Override
@@ -181,7 +182,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onLoadingCancelled(String s, View view) {
-
             }
         });
     }
@@ -225,6 +225,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             timer = new Timer();
             TimerTask timerTask = new TimerTask() {
                 int i = 3;
+
                 @Override
                 public void run() {
                     handler.sendEmptyMessage(i--);
@@ -343,24 +344,19 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     }
 
     private int getScreen(int index) {
-        int id = R.drawable.screen1;
         switch (index) {
             case 0:
-                id = R.drawable.screen1;
-                break;
+                return R.drawable.screen1;
             case 1:
-                id = R.drawable.screen2;
-                break;
+                return R.drawable.screen2;
             case 2:
-                id = R.drawable.screen3;
-                break;
+                return R.drawable.screen3;
             case 3:
-                id = R.drawable.screen4;
-                break;
+                return R.drawable.screen4;
+            default:
+                return R.drawable.screen1;
         }
-        return id;
     }
-
 
     @Override
     protected void onResume() {
@@ -382,5 +378,8 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             timer = null;
         }
         ShareSDK.stopSDK(this);
+        myHandler.removeCallbacks(mRunnable);
+        myHandler = null;
+        mRunnable = null;
     }
 }

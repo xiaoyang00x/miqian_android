@@ -30,7 +30,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     public WFYTitle mTitle;
     public Activity mActivity;
     public LinearLayout mViewnoresult;
-    public Dialog mWaitingDialog;
+    public ProgressDialogView progressDialogView;
     public ImageLoader imageLoader;
     public DisplayImageOptions options;
     private TextView tvTips;
@@ -41,12 +41,11 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         super.onCreate(arg0);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_base);
-        initCotentView();
+        initContentView();
         mActivity = this;
         imageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         mTitle = (WFYTitle) findViewById(R.id.wFYTitle);
-        mWaitingDialog = ProgressDialogView.create(mActivity);
 
         mViewnoresult = (LinearLayout) findViewById(R.id.frame_no_data);
 
@@ -73,13 +72,11 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         //增加栈管理器
         ActivityStack.getActivityStack().pushActivity(this);
         //设置不在主页
-        MyApplication.getInstance().setIsOnMainAcitivity(false);
+        MyApplication.setIsOnMainAcitivity(false);
     }
 
     //获得数据
-    public abstract void obtainData(
-
-    );
+    public abstract void obtainData();
 
     public abstract void initView();
 
@@ -87,7 +84,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
 
     public abstract void initTitle(WFYTitle mTitle);
 
-    private void initCotentView() {
+    private void initContentView() {
         mContentView = (LinearLayout) findViewById(R.id.content);
         if (getLayoutId() == 0) {
             return;
@@ -106,6 +103,10 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     protected void onDestroy() {
         //推出Activity
         ActivityStack.getActivityStack().popActivity(this);
+        if (progressDialogView != null) {
+            progressDialogView.destroy();
+            progressDialogView = null;
+        }
         super.onDestroy();
     }
 
@@ -118,17 +119,18 @@ public abstract class BaseActivity extends BaseFragmentActivity {
      * 显示 loading 对话框
      */
     protected void begin() {
-        if (mWaitingDialog != null) {
-            mWaitingDialog.show();
+        if (progressDialogView == null) {
+            progressDialogView = new ProgressDialogView(this);
         }
+        progressDialogView.show();
     }
 
     /**
      * 显示 loading 对话框
      */
     protected void end() {
-        if (mWaitingDialog != null && mWaitingDialog.isShowing()) {
-            mWaitingDialog.dismiss();
+        if (progressDialogView != null) {
+            progressDialogView.dismiss();
         }
     }
 
@@ -174,12 +176,11 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         if (MobileOS.getNetworkType(mContext) == -1) {
             tvTips.setText("暂时没有网络");
             ivData.setBackgroundResource(R.drawable.nonetwork);
-        }else {
+        } else {
             tvTips.setText("数据获取失败，请重新获取");
             ivData.setBackgroundResource(R.drawable.error_data);
         }
     }
-
 
 
 }

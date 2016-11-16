@@ -18,9 +18,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.Dialog_Login;
 import com.miqian.mq.views.MQMarqueeTextView;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -78,6 +84,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     protected EditText et_input;
     protected Button btn_buy;
     protected View view_close_keyboard;
+    protected View view_to_login; // 未登录情况下底部显示透明view 点击触发引导登录
     protected RelativeLayout rlyt_input; // 底部状态:立即认购输入框
     protected RelativeLayout rlyt_dialog;
     protected TextView tv_dialog_min_amount; // 起投金额
@@ -132,8 +139,6 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         return R.layout.activity_regular_detail;
     }
 
-    public abstract void jumpToNextPageIfInputValid();
-
     @Override
     public void initView() {
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
@@ -161,6 +166,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         tv3 = (TextView) findViewById(R.id.tv_3);
 
         rlyt_dialog = (RelativeLayout) findViewById(R.id.rlyt_dialog);
+        view_to_login = findViewById(R.id.view_to_login);
         et_input = (EditText) findViewById(R.id.et_input);
         rlyt_input = (RelativeLayout) findViewById(R.id.rlyt_input);
         btn_buy = (Button) findViewById(R.id.btn_buy);
@@ -188,11 +194,11 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!UserUtil.hasLogin(ProjectDetailActivity.this)) {
-                    UserUtil.showLoginDialog(ProjectDetailActivity.this);
-                } else {
-                    jumpToNextPageIfInputValid();
-                }
+//                if (!UserUtil.hasLogin(ProjectDetailActivity.this)) {
+//                    UserUtil.showLoginDialog(ProjectDetailActivity.this);
+//                } else {
+                jumpToNextPageIfInputValid();
+//                }
             }
         });
         et_input.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +208,8 @@ public abstract class ProjectDetailActivity extends BaseActivity {
             }
         });
     }
+
+    public abstract void jumpToNextPageIfInputValid();
 
     protected View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
         @Override
@@ -216,7 +224,6 @@ public abstract class ProjectDetailActivity extends BaseActivity {
             }
         }
     };
-
 
     protected MySwipeRefresh.OnPullRefreshListener mOnPullRefreshListener = new MySwipeRefresh.OnPullRefreshListener() {
         @Override
@@ -289,6 +296,62 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         } else {
             tv_festival.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 用户未登录状态下 已开标 未满额状态下 在输入框上蒙一层view，点击view先去登录
+     * 用户已登录状态下 则没有此view
+     */
+    protected void enableViewToLogin() {
+        if (UserUtil.hasLogin(ProjectDetailActivity.this)) {
+            return;
+        }
+        view_to_login.setVisibility(View.VISIBLE);
+        view_to_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserUtil.hasLogin(ProjectDetailActivity.this)) {
+                    return;
+                }
+                showLoginDialog();
+            }
+        });
+    }
+
+    /**
+     * 已满额 待开标状态下隐藏view
+     */
+    protected void disableViewToLogin() {
+        view_to_login.setVisibility(View.GONE);
+        view_to_login.setOnClickListener(null);
+    }
+
+    /**
+     * 显示登录对话框 提示用户登录
+     */
+    protected void showLoginDialog() {
+        Dialog_Login dialog_login = new Dialog_Login(ProjectDetailActivity.this) {
+            @Override
+            public void login(String telephone, String password) {
+                HttpRequest.login(getApplicationContext(), new ICallback<LoginResult>() {
+                    @Override
+                    public void onSucceed(LoginResult result) {
+                        dismiss();
+                        view_to_login.setVisibility(View.GONE);
+                        if (Pref.getBoolean(Pref.GESTURESTATE, ProjectDetailActivity.this, true)) {
+                            GestureLockSetActivity.startActivity(ProjectDetailActivity.this, null, false);
+                        }
+                        obtainData();
+                    }
+
+                    @Override
+                    public void onFail(String error) {
+                        Uihelper.showToast(ProjectDetailActivity.this, error);
+                    }
+                }, telephone, password);
+            }
+        };
+        dialog_login.show();
     }
 
     /**

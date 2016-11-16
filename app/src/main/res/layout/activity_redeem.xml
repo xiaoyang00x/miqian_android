@@ -28,7 +28,7 @@
             style="@style/edittext_item"
             android:layout_height="match_parent"
             android:numeric="decimal"
-            android:paddingLeft="5dp"></EditText>
+            android:paddingLeft="5dp"/>
        </LinearLayout>
 
         <View style="@style/item_divider"
@@ -51,7 +51,7 @@
                 android:text=""
                 android:gravity="center_vertical"
                 android:textSize="@dimen/mq_font2"
-                android:paddingLeft="5dp"></TextView>
+                android:paddingLeft="5dp"/>
         </LinearLayout>
         <View style="@style/item_divider"
             android:layout_marginRight="0dp" />

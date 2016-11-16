@@ -166,7 +166,6 @@ public class UserUtil {
         growingIO.setCS1("user_id", "");
         growingIO.setCS2("user_class", "");
 
-
         logout();
     }
 
@@ -269,6 +268,18 @@ public class UserUtil {
             intent.putExtra("realMoney", realMoney);
             activity.startActivity(intent);
         }
+    }
+
+    public static void updateFromServer(Context context) {
+        HttpRequest.getUserInfo(context, new ICallback<LoginResult>() {
+            @Override
+            public void onSucceed(LoginResult result) {
+            }
+
+            @Override
+            public void onFail(String error) {
+            }
+        });
     }
 
     //  显示认购额度

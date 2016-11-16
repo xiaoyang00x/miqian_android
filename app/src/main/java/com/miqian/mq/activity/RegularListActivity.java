@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -101,15 +102,19 @@ public class RegularListActivity extends BaseActivity {
     private ArrayList<RegularBaseData> mList;
 
     private void handleSuccessResult(GetRegularResult result) {
-        if (result == null || result.getData() == null ||
-                (mList = result.getData().getSubjectData()) == null ||
+        if (result == null || result.getData() == null) {
+            return;
+        }
+        if (!TextUtils.isEmpty(result.getData().getFitSubjectDesc())) {
+            tv_description.setText(result.getData().getFitSubjectDesc());
+        }
+        if ((mList = result.getData().getSubjectData()) == null ||
                 mList.size() <= 0) {
             return;
         }
         for (RegularBaseData info : mList) {
             mAdapter.add(info);
         }
-        tv_description.setText(result.getData().getFitSubjectDesc());
         mAdapter.notifyDataSetChanged();
     }
 

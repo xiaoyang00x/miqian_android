@@ -16,7 +16,7 @@ public abstract class BasicFragment extends Fragment {
     protected Context mContext;
     protected Context mApplicationContext;
     protected Activity mActivity;
-    private Dialog mWaitingDialog;
+    private ProgressDialogView progressDialogView;
 
     @Override
     public void onAttach(Activity activity) {
@@ -27,16 +27,16 @@ public abstract class BasicFragment extends Fragment {
     }
 
     protected void begin() {
-        if (mWaitingDialog == null) {
-            mWaitingDialog = ProgressDialogView.create(getActivity());
+        if (progressDialogView == null) {
+            progressDialogView = new ProgressDialogView(getActivity());
         }
-        if (!mWaitingDialog.isShowing())
-            mWaitingDialog.show();
+        progressDialogView.show();
     }
 
     protected void end() {
-        if (mWaitingDialog != null && mWaitingDialog.isShowing())
-            mWaitingDialog.dismiss();
+        if (progressDialogView != null) {
+            progressDialogView.dismiss();
+        }
     }
 
     @Override

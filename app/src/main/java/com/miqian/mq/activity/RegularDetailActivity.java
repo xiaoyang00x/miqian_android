@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
+import com.miqian.mq.entity.CurrentDetailResult;
 import com.miqian.mq.entity.CurrentProjectInfo;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularDetailResult;
@@ -83,6 +84,22 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
     // 获取数据:定期项目
     @Override
     public void obtainData() {
+        // 暂预留
+        ICallback<RegularDetailResult> iCallback = new ICallback<RegularDetailResult>() {
+
+            @Override
+            public void onSucceed(RegularDetailResult result) {
+            }
+
+            @Override
+            public void onFail(String error) {
+            }
+        };
+        swipeRefresh.setRefreshing(true);
+        requestData(iCallback);
+    }
+
+    public void requestData(final ICallback<RegularDetailResult> iCallback) {
         if (inProcess) {
             return;
         }
@@ -90,8 +107,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
             inProcess = true;
         }
         begin();
-        swipeRefresh.setRefreshing(true);
-        HttpRequest.getRegularDetail(mContext, subjectId, prodId, UserUtil.getUserId(RegularDetailActivity.this), new ICallback<RegularDetailResult>() {
+        HttpRequest.getRegularDetail(getApplicationContext(), subjectId, prodId, UserUtil.getUserId(RegularDetailActivity.this), new ICallback<RegularDetailResult>() {
 
             @Override
             public void onSucceed(RegularDetailResult result) {
@@ -113,12 +129,32 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 synchronized (mLock) {
                     inProcess = false;
                 }
+                Uihelper.showToast(mContext, error);
+                if (null == mInfo) {
+                    showErrorView();
+                }
                 swipeRefresh.setRefreshing(false);
                 end();
-                Uihelper.showToast(mContext, error);
-                showErrorView();
             }
         });
+    }
+
+    /**
+     * 刷新 (已登录)用户在 该定期标的 下的 认购额度
+     */
+    protected void refreshUserRegularProjectInfo() {
+        ICallback<RegularDetailResult> iCallback = new ICallback<RegularDetailResult>() {
+
+            @Override
+            public void onSucceed(RegularDetailResult result) {
+                jumpToNextPageIfInputValid();
+            }
+
+            @Override
+            public void onFail(String error) {
+            }
+        };
+        requestData(iCallback);
     }
 
     protected void updateUI() {
@@ -280,6 +316,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
                 btn_state.setText("待开标");
+                disableViewToLogin();
                 break;
             case RegularBase.STATE_5:
                 refreshUserMaxBuyAmount();
@@ -298,12 +335,14 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 tv_dialog_max_amount.setOnClickListener(mOnclickListener);
                 // 限制输入长度
                 et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
+                enableViewToLogin();
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
                 btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
                 btn_state.setText("已满额");
+                disableViewToLogin();
                 break;
         }
     }
@@ -343,15 +382,14 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
 
         /** 用户认购额度小于起始金额 **/
         if (inputAmount.compareTo(leftLimit) == -1) {
-            /** 用户认购额度 为当前可认购的最大金额时（此额度小于起始金额） 则可以让用户认购 **/
-            if (inputAmount.compareTo(rightLimit) == 0) {
-            } else {
+            /** 用户认购额度 为当前可认购的最大金额时（此额度小于起始金额） 则可以让用户认购 否则提示错误**/
+            if (inputAmount.compareTo(rightLimit) != 0) {
                 Toast.makeText(getBaseContext(), "提示：" + leftLimit + "元起投", Toast.LENGTH_SHORT).show();
             }
         }
         /** 用户认购额度大于最大可认购金额 **/
         else if (inputAmount.compareTo(rightLimit) == 1) {
-            Toast.makeText(getBaseContext(), "提示：请输入小于等于" + rightLimit + "元", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "提示：您的认购额已超过该标的最大限购额", Toast.LENGTH_SHORT).show();
         }
         /** 用户认购额度是否为 每份金额 的整数倍 **/
         else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
@@ -375,46 +413,6 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
         }
         userMaxBuyAmount = getUpLimit(mInfo.getSubjectMaxBuy(), mInfo.getResidueAmt());
         userMaxBuyAmount = getUpLimit(userMaxBuyAmount, mInfo.getUserSubjectRemainAmt());
-    }
-
-    protected void refreshUserRegularProjectInfo() {
-        if (inProcess) {
-            return;
-        }
-        synchronized (mLock) {
-            inProcess = true;
-        }
-        begin();
-        swipeRefresh.setRefreshing(true);
-        HttpRequest.getRegularDetail(mContext, subjectId, prodId, UserUtil.getUserId(RegularDetailActivity.this), new ICallback<RegularDetailResult>() {
-
-            @Override
-            public void onSucceed(RegularDetailResult result) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                if (null != result || null != result.getData()
-                        || null != result.getData().getSubjectData()) {
-                    showContentView();
-                    mInfo = result.getData().getSubjectData();
-                    updateUI();
-                    jumpToNextPageIfInputValid();
-                }
-                swipeRefresh.setRefreshing(false);
-                end();
-            }
-
-            @Override
-            public void onFail(String error) {
-                synchronized (mLock) {
-                    inProcess = false;
-                }
-                swipeRefresh.setRefreshing(false);
-                end();
-                Uihelper.showToast(mContext, error);
-                showErrorView();
-            }
-        });
     }
 
 }

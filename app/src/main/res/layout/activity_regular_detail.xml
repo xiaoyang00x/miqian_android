@@ -145,6 +145,8 @@
                         android:layout_alignBaseline="@+id/tv_profit_rate"
                         android:layout_alignLeft="@+id/temp2"
                         android:layout_below="@+id/temp2"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:text="60"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mq_font15_v2"
@@ -474,6 +476,12 @@
             android:layout_alignParentTop="true"
             android:background="@color/mq_b6_v2" />
 
+        <View
+            android:id="@+id/view_to_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/btn_state"
             android:layout_width="match_parent"
@@ -483,6 +491,5 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-
 
 </RelativeLayout>

@@ -80,7 +80,7 @@ public class RegularProjectDetailActivity extends RegularDetailActivity {
 
         content.removeAllViews();
 
-        LayoutInflater mInflater = LayoutInflater.from(getBaseContext());
+        LayoutInflater mInflater = LayoutInflater.from(getApplicationContext());
         int count = mList.size() > 4 ? 4 : mList.size();
         for (int index = 0; index < count; index++) {
             RegularEarnDetail detail = mList.get(index);

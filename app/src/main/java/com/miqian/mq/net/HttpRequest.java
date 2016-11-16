@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.activity.WebHFActivity;
 import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -204,7 +205,7 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
                 if (loginResult.getCode().equals("000000")) {
-                    UserUtil.saveUserInfo(context, loginResult.getData());
+                    UserUtil.saveUserInfo(MyApplication.getInstance(), loginResult.getData());
                     UserUtil.saveHfInfo(context, loginResult.getData());
                     callback.onSucceed(loginResult);
                 } else {
@@ -928,11 +929,11 @@ public class HttpRequest {
      * 我的促销接口，包括红包，拾财券等
      * 促销券使用状态status: 0可使用,1使用完,2已过期,3赠送
      */
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String status, String pageNum, String pageSize) {
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String status, String pageNo, String pageSize) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("status", status));
-        mList.add(new Param("pageNum", pageNum));
+        mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
         new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {
 
