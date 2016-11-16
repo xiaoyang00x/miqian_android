@@ -20,6 +20,8 @@ import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
+import java.util.Locale;
+
 /**
  * Created by TLT on 2016/6/16.
  * <p/>
@@ -232,9 +234,9 @@ public class MyRegularTransferDetailActivity extends BaseActivity implements Vie
         long minute = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000) / (60 * 1000);
         long second = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - minute * 60 * 1000) / 1000;
         return new StringBuilder("结束时间:").
-                append(String.format("%02d", day)).append("天").
-                append(String.format("%02d", hour)).append("时").
-                append(String.format("%02d", minute)).append("分").
-                append(String.format("%02d", second)).append("秒");
+                append(String.format(Locale.getDefault(), "%02d", day)).append("天").
+                append(String.format(Locale.getDefault(), "%02d", hour)).append("时").
+                append(String.format(Locale.getDefault(), "%02d", minute)).append("分").
+                append(String.format(Locale.getDefault(), "%02d", second)).append("秒");
     }
 }

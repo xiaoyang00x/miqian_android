@@ -1,6 +1,7 @@
 package com.miqian.mq.views.progresssbar;
 
 import java.lang.ref.WeakReference;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -269,7 +270,7 @@ public class WaterWaveProgress extends View {
 			waveHeight = newWaveHeight;
 		}
 		if (mShowNumerical) {
-			String progressTxt = String.format("%.0f", (mProgress*1f) / mMaxProgress
+			String progressTxt = String.format(Locale.getDefault(), "%.0f", (mProgress * 1f) / mMaxProgress
 					* 100f)
 					+ "%";
 			float mTxtWidth = mTextPaint.measureText(progressTxt, 0,

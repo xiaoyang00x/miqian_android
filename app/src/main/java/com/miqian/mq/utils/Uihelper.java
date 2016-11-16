@@ -180,11 +180,11 @@ public class Uihelper {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         return new StringBuilder().
-                append(String.format("%02d", month)).append("月").
-                append(String.format("%02d", day)).append("日").
+                append(String.format(Locale.getDefault(), "%02d", month)).append("月").
+                append(String.format(Locale.getDefault(), "%02d", day)).append("日").
                 append(" ").
-                append(String.format("%02d", hour)).append(":").
-                append(String.format("%02d", minute)).append("发售").toString();
+                append(String.format(Locale.getDefault(), "%02d", hour)).append(":").
+                append(String.format(Locale.getDefault(), "%02d", minute)).append("发售").toString();
     }
 
     /**
