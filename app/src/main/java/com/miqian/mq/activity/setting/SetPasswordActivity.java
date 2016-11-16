@@ -1,23 +1,17 @@
 package com.miqian.mq.activity.setting;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
-import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
-
-
 /**
  * Description:设置密码
  *
@@ -129,6 +123,7 @@ public class SetPasswordActivity extends BaseActivity {
                 public void onSucceed(Meta result) {
                     end();
                     Uihelper.showToast(mActivity, "成功修改密码");
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
                     SetPasswordActivity.this.finish();
                 }
 

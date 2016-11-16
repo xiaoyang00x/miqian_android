@@ -244,7 +244,7 @@ public class SendCaptchaActivity extends BaseActivity {
                     public void onSucceed(Meta result) {
                         end();
                         Uihelper.showToast(mActivity, "绑定成功");
-                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.MODIFYPHONE, phone);
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
                         finish();
                     }
 
