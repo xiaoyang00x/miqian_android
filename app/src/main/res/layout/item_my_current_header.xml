@@ -164,9 +164,35 @@
             android:text="项目匹配"
             android:textColor="@color/mq_b1_v2"
             android:textSize="@dimen/mq_font7_v2" />
+        <ImageView
+            style="@style/WrapContent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/right" />
 
     </RelativeLayout>
     <View style="@style/item_divider_no_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right"
+        android:textSize="@dimen/mq_font4_v2"
+        android:textColor="@color/mq_b4_v2"
+        android:textStyle="bold"
+        android:text="温馨提示："
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_left_right"
+        android:paddingRight="@dimen/margin_left_right"
+        android:textSize="@dimen/mq_font4_v2"
+        android:textColor="@color/mq_b4_v2"
+        android:text="在投收益，因为匹配项目还款日不同，将不定期付息，并归还至账户余额。"
+        />
 
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.ConfigResult;
 import com.miqian.mq.entity.CurrentDetailResult;
+import com.miqian.mq.entity.CurrentMathProjectResult;
 import com.miqian.mq.entity.CurrentProjectResult;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.GetHomeActivityResult;
@@ -701,6 +702,32 @@ public class HttpRequest {
                     callback.onSucceed(userCurrentResult);
                 } else {
                     callback.onFail(userCurrentResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 我的秒钱宝--项目匹配
+     */
+    public static void getCurrentProjectMath(Context context, final ICallback<CurrentMathProjectResult> callback) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.user_current_project_math, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                CurrentMathProjectResult currentMathProjectResult = JsonUtil.parseObject(result, CurrentMathProjectResult.class);
+                if (currentMathProjectResult.getCode().equals("000000")) {
+                    callback.onSucceed(currentMathProjectResult);
+                } else {
+                    callback.onFail(currentMathProjectResult.getMessage());
                 }
             }
 

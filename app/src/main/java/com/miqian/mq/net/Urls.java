@@ -117,6 +117,8 @@ public class Urls {
     public final static String loginOut = base_server + "userService/logout";
     //我的秒钱宝
     public final static String user_current = base_server + "deposit/mine/getMineCurrentMain";
+    //我的秒钱宝-项目匹配
+    public final static String user_current_project_math = base_server + "deposit/current/getUserCurrentProject";
     //我的定期
     public final static String user_regular = base_server + "deposit/mine/getMineProductList";//userRegService/v2/getMyRegBuyList
     //我的定期详情
@@ -181,6 +183,9 @@ public class Urls {
     public final static String web_transfer_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
     //发起转让页面：可转金额说明
     public final static String web_transferamt_expaint = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
+
+    //我的秒钱宝匹配的项目详情
+    public final static String web_math_project_details = base_server + "deposit/webView/toProjectPage/";
 
     //秒钱包详情
     public final static String web_current_detail = base_server + "deposit/webView/productInfo/";

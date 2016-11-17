@@ -22,13 +22,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_name"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/layout_principal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_weight="1">
 
             <TextView
@@ -45,8 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/lable_principal"
-                android:layout_below="@id/lable_principal"
-                android:textColor="@color/mq_r1_v2"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/mq_b2_v2"
                 android:textSize="@dimen/mq_font9_v2"
                 android:textStyle="bold" />
 
@@ -57,66 +57,37 @@
                 android:layout_alignBaseline="@+id/tv_principal"
                 android:layout_toRightOf="@+id/tv_principal"
                 android:text="元"
-                android:textColor="@color/mq_r1_v2"
-                android:textSize="@dimen/mq_font5_v2" />
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/layout_collect_earnings"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/lable_collect_earnings"
+                android:id="@+id/tv_view_notes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:text="待收收益"
-                android:textColor="@color/mq_b4_v2"
-                android:textSize="@dimen/mq_font3_v2" />
-
-            <TextView
-                android:id="@+id/tv_collect_earnings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/lable_collect_earnings"
-                android:layout_below="@id/lable_collect_earnings"
-                android:textColor="@color/mq_r1_v2"
-                android:textSize="@dimen/mq_font9_v2"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_collect_earnings_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/tv_collect_earnings"
-                android:layout_toRightOf="@id/tv_collect_earnings"
-                android:text="元"
-                android:textColor="@color/mq_r1_v2"
+                android:singleLine="true"
+                android:layout_alignParentBottom="true"
+                android:text="查看认购记录>>"
+                android:textColor="@color/mq_bl4_v2"
                 android:textSize="@dimen/mq_font5_v2" />
         </RelativeLayout>
 
     </LinearLayout>
 
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/layout_main_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/horizontal_dotted_line" />
-
     <TextView
         android:id="@+id/tv_next_due_date"
         android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/line"
+        android:layout_below="@id/layout_main_content"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
@@ -125,18 +96,6 @@
         android:textSize="@dimen/mq_font3_v2"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_view_notes"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/line"
-        android:gravity="center_vertical|right"
-        android:paddingRight="15dp"
-        android:singleLine="true"
-        android:text="查看认购记录>>"
-        android:textColor="@color/mq_bl4_v2"
-        android:textSize="@dimen/mq_font3_v2" />
 
     <RelativeLayout
         android:id="@+id/divider"
