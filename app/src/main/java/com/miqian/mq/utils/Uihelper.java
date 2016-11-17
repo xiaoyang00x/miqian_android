@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 
 import java.text.ParseException;
@@ -22,9 +23,9 @@ public class Uihelper {
     private static Toast mToast;
     public static final String RFC3339 = "yyyy-MM-dd HH:mm:ss";
 
-    private static void initToast(Context context) {
+    private static void initToast() {
         if (mToast == null) {
-            mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(MyApplication.getInstance(), "", Toast.LENGTH_SHORT);
         }
     }
 
@@ -32,7 +33,7 @@ public class Uihelper {
         if (context == null) {
             return;
         }
-        initToast(context);
+        initToast();
         if (!TextUtils.isEmpty(content)) {
             mToast.setText(content);
             mToast.show();
@@ -43,7 +44,7 @@ public class Uihelper {
         if (context == null) {
             return;
         }
-        initToast(context);
+        initToast();
         mToast.setText(id);
         mToast.show();
     }
@@ -179,11 +180,11 @@ public class Uihelper {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         return new StringBuilder().
-                append(String.format("%02d", month)).append("月").
-                append(String.format("%02d", day)).append("日").
+                append(String.format(Locale.getDefault(), "%02d", month)).append("月").
+                append(String.format(Locale.getDefault(), "%02d", day)).append("日").
                 append(" ").
-                append(String.format("%02d", hour)).append(":").
-                append(String.format("%02d", minute)).append("发售").toString();
+                append(String.format(Locale.getDefault(), "%02d", hour)).append(":").
+                append(String.format(Locale.getDefault(), "%02d", minute)).append("发售").toString();
     }
 
     /**

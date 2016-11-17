@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -263,7 +264,7 @@ public class CustomFeedBackActivity extends BaseActivity {
 				if (nextReply.created_at - reply.created_at > 100000) {
 					Date replyTime = new Date(reply.created_at);
 					SimpleDateFormat sdf = new SimpleDateFormat(
-							"yyyy-MM-dd HH:mm:ss");
+							"yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 					holder.replyData.setText(sdf.format(replyTime));
 					holder.replyData.setVisibility(View.VISIBLE);
 				}

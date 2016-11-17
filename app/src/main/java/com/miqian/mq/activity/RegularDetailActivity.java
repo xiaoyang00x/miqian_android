@@ -313,17 +313,15 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
             case RegularBase.STATE_4:
                 tv_begin_countdown.setVisibility(View.VISIBLE);
                 tv_begin_countdown.setText(Uihelper.timeToDateRegular(mInfo.getStartTimestamp()));
-                btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_bl3_v2));
                 btn_state.setText("待开标");
-                disableViewToLogin();
+                showStateButton();
+                hideInputEditText();
+                hideViewToLogin();
                 break;
             case RegularBase.STATE_5:
                 refreshUserMaxBuyAmount();
                 tv_begin_countdown.setVisibility(View.GONE);
-                rlyt_dialog.setOnTouchListener(mOnTouchListener);
-                rlyt_input.setOnTouchListener(mOnTouchListener);
-                btn_state.setVisibility(View.GONE);
                 tv_dialog_min_amount.setText(FormatUtil.formatAmount(mInfo.getFromInvestmentAmount()));
                 addUnit(tv_dialog_min_amount);
                 tv_dialog_min_amount.setOnClickListener(mOnclickListener);
@@ -335,14 +333,22 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 tv_dialog_max_amount.setOnClickListener(mOnclickListener);
                 // 限制输入长度
                 et_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mInfo.getResidueAmt().toString().length())});
-                enableViewToLogin();
+                if (UserUtil.hasLogin(getApplicationContext())) {
+                    enableInputEditText();
+                    hideViewToLogin();
+                } else {
+                    showViewToLogin();
+                    disableInputEditText();
+                }
+                hideStateButton();
                 break;
             default:
                 tv_begin_countdown.setVisibility(View.GONE);
-                btn_state.setVisibility(View.VISIBLE);
                 btn_state.setBackgroundColor(getResources().getColor(R.color.mq_b5_v2));
                 btn_state.setText("已满额");
-                disableViewToLogin();
+                showStateButton();
+                hideInputEditText();
+                hideViewToLogin();
                 break;
         }
     }
