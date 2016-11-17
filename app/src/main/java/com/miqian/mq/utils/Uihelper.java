@@ -29,10 +29,7 @@ public class Uihelper {
         }
     }
 
-    public static void showToast(final Context context, final String content) {
-        if (context == null) {
-            return;
-        }
+    public static void showToast(Context context, final String content) {
         initToast();
         if (!TextUtils.isEmpty(content)) {
             mToast.setText(content);
@@ -40,32 +37,10 @@ public class Uihelper {
         }
     }
 
-    public static void showToast(final Context context, int id) {
-        if (context == null) {
-            return;
-        }
+    public static void showToast(Context context, int id) {
         initToast();
         mToast.setText(id);
         mToast.show();
-    }
-
-    public static int getMessageCount(int code, Context context) {
-        String key = "";
-        if (!UserUtil.hasLogin(context)) {
-            key = Pref.MESSAGE_READ + Pref.VISITOR;
-        } else {
-            key = Pref.MESSAGE_READ + Pref.getString(Pref.USERID, context, Pref.VISITOR);
-        }
-        int message = Pref.getInt(key, context, 0);
-        if (code == 1) {
-            message += 1;
-        } else if (code == -1) {
-            message -= 1;
-        } else if (code == 0) {
-            message = 0;
-        }
-        Pref.saveInt(key, message, context);
-        return message;
     }
 
     /**

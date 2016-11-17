@@ -6,10 +6,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
         <LinearLayout
@@ -31,8 +30,32 @@
             android:paddingLeft="5dp"/>
        </LinearLayout>
 
-        <View style="@style/item_divider"
-            android:layout_marginRight="0dp" />
+        <TextView
+            android:id="@+id/tv_extra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/mq_font4_v2"
+            android:textColor="@color/mq_b4_v2"
+            android:text=""
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/tip_redeem"
+            />
+
+        <com.miqian.mq.views.TextViewEx
+            android:id="@+id/tv_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/mq_font4_v2"
+            android:textColor="@color/mq_b4_v2"
+            android:text=""
+            android:layout_marginLeft="42dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="5dp"
+             />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/listitem_height"
@@ -113,28 +136,6 @@
                 android:onClick="btn_click"
                 android:text="赎回" />
         </RelativeLayout>
-
-        <com.miqian.mq.views.TextViewEx
-            android:id="@+id/tv_extra"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:text=""
-            android:textColor="@color/mq_b4_v2"
-            android:textSize="@dimen/mq_font3_v2" />
-
-        <com.miqian.mq.views.TextViewEx
-            android:id="@+id/tv_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:text=""
-            android:textColor="@color/mq_b4_v2"
-            android:textSize="@dimen/mq_font3_v2" />
-
     </LinearLayout>
 
 </RelativeLayout>

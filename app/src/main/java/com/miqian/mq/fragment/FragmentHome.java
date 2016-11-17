@@ -136,6 +136,11 @@ public class FragmentHome extends BasicFragment implements MainActivity.RefeshDa
         super.onDestroy();
         adapter = null;
         mDatas = null;
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+            timerTask = null;
+        }
     }
 
     private void findView(View view) {

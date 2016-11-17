@@ -44,7 +44,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
     private String money;
     private Button btnRollout;
     private TextViewEx tvTip;
-    private TextViewEx tvExtra;
+    private TextView tvExtra;
     private UserCurrentData userCurrentData;
     private BigDecimal resideMoney;//可赎回金额
     private BigDecimal curResidue;//本月剩余可赎回额度
@@ -122,7 +122,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
     public void initView() {
         editMoney = (EditText) findViewById(R.id.edit_money);
         btnRollout = (Button) findViewById(R.id.bt_redeem);
-        tvExtra = (TextViewEx) findViewById(R.id.tv_extra);
+        tvExtra = (TextView) findViewById(R.id.tv_extra);
         tvTip = (TextViewEx) findViewById(R.id.tv_tip);
         tvPhone = (TextView) findViewById(R.id.tv_phone);
         mBtn_sendCaptcha = (Button) findViewById(R.id.btn_send);
