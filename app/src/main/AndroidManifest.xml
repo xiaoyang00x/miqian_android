@@ -102,6 +102,10 @@
             android:name=".activity.current.SubscriptionRecordsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.current.ActivityProjectMath"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.user.UserRegularDetailActivity"
