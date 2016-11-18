@@ -391,22 +391,23 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
             /** 用户认购额度 为当前可认购的最大金额时（此额度小于起始金额） 则可以让用户认购 否则提示错误**/
             if (inputAmount.compareTo(rightLimit) != 0) {
                 Toast.makeText(getBaseContext(), "提示：" + leftLimit + "元起投", Toast.LENGTH_SHORT).show();
+                return;
             }
         }
         /** 用户认购额度大于最大可认购金额 **/
         else if (inputAmount.compareTo(rightLimit) == 1) {
             Toast.makeText(getBaseContext(), "提示：您的认购额已超过该标的最大限购额", Toast.LENGTH_SHORT).show();
+            return;
         }
         /** 用户认购额度是否为 每份金额 的整数倍 **/
         else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
             Toast.makeText(getBaseContext(), "提示：请输入" + perAmount + "的整数倍", Toast.LENGTH_SHORT).show();
+            return;
         }
         /** 用户认购额度满足条件 进入下个页面 **/
-        else {
-            String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
-            UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString);
-            et_input.setText("");
-        }
+        String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
+        UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString);
+        et_input.setText("");
     }
 
     /**
