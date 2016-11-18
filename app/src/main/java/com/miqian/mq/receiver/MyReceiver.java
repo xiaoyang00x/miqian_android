@@ -100,7 +100,7 @@ public class MyReceiver extends BroadcastReceiver {
                 notificationIntent = new Intent(context, SplashActivity.class);
                 Pref.saveBoolean(Pref.IsPush, true, context);
                 if ("2".equals(response.getPushSource())) {//未登录的用户,从本地读取消息
-                    Pref.saveBoolean(Pref.FROM_NATIVE+response.getId(), true, context);
+                    Pref.saveBoolean(Pref.FROM_NATIVE + response.getId(), true, context);
                 }
             } else {
                 if (TextUtils.isEmpty(string_uritype)) {
@@ -142,12 +142,8 @@ public class MyReceiver extends BroadcastReceiver {
                         } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(ext);
-                                if (jsonObject != null) {
-                                    String url = jsonObject.getString("url");
-                                    notificationIntent = WebActivity.getIntent(context, url);
-                                } else {
-                                    notificationIntent = new Intent(context, MainActivity.class);
-                                }
+                                String url = jsonObject.getString("url");
+                                notificationIntent = WebActivity.getIntent(context, url);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -158,7 +154,7 @@ public class MyReceiver extends BroadcastReceiver {
                     case 56://活动公告文本
 
                         if ("2".equals(response.getPushSource())) {//未登录的用户,从本地读取消息
-                            Pref.saveBoolean(Pref.FROM_NATIVE+response.getId(), true, context);
+                            Pref.saveBoolean(Pref.FROM_NATIVE + response.getId(), true, context);
                         }
                         notificationIntent = new Intent(context, AnnounceResultActivity.class);
                         notificationIntent.putExtra("id", response.getId());
