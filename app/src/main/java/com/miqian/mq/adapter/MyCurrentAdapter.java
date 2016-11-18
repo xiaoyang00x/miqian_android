@@ -100,19 +100,17 @@ public class MyCurrentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         public void bindData(UserCurrentData.UserCurrent userCurrent) {
-            if(userCurrent == null) return;
-            if(userCurrent != null) {
-                textEarning.setText(FormatUtil.formatAmount(userCurrent.getYesterdayInterest()));
-                textCaptial.setText(FormatUtil.formatAmount(userCurrent.getPrnAmt()));
-                textTotalEarning.setText(FormatUtil.formatAmount(userCurrent.getRegIncome()));
+            if (userCurrent == null) return;
+            textEarning.setText(FormatUtil.formatAmount(userCurrent.getYesterdayInterest()));
+            textCaptial.setText(FormatUtil.formatAmount(userCurrent.getPrnAmt()));
+            textTotalEarning.setText(FormatUtil.formatAmount(userCurrent.getRegIncome()));
 
-                String tempInterest = userCurrent.getYearInterest().toString();
-                if (TextUtils.isEmpty(tempInterest)) {
-                    textInterest.setVisibility(View.GONE);
-                } else {
-                    textInterest.setVisibility(View.VISIBLE);
-                    textInterest.setText(tempInterest + "%");
-                }
+            String tempInterest = userCurrent.getYearInterest().toString();
+            if (TextUtils.isEmpty(tempInterest)) {
+                textInterest.setVisibility(View.GONE);
+            } else {
+                textInterest.setVisibility(View.VISIBLE);
+                textInterest.setText(tempInterest + "%");
             }
         }
 

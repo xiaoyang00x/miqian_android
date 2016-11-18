@@ -114,8 +114,8 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                 synchronized (mLock) {
                     inProcess = false;
                 }
-                if (null != result || null != result.getData()
-                        || null != result.getData().getSubjectData()) {
+                if (null != result && null != result.getData()
+                        && null != result.getData().getSubjectData()) {
                     showContentView();
                     mInfo = result.getData().getSubjectData();
                     updateUI();

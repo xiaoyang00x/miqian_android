@@ -71,7 +71,6 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
         begin();
         HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
 
-
             @Override
             public void onSucceed(RedPaperData result) {
                 end();

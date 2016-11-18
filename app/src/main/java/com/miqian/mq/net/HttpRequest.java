@@ -55,7 +55,6 @@ import java.util.List;
 public class HttpRequest {
 
     private static final String CODE_SUCCESS = "000000";
-    private static final String ERROR_MSG = "";
 
     /**
      * APP的配置：广告，tab图标
@@ -67,9 +66,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 ConfigResult meta = JsonUtil.parseObject(result, ConfigResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -101,9 +98,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 ProducedOrderResult meta = JsonUtil.parseObject(result, ProducedOrderResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode()) || TextUtils.equals("996633", meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode()) || TextUtils.equals("996633", meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -129,9 +124,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 LoginResult meta = JsonUtil.parseObject(result, LoginResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     UserUtil.saveHfInfo(context, meta.getData());
                     callback.onSucceed(meta);
                 } else {
@@ -158,9 +151,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 LoginResult meta = JsonUtil.parseObject(result, LoginResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     UserUtil.saveHfInfo(context, meta.getData());
                     callback.onSucceed(meta);
                 } else {
@@ -191,9 +182,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RegisterResult meta = JsonUtil.parseObject(result, RegisterResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -218,9 +207,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 LoginResult meta = JsonUtil.parseObject(result, LoginResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     UserUtil.saveUserInfo(MyApplication.getInstance(), meta.getData());
                     UserUtil.saveHfInfo(context, meta.getData());
                     callback.onSucceed(meta);
@@ -254,9 +241,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -289,9 +274,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -322,9 +305,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 MessageInfoResult meta = JsonUtil.parseObject(result, MessageInfoResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -348,9 +329,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 UserMessageResult meta = JsonUtil.parseObject(result, UserMessageResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                     //保存数据到本地，缓存用
                     Pref.saveString(Pref.DATA_MESSAGE, result, context);
@@ -376,9 +355,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 PushDataResult meta = JsonUtil.parseObject(result, PushDataResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                     //保存数据到本地，缓存用
                     Pref.saveString(Pref.DATA_PUSH, result, context);
@@ -406,9 +383,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -437,9 +412,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -467,9 +440,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -497,9 +468,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 HomePageInfoResult meta = JSON.parseObject(result, HomePageInfoResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -530,9 +499,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 CurrentProjectResult meta = JsonUtil.parseObject(result, CurrentProjectResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -561,9 +528,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 CurrentDetailResult meta = JsonUtil.parseObject(result, CurrentDetailResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -592,9 +557,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RegularProjectListResult meta = JsonUtil.parseObject(result, RegularProjectListResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -624,9 +587,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RegularTransferListResult meta = JsonUtil.parseObject(result, RegularTransferListResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -651,9 +612,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 GetRegularResult meta = JsonUtil.parseObject(result, GetRegularResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -687,9 +646,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RegularDetailResult meta = JsonUtil.parseObject(result, RegularDetailResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -716,9 +673,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -744,9 +699,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 UserCurrentResult meta = JsonUtil.parseObject(result, UserCurrentResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -772,9 +725,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 CurrentMathProjectResult meta = JsonUtil.parseObject(result, CurrentMathProjectResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -807,9 +758,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 UserRegularResult meta = JsonUtil.parseObject(result, UserRegularResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -840,9 +789,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 UserRegularDetailResult meta = JsonUtil.parseObject(result, UserRegularDetailResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -873,9 +820,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 TransferDetailResult meta = JsonUtil.parseObject(result, TransferDetailResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -904,9 +849,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RepaymentResult meta = JsonUtil.parseObject(result, RepaymentResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -965,9 +908,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RegTransFerredDetailResult meta = JsonUtil.parseObject(result, RegTransFerredDetailResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -998,9 +939,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RegTransDetailResult meta = JsonUtil.parseObject(result, RegTransDetailResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -1029,9 +968,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 RedPaperData meta = JsonUtil.parseObject(result, RedPaperData.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -1089,9 +1026,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 CurrentRecordResult meta = JsonUtil.parseObject(result, CurrentRecordResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -1120,9 +1055,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -1148,9 +1081,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 WithDrawResult meta = JsonUtil.parseObject(result, WithDrawResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -1179,9 +1110,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 GetHomeActivityResult meta = JsonUtil.parseObject(result, GetHomeActivityResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -1236,9 +1165,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 OperationResult meta = JsonUtil.parseObject(result, OperationResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -1269,9 +1196,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -1294,9 +1219,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 UpdateResult meta = JsonUtil.parseObject(result, UpdateResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
 //                    UpdateInfo updateInfo = meta.getData();
 //                    if ("2".equals(updateInfo.getUpgradeSign())) {
@@ -1381,9 +1304,7 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 SubscriptionRecordsResult meta = JsonUtil.parseObject(result, SubscriptionRecordsResult.class);
-                if (null == meta) {
-                    callback.onFail(ERROR_MSG);
-                } else if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
+                if (TextUtils.equals(CODE_SUCCESS, meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
