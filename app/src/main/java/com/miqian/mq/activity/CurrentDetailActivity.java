@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -239,10 +240,10 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
         int count = mList.size();
         for (int index = 0; index < count; index++) {
             final CurrentDetailMoreInfoItem item = mList.get(index);
-            View mView = mInflater.inflate(R.layout.item_project_detail, null);
+            View mView = mInflater.inflate(R.layout.item_project_detail, content, false);
             ((TextView) mView.findViewById(R.id.tv_left)).setText(item.getTitle());
             if (!TextUtils.isEmpty(item.getJumpUrl())) {
-                ((TextView) mView.findViewById(R.id.tv_right)).setText(">");
+                mView.findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
                 mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -250,14 +251,15 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
                     }
                 });
             } else {
+                mView.findViewById(R.id.tv_right).setVisibility(View.VISIBLE);
                 ((TextView) mView.findViewById(R.id.tv_right)).setText(item.getContent());
             }
             content.addView(mView);
         }
 
-        View mView = mInflater.inflate(R.layout.item_project_detail, null);
+        View mView = mInflater.inflate(R.layout.item_project_detail, content, false);
         ((TextView) mView.findViewById(R.id.tv_left)).setText("更多信息");
-        ((TextView) mView.findViewById(R.id.tv_right)).setText(">");
+        mView.findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

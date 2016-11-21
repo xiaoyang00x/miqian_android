@@ -84,8 +84,9 @@ public class RegularProjectDetailActivity extends RegularDetailActivity {
         int count = mList.size() > 4 ? 4 : mList.size();
         for (int index = 0; index < count; index++) {
             RegularEarnDetail detail = mList.get(index);
-            View mView = mInflater.inflate(R.layout.item_project_detail, null);
+            View mView = mInflater.inflate(R.layout.item_project_detail, content, false);
             ((TextView) mView.findViewById(R.id.tv_left)).setText(detail.getTitle());
+            mView.findViewById(R.id.tv_right).setVisibility(View.VISIBLE);
             ((TextView) mView.findViewById(R.id.tv_right)).setText(detail.getName());
             content.addView(mView);
         }

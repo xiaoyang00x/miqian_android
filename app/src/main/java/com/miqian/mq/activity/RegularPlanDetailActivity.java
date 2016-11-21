@@ -75,8 +75,9 @@ public class RegularPlanDetailActivity extends RegularDetailActivity {
         int count = mList.size() > 3 ? 3 : mList.size();
         for (int index = 0; index < count; index++) {
             RegularProjectMatch projectMatch = mList.get(index);
-            View mView = mInflater.inflate(R.layout.item_project_detail, null);
+            View mView = mInflater.inflate(R.layout.item_project_detail, content, false);
             ((TextView) mView.findViewById(R.id.tv_left)).setText(projectMatch.getName());
+            mView.findViewById(R.id.tv_right).setVisibility(View.VISIBLE);
             ((TextView) mView.findViewById(R.id.tv_right)).setText(
                     new StringBuilder("金额:￥")
                             .append(FormatUtil.formatAmount(projectMatch.getOccupyAmount()))

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:ellipsize="end"
         android:gravity="left"
-        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
-        android:paddingTop="10dp"
         android:singleLine="true"
         android:text="项目名称"
         android:textColor="@color/mq_b2_v2"
@@ -24,24 +23,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/tv_left"
         android:ellipsize="end"
         android:gravity="right"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
         android:paddingRight="15dp"
-        android:paddingTop="10dp"
         android:singleLine="true"
         android:text="苏宁云商-上市公司"
         android:textColor="@color/mq_b4_v2"
         android:textSize="@dimen/mq_font5_v2"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:paddingRight="15dp"
+        android:scaleType="matrix"
+        android:src="@drawable/right"
+        android:visibility="gone" />
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/tv_left"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
         android:background="@color/mq_b6_v2" />
 
 </RelativeLayout>

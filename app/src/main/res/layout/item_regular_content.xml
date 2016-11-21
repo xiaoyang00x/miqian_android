@@ -7,7 +7,7 @@
     <View
         android:id="@+id/line_top"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_alignParentTop="true"
         android:background="@color/mq_b6_v2" />
 
@@ -151,7 +151,7 @@
     <View
         android:id="@+id/line_bottom"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@+id/tv_remain_amount"
         android:background="@color/mq_b6_v2" />
 

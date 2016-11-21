@@ -227,7 +227,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:background="@color/mq_b6_v2" />
 
                 <ViewStub
@@ -346,7 +346,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="1px"
                         android:background="@color/mq_b6_v2" />
 
                     <View
@@ -472,7 +472,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1px"
             android:layout_alignParentTop="true"
             android:background="@color/mq_b6_v2" />
 

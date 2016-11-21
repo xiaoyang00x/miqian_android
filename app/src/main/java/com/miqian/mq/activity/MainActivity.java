@@ -515,11 +515,9 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     try {
                         String ext = jInfo.getExt();
                         JSONObject jsonObject = new JSONObject(ext);
-                        if (jsonObject != null) {
-                            String url = jsonObject.getString("url");
-                            if (!TextUtils.isEmpty(url)) {
-                                WebActivity.startActivity(context, url);
-                            }
+                        String url = jsonObject.getString("url");
+                        if (!TextUtils.isEmpty(url)) {
+                            WebActivity.startActivity(context, url);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -559,19 +557,16 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (!TextUtils.isEmpty(ext)) {
             try {
                 JSONObject jsonObject = new JSONObject(ext);
-                if (jsonObject != null) {
-                    int prodId = jsonObject.getInt("prodId");
-                    String subjectId = jsonObject.getString("subjectId");
-                    if (!TextUtils.isEmpty(subjectId)) {
-                        RegularDetailActivity.startActivity(mContext, subjectId, prodId);
-                        MyApplication.getPushList().clear();
-                    }
+                int prodId = jsonObject.getInt("prodId");
+                String subjectId = jsonObject.getString("subjectId");
+                if (!TextUtils.isEmpty(subjectId)) {
+                    RegularDetailActivity.startActivity(mContext, subjectId, prodId);
+                    MyApplication.getPushList().clear();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
     private void showTipDialog(final JpushInfo jpush) {

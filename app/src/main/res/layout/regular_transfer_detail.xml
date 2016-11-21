@@ -60,7 +60,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/mq_b6_v2" />
 
@@ -111,7 +111,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/mq_b6_v2" />
 
@@ -161,7 +161,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/mq_b6_v2" />
 
@@ -254,7 +254,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:background="@color/mq_b6_v2" />
 
 </LinearLayout>
