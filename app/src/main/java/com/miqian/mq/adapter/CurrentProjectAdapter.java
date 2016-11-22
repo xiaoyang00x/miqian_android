@@ -26,9 +26,8 @@ import java.util.ArrayList;
 public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int ITEM_TYPE_CARD = 0; // 顶部待开标／可认购的秒钱包
-    private final int ITEM_TYPE_TITLE = 1; // 已满额的秒钱宝 标题
-    private final int ITEM_TYPE_CONTENT = 2; // 已满额的秒钱宝列表
-    private final int ITEM_TYPE_FOOTER = 3; // 加载更多
+    private final int ITEM_TYPE_CONTENT = 1; // 已满额的秒钱宝列表
+    private final int ITEM_TYPE_FOOTER = 2; // 加载更多
 
     private ArrayList<CurrentProjectInfo> mList;
     private boolean isFinished;
@@ -61,8 +60,6 @@ public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         switch (viewType) {
             case ITEM_TYPE_CARD:
                 return new CurrentProjectCardHolder(LayoutInflater.from(mContext).inflate(R.layout.item_current_card, parent, false));
-            case ITEM_TYPE_TITLE:
-                return new CurrentProjectTitleHolder(LayoutInflater.from(mContext).inflate(R.layout.item_current_title, parent, false));
             case ITEM_TYPE_CONTENT:
                 return new CurrentProjectContentHolder(LayoutInflater.from(mContext).inflate(R.layout.item_current_content, parent, false));
             case ITEM_TYPE_FOOTER:
@@ -92,17 +89,15 @@ public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         /**
          *  1、如果返回 0  条数据 则返回0
          *  2、如果返回 1  条数据 则返回1
-         *  3、如果返回 2+ 条数据 则返回数据条目＋2（增加 "活期项目文字条目" 和 "加载更多条目"）
+         *  3、如果返回 2+ 条数据 则返回数据条目＋1（增加 "加载更多条目"）
          **/
-        return size == 0 ? 0 : size == 1 ? 1 : size + 2;
+        return size == 0 ? 0 : size == 1 ? 1 : size + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
             return ITEM_TYPE_CARD;
-        } else if (position == 1) {
-            return ITEM_TYPE_TITLE;
         } else if (position + 1 == getItemCount()) {
             return ITEM_TYPE_FOOTER;
         }
@@ -171,14 +166,6 @@ public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             mContext, info.getSubjectId());
                 }
             });
-        }
-
-    }
-
-    class CurrentProjectTitleHolder extends RecyclerView.ViewHolder {
-
-        public CurrentProjectTitleHolder(View itemView) {
-            super(itemView);
         }
 
     }
