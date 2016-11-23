@@ -17,7 +17,6 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.HfAutoActivity;
 import com.miqian.mq.activity.user.HfUpdateActivity;
 import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.Promote;
@@ -83,8 +82,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     private String money;
     private String realMoney;
-    private String prodId; //1:定期赚 2:定期计划 3:活期
-    private String subjectId; //标的id，活期默认为0
+    private String prodId; //1:定期赚 2:定期计划 3:秒钱宝
+    private String subjectId; //标的id
     private String interestRateString; //年化收益和期限
     private int position = -1;//使用的红包位置，用于获取list
 //    private String bankNumber;
@@ -292,7 +291,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             }
         }
 //            else if (payModeState == PAY_MODE_CURRENT) {
-//                textPayType.setText("活期资产");
+//                textPayType.setText("秒钱宝");
 //                textPayTip.setText("可用" + producedOrder.getBalanceCurrent() + "元");
 //                imageType.setImageResource(R.drawable.current_enable);
 //                showErrorView(producedOrder.getBalanceCurrent());
@@ -301,7 +300,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     }
 
     /**
-     * 活期或余额不足的提示
+     * 秒钱宝或余额不足的提示
      */
     private void showErrorView(BigDecimal balance) {
         if (payMoney.compareTo(balance) > 0) {
@@ -313,7 +312,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //                textErrorLian.setText("账户余额不足，请充值后，再进行认购");
 //            } else if (payModeState == PAY_MODE_CURRENT) {
 //                imageType.setImageResource(R.drawable.current_disable);
-//                textErrorLian.setText("活期余额不足，请充值或更换支付方式后，再进行认购");
+//                textErrorLian.setText("秒钱宝余额不足，请充值或更换支付方式后，再进行认购");
 //            }
         }
     }
@@ -465,7 +464,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     //产品协议
     public void textLawCickProduct(View v) {
-        //活期
+        //秒钱宝
         if (PRODID_CURRENT.equals(prodId)) {
             WebActivity.startActivity(mActivity, Urls.web_current_law);
 
@@ -488,7 +487,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     @Override
     public void initTitle(WFYTitle mTitle) {
         if (PRODID_CURRENT.equals(prodId)) {
-            mTitle.setTitleText("活期认购");
+            mTitle.setTitleText("秒钱宝认购");
         } else if (PRODID_REGULAR.equals(prodId)) {
             mTitle.setTitleText("定期认购");
         } else if (PRODID_REGULAR_PLAN.equals(prodId)) {
@@ -557,7 +556,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //                    if (payModeState == PAY_MODE_BALANCE) {
 //                        tipString = "账户余额不足，请充值或更换支付方式后，再进行认购";
 //                    } else if (payModeState == PAY_MODE_CURRENT) {
-//                        tipString = "活期余额不足，请充值或更换支付方式后，再进行认购";
+//                        tipString = "秒钱宝余额不足，请充值或更换支付方式后，再进行认购";
 //                    }
 //                    if (mDialogTip==null){
 //                        mDialogTip=new DialogTip(mActivity) {};

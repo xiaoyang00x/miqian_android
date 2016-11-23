@@ -238,7 +238,7 @@ public class UserUtil {
      * 跳转认购页
      *
      * @param money              认购金额
-     * @param prodId             0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param prodId             1:定期赚 2:定期计划 3:秒钱宝
      * @param subjectId          标的id，活期默认为0
      * @param interestRateString 定期计划和定期赚的利率和期限
      */
@@ -250,7 +250,7 @@ public class UserUtil {
      * 跳转认购页
      *
      * @param money              认购金额
-     * @param prodId             0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param prodId             1:定期赚 2:定期计划 3:秒钱宝
      * @param subjectId          标的id，活期默认为0
      * @param interestRateString 定期计划和定期赚的利率和期限
      * @param realMoney           实际支付金额（认购转让标的显示）
