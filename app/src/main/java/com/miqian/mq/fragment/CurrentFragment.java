@@ -21,7 +21,7 @@ import com.miqian.mq.views.ServerBusyView;
 import java.util.ArrayList;
 
 /**
- * 活期首页
+ * 秒钱宝首页
  */
 public class CurrentFragment extends BasicFragment {
 
@@ -55,7 +55,7 @@ public class CurrentFragment extends BasicFragment {
     }
 
     private void initTitle() {
-        ((TextView) rootView.findViewById(R.id.title)).setText("活期理财");
+        ((TextView) rootView.findViewById(R.id.title)).setText("秒钱宝");
     }
 
     private void findView() {

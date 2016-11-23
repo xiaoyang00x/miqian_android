@@ -17,7 +17,7 @@ public class RegularBase {
     public static final int REGULAR_04 = 4; // 定期项目转让
     public static final int REGULAR_PLAN = 2; // 定期计划
     public static final int REGULAR_06 = 6; // 定期计划转让
-    public static final int CURRENT_PROJECT = 3; // 活期秒钱宝
+    public static final int CURRENT_PROJECT = 3; // 秒钱宝
 
     // 标的状态
     public static final int STATE_1 = 1; // 创建

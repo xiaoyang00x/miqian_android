@@ -34,7 +34,7 @@ public class RegularProjectInfo extends RegularBase {
     private String subjectType; // 标的类型 88:88-活动 00:标准标的 01:新手专属 02:众人拾财专属 03:老财主专享回馈 04:定向大额投资人
     public final static String TYPE_RATE = "88";
 
-    private int prodId; // 产品类型  1活期，2活期转让，3定期，4定期转让，5定期计划，6计划转让
+    private int prodId; // 产品类型  1秒钱宝，2秒钱宝转让，3定期，4定期转让，5定期计划，6计划转让
 
     private int limitDay4Transfer; // 再次转让限制天数
 

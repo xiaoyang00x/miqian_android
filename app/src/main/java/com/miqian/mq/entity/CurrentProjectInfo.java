@@ -21,7 +21,7 @@ public class CurrentProjectInfo {
     private int subjectStatus; // 产品状态 1:创建 2:待审核 3:待上线 4:待开标 5:开标 6:满标 7:下架
     private BigDecimal subjectTotalPrice; // 标的总额
     private String yearInterest; //	年利率
-    private String prodId; // 产品类型 1:定期赚 2:定期计划 3:活期 99:其他
+    private String prodId; // 产品类型 1:定期赚 2:定期计划 3:秒钱宝 99:其他
     private String riskCheck; // 风险审核
     private String securityGuarantee; // 安全保障 该字段暂没有用
     private String personTime; // 认购人数

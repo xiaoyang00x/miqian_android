@@ -2,7 +2,7 @@ package com.miqian.mq.entity;
 
 /**
  * @author wangduo
- * @description: 活期首页
+ * @description: 秒钱宝首页
  * @email: cswangduo@163.com
  * @date: 16/10/19
  */

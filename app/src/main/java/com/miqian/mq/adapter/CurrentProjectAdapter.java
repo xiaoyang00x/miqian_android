@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 /**
  * @author wangduo
- * @description: 活期项目列表数据适配器
+ * @description: 秒钱宝项目列表数据适配器
  * @email: cswangduo@163.com
  * @date: 16/5/27
  */

@@ -316,7 +316,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         RegularDetailActivity.startActivity(this, subjectId, product_id);
     }
 
-    //活期首页
+    //秒钱宝首页
     @JavascriptInterface
     public void startCurrent() {
         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_CURRENT, null);

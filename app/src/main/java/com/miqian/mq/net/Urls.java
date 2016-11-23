@@ -75,9 +75,9 @@ public class Urls {
 //    public static final String RSA_PUBLICE = RSA_PUBLICE_ONLINE;
 //    public static final String RSA_PRIVATE = RSA_PRIVATE_ONLINE;
 
-    //活期首页
+    //秒钱宝首页
     public final static String current_home = base_server + "deposit/current/getCurrentList";
-    //活期详情
+    //秒钱宝详情
     public final static String current_detail = base_server + "deposit/current/getCurrentDetail";
     //认购预处理
     public final static String order_produced = base_server + "tradeService/subscribePreprocess";//assetService/subscribePreprocess

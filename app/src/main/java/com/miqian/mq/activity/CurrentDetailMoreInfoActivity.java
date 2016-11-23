@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * @author wangduo
- * @description: 活期详情 更多信息页面
+ * @description: 秒钱宝详情 更多信息页面
  * @email: cswangduo@163.com
  * @date: 16/10/24
  */

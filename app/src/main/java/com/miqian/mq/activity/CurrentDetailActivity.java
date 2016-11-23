@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 /**
  * @author wangduo
- * @description: 活期详情
+ * @description: 秒钱宝详情
  * @email: cswangduo@163.com
  * @date: 16/10/23
  */
@@ -132,7 +132,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("活期理财");
+        mTitle.setTitleText("秒钱宝");
     }
 
     @Override
@@ -360,7 +360,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
 
         /** 用户对于这类产品的剩余认购额度为0 **/
         if (projectInfo.getUserCurRemainAmt().compareTo(BigDecimal.ZERO) == 0) {
-            Toast.makeText(getBaseContext(), "提示：活期认购总额不可大于" + projectInfo.getCurrentMaxAmt() + "元", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "提示：秒钱宝认购总额不可大于" + projectInfo.getCurrentMaxAmt() + "元", Toast.LENGTH_SHORT).show();
             return;
         }
         /** 用户认购额度小于起始金额 **/

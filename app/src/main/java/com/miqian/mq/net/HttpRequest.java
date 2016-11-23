@@ -483,7 +483,7 @@ public class HttpRequest {
     }
 
     /**
-     * 获取活期项目列表数据
+     * 获取秒钱宝项目列表数据
      *
      * @param context
      * @param callback
@@ -514,7 +514,7 @@ public class HttpRequest {
     }
 
     /**
-     * 获取活期详情
+     * 获取秒钱宝详情
      *
      * @param subjectId 标的编号，如传入则返回改标的相关信息
      */
