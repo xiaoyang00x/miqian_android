@@ -154,13 +154,13 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
     @Override
     public void initTitle(WFYTitle mTitle) {
 
-        mTitle.setTitleText("赎回");
+        mTitle.setTitleText("秒钱宝赎回");
 
     }
 
     @Override
     protected String getPageName() {
-        return "赎回";
+        return "秒钱宝赎回";
     }
 
     public void btn_click(View v) {
