@@ -45,8 +45,8 @@
   <string name="buy_now">立即认购</string>
 
   <!-- 首页-->
-  <string name="main_tab_home">秒钱</string>
-  <string name="main_tab_current"> 活期</string>
+  <string name="main_tab_home">首页</string>
+  <string name="main_tab_current">秒钱宝</string>
   <string name="main_tab_regular">定期</string>
   <string name="main_tab_user">我的</string>
 
