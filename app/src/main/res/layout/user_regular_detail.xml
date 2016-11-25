@@ -213,8 +213,6 @@
 
                     <TextView
                         android:id="@+id/text_project"
-                        android:textColor="@color/mq_b2_v2"
-                        android:textSize="@dimen/mq_font6_v2"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -222,6 +220,8 @@
                         android:gravity="left"
                         android:singleLine="true"
                         android:text="项目详情"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -239,10 +239,10 @@
 
                 <RelativeLayout
                     android:id="@+id/layout_payment"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/listitem_height"
-                    android:background="@color/white">
+                    android:background="@color/white"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -255,22 +255,22 @@
 
                     <TextView
                         android:id="@+id/text_repayment"
-                        android:textColor="@color/mq_b2_v2"
-                        android:textSize="@dimen/mq_font6_v2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
-                        android:text="" />
+                        android:text=""
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2" />
 
                     <View
                         android:id="@+id/divider_payment"
-                        android:visibility="gone"
                         style="@style/item_divider"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="0dp"
-                        android:layout_marginRight="0dp" />
+                        android:layout_marginRight="0dp"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -280,24 +280,23 @@
 
                     <TextView
                         android:id="@+id/text_earning_type"
-                        android:textColor="@color/mq_b2_v2"
-                        android:textSize="@dimen/mq_font6_v2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_left_right"
-                        android:text="待收收益" />
+                        android:text="待收收益"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2" />
 
                     <TextView
                         android:id="@+id/text_earning"
-                        android:textColor="@color/mq_b2_v2"
-                        android:textSize="@dimen/mq_font6_v2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_left_right"
-                         />
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font6_v2" />
 
                     <View
                         style="@style/item_divider"
@@ -348,55 +347,12 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/layout_transfer_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/listitem_height"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:visibility="gone">
-
-                    <TextView
-                        style="@style/f3_B1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/margin_left_right"
-                        android:text="转让情况" />
-
-                    <TextView
-                        android:id="@+id/tv_transfered_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
-                        android:layout_toLeftOf="@+id/arrow_tansfer"
-                        android:gravity="left"
-                        android:singleLine="true"
-                        android:text=""
-                        android:textColor="@color/mq_b4_v2"
-                        android:textSize="@dimen/mq_font4_v2" />
-
-                    <ImageView
-                        android:id="@+id/arrow_tansfer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/margin_left_right"
-                        android:src="@drawable/right" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/listitem_height"
                     android:layout_marginTop="10dp"
                     android:background="@color/white">
 
                     <TextView
-                        android:textColor="@color/mq_b2_v2"
-                        android:textSize="@dimen/mq_font7_v2"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -404,6 +360,8 @@
                         android:gravity="left"
                         android:singleLine="true"
                         android:text="标的相关记录"
+                        android:textColor="@color/mq_b2_v2"
+                        android:textSize="@dimen/mq_font7_v2"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -463,14 +421,14 @@
                                 android:textSize="@dimen/mq_font3_v2" />
 
                             <!--<TextView-->
-                                <!--android:id="@+id/tv_time_first"-->
-                                <!--android:layout_width="150dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_gravity="bottom"-->
-                                <!--android:gravity="right"-->
-                                <!--android:text="3333"-->
-                                <!--android:textColor="@color/mq_r1_v2"-->
-                                <!--android:textSize="@dimen/mq_font2_v2" />-->
+                            <!--android:id="@+id/tv_time_first"-->
+                            <!--android:layout_width="150dp"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_gravity="bottom"-->
+                            <!--android:gravity="right"-->
+                            <!--android:text="3333"-->
+                            <!--android:textColor="@color/mq_r1_v2"-->
+                            <!--android:textSize="@dimen/mq_font2_v2" />-->
                         </LinearLayout>
 
 
@@ -481,13 +439,13 @@
                             android:layout_marginRight="5dp">
 
                             <View
-                                android:visibility="gone"
                                 android:id="@+id/view_red"
                                 android:layout_width="3dp"
                                 android:layout_height="20dp"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
-                                android:background="@color/mq_r1_v2" />
+                                android:background="@color/mq_r1_v2"
+                                android:visibility="gone" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
