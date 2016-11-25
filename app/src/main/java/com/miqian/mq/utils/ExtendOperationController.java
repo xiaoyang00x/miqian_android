@@ -31,7 +31,7 @@ public class ExtendOperationController {
 
 		/** 返回首页 */
 		int BACK_HOME = 1001;
-		/** 返回活期首页 */
+		/** 返回秒钱宝首页 */
 		int BACK_CURRENT = 1002;
 		/** 返回定期首页 */
 		int BACK_REGULAR = 1003;
@@ -52,7 +52,7 @@ public class ExtendOperationController {
 		int RefeshMessage = 1010;
 		/** 消息状态*/
 		int MessageState = 1011;
-		/**刷新活期数据*/
+		/**刷新秒钱宝数据*/
 		int REFRESH_CURRENTINFO = 1013;
 		/**系统维护*/
 		int SYSTEM_MAINTENANCE = 1014;

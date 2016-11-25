@@ -122,7 +122,7 @@ public class MyReceiver extends BroadcastReceiver {
                     case 4://认购 ，到资金记录
                     case 5://定期赚到期，到我的定期列表页
                     case 6://定期计划到期，到我的定期列表页
-                    case 7://活期赎回，到资金记录
+                    case 7://秒钱宝赎回，到资金记录
                     case 8://转让被认购完成,跳到资金记录
                     case 15://提现受理失败
                     case 50://系统升级,系统维护
@@ -165,7 +165,7 @@ public class MyReceiver extends BroadcastReceiver {
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ChangeTab, 0);
                         notificationIntent = new Intent(context, MainActivity.class);
                         break;
-                    case 58://跳活期首页
+                    case 58://跳秒钱宝首页
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.ChangeTab, 1);
                         notificationIntent = new Intent(context, MainActivity.class);
                         break;

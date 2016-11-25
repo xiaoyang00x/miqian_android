@@ -81,7 +81,7 @@ public class HttpRequest {
     }
 
     /**
-     * 活期、定期赚、定期计划
+     * 秒钱宝、定期赚、定期计划
      * 认购订单生成页面
      *
      * @param amt 金额
@@ -864,11 +864,11 @@ public class HttpRequest {
     }
 
     /**
-     * 活期、定期赚、定期计划
+     * 秒钱宝、定期赚、定期计划
      * 认购接口
      *
      * @param amt       金额
-     * @param subjectId 0:活期
+     * @param subjectId
      */
     public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String subjectId, String promotionId) {
         List<Param> mList = new ArrayList<>();
@@ -1005,14 +1005,14 @@ public class HttpRequest {
     }
 
     /**
-     * API-资金记录/活期交易记录
+     * API-资金记录/秒钱宝交易记录
      *
      * @param context
      * @param callback
      * @param pageNo
      * @param pageSize
      * @param billType    资金记录类型 00 全部 01 充值 02 提现 03 认购 04 赎回 05 转让 06 到期还款
-     * @param productCode 资金产品类型 0 全部 3 活期
+     * @param productCode 资金产品类型 0 全部 3 秒钱宝
      */
     public static void getFundFlow(Context context, final ICallback<CurrentRecordResult> callback,
                                    String pageNo, String pageSize, String billType, String productCode) {

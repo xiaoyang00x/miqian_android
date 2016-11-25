@@ -147,7 +147,7 @@ public class Urls {
     public final static String getCustPromotion = base_server + "deposit/mine/getMinePromList";//userService/getCustPromotion
     //赎回
     public final static String redeem = base_server + "tradeService/redeem";// assetService/redeem
-    //资金记录/活期交易记录
+    //资金记录/秒钱宝交易记录
     public final static String getFundFlow = base_server + "deposit/mine/getFundFlow";
     //我的秒钱宝认购记录
     public final static String getUserCurrentProduct = base_server + "deposit/current/getUserCurrentProduct";
@@ -173,8 +173,8 @@ public class Urls {
     public final static String web_register_law = "https://res.shicaidai.com/miaoqian/webView/service-items.html";
     //充值页面：《资金管理协议》
     public final static String web_recharge_law = "https://res.shicaidai.com/miaoqian/webView/zjglxy.html";
-    //活期认购页：《活期赚服务协议》
-    public final static String web_current_law = "https://res.shicaidai.com/miaoqian/webView/hqzfwxy.html";
+    //秒钱宝认购页：《秒钱宝服务协议》
+    public final static String web_current_law = "https://res.shicaidai.com/miaoqian/webView/depositHqzfwxy.html";
     //定期赚认购页面：《定期赚服务协议》
     public final static String web_regular_law = "https://res.shicaidai.com/miaoqian/webView/dqzfwxy.html";
     //定期计划认购页面：《定期计划服务协议》
@@ -199,10 +199,8 @@ public class Urls {
     //红包、拾财券使用规则(认购页面)
     public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
 
-    //活期详情
-    public final static String web_current = base_server + "webView/currentDetail";
     //帮助中心
-    public final static String web_help = "https://res.shicaidai.com/miaoqian/webView/helpCenter.html";
+    public final static String web_help = "https://res.shicaidai.com/miaoqian/webView/depositHelpCenter.html";
 
 
     //首页运营活动

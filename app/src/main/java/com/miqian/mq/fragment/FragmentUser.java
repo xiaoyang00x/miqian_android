@@ -171,7 +171,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         } else {
             tv_balance.setText("--.--");
         }
-        //我的活期
+        //我的秒钱宝
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getCurAmt())) {
             tv_Current.setText(FormatUtil.formatAmountStr(userInfo.getCurAmt()) + "元");
         } else {
@@ -457,7 +457,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 }
 
                 break;
-            //我的活期
+            //我的秒钱宝
             case R.id.frame_account_current:
                 MobclickAgent.onEvent(getActivity(), "1019");
                 startActivity(new Intent(getActivity(), ActivityUserCurrent.class));

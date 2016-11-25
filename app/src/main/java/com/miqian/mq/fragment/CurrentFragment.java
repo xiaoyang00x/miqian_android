@@ -206,7 +206,7 @@ public class CurrentFragment extends BasicFragment {
 
     @Override
     protected String getPageName() {
-        return "首页-活期";
+        return "首页-秒钱宝";
     }
 
 }

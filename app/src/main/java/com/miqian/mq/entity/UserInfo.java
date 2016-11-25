@@ -12,7 +12,7 @@ public class UserInfo implements Serializable {
     private String userName;//真实姓名
     private String mobile;//手机号
     private boolean status;//用户状态 true 激活 false 未激活
-    private String curAmt;//活期总额
+    private String curAmt;//秒钱宝总额
     private boolean bindCardStatus;//银行卡绑定状态 false未绑定 true 已绑定
     private String usableSa;//可用余额
     private String totalProfit;//历史收益

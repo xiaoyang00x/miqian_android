@@ -67,7 +67,7 @@ public class ActivityCurrentRecord extends BaseActivity {
     private AdapterCurrrentRecord adapterCurrrentRecord;
     private String billType;                //资金记录类型
     private String productCode;             //资金产品类型
-    private boolean isCurrent = false;      //是否为活期交易记录
+    private boolean isCurrent = false;      //是否为秒钱宝交易记录
 
 
     public static void startActivity(Context context, String billType, String productCode) {
@@ -255,7 +255,7 @@ public class ActivityCurrentRecord extends BaseActivity {
 
     @Override
     protected String getPageName() {
-        return isCurrent? "活期交易记录" : "资金记录";
+        return isCurrent? "秒钱宝交易记录" : "资金记录";
     }
 
     public void searchBtn(View v) {

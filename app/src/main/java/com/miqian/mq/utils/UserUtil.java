@@ -239,7 +239,7 @@ public class UserUtil {
      *
      * @param money              认购金额
      * @param prodId             1:定期赚 2:定期计划 3:秒钱宝
-     * @param subjectId          标的id，活期默认为0
+     * @param subjectId          标的id
      * @param interestRateString 定期计划和定期赚的利率和期限
      */
     public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString) {
@@ -251,7 +251,7 @@ public class UserUtil {
      *
      * @param money              认购金额
      * @param prodId             1:定期赚 2:定期计划 3:秒钱宝
-     * @param subjectId          标的id，活期默认为0
+     * @param subjectId          标的id
      * @param interestRateString 定期计划和定期赚的利率和期限
      * @param realMoney           实际支付金额（认购转让标的显示）
      */

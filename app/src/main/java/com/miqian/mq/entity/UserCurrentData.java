@@ -29,7 +29,7 @@ public class UserCurrentData implements Serializable{
     }
 
     /**
-     * 用户活期金额数据
+     * 用户秒钱宝金额数据
      */
     public class UserCurrent implements Serializable{
         private BigDecimal prnAmt;                          //在投本金

@@ -193,7 +193,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                     mDialogTip.show();
                 } else {
                     if (code.equals("000000")) {
-                        //刷新我的活期数据
+                        //刷新我的秒钱宝数据
                         ExtendOperationController.getInstance().
                                 doNotificationExtendOperation(ExtendOperationController.OperationKey.REFRESH_CURRENTINFO, null);
                         intent.putExtra("state", 1);
