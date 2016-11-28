@@ -69,6 +69,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private TextView tvOriginprojectName;
     private View layoutPriginproject;
     private ImageView ivProjectState;
+    private View layoutTransferDetail;
+    private TextView tvTransferedMoney;
     private LinearLayout layoutFirst;
     private View layoutPayment;
     private View dividerPayment;
@@ -142,10 +144,18 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         tvOriginproject = (TextView) findViewById(R.id.tv_originproject);
         tvOriginprojectName = (TextView) findViewById(R.id.tv_originproject_name);
         ivProjectState = (ImageView) findViewById(R.id.image_project_status);
+
+        //转让记录
+        layoutTransferDetail = findViewById(R.id.layout_transfer_detail);
+        tvTransferedMoney = (TextView) findViewById(R.id.tv_transfered_money);
+
         dividerPayment = findViewById(R.id.divider_payment);
+
+
         frameProjectMatch.setOnClickListener(this);
         findViewById(R.id.tv_referrecord).setOnClickListener(this);
         layoutPriginproject.setOnClickListener(this);
+        layoutTransferDetail.setOnClickListener(this);
 
     }
 
@@ -170,7 +180,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         }
         textDateStart.setText("认购日期:" + regInvest.getCrtDt());
         textDateEnd.setText("结束日期:" + regInvest.getDueDt());
-        if (!TextUtils.isEmpty(regInvest.getPayMeansName())) {
+        if (!TextUtils.isEmpty(regInvest.getPayMeansName())){
             layoutPayment.setVisibility(View.VISIBLE);
             dividerPayment.setVisibility(View.VISIBLE);
             textRepayment.setText(regInvest.getPayMeansName());
@@ -234,6 +244,11 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             frameProjectMatch.setVisibility(View.VISIBLE);
             textProject.setText("项目详情");
         }
+        if ("Y".equals(regInvest.getHasTransOper())) {//有转让，N未转让
+            layoutTransferDetail.setVisibility(View.VISIBLE);
+            tvTransferedMoney.setText("已转让" + regInvest.getTransedAmt());
+        }
+
         String realInterest = regInvest.getRealInterest();
         String presentInterest = regInvest.getPresentInterest();
         textInterestRate.setText(realInterest);
@@ -316,7 +331,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 if (userRegularDetail != null) {
                     if ("1".equals(projectType)) {//定期赚
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + regInvest.getBdId() + "/" + regInvest.getProjectCode() + "/0");
-                    } else {//定期计划
+                    } else{//定期计划
                         WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + regInvest.getBdId() + "/0");
                     }
                 }
@@ -325,7 +340,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 if (userRegularDetail != null) {
                     if ("1".equals(projectType)) {//定期赚
                         WebActivity.startActivity(mActivity, Urls.web_regular_earn_detail + regInvest.getBdId() + "/" + regInvest.getProjectCode() + "/0");
-                    } else {//定期计划
+                    } else{//定期计划
                         WebActivity.startActivity(mActivity, Urls.web_regular_plan_detail + regInvest.getBdId() + "/0");
                     }
                 }
@@ -336,6 +351,15 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 intent.putExtra("investId", investId);
                 startActivity(intent);
                 break;
+
+            case R.id.layout_transfer_detail:  //查看转让详情
+
+                Intent intentTransfer = new Intent(this, TransferDetailActivity.class);
+                intentTransfer.putExtra("investId", investId);
+                intentTransfer.putExtra("clearYn", clearYn);
+                startActivity(intentTransfer);
+                break;
+
         }
     }
 
