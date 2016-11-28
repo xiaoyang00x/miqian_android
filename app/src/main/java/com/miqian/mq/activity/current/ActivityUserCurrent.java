@@ -1,6 +1,7 @@
 package com.miqian.mq.activity.current;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private UserCurrentData userCurrentData;
     private MyCurrentAdapter myCurrentAdapter;
     private ExtendOperationController operationController;
+    private boolean reFresh;//赎回成功返回，不弹加载框和下拉刷新只更新数据，重新刷新页面标识
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -65,13 +67,16 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         synchronized (mLock) {
             inProcess = true;
         }
-        swipeRefresh.setRefreshing(true);
-        begin();
+        if (!reFresh) {
+            begin();
+            swipeRefresh.setRefreshing(true);
+        }
         HttpRequest.getUserCurrent(mActivity, new ICallback<UserCurrentResult>() {
             @Override
             public void onSucceed(UserCurrentResult result) {
                 synchronized (mLock) {
                     inProcess = false;
+                    reFresh = false;
                 }
                 swipeRefresh.setRefreshing(false);
                 end();
@@ -87,6 +92,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             public void onFail(String error) {
                 synchronized (mLock) {
                     inProcess = false;
+                    reFresh = false;
                 }
                 swipeRefresh.setRefreshing(false);
                 end();
@@ -167,10 +173,10 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_redeem:
-                if (userCurrentData !=null){
+                if (userCurrentData != null) {
                     MobclickAgent.onEvent(mActivity, "1038");
                     Intent intent = new Intent(mActivity, ActivityRedeem.class);
-                    Bundle bundle=new Bundle();
+                    Bundle bundle = new Bundle();
                     bundle.putSerializable("userCurrentData", userCurrentData);
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -187,6 +193,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     public void excuteExtendOperation(int operationKey, Object data) {
 
         if (operationKey == ExtendOperationController.OperationKey.REFRESH_CURRENTINFO) {
+            reFresh = true;
             obtainData();
         }
 
