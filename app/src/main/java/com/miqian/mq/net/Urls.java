@@ -126,7 +126,7 @@ public class Urls {
     //项目匹配
     public final static String project_match = base_server + "webView/getProjMatchList/";
     //我的定期转让情况
-    public final static String regular_transfer_detail = base_server + "commonService/getRegTrans";
+    public final static String regular_transfer_detail = base_server + "deposit/mine/getMineProductTransfer";// commonService/getRegTrans
     //还款详情
     public final static String repayment_detail = base_server + "commonService/getRepaymentList";
 

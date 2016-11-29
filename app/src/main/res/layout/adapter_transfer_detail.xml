@@ -49,17 +49,17 @@
                 android:textSize="@dimen/mq_font4"
                 android:text="转让中"/>
 
-            <TextView
-                android:id="@+id/text_transfer_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/text_transfer_status"
-                android:layout_marginRight="@dimen/margin_left_right"
-                android:layout_centerVertical="true"
-                android:singleLine="true"
-                android:textColor="@color/mq_r1"
-                android:textSize="@dimen/mq_font4"
-                android:text="--"/>
+            <!--<TextView-->
+                <!--android:id="@+id/text_transfer_money"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toLeftOf="@id/text_transfer_status"-->
+                <!--android:layout_marginRight="@dimen/margin_left_right"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:singleLine="true"-->
+                <!--android:textColor="@color/mq_r1"-->
+                <!--android:textSize="@dimen/mq_font4"-->
+                <!--android:text="3334343434"/>-->
         </RelativeLayout>
 
         <RelativeLayout
@@ -76,7 +76,7 @@
                 android:singleLine="true"
                 android:textColor="@color/mq_b2"
                 android:textSize="@dimen/mq_font5"
-                android:text="2015-01-01"/>
+                android:text=""/>
 
             <TextView
                 android:id="@+id/text_interest"

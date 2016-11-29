@@ -33,7 +33,7 @@ public class AdapterTransferDetail extends RecyclerView.Adapter {
             TranferDetailInfo tranferDetailInfo = mList.get(position);
             ((ViewHolder) holder).textTransferingMoney.setText(tranferDetailInfo.getPrin());
             ((ViewHolder) holder).textTransferStatus.setText(tranferDetailInfo.getTransState());
-            ((ViewHolder) holder).textTransferMoney.setText(tranferDetailInfo.getBuyAmt());
+//            ((ViewHolder) holder).textTransferMoney.setText(tranferDetailInfo.getBuyAmt());
             ((ViewHolder) holder).textDate.setText(tranferDetailInfo.getApplDt());
             ((ViewHolder) holder).textInterest.setText(tranferDetailInfo.getDiscount());
         }
@@ -51,7 +51,7 @@ public class AdapterTransferDetail extends RecyclerView.Adapter {
 
         public TextView textTransferingMoney;
         public TextView textTransferStatus;
-        public TextView textTransferMoney;
+//        public TextView textTransferMoney;
         public TextView textDate;
         public TextView textInterest;
 
@@ -59,7 +59,7 @@ public class AdapterTransferDetail extends RecyclerView.Adapter {
             super(itemView);
             textTransferingMoney = (TextView) itemView.findViewById(R.id.text_transfering_money);
             textTransferStatus = (TextView) itemView.findViewById(R.id.text_transfer_status);
-            textTransferMoney = (TextView) itemView.findViewById(R.id.text_transfer_money);
+//            textTransferMoney = (TextView) itemView.findViewById(R.id.text_transfer_money);
             textDate = (TextView) itemView.findViewById(R.id.text_date);
             textInterest = (TextView) itemView.findViewById(R.id.text_interest);
         }
