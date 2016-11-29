@@ -6,12 +6,10 @@ import java.util.Locale;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
-import android.graphics.Region;
 import android.graphics.Path.Direction;
 import android.graphics.Region.Op;
 import android.os.Handler;
@@ -19,9 +17,7 @@ import android.os.Message;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ProgressBar;
 
 /**
  * @author Administrator
@@ -67,7 +63,7 @@ public class WaterWaveProgress extends View {
 		private int refreshPeriod = 100;
 
 		public MyHandler(WaterWaveProgress host) {
-			mWeakRef = new WeakReference<WaterWaveProgress>(host);
+			mWeakRef = new WeakReference<>(host);
 		}
 
 		@Override

@@ -13,13 +13,10 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.UserCurrentData;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -140,7 +137,7 @@ public class ActivityRedeem extends BaseActivity implements View.OnClickListener
                         return;
                     }
                     s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         });

@@ -291,7 +291,7 @@ public class HttpRequest {
     //获得消息详情
     public static void getPushDetail(Context context, final ICallback<MessageInfoResult> callback, boolean isMessage, String id) {
         List<Param> mList = new ArrayList<>();
-        String url = "";
+        String url;
         mList.add(new Param("id", id));
         if (isMessage) {
             mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));

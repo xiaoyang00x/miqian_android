@@ -76,9 +76,7 @@ public class UserUtil {
     public static void showWebActivity() {
         synchronized (ListenerManager.adsListeners) {
             Set<String> set = ListenerManager.adsListeners.keySet();
-            Iterator<String> it = set.iterator();
-            while (it.hasNext()) {
-                String key = it.next();
+            for (String key : set) {
                 WeakReference<HomeAdsListener> ref = ListenerManager.adsListeners.get(key);
                 if (ref != null && ref.get() != null) {
                     HomeAdsListener listener = ref.get();
@@ -95,9 +93,7 @@ public class UserUtil {
     public static void loginSuccess() {
         synchronized (ListenerManager.loginListeners) {
             Set<String> set = ListenerManager.loginListeners.keySet();
-            Iterator<String> it = set.iterator();
-            while (it.hasNext()) {
-                String key = it.next();
+            for (String key : set) {
                 WeakReference<LoginListener> ref = ListenerManager.loginListeners.get(key);
                 if (ref != null && ref.get() != null) {
                     LoginListener listener = ref.get();
@@ -115,9 +111,7 @@ public class UserUtil {
     public static void logout() {
         synchronized (ListenerManager.loginListeners) {
             Set<String> set = ListenerManager.loginListeners.keySet();
-            Iterator<String> it = set.iterator();
-            while (it.hasNext()) {
-                String key = it.next();
+            for (String key : set) {
                 WeakReference<LoginListener> ref = ListenerManager.loginListeners.get(key);
                 if (ref != null && ref.get() != null) {
                     LoginListener listener = ref.get();

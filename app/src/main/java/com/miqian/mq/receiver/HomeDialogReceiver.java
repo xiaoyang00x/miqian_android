@@ -32,9 +32,7 @@ public class HomeDialogReceiver extends BroadcastReceiver {
     public void showHomeDialog() {
         synchronized (ListenerManager.homeDialogListeners) {
             Set<String> set = ListenerManager.homeDialogListeners.keySet();
-            Iterator<String> it = set.iterator();
-            while (it.hasNext()) {
-                String key = it.next();
+            for (String key : set) {
                 WeakReference<HomeDialogListener> ref = ListenerManager.homeDialogListeners.get(key);
                 if (ref != null && ref.get() != null) {
                     HomeDialogListener listener = ref.get();

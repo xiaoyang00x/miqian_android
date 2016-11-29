@@ -76,7 +76,7 @@ public class HttpUtils {
     }
 
     public static String getSign(List<Param> list) {
-        StringBuffer signBuffer = new StringBuffer();
+        StringBuilder signBuffer = new StringBuilder();
         if (list != null && list.size() > 0) {
             for (Param param : list) {
                 signBuffer.append("&").append(param.key);
@@ -124,7 +124,7 @@ public class HttpUtils {
     }
 
     public static String getUrl(List<Param> list) {
-        StringBuffer urlBuffer = new StringBuffer();
+        StringBuilder urlBuffer = new StringBuilder();
         if (list != null && list.size() > 0) {
             urlBuffer.append("?");
             for (Param param : list) {

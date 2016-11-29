@@ -207,7 +207,7 @@ public class CustomFeedBackActivity extends BaseActivity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
+			ViewHolder holder;
 			// 获取单条回复
 			Reply reply = mComversation.getReplyList().get(position);
 			if (convertView == null) {

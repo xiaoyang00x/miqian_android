@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -27,7 +26,7 @@ public class FormatUtil {
             try {
                 float floatTemp = Float.parseFloat(money);
                 moneyString = String.format(Locale.getDefault(), "%.2f", floatTemp);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         return moneyString;
@@ -52,10 +51,9 @@ public class FormatUtil {
     public static String formatAmount(BigDecimal amount) {
         NumberFormat nf = new DecimalFormat("#,###.##");
         String format = amount == null ? "0" : amount.toString();
-        try{
+        try {
             format = nf.format(amount);
-        }catch (Exception e) {
-
+        } catch (Exception ignored) {
         }
         return format;
     }
@@ -67,10 +65,10 @@ public class FormatUtil {
      */
     public static String formatAmountStr(String amount) {
         NumberFormat nf = new DecimalFormat("#,###.##");
-        String format = TextUtils.isEmpty(amount)? "0" : amount;
-        try{
+        String format = TextUtils.isEmpty(amount) ? "0" : amount;
+        try {
             format = nf.format(new BigDecimal(amount));
-        }catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return format;

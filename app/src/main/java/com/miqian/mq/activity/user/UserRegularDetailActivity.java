@@ -15,7 +15,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.Operation;
-import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.UserRegularDetail;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.net.HttpRequest;

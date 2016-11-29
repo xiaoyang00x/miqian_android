@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
+import com.miqian.mq.MyApplication;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.UserUtil;
 
@@ -18,12 +19,10 @@ import cn.jpush.android.api.TagAliasCallback;
  */
 public class JpushHelper {
     public static String TAG = "Jpush";
-    public static Context context;
     private static Set<String> tagSet;
 
     public static void setAlias(Context mContext) {
-        context = mContext;
-        tagSet = new LinkedHashSet<String>();
+        tagSet = new LinkedHashSet<>();
         tagSet.clear();
         // 调用 Handler 来异步设置别名
         //登录状态设置用户token别名，并且取消设置的标签
@@ -47,7 +46,7 @@ public class JpushHelper {
                 case MSG_SET_ALIAS:
                     LogUtil.d(TAG, "Set alias in handler.");
                     // 调用 JPush 接口来设置别名。
-                    JPushInterface.setAliasAndTags(context.getApplicationContext(),
+                    JPushInterface.setAliasAndTags(MyApplication.getInstance(),
                             (String) msg.obj,
                             null,
                             mAliasCallback);
@@ -55,7 +54,7 @@ public class JpushHelper {
                 case MSG_SET_TAGS:
                     LogUtil.d(TAG, "Set Tag in handler.");
                     // 调用 JPush 接口来设置别名。
-                    JPushInterface.setAliasAndTags(context.getApplicationContext(),
+                    JPushInterface.setAliasAndTags(MyApplication.getInstance(),
                             null,
                             (Set<String>) msg.obj,
                             mTagsCallback);

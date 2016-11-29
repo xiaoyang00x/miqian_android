@@ -73,7 +73,7 @@ public class ExtendOperationController {
 	static ExtendOperationController mControll;
 
 	public ExtendOperationController() {
-		mListeners = new LinkedList<ExtendOperationListener>();
+		mListeners = new LinkedList<>();
 	}
 
 	public static ExtendOperationController getInstance() {

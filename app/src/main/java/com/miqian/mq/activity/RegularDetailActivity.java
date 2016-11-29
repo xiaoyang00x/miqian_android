@@ -1,7 +1,6 @@
 package com.miqian.mq.activity;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.text.InputFilter;
 import android.text.Selection;
 import android.text.TextUtils;
@@ -9,8 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.CurrentDetailResult;
-import com.miqian.mq.entity.CurrentProjectInfo;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularProjectFeature;
@@ -95,7 +92,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
             public void onFail(String error) {
             }
         };
-        swipeRefresh.setRefreshing(true);
+//        swipeRefresh.setRefreshing(true);
         requestData(iCallback);
     }
 
@@ -119,6 +116,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
                     showContentView();
                     mInfo = result.getData().getSubjectData();
                     updateUI();
+                    iCallback.onSucceed(result);
                 }
                 swipeRefresh.setRefreshing(false);
                 end();

@@ -62,6 +62,7 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -200,9 +201,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         HashMap<String, Boolean> jpushList = MyApplication.getPushList();
         if (jpushList.size() > 0) {
             Set set = jpushList.entrySet();
-            java.util.Iterator it = jpushList.entrySet().iterator();
-            while (it.hasNext()) {
-                java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
+            for (Object o : set) {
+                Map.Entry entry = (Map.Entry) o;
                 boolean hasTip = (boolean) entry.getValue();
                 String noticeId = (String) entry.getKey();
                 if (!hasTip) {

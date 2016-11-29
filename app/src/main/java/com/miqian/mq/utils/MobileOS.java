@@ -75,7 +75,7 @@ public class MobileOS {
         String verName = "unknown";
         try {
             verName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
-        } catch (NameNotFoundException e) {
+        } catch (NameNotFoundException ignored) {
         }
         return verName;
     }
@@ -129,7 +129,7 @@ public class MobileOS {
         String imei = "";
         try {
             imei = telephonyManager.getDeviceId();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return !TextUtils.isEmpty(imei) ? imei : getLocalMacAddress(context);
     }
@@ -164,7 +164,7 @@ public class MobileOS {
     public static String getRandomString() {
         String base = "abcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(Pref.VISITOR);
         for (int i = 0; i < 10; i++) {
             int number = random.nextInt(base.length());
@@ -181,14 +181,23 @@ public class MobileOS {
         String operator = telephonyManager.getSimOperator();
         String operatorName = "";
         if (operator != null) {
-            if (operator.equals("46000") || operator.equals("46002") || operator.equals("46007")) {
-                operatorName = "中国移动";
-            } else if (operator.equals("46001") || operator.equals("46006")) {
-                operatorName = "中国联通";
-            } else if (operator.equals("46003") || operator.equals("46005")) {
-                operatorName = "中国电信";
-            } else if (operator.equals("46020")) {
-                operatorName = "中国铁通";
+            switch (operator) {
+                case "46000":
+                case "46002":
+                case "46007":
+                    operatorName = "中国移动";
+                    break;
+                case "46001":
+                case "46006":
+                    operatorName = "中国联通";
+                    break;
+                case "46003":
+                case "46005":
+                    operatorName = "中国电信";
+                    break;
+                case "46020":
+                    operatorName = "中国铁通";
+                    break;
             }
         }
         return operatorName;

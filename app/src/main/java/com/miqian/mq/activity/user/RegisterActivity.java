@@ -3,7 +3,6 @@ package com.miqian.mq.activity.user;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.renderscript.Type;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;

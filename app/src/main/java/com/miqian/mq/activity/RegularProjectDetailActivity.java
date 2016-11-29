@@ -2,31 +2,18 @@ package com.miqian.mq.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.RegularBase;
-import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularEarnDetail;
-import com.miqian.mq.entity.RegularProjectFeature;
-import com.miqian.mq.entity.RegularProjectInfo;
-import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Constants;
-import com.miqian.mq.utils.FormatUtil;
-import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**

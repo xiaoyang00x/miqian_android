@@ -1,7 +1,6 @@
 package com.miqian.mq.entity;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 /**
  * Created by sunyong on 9/14/15.

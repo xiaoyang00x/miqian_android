@@ -38,72 +38,80 @@ public class CalculateUtil {
     }
     public static int isTransfer(String subjectType, BigDecimal bdRealInterest, BigDecimal bdPresentInterest, String transedAmt) {
         int showType = 0;
-        if (subjectType.equals("88")) {//88节双倍收益
-            if (bdRealInterest.compareTo(bdPresentInterest) == 0) {
-                showType = INTEREST_SHOWTYPE_TWO;
-            }else {
-                if (bdPresentInterest.compareTo(BigDecimal.ZERO)>0) {
+        switch (subjectType) {
+            case "88": //88节双倍收益
+                if (bdRealInterest.compareTo(bdPresentInterest) == 0) {
+                    showType = INTEREST_SHOWTYPE_TWO;
+                } else {
+                    if (bdPresentInterest.compareTo(BigDecimal.ZERO) > 0) {
+                        showType = INTEREST_SHOWTYPE_THREE;
+                    } else {
+                        showType = INTEREST_SHOWTYPE_ONE;
+                    }
+                }
+                break;
+            case "07": //双倍收益卡
+                if (!TextUtils.isEmpty(transedAmt)) {
+                    BigDecimal amtMoney = new BigDecimal(transedAmt);
+                    if (amtMoney.compareTo(BigDecimal.ZERO) > 0) {
+                        showType = INTEREST_SHOWTYPE_ONE;
+                    } else {
+                        if (bdRealInterest.compareTo(bdPresentInterest) == 0) {
+                            showType = INTEREST_SHOWTYPE_TWO;
+                        } else {
+                            if (bdPresentInterest.compareTo(BigDecimal.ZERO) > 0) {
+                                showType = INTEREST_SHOWTYPE_THREE;
+                            } else {
+                                showType = INTEREST_SHOWTYPE_ONE;
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                if (bdPresentInterest.compareTo(BigDecimal.ZERO) > 0) {
                     showType = INTEREST_SHOWTYPE_THREE;
                 } else {
                     showType = INTEREST_SHOWTYPE_ONE;
                 }
-            }
-        } else if (subjectType.equals("07")) {//双倍收益卡
-            if (!TextUtils.isEmpty(transedAmt)) {
-                BigDecimal amtMoney = new BigDecimal(transedAmt);
-                if (amtMoney.compareTo(BigDecimal.ZERO) > 0) {
-                    showType = INTEREST_SHOWTYPE_ONE;
-                } else {
-                    if (bdRealInterest.compareTo(bdPresentInterest) == 0) {
-                        showType = INTEREST_SHOWTYPE_TWO;
-                    }else {
-                        if (bdPresentInterest.compareTo(BigDecimal.ZERO)>0) {
-                            showType = INTEREST_SHOWTYPE_THREE;
-                        } else {
-                            showType = INTEREST_SHOWTYPE_ONE;
-                        }
-                    }
-                }
-            }
-        } else {
-            if (bdPresentInterest.compareTo(BigDecimal.ZERO)>0) {
-                showType = INTEREST_SHOWTYPE_THREE;
-            } else {
-                showType = INTEREST_SHOWTYPE_ONE;
-            }
+                break;
         }
         return showType;
     }
 
     public static int isOirigin(String subjectType, BigDecimal bdRealInterest, BigDecimal bdPresentInterest, String transedAmt) {
         int showType = 0;
-        if (subjectType.equals("88")) {//88节双倍收益
-            if (bdRealInterest.compareTo(bdPresentInterest) == 0) {
-                showType = INTEREST_SHOWTYPE_FOUR;
-            }
-        } else if (subjectType.equals("07")) {//双倍收益卡
-            if (!TextUtils.isEmpty(transedAmt)) {
-                BigDecimal amtMoney = new BigDecimal(transedAmt);
-                if (amtMoney.compareTo(BigDecimal.ZERO) > 0) {
-                    showType = INTEREST_SHOWTYPE_FIVE;
-                } else {
-                    if (bdRealInterest.compareTo(bdPresentInterest) == 0) {
-                        showType = INTEREST_SHOWTYPE_SIX;
-                    }else {
-                        if (bdPresentInterest.compareTo(BigDecimal.ZERO)>0) {
-                            showType = INTEREST_SHOWTYPE_SEVEN;
+        switch (subjectType) {
+            case "88": //88节双倍收益
+                if (bdRealInterest.compareTo(bdPresentInterest) == 0) {
+                    showType = INTEREST_SHOWTYPE_FOUR;
+                }
+                break;
+            case "07": //双倍收益卡
+                if (!TextUtils.isEmpty(transedAmt)) {
+                    BigDecimal amtMoney = new BigDecimal(transedAmt);
+                    if (amtMoney.compareTo(BigDecimal.ZERO) > 0) {
+                        showType = INTEREST_SHOWTYPE_FIVE;
+                    } else {
+                        if (bdRealInterest.compareTo(bdPresentInterest) == 0) {
+                            showType = INTEREST_SHOWTYPE_SIX;
                         } else {
-                            showType = INTEREST_SHOWTYPE_FIVE;
+                            if (bdPresentInterest.compareTo(BigDecimal.ZERO) > 0) {
+                                showType = INTEREST_SHOWTYPE_SEVEN;
+                            } else {
+                                showType = INTEREST_SHOWTYPE_FIVE;
+                            }
                         }
                     }
                 }
-            }
-        }else {
-            if (bdPresentInterest.compareTo(BigDecimal.ZERO)>0) {
-                showType = INTEREST_SHOWTYPE_SEVEN;
-            } else {
-                showType = INTEREST_SHOWTYPE_FIVE;
-            }
+                break;
+            default:
+                if (bdPresentInterest.compareTo(BigDecimal.ZERO) > 0) {
+                    showType = INTEREST_SHOWTYPE_SEVEN;
+                } else {
+                    showType = INTEREST_SHOWTYPE_FIVE;
+                }
+                break;
         }
         return showType;
     }

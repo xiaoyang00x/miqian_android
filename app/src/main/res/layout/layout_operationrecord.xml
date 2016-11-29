@@ -12,7 +12,7 @@
         <LinearLayout
             android:id="@+id/linear_record"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/arrow_detail"
             android:layout_marginRight="@dimen/margin_left_right"
             android:orientation="vertical"

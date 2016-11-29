@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -13,7 +12,6 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.RegTransFerredDetail;
 import com.miqian.mq.entity.RegTransFerredDetailResult;
-import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -82,10 +80,13 @@ public class MyRegularTransferDetailActivity extends BaseActivity implements Vie
         tv_name.setText(regTransFerredDetail.getBdNm());
         // 标的描述
         StringBuilder sb = new StringBuilder();
-        sb.append(regTransFerredDetail.getChangeMod()
-                + " | " + regTransFerredDetail.getBidLmtminAmt() + "元起投"
-                + " | " + regTransFerredDetail.getBdCiMod());
-        tv_description.setText(sb.toString());
+        sb.append(regTransFerredDetail.getChangeMod())
+                .append(" | ")
+                .append(regTransFerredDetail.getBidLmtminAmt())
+                .append("元起投")
+                .append(" | ")
+                .append(regTransFerredDetail.getBdCiMod());
+        tv_description.setText(sb);
         tv_profit_rate.setText(regTransFerredDetail.getPredictRate());
         tv_time_limit.setText(regTransFerredDetail.getLimitCnt());
         tvOriginProfit.setText("原年化收益:"+regTransFerredDetail.getOldYrt() + "%");

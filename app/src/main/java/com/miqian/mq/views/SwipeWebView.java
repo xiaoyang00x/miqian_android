@@ -45,7 +45,7 @@ public class SwipeWebView extends WebView {
             "wait",
     };
 
-    private HashMap<String, Object> mJsInterfaceMap = new HashMap<String, Object>();
+    private HashMap<String, Object> mJsInterfaceMap = new HashMap<>();
 
     private String mJsStringCache = null;
 
@@ -385,8 +385,6 @@ public class SwipeWebView extends WebView {
             String returnValue = isVoid ? "" : returnObj.toString();
             result.confirm(returnValue); // 通过prompt返回调用结果
             succeed = true;
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

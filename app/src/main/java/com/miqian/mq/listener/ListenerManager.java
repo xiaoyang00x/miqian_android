@@ -10,9 +10,9 @@ import java.util.HashMap;
  */
 public class ListenerManager {
 
-    public static final HashMap<String, WeakReference<HomeDialogListener>> homeDialogListeners = new HashMap<String, WeakReference<HomeDialogListener>>();
-    public static final HashMap<String, WeakReference< LoginListener>> loginListeners = new HashMap<String, WeakReference<LoginListener>>();
-    public static final HashMap<String, WeakReference< HomeAdsListener>> adsListeners = new HashMap<String, WeakReference<HomeAdsListener>>();
+    public static final HashMap<String, WeakReference<HomeDialogListener>> homeDialogListeners = new HashMap<>();
+    public static final HashMap<String, WeakReference< LoginListener>> loginListeners = new HashMap<>();
+    public static final HashMap<String, WeakReference< HomeAdsListener>> adsListeners = new HashMap<>();
 
 
     public static void registerHomeDialogListener(String key, HomeDialogListener listener) {
@@ -21,7 +21,7 @@ public class ListenerManager {
             if (ref != null && ref.get() != null) {
                 ref.clear();
             }
-            homeDialogListeners.put(key, new WeakReference<HomeDialogListener>(listener));
+            homeDialogListeners.put(key, new WeakReference<>(listener));
         }
     }
 
@@ -41,7 +41,7 @@ public class ListenerManager {
             if (ref != null && ref.get() != null) {
                 ref.clear();
             }
-            loginListeners.put(key, new WeakReference<LoginListener>(listener));
+            loginListeners.put(key, new WeakReference<>(listener));
         }
     }
 
@@ -61,7 +61,7 @@ public class ListenerManager {
             if (ref != null && ref.get() != null) {
                 ref.clear();
             }
-            adsListeners.put(key, new WeakReference<HomeAdsListener>(listener));
+            adsListeners.put(key, new WeakReference<>(listener));
         }
     }
 

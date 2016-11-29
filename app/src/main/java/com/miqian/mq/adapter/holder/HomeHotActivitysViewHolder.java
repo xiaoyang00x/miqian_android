@@ -1,18 +1,14 @@
 package com.miqian.mq.adapter.holder;
 
 import android.graphics.Bitmap;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.HomeNewActivitiesData;
-import com.miqian.mq.entity.HomeNewsData;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.utils.Uihelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

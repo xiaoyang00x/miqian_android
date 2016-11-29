@@ -25,7 +25,6 @@ import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
-import com.miqian.mq.views.swipemenulistview.SwipeMenuListView;
 
 import java.util.List;
 

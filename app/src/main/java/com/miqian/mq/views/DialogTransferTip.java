@@ -5,10 +5,8 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.umeng.analytics.MobclickAgent;
 
 
 public abstract class DialogTransferTip extends Dialog {

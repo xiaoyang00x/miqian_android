@@ -2,40 +2,23 @@ package com.miqian.mq.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.RegularDetailActivity;
-import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityCurrentRecord;
 import com.miqian.mq.activity.current.ActivityProjectMath;
-import com.miqian.mq.activity.current.ActivityRedeem;
-import com.miqian.mq.activity.current.SubscriptionRecordsActivity;
 import com.miqian.mq.entity.FundFlow;
-import com.miqian.mq.entity.RegularBase;
-import com.miqian.mq.entity.RegularProjectData;
-import com.miqian.mq.entity.RegularProjectHeader;
-import com.miqian.mq.entity.RegularProjectInfo;
-import com.miqian.mq.entity.RegularProjectList;
 import com.miqian.mq.entity.UserCurrentData;
-import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
-import com.miqian.mq.utils.Uihelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
 
 /**
  * @author wgl

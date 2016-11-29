@@ -182,7 +182,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     public List<JpushInfo> getjpushInfo(String userId) {
         SQLiteDatabase db = getDatabase();
-        ArrayList<JpushInfo> jpushArrayList = new ArrayList<JpushInfo>();
+        ArrayList<JpushInfo> jpushArrayList = new ArrayList<>();
         JpushInfo jpushInfo = null;
         Cursor cursor = db.query(Jpush_TABLE_NAME, null, "userId=?", new String[]{userId}, null, null, null);
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -200,28 +200,40 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                     e.printStackTrace();
                 }
 
-                if (key.equals("title")) {
-                    jpushInfo.setTitle(value);
-                } else if (key.equals("content")) {
-                    jpushInfo.setContent(value);
-                } else if (key.equals("userId")) {
-                    jpushInfo.setUserId(userId);
-                } else if (key.equals("notice_id")) {
-                    jpushInfo.setId(value);
-                } else if (key.equals("uritype")) {
-                    jpushInfo.setUriType(value);
-                } else if (key.equals("url")) {
-                    jpushInfo.setUrl(value);
-                } else if (key.equals("state")) {
-                    jpushInfo.setState(value);
-                } else if (key.equals("time")) {
-                    jpushInfo.setTime(value);
-                } else if (key.equals("pushSource")) {
-                    jpushInfo.setPushSource(value);
-                }else if (key.equals("token")) {
-                    jpushInfo.setToken(value);
-                } else if (key.equals("ext")) {
-                    jpushInfo.setExt(value);
+                switch (key) {
+                    case "title":
+                        jpushInfo.setTitle(value);
+                        break;
+                    case "content":
+                        jpushInfo.setContent(value);
+                        break;
+                    case "userId":
+                        jpushInfo.setUserId(userId);
+                        break;
+                    case "notice_id":
+                        jpushInfo.setId(value);
+                        break;
+                    case "uritype":
+                        jpushInfo.setUriType(value);
+                        break;
+                    case "url":
+                        jpushInfo.setUrl(value);
+                        break;
+                    case "state":
+                        jpushInfo.setState(value);
+                        break;
+                    case "time":
+                        jpushInfo.setTime(value);
+                        break;
+                    case "pushSource":
+                        jpushInfo.setPushSource(value);
+                        break;
+                    case "token":
+                        jpushInfo.setToken(value);
+                        break;
+                    case "ext":
+                        jpushInfo.setExt(value);
+                        break;
                 }
             }
             cursorTemp.close();
@@ -249,28 +261,40 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (key.equals("title")) {
-                    jpushInfo.setTitle(value);
-                } else if (key.equals("content")) {
-                    jpushInfo.setContent(value);
-                } else if (key.equals("userId")) {
-                    jpushInfo.setUserId(value);
-                } else if (key.equals("notice_id")) {
-                    jpushInfo.setId(value);
-                } else if (key.equals("uritype")) {
-                    jpushInfo.setUriType(value);
-                } else if (key.equals("url")) {
-                    jpushInfo.setUrl(value);
-                } else if (key.equals("state")) {
-                    jpushInfo.setState(value);
-                } else if (key.equals("time")) {
-                    jpushInfo.setTime(value);
-                } else if (key.equals("pushSource")) {
-                    jpushInfo.setPushSource(value);
-                }else if (key.equals("token")) {
-                    jpushInfo.setToken(value);
-                }else if (key.equals("ext")) {
-                    jpushInfo.setExt(value);
+                switch (key) {
+                    case "title":
+                        jpushInfo.setTitle(value);
+                        break;
+                    case "content":
+                        jpushInfo.setContent(value);
+                        break;
+                    case "userId":
+                        jpushInfo.setUserId(value);
+                        break;
+                    case "notice_id":
+                        jpushInfo.setId(value);
+                        break;
+                    case "uritype":
+                        jpushInfo.setUriType(value);
+                        break;
+                    case "url":
+                        jpushInfo.setUrl(value);
+                        break;
+                    case "state":
+                        jpushInfo.setState(value);
+                        break;
+                    case "time":
+                        jpushInfo.setTime(value);
+                        break;
+                    case "pushSource":
+                        jpushInfo.setPushSource(value);
+                        break;
+                    case "token":
+                        jpushInfo.setToken(value);
+                        break;
+                    case "ext":
+                        jpushInfo.setExt(value);
+                        break;
                 }
             }
             cursorTemp.close();

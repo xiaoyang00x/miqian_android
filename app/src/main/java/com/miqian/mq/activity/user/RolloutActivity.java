@@ -28,7 +28,6 @@ import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * Created by Joy on 2015/9/22.
@@ -105,7 +104,7 @@ public class RolloutActivity extends BaseActivity {
                         return;
                     }
                     s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -181,7 +180,7 @@ public class RolloutActivity extends BaseActivity {
                     if(!TextUtils.isEmpty(feeAmt)){
                         bdFeeamt=new BigDecimal(feeAmt);
                         if (bdFeeamt.compareTo(BigDecimal.ZERO)>0){
-                            tip.append("提现手续费"+feeAmt+"元");
+                            tip.append("提现手续费").append(feeAmt).append("元");
                             initTipDialog(1);
                             dialogTipsReput.setRemarks(tip.toString());
                             dialogTipsReput.show();

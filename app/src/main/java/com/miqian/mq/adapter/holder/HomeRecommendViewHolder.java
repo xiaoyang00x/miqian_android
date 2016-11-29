@@ -3,20 +3,15 @@ package com.miqian.mq.adapter.holder;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.adapter.CyclePagerAdapter;
-import com.miqian.mq.entity.HomeAdData;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomeRecommendData;
 import com.miqian.mq.utils.Uihelper;
@@ -24,7 +19,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 

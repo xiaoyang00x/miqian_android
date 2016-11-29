@@ -154,12 +154,11 @@ public class Uihelper {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        return new StringBuilder().
-                append(String.format(Locale.getDefault(), "%02d", month)).append("月").
-                append(String.format(Locale.getDefault(), "%02d", day)).append("日").
-                append(" ").
-                append(String.format(Locale.getDefault(), "%02d", hour)).append(":").
-                append(String.format(Locale.getDefault(), "%02d", minute)).append("发售").toString();
+        return String.format(Locale.getDefault(), "%02d", month) + "月" +
+                String.format(Locale.getDefault(), "%02d", day) + "日" +
+                " " +
+                String.format(Locale.getDefault(), "%02d", hour) + ":" +
+                String.format(Locale.getDefault(), "%02d", minute) + "发售";
     }
 
     /**

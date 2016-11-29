@@ -12,7 +12,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.adapter.RegularListAdapter;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.RegularBaseData;
-import com.miqian.mq.entity.SubjectCategoryData;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Constants;

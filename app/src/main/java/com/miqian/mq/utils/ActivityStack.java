@@ -52,7 +52,7 @@ public class ActivityStack {
 
 	public void pushActivity(Activity activity) {
 		if (activityStack == null) {
-			activityStack = new Stack<Activity>();
+			activityStack = new Stack<>();
 		}
 		activityStack.add(activity);
 	}

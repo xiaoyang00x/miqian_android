@@ -53,7 +53,7 @@ public abstract class DialogPay extends Dialog {
                         return;
                     }
                     s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         });

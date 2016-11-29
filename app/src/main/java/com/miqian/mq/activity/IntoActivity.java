@@ -97,7 +97,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                         return;
                     }
                     s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -112,7 +112,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                         return;
                     }
                     s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         });

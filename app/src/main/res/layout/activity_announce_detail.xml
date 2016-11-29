@@ -2,70 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/linear_content"
-        android:visibility="gone"
-        android:background="@color/white"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="vertical"
         android:paddingLeft="20dp"
-          android:paddingRight="20dp"
-        android:orientation="vertical" >
+        android:paddingRight="20dp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top"
-            android:text=""
+            android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
-            android:ellipsize="end"
+            android:text=""
             android:textColor="#505050"
-            android:textSize="@dimen/mq_font1"
-             />
+            android:textSize="@dimen/mq_font1" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/mq_b4"
             android:layout_marginTop="@dimen/margin_top"
-            />
+            android:background="@color/mq_b4" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#A0A0A0"
             android:layout_marginTop="@dimen/margin_top"
-            android:text="亲爱的用户:" />
+            android:text="亲爱的用户:"
+            android:textColor="#A0A0A0" />
+
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#A0A0A0"
             android:layout_marginTop="5dp"
-            android:text="" />
+            android:text=""
+            android:textColor="#A0A0A0" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#A0A0A0"
-            android:gravity="right|center"
             android:layout_marginTop="@dimen/margin_top"
-            android:text="秒钱运营团队" />
+            android:gravity="right|center"
+            android:text="秒钱运营团队"
+            android:textColor="#A0A0A0" />
+
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#A0A0A0"
             android:layout_marginTop="2dp"
             android:gravity="right|center"
-            android:text="" />
-        
+            android:text=""
+            android:textColor="#A0A0A0" />
 
 
     </LinearLayout>

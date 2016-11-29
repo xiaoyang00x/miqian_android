@@ -3,7 +3,6 @@ package com.miqian.mq.views.swipemenulistview;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -13,7 +12,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.utils.Uihelper;
 
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class SwipeMenuAdapter implements WrapperListAdapter,

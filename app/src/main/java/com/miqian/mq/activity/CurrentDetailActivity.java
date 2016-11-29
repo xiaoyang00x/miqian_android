@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +67,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
             public void onFail(String error) {
             }
         };
-        swipeRefresh.setRefreshing(true);
+//        swipeRefresh.setRefreshing(true);
         requestData(iCallback);
     }
 

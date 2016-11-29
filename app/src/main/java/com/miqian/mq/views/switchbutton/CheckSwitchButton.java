@@ -3,7 +3,6 @@ package com.miqian.mq.views.switchbutton;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,8 +14,6 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 import android.widget.CheckBox;
-
-import com.miqian.mq.R;
 
 /**
  * @describe 使用了第三方的 SwitchButton，添加了相关属性的注释，更容易看懂

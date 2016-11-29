@@ -203,7 +203,7 @@ public class WebHFActivity extends WebActivity {
     }
 
     private Map<String, String> getHeader(String sign) {
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         headers.put("deviceId", MobileOS.getIMEI(this));
         headers.put("cType", "android");
         headers.put("deviceModel", MobileOS.getDeviceModel());

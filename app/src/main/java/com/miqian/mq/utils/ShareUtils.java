@@ -80,21 +80,20 @@ public class ShareUtils {
                 String[] platforms = shareData.getShare_platform().split(",");
                 String[] hiddenPlatforms = minus(allPlatforms, platforms);
                 if (hiddenPlatforms.length > 0) {
-                    for (int i = 0; i < hiddenPlatforms.length; i++) {
-                        String platformName = hiddenPlatforms[i];
+                    for (String platformName : hiddenPlatforms) {
                         if (ShareData.PLATFORM_WECHAT.equals(platformName)) {
                             oks.addHiddenPlatform("Wechat");
-                        }else if (ShareData.PLATFORM_WECHAT_MOMENTS.equals(platformName)) {
+                        } else if (ShareData.PLATFORM_WECHAT_MOMENTS.equals(platformName)) {
                             oks.addHiddenPlatform("WechatMoments");
-                        }else if (ShareData.PLATFORM_SINA.equals(platformName)) {
+                        } else if (ShareData.PLATFORM_SINA.equals(platformName)) {
                             oks.addHiddenPlatform("SinaWeibo");
-                        }else if (ShareData.PLATFORM_QQ.equals(platformName)) {
+                        } else if (ShareData.PLATFORM_QQ.equals(platformName)) {
                             oks.addHiddenPlatform("QQ");
-                        }else if (ShareData.PLATFORM_QQ_ZONE.equals(platformName)) {
+                        } else if (ShareData.PLATFORM_QQ_ZONE.equals(platformName)) {
                             oks.addHiddenPlatform("QZone");
-                        }else if (ShareData.PLATFORM_EMAIL.equals(platformName)) {
+                        } else if (ShareData.PLATFORM_EMAIL.equals(platformName)) {
                             oks.addHiddenPlatform("Email");
-                        }else if (ShareData.PLATFORM_SHORT_MSG.equals(platformName)) {
+                        } else if (ShareData.PLATFORM_SHORT_MSG.equals(platformName)) {
                             oks.addHiddenPlatform("ShortMessage");
                         }
                     }
@@ -103,7 +102,7 @@ public class ShareUtils {
 
             // 启动分享GUI
             oks.show(mActivity);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -159,7 +158,7 @@ public class ShareUtils {
         Gson gson = new Gson();
         try {
             jsShareListener.shareLog(gson.toJson(shareLog));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 }

@@ -187,7 +187,7 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
                     }
                     s.delete(money.length() - 1, money.length());
 
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -311,33 +311,32 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
 
                 BigDecimal disCount = new BigDecimal(fnum.format(disCountMoney));
 
-                if (subtractProfit.compareTo(transferOverTop) > 0) {
-                    StringBuffer sb = new StringBuffer();
-                    sb.append("您设定转让后年化收益为" + transferRate + "%。" + "让利金额" + disCount.abs() + "元, 让利金额过高,可能造成本金损失过多,是否继续？");
-                    DialogTransferTip dialogTips = new DialogTransferTip(LaunchTransferRegularAcitivity.this, sb.toString()) {
-                        @Override
-                        public void positionBtnClick() {
-                            dismiss();
-                            //输入交易密码
-                        }
-                    };
-                    dialogTips.show();
-                } else if (subtractProfit.compareTo(transferOverLow) < 0) {
-                    StringBuffer sb = new StringBuffer();
-                    sb.append("您设定转让后年化收益为" + transferRate + "%。" + "让利金额" + disCount.abs() + "元, 让利金额过低,可能影响您的转让结果,是否继续？");
-                    DialogTransferTip dialogTips = new DialogTransferTip(LaunchTransferRegularAcitivity.this, sb.toString()) {
-                        @Override
-                        public void positionBtnClick() {
-                            //输入交易密码
-                            dismiss();
-
-                        }
-                    };
-                    dialogTips.show();
-                } else {
-//                    //输入交易密码
+                int result = subtractProfit.compareTo(transferOverTop);
+                if (result == 0) {
+                    //输入交易密码
 //                    showTradeDialog();
+                    return;
                 }
+                StringBuilder sb = new StringBuilder();
+                sb.append("您设定转让后年化收益为")
+                        .append(transferRate)
+                        .append("%。")
+                        .append("让利金额")
+                        .append(disCount.abs());
+                if (subtractProfit.compareTo(transferOverTop) > 0) {
+                    sb.append("元, 让利金额过高,可能造成本金损失过多,是否继续？");
+                } else if (subtractProfit.compareTo(transferOverLow) < 0) {
+                    sb.append("元, 让利金额过低,可能影响您的转让结果,是否继续？");
+                }
+                DialogTransferTip dialogTips = new DialogTransferTip(LaunchTransferRegularAcitivity.this, sb.toString()) {
+                    @Override
+                    public void positionBtnClick() {
+                        //输入交易密码
+                        dismiss();
+
+                    }
+                };
+                dialogTips.show();
                 break;
             default:
                 break;
