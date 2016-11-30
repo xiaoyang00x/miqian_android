@@ -6,7 +6,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import com.miqian.mq.R;
 
-public class WaterWaveAttrInit {
+class WaterWaveAttrInit {
 
 	private int progressWidth; // 进度条宽度
 	private int progressColor;

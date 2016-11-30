@@ -21,7 +21,7 @@ public class Uihelper {
 
 
     private static Toast mToast;
-    public static final String RFC3339 = "yyyy-MM-dd HH:mm:ss";
+    private static final String RFC3339 = "yyyy-MM-dd HH:mm:ss";
 
     private static void initToast() {
         if (mToast == null) {
@@ -109,8 +109,7 @@ public class Uihelper {
         if (minute > 0) {
             return minute + resources.getString(R.string.time_minute_ago);
         }
-        long second = seconds;// 相差的秒数
-        if (second > 0) {
+        if (seconds > 0) {
             return resources.getString(R.string.time_one_minute_inner);
         }
         return "";
@@ -131,14 +130,12 @@ public class Uihelper {
      */
     public static String timestampToDateStr(Double timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String date = sdf.format(new Date((long) (timestamp * 1000L)));
-        return date;
+        return sdf.format(new Date((long) (timestamp * 1000L)));
     }
 
     public static String timestampToDateStr_other(long timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String date = sdf.format(new Date(timestamp));
-        return date;
+        return sdf.format(new Date(timestamp));
     }
 
     /**
@@ -169,7 +166,7 @@ public class Uihelper {
      * @author Jackie
      * @date 2015-9-29
      */
-    public static String timestampToString(String timestamp) {
+    private static String timestampToString(String timestamp) {
         if (!TextUtils.isEmpty(timestamp)) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
             Date date = new Date(Long.parseLong(timestamp));
@@ -213,7 +210,7 @@ public class Uihelper {
         return "";
     }
 
-    public static Date parseDate(String str, String format) {
+    private static Date parseDate(String str, String format) {
         Date addTime = null;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());

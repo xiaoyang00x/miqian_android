@@ -7,5 +7,5 @@ package com.miqian.mq.views;
  * @date: 16/10/21
  */
 
-public class ProjectDetailView {
+class ProjectDetailView {
 }

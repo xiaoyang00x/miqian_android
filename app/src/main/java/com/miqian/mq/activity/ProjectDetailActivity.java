@@ -43,71 +43,71 @@ import java.math.BigDecimal;
  */
 public abstract class ProjectDetailActivity extends BaseActivity {
 
-    protected MySwipeRefresh swipeRefresh;
+    MySwipeRefresh swipeRefresh;
 
     // 最大可认购金额 如果为12个9 代表 无限购
-    protected final BigDecimal MAXBUYAMT = new BigDecimal("999999999");
+    final BigDecimal MAXBUYAMT = new BigDecimal("999999999");
 
     /* 标的基本信息 */
-    protected TextView tv_begin_countdown; // 开标倒计时
-    protected TextView tv_name; // 标的名称
-    protected ImageView iv_tag;
-    protected TextView tv_description; // 标的描述
-    protected TextView tv_profit_rate; // 标的年利率
-    protected TextView tv_profit_rate_unit; // 标的年利率 单位％
-    protected TextView tv_time_limit; // 标的期限
-    protected TextView tv_time_limit_unit; // 标的期限 单位
-    protected TextView tv_remain_amount; // 标的可认购金额
-    protected TextView tv_people_amount; // 已认购人数
-    protected TextView tv_info_right; // 默认文字(已认购人数)或原年化收益:
+    TextView tv_begin_countdown; // 开标倒计时
+    TextView tv_name; // 标的名称
+    ImageView iv_tag;
+    TextView tv_description; // 标的描述
+    TextView tv_profit_rate; // 标的年利率
+    TextView tv_profit_rate_unit; // 标的年利率 单位％
+    TextView tv_time_limit; // 标的期限
+    TextView tv_time_limit_unit; // 标的期限 单位
+    TextView tv_remain_amount; // 标的可认购金额
+    TextView tv_people_amount; // 已认购人数
+    TextView tv_info_right; // 默认文字(已认购人数)或原年化收益:
     /* 标的基本信息 */
 
     /* 标的活动信息 */
-    protected MQMarqueeTextView tv_festival; // 88理财节
+    private MQMarqueeTextView tv_festival; // 88理财节
     /* 标的活动信息 */
 
     /* 标的更多信息 */
-    protected ViewStub viewstub_detail;
-    protected View viewDetail;
+    ViewStub viewstub_detail;
+    View viewDetail;
     /* 标的更多信息 */
 
     /* 标的特色相关 */
-    protected LinearLayout llyt_project_feature;
-    protected ImageView iv1;
-    protected ImageView iv2;
-    protected ImageView iv3;
-    protected TextView tv1;
-    protected TextView tv2;
-    protected TextView tv3;
+    LinearLayout llyt_project_feature;
+    ImageView iv1;
+    ImageView iv2;
+    ImageView iv3;
+    TextView tv1;
+    TextView tv2;
+    TextView tv3;
     /* 标的特色相关 */
 
     /* 底部输入框相关 */
-    protected EditText et_input;
-    protected Button btn_buy;
-    protected View view_close_keyboard;
-    protected View view_to_login; // 未登录情况下底部显示透明view 点击触发引导登录
-    protected RelativeLayout rlyt_input; // 底部状态:立即认购输入框
-    protected RelativeLayout rlyt_dialog;
-    protected TextView tv_dialog_min_amount; // 起投金额
-    protected TextView tv_dialog_max_amount_tip; // 最大可认购金额/实际支付金额 文案
-    protected TextView tv_dialog_max_amount; // 最大可认购金额/实际支付金额
-    protected Button btn_state; // 底部状态:标的状态:已满额 待开标
-    protected InputMethodManager imm;
+    EditText et_input;
+    private Button btn_buy;
+    private View view_close_keyboard;
+    private View view_to_login; // 未登录情况下底部显示透明view 点击触发引导登录
+    private RelativeLayout rlyt_input; // 底部状态:立即认购输入框
+    private RelativeLayout rlyt_dialog;
+    TextView tv_dialog_min_amount; // 起投金额
+    TextView tv_dialog_max_amount_tip; // 最大可认购金额/实际支付金额 文案
+    TextView tv_dialog_max_amount; // 最大可认购金额/实际支付金额
+    Button btn_state; // 底部状态:标的状态:已满额 待开标
+    private InputMethodManager imm;
     /* 底部输入框相关 */
 
-    protected String subjectId; // 标的ID
-    protected int prodId; // 产品类型:定期计划 定期赚
-    protected String total_profit_rate; // 标的总年化利率:原始+赠送利率
+    String subjectId; // 标的ID
+    int prodId; // 产品类型:定期计划 定期赚
+    String total_profit_rate; // 标的总年化利率:原始+赠送利率
 
-    protected String input; // 用户输入金额
+    String input; // 用户输入金额
 
-    protected ImageLoader imageLoader;
-    protected DisplayImageOptions options;
+    ImageLoader imageLoader;
+    DisplayImageOptions options;
 
-    protected int screenHeight; // 屏幕高度
+    private int screenHeight; // 屏幕高度
 
-    protected boolean inProcess = false;
-    protected final Object mLock = new Object();
+    boolean inProcess = false;
+    final Object mLock = new Object();
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -193,9 +193,9 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         });
     }
 
-    public abstract void jumpToNextPageIfInputValid();
+    protected abstract void jumpToNextPageIfInputValid();
 
-    protected View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
+    private View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
         @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
             if (btn_state.getVisibility() == View.VISIBLE
@@ -211,14 +211,14 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         }
     };
 
-    protected MySwipeRefresh.OnPullRefreshListener mOnPullRefreshListener = new MySwipeRefresh.OnPullRefreshListener() {
+    private MySwipeRefresh.OnPullRefreshListener mOnPullRefreshListener = new MySwipeRefresh.OnPullRefreshListener() {
         @Override
         public void onRefresh() {
             obtainData();
         }
     };
 
-    protected View.OnFocusChangeListener mOnFousChangeListener = new View.OnFocusChangeListener() {
+    private View.OnFocusChangeListener mOnFousChangeListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
             if (hasFocus) {
@@ -230,7 +230,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 屏蔽触摸 键盘弹出后 其它区域的点击事件
      */
-    protected View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             return true;
@@ -240,7 +240,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 弹出输入法键盘后额外显示view
      */
-    protected void showKeyBoardView() {
+    private void showKeyBoardView() {
         view_close_keyboard.setVisibility(View.VISIBLE);
         rlyt_dialog.setVisibility(View.VISIBLE);
     }
@@ -248,7 +248,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 隐藏输入法后键盘额外显示view
      */
-    protected void hideKeyBoardView() {
+    private void hideKeyBoardView() {
         view_close_keyboard.setVisibility(View.GONE);
         rlyt_dialog.setVisibility(View.GONE);
     }
@@ -256,7 +256,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 此方法为不得已而为之之法 不可轻易尝试 其中有何风险待测试
      */
-    protected void closeKeyboard() {
+    private void closeKeyboard() {
         if (null != imm) {
             begin();
             new Thread(new Runnable() {
@@ -280,7 +280,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
      * @param festival88
      * @param festival88_url
      */
-    protected void updateFestivalInfo(String festival88, final String festival88_url) {
+    void updateFestivalInfo(String festival88, final String festival88_url) {
         if (!TextUtils.isEmpty(festival88)) {
             tv_festival.setVisibility(View.VISIBLE);
             tv_festival.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -303,7 +303,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
      * 用户未登录状态下 已开标 未满额状态下 在输入框上蒙一层view，点击view先去登录
      * 用户已登录状态下 则没有此view
      */
-    protected void showViewToLogin() {
+    void showViewToLogin() {
         view_to_login.setVisibility(View.VISIBLE);
         view_to_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -322,7 +322,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 已登录 已满额 待开标状态下隐藏view
      */
-    protected void hideViewToLogin() {
+    void hideViewToLogin() {
         view_to_login.setVisibility(View.GONE);
         view_to_login.setOnClickListener(null);
     }
@@ -330,7 +330,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 显示底部输入框 并使功能生效
      */
-    protected void enableInputEditText() {
+    void enableInputEditText() {
         rlyt_input.setVisibility(View.VISIBLE);
         rlyt_dialog.setOnTouchListener(mOnTouchListener);
         rlyt_input.setOnTouchListener(mOnTouchListener);
@@ -352,7 +352,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 显示底部输入框 但使功能生效
      */
-    protected void disableInputEditText() {
+    void disableInputEditText() {
         rlyt_input.setVisibility(View.VISIBLE);
         rlyt_dialog.setOnTouchListener(null);
         rlyt_input.setOnTouchListener(null);
@@ -364,21 +364,21 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 隐藏底部输入框
      */
-    protected void hideInputEditText() {
+    void hideInputEditText() {
         rlyt_input.setVisibility(View.GONE);
     }
 
     /**
      * 显示底部状态按钮(如：待开标、已满额)
      */
-    protected void showStateButton() {
+    void showStateButton() {
         btn_state.setVisibility(View.VISIBLE);
     }
 
     /**
      * 隐藏底部状态按钮(如：待开标、已满额)
      */
-    protected void hideStateButton() {
+    void hideStateButton() {
         btn_state.setVisibility(View.GONE);
     }
 
@@ -387,7 +387,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
     /**
      * 显示登录对话框 引导用户登录
      */
-    protected void showLoginDialog() {
+    private void showLoginDialog() {
         if (null == dialog_login) {
             dialog_login = new Dialog_Login(ProjectDetailActivity.this) {
                 @Override
@@ -431,7 +431,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
      *
      * @param textView
      */
-    protected void addUnit(TextView textView) {
+    void addUnit(TextView textView) {
         SpannableString spannableString = new SpannableString("元");
         spannableString.setSpan(new TextAppearanceSpan(this, R.style.f3_b4_V2), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.append(spannableString);
@@ -444,7 +444,7 @@ public abstract class ProjectDetailActivity extends BaseActivity {
      * @param amountB
      * @return
      */
-    protected BigDecimal getUpLimit(BigDecimal amountA, BigDecimal amountB) {
+    BigDecimal getUpLimit(BigDecimal amountA, BigDecimal amountB) {
         if (amountA == null && amountB == null) {
             return null;
         } else if (amountA == null) {

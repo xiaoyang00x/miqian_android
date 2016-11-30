@@ -18,7 +18,7 @@ import cn.jpush.android.api.TagAliasCallback;
  * Created by Joy on 2015/8/28.
  */
 public class JpushHelper {
-    public static String TAG = "Jpush";
+    private static String TAG = "Jpush";
     private static Set<String> tagSet;
 
     public static void setAlias(Context mContext) {

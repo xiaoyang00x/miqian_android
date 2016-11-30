@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class TabPagerAdapter extends FragmentStatePagerAdapter {
+class TabPagerAdapter extends FragmentStatePagerAdapter {
 	
 	private List<Fragment> list;
 	

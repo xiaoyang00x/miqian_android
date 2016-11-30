@@ -12,9 +12,9 @@ import com.umeng.analytics.MobclickAgent;
  */
 public abstract class BasicFragment extends Fragment {
 
-    protected Context mContext;
-    protected Context mApplicationContext;
-    protected Activity mActivity;
+    Context mContext;
+    Context mApplicationContext;
+    Activity mActivity;
     private ProgressDialogView progressDialogView;
 
     @Override
@@ -25,14 +25,14 @@ public abstract class BasicFragment extends Fragment {
         mApplicationContext = activity.getApplicationContext();
     }
 
-    protected void begin() {
+    void begin() {
         if (progressDialogView == null) {
             progressDialogView = new ProgressDialogView(getActivity());
         }
         progressDialogView.show();
     }
 
-    protected void end() {
+    void end() {
         if (progressDialogView != null) {
             progressDialogView.dismiss();
         }

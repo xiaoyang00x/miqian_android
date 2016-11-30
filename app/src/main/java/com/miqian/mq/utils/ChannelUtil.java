@@ -23,7 +23,7 @@ public class ChannelUtil {
         return getChannel(context, "1000");
     }
 
-    public static String getChannel(Context context, String defaultChannel) {
+    private static String getChannel(Context context, String defaultChannel) {
         //内存中获取
         if (!TextUtils.isEmpty(mChannel)) {
             return mChannel;

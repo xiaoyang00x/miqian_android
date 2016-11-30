@@ -4,7 +4,7 @@ package com.miqian.mq.views;
  * 手势锁九宫格中每个点
  * Created by wangduo on 15/12/11.
  */
-public class GestureLockPoint {
+class GestureLockPoint {
 
     public final static int STATE_NOR = 0; // 普通状态
     public final static int STATE_PRESS = 1; // 按下状态
@@ -53,7 +53,7 @@ public class GestureLockPoint {
         return degree;
     }
 
-    public static float getAngle(GestureLockPoint a, GestureLockPoint b) {
+    private static float getAngle(GestureLockPoint a, GestureLockPoint b) {
         //两点的x、y值
         int x = b.pointX - a.pointX;
         int y = b.pointY - a.pointY;

@@ -64,7 +64,7 @@ public class SystemBarTintManager {
     /**
      * The default system bar tint color value.
      */
-    public static final int DEFAULT_TINT_COLOR = 0x99000000;
+    private static final int DEFAULT_TINT_COLOR = 0x99000000;
 
     private static String sNavBarOverride;
 
@@ -206,7 +206,7 @@ public class SystemBarTintManager {
      *
      * @param color The color of the background tint.
      */
-    public void setStatusBarTintColor(int color) {
+    private void setStatusBarTintColor(int color) {
         if (mStatusBarAvailable) {
             mStatusBarTintView.setBackgroundColor(color);
         }
@@ -229,7 +229,7 @@ public class SystemBarTintManager {
      * @param drawable The drawable to use as the background, or null to remove it.
      */
     @SuppressWarnings("deprecation")
-    public void setStatusBarTintDrawable(Drawable drawable) {
+    private void setStatusBarTintDrawable(Drawable drawable) {
         if (mStatusBarAvailable) {
             mStatusBarTintView.setBackgroundDrawable(drawable);
         }
@@ -241,7 +241,7 @@ public class SystemBarTintManager {
      * @param alpha The alpha to use
      */
     @TargetApi(11)
-    public void setStatusBarAlpha(float alpha) {
+    private void setStatusBarAlpha(float alpha) {
         if (mStatusBarAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mStatusBarTintView.setAlpha(alpha);
         }
@@ -252,7 +252,7 @@ public class SystemBarTintManager {
      *
      * @param color The color of the background tint.
      */
-    public void setNavigationBarTintColor(int color) {
+    private void setNavigationBarTintColor(int color) {
         if (mNavBarAvailable) {
             mNavBarTintView.setBackgroundColor(color);
         }
@@ -263,7 +263,7 @@ public class SystemBarTintManager {
      *
      * @param res The identifier of the resource.
      */
-    public void setNavigationBarTintResource(int res) {
+    private void setNavigationBarTintResource(int res) {
         if (mNavBarAvailable) {
             mNavBarTintView.setBackgroundResource(res);
         }
@@ -275,7 +275,7 @@ public class SystemBarTintManager {
      * @param drawable The drawable to use as the background, or null to remove it.
      */
     @SuppressWarnings("deprecation")
-    public void setNavigationBarTintDrawable(Drawable drawable) {
+    private void setNavigationBarTintDrawable(Drawable drawable) {
         if (mNavBarAvailable) {
             mNavBarTintView.setBackgroundDrawable(drawable);
         }
@@ -287,7 +287,7 @@ public class SystemBarTintManager {
      * @param alpha The alpha to use
      */
     @TargetApi(11)
-    public void setNavigationBarAlpha(float alpha) {
+    private void setNavigationBarAlpha(float alpha) {
         if (mNavBarAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mNavBarTintView.setAlpha(alpha);
         }

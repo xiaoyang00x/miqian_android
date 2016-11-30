@@ -29,8 +29,8 @@ public class RoundImageView extends ImageView {
      * 图片的类型，圆形or圆角
      */
     private int type;
-    public static final int TYPE_CIRCLE = 0;
-    public static final int TYPE_ROUND = 1;
+    private static final int TYPE_CIRCLE = 0;
+    private static final int TYPE_ROUND = 1;
     /**
      * 圆角大小的默认值
      */
@@ -229,7 +229,7 @@ public class RoundImageView extends ImageView {
 
     }
 
-    public int dp2px(int dpVal) {
+    private int dp2px(int dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 dpVal, getResources().getDisplayMetrics());
     }

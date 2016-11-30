@@ -5,7 +5,7 @@ import java.util.List;
 
 public class UserRegularDetail implements Serializable{
     private RegInvest regInvest;
-    List<Operation>  operation;
+    private List<Operation>  operation;
 
     public RegInvest getRegInvest() {
         return regInvest;

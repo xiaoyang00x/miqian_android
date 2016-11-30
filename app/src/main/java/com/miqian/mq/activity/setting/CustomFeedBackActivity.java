@@ -159,7 +159,6 @@ public class CustomFeedBackActivity extends BaseActivity {
 				mHandler.sendMessage(new Message());
 				// 如果开发者没有新的回复数据，则返回
 				if (replyList == null || replyList.size() < 1) {
-					return;
 				}
 			}
 		});

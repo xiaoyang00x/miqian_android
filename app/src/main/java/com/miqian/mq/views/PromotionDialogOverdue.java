@@ -94,7 +94,7 @@ public class PromotionDialogOverdue extends Dialog implements View.OnClickListen
         }
     }
 
-    Dialog_Login dialog_login = null;
+    private Dialog_Login dialog_login = null;
 
     private Dialog_Login initDialogLogin(final Context context, final Class<?> cls, int type) {
         if (dialog_login == null || dialog_login.type != type) {

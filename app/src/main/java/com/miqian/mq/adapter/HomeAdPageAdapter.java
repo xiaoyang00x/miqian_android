@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class HomeAdPageAdapter extends PagerAdapter {
+class HomeAdPageAdapter extends PagerAdapter {
     private ArrayList<HomeAdData> list = new ArrayList<>();
     private Recylcer recylcer;
     private LayoutParams lp =
@@ -25,7 +25,7 @@ public class HomeAdPageAdapter extends PagerAdapter {
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
     private OnPageItemClickListener onPageItemClickListener;
-    Context ctx;
+    private Context ctx;
 
     public class Recylcer {
 

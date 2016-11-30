@@ -202,7 +202,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
         }
     }
 
-    public void showProjectImage(String projectstatus, ViewHolder holder) {
+    private void showProjectImage(String projectstatus, ViewHolder holder) {
         holder.imageProjectStatus.setVisibility(View.VISIBLE);
         if (projectstatus.equals("2")) {
             holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);

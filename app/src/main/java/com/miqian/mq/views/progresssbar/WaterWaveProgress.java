@@ -32,9 +32,10 @@ public class WaterWaveProgress extends View {
 	private int mRingColor, mRingBgColor, mWaterColor, mWaterBgColor,
 			mFontSize, mTextColor;
 	// 进度 //浪峰个数
-	float  crestCount = 1.5f;
+	private float  crestCount = 1.5f;
 	
-	int mProgress = 10, mMaxProgress = 100;
+	private int mProgress = 10;
+	private int mMaxProgress = 100;
 
 	// 画布中心点
 	private Point mCenterPoint;
@@ -53,7 +54,7 @@ public class WaterWaveProgress extends View {
 	private float mWaveSpeed = 0.070F; // 0.020F
 	/** 水的透明度 */
 	private int mWaterAlpha = 255; // 255
-	WaterWaveAttrInit attrInit;
+	private WaterWaveAttrInit attrInit;
 
 	private MyHandler mHandler = null;
 

@@ -8,12 +8,12 @@ public class Urls {
     /**
      * 测试key
      */
-    public static final String RSA_PUBLICE_TEST = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCU2DBwdq+RCEL2hmR3c4Cs9Uno" + "\r"
+    private static final String RSA_PUBLICE_TEST = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCU2DBwdq+RCEL2hmR3c4Cs9Uno" + "\r"
             + "iadyKamYWTPpWSivJfLifXQWTED09z9KjK3nCjnFqquU7j7CmQwuEx9c9SkvjE+P" + "\r"
             + "NpD/23buQ31yIB41bVb0dDDjTLLqVd6aCbC85jJQ34qq6jNoMBs/IFTFBvjO++nE" + "\r"
             + "dRnBiq4YHLVtD/qbhwIDAQAB";
 
-    public static final String RSA_PRIVATE_TEST = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAM+59Lcccqp9r3yk" + "\r"
+    private static final String RSA_PRIVATE_TEST = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAM+59Lcccqp9r3yk" + "\r"
             + "CRP2pSB6o9EP+igdwxTXFnVIwTg7N9cbIcsCZmfnZGm2OF4G3fx8dVSl5LfQo7sr" + "\r"
             + "TZ2iaDayq0pcqMr/pzft1KxOqV2JF966uJf+dINO2T7gIimG1XGg4NNQQC2AUeQQ" + "\r"
             + "cBpfqwa6uUUMLzus/Q7JfQ/5Idt7AgMBAAECgYB1pW7Iai8zCf3ijJCroswAqhSv" + "\r"
@@ -52,7 +52,7 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testdepositapi.shicaidai.com/";//需要配置dns 172.20.1.14
+    private static final String SERVER_TEST = "https://testdepositapi.shicaidai.com/";//需要配置dns 172.20.1.14
 //    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
 //    public static final String SERVER_TEST = "172.20.50.64:8080/miaoqian-app/"; // 冰红茶本地地址
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
@@ -67,7 +67,7 @@ public class Urls {
      * 以 "_ONLINE"结尾为线上环境
      */
     //测试
-    public static final String base_server = SERVER_TEST;
+    private static final String base_server = SERVER_TEST;
     public static final String RSA_PUBLICE = RSA_PUBLICE_TEST;
     public static final String RSA_PRIVATE = RSA_PRIVATE_TEST;
     //线上

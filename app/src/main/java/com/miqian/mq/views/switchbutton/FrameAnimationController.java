@@ -3,7 +3,7 @@ package com.miqian.mq.views.switchbutton;
 import android.os.Handler;
 import android.os.Message;
 
-public class FrameAnimationController {
+class FrameAnimationController {
 	private static final int MSG_ANIMATE = 1000;
 
 	public static final int ANIMATION_FRAME_DURATION = 1000 / 60;

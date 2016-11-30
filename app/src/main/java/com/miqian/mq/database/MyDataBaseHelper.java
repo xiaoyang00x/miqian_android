@@ -41,7 +41,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         return mInstance;
     }
 
-    public MyDataBaseHelper(Context context) {
+    private MyDataBaseHelper(Context context) {
         super(context, "db", null, VERSION);
         if (mDatabase == null) {
             mDatabase = getWritableDatabase();
@@ -72,14 +72,14 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         return mDatabase;
     }
 
-    public void closeDatabase() {
+    private void closeDatabase() {
         if (mDatabase != null) {
             mDatabase.close();
             mDatabase = null;
         }
     }
 
-    public void updateInfoTable(String tablename, String id, String key, String value) {
+    private void updateInfoTable(String tablename, String id, String key, String value) {
         SQLiteDatabase db = getDatabase();
         if (value == null) {
             return;
@@ -106,7 +106,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         cursorTemp.close();
     }
 
-    public void inserInfoTable(String tablename, long id, String key, String value) {
+    private void inserInfoTable(String tablename, long id, String key, String value) {
         SQLiteDatabase db = getDatabase();
         if (value == null) {
             return;
@@ -124,7 +124,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         db.insert(tablename, null, values);
     }
 
-    public void delete(String tableName, JpushInfo jpushInfo) {
+    private void delete(String tableName, JpushInfo jpushInfo) {
         SQLiteDatabase db = getDatabase();
         int id = db.delete(tableName, "notice_id" + "=?", new String[]{jpushInfo.getId()});
     }

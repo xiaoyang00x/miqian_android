@@ -29,7 +29,7 @@ import static android.widget.LinearLayout.VERTICAL;
  * others are only stroked.
  */
 public class CirclePageIndicator extends View implements PageIndicator {
-    public static final String TAG = CirclePageIndicator.class.getSimpleName();
+    private static final String TAG = CirclePageIndicator.class.getSimpleName();
     private static final int INVALID_POINTER = -1;
 
     private float mRadius;
@@ -106,7 +106,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     }
 
-    int screenWidth = 0;
+    private int screenWidth = 0;
 
     public void setCentered(boolean centered) {
         mCentered = centered;

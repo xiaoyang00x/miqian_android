@@ -158,7 +158,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     }
 
-    public void refreshView() {
+    private void refreshView() {
         if (userRegularDetail == null) {
             return;
         }

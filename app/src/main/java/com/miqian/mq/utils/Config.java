@@ -18,7 +18,7 @@ public class Config {
 	public final static boolean DEBUG = true;
 
 	// 关于手机屏幕的一些属性
-	public static int WIDTH = 480; // 屏幕宽度
+	private static int WIDTH = 480; // 屏幕宽度
 	public static int HEIGHT = 800; // 屏幕高度
 	public static float DENSITY = 1.5f; // 屏幕密度
 

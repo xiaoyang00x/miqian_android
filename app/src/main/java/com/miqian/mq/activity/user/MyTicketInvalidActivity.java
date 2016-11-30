@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
-    public List<Promote> promList = new ArrayList<>();
+    private List<Promote> promList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RadioGroup radioGroup;
     private LinearLayout frameNone;

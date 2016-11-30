@@ -26,7 +26,7 @@ public class CalculateUtil {
      */
     public static int getShowInterest(String projectState, String subjectType
             , String realInterest, String presentInterest, String transedAmt) {
-        int showType = 0;
+        int showType;
         BigDecimal bdRealInterest = new BigDecimal("0"+realInterest);
         BigDecimal bdPresentInterest = new BigDecimal("0"+presentInterest);
         if ("2".equals(projectState) || "3".equals(projectState)) {
@@ -36,7 +36,7 @@ public class CalculateUtil {
         }
         return showType;
     }
-    public static int isTransfer(String subjectType, BigDecimal bdRealInterest, BigDecimal bdPresentInterest, String transedAmt) {
+    private static int isTransfer(String subjectType, BigDecimal bdRealInterest, BigDecimal bdPresentInterest, String transedAmt) {
         int showType = 0;
         switch (subjectType) {
             case "88": //88节双倍收益
@@ -79,7 +79,7 @@ public class CalculateUtil {
         return showType;
     }
 
-    public static int isOirigin(String subjectType, BigDecimal bdRealInterest, BigDecimal bdPresentInterest, String transedAmt) {
+    private static int isOirigin(String subjectType, BigDecimal bdRealInterest, BigDecimal bdPresentInterest, String transedAmt) {
         int showType = 0;
         switch (subjectType) {
             case "88": //88节双倍收益

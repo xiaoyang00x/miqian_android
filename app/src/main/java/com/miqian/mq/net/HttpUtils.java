@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HttpUtils {
 
-    public static final String APP_KEY = "&key=jwoxoWHeauio";
+    private static final String APP_KEY = "&key=jwoxoWHeauio";
     private static final MediaType CONTENT_TYPE = MediaType.parse("application/x-www-form-urlencoded");
 
     public static String httpPostRequest(Context context, String url, List<Param> list) {
@@ -107,7 +107,7 @@ public class HttpUtils {
     /**
      * 获取请求头
      */
-    public static Headers.Builder getRequestHeader(Context context, String sign) {
+    private static Headers.Builder getRequestHeader(Context context, String sign) {
         Headers.Builder headerBuilder = new Headers.Builder();
         headerBuilder.add("deviceId", MobileOS.getIMEI(context));
         headerBuilder.add("cType", "android");

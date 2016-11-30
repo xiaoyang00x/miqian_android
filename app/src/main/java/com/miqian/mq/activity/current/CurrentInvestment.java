@@ -105,20 +105,20 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public static final int PROCESSING = 2;
 
     //  支付方式: 余额、充值
-    public static final int PAY_MODE_BALANCE = 0;
-    public static final int PAY_MODE_BANK = 1;
+    private static final int PAY_MODE_BALANCE = 0;
+    private static final int PAY_MODE_BANK = 1;
 //    public static final int PAY_MODE_CURRENT = 2;
 //    public static final int PAY_MODE_LIAN = 3;
 
-    public static final String PRODID_REGULAR = "1";
-    public static final String PRODID_REGULAR_PLAN = "2";
-    public static final String PRODID_CURRENT = "3";
+    private static final String PRODID_REGULAR = "1";
+    private static final String PRODID_REGULAR_PLAN = "2";
+    private static final String PRODID_CURRENT = "3";
 //    public static final String PRODID_REGULAR_TRANSFER = "4";
 //    public static final String PRODID_REGULAR_PLAN_TRANSFER = "6";
 
 //    public static final String SUBJECTID_CURRENT = "0";
 
-    public int payModeState = 0;
+    private int payModeState = 0;
     //    private CustomDialog dialogTips;
     private CustomDialog packageTips;
 //    private DialogTip mDialogTip;

@@ -52,17 +52,17 @@ import com.miqian.mq.views.WebChromeClientEx;
  * Created by guolei_wang on 15/9/25.
  */
 public class WebActivity extends BaseActivity implements LoginListener, JsShareListener {
-    public static final String KEY_URL = "KEY_URL";
-    public static final String JS_INTERFACE_NAME = "MIAOQIAN";
+    static final String KEY_URL = "KEY_URL";
+    static final String JS_INTERFACE_NAME = "MIAOQIAN";
 
     private String url;
-    protected SwipeWebView webview;
-    protected MySwipeRefresh swipe_refresh;
-    protected ProgressBar progressBar;
-    protected View load_webview_error;
-    protected View tv_refresh;
+    SwipeWebView webview;
+    MySwipeRefresh swipe_refresh;
+    ProgressBar progressBar;
+    View load_webview_error;
+    View tv_refresh;
     private String defaultAgent;     //默认 UA
-    protected boolean isRefresh;       //是否支持下拉刷新
+    boolean isRefresh;       //是否支持下拉刷新
 
     public static void startActivity(Context context, String url) {
         context.startActivity(getIntent(context, url));
@@ -229,7 +229,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         }
     }
 
-    Dialog_Login dialog_login = null;
+    private Dialog_Login dialog_login = null;
 
     private Dialog_Login initDialogLogin(final Context context, final Class<?> cls, int type) {
         if (dialog_login == null || dialog_login.type != type) {
@@ -374,7 +374,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
      *
      * @param settings
      */
-    protected void setUserAgent(WebSettings settings) {
+    void setUserAgent(WebSettings settings) {
         if (TextUtils.isEmpty(defaultAgent)) {
             defaultAgent = settings.getUserAgentString();
         }

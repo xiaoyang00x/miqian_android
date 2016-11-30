@@ -23,10 +23,10 @@ import java.util.ArrayList;
  * Created by guolei_wang
  */
 public class HomeAdapter extends RecyclerView.Adapter<HomeBaseViewHolder> {
-    HomePageInfo info;
-    Activity activity;
-    ArrayList<HomePageInfo> mDatas;
-    HomeAdViewHolder homeAdViewHolder;
+    private HomePageInfo info;
+    private Activity activity;
+    private ArrayList<HomePageInfo> mDatas;
+    private HomeAdViewHolder homeAdViewHolder;
 
     public HomeAdapter(Activity activity, ArrayList<HomePageInfo> datas) {
         this.activity = activity;

@@ -33,8 +33,8 @@ import java.util.List;
  * 资金记录\秒钱宝交易记录
  */
 public class ActivityCurrentRecord extends BaseActivity {
-    public static final String PRODUCT_CODE = "PRODUCT_CODE";
-    public static final String BILL_TYPE = "BILL_TYPE";
+    private static final String PRODUCT_CODE = "PRODUCT_CODE";
+    private static final String BILL_TYPE = "BILL_TYPE";
     private Animation animHide;
     private Animation animShow;
     private CircleButton all;

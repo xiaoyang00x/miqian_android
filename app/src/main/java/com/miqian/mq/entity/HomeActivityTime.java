@@ -4,7 +4,7 @@ package com.miqian.mq.entity;
  * Created by guolei_wang on 15/12/17.
  * 首页运营活动时间
  */
-public class HomeActivityTime {
+class HomeActivityTime {
     private long beginTime;
     private long endTime;
 

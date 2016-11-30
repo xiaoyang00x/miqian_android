@@ -134,7 +134,7 @@ public class MobileOS {
         return !TextUtils.isEmpty(imei) ? imei : getLocalMacAddress(context);
     }
 
-    public static String getLocalMacAddress(Context context) {
+    private static String getLocalMacAddress(Context context) {
         WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         String address = info.getMacAddress();
@@ -144,7 +144,7 @@ public class MobileOS {
     /**
      * 获取AndroidId
      */
-    public static String getAndroidId(Context context) {
+    private static String getAndroidId(Context context) {
         String androidId = Settings.System.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         if (TextUtils.isEmpty(androidId)) {
             androidId = Pref.getString(Pref.DEVICE_ID, context, "");
@@ -161,7 +161,7 @@ public class MobileOS {
      * 随机生成一个串作为DeviceId
      * Visitor_0000 + 随机数
      */
-    public static String getRandomString() {
+    private static String getRandomString() {
         String base = "abcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
@@ -352,10 +352,7 @@ public class MobileOS {
      */
     public static boolean isMobileNO(String mobiles) {
         String telRegex = "[1][3456789]\\d{9}";// "[1]"代表第1位为数字1,第二位为3到9，"\\d{9}"代表后面是可以是0～9的数字，有9位。
-        if (TextUtils.isEmpty(mobiles))
-            return false;
-        else
-            return mobiles.matches(telRegex);
+        return !TextUtils.isEmpty(mobiles) && mobiles.matches(telRegex);
     }
 
     /**

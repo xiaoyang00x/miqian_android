@@ -58,7 +58,7 @@ public class TextViewEx extends TextView {
 		super.setText(st);
 	}
 
-	protected static Object[] createWrappedLine(String block, Paint paint, float spaceOffset, float maxWidth) {
+	private static Object[] createWrappedLine(String block, Paint paint, float spaceOffset, float maxWidth) {
 		float cacheWidth = maxWidth;
 		int start = 0;
 		String line = "";

@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
  * @author: guolei_wang
  * @time: 2015-1-15 下午4:28:52 
  ******************************************/
-public class WebViewClientEx extends WebViewClient {
+class WebViewClientEx extends WebViewClient {
 	@Override
     public void onLoadResource(WebView view, String url) {
         //injectJavascriptInterfaces(view);

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 public class NetBroadReceiver extends BroadcastReceiver  {
-	 public static ArrayList<netEventHandler> mListeners = new ArrayList<>();
+	 private static ArrayList<netEventHandler> mListeners = new ArrayList<>();
 	    private static String NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 	    @Override
 	    public void onReceive(Context context, Intent intent) {

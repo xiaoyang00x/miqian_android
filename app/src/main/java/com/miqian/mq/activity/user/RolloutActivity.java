@@ -162,12 +162,10 @@ public class RolloutActivity extends BaseActivity {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额超限");
             dialogTips.show();
-            return;
         } else if (moneyCurrent.compareTo(mLimitLowestMoney) < 0) {
             initTipDialog(0);
             dialogTips.setRemarks("转出金额不能小于" + mLimitLowestMoney + "元");
             dialogTips.show();
-            return;
         } else {
             //提现预处理
             HttpRequest.withdrawPreprocess(mActivity, new ICallback<WithDrawResult>() {
@@ -198,12 +196,11 @@ public class RolloutActivity extends BaseActivity {
 
                 }
             }, moneyString);
-
         }
     }
 
 
-    public void initTipDialog(int code) {
+    private void initTipDialog(int code) {
 
         if (code == 0 && dialogTips == null) {
             dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {

@@ -105,11 +105,11 @@ public class MySwipeRefresh extends ViewGroup {
     private int mHeaderViewIndex = -1;
     private int mFooterViewIndex = -1;
 
-    protected int mFrom;
+    private int mFrom;
 
     private float mStartingScale;
 
-    protected int mOriginalOffsetTop;
+    private int mOriginalOffsetTop;
 
     private Animation mScaleAnimation;
 
@@ -556,7 +556,7 @@ public class MySwipeRefresh extends ViewGroup {
      *
      * @return
      */
-    public boolean isChildScrollToTop() {
+    private boolean isChildScrollToTop() {
         return !ViewCompat.canScrollVertically(mTarget, -1);
     }
 
@@ -565,7 +565,7 @@ public class MySwipeRefresh extends ViewGroup {
      *
      * @return
      */
-    public boolean isChildScrollToBottom() {
+    private boolean isChildScrollToBottom() {
         if (isChildScrollToTop()) {
             return false;
         }
@@ -715,12 +715,7 @@ public class MySwipeRefresh extends ViewGroup {
                 // 如果子View可以滑动，不拦截事件，交给子View处理
                 return false;
             }
-
-            if (isChildScrollToBottom()) {// 上拉加载更多
-                return true;
-            } else {// 下拉刷新
-                return handlerPullTouchEvent(ev, action);
-            }
+            return isChildScrollToBottom() || handlerPullTouchEvent(ev, action);
         } catch (Exception e) {
             return false;
         }
@@ -937,7 +932,7 @@ public class MySwipeRefresh extends ViewGroup {
      *
      * @param delay
      */
-    public void resetTargetLayoutDelay(int delay) {
+    private void resetTargetLayoutDelay(int delay) {
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -950,7 +945,7 @@ public class MySwipeRefresh extends ViewGroup {
     /**
      * 重置Target的位置
      */
-    public void resetTargetLayout() {
+    private void resetTargetLayout() {
         final int width = getMeasuredWidth();
         final int height = getMeasuredHeight();
         final View child = mTarget;
@@ -1368,10 +1363,10 @@ public class MySwipeRefresh extends ViewGroup {
 
     }
 
-    GestureDetector gestureDetector;
+    private GestureDetector gestureDetector;
     View.OnTouchListener onTouchListener;
 
-    class Yscroll extends GestureDetector.SimpleOnGestureListener {
+    private class Yscroll extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {

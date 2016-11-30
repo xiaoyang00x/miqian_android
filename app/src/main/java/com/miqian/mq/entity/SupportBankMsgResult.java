@@ -3,7 +3,7 @@ package com.miqian.mq.entity;
 /**
  * Created by Jackie on 2015/10/29.
  */
-public class SupportBankMsgResult extends Meta {
+class SupportBankMsgResult extends Meta {
 
     private SupportBankMsg data;
 

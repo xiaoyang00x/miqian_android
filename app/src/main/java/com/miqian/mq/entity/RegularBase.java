@@ -28,7 +28,7 @@ public class RegularBase {
     public static final int STATE_6 = 6; // 满标
     public static final int STATE_7 = 7; // 下架
 
-    protected int type; // 条目类型
+    private int type; // 条目类型
 
     public int getType() {
         return type;

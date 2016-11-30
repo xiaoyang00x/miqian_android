@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Created by wgl on 2016/10/25.
  */
 public class SubscriptionRecordsActivity extends BaseActivity {
-    public static final String PROJECT_CODE = "projectCode"; // 项目编号
+    private static final String PROJECT_CODE = "projectCode"; // 项目编号
     private RecyclerView recyclerView;
     private ArrayList<SubscriptionRecords.Products> dataList;
     private String projectCode = "";    //项目编号

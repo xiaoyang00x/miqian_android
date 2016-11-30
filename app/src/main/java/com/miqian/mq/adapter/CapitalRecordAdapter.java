@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * Created by sunyong on 9/23/15.
  */
-public class CapitalRecordAdapter extends RecyclerView.Adapter {
-    List<CapitalItem> list;
+class CapitalRecordAdapter extends RecyclerView.Adapter {
+    private List<CapitalItem> list;
 
     public CapitalRecordAdapter(List<CapitalItem> list) {
         this.list = list;

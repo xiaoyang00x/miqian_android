@@ -114,7 +114,7 @@ public class CurrentFragment extends BasicFragment {
     };
 
     // 获取第一页数据/刷新数据
-    public void obtainFirstPageData() {
+    private void obtainFirstPageData() {
         pageNo = STARTPAGE;
         swipeRefresh.setRefreshing(true);
         obtainData(new ICallback<CurrentProjectResult>() {
@@ -142,7 +142,7 @@ public class CurrentFragment extends BasicFragment {
     }
 
     // 获取下一页数据
-    public void obtainNextPageData() {
+    private void obtainNextPageData() {
         pageNo++;
         obtainData(new ICallback<CurrentProjectResult>() {
 

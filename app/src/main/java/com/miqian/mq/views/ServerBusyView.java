@@ -26,8 +26,8 @@ public class ServerBusyView extends ScrollView {
     private ImageView iv_houzi;
     private TextView tv_tip;
 
-    public static final String SERVERBUSY = "抱歉，当前访问人数太多，\n服务器有点忙，请稍后再试•••";
-    public static final String NONETWORK = "当前网络不可用，\n请检查你的网络设置•••";
+    private static final String SERVERBUSY = "抱歉，当前访问人数太多，\n服务器有点忙，请稍后再试•••";
+    private static final String NONETWORK = "当前网络不可用，\n请检查你的网络设置•••";
 
     public ServerBusyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -41,7 +41,7 @@ public class ServerBusyView extends ScrollView {
     private TextView tv_lookAround3;
     private TextView tv_lookAround4;
 
-    public void init() {
+    private void init() {
         View mView = LayoutInflater.from(mContext).inflate(R.layout.server_busy, null);
         iv_houzi = (ImageView) mView.findViewById(R.id.iv_houzi);
         tv_tip = (TextView) mView.findViewById(R.id.tv_tip);

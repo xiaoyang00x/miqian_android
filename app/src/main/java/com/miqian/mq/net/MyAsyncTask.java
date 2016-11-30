@@ -26,7 +26,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
     private final String TAG = MyAsyncTask.class.getSimpleName();
     private Context mContext;
     private List<Param> mList;
-    protected ICallback<String> callback;
+    private ICallback<String> callback;
     private String mUrl;
 
     public static final String NETWORK_ERROR = "您当前网络不可用";
@@ -68,26 +68,28 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                     callback.onFail(SERVER_ERROR);
                 } else {
                     Meta response = JsonUtil.parseObject(result, Meta.class);
-                    if (response.getCode().equals("999995")) {//token失效
-                        JpushInfo jpushInfo = new JpushInfo();
-                        jpushInfo.setContent(response.getMessage());//此处套用极光的类 ，统一方法调用
-                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, jpushInfo);
-                        callback.onFail("");
-                        return;
-                    } else if (response.getCode().equals("899999")) {//系统维护
-                        MaintenanceResult maintenanceResult = JsonUtil.parseObject(result, MaintenanceResult.class);
-                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.SYSTEM_MAINTENANCE, maintenanceResult);
-                        callback.onFail("");
-                        return;
-                    } else if (response.getCode().equals("900000")) {//强制升级
+                    switch (response.getCode()) {
+                        case "999995": //token失效
+                            JpushInfo jpushInfo = new JpushInfo();
+                            jpushInfo.setContent(response.getMessage());//此处套用极光的类 ，统一方法调用
+
+                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, jpushInfo);
+                            callback.onFail("");
+                            return;
+                        case "899999": //系统维护
+                            MaintenanceResult maintenanceResult = JsonUtil.parseObject(result, MaintenanceResult.class);
+                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.SYSTEM_MAINTENANCE, maintenanceResult);
+                            callback.onFail("");
+                            return;
+                        case "900000": //强制升级
 //                        UmengUpdateAgent.forceUpdate(mContext);
-                        callback.onFail("当前版本不可用，请升级应用");
-                        return;
-                    } else if (response.getCode().equals("999888")) {//汇付用户升级提示
-                        HomePageInfoResult homePageInfoResult = JSON.parseObject(result, HomePageInfoResult.class);
-                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.HF_UPDATE, homePageInfoResult);
-                        callback.onFail("");
-                        return;
+                            callback.onFail("当前版本不可用，请升级应用");
+                            return;
+                        case "999888": //汇付用户升级提示
+                            HomePageInfoResult homePageInfoResult = JSON.parseObject(result, HomePageInfoResult.class);
+                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.HF_UPDATE, homePageInfoResult);
+                            callback.onFail("");
+                            return;
                     }
                     callback.onSucceed(result);
                 }

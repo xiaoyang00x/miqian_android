@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public abstract class RegularDetailActivity extends ProjectDetailActivity {
 
-    protected RegularProjectInfo mInfo;
+    RegularProjectInfo mInfo;
     private BigDecimal userMaxBuyAmount; // 当前用户对于该标的最大可认购金额
 
     public static void startActivity(Context context, String subjectId, int prodId) {
@@ -43,7 +43,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
         }
     }
 
-    protected View.OnClickListener mOnclickListener = new View.OnClickListener() {
+    View.OnClickListener mOnclickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -96,7 +96,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
         requestData(iCallback);
     }
 
-    public void requestData(final ICallback<RegularDetailResult> iCallback) {
+    private void requestData(final ICallback<RegularDetailResult> iCallback) {
         if (inProcess) {
             return;
         }
@@ -140,7 +140,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
     /**
      * 刷新 (已登录)用户在 该定期标的 下的 认购额度
      */
-    protected void refreshUserRegularProjectInfo() {
+    private void refreshUserRegularProjectInfo() {
         ICallback<RegularDetailResult> iCallback = new ICallback<RegularDetailResult>() {
 
             @Override
@@ -155,7 +155,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
         requestData(iCallback);
     }
 
-    protected void updateUI() {
+    private void updateUI() {
         updateProjectInfo();
         updateFestivalInfo(mInfo.getFestival88(), mInfo.getFestival88_url());
         updateMoreInfo();
@@ -168,7 +168,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
     /**
      * 标的基本信息
      */
-    protected void updateProjectInfo() {
+    private void updateProjectInfo() {
         /** 标的名称 **/
         tv_name.setText(mInfo.getSubjectName());
         /** 标的名称 **/
@@ -244,7 +244,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
     /**
      * 标的特色
      */
-    protected void updateProjectFeature() {
+    private void updateProjectFeature() {
         llyt_project_feature.setVisibility(View.VISIBLE);
 
         if (RegularBase.REGULAR_PROJECT == prodId) {
@@ -303,7 +303,7 @@ public abstract class RegularDetailActivity extends ProjectDetailActivity {
     }
 
     // 标的状态 － 已开标：底部显示输入框；待开标、已满额：底部显示按钮
-    protected void updateProjectStatus() {
+    private void updateProjectStatus() {
         switch (mInfo.getSubjectStatus()) {
             case RegularBase.STATE_1:
             case RegularBase.STATE_2:

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Created by guolei_wang on 15/12/15.
  * 首页返回的定期数据
  */
-public class SubjectCategoryData implements Serializable {
+class SubjectCategoryData implements Serializable {
 
     private String subjectCategoryName;
     private String subjectCategoryIconUrl;

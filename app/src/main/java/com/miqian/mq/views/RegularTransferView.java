@@ -103,7 +103,7 @@ public class RegularTransferView {
     };
 
     // 获取第一页数据/刷新数据
-    public void obtainFirstPageData() {
+    private void obtainFirstPageData() {
         nextPage = STARTPAGE;
         obtainData(new ICallback<RegularTransferListResult>() {
 
@@ -131,7 +131,7 @@ public class RegularTransferView {
     }
 
     // 获取下一页数据
-    public void obtainNextPageData() {
+    private void obtainNextPageData() {
         nextPage++;
         obtainData(new ICallback<RegularTransferListResult>() {
 
@@ -156,7 +156,7 @@ public class RegularTransferView {
     private final Object mLock = new Object();
 
     // 获取数据:定期项目转让列表
-    public void obtainData(final ICallback<RegularTransferListResult> iCallback) {
+    private void obtainData(final ICallback<RegularTransferListResult> iCallback) {
         if (inProcess) {
             return;
         }

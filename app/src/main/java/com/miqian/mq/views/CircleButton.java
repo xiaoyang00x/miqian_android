@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.miqian.mq.R;
 
 public class CircleButton extends ImageView {
-  int color = Color.BLACK;
+  private int color = Color.BLACK;
 	private static final int PRESSED_COLOR_LIGHTUP = 255 / 25;
 	private static final int PRESSED_RING_ALPHA = 175;
 	private static final int DEFAULT_PRESSED_RING_WIDTH_DIP = 2;

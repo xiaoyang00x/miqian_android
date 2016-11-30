@@ -107,7 +107,7 @@ public class ShareUtils {
     }
 
     //求两个数组的差集
-    public static String[] minus(String[] arr1, String[] arr2) {
+    private static String[] minus(String[] arr1, String[] arr2) {
         LinkedList<String> list = new LinkedList<>();
         LinkedList<String> history = new LinkedList<>();
         String[] longerArr = arr1;
@@ -137,7 +137,7 @@ public class ShareUtils {
         return list.toArray(result);
     }
 
-    public static void setShareLog(boolean isSuccess, Platform platform, JsShareListener jsShareListener) {
+    private static void setShareLog(boolean isSuccess, Platform platform, JsShareListener jsShareListener) {
         JsShareLog shareLog = new JsShareLog();
         shareLog.setIs_success(isSuccess ? 1 : 0);
         if ("Wechat".equals(platform.getName())) {

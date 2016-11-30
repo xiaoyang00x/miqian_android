@@ -26,8 +26,8 @@ import java.util.Map;
  */
 public class SwipeWebView extends WebView {
 	
-	ScrollView parentScrollView;
-	ViewGroup parentView;
+	private ScrollView parentScrollView;
+	private ViewGroup parentView;
 
     private static final boolean DEBUG = false;
     private static final String VAR_ARG_PREFIX = "arg";
@@ -159,8 +159,7 @@ public class SwipeWebView extends WebView {
             return;
         }
 
-        String jsString = genJavascriptInterfacesString();
-        mJsStringCache = jsString;
+        mJsStringCache = genJavascriptInterfacesString();
         loadJavascriptInterfaces();
     }
 
@@ -225,7 +224,7 @@ public class SwipeWebView extends WebView {
             return;
         }
 
-        Class<? extends Object> objClass = obj.getClass();
+        Class<?> objClass = obj.getClass();
 
         script.append("if(typeof(window.").append(interfaceName).append(")!='undefined'){");
         if (DEBUG) {

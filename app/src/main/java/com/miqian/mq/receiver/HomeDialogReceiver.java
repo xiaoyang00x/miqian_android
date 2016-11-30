@@ -8,7 +8,6 @@ import com.miqian.mq.listener.HomeDialogListener;
 import com.miqian.mq.listener.ListenerManager;
 
 import java.lang.ref.WeakReference;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -29,7 +28,7 @@ public class HomeDialogReceiver extends BroadcastReceiver {
     /**
      * 通知已经注册监听的类进行相应的处理
      */
-    public void showHomeDialog() {
+    private void showHomeDialog() {
         synchronized (ListenerManager.homeDialogListeners) {
             Set<String> set = ListenerManager.homeDialogListeners.keySet();
             for (String key : set) {

@@ -73,7 +73,7 @@ public class MyRegularTransferDetailActivity extends BaseActivity implements Vie
         });
     }
 
-    public void refreshView() {
+    private void refreshView() {
         if (regTransFerredDetail == null) {
             return;
         }
@@ -213,7 +213,7 @@ public class MyRegularTransferDetailActivity extends BaseActivity implements Vie
     };
 
 
-    public void updateProjectStatus() {
+    private void updateProjectStatus() {
         //转让中
         if (regTransFerredDetail.getProjectState().equals("1")) {
             tv_begin_countdown.setVisibility(View.VISIBLE);

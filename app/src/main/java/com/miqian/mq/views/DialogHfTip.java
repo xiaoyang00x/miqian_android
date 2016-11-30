@@ -54,14 +54,14 @@ public abstract class DialogHfTip extends Dialog {
         setInfo("为保障您的账户资金安全，秒钱已全面接入资金存管，需您对账户进行升级，以保证您的资金安全。");
     }
 
-    public void setInfo(String info) {
+    private void setInfo(String info) {
         tvTip.setText(info, true);
     }
 
     public void setSureInfo(String mSureInfo) {
         tvSure.setText(mSureInfo);
     }
-    public void setTitle(String title) {
+    private void setTitle(String title) {
         tvTitle.setVisibility(View.VISIBLE);
         tvTitle.setText(title);
     }

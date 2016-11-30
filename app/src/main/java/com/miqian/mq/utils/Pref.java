@@ -11,7 +11,7 @@ public class Pref {
     /**
      * Preferences的存储文件名称
      */
-    final static String PREFS_NAME = "miqian_preferences";
+    private final static String PREFS_NAME = "miqian_preferences";
 
     public static final String TOKEN = "Token";
 
@@ -95,8 +95,7 @@ public class Pref {
     public final static String IGNORE_VERSION = "IgnoreVersion";
 
     private static SharedPreferences getSettings(final Context contex) {
-        SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);
-        return mSharedPreferences;
+        return contex.getSharedPreferences(PREFS_NAME, 0);
     }
 
     public static String getString(final String key, final Context context, final String defaultValue) {

@@ -79,7 +79,7 @@ public class AnnounceResultActivity extends BaseActivity {
         }, isMessage, messsageId + "");
     }
 
-    protected void setData(MessageInfo detailInfo) {
+    private void setData(MessageInfo detailInfo) {
 
         findViewById(R.id.linear_content).setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(detailInfo.getTitle())) {

@@ -99,7 +99,7 @@ public class MobileDeviceUtil {
      */
     private static MobileDeviceUtil instance = null;
 
-    public MobileDeviceUtil(Context context) {
+    private MobileDeviceUtil(Context context) {
         this.context = context;
     }
 

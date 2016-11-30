@@ -41,13 +41,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class FragmentHome extends BasicFragment implements MainActivity.RefeshDataListener, ImageLoadingListener, HomeDialogListener {
-    public static final int REQ_SHOW_DIALOG = 0x1000;
+    private static final int REQ_SHOW_DIALOG = 0x1000;
     private View view;
     private RecyclerView recyclerView;
     private MySwipeRefresh swipeRefresh;
-    HomeAdapter adapter;
-    ArrayList<HomePageInfo> mDatas;
-    GetHomeActivity mHomeActivityData;
+    private HomeAdapter adapter;
+    private ArrayList<HomePageInfo> mDatas;
+    private GetHomeActivity mHomeActivityData;
     private boolean isFirstLoading = true;   //是否为第一次加载数据，下拉刷新重置为 true
     private PendingIntent dialogPendingIntent;
     private AlarmManager alarmManager;

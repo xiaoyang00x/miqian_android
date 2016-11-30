@@ -69,10 +69,10 @@ public class ExtendOperationController {
 		void excuteExtendOperation(int operationKey, Object data);
 	}
 
-	List<ExtendOperationListener> mListeners;
-	static ExtendOperationController mControll;
+	private List<ExtendOperationListener> mListeners;
+	private static ExtendOperationController mControll;
 
-	public ExtendOperationController() {
+	private ExtendOperationController() {
 		mListeners = new LinkedList<>();
 	}
 

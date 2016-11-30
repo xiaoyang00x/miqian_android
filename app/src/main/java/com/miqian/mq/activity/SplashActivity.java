@@ -139,7 +139,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public void loadImage(String url, final Context context) {
+    private void loadImage(String url, final Context context) {
         initImageLoader();
         imageLoader.loadImage(url, options, new ImageLoadingListener() {
             @Override
@@ -164,7 +164,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    public void loadImageAds(String url) {
+    private void loadImageAds(String url) {
         initImageLoader();
         imageLoader.loadImage(url, options, new ImageLoadingListener() {
             @Override
@@ -238,7 +238,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    Handler handler = new Handler() {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what <= 0) {
@@ -261,7 +261,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     };
 
     // 填充ViewPager的数据适配器
-    PagerAdapter mPagerAdapter = new PagerAdapter() {
+    private PagerAdapter mPagerAdapter = new PagerAdapter() {
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
@@ -299,7 +299,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         }
     };
 
-    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageSelected(int index) {
             if (index < framePages.getChildCount()) {

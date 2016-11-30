@@ -24,7 +24,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
  */
 public class ShowWebImgActivity extends BaseActivity {
 
-    public static final String URL_IMG = "URL_IMG";
+    private static final String URL_IMG = "URL_IMG";
 
     private MQPhotoView photoView;
     private MQPhotoViewAttacher mAttacher;

@@ -167,10 +167,7 @@ public class GestureLockView extends View {
      * @return
      */
     private boolean isXYInPoint(int x, int y, GestureLockPoint point) {
-        if (point == null) {
-            return false;
-        }
-        return Math.sqrt((point.pointX - x) * (point.pointX - x) + (point.pointY - y) * (point.pointY - y)) < bitmapR * 0.6;
+        return point != null && Math.sqrt((point.pointX - x) * (point.pointX - x) + (point.pointY - y) * (point.pointY - y)) < bitmapR * 0.6;
     }
 
     /**

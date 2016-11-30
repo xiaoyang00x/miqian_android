@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by guolei_wang on 15/9/17.
  * 定期赚子标信息
  */
-public class RegularEarnSubInfo implements Serializable {
+class RegularEarnSubInfo implements Serializable {
 
     private String yearInterest; //年化收益
     private String limit; //期限

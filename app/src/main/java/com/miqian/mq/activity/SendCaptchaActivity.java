@@ -266,7 +266,7 @@ public class SendCaptchaActivity extends BaseActivity {
 
     }
 
-    class MyRunnable implements Runnable {
+    private class MyRunnable implements Runnable {
 
         @Override
         public void run() {

@@ -192,7 +192,7 @@ public class SwipeMenuListView extends ListView {
 	public interface OpenOrCloseListener {
 		void isOpen(boolean isOpen);
 	}
-	public void requestDisallowInterceptTouchEven(boolean isRequest){
+	private void requestDisallowInterceptTouchEven(boolean isRequest){
 
 		getParent().requestDisallowInterceptTouchEvent(true);
 	}

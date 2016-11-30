@@ -77,10 +77,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     private final String TAG_REGULAR = "REGULAR";
     private final String TAG_USER = "USER";
 
-    FragmentTabHost mTabHost;
-    Context context;
-    TabWidget tabWidget;
-    TabIndicator tabIndicator1, tabIndicator2, tabIndicator3, tabIndicator4;
+    private FragmentTabHost mTabHost;
+    private Context context;
+    private TabWidget tabWidget;
+    private TabIndicator tabIndicator1;
+    private TabIndicator tabIndicator2;
+    private TabIndicator tabIndicator3;
+    private TabIndicator tabIndicator4;
     private RelativeLayout maintenance;
     private List<JpushInfo> jpushInfolist;
     private int current_tab = 0;
@@ -248,7 +251,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         MyApplication.setIsOnMainAcitivity(false);
     }
 
-    public void findTabView() {
+    private void findTabView() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         tabWidget = (TabWidget) findViewById(android.R.id.tabs);
         LinearLayout layout = (LinearLayout) mTabHost.getChildAt(0);
@@ -428,7 +431,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     /**
      * 初始化Tab
      */
-    public void initTab() {
+    private void initTab() {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         FragmentTabHost.TabSpec tabSpechome = mTabHost.newTabSpec(TAG_HOME);
         tabSpechome.setIndicator(tabIndicator1.getTabIndicator());
@@ -713,7 +716,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         }
     }
 
-    public BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";
         String SYSTEM_HOME_KEY_LONG = "recentapps";
@@ -738,7 +741,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     /**
      * 认购成功显示财富tab 上的红点
      */
-    public void showRedPointer() {
+    private void showRedPointer() {
         if (imgRedPointer != null) {
             imgRedPointer.setVisibility(View.VISIBLE);
         }

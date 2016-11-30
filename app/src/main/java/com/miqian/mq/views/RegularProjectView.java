@@ -79,7 +79,7 @@ public class RegularProjectView {
     private final Object mLock = new Object();
 
     // 获取数据:定期项目
-    public void obtainData() {
+    private void obtainData() {
         if (inProcess) {
             return;
         }

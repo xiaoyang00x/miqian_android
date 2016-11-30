@@ -23,7 +23,6 @@ public class ActivityStack {
 		if (activity != null) {
 			activity.finish();
 			activityStack.remove(activity);
-			activity = null;
 		}
 	}
 
@@ -41,13 +40,11 @@ public class ActivityStack {
 		if (activity != null) {
 			activity.finish();
 			activityStack.remove(activity);
-			activity = null;
 		}
 	}
 
-	public Activity currentActivity() {
-		Activity activity = activityStack.lastElement();
-		return activity;
+	private Activity currentActivity() {
+		return activityStack.lastElement();
 	}
 
 	public void pushActivity(Activity activity) {
@@ -78,7 +75,6 @@ public class ActivityStack {
 			if (activity != null) {
 				activity.finish();
 				activityStack.remove(activity);
-				activity = null;
 			}
 			time--;
 		}

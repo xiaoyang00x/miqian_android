@@ -135,15 +135,15 @@ public class AdapterPacket extends RecyclerView.Adapter {
 
     class BaseViewHoleder extends RecyclerView.ViewHolder {
 
-        protected TextView tv_name;
-        protected TextView tv_validate_date;
-        protected TextView tv_percent_limit;
-        protected TextView tv_date_limit;
-        protected TextView tv_use_limit;
-        protected TextView tv_amount_unit;
-        protected TextView tv_precent_unit;
-        protected TextView tv_amount;
-        protected RelativeLayout frame_ticket;
+        TextView tv_name;
+        TextView tv_validate_date;
+        TextView tv_percent_limit;
+        TextView tv_date_limit;
+        TextView tv_use_limit;
+        TextView tv_amount_unit;
+        TextView tv_precent_unit;
+        TextView tv_amount;
+        RelativeLayout frame_ticket;
         public ImageView promoteChoosed;
 
         public BaseViewHoleder(View itemView) {
@@ -178,8 +178,8 @@ public class AdapterPacket extends RecyclerView.Adapter {
      */
     class BaBaViewHoleder extends BaseViewHoleder {
 
-        protected ImageView img_background;
-        protected ImageView img_tag;
+        ImageView img_background;
+        ImageView img_tag;
 
         public BaBaViewHoleder(View itemView) {
             super(itemView);

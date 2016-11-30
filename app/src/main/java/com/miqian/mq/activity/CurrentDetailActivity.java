@@ -71,7 +71,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
         requestData(iCallback);
     }
 
-    public void requestData(final ICallback<CurrentDetailResult> iCallback) {
+    private void requestData(final ICallback<CurrentDetailResult> iCallback) {
         if (inProcess) {
             return;
         }
@@ -114,7 +114,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
     /**
      * 刷新 (已登录)用户在 该秒钱宝标的 下的 认购额度
      */
-    public void refreshUserCurrentProjectInfo() {
+    private void refreshUserCurrentProjectInfo() {
         ICallback<CurrentDetailResult> iCallback = new ICallback<CurrentDetailResult>() {
 
             @Override
@@ -270,7 +270,7 @@ public class CurrentDetailActivity extends ProjectDetailActivity {
     }
 
     // 标的状态 － 已开标：底部显示输入框；待开标、已满额：底部显示按钮
-    protected void updateProjectStatus() {
+    private void updateProjectStatus() {
         switch (mInfo.getCurrentInfo().getSubjectStatus()) {
             case RegularBase.STATE_1:
             case RegularBase.STATE_2:

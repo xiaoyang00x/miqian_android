@@ -221,7 +221,7 @@ public class RegisterActivity extends BaseActivity {
         return "注册";
     }
 
-    class MyRunnable implements Runnable {
+    private class MyRunnable implements Runnable {
 
         @Override
         public void run() {

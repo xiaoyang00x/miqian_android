@@ -23,7 +23,6 @@ import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
 
 import java.lang.ref.WeakReference;
-import java.util.Iterator;
 import java.util.Set;
 
 
@@ -90,7 +89,7 @@ public class UserUtil {
     /**
      * 登录成功通知监听
      */
-    public static void loginSuccess() {
+    private static void loginSuccess() {
         synchronized (ListenerManager.loginListeners) {
             Set<String> set = ListenerManager.loginListeners.keySet();
             for (String key : set) {
@@ -108,7 +107,7 @@ public class UserUtil {
     /**
      * 退出成功通知监听
      */
-    public static void logout() {
+    private static void logout() {
         synchronized (ListenerManager.loginListeners) {
             Set<String> set = ListenerManager.loginListeners.keySet();
             for (String key : set) {
@@ -249,7 +248,7 @@ public class UserUtil {
      * @param interestRateString 定期计划和定期赚的利率和期限
      * @param realMoney           实际支付金额（认购转让标的显示）
      */
-    public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString, String realMoney) {
+    private static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString, String realMoney) {
         boolean accountStatus = Pref.getBoolean(getPrefKey(activity, Pref.HF_ACCOUNT_STATUS), activity, false);
         if (!accountStatus) {
             OpenHuiFuActivity.startActivity(activity, TypeUtil.TYPE_OPENHF_INVESTMENT);

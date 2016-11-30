@@ -103,7 +103,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
         unregisterReceiver(mScreenOffReceiver);
     }
 
-    public BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";
         String SYSTEM_HOME_KEY_LONG = "recentapps";
@@ -122,7 +122,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
         }
     };
 
-    public BroadcastReceiver mScreenOffReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mScreenOffReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -139,13 +139,13 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
      */
     protected abstract String getPageName();
 
-    public void setExsitFragment(boolean exsitFragment) {
+    void setExsitFragment(boolean exsitFragment) {
         this.exsitFragment = exsitFragment;
     }
 
     private boolean exsitFragment = false;//当前Activity是否存在Fragment
 
-    protected boolean doubleClickEnable = false; // 是否支持双击or多点点击(webview查看大图页面会用到双击放大/缩小图片功能)
+    boolean doubleClickEnable = false; // 是否支持双击or多点点击(webview查看大图页面会用到双击放大/缩小图片功能)
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

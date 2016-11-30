@@ -27,7 +27,7 @@ public class CircleBar extends View {
   private float mSweepAnglePer;
   private float mSweepAngle;
   private int mTextSize;
-  BarAnimation anim;
+  private BarAnimation anim;
 
   public CircleBar(Context context) {
     super(context);
@@ -157,7 +157,7 @@ public class CircleBar extends View {
     }
   }
 
-  public static int dip2px(Context context, float dipValue) {
+  private static int dip2px(Context context, float dipValue) {
     final float scale = context.getResources().getDisplayMetrics().density;
     return (int) (dipValue * scale + 0.5f);
   }

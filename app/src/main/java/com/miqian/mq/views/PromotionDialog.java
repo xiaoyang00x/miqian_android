@@ -94,7 +94,7 @@ public class PromotionDialog extends Dialog implements View.OnClickListener {
         }
     }
 
-    Dialog_Login dialog_login = null;
+    private Dialog_Login dialog_login = null;
 
     private Dialog_Login initDialogLogin(final Context context, final Class<?> cls, int type) {
         if (dialog_login == null || dialog_login.type != type) {

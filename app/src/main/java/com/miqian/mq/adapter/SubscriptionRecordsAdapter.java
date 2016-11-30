@@ -44,17 +44,9 @@ public class SubscriptionRecordsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        boolean showLine = true;
-        if(position == getItemCount() - 1) {
-            showLine = false;
-        }else {
-            showLine = true;
-        }
-
+        boolean showLine = position != getItemCount() - 1;
         ((ProductsListHolder) holder).bindData(dataList.get(position), showLine);
-
     }
-
 
     private class ProductsListHolder extends RecyclerView.ViewHolder {
 

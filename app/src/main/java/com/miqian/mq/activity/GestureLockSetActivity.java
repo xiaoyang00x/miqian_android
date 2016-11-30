@@ -48,7 +48,7 @@ public class GestureLockSetActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    public void startActivity(Class cls) {
+    private void startActivity(Class cls) {
         startActivity(new Intent(mContext, cls));
     }
 

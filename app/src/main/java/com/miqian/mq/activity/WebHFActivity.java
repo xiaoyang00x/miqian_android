@@ -49,7 +49,7 @@ public class WebHFActivity extends WebActivity {
         activity.startActivityForResult(getIntent(activity, url, list), type);
     }
 
-    public static Intent getIntent(Context context, String url, ArrayList<String> list) {
+    private static Intent getIntent(Context context, String url, ArrayList<String> list) {
         Intent intent = new Intent(context, WebHFActivity.class);
         intent.putExtra(KEY_URL, url);
         intent.putStringArrayListExtra("list", list);

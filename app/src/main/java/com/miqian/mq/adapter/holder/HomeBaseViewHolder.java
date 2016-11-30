@@ -10,7 +10,7 @@ import com.miqian.mq.entity.HomePageInfo;
  */
 public abstract class HomeBaseViewHolder extends  RecyclerView.ViewHolder {
 
-    public HomeBaseViewHolder(View itemView) {
+    HomeBaseViewHolder(View itemView) {
         super(itemView);
     }
 

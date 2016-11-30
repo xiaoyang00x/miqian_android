@@ -24,24 +24,24 @@ import com.miqian.mq.R;
  * Created by Akexorcist on 5/16/15 AD.
  */
 public abstract class BaseRoundCornerProgressBar extends LinearLayout {
-    protected final static int DEFAULT_PROGRESS_BAR_HEIGHT = 30;
-    protected final static int DEFAULT_BACKGROUND_WIDTH = 0;
-    protected final static int DEFAULT_MAX_PROGRESS = 100;
-    protected final static int DEFAULT_CURRENT_PROGRESS = 0;
-    protected final static int DEFAULT_SECONDARY_PROGRESS = 0;
-    protected final static int DEFAULT_PROGRESS_RADIUS = 10;
-    protected final static int DEFAULT_PROGRESS_PADDING = 5;
-    protected final static int DEFAULT_PROGRESS_COLOR = Color.parseColor("#ff7f7f7f");
-    protected final static int DEFAULT_SECONDARY_PROGRESS_COLOR = Color.parseColor("#7f7f7f7f");
-    protected final static int DEFAULT_BACKGROUND_COLOR = Color.parseColor("#ff5f5f5f");
+    final static int DEFAULT_PROGRESS_BAR_HEIGHT = 30;
+    private final static int DEFAULT_BACKGROUND_WIDTH = 0;
+    private final static int DEFAULT_MAX_PROGRESS = 100;
+    private final static int DEFAULT_CURRENT_PROGRESS = 0;
+    private final static int DEFAULT_SECONDARY_PROGRESS = 0;
+    private final static int DEFAULT_PROGRESS_RADIUS = 10;
+    private final static int DEFAULT_PROGRESS_PADDING = 5;
+    private final static int DEFAULT_PROGRESS_COLOR = Color.parseColor("#ff7f7f7f");
+    private final static int DEFAULT_SECONDARY_PROGRESS_COLOR = Color.parseColor("#7f7f7f7f");
+    private final static int DEFAULT_BACKGROUND_COLOR = Color.parseColor("#ff5f5f5f");
 
-    protected LinearLayout layoutBackground;
-    protected LinearLayout layoutProgress;
-    protected LinearLayout layoutSecondaryProgress;
+    private LinearLayout layoutBackground;
+    private LinearLayout layoutProgress;
+    private LinearLayout layoutSecondaryProgress;
 
-    protected float max;
-    protected float progress;
-    protected float secondaryProgress;
+    private float max;
+    private float progress;
+    private float secondaryProgress;
 
     private int backgroundWidth;
     private int backgroundHeight;
@@ -59,7 +59,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
 
     private boolean isScreenMeasure;
     private boolean isBackgroundLayourSet;
-    protected boolean isReverse;
+    private boolean isReverse;
 
     @SuppressLint("NewApi")
     public BaseRoundCornerProgressBar(Context context, AttributeSet attrs) {
@@ -104,7 +104,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
         }
     }
 
-    protected void setup(Context context, AttributeSet attrs) {
+    private void setup(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundCornerProgress);
 
         DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
@@ -175,7 +175,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
         }
     }
 
-    public void setProgressColor(int color, int secondaryColor) {
+    private void setProgressColor(int color, int secondaryColor) {
         progressColor = color;
         secondaryProgressColor = secondaryColor;
 
@@ -221,7 +221,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
         return secondaryProgressColor;
     }
 
-    protected void setProgress() {
+    private void setProgress() {
         setProgress(progress);
     }
 
@@ -238,7 +238,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
 
     protected abstract void onLayoutMeasured();
 
-    public void setProgress(float progress) {
+    private void setProgress(float progress) {
         progress = (progress > max) ? max : progress;
         progress = (progress < 0) ? 0 : progress;
         this.progress = progress;
@@ -271,7 +271,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
 
     protected abstract float setLayoutProgressWidth(float ratio);
 
-    public void setSecondaryProgress(float secondaryProgress) {
+    private void setSecondaryProgress(float secondaryProgress) {
         secondaryProgress = (secondaryProgress > max) ? max : secondaryProgress;
         secondaryProgress = (secondaryProgress < 0) ? 0 : secondaryProgress;
         this.secondaryProgress = secondaryProgress;
@@ -304,7 +304,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
 
     protected abstract float setSecondaryLayoutProgressWidth(float ratio);
 
-    protected void setSecondaryProgress() {
+    private void setSecondaryProgress() {
         setSecondaryProgress(secondaryProgress);
     }
 
@@ -328,11 +328,11 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
         return secondaryProgress;
     }
 
-    public int getBackgroundWidth() {
+    int getBackgroundWidth() {
         return backgroundWidth;
     }
 
-    public void setBackgroundWidth(int backgroundWidth) {
+    void setBackgroundWidth(int backgroundWidth) {
         this.backgroundWidth = backgroundWidth;
     }
 
@@ -340,11 +340,11 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
         return backgroundHeight;
     }
 
-    public void setBackgroundHeight(int backgroundHeight) {
+    void setBackgroundHeight(int backgroundHeight) {
         this.backgroundHeight = backgroundHeight;
     }
 
-    public int getRadius() {
+    int getRadius() {
         return radius;
     }
 
@@ -352,7 +352,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
         this.radius = radius;
     }
 
-    public int getPadding() {
+    int getPadding() {
         return padding;
     }
 
@@ -369,7 +369,7 @@ public abstract class BaseRoundCornerProgressBar extends LinearLayout {
     }
 
     @SuppressLint("NewApi")
-    protected float dp2px(float dp) {
+    float dp2px(float dp) {
         DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
     }

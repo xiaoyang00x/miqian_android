@@ -245,7 +245,7 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
         }
     }
 
-    public void handleData(String money, String finalprofit) {
+    private void handleData(String money, String finalprofit) {
         //计算折让比
         BigDecimal f_transferrate = new BigDecimal(finalprofit);
         BigDecimal temp = new BigDecimal(365).divide(leftCnt, 8, BigDecimal.ROUND_HALF_EVEN).add(f_transferrate.divide(new BigDecimal(100), 8, BigDecimal.ROUND_HALF_EVEN));

@@ -24,13 +24,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public abstract class BaseActivity extends BaseFragmentActivity {
 
-    public LinearLayout mContentView;
-    public WFYTitle mTitle;
-    public Activity mActivity;
-    public LinearLayout mViewnoresult;
-    public ProgressDialogView progressDialogView;
-    public ImageLoader imageLoader;
-    public DisplayImageOptions options;
+    LinearLayout mContentView;
+    WFYTitle mTitle;
+    protected Activity mActivity;
+    protected LinearLayout mViewnoresult;
+    private ProgressDialogView progressDialogView;
+    protected ImageLoader imageLoader;
+    protected DisplayImageOptions options;
     private TextView tvTips;
     private ImageView ivData;
 
@@ -74,13 +74,13 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     }
 
     //获得数据
-    public abstract void obtainData();
+    protected abstract void obtainData();
 
-    public abstract void initView();
+    protected abstract void initView();
 
-    public abstract int getLayoutId();
+    protected abstract int getLayoutId();
 
-    public abstract void initTitle(WFYTitle mTitle);
+    protected abstract void initTitle(WFYTitle mTitle);
 
     private void initContentView() {
         mContentView = (LinearLayout) findViewById(R.id.content);
@@ -93,7 +93,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         mContentView.addView(contentView);
     }
 
-    public WFYTitle getmTitle() {
+    protected WFYTitle getmTitle() {
         return mTitle;
     }
 
@@ -133,7 +133,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     }
 
     // 刚进入页面不显示数据 从服务器获取到数据再显示数据
-    protected void showDefaultView() {
+    void showDefaultView() {
         mContentView.setVisibility(View.GONE);
         mViewnoresult.setVisibility(View.GONE);
     }
@@ -149,7 +149,7 @@ public abstract class BaseActivity extends BaseFragmentActivity {
         ivData.setBackgroundResource(R.drawable.nodata);
     }
 
-    public TextView getTvTips() {
+    protected TextView getTvTips() {
         return tvTips;
     }
 

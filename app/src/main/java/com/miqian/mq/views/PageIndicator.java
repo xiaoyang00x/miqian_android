@@ -38,7 +38,7 @@ public class PageIndicator extends LinearLayout {
     this.isPageOrginal = isPageOrginal;
   }
 
-  public void initViews(Context context) {
+  private void initViews(Context context) {
     density = MobileDeviceUtil.getInstance(context.getApplicationContext()).getScreenDensity();
   }
 

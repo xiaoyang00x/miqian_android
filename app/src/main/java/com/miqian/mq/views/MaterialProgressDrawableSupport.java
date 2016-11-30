@@ -57,9 +57,9 @@ public class MaterialProgressDrawableSupport extends Drawable implements Animata
     @IntDef({LARGE, DEFAULT})
     public @interface ProgressDrawableSize {}
     // Maps to ProgressBar.Large style
-    static final int LARGE = 0;
+    private static final int LARGE = 0;
     // Maps to ProgressBar default style
-    static final int DEFAULT = 1;
+    private static final int DEFAULT = 1;
 
     // Maps to ProgressBar default style
     private static final int CIRCLE_DIAMETER = 40;
@@ -105,7 +105,7 @@ public class MaterialProgressDrawableSupport extends Drawable implements Animata
     private float mRotationCount;
     private double mWidth;
     private double mHeight;
-    boolean mFinishing;
+    private boolean mFinishing;
 
     public MaterialProgressDrawableSupport(Context context, View parent) {
         mParent = parent;
@@ -140,7 +140,7 @@ public class MaterialProgressDrawableSupport extends Drawable implements Animata
      * @param size One of {@link MaterialProgressDrawableSupport.LARGE} or
      *            {@link MaterialProgressDrawableSupport.DEFAULT}
      */
-    public void updateSizes(@ProgressDrawableSize int size) {
+    private void updateSizes(@ProgressDrawableSize int size) {
         if (size == LARGE) {
             setSizeParameters(CIRCLE_DIAMETER_LARGE, CIRCLE_DIAMETER_LARGE, CENTER_RADIUS_LARGE,
                     STROKE_WIDTH_LARGE, ARROW_WIDTH_LARGE, ARROW_HEIGHT_LARGE);

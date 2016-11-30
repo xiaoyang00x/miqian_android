@@ -22,8 +22,8 @@ import java.util.ArrayList;
  * @date: 16/11/16
  */
 public class ProjectMathAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static final int TYPE_HEAD = 0;
-    public static final int TYPE_PROJECT = 1;
+    private static final int TYPE_HEAD = 0;
+    private static final int TYPE_PROJECT = 1;
 
     private ArrayList<CurrentMathProjectData.MatchProject> mList; // 所有item
     private CurrentMathProjectData currentMathProjectData;

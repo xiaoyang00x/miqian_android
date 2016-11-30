@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class MyTicketActivity extends BaseActivity implements View.OnClickListener {
 
-    public List<Promote> promList = new ArrayList<>();
+    private List<Promote> promList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterMyTicket adapterMyTicket;
 

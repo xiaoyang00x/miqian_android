@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * Created by Jackie on 2015/12/18.
  * 活转定中使用的金额
  */
-public class Amt {
+class Amt {
 
     private BigDecimal amt;//金额
 

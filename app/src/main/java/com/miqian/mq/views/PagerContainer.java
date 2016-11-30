@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 public class PagerContainer extends LinearLayout implements ViewPager.OnPageChangeListener {
 
     private ViewPager mPager;
-    boolean mNeedsRedraw = false;
+    private boolean mNeedsRedraw = false;
 
     public PagerContainer(Context context) {
         super(context);

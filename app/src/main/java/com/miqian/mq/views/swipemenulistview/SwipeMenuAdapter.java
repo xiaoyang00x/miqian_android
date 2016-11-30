@@ -19,7 +19,7 @@ public class SwipeMenuAdapter implements WrapperListAdapter,
 
     private ListAdapter mAdapter;
     private Context mContext;
-    List<MessageInfo> mList;
+    private List<MessageInfo> mList;
     private SwipeMenuListView.OnMenuItemClickListener onMenuItemClickListener;
 
     public SwipeMenuAdapter(Context context, ListAdapter adapter, List<MessageInfo> list) {
@@ -61,7 +61,7 @@ public class SwipeMenuAdapter implements WrapperListAdapter,
         return layout;
     }
 
-    public void createMenu(SwipeMenu menu, MessageInfo messageInfo) {
+    private void createMenu(SwipeMenu menu, MessageInfo messageInfo) {
 
         SwipeMenuItem item1 = new SwipeMenuItem(mContext);
         item1.setBackground(mContext.getResources().getDrawable(R.drawable.shape_swip_red));
