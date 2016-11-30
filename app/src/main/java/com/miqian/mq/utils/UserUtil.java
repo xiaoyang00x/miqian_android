@@ -19,7 +19,6 @@ import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.receiver.JpushHelper;
-import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
 
 import java.lang.ref.WeakReference;
@@ -174,35 +173,6 @@ public class UserUtil {
         dialog_login.show();
     }
 
-    //  支付时判断是否登录、实名认证
-    public static void loginPay(final Activity context, final DialogPay dialogPay) {
-        if (!UserUtil.hasLogin(context)) {
-            Dialog_Login dialog_login = new Dialog_Login(context) {
-                @Override
-                public void login(String telephone, String password) {
-                    HttpRequest.login(context, new ICallback<LoginResult>() {
-                        @Override
-                        public void onSucceed(LoginResult result) {
-                            dismiss();
-                            dialogPay.show();
-                            if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                                GestureLockSetActivity.startActivity(context, null,false);
-                            }
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            Uihelper.showToast(context, error);
-                        }
-                    }, telephone, password);
-                }
-            };
-            dialog_login.show();
-        } else {
-            dialogPay.show();
-        }
-    }
-
     //  认购时确认是否登录
     public static void showLoginDialog(final Activity context) {
         Dialog_Login dialog_login = new Dialog_Login(context) {
@@ -274,28 +244,5 @@ public class UserUtil {
             }
         });
     }
-
-    //  显示认购额度
-//    public static void showDialog(Activity activity) {
-//        initDialog(activity);
-//        dialogPay.show();
-//    }
-
-//    public static void initDialog(final Activity activity) {
-//        if (dialogPay != null) {
-//            return;
-//        }
-//        dialogPay = new DialogPay(activity) {
-//            @Override
-//            public void positionBtnClick(String s) {
-////                currenPay(activity, IntoActivity.class);
-//            }
-//
-//            @Override
-//            public void negativeBtnClick() {
-//
-//            }
-//        };
-//    }
 
 }
