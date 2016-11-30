@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -26,7 +24,7 @@
             android:id="@+id/edit_money"
             style="@style/edittext_item"
             android:layout_height="match_parent"
-            android:numeric="decimal"
+            android:inputType="numberDecimal"
             android:paddingLeft="5dp"/>
        </LinearLayout>
 
@@ -137,5 +135,3 @@
                 android:text="赎回" />
         </RelativeLayout>
     </LinearLayout>
-
-</RelativeLayout>

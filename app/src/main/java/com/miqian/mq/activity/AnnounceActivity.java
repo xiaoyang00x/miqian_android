@@ -125,10 +125,13 @@ public class AnnounceActivity extends BaseActivity implements OnClickListener, A
                 } else {
                     //显示缓存信息
                     UserMessageResult userMessageResult = JsonUtil.parseObject(messageCash, UserMessageResult.class);
-                    list = userMessageResult.getData().getMsgList();
-                    adapter = new MessageAdapter(mActivity, list);
-                    mSwipeMenuListView.setdataList(list);
-                    mSwipeMenuListView.setAdapter(adapter);
+                    UserMessageData data = userMessageResult.getData();
+                    if (data!=null){
+                        list = data.getMsgList();
+                        adapter = new MessageAdapter(mActivity, list);
+                        mSwipeMenuListView.setdataList(list);
+                        mSwipeMenuListView.setAdapter(adapter);
+                    }
                 }
                 swipeRefresh.setRefreshing(false);
                 isLoading = false;

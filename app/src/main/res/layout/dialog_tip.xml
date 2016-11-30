@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -58,4 +56,3 @@
             android:textColor="@drawable/btn_cancel_font"
             android:textSize="@dimen/mq_font7_v2" />
     </LinearLayout>
-</RelativeLayout>
