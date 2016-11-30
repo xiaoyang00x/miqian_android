@@ -1,121 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_left_right"
+    android:paddingRight="@dimen/margin_left_right">
+
+    <TextView
+        android:id="@+id/hf_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="@string/open_third"
+        android:textColor="@color/mq_b1_v2"
+        android:textSize="@dimen/mq_font8_v2"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/hf_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/open_ensure"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font6_v2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/hint"
+            android:background="@drawable/dashline" />
+
+        <TextView
+            android:id="@+id/hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="温馨提示"
+            android:textColor="@color/mq_b2_v2"
+            android:textSize="@dimen/mq_font3_v2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/hint"
+            android:background="@drawable/dashline" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/hf_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/open_hint"
+        android:textColor="@color/mq_b4_v2"
+        android:textSize="@dimen/mq_font3_v2" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_top"
         android:orientation="vertical"
         android:paddingLeft="@dimen/margin_left_right"
-        android:paddingRight="@dimen/margin_left_right">
+        android:paddingRight="@dimen/margin_left_right"
+        android:paddingTop="70dp">
 
-        <TextView
-            android:id="@+id/hf_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:gravity="center"
-            android:text="@string/open_third"
-            android:textColor="@color/mq_b1_v2"
-            android:textSize="@dimen/mq_font8_v2"
-            android:textStyle="bold" />
+        <Button
+            android:id="@+id/bt_open"
+            style="@style/click_btn"
+            android:layout_gravity="center"
+            android:onClick="btn_click"
+            android:text="@string/open_btn" />
 
-        <TextView
-            android:id="@+id/hf_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/open_ensure"
-            android:textColor="@color/mq_r1_v2"
-            android:textSize="@dimen/mq_font6_v2" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="50dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/hint"
-                android:background="@drawable/dashline" />
-
-            <TextView
-                android:id="@+id/hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:gravity="center"
-                android:text="温馨提示"
-                android:textColor="@color/mq_b2_v2"
-                android:textSize="@dimen/mq_font3_v2" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/hint"
-                android:background="@drawable/dashline" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/hf_tip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="@string/open_hint"
-            android:textColor="@color/mq_b4_v2"
-            android:textSize="@dimen/mq_font3_v2" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_top"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/margin_left_right"
-            android:paddingRight="@dimen/margin_left_right"
-            android:paddingTop="70dp">
-
-            <Button
-                android:id="@+id/bt_open"
-                style="@style/click_btn"
-                android:layout_gravity="center"
-                android:onClick="btn_click"
-                android:text="@string/open_btn" />
-
-            <Button
-                android:id="@+id/bt_close"
-                style="@style/click_btn"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_cancel_normal"
-                android:onClick="btn_close"
-                android:text="暂不开通"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_law"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="@string/open_rule"
-            android:textColor="@color/mq_bl3_v2"
-            android:textSize="@dimen/mq_font3_v2" />
-
+        <Button
+            android:id="@+id/bt_close"
+            style="@style/click_btn"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_cancel_normal"
+            android:onClick="btn_close"
+            android:text="暂不开通"
+            android:visibility="gone" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_law"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/open_rule"
+        android:textColor="@color/mq_bl3_v2"
+        android:textSize="@dimen/mq_font3_v2" />
 
 </LinearLayout>
+
