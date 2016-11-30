@@ -8,7 +8,6 @@ import com.miqian.mq.listener.HomeDialogListener;
 import com.miqian.mq.listener.ListenerManager;
 
 import java.lang.ref.WeakReference;
-import java.util.Iterator;
 import java.util.Set;
 
 /**

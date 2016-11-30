@@ -10,12 +10,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.tencent.bugly.crashreport.CrashReport;
-
 import cn.udesk.R;
 import cn.udesk.UdeskConst;
 import cn.udesk.widget.UdeskTitleBar;
-import udesk.core.UdeskCoreConst;
 
 /**
  * Created by k on 2016/4/6.

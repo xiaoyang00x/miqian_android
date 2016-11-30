@@ -23,7 +23,6 @@ import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
 
 import java.lang.ref.WeakReference;
-import java.util.Iterator;
 import java.util.Set;
 
 
