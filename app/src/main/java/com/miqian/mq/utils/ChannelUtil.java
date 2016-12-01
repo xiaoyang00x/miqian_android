@@ -94,14 +94,13 @@ public class ChannelUtil {
         editor.putString(CHANNEL_KEY, channel);
 
         editor.putInt(CHANNEL_VERSION_KEY, getVersionCode(context));
-        editor.commit();
+        editor.apply();
     }
 
     private static String getChannelBySharedPreferences(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         int currentVersionCode = getVersionCode(context);
-        if
-                (currentVersionCode == -1) {
+        if (currentVersionCode == -1) {
             //获取错误
             return "";
         }
