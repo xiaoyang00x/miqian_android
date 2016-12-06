@@ -214,7 +214,7 @@ public class MaterialProgressDrawableSupport extends Drawable implements Animata
     }
 
     @Override
-    public void draw(Canvas c) {
+    public void draw(@NonNull Canvas c) {
         final Rect bounds = getBounds();
         final int saveCount = c.save();
         c.rotate(mRotation, bounds.exactCenterX(), bounds.exactCenterY());
@@ -378,17 +378,17 @@ public class MaterialProgressDrawableSupport extends Drawable implements Animata
 
     private final Callback mCallback = new Callback() {
         @Override
-        public void invalidateDrawable(Drawable d) {
+        public void invalidateDrawable(@NonNull Drawable d) {
             invalidateSelf();
         }
 
         @Override
-        public void scheduleDrawable(Drawable d, Runnable what, long when) {
+        public void scheduleDrawable(@NonNull Drawable d, @NonNull Runnable what, long when) {
             scheduleSelf(what, when);
         }
 
         @Override
-        public void unscheduleDrawable(Drawable d, Runnable what) {
+        public void unscheduleDrawable(@NonNull Drawable d, @NonNull Runnable what) {
             unscheduleSelf(what);
         }
     };

@@ -59,14 +59,9 @@ public class MyCurrentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private RelativeLayout frameCurrentRecord;      //资金记录
         private RelativeLayout frameProjectMatch;       //匹配项目
 
-        private ImageLoader imageLoader;
-        private DisplayImageOptions options;
-
         public CurrentHeadHolder(View itemView) {
             super(itemView);
             initView(itemView);
-            imageLoader = ImageLoader.getInstance();
-            options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         }
 
         private void initView(View itemView) {

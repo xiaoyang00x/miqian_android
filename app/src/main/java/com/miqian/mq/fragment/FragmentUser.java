@@ -277,8 +277,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
         //*********未登录的的Ui***************
 
-        final View relaTelephone = view.findViewById(R.id.rela_telephone);
-        final View relaPassword = view.findViewById(R.id.rela_password);
         editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
         editPassword = (EditText) view.findViewById(R.id.edit_password);
 

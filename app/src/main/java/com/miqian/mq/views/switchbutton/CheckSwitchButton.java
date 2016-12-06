@@ -61,7 +61,7 @@ public class CheckSwitchButton extends CheckBox {
 
 	private int mTouchSlop;
 	/** 最大透明度，就是不透明 */
-	private final int MAX_ALPHA = 255;
+	private static final int MAX_ALPHA = 255;
 	/** 当前透明度，这里主要用于如果控件的enable属性为false时候设置半透明 ，即不可以点击 */
 	private int mAlpha = MAX_ALPHA;
 
@@ -79,11 +79,11 @@ public class CheckSwitchButton extends CheckBox {
 	/** 判断是否在进行动画  */
 	private boolean mAnimating;
 
-	private final float VELOCITY = 350;
+	private static final float VELOCITY = 350;
 	/** 滑动速度 */
 	private float mVelocity;
 
-	private final float EXTENDED_OFFSET_Y = 15;
+	private static final float EXTENDED_OFFSET_Y = 15;
 	/** Y轴方向扩大的区域,增大点击区域 */
 	private float mExtendOffsetY;
 
@@ -107,7 +107,6 @@ public class CheckSwitchButton extends CheckBox {
 	private void initView(Context context) {
 		mPaint = new Paint();
 		mPaint.setColor(Color.WHITE);
-		Resources resources = context.getResources();
 
 		// get viewConfiguration
 		mClickTimeout = ViewConfiguration.getPressedStateDuration()
@@ -248,7 +247,7 @@ public class CheckSwitchButton extends CheckBox {
 			break;
 		case MotionEvent.ACTION_MOVE:
 			// 拖动着的时间
-			float time = event.getEventTime() - event.getDownTime();
+			float time;
 			// 当前按钮的位置
 			mBtnPos = mBtnInitPos + event.getX() - mFirstDownX;
 			if (mBtnPos >= mBtnOffPos) {

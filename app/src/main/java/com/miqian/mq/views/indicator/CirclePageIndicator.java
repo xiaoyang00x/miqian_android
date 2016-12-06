@@ -487,7 +487,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     private int getLongSize() {
-        ViewGroup parent = (ViewGroup) getParent();
         int parentWidth;
         int longPaddingBefore;
         int longPaddingAfter;

@@ -1,23 +1,20 @@
 package com.miqian.mq.views.progresssbar;
 
-import java.lang.ref.WeakReference;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Path.Direction;
 import android.graphics.Point;
 import android.graphics.RectF;
-import android.graphics.Path.Direction;
 import android.graphics.Region.Op;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.util.Locale;
 
 /**
  * @author Administrator
@@ -55,27 +52,6 @@ public class WaterWaveProgress extends View {
 	/** 水的透明度 */
 	private int mWaterAlpha = 255; // 255
 	private WaterWaveAttrInit attrInit;
-
-	private MyHandler mHandler = null;
-
-	private static class MyHandler extends Handler {
-		private WeakReference<WaterWaveProgress> mWeakRef = null;
-
-		private int refreshPeriod = 100;
-
-		public MyHandler(WaterWaveProgress host) {
-			mWeakRef = new WeakReference<>(host);
-		}
-
-		@Override
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			if (mWeakRef.get() != null) {
-				mWeakRef.get().invalidate();
-				sendEmptyMessageDelayed(0, refreshPeriod);
-			}
-		}
-	}
 
 	public WaterWaveProgress(Context paramContext) {
 		super(paramContext);
@@ -131,16 +107,6 @@ public class WaterWaveProgress extends View {
 		mTextPaint.setStyle(Paint.Style.FILL);
 		mTextPaint.setTextSize(mFontSize);
 
-		mHandler = new MyHandler(this);
-
-	}
-
-	public void animateWave() {
-		if (!isWaving) {
-			mWaveFactor = 0L;
-			isWaving = true;
-			mHandler.sendEmptyMessage(0);
-		}
 	}
 
 	@SuppressLint({ "DrawAllocation", "NewApi" })
@@ -245,7 +211,7 @@ public class WaterWaveProgress extends View {
 						* (2.0F * (xToBeDrawed + (mWaveFactor * width)
 								* mWaveSpeed)) / width));
 		// 波浪线新的高度
-		int newWaveHeight = waveHeight;
+		int newWaveHeight;
 		while (true) {
 			if (xToBeDrawed >= waterHeightCount + waterPadding) {
 				break;

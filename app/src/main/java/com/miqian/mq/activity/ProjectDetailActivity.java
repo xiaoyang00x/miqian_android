@@ -101,9 +101,6 @@ public abstract class ProjectDetailActivity extends BaseActivity {
 
     String input; // 用户输入金额
 
-    ImageLoader imageLoader;
-    DisplayImageOptions options;
-
     private int screenHeight; // 屏幕高度
 
     boolean inProcess = false;
@@ -114,8 +111,6 @@ public abstract class ProjectDetailActivity extends BaseActivity {
         subjectId = getIntent().getStringExtra(Constants.SUBJECTID);
         super.onCreate(arg0);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
         showDefaultView();
         screenHeight = MobileOS.getScreenHeight(this);
         // 关于Android收起输入法时会出现屏幕部分黑屏解决

@@ -74,7 +74,7 @@ public class MyReceiver extends BroadcastReceiver {
             response.setContent(content);
             String jpushToken = response.getToken();
 
-            String userId = "";
+            String userId;
 
             // 是否登录
             if (!UserUtil.hasLogin(context)) {
@@ -187,20 +187,16 @@ public class MyReceiver extends BroadcastReceiver {
                         if (!TextUtils.isEmpty(ext)) {
                             try {
                                 JSONObject jsonObject = new JSONObject(ext);
-                                if (jsonObject != null) {
-                                    int prodId = jsonObject.getInt("prodId");
-                                    String subjectId = jsonObject.getString("subjectId");
-                                    if (!TextUtils.isEmpty(subjectId)) {
-                                        if (RegularBase.REGULAR_PROJECT == prodId) {
-                                            notificationIntent = new Intent(context, RegularProjectDetailActivity.class);
-                                        } else if (RegularBase.REGULAR_PLAN == prodId) {
-                                            notificationIntent = new Intent(context, RegularPlanDetailActivity.class);
-                                        }
-                                        notificationIntent.putExtra(Constants.SUBJECTID, subjectId);
-                                        notificationIntent.putExtra(Constants.PRODID, prodId);
-                                    } else {
-                                        notificationIntent = new Intent(context, MainActivity.class);
+                                int prodId = jsonObject.getInt("prodId");
+                                String subjectId = jsonObject.getString("subjectId");
+                                if (!TextUtils.isEmpty(subjectId)) {
+                                    if (RegularBase.REGULAR_PROJECT == prodId) {
+                                        notificationIntent = new Intent(context, RegularProjectDetailActivity.class);
+                                    } else if (RegularBase.REGULAR_PLAN == prodId) {
+                                        notificationIntent = new Intent(context, RegularPlanDetailActivity.class);
                                     }
+                                    notificationIntent.putExtra(Constants.SUBJECTID, subjectId);
+                                    notificationIntent.putExtra(Constants.PRODID, prodId);
                                 } else {
                                     notificationIntent = new Intent(context, MainActivity.class);
                                 }
@@ -241,8 +237,7 @@ public class MyReceiver extends BroadcastReceiver {
                 //判断是否在后台,在后台则发送通知
                 boolean isBackStage = MyApplication.isBackStage();
                 boolean isCurrent = MyApplication.isCurrent();
-                if (!isBackStage && isCurrent) {
-                } else {
+                if (isBackStage || !isCurrent) {
                     mNotificationManager.notify(Integer.valueOf(noticeId), mBuilder.build());
                 }
             }

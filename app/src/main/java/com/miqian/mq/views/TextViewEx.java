@@ -59,7 +59,7 @@ public class TextViewEx extends TextView {
 	}
 
 	private static Object[] createWrappedLine(String block, Paint paint, float spaceOffset, float maxWidth) {
-		float cacheWidth = maxWidth;
+		float cacheWidth;
 		int start = 0;
 		String line = "";
 		while (start < block.length()) {
@@ -83,7 +83,7 @@ public class TextViewEx extends TextView {
 			return;
 		}
 
-		Canvas activeCanvas = null;
+		Canvas activeCanvas;
 
 		if (cacheEnabled) {
 			if (cache != null) {
@@ -123,10 +123,6 @@ public class TextViewEx extends TextView {
 				continue;
 			} else if (block.equals("\n")) {
 				verticalOffset += horizontalFontOffset;
-				continue;
-			}
-
-			if (block.length() == 0) {
 				continue;
 			}
 

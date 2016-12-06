@@ -805,8 +805,6 @@ public class MySwipeRefresh extends ViewGroup {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL: {
                 if (mActivePointerId == INVALID_POINTER) {
-                    if (action == MotionEvent.ACTION_UP) {
-                    }
                     return false;
                 }
                 final int pointerIndex = MotionEventCompat.findPointerIndex(ev,

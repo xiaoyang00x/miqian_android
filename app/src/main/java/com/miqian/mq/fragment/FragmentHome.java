@@ -77,7 +77,7 @@ public class FragmentHome extends BasicFragment implements MainActivity.RefeshDa
         recyclerView.setLayoutManager(layoutManager);
 
         if (mDatas != null) {
-            adapter = new HomeAdapter(mActivity, mDatas);
+            adapter = new HomeAdapter(mDatas);
             recyclerView.setAdapter(adapter);
         } else if (isServerBusyPageShow) {
             serverBusyView.showServerBusy();
@@ -218,7 +218,7 @@ public class FragmentHome extends BasicFragment implements MainActivity.RefeshDa
         if (result == null) return;
         mDatas = result.getData();
         if (mDatas == null) return;
-        adapter = new HomeAdapter(mActivity, mDatas);
+        adapter = new HomeAdapter(mDatas);
         recyclerView.setAdapter(adapter);
         serverBusyView.hide();
         isServerBusyPageShow = false;

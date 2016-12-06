@@ -130,7 +130,6 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
             if (!TextUtils.isEmpty(presentInterest)) {
                 tvPresentProfit.setText("+" + presentInterest + "%");
                 floatPresentInterst = new BigDecimal(presentInterest);
-            } else {
             }
             //实际年化收益
             profit = floatRealInterst.add(floatPresentInterst);
@@ -241,7 +240,6 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
                     scrollview.scrollTo(0, Uihelper.dip2px(mContext, 280));
                 }
             }, 500);
-        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
         }
     }
 
@@ -251,7 +249,7 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
         BigDecimal temp = new BigDecimal(365).divide(leftCnt, 8, BigDecimal.ROUND_HALF_EVEN).add(f_transferrate.divide(new BigDecimal(100), 8, BigDecimal.ROUND_HALF_EVEN));
         discountRate = ((f_transferrate.subtract(profit))).divide(new BigDecimal(100), 8, BigDecimal.ROUND_HALF_EVEN).divide(temp, 8, BigDecimal.ROUND_HALF_EVEN);
         fnum = new DecimalFormat("##0.00");
-        stringDiscountRate = fnum.format(discountRate);
+//        stringDiscountRate = fnum.format(discountRate);
         //计算折让金
         BigDecimal tempMoney = new BigDecimal(money);
         disCountMoney = discountRate.multiply(tempMoney);

@@ -195,7 +195,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             MobclickAgent.onEvent(mActivity, "1039");
         }
 
-        Intent intent = null;
+        Intent intent;
         if (mType == 2) {
             intent = new Intent(mActivity, MyRegularTransferDetailActivity.class);
         } else {

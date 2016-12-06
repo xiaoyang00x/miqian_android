@@ -59,10 +59,10 @@ public class Pref {
 //	// app是否在后台
 //	public static final String BACKSTAGE = "BackStage";
 
-    public static String IsPush = "IsPush";
+    public static final String IsPush = "IsPush";
 
-    public static String CITY = "city";
-    public static String PUSH = "push";
+    public static final String CITY = "city";
+    public static final String PUSH = "push";
 
     // 图案锁 加密后存储
     public final static String GESTUREPSW = "gesturePsw";

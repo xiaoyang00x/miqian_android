@@ -24,9 +24,8 @@ public class AdapterCurrrentRecord extends RecyclerView.Adapter {
     private List<FundFlow> dataList;
 
     private int maxValue = 999;//最大的值
-    private final int VIEW_ITEM = 1;
-    private final int VIEW_FOOTER = 2;
-
+    private static final int VIEW_ITEM = 1;
+    private static final int VIEW_FOOTER = 2;
 
     public AdapterCurrrentRecord(List<FundFlow> dataList) {
         this.dataList = dataList;

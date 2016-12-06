@@ -21,9 +21,9 @@ import java.util.List;
 
 public class AdapterUserRegular extends RecyclerView.Adapter {
 
-    private final int VIEW_HEADER = 0;
-    private final int VIEW_ITEM = 1;
-    private final int VIEW_FOOTER = 2;
+    private static final int VIEW_HEADER = 0;
+    private static final int VIEW_ITEM = 1;
+    private static final int VIEW_FOOTER = 2;
     private final Context mContext;
     private final Page mPage;
 

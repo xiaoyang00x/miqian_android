@@ -122,8 +122,6 @@ public class ActivityProjectMath extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-        }
     }
 
 }

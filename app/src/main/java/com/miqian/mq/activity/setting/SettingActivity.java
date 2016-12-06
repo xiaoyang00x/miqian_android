@@ -272,7 +272,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private void setUdeskUserInfo() {
 
         Map<String, String> info = new HashMap<>();
-        String userId = "";
+        String userId;
         if (UserUtil.hasLogin(mApplicationContext)) {
             userId = UserUtil.getUserId(mApplicationContext);
         } else {

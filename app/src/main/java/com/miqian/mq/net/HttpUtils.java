@@ -52,7 +52,7 @@ public class HttpUtils {
                 }
             }
         }
-        RequestBody requestBody = null;
+        RequestBody requestBody;
         try {
             requestBody = builder.build();
         } catch (Exception e) {
@@ -60,13 +60,12 @@ public class HttpUtils {
         }
         Headers.Builder headerBuilder = getRequestHeader(context, getSign(list));
         final Request request = new Request.Builder().url(url).post(requestBody).headers(headerBuilder.build()).build();
-        Response response = null;
+        Response response;
         try {
             response = client.newCall(request).execute();
             if (response.isSuccessful()) {
                 String body = response.body().string();
                 response.body().close();
-                response = null;
                 return body;
             }
             return null;

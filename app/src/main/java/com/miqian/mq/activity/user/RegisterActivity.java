@@ -26,11 +26,12 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by Joy on 2015/9/4.
  */
 public class RegisterActivity extends BaseActivity {
-
 
     private EditText mEt_Telephone;
     private EditText mEt_Captcha;
@@ -41,26 +42,45 @@ public class RegisterActivity extends BaseActivity {
     private boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;
     private Thread thread;
-    private static Handler handler;
+    private MyHandler handler = new MyHandler(this);
     private static final int NUM_TYPE_CAPTCHA = 1;
     private static final int NUM_TYPE_SUMMIT = 2;
     private static final int NUM_TYPE_TOAST = 3;
 
-
     @Override
     public void obtainData() {
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                String timeInfo = msg.getData().getString("time");
-                mBtn_sendCaptcha.setText(timeInfo + "秒后重新获取");
-                if ("0".equals(timeInfo)) {
-                    mBtn_sendCaptcha.setEnabled(true);
-                    mBtn_sendCaptcha.setText("获取验证码");
-                }
-                super.handleMessage(msg);
+    }
+
+    public Button getBtn_sendCaptcha() {
+        return mBtn_sendCaptcha;
+    }
+
+    private static class MyHandler extends Handler {
+
+        private final WeakReference<RegisterActivity> mActivity;
+
+        public MyHandler(RegisterActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            System.out.println(msg);
+            if (mActivity.get() == null) {
+                return;
             }
-        };
+            Button button = mActivity.get().getBtn_sendCaptcha();
+            if (null == button) {
+                return;
+            }
+            String timeInfo = msg.getData().getString("time");
+            button.setText(timeInfo + "秒后重新获取");
+            if ("0".equals(timeInfo)) {
+                button.setEnabled(true);
+                button.setText("获取验证码");
+            }
+            super.handleMessage(msg);
+        }
     }
 
     @Override

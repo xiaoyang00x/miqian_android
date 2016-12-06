@@ -178,13 +178,8 @@ public class AdapterPacket extends RecyclerView.Adapter {
      */
     class BaBaViewHoleder extends BaseViewHoleder {
 
-        ImageView img_background;
-        ImageView img_tag;
-
         public BaBaViewHoleder(View itemView) {
             super(itemView);
-            img_background = (ImageView) itemView.findViewById(R.id.img_background);
-            img_tag = (ImageView) itemView.findViewById(R.id.img_tag);
         }
     }
 

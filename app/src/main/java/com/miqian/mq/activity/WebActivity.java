@@ -378,7 +378,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         if (TextUtils.isEmpty(defaultAgent)) {
             defaultAgent = settings.getUserAgentString();
         }
-        String ua = "";
+        String ua;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", UserUtil.getToken(mContext));
         jsonObject.put("userid", UserUtil.getUserId(mContext));

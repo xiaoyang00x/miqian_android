@@ -202,7 +202,7 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void checkCaptcha(final String phone, final String captcha) {
-        int type = 0;
+        int type;
         if (isModifyPhone) {
             summit(phone, captcha);
         } else {

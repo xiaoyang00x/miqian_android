@@ -174,7 +174,7 @@ public class RolloutActivity extends BaseActivity {
                     WithdrawItem data = result.getData();
                     StringBuilder tip = new StringBuilder();
                     String feeAmt = data.getFeeAmt();
-                    BigDecimal bdFeeamt=null;
+                    BigDecimal bdFeeamt;
                     if(!TextUtils.isEmpty(feeAmt)){
                         bdFeeamt=new BigDecimal(feeAmt);
                         if (bdFeeamt.compareTo(BigDecimal.ZERO)>0){

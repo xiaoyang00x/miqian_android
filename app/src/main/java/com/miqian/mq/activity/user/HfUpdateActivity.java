@@ -181,7 +181,6 @@ public class HfUpdateActivity extends BaseActivity implements View.OnClickListen
 //        if (requestCode == REQUEST_CODE_REGISTER) {
         if (resultCode == CurrentInvestment.SUCCESS) {
             getData();
-        } else {
         }
 //        }
     }

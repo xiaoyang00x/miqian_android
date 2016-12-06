@@ -25,8 +25,8 @@ import java.util.ArrayList;
  */
 public class RegularTransferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int ITEM_TYPE_NORMAL = 0; //
-    private final int ITEM_TYPE_FOOTER = 1; // 加载更多
+    private static final int ITEM_TYPE_NORMAL = 0; //
+    private static final int ITEM_TYPE_FOOTER = 1; // 加载更多
 
     private ArrayList<RegularProjectInfo> mList;
     private Context mContext;

@@ -10,13 +10,17 @@ import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.views.WFYTitle;
 
+import java.util.Locale;
+
 
 public class AboutUsActivity extends BaseActivity implements View.OnClickListener {
+
     private TextView tvVersion;
 
     @Override
     public void obtainData() {
-        tvVersion.setText("v" + MobileOS.getAppVersionName(this));
+        tvVersion.setText(String.format(
+                Locale.getDefault(), "v%s", MobileOS.getAppVersionName(this)));
     }
 
     @Override

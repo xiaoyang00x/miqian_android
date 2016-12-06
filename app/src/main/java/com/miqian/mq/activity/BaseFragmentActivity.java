@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
-import com.miqian.mq.receiver.NetBroadReceiver;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
@@ -22,7 +21,7 @@ import com.umeng.analytics.MobclickAgent;
 /**
  * Created by Joy on 2015/9/1.
  */
-public abstract class BaseFragmentActivity extends FragmentActivity implements NetBroadReceiver.netEventHandler {
+public abstract class BaseFragmentActivity extends FragmentActivity {
     private static final String TAG = BaseFragmentActivity.class.getSimpleName();
     protected Context mContext;
     protected Context mApplicationContext;
@@ -47,11 +46,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
         registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
         //注册监听锁屏广播
         registerReceiver(mScreenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
-    }
-
-    @Override
-    public void onNetChange() {
-
     }
 
     @Override
@@ -106,7 +100,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements N
     private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";
-        String SYSTEM_HOME_KEY_LONG = "recentapps";
 
         @Override
         public void onReceive(Context context, Intent intent) {

@@ -45,8 +45,6 @@ public abstract class Dialog_Login extends Dialog {
     }
 
     private void initView() {
-        final View relaTelephone = findViewById(R.id.rela_telephone);
-        final View relaPassword = findViewById(R.id.rela_password);
         final EditText editTelephone = (EditText) findViewById(R.id.edit_telephone);
         final EditText editPassword = (EditText) findViewById(R.id.edit_password);
 

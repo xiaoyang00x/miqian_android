@@ -14,6 +14,7 @@ import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.HomeAdsListener;
+import com.miqian.mq.listener.HomeDialogListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
@@ -22,6 +23,7 @@ import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.views.Dialog_Login;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -73,9 +75,8 @@ public class UserUtil {
      */
     public static void showWebActivity() {
         synchronized (ListenerManager.adsListeners) {
-            Set<String> set = ListenerManager.adsListeners.keySet();
-            for (String key : set) {
-                WeakReference<HomeAdsListener> ref = ListenerManager.adsListeners.get(key);
+            for (Map.Entry<String, WeakReference<HomeAdsListener>> entry : ListenerManager.adsListeners.entrySet()) {
+                WeakReference<HomeAdsListener> ref = entry.getValue();
                 if (ref != null && ref.get() != null) {
                     HomeAdsListener listener = ref.get();
                     if (listener != null) {
@@ -90,9 +91,8 @@ public class UserUtil {
      */
     private static void loginSuccess() {
         synchronized (ListenerManager.loginListeners) {
-            Set<String> set = ListenerManager.loginListeners.keySet();
-            for (String key : set) {
-                WeakReference<LoginListener> ref = ListenerManager.loginListeners.get(key);
+            for (Map.Entry<String, WeakReference<LoginListener>> entry : ListenerManager.loginListeners.entrySet()) {
+                WeakReference<LoginListener> ref = entry.getValue();
                 if (ref != null && ref.get() != null) {
                     LoginListener listener = ref.get();
                     if (listener != null) {
@@ -108,9 +108,8 @@ public class UserUtil {
      */
     private static void logout() {
         synchronized (ListenerManager.loginListeners) {
-            Set<String> set = ListenerManager.loginListeners.keySet();
-            for (String key : set) {
-                WeakReference<LoginListener> ref = ListenerManager.loginListeners.get(key);
+            for (Map.Entry<String, WeakReference<LoginListener>> entry : ListenerManager.loginListeners.entrySet()) {
+                WeakReference<LoginListener> ref = entry.getValue();
                 if (ref != null && ref.get() != null) {
                     LoginListener listener = ref.get();
                     if (listener != null) {

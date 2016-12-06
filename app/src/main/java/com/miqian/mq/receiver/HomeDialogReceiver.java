@@ -8,6 +8,7 @@ import com.miqian.mq.listener.HomeDialogListener;
 import com.miqian.mq.listener.ListenerManager;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,9 +31,8 @@ public class HomeDialogReceiver extends BroadcastReceiver {
      */
     private void showHomeDialog() {
         synchronized (ListenerManager.homeDialogListeners) {
-            Set<String> set = ListenerManager.homeDialogListeners.keySet();
-            for (String key : set) {
-                WeakReference<HomeDialogListener> ref = ListenerManager.homeDialogListeners.get(key);
+            for (Map.Entry<String, WeakReference<HomeDialogListener>> entry : ListenerManager.homeDialogListeners.entrySet()) {
+                WeakReference<HomeDialogListener> ref = entry.getValue();
                 if (ref != null && ref.get() != null) {
                     HomeDialogListener listener = ref.get();
                     if (listener != null) {

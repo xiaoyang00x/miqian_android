@@ -25,8 +25,6 @@ public class Config {
 	public static final String UDESK_DOMAIN = "miaoqian.udesk.cn";// 在udesk平台申请的演示用域名。
 	public static final String UDESK_SECRETKEY = "981627cd4151ede26a2f2c3258aacba1";// udesk平台分配的演示用secret
 
-	private String sdk_Token = "xxxxxxxxx";//用户身份的唯一识别必填必须唯一
-
 	public static void init(Activity activity) {
 		if (WIDTH == 480 || HEIGHT == 800) {
 			DisplayMetrics displayMetrics = new DisplayMetrics();

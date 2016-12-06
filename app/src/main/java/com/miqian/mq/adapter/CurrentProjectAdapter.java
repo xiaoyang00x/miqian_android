@@ -25,9 +25,9 @@ import java.util.ArrayList;
  */
 public class CurrentProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int ITEM_TYPE_CARD = 0; // 顶部待开标／可认购的秒钱包
-    private final int ITEM_TYPE_CONTENT = 1; // 已满额的秒钱宝列表
-    private final int ITEM_TYPE_FOOTER = 2; // 加载更多
+    private static final int ITEM_TYPE_CARD = 0; // 顶部待开标／可认购的秒钱包
+    private static final int ITEM_TYPE_CONTENT = 1; // 已满额的秒钱宝列表
+    private static final int ITEM_TYPE_FOOTER = 2; // 加载更多
 
     private ArrayList<CurrentProjectInfo> mList;
     private boolean isFinished;

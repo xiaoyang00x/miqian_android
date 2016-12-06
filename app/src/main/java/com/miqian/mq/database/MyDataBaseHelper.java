@@ -126,7 +126,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     private void delete(String tableName, JpushInfo jpushInfo) {
         SQLiteDatabase db = getDatabase();
-        int id = db.delete(tableName, "notice_id" + "=?", new String[]{jpushInfo.getId()});
+        db.delete(tableName, "notice_id" + "=?", new String[]{jpushInfo.getId()});
     }
 
     public void detetjpushInfo(JpushInfo jpushInfo) {
@@ -183,7 +183,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     public List<JpushInfo> getjpushInfo(String userId) {
         SQLiteDatabase db = getDatabase();
         ArrayList<JpushInfo> jpushArrayList = new ArrayList<>();
-        JpushInfo jpushInfo = null;
+        JpushInfo jpushInfo;
         Cursor cursor = db.query(Jpush_TABLE_NAME, null, "userId=?", new String[]{userId}, null, null, null);
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             jpushInfo = new JpushInfo();

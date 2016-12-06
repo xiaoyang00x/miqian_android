@@ -351,14 +351,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     }
 
     class TabIndicator {
-        private Context ctx;
         private MyRelativeLayout tabIndicator;
         private ImageView tabIcon;
         private TextView tabName;
         private ImageView imgRedPointer;
 
         private TabIndicator(Context ctx, TabWidget tw, int drawbleId, int nameResId) {
-            this.ctx = ctx;
             tabIndicator = (MyRelativeLayout) LayoutInflater.from(ctx).inflate(R.layout.tab_indicator, tw, false);
             tabIcon = (ImageView) tabIndicator.findViewById(R.id.img_tab);
             tabName = (TextView) tabIndicator.findViewById(R.id.tv_name);
@@ -368,7 +366,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         }
 
         private TabIndicator(Context ctx, TabWidget tw, String url, int nameResId) {
-            this.ctx = ctx;
             tabIndicator = (MyRelativeLayout) LayoutInflater.from(ctx).inflate(R.layout.tab_indicator, tw, false);
             tabIcon = (ImageView) tabIndicator.findViewById(R.id.img_tab);
             tabName = (TextView) tabIndicator.findViewById(R.id.tv_name);
@@ -712,14 +709,11 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         dialogHfTip.setCancelable(false);
         dialogHfTip.setCanceledOnTouchOutside(false);
         dialogHfTip.show();
-        if (jpushInfo != null) {
-        }
     }
 
     private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";
-        String SYSTEM_HOME_KEY_LONG = "recentapps";
 
         @Override
         public void onReceive(Context context, Intent intent) {

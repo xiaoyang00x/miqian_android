@@ -37,6 +37,7 @@ public class CurrentDetailMoreInfoActivity extends BaseActivity {
     public void obtainData() {
         if (null == mList || mList.size() <= 0) {
             finish();
+            return;
         }
         int size = mList.size();
         LayoutInflater mInflater = LayoutInflater.from(getBaseContext());

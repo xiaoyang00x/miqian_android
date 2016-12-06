@@ -345,14 +345,12 @@ public class FragmentTabHost extends TabHost
                     ft.detach(mLastTab.fragment);
                 }
             }
-            if (newTab != null) {
-                if (newTab.fragment == null) {
-                    newTab.fragment = Fragment.instantiate(mContext,
-                            newTab.clss.getName(), newTab.args);
-                    ft.add(mContainerId, newTab.fragment, newTab.tag);
-                } else {
-                    ft.attach(newTab.fragment);
-                }
+            if (newTab.fragment == null) {
+                newTab.fragment = Fragment.instantiate(mContext,
+                        newTab.clss.getName(), newTab.args);
+                ft.add(mContainerId, newTab.fragment, newTab.tag);
+            } else {
+                ft.attach(newTab.fragment);
             }
 
             mLastTab = newTab;

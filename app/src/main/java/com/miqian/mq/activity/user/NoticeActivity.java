@@ -125,8 +125,7 @@ public class NoticeActivity extends BaseActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
-                if (position == list.size() + 1) {
-                } else {
+                if (position != list.size() + 1) {
                     MessageInfo messageInfo = list.get(position);
                     int msgType = messageInfo.getMsgType();
                     boolean isReaded = Pref.getBoolean(Pref.PUSH + list.get(position).getId(), mActivity, false);
