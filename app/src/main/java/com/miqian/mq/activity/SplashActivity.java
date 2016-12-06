@@ -340,6 +340,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                 Pref.saveBoolean(Pref.FIRST_LOAD + MobileOS.getAppVersionName(this), false, SplashActivity.this);
                 startActivity(intent);
                 SplashActivity.this.finish();
+                break;
         }
     }
 
