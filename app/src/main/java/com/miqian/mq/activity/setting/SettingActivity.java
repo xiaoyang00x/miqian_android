@@ -307,6 +307,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         } else {
             userId = MobileDeviceUtil.getInstance(mApplicationContext).getMobileImei();
         }
+        if(TextUtils.isEmpty(userId)) {
+            userId = MobileDeviceUtil.getInstance(mApplicationContext).getUUID();
+        }
+
         info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, userId);
         //以下注释的字段都是可选的字段， 有邮箱建议填写
         info.put(UdeskConst.UdeskUserInfo.NICK_NAME, Pref.getString(Pref.REAL_NAME, mApplicationContext, ""));
