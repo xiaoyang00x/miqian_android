@@ -50,21 +50,23 @@
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- GrowingIO 启动圈选接口 -->
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <data android:scheme="growing.f20b1d4a79b7e6e4" />
-                <data
-                    android:host="splash"
-                    android:scheme="miaoqian" />
-            </intent-filter>
-
+                <!-- GrowingIO 启动圈选接口 -->
+                </intent-filter>
+                <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:host="splash" android:scheme="miaoqian" />
+                <!-- GrowingIO 启动圈选接口 -->
+                </intent-filter>
         </activity>
 
         <!-- LLYT SDK START -->

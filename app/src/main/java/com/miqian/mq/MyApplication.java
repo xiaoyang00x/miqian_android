@@ -1,7 +1,12 @@
 package com.miqian.mq;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.support.multidex.MultiDexApplication;
+
+import com.growingio.android.sdk.collection.Configuration;
+import com.growingio.android.sdk.collection.GrowingIO;
 
 import com.miqian.mq.utils.ChannelUtil;
 import com.miqian.mq.utils.Config;
@@ -11,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.util.HashMap;
 
@@ -95,9 +101,27 @@ public class MyApplication extends MultiDexApplication {
         MobclickAgent.startWithConfigure(new MobclickAgent.UMAnalyticsConfig(this, "54cc3aedfd98c5b1d000039a", ChannelUtil.getChannel(this)));
         //友盟  禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.openActivityDurationTrack(false);
+        OnlineConfigAgent.getInstance().updateOnlineConfig(this);
+//        OnlineConfigAgent.getInstance().setDebugMode(false);
 
         //Udesk 初始化
         UdeskSDKManager.getInstance().initApiKey(this, Config.UDESK_DOMAIN, Config.UDESK_SECRETKEY);
+
+        try {
+            ApplicationInfo appInfo = this.getPackageManager()
+                    .getApplicationInfo(getPackageName(),
+                            PackageManager.GET_META_DATA);
+            String channelValue=appInfo.metaData.getString("com.growingio.android.GConfig.Channel");
+            GrowingIO.startWithConfiguration(this, new Configuration()
+                    .useID()
+                    .trackAllFragments()
+                    .setChannel(channelValue));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
 
     }
 

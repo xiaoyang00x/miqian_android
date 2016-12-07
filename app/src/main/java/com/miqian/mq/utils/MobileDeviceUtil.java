@@ -14,6 +14,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import java.util.UUID;
+
 
 public class MobileDeviceUtil {
     /**
@@ -156,14 +158,20 @@ public class MobileDeviceUtil {
      * @return
      */
     public String getPhoneNum() {
-        if (TextUtils.isEmpty(phoneNo)) {
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (null != tm) {
-                phoneNo = tm.getLine1Number();
+        try {
+            if (TextUtils.isEmpty(phoneNo)) {
+                TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                if (null != tm) {
+                    phoneNo = tm.getLine1Number();
+                }
+                if (TextUtils.isEmpty(phoneNo))
+                    phoneNo = "";
             }
-            if (TextUtils.isEmpty(phoneNo))
-                phoneNo = "";
+        }catch (Exception e) {
+            e.printStackTrace();
+            phoneNo = "";
         }
+
         return phoneNo;
 
     }
@@ -473,10 +481,15 @@ public class MobileDeviceUtil {
 
     /**
      * 自动生成一个UUID来记录安装量
-     * 
-     * @return
      */
-    public String getUUID() {
+    public String getUUID(){
+        uuid = Pref.getString("sysCacheMap",context, "");
+
+        if(TextUtils.isEmpty(uuid)){
+            uuid = UUID.randomUUID().toString();
+            Pref.saveString("sysCacheMap", uuid, context);
+        }
+
         return uuid;
     }
 

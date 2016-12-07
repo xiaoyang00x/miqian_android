@@ -10,7 +10,8 @@
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/frame_title">
+        android:layout_below="@+id/frame_title"
+        android:visibility="visible">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -41,26 +42,26 @@
                                 android:layout_width="280dp"
                                 android:layout_height="280dp"
                                 android:layout_centerInParent="true"
-                                android:clickable="true"
-                                android:background="@drawable/current_circle_bg">
+                                android:background="@drawable/current_circle_bg"
+                                android:clickable="true">
 
                                 <TextView
                                     android:id="@+id/text_interest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:textSize="@dimen/mq_font17_v2"
+                                    android:drawableRight="@drawable/current_interest_percent"
                                     android:textColor="@color/mq_r1_v2"
-                                    android:drawableRight="@drawable/current_interest_percent"/>
+                                    android:textSize="@dimen/mq_font17_v2" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/text_interest"
                                     android:layout_centerHorizontal="true"
-                                    android:textSize="@dimen/mq_font3_v2"
+                                    android:text="年化收益"
                                     android:textColor="@color/mq_b4_v2"
-                                    android:text="年化收益"/>
+                                    android:textSize="@dimen/mq_font3_v2" />
                             </RelativeLayout>
                         </RelativeLayout>
 
@@ -197,7 +198,57 @@
 
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
             </RelativeLayout>
         </ScrollView>
     </com.miqian.mq.views.MySwipeRefresh>
+
+    <LinearLayout
+        android:id="@+id/frame_crowd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frame_title"
+        android:orientation="vertical"
+        android:background="@color/mq_r1_v2"
+        android:visibility="gone">
+
+        <TextView
+            android:drawableTop="@drawable/current_crowd"
+            android:drawablePadding="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="春节期间，平台参与的手机QQ抢红包，因活动期间访问用户过多，暂停活期认购、赎回操作，待活动高峰过后，系统会恢复认购、赎回操作。"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mq_font7_v2"
+            android:lineSpacingExtra="8dp"
+            android:layout_margin="30dp"
+            android:layout_marginTop="40dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="活动预计开标时间"
+            android:textColor="@color/mq_y1_v2"
+            android:textSize="@dimen/mq_font7_v2"
+            android:layout_marginTop="40dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/bt_subscribe"
+            android:layout_marginTop="10dp"
+            android:text="初五（02月01日）"
+            android:textColor="@color/mq_r1"
+            android:textSize="@dimen/mq_font8_v2" />
+    </LinearLayout>
 </RelativeLayout>

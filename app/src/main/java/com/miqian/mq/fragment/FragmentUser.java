@@ -366,8 +366,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         view.findViewById(R.id.layout_register).setVisibility(View.GONE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
         //在线参数
-        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
-        OnlineConfigAgent.getInstance().setDebugMode(false);
+//        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
         String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "ShowQQRedBag");
         if ("YES".equals(value)) {
             view_QQredBag.setVisibility(View.VISIBLE);

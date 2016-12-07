@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.growingio.android'
 
 android {
     compileSdkVersion 23
@@ -10,6 +11,9 @@ android {
         versionCode 13
         versionName '2.3.1'
         multiDexEnabled true
+
+        resValue("string", "growingio_project_id", "aabcdf9bad412e4f")
+        resValue("string", "growingio_url_scheme", "growing.f20b1d4a79b7e6e4")
     }
 
     packagingOptions {
@@ -91,7 +95,7 @@ dependencies {
     compile 'com.umeng:fb:5.4.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile project(':onekeyshare')
-    compile 'com.growingio.android:vds-android:latest.release@aar'
+    compile 'com.growingio.android:vds-android-agent:0.9.99@aar'
     compile project(path: ':Udesk_Separate_UI')
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
 }
