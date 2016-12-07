@@ -223,13 +223,17 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");
-                if (balance != null && balance.compareTo(downLimit) >= 0) {
-                    dialogPay.setEditMoneyHint("可用余额" + balance + "元");
+                if (isCrowd) {
+                    Uihelper.showToast(mActivity, "春节期间，平台参加手机QQ抢红包。因活动期间访问用户过多，暂停认购操作，待活动高峰结束后恢复认购操作");
                 } else {
-                    dialogPay.setEditMoneyHint(downLimit + "元起投");
+                    if (balance != null && balance.compareTo(downLimit) >= 0) {
+                        dialogPay.setEditMoneyHint("可用余额" + balance + "元");
+                    } else {
+                        dialogPay.setEditMoneyHint(downLimit + "元起投");
+                    }
+                    UserUtil.loginPay(mActivity, dialogPay);
+//                    UserUtil.registerPay(mActivity, dialogPay);
                 }
-//                UserUtil.loginPay(mActivity, dialogPay);
-                UserUtil.registerPay(mActivity, dialogPay);
                 break;
         }
     }
