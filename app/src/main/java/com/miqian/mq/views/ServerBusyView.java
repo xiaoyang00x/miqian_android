@@ -26,8 +26,8 @@ public class ServerBusyView extends ScrollView {
     private ImageView iv_houzi;
     private TextView tv_tip;
 
-    public static final String SERVERBUSY = "抱歉，当前访问人数太多，\n服务器有点忙，请稍后再试•••";
-    public static final String NONETWORK = "当前网络不可用，\n请检查你的网络设置•••";
+    private static final String SERVERBUSY = "秒钱被财主们挤爆啦，请您稍后再来访问。\n万分对不起您，耽误您赚钱了！";
+    private static final String NONETWORK = SERVERBUSY;
 
     public ServerBusyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -42,7 +42,7 @@ public class ServerBusyView extends ScrollView {
     private TextView tv_lookAround4;
 
     public void init() {
-        View mView = LayoutInflater.from(mContext).inflate(R.layout.server_busy, null);
+        View mView = LayoutInflater.from(mContext).inflate(R.layout.server_busy, this, false);
         iv_houzi = (ImageView) mView.findViewById(R.id.iv_houzi);
         tv_tip = (TextView) mView.findViewById(R.id.tv_tip);
         btn_refresh = (Button) mView.findViewById(R.id.btn_refresh);
@@ -50,29 +50,20 @@ public class ServerBusyView extends ScrollView {
         tv_lookAround2 = (TextView) mView.findViewById(R.id.tv_lookAround2);
         tv_lookAround3 = (TextView) mView.findViewById(R.id.tv_lookAround3);
         tv_lookAround4 = (TextView) mView.findViewById(R.id.tv_lookAround4);
-        setTopImgSizeOfServerBusyPage(mContext);
         addView(mView);
-    }
-
-    // 顶部 - 图片的宽高
-    private void setTopImgSizeOfServerBusyPage(Context mContext) {
-        ViewGroup.LayoutParams params = iv_houzi.getLayoutParams();
-        params.width = MobileOS.getScreenWidth(mContext);
-        params.height = (int) (params.width * 0.75);
-        iv_houzi.setLayoutParams(params);
     }
 
     // 服务器繁忙页面 - 显示
     public void showServerBusy() {
         tv_tip.setText(SERVERBUSY);
-        iv_houzi.setImageResource(R.drawable.page_server_busy);
+        iv_houzi.setImageResource(R.drawable.icon_page_error);
         setVisibility(View.VISIBLE);
     }
 
     // 无网络页面 - 显示
     public void showNoNetwork() {
         tv_tip.setText(NONETWORK);
-        iv_houzi.setImageResource(R.drawable.page_no_network);
+        iv_houzi.setImageResource(R.drawable.icon_page_error);
         setVisibility(View.VISIBLE);
     }
 

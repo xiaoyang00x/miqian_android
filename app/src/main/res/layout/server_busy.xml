@@ -7,10 +7,12 @@
 
     <ImageView
         android:id="@+id/iv_houzi"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/page_server_busy" />
+        android:layout_marginTop="77dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="matrix"
+        android:src="@drawable/icon_page_error" />
 
     <TextView
         android:id="@+id/tv_tip"
@@ -20,28 +22,30 @@
         android:gravity="center_horizontal"
         android:lineSpacingExtra="3dp"
         android:textColor="@color/mq_b2"
-        android:textSize="@dimen/mq_font3" />
+        android:textSize="@dimen/mq_font5_v2" />
 
     <Button
         android:id="@+id/btn_refresh"
         android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_refresh_selector"
         android:gravity="center"
         android:text="点击刷新"
-        android:textColor="#1A98FF"
-        android:textSize="@dimen/mq_font2" />
+        android:textStyle="bold"
+        android:textColor="@color/mq_bl3_v2"
+        android:textSize="@dimen/mq_font7_v2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:text="您可以了解:"
-        android:textColor="@color/mq_b1"
-        android:textSize="@dimen/mq_font3" />
+        android:textStyle="bold"
+        android:textColor="@color/mq_b1_v2"
+        android:textSize="@dimen/mq_font7_v2" />
 
     <TextView
         android:id="@+id/tv_lookAround1"
@@ -52,8 +56,8 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:text="• 秒钱如何帮您高收益赚钱"
-        android:textColor="#1A98FF"
-        android:textSize="@dimen/mq_font3" />
+        android:textColor="@color/mq_bl3_v2"
+        android:textSize="@dimen/mq_font7_v2" />
 
     <TextView
         android:id="@+id/tv_lookAround2"
@@ -64,8 +68,8 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:text="• 新手指引"
-        android:textColor="#1A98FF"
-        android:textSize="@dimen/mq_font3" />
+        android:textColor="@color/mq_bl3_v2"
+        android:textSize="@dimen/mq_font7_v2" />
 
     <TextView
         android:id="@+id/tv_lookAround3"
@@ -76,8 +80,8 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:text="• 常见问题"
-        android:textColor="#1A98FF"
-        android:textSize="@dimen/mq_font3" />
+        android:textColor="@color/mq_bl3_v2"
+        android:textSize="@dimen/mq_font7_v2" />
 
     <TextView
         android:id="@+id/tv_lookAround4"
@@ -88,7 +92,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:text="• 项目安全透明--人行征信中心可查询"
-        android:textColor="#1A98FF"
-        android:textSize="@dimen/mq_font3" />
+        android:textColor="@color/mq_bl3_v2"
+        android:textSize="@dimen/mq_font7_v2" />
 
 </LinearLayout>
