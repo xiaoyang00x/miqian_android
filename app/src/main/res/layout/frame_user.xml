@@ -11,6 +11,13 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/frame_title"
         android:visibility="gone" />
+    <include
+        android:id="@+id/layout_register"
+        layout="@layout/layout_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frame_title"
+        android:visibility="visible" />
 
 
     <com.miqian.mq.views.MySwipeRefresh
@@ -19,7 +26,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/frame_title"
         android:background="@color/base_background"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ScrollView
             android:id="@+id/layout_logined"

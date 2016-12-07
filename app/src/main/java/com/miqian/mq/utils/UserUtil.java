@@ -19,6 +19,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
+import com.miqian.mq.views.Dialog_Register;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
@@ -70,6 +71,7 @@ public class UserUtil {
             }
         }
     }
+
     /**
      * 登录成功通知监听
      */
@@ -190,6 +192,46 @@ public class UserUtil {
             dialogPay.show();
         }
     }
+    //  手Q活动时判断是否登录，未登录弹注册窗口
+    public static void registerPay(final Activity context, final DialogPay dialogPay) {
+        if (!UserUtil.hasLogin(context)) {
+            Dialog_Register dialog_login = new Dialog_Register(context) {
+                @Override
+                public void toLogin() {
+                    dismiss();
+                    showLoginDialog(context);
+                }
+
+                @Override
+                public void registerSuccess() {
+                    dismiss();
+                    dialogPay.show();
+
+                }
+            };
+            dialog_login.show();
+        } else {
+            dialogPay.show();
+        }
+    }
+
+
+    //  手Q活动认购时弹注册页
+    public static void showRegisterDialog(final Activity context) {
+        Dialog_Register dialog_login = new Dialog_Register(context) {
+
+            @Override
+            public void toLogin() {
+                dismiss();
+                showLoginDialog(context);
+            }
+            @Override
+            public void registerSuccess() {
+                         dismiss();
+            }
+        };
+        dialog_login.show();
+    }
 
     //  认购时确认是否登录
     public static void showLoginDialog(final Activity context) {
@@ -237,7 +279,7 @@ public class UserUtil {
      * @param prodId             0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
      * @param subjectId          标的id，活期默认为0
      * @param interestRateString 定期计划和定期赚的利率和期限
-     * @param realMoney           实际支付金额（认购转让标的显示）
+     * @param realMoney          实际支付金额（认购转让标的显示）
      */
     public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString, String realMoney) {
         Intent intent = new Intent(activity, CurrentInvestment.class);

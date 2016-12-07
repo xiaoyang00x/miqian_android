@@ -20,6 +20,7 @@ import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.PaymodeActivity;
+import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
@@ -32,6 +33,7 @@ import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -58,7 +60,7 @@ import java.math.BigDecimal;
  * @created 2015-3-18
  */
 
-public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener {
+public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener ,QQprojectRegister.LoginLister {
 
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket;
@@ -77,12 +79,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private View view_QQredBag;
     private CustomDialog tipDialog;
     private boolean hasMessage;
+    private boolean isQQProject=true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         extendOperationController = ExtendOperationController.getInstance();
         extendOperationController.registerExtendOperationListener(this);
-
         super.onCreate(savedInstanceState);
     }
 
@@ -108,13 +110,21 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             initUserView();
             obtainData();
         }
-        //未登录，显示登录界面
+        //未登录,  判断是否是手Q活动
         else {
-            initLoginView();
-            editPassword.setText("");
-            String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");
-            editTelephone.setText(telphone);
-            editTelephone.setSelection(telphone.length());
+            if (isQQProject){
+                //手Q活动
+                QQprojectRegister qQprojectRegister=new QQprojectRegister(getActivity(),view,swipeRefresh);
+                qQprojectRegister.setLoginLister(this);
+
+            }else {
+                initLoginView();
+                editPassword.setText("");
+                String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");
+                editTelephone.setText(telphone);
+                editTelephone.setSelection(telphone.length());
+            }
+
         }
 
         super.onStart();
@@ -353,6 +363,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     private void initLoginView() {
         swipeRefresh.setVisibility(View.GONE);
+        view.findViewById(R.id.layout_register).setVisibility(View.GONE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
         //在线参数
         OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
@@ -534,5 +545,15 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
         }
 
+    }
+
+    @Override
+    public void toLogin() {
+        isQQProject=false;
+        initLoginView();
+        editPassword.setText("");
+        String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");
+        editTelephone.setText(telphone);
+        editTelephone.setSelection(telphone.length());
     }
 }
