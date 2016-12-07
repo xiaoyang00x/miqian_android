@@ -228,7 +228,8 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 } else {
                     dialogPay.setEditMoneyHint(downLimit + "元起投");
                 }
-                UserUtil.loginPay(mActivity, dialogPay);
+//                UserUtil.loginPay(mActivity, dialogPay);
+                UserUtil.registerPay(mActivity, dialogPay);
                 break;
         }
     }

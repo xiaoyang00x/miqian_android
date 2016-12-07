@@ -656,7 +656,9 @@ public class RegularDetailActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.btn_buy:
                     if (!UserUtil.hasLogin(RegularDetailActivity.this)) {
-                        UserUtil.showLoginDialog(RegularDetailActivity.this);
+//                        UserUtil.showLoginDialog(RegularDetailActivity.this);
+                        UserUtil.showRegisterDialog(RegularDetailActivity.this);
+
                     } else {
                         jumpToNextPageIfInputValid();
                     }

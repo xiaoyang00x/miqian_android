@@ -211,7 +211,11 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 } else {
                     dialogPay.setEditMoneyHint(downLimit + "元起投");
                 }
-                UserUtil.loginPay(mContext, dialogPay);
+
+//                UserUtil.loginPay(mContext, dialogPay);
+                UserUtil.registerPay(mContext, dialogPay);
+
+
                 break;
             case R.id.frame_image:
                 MobclickAgent.onEvent(mContext, "1006");
