@@ -86,6 +86,9 @@ public class Pref {
     //忽略的版本号
     public final static String IGNORE_VERSION = "IgnoreVersion";
 
+    //本地保存是否显示过QQ图标
+    public final static String HAS_QQ = "hasqq";
+
     private static SharedPreferences getSettings(final Context contex) {
         SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);
         return mSharedPreferences;

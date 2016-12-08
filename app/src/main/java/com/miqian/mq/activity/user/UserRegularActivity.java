@@ -22,8 +22,10 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.util.List;
 
@@ -48,10 +50,17 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private List<RegInvest> regInvestList;
     private RadioGroup radioGroup;
     private boolean launchSuccess;
+    private boolean isQQproject;
+    private View layoutQQRegular;
+    private TextViewEx tvQQRegular;
 
     @Override
     public void onCreate(Bundle arg0) {
-
+        //手Q开关
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        if ("YES".equals(value)) {
+            isQQproject = true;
+        }
         launchSuccess = getIntent().getBooleanExtra("launchSuccess", false);
         if (launchSuccess) {
             isExpiry = "ZR";
@@ -74,8 +83,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                 swipeRefresh.setRefreshing(false);
                 userRegular = result.getData();
                 regInvestList = userRegular.getRegInvest();
-                    refreshView();
+                refreshView();
             }
+
             @Override
             public void onFail(String error) {
                 swipeRefresh.setRefreshing(false);
@@ -118,6 +128,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     public void initView() {
 
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
+        tvQQRegular = (TextViewEx) findViewById(R.id.tv_qq_nodata);
 //        RadioButton btnRight = (RadioButton) findViewById(R.id.bt_right);
 //        if (launchSuccess) {
 //            btnRight.setChecked(true);
@@ -130,7 +141,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                 obtainData();
             }
         });
-
+        layoutQQRegular = findViewById(R.id.layout_qq_regular_nodata);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -194,6 +205,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onItemClick(View view, int postion) {
+        if (isQQproject) {
+            return;
+        }
         RegInvest regInvest = regInvestList.get(postion);
         if (regInvest.getBearingStatus().equals("Y")) {
             MobclickAgent.onEvent(mActivity, "1040");
@@ -222,12 +236,23 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
 
         if (checkId == R.id.bt_left) {
+            if (isQQproject) {
+                layoutQQRegular.setVisibility(View.GONE);
+                swipeRefresh.setVisibility(View.VISIBLE);
+            }
             isExpiry = "N";
             mType = 0;
             obtainData();
         } else if (checkId == R.id.bt_middle) {
             isExpiry = "Y";
             mType = 1;
+            //手Q活动
+            if (isQQproject) {
+                swipeRefresh.setVisibility(View.GONE);
+                layoutQQRegular.setVisibility(View.VISIBLE);
+                tvQQRegular.setText("亲爱的财主,春节期间，平台参加手机QQ抢红包活动。因活动期间访问用户过多，暂停已结算标的内容查询,待活动高峰结束后(2月1日)恢复操作,请您谅解。", true);
+                return;
+            }
             obtainData();
         } else if (checkId == R.id.bt_right) {
             isExpiry = "ZR";
