@@ -25,21 +25,16 @@ import java.math.BigDecimal;
  */
 public class HomeSelectionHolder extends HomeBaseViewHolder {
 
-    private TextView tv_lable;
     private LinearLayout layout_container;
     private LayoutInflater inflater;
-    private View divider;
     private Context mContext;
 
     public HomeSelectionHolder(View itemView) {
         super(itemView);
         mContext = itemView.getContext();
         inflater = LayoutInflater.from(itemView.getContext());
-        tv_lable = (TextView)itemView.findViewById(R.id.tv_lable);
-        divider = itemView.findViewById(R.id.divider);
         layout_container = (LinearLayout) itemView.findViewById(R.id.layout_container);
 
-        divider.setVisibility(View.GONE);
 
     }
 
@@ -47,13 +42,6 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
     public void bindView(HomePageInfo mData) {
         layout_container.removeAllViews();
         if(mData != null && mData.getSubjectInfoData() != null) {
-            if(TextUtils.isEmpty(mData.getTitle())) {
-                tv_lable.setVisibility(View.GONE);
-            }else {
-                tv_lable.setText(mData.getTitle());
-                tv_lable.setVisibility(View.VISIBLE);
-            }
-
             if(mData.getSubjectInfoData().size() > 0) {
                 for(int i = 0; i < mData.getSubjectInfoData().size(); i++) {
                     layout_container.addView(initProjectView(mData.getSubjectInfoData().get(i)));

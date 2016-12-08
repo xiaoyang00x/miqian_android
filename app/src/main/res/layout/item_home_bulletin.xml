@@ -1,45 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
-    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     >
-    <ImageView
-        android:id="@+id/img_bulletin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/icon_home_bulletin_new"
-        android:layout_marginLeft="@dimen/margin_left_right"
-        android:layout_marginRight="@dimen/margin_left_right"
-        />
-    <View
-        android:id="@+id/divider"
-        android:layout_width="1dp"
-        android:layout_height="22dp"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/margin_left_right"
-        android:background="@color/mq_b6_v2"
-        android:layout_toRightOf="@id/img_bulletin"/>
-    <TextView
-        android:id="@+id/tv_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/divider"
-        android:layout_marginRight="@dimen/margin_left_right"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:textColor="@color/mq_bl1_v2"
-        android:textSize="@dimen/mq_font7_v2"
-        android:textStyle="bold"
-        />
+        android:layout_height="44dp"
+        android:background="#ce2811"
+        >
+        <ImageView
+            android:id="@+id/img_bulletin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_home_bulletin_new"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginRight="@dimen/margin_left_right"
+            />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:background="#ac210e"
+            android:layout_toRightOf="@id/img_bulletin"/>
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/divider"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:textColor="#fbd79d"
+            android:textSize="@dimen/mq_font7_v2"
+            android:textStyle="bold"
+            />
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_alignParentBottom="true"
-        android:background="@color/mq_b6_v2"
+        android:layout_height="70dp"
+        android:background="@drawable/qq_tu"
         />
-</RelativeLayout>
+
+</LinearLayout>

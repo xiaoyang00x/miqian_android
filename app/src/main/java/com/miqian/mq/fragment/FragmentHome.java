@@ -25,6 +25,8 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.MyAsyncTask;
 import com.miqian.mq.receiver.HomeDialogReceiver;
+import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.HomeDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.PromotionDialog;
@@ -175,12 +177,19 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 if (result == null) return;
                 mDatas = result.getData();
                 if (mDatas == null) return;
-//                if (null == adapter) {
+
+                //未登录用户或友盟开关开启状态使用本地数据
+                if(!UserUtil.hasLogin(mApplicationContext)) {
+                    try {
+                        mDatas = generateHomeData(mDatas);
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
                 adapter = new HomeAdapter(mActivity, mDatas);
                 recyclerView.setAdapter(adapter);
-//                } else {
-//                    adapter.notifyDataSetChanged(info);
-//                }
                 serverBusyView.hide();
                 isServerBusyPageShow = false;
                 isNoNetworkPageShow = false;
@@ -206,6 +215,51 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
             }
         });
     }
+
+    /**
+     * 生成本地静态数据
+     * 本地静态数据顺序:轮播  公告  精选项目 运营数据 热门活动 热门推荐 新闻动态   客服电话
+     * @param oldList 服务器返回数据
+     */
+    private ArrayList<HomePageInfo> generateHomeData(ArrayList<HomePageInfo> oldList) {
+        ArrayList<HomePageInfo> list = new ArrayList<>();
+
+        HomePageInfo homePageInfo_banner = JsonUtil.parseObject(json_banner, HomePageInfo.class);
+        HomePageInfo homePageInfo_activity = JsonUtil.parseObject(json_activity, HomePageInfo.class);
+        HomePageInfo homePageInfo_recommend = JsonUtil.parseObject(json_recommend, HomePageInfo.class);
+        HomePageInfo homePageInfo_news = JsonUtil.parseObject(json_news, HomePageInfo.class);
+        HomePageInfo homePageInfo_contact = JsonUtil.parseObject(json_contact, HomePageInfo.class);
+
+        list.add(homePageInfo_banner);
+        checkHomeInfo(list, oldList, HomePageInfo.MODULE_BULLETIN);
+        checkHomeInfo(list, oldList, HomePageInfo.MODULE_SELECTION);
+        checkHomeInfo(list, oldList, HomePageInfo.MODULE_OPERATION_DATA);
+        list.add(homePageInfo_activity);
+        list.add(homePageInfo_recommend);
+        list.add(homePageInfo_news);
+        list.add(homePageInfo_contact);
+
+        return list;
+    }
+
+    /**
+     * 将服务器返回的数据拼接到新的静态数据列表中
+     * @param newList 新的静态数据列表
+     * @param oldList 服务器返回数据列表
+     * @param type  数据类型
+     */
+    private void checkHomeInfo(ArrayList<HomePageInfo> newList, ArrayList<HomePageInfo> oldList, int type) {
+        for (HomePageInfo info:oldList) {
+            if(info != null && info.getModule() == type) {
+                newList.add(info);
+            }
+        }
+    }
+    private final String json_banner = "{\"module\":\"1\",\"bsAdListData\":[{\"id\":89,\"imgUrl\":\"assets://home/banner1.jpg\",\"jumpUrl\":\"file:///android_asset/home/banner1.html\"},{\"id\":88,\"imgUrl\":\"assets://home/banner2.jpg\",\"jumpUrl\":\"file:///android_asset/home/banner2.html\"}]}";
+    private final String json_activity = "{\"module\":\"6\",\"hotActivityData\":[{\"id\":90,\"imgUrl\":\"assets://home/activity.jpg\",\"jumpUrl\":\"assets://home/activity.html\"}]}";
+    private final String json_recommend = "{\"module\":\"4\",\"title\":\"热门推荐\",\"hotRecommendData\":[{\"id\":77,\"imgUrl\":\"assets://home/recommend1.png\",\"jumpUrl\":\"file:///android_asset/home/recommend1.html\"},{\"id\":78,\"imgUrl\":\"assets://home/recommend2.png\",\"jumpUrl\":\"file:///android_asset/home/recommend2.html\"},{\"id\":79,\"imgUrl\":\"assets://home/recommend3.png\",\"jumpUrl\":\"file:///android_asset/home/recommend3.html\"}]}";
+    private final String json_news = "{\"module\":\"7\",\"title\":\"新闻动态\",\"hotNewsData\":[{\"imgUrl\":\"assets://home/news_fenghuang.png\",\"id\":56,\"title\":\"《中国互联网金融风险报告》：互联网金融的核心是风控\",\"desc\":\"金融的核心是风控，它贯穿着互联网金融的…\",\"jumpUrl\":\"file:///android_asset/home/news_fenghuang.html\"},{\"imgUrl\":\"assets://home/news_huanqiu.png\",\"id\":53,\"title\":\"秒钱·拾财贷安全运营1000天，稳健前行\",\"desc\":\"行业里一直有这样一个共识，即要成为某个…\",\"jumpUrl\":\"file:///android_asset/home/news_huanqiu.html\"},{\"imgUrl\":\"assets://home/news_sina.png\",\"id\":51,\"title\":\"债权资产类平台靠“垂直创新”逆势崛起\",\"desc\":\"针对债权资产类平台的崛起，秒钱创始人兼…\",\"jumpUrl\":\"file:///android_asset/home/news_sina.html\"}]}";
+    private final String json_contact = "{\"module\":\"8\",\"consumerHotLine\":\"400-665-6191\"}";
 
     private boolean inActivityProcess = false;
     private final Object mActivityLock = new Object();
