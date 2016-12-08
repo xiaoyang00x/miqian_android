@@ -35,6 +35,7 @@ import com.miqian.mq.views.ServerBusyView;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -179,7 +180,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 if (mDatas == null) return;
 
                 //未登录用户或友盟开关开启状态使用本地数据
-                if(!UserUtil.hasLogin(mApplicationContext)) {
+                if(!UserUtil.hasLogin(mApplicationContext) || "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"))) {
                     try {
                         mDatas = generateHomeData(mDatas);
                     }catch (Exception e) {
@@ -256,7 +257,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         }
     }
     private final String json_banner = "{\"module\":\"1\",\"bsAdListData\":[{\"id\":89,\"imgUrl\":\"assets://home/banner1.jpg\",\"jumpUrl\":\"file:///android_asset/home/banner1.html\"},{\"id\":88,\"imgUrl\":\"assets://home/banner2.jpg\",\"jumpUrl\":\"file:///android_asset/home/banner2.html\"}]}";
-    private final String json_activity = "{\"module\":\"6\",\"hotActivityData\":[{\"id\":90,\"imgUrl\":\"assets://home/activity.jpg\",\"jumpUrl\":\"assets://home/activity.html\"}]}";
+    private final String json_activity = "{\"module\":\"6\",\"hotActivityData\":[{\"id\":90,\"imgUrl\":\"assets://home/activity.jpg\",\"jumpUrl\":\"file:///android_asset/home/activity.html\"}]}";
     private final String json_recommend = "{\"module\":\"4\",\"title\":\"热门推荐\",\"hotRecommendData\":[{\"id\":77,\"imgUrl\":\"assets://home/recommend1.png\",\"jumpUrl\":\"file:///android_asset/home/recommend1.html\"},{\"id\":78,\"imgUrl\":\"assets://home/recommend2.png\",\"jumpUrl\":\"file:///android_asset/home/recommend2.html\"},{\"id\":79,\"imgUrl\":\"assets://home/recommend3.png\",\"jumpUrl\":\"file:///android_asset/home/recommend3.html\"}]}";
     private final String json_news = "{\"module\":\"7\",\"title\":\"新闻动态\",\"hotNewsData\":[{\"imgUrl\":\"assets://home/news_fenghuang.png\",\"id\":56,\"title\":\"《中国互联网金融风险报告》：互联网金融的核心是风控\",\"desc\":\"金融的核心是风控，它贯穿着互联网金融的…\",\"jumpUrl\":\"file:///android_asset/home/news_fenghuang.html\"},{\"imgUrl\":\"assets://home/news_huanqiu.png\",\"id\":53,\"title\":\"秒钱·拾财贷安全运营1000天，稳健前行\",\"desc\":\"行业里一直有这样一个共识，即要成为某个…\",\"jumpUrl\":\"file:///android_asset/home/news_huanqiu.html\"},{\"imgUrl\":\"assets://home/news_sina.png\",\"id\":51,\"title\":\"债权资产类平台靠“垂直创新”逆势崛起\",\"desc\":\"针对债权资产类平台的崛起，秒钱创始人兼…\",\"jumpUrl\":\"file:///android_asset/home/news_sina.html\"}]}";
     private final String json_contact = "{\"module\":\"8\",\"consumerHotLine\":\"400-665-6191\"}";
