@@ -127,12 +127,13 @@ public class PaymodeActivity extends BaseActivity implements View.OnClickListene
         if (CurrentInvestment.PRODID_CURRENT.equals(prodId)) {
             frameCurrent.setVisibility(View.GONE);
         } else {
-            if (currentMoney.compareTo(payMoney) >= 0) {
-                frameCurrent.setOnClickListener(this);
-            } else {
+//            活期转定期手q版本不可用
+//            if (currentMoney.compareTo(payMoney) >= 0) {
+//                frameCurrent.setOnClickListener(this);
+//            } else {
                 textCurrent.setTextColor(getResources().getColor(R.color.mq_b4_v2));
                 imageCurrent.setEnabled(false);
-            }
+//            }
         }
 
         if (balanceMoney.compareTo(payMoney) >= 0) {

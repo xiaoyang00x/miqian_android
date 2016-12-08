@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.entity.Popup;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.listener.JsShareListener;
 import com.miqian.mq.utils.ActivityStack;
@@ -59,7 +58,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         Intent intent = getIntent();
         status = intent.getIntExtra("status", 0);
         if (status == 1) {
-            title = "认购成功";
+            title = "认购申请成功";
             String result = intent.getStringExtra("subscribeOrder");
             subscribeOrder =  JsonUtil.parseObject(result, SubscribeOrder.class);
         } else {
@@ -110,7 +109,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         if (status == 1) {
             imageStatus.setImageResource(R.drawable.result_success);
             tradeNumber.setText(orderNo);
-            tvStatus.setText("认购成功");
+            tvStatus.setText("认购申请成功");
         } else {
             findViewById(R.id.frame_trade_number).setVisibility(View.GONE);
             tvTip.setText("如果多次失败，请联系客服400-6656-191");

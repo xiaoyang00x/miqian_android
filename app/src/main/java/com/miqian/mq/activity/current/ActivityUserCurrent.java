@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
 
@@ -35,6 +37,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private TextView textTotalEarning;
     private RelativeLayout frameCurrentRecord;
     private RelativeLayout frameProjectMatch;
+    private LinearLayout frameTip;
     private Button btRedeem;//赎回
     private Button btSubscribe;//认购
     private TextView textInterest;
@@ -47,11 +50,18 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
 
     private String interestRateString = "";
     private ExtendOperationController operationController;
+    private boolean isCrowd = false;
 
     @Override
     public void onCreate(Bundle arg0) {
         operationController = ExtendOperationController.getInstance();
         operationController.registerExtendOperationListener(this);
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        if ("YES".equals(value)) {
+            isCrowd = true;
+        } else {
+            isCrowd = false;
+        }
         super.onCreate(arg0);
     }
 
@@ -89,7 +99,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             textEarning.setText(userCurrent.getCurYesterDayAmt());
             textCaptial.setText(userCurrent.getCurAsset()+"");
             textTotalEarning.setText(userCurrent.getCurAmt()+"");
-            BigDecimal money = new BigDecimal(userCurrent.getCurAsset()+"");
+            BigDecimal money = userCurrent.getCurAsset();
             downLimit = userCurrent.getCurrentBuyDownLimit();
             upLimit = userCurrent.getCurrentBuyUpLimit();
             balance = userCurrent.getBalance();
@@ -120,6 +130,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         textEarning = (TextView) findViewById(R.id.earning);
         textCaptial = (TextView) findViewById(R.id.captial);
         textTotalEarning = (TextView) findViewById(R.id.total_earning);
+        frameTip = (LinearLayout) findViewById(R.id.frame_tip);
 
         frameCurrentRecord = (RelativeLayout) findViewById(R.id.frame_current_record);
         frameProjectMatch = (RelativeLayout) findViewById(R.id.frame_project_match);
@@ -183,15 +194,25 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.frame_current_record:
                 MobclickAgent.onEvent(mActivity, "1035");
-                startActivity(new Intent(mActivity, ActivityCurrentRecord.class));
+                if (isCrowd) {
+                    Uihelper.showToast(mActivity, "活动期间因访问量过大，交易记录服务暂停，活动结束后恢复");
+                } else {
+                    startActivity(new Intent(mActivity, ActivityCurrentRecord.class));
+                }
                 break;
             case R.id.frame_project_match:
                 MobclickAgent.onEvent(mActivity, "1036");
                 //项目匹配
-                WebActivity.startActivity(mActivity, Urls.project_match + "0");
+                if (isCrowd) {
+                    Uihelper.showToast(mActivity, "活动期间因访问量过大，匹配数据暂停查询，活动结束后恢复");
+                } else {
+                    WebActivity.startActivity(mActivity, Urls.project_match + "0");
+                }
                 break;
             case R.id.bt_redeem:
-                if (userCurrent!=null){
+                if (isCrowd) {
+                    Uihelper.showToast(mActivity, "春节期间，平台参加手机QQ抢红包。因活动期间访问用户过多，暂停赎回操作，待活动高峰结束后恢复赎回操作");
+                } else if (userCurrent!=null){
                     MobclickAgent.onEvent(mActivity, "1038");
                     Intent intent = new Intent(mActivity, ActivityRedeem.class);
                     Bundle bundle=new Bundle();
@@ -202,12 +223,17 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");
-                if (balance != null && balance.compareTo(downLimit) >= 0) {
-                    dialogPay.setEditMoneyHint("可用余额" + balance + "元");
+                if (isCrowd) {
+                    Uihelper.showToast(mActivity, "春节期间，平台参加手机QQ抢红包。因活动期间访问用户过多，暂停认购操作，待活动高峰结束后恢复认购操作");
                 } else {
-                    dialogPay.setEditMoneyHint(downLimit + "元起投");
+                    if (balance != null && balance.compareTo(downLimit) >= 0) {
+                        dialogPay.setEditMoneyHint("可用余额" + balance + "元");
+                    } else {
+                        dialogPay.setEditMoneyHint(downLimit + "元起投");
+                    }
+                    UserUtil.loginPay(mActivity, dialogPay);
+//                    UserUtil.registerPay(mActivity, dialogPay);
                 }
-                UserUtil.loginPay(mActivity, dialogPay);
                 break;
         }
     }

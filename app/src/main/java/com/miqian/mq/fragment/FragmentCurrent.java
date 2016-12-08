@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WaterWaveView;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
 
@@ -40,6 +42,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     private RelativeLayout frameEarning;
     private RelativeLayout frameSafe;
     private RelativeLayout frameBack;
+    private LinearLayout frameCrowd;
 
     private Activity mContext;
     private DialogPay dialogPay;
@@ -50,6 +53,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     private BigDecimal downLimit = BigDecimal.ONE;
     private BigDecimal upLimit = new BigDecimal(9999999999L);
     private BigDecimal balance;
+    private boolean isCache = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,14 +65,28 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         if (parent != null) {
             parent.removeView(view);
         }
-        interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "8");
+        interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "6");
         findViewById(view);
-        obtainData();
+        String valueCache = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache");
+        if ("YES".equals(valueCache)) {
+            isCache = true;
+        } else {
+            isCache = false;
+        }
+
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        if ("YES".equals(value)) {
+            swipeRefresh.setVisibility(View.GONE);
+            frameCrowd.setVisibility(View.VISIBLE);
+        } else {
+            obtainData();
+        }
         initInterestView();
         return view;
     }
 
     private void findViewById(View view) {
+        frameCrowd = (LinearLayout) view.findViewById(R.id.frame_crowd);
         waterWaveView = (WaterWaveView) view.findViewById(R.id.wave_view);
         waterWaveView.startWave();
 
@@ -193,7 +211,11 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 } else {
                     dialogPay.setEditMoneyHint(downLimit + "元起投");
                 }
-                UserUtil.loginPay(mContext, dialogPay);
+
+//                UserUtil.loginPay(mContext, dialogPay);
+                UserUtil.registerPay(mContext, dialogPay);
+
+
                 break;
             case R.id.frame_image:
                 MobclickAgent.onEvent(mContext, "1006");
@@ -201,15 +223,28 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 break;
             case R.id.frame_earning:
                 MobclickAgent.onEvent(mContext, "1006");
-                WebActivity.startActivity(mContext, Urls.web_current_earning);
+                if (isCache) {
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                } else {
+                    WebActivity.startActivity(mContext, Urls.web_current_earning);
+                }
                 break;
             case R.id.frame_safe:
                 MobclickAgent.onEvent(mContext, "1006");
-                WebActivity.startActivity(mContext, Urls.web_current_safe);
+                if (isCache) {
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                } else {
+                    WebActivity.startActivity(mContext, Urls.web_current_safe);
+                }
                 break;
             case R.id.frame_back:
                 MobclickAgent.onEvent(mContext, "1006");
-                WebActivity.startActivity(mContext, Urls.web_current_back);
+                MobclickAgent.onEvent(mContext, "1006");
+                if (isCache) {
+                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                } else {
+                    WebActivity.startActivity(mContext, Urls.web_current_back);
+                }
                 break;
             default:
                 break;

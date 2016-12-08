@@ -4,11 +4,10 @@
 
     <stroke
         android:width="2px"
-        android:color="#1A98FF" />
+        android:color="@color/mq_bl3_v2" />
 
     <corners android:radius="40dp" />
 
     <solid android:color="#E0EAF2" />
-
 
 </shape>

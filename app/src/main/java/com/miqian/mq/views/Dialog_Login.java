@@ -114,8 +114,7 @@ public abstract class Dialog_Login extends Dialog {
         });
         View view_QQredBag = findViewById(R.id.layout_qq_redbag);
         //在线参数
-        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
-        OnlineConfigAgent.getInstance().setDebugMode(false);
+//        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
         String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "ShowQQRedBag");
         if ("YES".equals(value)) {
             view_QQredBag.setVisibility(View.VISIBLE);
