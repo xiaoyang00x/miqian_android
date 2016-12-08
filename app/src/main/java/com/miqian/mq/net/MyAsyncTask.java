@@ -29,6 +29,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
 
     public static final String NETWORK_ERROR = "您当前网络不可用";
     public static final String SERVER_ERROR = "网络有点卡，请稍后再试~";
+    public static final String SERVER_ERROR2 = "数据异常，请联系客服";
 
     public MyAsyncTask(Context context, String url, List<Param> list, ICallback<String> callback) {
         this.mContext = context;
@@ -83,11 +84,11 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                     callback.onSucceed(result);
                 }
             } else {
-                callback.onFail("数据异常，请联系客服");
+                callback.onFail(SERVER_ERROR2);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            callback.onFail("数据异常，请联系客服");
+            callback.onFail(SERVER_ERROR2);
         }
 
         mContext = null;

@@ -3,6 +3,7 @@ package com.miqian.mq.views;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -110,7 +111,9 @@ public class RegularProjectView {
                     inProcess = false;
                 }
                 swipeRefresh.setRefreshing(false);
-                if (error.equals(MyAsyncTask.SERVER_ERROR) && mData == null) {
+                if ((TextUtils.equals(error, MyAsyncTask.SERVER_ERROR)
+                        || TextUtils.equals(error, MyAsyncTask.SERVER_ERROR2))
+                        && mData == null) {
                     serverBusyView.showServerBusy();
                 } else if (error.equals(MyAsyncTask.NETWORK_ERROR) && mData == null) {
                     serverBusyView.showNoNetwork();

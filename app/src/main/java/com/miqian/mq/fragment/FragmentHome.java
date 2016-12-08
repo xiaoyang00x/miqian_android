@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -204,7 +205,9 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 end();
                 swipeRefresh.setRefreshing(false);
 //                Uihelper.showToast(getActivity(), error);
-                if (error.equals(MyAsyncTask.SERVER_ERROR) && mDatas == null) {
+                if ((TextUtils.equals(error, MyAsyncTask.SERVER_ERROR)
+                        || TextUtils.equals(error, MyAsyncTask.SERVER_ERROR2))
+                        && mDatas == null) {
                     serverBusyView.showServerBusy();
                     isServerBusyPageShow = true;
                     isNoNetworkPageShow = false;
@@ -295,12 +298,12 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
 //                }
 
                 if (mHomeActivityData != null && GetHomeActivity.FLAG_SHOW.equals(mHomeActivityData.getShowFlag())) {
-                    if(GetHomeActivity.ACTIVITY_TYPE_HOME.equals(mHomeActivityData.getActivityType())) {
+                    if (GetHomeActivity.ACTIVITY_TYPE_HOME.equals(mHomeActivityData.getActivityType())) {
                         showActivityDialog();
-                    }else if(GetHomeActivity.ACTIVITY_TYPE_PROMOTION.equals(mHomeActivityData.getActivityType())) {
+                    } else if (GetHomeActivity.ACTIVITY_TYPE_PROMOTION.equals(mHomeActivityData.getActivityType())) {
                         Dialog dialogPromotion = new PromotionDialog(mActivity, mHomeActivityData);
                         dialogPromotion.show();
-                    }else if(GetHomeActivity.ACTIVITY_TYPE_PROMOTION_OVERDUE.equals(mHomeActivityData.getActivityType())) {
+                    } else if (GetHomeActivity.ACTIVITY_TYPE_PROMOTION_OVERDUE.equals(mHomeActivityData.getActivityType())) {
                         Dialog dialogPromotionOverdue = new PromotionDialogOverdue(mActivity, mHomeActivityData);
                         dialogPromotionOverdue.show();
                     }
@@ -322,7 +325,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         super.onDestroyView();
         ListenerManager.unregisterHomeDialogListener(FragmentHome.class.getSimpleName());
 
-        if(dialogPendingIntent != null) {
+        if (dialogPendingIntent != null) {
             alarmManager.cancel(dialogPendingIntent);
         }
     }
@@ -332,7 +335,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         if (currentTime >= mHomeActivityData.getBeginTime() && currentTime < mHomeActivityData.getEndTime()) {
             show();
         } else if (currentTime < mHomeActivityData.getBeginTime()) {
-            if(dialogPendingIntent == null) {
+            if (dialogPendingIntent == null) {
                 Intent intent = new Intent(getActivity(), HomeDialogReceiver.class);
                 intent.setAction(HomeDialogReceiver.ACTION_SHOW_DIALOG);
                 dialogPendingIntent = PendingIntent.getBroadcast(mContext, REQ_SHOW_DIALOG, intent, PendingIntent.FLAG_UPDATE_CURRENT);

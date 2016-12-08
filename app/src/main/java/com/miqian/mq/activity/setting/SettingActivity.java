@@ -264,6 +264,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             public void onSucceed(Meta result) {
                 end();
                 UserUtil.clearUserInfo(mActivity);
+                extendOperationController.doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER,null);
                 finish();
             }
 

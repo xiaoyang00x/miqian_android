@@ -49,4 +49,9 @@
   <string name="main_tab_current"> 活期</string>
   <string name="main_tab_regular">定期</string>
   <string name="main_tab_user">我的</string>
+
+  <!-- 关于手Q的提示文案-->
+  <string name="qq_project_modifyphone">活动期间因访问量过大，换绑手机号码服务暂停，活动结束后恢复，如有疑问，请联系客服</string>
+  <string name="qq_project_rollout">春节期间，平台参加手机QQ抢红包。因活动期间访问用户过多，暂停提现操作，待活动高峰结束后(2月1日)恢复认购操作。</string>
+
 </resources>

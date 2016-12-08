@@ -58,7 +58,30 @@
                 <!--android:textSize="@dimen/mq_font3" />-->
         </RadioGroup>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_qq_regular_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/qq_regular_nodata"
+            android:layout_marginTop="55dp"
+            android:layout_marginBottom="30dp"
+            />
+        <com.miqian.mq.views.TextViewEx
+            android:id="@+id/tv_qq_nodata"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content" />
 
+    </LinearLayout>
     <com.miqian.mq.views.MySwipeRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"

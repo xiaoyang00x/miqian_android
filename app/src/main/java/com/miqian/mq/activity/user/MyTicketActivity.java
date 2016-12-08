@@ -5,7 +5,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -22,6 +24,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,10 +97,16 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void showEmptyView() {
         super.showEmptyView();
-        mViewnoresult.findViewById(R.id.tv_tips).setVisibility(View.GONE);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.topMargin = 30;
-        mViewnoresult.addView(getView(), params);
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        if ("YES".equals(value)) {
+            ((ImageView) mViewnoresult.findViewById(R.id.iv_data)).setBackgroundResource(R.drawable.bg_ticket_qq_none);
+            ((TextView)mViewnoresult.findViewById(R.id.tv_tips)).setText("暂时无可用红包");
+        } else {
+            mViewnoresult.findViewById(R.id.tv_tips).setVisibility(View.GONE);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.topMargin = 30;
+            mViewnoresult.addView(getView(), params);
+        }
     }
 
     @Override

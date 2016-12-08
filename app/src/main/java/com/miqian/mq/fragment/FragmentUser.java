@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.prefill.PreFillType;
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
@@ -60,7 +62,7 @@ import java.math.BigDecimal;
  * @created 2015-3-18
  */
 
-public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener ,QQprojectRegister.LoginLister {
+public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener, QQprojectRegister.LoginLister {
 
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket;
@@ -79,7 +81,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private View view_QQredBag;
     private CustomDialog tipDialog;
     private boolean hasMessage;
-    private boolean isQQProject=true;
+    private boolean loginMode;
+    private boolean isQQproject;// 手Q活动开关
+    private ImageView ivQQ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,30 +103,29 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         }
         MainActivity mainActivity = (MainActivity) getActivity();//.setReshListener(this);
         mainActivity.setReshListener(this);
+        //手Q开关
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        if ("YES".equals(value)) {
+            isQQproject = true;
+        }
+
         findViewById(view);
         return view;
     }
 
     @Override
     public void onStart() {
-        //已登录，显示我的界面
         if (UserUtil.hasLogin(getActivity())) {
             initUserView();
             obtainData();
         }
-        //未登录,  判断是否是手Q活动
+        //未登录,  显示注册页面
         else {
-            if (isQQProject){
-                //手Q活动
-                QQprojectRegister qQprojectRegister=new QQprojectRegister(getActivity(),view,swipeRefresh);
+            if (loginMode) {
+                toLogin();
+            } else {
+                QQprojectRegister qQprojectRegister = new QQprojectRegister(getActivity(), view, swipeRefresh);
                 qQprojectRegister.setLoginLister(this);
-
-            }else {
-                initLoginView();
-                editPassword.setText("");
-                String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");
-                editTelephone.setText(telphone);
-                editTelephone.setSelection(telphone.length());
             }
 
         }
@@ -195,13 +198,19 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         } else {
             tv_Regular.setText("--");
         }
-        //优惠券
+        //红包优惠券
         if (userInfo != null) {
             int count = userInfo.getTotalPromotion();
+            boolean isHasQQImage = Pref.getBoolean(UserUtil.getPrefKey(getActivity(), Pref.HAS_QQ), getActivity(), false);
+            if (isQQproject && (isHasQQImage || count == 5)) {
+                ivQQ.setVisibility(View.VISIBLE);
+                Pref.saveBoolean(UserUtil.getPrefKey(getActivity(),Pref.HAS_QQ),true,getActivity());
+            }
             tv_Ticket.setText(count + "张");
         } else {
             tv_Ticket.setText("--");
         }
+
         //总资产
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalAsset())) {
             tv_totalasset.setText(userInfo.getTotalAsset());
@@ -247,10 +256,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         tv_Title.setText("我的资产");
 
         btn_message = (ImageButton) view.findViewById(R.id.bt_left);
-        if (hasMessage) {
-            btn_message.setImageResource(R.drawable.bt_hasmessage);
-        } else {
-            btn_message.setImageResource(R.drawable.btn_message);
+        if (!isQQproject) {
+            if (hasMessage) {
+                btn_message.setImageResource(R.drawable.bt_hasmessage);
+            } else {
+                btn_message.setImageResource(R.drawable.btn_message);
+            }
         }
         btn_message.setOnClickListener(this);
 
@@ -268,6 +279,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         tv_Current = (TextView) view.findViewById(R.id.account_current);
         tv_Regular = (TextView) view.findViewById(R.id.account_regular);
         tv_Ticket = (TextView) view.findViewById(R.id.account_ticket);
+        ivQQ = (ImageView) view.findViewById(R.id.iv_qq);
 
         tv_balance = (TextView) view.findViewById(R.id.tv_balance);
         tv_TotalProfit = (TextView) view.findViewById(R.id.tv_totalProfit);
@@ -355,7 +367,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private void initUserView() {
         swipeRefresh.setVisibility(View.VISIBLE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.GONE);
-
+        if (!isQQproject) {
+            view.findViewById(R.id.layout_record_invite).setVisibility(View.VISIBLE);
+        }
         if (userInfo != null) {
             setData(userInfo);
         }
@@ -426,11 +440,15 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
 
                         if ("1".equals(userInfo.getBindCardStatus())) {
-                            Intent intent = new Intent(getActivity(), RolloutActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("userInfo", userInfoTemp);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
+                            if (isQQproject) {
+                                Uihelper.showToast(getActivity(), R.string.qq_project_rollout);
+                            } else {
+                                Intent intent = new Intent(getActivity(), RolloutActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("userInfo", userInfoTemp);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
                         } else {//提示绑卡
                             if (tipDialog == null) {
                                 tipDialog = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
@@ -483,7 +501,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 MobclickAgent.onEvent(getActivity(), "1015");
                 startActivity(new Intent(getActivity(), AnnounceActivity.class));
                 hasMessage = false;
-                btn_message.setImageResource(R.drawable.btn_message);
+                if (!isQQproject) {
+                    btn_message.setImageResource(R.drawable.btn_message);
+                }
                 break;
             //我的设置
             case R.id.bt_right:
@@ -508,7 +528,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (MyApplication.getInstance().isShowTips()) {
             MyApplication.getInstance().setShowTips(false);
             if (dialogTips == null) {
-                dialogTips = new DialogTip(getActivity()) {};
+                dialogTips = new DialogTip(getActivity()) {
+                };
             }
             if (jpushInfo != null) {
                 dialogTips.setInfo(jpushInfo.getContent());
@@ -526,19 +547,30 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 // 更新数据
                 if (UserUtil.hasLogin(getActivity())) {
                     hasMessage = true;
-                    btn_message.setImageResource(R.drawable.bt_hasmessage);
+                    if (!isQQproject) {
+                        btn_message.setImageResource(R.drawable.bt_hasmessage);
+                    }
+
                 } else {
                     hasMessage = false;
-                    btn_message.setImageResource(R.drawable.btn_message);
+                    if (!isQQproject) {
+                        btn_message.setImageResource(R.drawable.btn_message);
+                    }
                 }
                 break;
             case ExtendOperationController.OperationKey.MessageState:
                 // 更新数据
                 hasMessage = false;
-                btn_message.setImageResource(R.drawable.btn_message);
+                if (!isQQproject) {
+                    btn_message.setImageResource(R.drawable.btn_message);
+                }
                 break;
             case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
                 userInfoTemp.setPayPwdStatus("1");
+                break;
+            case ExtendOperationController.OperationKey.BACK_USER:
+                loginMode = true;
+                ivQQ.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -548,7 +580,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void toLogin() {
-        isQQProject=false;
         initLoginView();
         editPassword.setText("");
         String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");

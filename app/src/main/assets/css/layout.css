@@ -1,0 +1,233 @@
+@charset "UTF-8";
+
+/* 基础样式 */
+body,html,a,img,div,form,select,input,ul,ol,ul,li,h1,h2,h3,h4,h5,h6,dd,dl,dt,p,label,em,span{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+html,body{width:100%;height:100%;}
+.row {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+}
+.theme-bg {
+    background-color: #e8373d;
+}
+.theme-color {
+    color: #e8373d !important;
+}
+.clearfix {
+	zoom: 1;
+}
+.clearfix:after{content:".";visibility:hidden;clear:both;height:0;width:100%;display:block;}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.font-bold {
+    font-weight: bold;
+}
+.align-center {
+    text-align: center;
+}
+.prefix-rmb:before {
+    content: '¥';
+    font-size: 70%;
+    display: inline-block;
+    padding-right: 0.04rem;
+}
+.mart20 {
+    margin-top: 0.2rem;
+}
+a{color:inherit;text-decoration:none;-webkit-touch-callout:none;-webkit-user-select:none;}
+em,i{font-style:normal}
+.img-wrap, img{border:none;}
+.img-wrap img{width:100%;-webkit-touch-callout:none;-webkit-user-select:none;}
+img[data-src]{height:0;}
+ol,li{list-style:none;}
+body{min-width:320px;max-width:640px;margin:0 auto;background:#f8f8f8;font-size:100%;font-family:"Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;color:#333;}
+input{ outline:medium;}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+    color: #ccc;
+}
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: #ccc;
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #ccc;
+}
+input[type=button]{
+	-webkit-appearance:none;
+	outline:none
+}
+input::-webkit-outer-spin-button,  
+input::-webkit-inner-spin-button{  
+    -webkit-appearance: none !important;  
+    margin: 0;  
+} 
+
+/* 了解更多理财干货 */
+.know-more {
+    background-color: #e8373d;
+    padding-top: 0.3rem;
+}
+.know-more .code-img {
+    width: 6.4rem;
+    height: 8.08rem;
+    margin: 0 auto;
+}
+.know-more .weibo {
+    background: url(../img/weibo_code.png) no-repeat center center;
+    background-size: 100%;
+}
+.know-more .weixin {
+    background: url(../img/weixin_code.png) no-repeat center center;
+    background-size: 100%;
+}
+.know-more p {
+    font-size: 0.3rem;
+    color: #fff;
+    width: 6.4rem;
+    margin: 0 auto;
+    padding: 0.5rem 0;
+}
+.know-more .align-center {
+    text-align: center;
+}
+/* 一秒了解秒钱 */
+.know-mq {
+    background-color: #a435e4;
+}
+.know-mq .banner {
+    background: url(../img/sq_banner.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.5rem;
+    height: 5.36rem;
+    margin: 0 auto;
+}
+.know-mq .about-mq {
+
+}
+.about-mq .title {
+    background: url(../img/sq_miaoqian.png) no-repeat center center;
+    width: 3.21rem;
+    height: 0.85rem;
+    background-size: 100%;
+    margin: 0 auto;
+}
+.about-mq .desc {
+    font-size: 0.28rem;
+    color: #fff;
+    line-height: 0.56rem;
+    width: 6rem;
+    margin: 0 auto;
+    padding: 0.4rem 0;
+}
+.about-mq .flow-img {
+    background: url(../img/flow_img.png) no-repeat center center;
+    width: 7.09rem;
+    height: 3rem;
+    background-size: 100%;
+    margin: 0 auto;
+}
+.know-mq .mq-feature {
+    background: url(../img/sq_feature.png) no-repeat top center;
+    width: 6.78rem;
+    height: 13.47rem;
+    background-size: 100%;
+    margin: 0.8rem auto 0;
+}
+.mq-feature ul {
+    padding: 1.8rem 0 0;
+    width: 5.6rem;
+    margin: 0 auto;
+}
+.mq-feature li {
+    padding-bottom: 0.4rem;
+}
+.mq-feature h5 {
+    font-size: 0.32rem;
+    color: #fff;
+    padding-bottom: 0.2rem;
+}
+.mq-feature i {
+    display: inline-block;
+    background: url(../img/dot_num.png) no-repeat center center;
+    background-size: 100%;
+    width: 0.41rem;
+    height: 0.52rem;
+    text-align: center;
+    margin-right: 0.2rem;
+}
+.mq-feature p {
+    font-size: 0.28rem;
+    color: #fff;
+    line-height: 0.42rem;
+}
+/* 秒钱优质资产 */
+.mq-property {
+    background-color: #5d4fb6;
+}
+.mq-property .title {
+    background: url(../img/mq_500.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.5rem;
+    height: 4.49rem;
+}
+.mq-property .property-news {
+    background: url(../img/mq_news.png) no-repeat center center;
+    background-size: 100%;
+    width: 6.4rem;
+    height: 7.18rem;
+    margin: 0 auto;
+    position: relative;
+}
+.property-news p {
+    font-size: 0.3rem;
+    color: #6554b9;
+    width: 5.4rem;
+    margin: 0 auto;
+    padding-top: 2rem;
+}
+.mq-property .product500 {
+    background: url(../img/product_500.png) no-repeat center center;
+    background-size: 100%;
+    width: 6.4rem;
+    height: 20.98rem;
+    margin: 0 auto;
+    padding: 0.6rem 0 0.8rem;
+    position: relative;
+}
+.mq-property .clip {
+    background: url(../img/clip.png) no-repeat center center;
+    background-size: 100%;
+    width: 1.38rem;
+    height: 0.38rem;
+    position: absolute;
+}
+.mq-property .clip01 {
+    left: -0.69rem;
+    top: 4.7rem;
+}
+.mq-property .clip02 {
+    left: 1.1rem;
+    top: 11.55rem;
+}
+.mq-property .clip03 {
+    left: 5.79rem;
+    top: 12.08rem;
+}
+.mq-property .clip04 {
+    left: 0.1rem;
+    top: 21.92rem;
+}
+.mq-property .clip05 {
+    left: 6rem;
+    top: 33.6rem;
+}
+
+
