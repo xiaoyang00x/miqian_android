@@ -55,7 +55,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 秒钱如何帮您高收益赚钱"
+        android:text="• 一分钟了解秒钱"
         android:textColor="@color/mq_bl3_v2"
         android:textSize="@dimen/mq_font7_v2" />
 
@@ -67,7 +67,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 新手指引"
+        android:text="• 成熟风控体系"
         android:textColor="@color/mq_bl3_v2"
         android:textSize="@dimen/mq_font7_v2" />
 
@@ -79,7 +79,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 常见问题"
+        android:text="• 秒钱优质资产"
         android:textColor="@color/mq_bl3_v2"
         android:textSize="@dimen/mq_font7_v2" />
 
@@ -91,7 +91,7 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="• 项目安全透明--人行征信中心可查询"
+        android:text="• 了解更多秒钱理财干货"
         android:textColor="@color/mq_bl3_v2"
         android:textSize="@dimen/mq_font7_v2" />
 
