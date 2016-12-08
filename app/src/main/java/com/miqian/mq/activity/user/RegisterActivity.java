@@ -25,6 +25,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 /**
  * Created by Joy on 2015/9/4.
@@ -65,7 +66,11 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        //手Q开关
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        if ("NO".equals(value)) {
+            findViewById(R.id.layout_invite).setVisibility(View.VISIBLE);
+        }
         mEt_Telephone = (EditText) findViewById(R.id.et_account_telephone);
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
         mEt_Invite = (EditText) findViewById(R.id.et_account_invite);
@@ -88,7 +93,6 @@ public class RegisterActivity extends BaseActivity {
                 watchEdittext(NUM_TYPE_CAPTCHA);
             }
         });
-
     }
 
     private void watchEdittext(int type) {

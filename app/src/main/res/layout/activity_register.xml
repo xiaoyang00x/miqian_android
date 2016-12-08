@@ -110,6 +110,8 @@
 
 
     <LinearLayout
+        android:id="@+id/layout_invite"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
         android:layout_marginTop="10dp"
