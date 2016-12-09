@@ -6,6 +6,7 @@
     >
 
     <RelativeLayout
+        android:id="@+id/layout_project"
         android:layout_marginTop="1dp"
         android:background="@drawable/bg_project_new_year"
         android:layout_width="match_parent"

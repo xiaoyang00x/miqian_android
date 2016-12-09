@@ -57,6 +57,8 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     private ServerBusyView serverBusyView;
     private boolean isServerBusyPageShow = false; // 默认不显示服务器繁忙页面
     private boolean isNoNetworkPageShow = false; // 默认不显示无网络页面
+    private boolean isQQCache = false;          //手Q缓存开关
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +74,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     }
 
     private void setView() {
+        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"));
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -181,7 +184,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 if (mDatas == null) return;
 
                 //未登录用户或友盟开关开启状态使用本地数据
-                if(!UserUtil.hasLogin(mApplicationContext) && "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"))) {
+                if(!UserUtil.hasLogin(mApplicationContext) && isQQCache) {
                     try {
                         mDatas = generateHomeData(mDatas);
                     }catch (Exception e) {

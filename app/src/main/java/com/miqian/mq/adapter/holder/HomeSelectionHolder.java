@@ -1,6 +1,7 @@
 package com.miqian.mq.adapter.holder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomeSelectionProject;
 import com.miqian.mq.entity.RegularProjectInfo;
 import com.miqian.mq.utils.FormatUtil;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
 
@@ -25,16 +27,23 @@ import java.math.BigDecimal;
  */
 public class HomeSelectionHolder extends HomeBaseViewHolder {
 
+    private TextView tv_lable;
     private LinearLayout layout_container;
     private LayoutInflater inflater;
+    private View divider;
     private Context mContext;
+    private boolean isQQCache = false;          //手Q缓存开关
 
     public HomeSelectionHolder(View itemView) {
         super(itemView);
         mContext = itemView.getContext();
         inflater = LayoutInflater.from(itemView.getContext());
+        tv_lable = (TextView)itemView.findViewById(R.id.tv_lable);
+        divider = itemView.findViewById(R.id.divider);
         layout_container = (LinearLayout) itemView.findViewById(R.id.layout_container);
 
+        divider.setVisibility(View.GONE);
+        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"));
 
     }
 
@@ -42,6 +51,13 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
     public void bindView(HomePageInfo mData) {
         layout_container.removeAllViews();
         if(mData != null && mData.getSubjectInfoData() != null) {
+            if(isQQCache || TextUtils.isEmpty(mData.getTitle())) {
+                tv_lable.setVisibility(View.GONE);
+            }else {
+                tv_lable.setText(mData.getTitle());
+                tv_lable.setVisibility(View.VISIBLE);
+            }
+
             if(mData.getSubjectInfoData().size() > 0) {
                 for(int i = 0; i < mData.getSubjectInfoData().size(); i++) {
                     layout_container.addView(initProjectView(mData.getSubjectInfoData().get(i)));
@@ -78,6 +94,14 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
 
         //双倍卡标记
         ImageView iv_tag = (ImageView) projectView.findViewById(R.id.iv_tag);
+
+        View layout_project = projectView.findViewById(R.id.layout_project);
+
+        if(isQQCache) {
+            layout_project.setBackgroundResource(R.drawable.bg_project_new_year);
+        }else {
+            layout_project.setBackgroundColor(Color.WHITE);
+        }
 
         tv_project_name.setText(data.getSubjectName());
         profit_rate.setText(data.getYearInterest());
