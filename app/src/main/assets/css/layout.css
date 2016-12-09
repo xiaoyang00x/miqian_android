@@ -516,6 +516,7 @@ input::-webkit-inner-spin-button{
 }
 .join-way li {
     font-size: 0.3rem;
+    line-height: 0.36rem;
     color: #fff;
     padding: 0 0 0.3rem 0.6rem;
     position: relative;
@@ -578,10 +579,10 @@ input::-webkit-inner-spin-button{
     position: relative;
 }
 .mq-packet .mq-packet-rules {
-    background: url(../img/mq_packet_rules.png) no-repeat center center;
+    background: url(../img/mq_packet_rules.png) no-repeat top center;
     background-size: 100%;
     width: 7.02rem;
-    height: 9.22rem;
+    height: 9.92rem;
     margin: 1rem auto 0;
 }
 .mq-packet-rules p {
@@ -592,7 +593,7 @@ input::-webkit-inner-spin-button{
 }
 .mq-packet-rules .font-bold {
     font-weight: bold;
-    padding-top: 7.4rem;
+    padding-top: 7.9rem;
 }
 .mq-packet .qq-product {
     background: url(../img/qq_product.png) no-repeat center center;
