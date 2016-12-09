@@ -58,6 +58,7 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_content://跳公告详情
+            case R.id.img_bulletin:
                 MobclickAgent.onEvent(mContext, "1004_2");
                 MessageInfo messageInfo = data.getBsPushData();
                 int msgType = messageInfo.getMsgType();
@@ -83,12 +84,12 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
                     Pref.saveBoolean(Pref.PUSH + messageInfo.getId(), true, mContext);
                 }
                 break;
-            case R.id.img_bulletin://跳列表页
-                MobclickAgent.onEvent(mContext, "1004_1");
-                mContext.startActivity(new Intent(mContext, NoticeActivity.class));
-                Pref.saveLong(Pref.DATA_BULLETIN_TIME, data.getBsPushData().getSendTime(), mContext);
-                img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
-                break;
+//            case R.id.img_bulletin://跳列表页
+//                MobclickAgent.onEvent(mContext, "1004_1");
+//                mContext.startActivity(new Intent(mContext, NoticeActivity.class));
+//                Pref.saveLong(Pref.DATA_BULLETIN_TIME, data.getBsPushData().getSendTime(), mContext);
+//                img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
+//                break;
             default:
                 break;
         }
