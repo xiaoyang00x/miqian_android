@@ -91,16 +91,16 @@ public class ServerBusyView extends ScrollView {
                     }
                     break;
                 case R.id.tv_lookAround1:
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/know-mq.html");
                     break;
                 case R.id.tv_lookAround2:
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround2.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/risk-control.html");
                     break;
                 case R.id.tv_lookAround3:
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround3.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/mq-property.html");
                     break;
                 case R.id.tv_lookAround4:
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround4.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/know-more.html");
                     break;
             }
         }
