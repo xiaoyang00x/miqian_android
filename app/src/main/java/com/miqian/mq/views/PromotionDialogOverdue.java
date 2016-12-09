@@ -14,13 +14,9 @@ import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.entity.GetHomeActivity;
-import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Pref;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 
 /**
@@ -101,25 +97,14 @@ public class PromotionDialogOverdue extends Dialog implements View.OnClickListen
         if (dialog_login == null || dialog_login.type != type) {
             dialog_login = new Dialog_Login(context, type) {
                 @Override
-                public void login(String telephone, String password) {
+                public void loginSuccess() {
                     // TODO: 2015/10/10 Loading
-                    HttpRequest.login(context, new ICallback<LoginResult>() {
-                        @Override
-                        public void onSucceed(LoginResult result) {
-                            UserInfo userInfo = result.getData();
-                            UserUtil.saveUserInfo(context, userInfo);
-                            if (Pref.getBoolean(Pref.GESTURESTATE, getContext(), true)) {
-                                GestureLockSetActivity.startActivity(context, cls);
-                            } else if (null != cls) {
-                                getOwnerActivity().startActivity(new Intent(context, cls));
-                            }
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            Uihelper.showToast(context, error);
-                        }
-                    }, telephone, password);
+                    if (Pref.getBoolean(Pref.GESTURESTATE, getContext(), true)) {
+                        GestureLockSetActivity.startActivity(context, cls);
+                    } else if (null != cls) {
+                        getOwnerActivity().startActivity(new Intent(context, cls));
+                    }
+                    dismiss();
                 }
             };
         }

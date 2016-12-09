@@ -26,15 +26,11 @@ import com.alibaba.fastjson.util.Base64;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
-import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.ShareData;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.JsShareListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
-import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
@@ -242,25 +238,14 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         if (dialog_login == null || dialog_login.type != type) {
             dialog_login = new Dialog_Login(context, type) {
                 @Override
-                public void login(String telephone, String password) {
+                public void loginSuccess() {
                     // TODO: 2015/10/10 Loading
-                    HttpRequest.login(context, new ICallback<LoginResult>() {
-                        @Override
-                        public void onSucceed(LoginResult result) {
-                            UserInfo userInfo = result.getData();
-                            UserUtil.saveUserInfo(context, userInfo);
-                            if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
-                                GestureLockSetActivity.startActivity(context, cls);
-                            } else if (null != cls) {
-                                startActivity(new Intent(context, cls));
-                            }
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            Uihelper.showToast(context, error);
-                        }
-                    }, telephone, password);
+                    if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
+                        GestureLockSetActivity.startActivity(context, cls);
+                    } else if (null != cls) {
+                        startActivity(new Intent(context, cls));
+                    }
+                    dismiss();
                 }
             };
         }

@@ -1,6 +1,5 @@
 package com.miqian.mq.views;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,11 +13,16 @@ import android.widget.EditText;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
+import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
 
@@ -29,6 +33,7 @@ public abstract class Dialog_Login extends Dialog {
 
     private final Context mContext;
     public int type;
+    private Dialog mWaitingDialog;
 
     public Dialog_Login(Context context) {
         super(context, R.style.Dialog);
@@ -46,8 +51,7 @@ public abstract class Dialog_Login extends Dialog {
     }
 
     private void initView() {
-        final View relaTelephone = findViewById(R.id.rela_telephone);
-        final View relaPassword = findViewById(R.id.rela_password);
+        mWaitingDialog = ProgressDialogView.create(mContext);
         final EditText editTelephone = (EditText) findViewById(R.id.edit_telephone);
         final EditText editPassword = (EditText) findViewById(R.id.edit_password);
 
@@ -94,7 +98,6 @@ public abstract class Dialog_Login extends Dialog {
                     if (MobileOS.isMobileNO(telephone) && telephone.length() == 11) {
                         if (!TextUtils.isEmpty(password)) {
                             if (password.length() >= 6 && password.length() <= 16) {
-                                dismiss();
                                 login(telephone, password);
                             } else {
                                 Uihelper.showToast(mContext, R.string.tip_password_login);
@@ -130,12 +133,46 @@ public abstract class Dialog_Login extends Dialog {
 
     }
 
-    public abstract void login(String telephone, String password);
+    public abstract void loginSuccess();
+    public void login(String telephone, String password) {
+        begin();
+        HttpRequest.login(mContext, new ICallback<LoginResult>() {
+            @Override
+            public void onSucceed(LoginResult result) {
+                UserInfo userInfo = result.getData();
+                UserUtil.saveUserInfo(mContext, userInfo);
+                loginSuccess();
+                end();
+            }
+
+            @Override
+            public void onFail(String error) {
+                end();
+                Uihelper.showToast(mContext, error);
+            }
+        }, telephone, password);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * 显示 loading 对话框
+     */
+    protected void begin() {
+        if (mWaitingDialog != null) {
+            mWaitingDialog.show();
+        }
+    }
+
+    /**
+     * 显示 loading 对话框
+     */
+    protected void end() {
+        if (mWaitingDialog != null && mWaitingDialog.isShowing()) {
+            mWaitingDialog.dismiss();
+        }
+    }
 }
