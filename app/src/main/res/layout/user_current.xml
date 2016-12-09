@@ -177,32 +177,6 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/frame_tip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="温馨提示："
-                android:textColor="@color/mq_b4_v2"
-                android:textSize="@dimen/mq_font5_v2"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:text="因平台参与手机QQ抢红包，活动期间可能出现用户访问量过大，为避免操作失败，平台针对认购、赎回、提现进行如下调整：\n(1).1月20日~1月31日，暂停活期认购；\n(2).1月27日~1月31日，暂停活期赎回、提现；"
-                android:textColor="@color/mq_b4_v2"
-                android:textSize="@dimen/mq_font5_v2" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/frame_subscribe"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -234,6 +208,40 @@
                 android:textColor="@drawable/btn_user_current_redeem_text"
                 android:textSize="@dimen/mq_font7_v2" />
         </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/frame_subscribe"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/frame_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="温馨提示："
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font5_v2"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingBottom="20dp"
+                    android:text="因平台参与手机QQ抢红包，活动期间可能出现用户访问量过大，为避免操作失败，平台针对认购、赎回、提现进行如下调整：\n(1).1月20日~1月31日，暂停活期认购；\n(2).1月27日~1月31日，暂停活期赎回、提现；"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font5_v2" />
+            </LinearLayout>
+        </ScrollView>
 
         <View
             android:layout_width="match_parent"
