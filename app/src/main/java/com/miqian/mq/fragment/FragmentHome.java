@@ -184,7 +184,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 if (mDatas == null) return;
 
                 //未登录用户或友盟开关开启状态使用本地数据
-                if(!UserUtil.hasLogin(mApplicationContext) && isQQCache) {
+                if(isQQCache) {
                     try {
                         mDatas = generateHomeData(mDatas);
                     }catch (Exception e) {
