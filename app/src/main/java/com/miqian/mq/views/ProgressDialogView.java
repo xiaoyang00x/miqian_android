@@ -40,6 +40,7 @@ public class ProgressDialogView {
 		lp.alpha = 0.8f; // 透明度
 		dialogWindow.setAttributes(lp);
 		dialogWindow.setContentView(view, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
 		return dialog;
 	}
 
