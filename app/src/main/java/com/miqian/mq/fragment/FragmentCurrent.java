@@ -224,7 +224,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
             case R.id.frame_earning:
                 MobclickAgent.onEvent(mContext, "1006");
                 if (isCache) {
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/current_earnings.html");
                 } else {
                     WebActivity.startActivity(mContext, Urls.web_current_earning);
                 }
@@ -232,7 +232,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
             case R.id.frame_safe:
                 MobclickAgent.onEvent(mContext, "1006");
                 if (isCache) {
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/current_safeguard.html");
                 } else {
                     WebActivity.startActivity(mContext, Urls.web_current_safe);
                 }
@@ -241,7 +241,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 MobclickAgent.onEvent(mContext, "1006");
                 MobclickAgent.onEvent(mContext, "1006");
                 if (isCache) {
-                    WebActivity.startActivity(getContext(), "file:///android_asset/lookaround1.html");
+                    WebActivity.startActivity(getContext(), "file:///android_asset/current_redeem.html");
                 } else {
                     WebActivity.startActivity(mContext, Urls.web_current_back);
                 }

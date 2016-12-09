@@ -138,7 +138,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             textGold.getPaint().setAntiAlias(true);//抗锯齿
             textGold.setText(goldCoin);
         }
-        if (subscribeOrder.getShareLink() != null) {
+        if (subscribeOrder != null && subscribeOrder.getShareLink() != null) {
             showShare();
         }
     }
