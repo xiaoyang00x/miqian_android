@@ -229,5 +229,344 @@ input::-webkit-inner-spin-button{
     left: 6rem;
     top: 33.6rem;
 }
+/* 平台大事记 */
+.mq-events {
+    background: url(../img/events_bg.png) repeat-x;
+}
+.mq-events .banner {
+    background: url(../img/events_banner.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.5rem;
+    height: 4.9rem;
+}
+.mq-events .events-tree {
+    position: relative;
+}
+.mq-events .tree-line {
+    background: url(../img/events_line.png) no-repeat center center;
+    background-size: 100%;
+    width: 0.93rem;
+    height: 46.85rem;
+    margin: 0 auto;
+    position: absolute;
+    top: 1.1rem;
+    left: 50%;
+    margin-left: -0.465rem;
+}
+.events-tree .tree-dot {
+    width: 5.9rem;
+    margin: 0 auto;
+    padding-top: 0.4rem;
+}
+.tree-dot .dot-img {
+    background: url(../img/events_icon.png) no-repeat center center;
+    background-size: 4.4rem 13.2rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    float: left;
+}
+.dot-01 .dot-img {
+    background-position: 0 0;
+}
+.dot-02 .dot-img {
+    background-position: -2.2rem 0;
+}
+.dot-03 .dot-img {
+    background-position: 0 -2.2rem;
+}
+.dot-04 .dot-img {
+    background-position: -2.2rem -2.2rem;
+}
+.dot-05 .dot-img {
+    background-position: 0 -2.2rem;
+}
+.dot-06 .dot-img {
+    background-position: 0 -4.4rem;
+}
+.dot-07 .dot-img {
+    background-position: -2.2rem -4.4rem;
+}
+.dot-08 .dot-img {
+    background-position: -2.2rem -2.2rem;
+}
+.dot-09 .dot-img {
+    background-position: 0 -2.2rem;
+}
+.dot-10 .dot-img {
+    background-position: 0 -6.6rem;
+}
+.dot-11 .dot-img {
+    background-position: 0 -2.2rem;
+}
+.dot-12 .dot-img {
+    background-position: -2.2rem -6.6rem;
+}
+.dot-13 .dot-img {
+    background-position: 0 -2.2rem;
+}
+.dot-14 .dot-img {
+    background-position: 0 -2.2rem;
+}
+.dot-15 .dot-img {
+    background-position: 0 -8.8rem;
+}
+.dot-16 .dot-img {
+    background-position: -2.2rem -8.8rem
+}
+.dot-17 .dot-img {
+    background-position: 0 -11rem;
+}
+.dot-18 .dot-img {
+    background-position: -2.2rem -11rem;
+}
+.events-tree .dot-01 {
+    padding-top: 0;
+}
+.events-tree .dot-15, .events-tree .dot-16 {
+    padding-top: 0.7rem;
+}
+.tree-dot .dot-text {
+    font-size: 0.24rem;
+    color: #fff;
+    float: right;
+    padding-top: 0.6rem;
+    width: 2.55rem;
+}
+.text-left .dot-img {
+    float: right;
+}
+.text-left .dot-text {
+    float: left;
+    text-align: right;
+}
+.tree-dot .time {
+    padding-bottom: 0.2rem;
+}
+.text-left .time {
+    text-align: right;
+}
+.mq-events .more-events {
+    font-size: 0.28rem;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    padding-top: 1.4rem;
+}
+.mq-events .events-count {
+    padding-top: 0.8rem;
+}
+.events-count p {
+    background-color: #ffd200;
+    border: 3px solid #ffa81f;
+    height: 0.6rem;
+    line-height: 0.6rem;
+    width: 4.7rem;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 0.33rem;
+    font-weight: bold;
+    color: #ff6c00;
+    border-radius: 1rem;
+    margin-bottom: 0.13rem;
+}
+.events-count p span {
+    color: #ff3108;
+}
+.mq-events .events-bottom {
+    background: url(../img/events_bottom.png) no-repeat bottom center;
+    background-size: 100%;
+    width: 7.5rem;
+    height: 4.59rem;
+    padding-top: 0.65rem;
+}
+.mq-events .events-cloud1 {
+    background: url(../img/events_cloud1.png) no-repeat center center;
+    background-size: 100%;
+    width: 6.29rem;
+    height: 1.03rem;
+    margin: 0 auto;
+    position: absolute;
+    top: 6.85rem;
+    left: 0.2rem;
+}
+.mq-events .events-cloud2 {
+    background: url(../img/events_cloud2.png) no-repeat center center;
+    background-size: 100%;
+    width: 6.57rem;
+    height: 3.73rem;
+    margin: 0 auto;
+    position: absolute;
+    top: 11.5rem;
+    left: 0.3rem;
+}
+/* 红包使用说明 */
+.packet-rules {
+
+}
+.packet-rules .banner {
+    background: url(../img/packet_banner.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.5rem;
+    height: 7.29rem;
+    margin: 0 auto;
+}
+.packet-rules .packet-con {
+    background-color: #fff7dd;
+}
+.packet-con .packet-item {
+    margin-bottom: 0.6rem;
+}
+.packet-item h4 {
+    background: url(../img/packet_title.png) no-repeat center center;
+    background-size: 100%;
+    width: 6.82rem;
+    height: 0.83rem;
+    margin: 0 auto;
+    font-size: 0.28rem;
+    color: #4c3904;
+    text-align: center;
+    line-height: 1rem;
+}
+.packet-item .desc {
+    font-size: 0.24rem;
+    color: #505050;
+    width: 5.7rem;
+    margin: 0 auto;
+    padding: 0.4rem 0 0.8rem;
+}
+.packet-item .select-packet {
+    background: url(../img/select_packet.png) no-repeat center center;
+    background-size: 100%;
+    width: 3.96rem;
+    height: 7.79rem;
+    margin: 0 auto;
+}
+.packet-item .sum {
+    font-size: 0.36rem;
+    color: #505050;
+    text-align: center;
+    padding-top: 0.2rem;
+}
+.packet-item .packet-addr {
+    background: url(../img/packet_addr.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.34rem;
+    height: 8.85rem;
+    margin: 0.8rem auto 0.2rem;
+}
+.packet-item .tips {
+    font-size: 0.24rem;
+    color: #505050;
+    width: 5.7rem;
+    margin: 0 auto;
+    padding: 0.2rem 0 0.8rem;
+}
+.packet-con .bottom-tips {
+    font-size: 0.28rem;
+    color: #999;
+    text-align: center;
+}
+.packet-rules .packet-bottom {
+    background: url(../img/packet_bottom.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.5rem;
+    height: 0.57rem;
+    margin: 0 auto;
+}
+/* 秒钱理财携手腾讯qq派送红包 */
+.mq-packet {
+    background-color: #df3b43;
+    padding-bottom: 1rem;
+}
+.mq-packet .banner {
+    background: url(../img/qq_banner.png) no-repeat top center;
+    background-size: 100%;
+    width: 7.5rem;
+    height: 7.62rem;
+    margin: 0 auto;
+}
+.mq-packet .desc {
+    font-size: 0.3rem;
+    color: #fff;
+    width: 6rem;
+    margin: 0 auto;
+}
+.mq-packet .desc-first {
+    margin-top: -1.5rem;
+}
+.mq-packet .desc-top {
+    padding-top: 0.3rem;
+}
+.mq-packet .join-way {
+    background: url(../img/join_way.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.22rem;
+    height: 7.18rem;
+    margin: 0.4rem auto 0;
+}
+.join-way ul {
+    padding: 1.8rem 0 0;
+}
+.join-way li {
+    font-size: 0.3rem;
+    color: #fff;
+    padding: 0 0 0.3rem 1.2rem;
+}
+.mq-packet .mq-qq-desc {
+    background: url(../img/mq_desc.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.06rem;
+    height: 4.35rem;
+    margin: 0.4rem auto 0;
+}
+.mq-qq-desc p {
+    font-size: 0.3rem;
+    color: #fff;
+    width: 6rem;
+    margin: 0 auto;
+    padding-top: 2rem;
+}
+.mq-packet .mq-btn {
+    display: block;
+    background: url(../img/qq_btn.png) no-repeat center center;
+    background-size: 100%;
+    width: 3.14rem;
+    height: 0.94rem;
+    font-size: 0.3rem;
+    color: #eb3632;
+    text-align: center;
+    line-height: 0.84rem;
+    position: absolute;
+    bottom: -0.48rem;
+    left: 50%;
+    margin-left: -1.62rem;
+}
+.mq-packet .block-btn {
+    position: relative;
+}
+.mq-packet .mq-packet-rules {
+    background: url(../img/mq_packet_rules.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.02rem;
+    height: 9.22rem;
+    margin: 1rem auto 0;
+}
+.mq-packet-rules p {
+    color: #fff;
+    font-size: 0.3rem;
+    width: 5.9rem;
+    margin: 0 auto;
+}
+.mq-packet-rules .font-bold {
+    font-weight: bold;
+    padding-top: 7.4rem;
+}
+.mq-packet .qq-product {
+    background: url(../img/qq_product.png) no-repeat center center;
+    background-size: 100%;
+    width: 7.05rem;
+    height: 8.42rem;
+    margin: 1rem auto 0;
+}
 
 
