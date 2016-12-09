@@ -176,7 +176,6 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
                     @Override
                     public void onSucceed(RegisterResult result) {
                         MobclickAgent.onEvent(mContext, "1053");
-                        end();
                         Uihelper.showToast(mContext, "注册成功");
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mContext, userInfo);
@@ -185,6 +184,7 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
                             GestureLockSetActivity.startActivity(mContext, null);
                         }
                         registerSuccess();
+                        end();
                     }
 
                     @Override
@@ -246,9 +246,7 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
     }
 
     private void sendMessage() {
-        if (mWaitingDialog != null) {
-            mWaitingDialog.show();
-        }
+        begin();
         HttpRequest.getCaptcha(mContext, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {

@@ -9,13 +9,10 @@ import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.HomeAdsListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
-import com.miqian.mq.net.HttpRequest;
-import com.miqian.mq.net.ICallback;
 import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.Dialog_Login;
@@ -162,36 +159,14 @@ public class UserUtil {
     }
 
     //  支付时判断是否登录、实名认证
-    public static void loginPay(final Activity context, final DialogPay dialogPay) {
+    public static void loginPay(final Activity context, DialogPay dialogPay) {
         if (!UserUtil.hasLogin(context)) {
-            Dialog_Login dialog_login = new Dialog_Login(context) {
-                @Override
-                public void login(String telephone, String password) {
-                    HttpRequest.login(context, new ICallback<LoginResult>() {
-                        @Override
-                        public void onSucceed(LoginResult result) {
-                            dismiss();
-                            UserInfo userInfo = result.getData();
-                            saveUserInfo(context, userInfo);
-
-                            dialogPay.show();
-                            if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                                GestureLockSetActivity.startActivity(context, null);
-                            }
-                        }
-
-                        @Override
-                        public void onFail(String error) {
-                            Uihelper.showToast(context, error);
-                        }
-                    }, telephone, password);
-                }
-            };
-            dialog_login.show();
+            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
         } else {
             dialogPay.show();
         }
     }
+
     //  手Q活动时判断是否登录，未登录弹注册窗口
     public static void registerPay(final Activity context, final DialogPay dialogPay) {
         if (!UserUtil.hasLogin(context)) {
@@ -225,9 +200,10 @@ public class UserUtil {
                 dismiss();
                 showLoginDialog(context);
             }
+
             @Override
             public void registerSuccess() {
-                         dismiss();
+                dismiss();
             }
         };
         dialog_login.show();
@@ -237,24 +213,11 @@ public class UserUtil {
     public static void showLoginDialog(final Activity context) {
         Dialog_Login dialog_login = new Dialog_Login(context) {
             @Override
-            public void login(String telephone, String password) {
-                HttpRequest.login(context, new ICallback<LoginResult>() {
-                    @Override
-                    public void onSucceed(LoginResult result) {
-                        dismiss();
-                        UserInfo userInfo = result.getData();
-                        saveUserInfo(context, userInfo);
-
-                        if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                            GestureLockSetActivity.startActivity(context, null);
-                        }
-                    }
-
-                    @Override
-                    public void onFail(String error) {
-                        Uihelper.showToast(context, error);
-                    }
-                }, telephone, password);
+            public void loginSuccess() {
+                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                    GestureLockSetActivity.startActivity(context, null);
+                }
+                dismiss();
             }
         };
         dialog_login.show();
