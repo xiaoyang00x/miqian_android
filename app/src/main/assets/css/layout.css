@@ -80,12 +80,19 @@ input::-webkit-inner-spin-button{
     height: 8.08rem;
     margin: 0 auto;
 }
+.know-more .code-img img {
+    display: block;
+    width: 3.66rem;
+    height: 3.66rem;
+    margin: 0 auto;
+    padding-top: 2.6rem;
+}
 .know-more .weibo {
-    background: url(../img/weibo_code.png) no-repeat center center;
+    background: url(../img/weibo_bg.png) no-repeat center center;
     background-size: 100%;
 }
 .know-more .weixin {
-    background: url(../img/weixin_code.png) no-repeat center center;
+    background: url(../img/weixin_bg.png) no-repeat center center;
     background-size: 100%;
 }
 .know-more p {
@@ -505,12 +512,38 @@ input::-webkit-inner-spin-button{
     margin: 0.4rem auto 0;
 }
 .join-way ul {
-    padding: 1.8rem 0 0;
+    padding: 1.8rem 0.3rem 0 0.6rem;
 }
 .join-way li {
     font-size: 0.3rem;
     color: #fff;
-    padding: 0 0 0.3rem 1.2rem;
+    padding: 0 0 0.3rem 0.6rem;
+    position: relative;
+}
+.join-way li i {
+    display: block;
+    width: 0.42rem;
+    height: 0.45rem;
+    background: url(../img/join_way_num.png) no-repeat center center;
+    background-size: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.join-way li .icon1 {
+    background-position: 0 0;
+}
+.join-way li .icon2 {
+    background-position: 0 -0.45rem;
+}
+.join-way li .icon3 {
+    background-position: 0 -0.9rem;
+}
+.join-way li .icon4 {
+    background-position: 0 -1.35rem;
+}
+.join-way li .icon5 {
+    background-position: 0 -1.8rem;
 }
 .mq-packet .mq-qq-desc {
     background: url(../img/mq_desc.png) no-repeat center center;

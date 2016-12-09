@@ -174,9 +174,9 @@ body,html{height:100%;background:#fafafa;font-size:14px}
 .bf-time{ position: relative; background: url(../img/banner_a1606.png) no-repeat center 0.5rem; background-size: 100%}
 .bf-time-hd{position: relative; z-index: 10;}
 .bf-time-line{ position: relative; z-index: 9; margin-top: -20px; padding-top: 0.8rem; background: url(../img/banner_a1608.png) repeat-y center; background-size: 100%;}
-.bf-time-year{ width: 1.18rem; height: 0.45rem; margin: 0 auto 0.2rem; line-height: 0.4rem; text-align: center; font-size: 0.28rem; color: #fff; background-color: #e8343d; border-radius: 0.1rem; border:0.06rem solid #fdc636;}
+.bf-time-year{ width: 1.18rem; height: 0.45rem; margin: 0 auto 0.2rem; line-height: 0.45rem; text-align: center; font-size: 0.28rem; color: #fff; background-color: #e8343d; border-radius: 0.1rem; border:0.06rem solid #fdc636;}
 .bf-thh{ position: relative;}
-.bf-th-wrap{display: inline-block; position: relative; padding: 0.1rem 0.2rem; background-color: #fdc636; border-radius: 0.06rem; font-size: 0.24rem; line-height: 0.38rem; color: #666}
+.bf-th-wrap{display: inline-block; position: relative; padding: 0.1rem 0.2rem; background-color: #fdc636; border-radius: 0.06rem; font-size: 0.24rem; font-weight: bold; line-height: 0.38rem; color: #666}
 .bf-th-wrap i{ position: absolute; top:0.1rem; width: 0.13rem; height: 0.2rem; background:url(../img/banner_a1605.png) no-repeat; background-size: cover}
 .bf-thh b{ position: absolute; top:0.36rem; left: 50%; width: 0.22rem; height: 0.22rem; margin-left: -0.11rem; background:url(../img/banner_a1609.png) no-repeat; background-size: 100%}
 .bf-time-history{ position: relative; max-width: 3rem; margin-bottom: 0.3rem;}
