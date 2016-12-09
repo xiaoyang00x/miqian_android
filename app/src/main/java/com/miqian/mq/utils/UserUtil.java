@@ -170,7 +170,6 @@ public class UserUtil {
                     HttpRequest.login(context, new ICallback<LoginResult>() {
                         @Override
                         public void onSucceed(LoginResult result) {
-                            dismiss();
                             UserInfo userInfo = result.getData();
                             saveUserInfo(context, userInfo);
 
@@ -178,6 +177,7 @@ public class UserUtil {
                             if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
                                 GestureLockSetActivity.startActivity(context, null);
                             }
+                            dismiss();
                         }
 
                         @Override
@@ -241,13 +241,12 @@ public class UserUtil {
                 HttpRequest.login(context, new ICallback<LoginResult>() {
                     @Override
                     public void onSucceed(LoginResult result) {
-                        dismiss();
                         UserInfo userInfo = result.getData();
                         saveUserInfo(context, userInfo);
-
                         if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
                             GestureLockSetActivity.startActivity(context, null);
                         }
+                        dismiss();
                     }
 
                     @Override

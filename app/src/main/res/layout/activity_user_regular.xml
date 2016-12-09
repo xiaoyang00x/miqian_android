@@ -73,7 +73,7 @@
             android:layout_marginTop="55dp"
             android:layout_marginBottom="30dp"
             />
-        <com.miqian.mq.views.TextViewEx
+        <TextView
             android:id="@+id/tv_qq_nodata"
             android:layout_width="wrap_content"
             android:layout_marginLeft="20dp"

@@ -2,14 +2,17 @@ package com.miqian.mq.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -20,9 +23,7 @@ import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
-import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
@@ -52,7 +53,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private boolean launchSuccess;
     private boolean isQQproject;
     private View layoutQQRegular;
-    private TextViewEx tvQQRegular;
+    private TextView tvQQRegular;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -128,7 +129,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     public void initView() {
 
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
-        tvQQRegular = (TextViewEx) findViewById(R.id.tv_qq_nodata);
+        tvQQRegular = (TextView) findViewById(R.id.tv_qq_nodata);
 //        RadioButton btnRight = (RadioButton) findViewById(R.id.bt_right);
 //        if (launchSuccess) {
 //            btnRight.setChecked(true);
@@ -250,7 +251,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             if (isQQproject) {
                 swipeRefresh.setVisibility(View.GONE);
                 layoutQQRegular.setVisibility(View.VISIBLE);
-                tvQQRegular.setText("亲爱的财主,春节期间，平台参加手机QQ抢红包活动。因活动期间访问用户过多，暂停已结算标的内容查询,待活动高峰结束后(2月1日)恢复操作,请您谅解。", true);
+                SpannableString spannableString = new SpannableString("亲爱的财主,春节期间，平台参加手机QQ抢红包活动。因活动期间访问用户过多，暂停已结算标的内容查询,待活动高峰结束后(2月1日)恢复操作,请您谅解。");
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mActivity, R.color.mq_r1_v2)), 57, 63, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvQQRegular.setText(spannableString);
                 return;
             }
             obtainData();
