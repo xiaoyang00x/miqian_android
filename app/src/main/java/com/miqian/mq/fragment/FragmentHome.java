@@ -181,7 +181,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
                 if (mDatas == null) return;
 
                 //未登录用户或友盟开关开启状态使用本地数据
-                if(!UserUtil.hasLogin(mApplicationContext) || "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"))) {
+                if(!UserUtil.hasLogin(mApplicationContext) && "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"))) {
                     try {
                         mDatas = generateHomeData(mDatas);
                     }catch (Exception e) {

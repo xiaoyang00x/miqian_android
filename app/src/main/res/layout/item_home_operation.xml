@@ -44,7 +44,7 @@
                     android:singleLine="true"
                     android:text="累计注册用户(人)"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/mq_font5_v2" />
+                    android:textSize="@dimen/mq_font3_v2" />
 
                 <TextView
                     android:id="@+id/tv_register"
@@ -53,7 +53,7 @@
                     android:singleLine="true"
                     android:text="75,899,000"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/mq_font9_v2" />
+                    android:textSize="@dimen/mq_font8_v2" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -88,7 +88,7 @@
                     android:singleLine="true"
                     android:text="安全运营(天)"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/mq_font5_v2" />
+                    android:textSize="@dimen/mq_font3_v2" />
 
                 <TextView
                     android:id="@+id/tv_operation_days"
@@ -97,7 +97,7 @@
                     android:singleLine="true"
                     android:text="75,899,000"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/mq_font9_v2" />
+                    android:textSize="@dimen/mq_font8_v2" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
