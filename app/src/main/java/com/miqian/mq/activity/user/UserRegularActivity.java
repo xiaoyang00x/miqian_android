@@ -251,8 +251,8 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             if (isQQproject) {
                 swipeRefresh.setVisibility(View.GONE);
                 layoutQQRegular.setVisibility(View.VISIBLE);
-                SpannableString spannableString = new SpannableString("亲爱的财主,春节期间，平台参加手机QQ抢红包活动。因活动期间访问用户过多，暂停已结算标的内容查询,待活动高峰结束后(2月1日)恢复操作,请您谅解。");
-                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mActivity, R.color.mq_r1_v2)), 57, 63, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                SpannableString spannableString = new SpannableString("亲爱的财主，春节期间，平台参加手机QQ抢红包。因活动期间访问用户过多，暂停已结算标的内容查询，待活动高峰结束后(2月1日)恢复操作，请您谅解。");
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mActivity, R.color.mq_r1_v2)), 56, 60, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvQQRegular.setText(spannableString);
                 return;
             }
