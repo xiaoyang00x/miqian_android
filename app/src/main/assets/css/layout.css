@@ -508,11 +508,11 @@ input::-webkit-inner-spin-button{
     background: url(../img/join_way.png) no-repeat center center;
     background-size: 100%;
     width: 7.22rem;
-    height: 5.48rem;
+    height: 7.18rem;
     margin: 0.4rem auto 0;
 }
 .join-way ul {
-    padding: 2rem 0.5rem 0 0.6rem;
+    padding: 1.8rem 0.3rem 0 0.6rem;
 }
 .join-way li {
     font-size: 0.3rem;
