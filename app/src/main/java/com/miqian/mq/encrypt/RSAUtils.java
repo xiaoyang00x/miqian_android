@@ -24,6 +24,7 @@ public class RSAUtils {
 
 
     private static final String RSA = "RSA";
+    protected static final boolean isEncrypt = false;
 
     /**
      * 得到公钥
@@ -46,6 +47,9 @@ public class RSAUtils {
      * @return
      */
     public static String encryptByPublic(String content) {
+        if (!isEncrypt) {
+            return content;
+        }
         try {
             PublicKey pubkey = getPublicKeyFromX509(RSA, Urls.RSA_PUBLICE);
 
@@ -78,6 +82,9 @@ public class RSAUtils {
      * @return 解密后的字符串
      */
     public static String decryptByPrivate(String content) {
+        if (!isEncrypt) {
+            return content;
+        }
         try {
             PrivateKey privateKey = loadPrivateKey(Urls.RSA_PRIVATE);
             byte[] encryptedData = Base64.decode(content, Base64.DEFAULT);
