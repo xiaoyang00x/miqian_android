@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,10 +13,7 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
-import com.miqian.mq.activity.QQprojectRegister;
-import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.UserInfo;
@@ -25,13 +21,11 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.MobileOS;
-import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 /**
  * Created by Administrator on 2015/9/1.
@@ -63,15 +57,6 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
         initView();
         obtainData();
     }
-
-    public Dialog_Register(Context context, int type) {
-        super(context, R.style.Dialog);
-        mContext = context;
-        this.type = type;
-        this.setContentView(R.layout.dialog_login);
-        initView();
-    }
-
     public void obtainData() {
         handler = new Handler() {
             @Override
@@ -179,10 +164,6 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
                         Uihelper.showToast(mContext, "注册成功");
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mContext, userInfo);
-
-                        if (Pref.getBoolean(Pref.GESTURESTATE, mContext, true)) {
-                            GestureLockSetActivity.startActivity(mContext, null);
-                        }
                         registerSuccess();
                         end();
                     }

@@ -2,7 +2,6 @@ package com.miqian.mq.views;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -74,7 +73,7 @@ public class PromotionDialogOverdue extends Dialog implements View.OnClickListen
                     if("3".equals(mData.getJumpNative())) {
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_REGULAR, null);
                     }else if("2".equals(mData.getJumpNative())) {
-                        UserUtil.loginActivity(getOwnerActivity(), MyTicketActivity.class, initDialogLogin(getOwnerActivity(), MyTicketActivity.class, 2));
+                      UserUtil.showRegisterDialog(getOwnerActivity(), MyTicketActivity.class);
                     }
                 }else {
                     WebActivity.startActivity(getOwnerActivity(), mData.getJumpUrl());
@@ -89,25 +88,5 @@ public class PromotionDialogOverdue extends Dialog implements View.OnClickListen
             default:
                 break;
         }
-    }
-
-    Dialog_Login dialog_login = null;
-
-    private Dialog_Login initDialogLogin(final Context context, final Class<?> cls, int type) {
-        if (dialog_login == null || dialog_login.type != type) {
-            dialog_login = new Dialog_Login(context, type) {
-                @Override
-                public void loginSuccess() {
-                    // TODO: 2015/10/10 Loading
-                    if (Pref.getBoolean(Pref.GESTURESTATE, getContext(), true)) {
-                        GestureLockSetActivity.startActivity(context, cls);
-                    } else if (null != cls) {
-                        getOwnerActivity().startActivity(new Intent(context, cls));
-                    }
-                    dismiss();
-                }
-            };
-        }
-        return dialog_login;
     }
 }

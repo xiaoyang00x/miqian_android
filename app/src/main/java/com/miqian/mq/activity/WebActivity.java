@@ -1,6 +1,7 @@
 package com.miqian.mq.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -25,7 +26,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.Base64;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.ShareData;
 import com.miqian.mq.listener.JsShareListener;
@@ -35,11 +35,10 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
-import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.ShareUtils;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
-import com.miqian.mq.views.Dialog_Login;
+import com.miqian.mq.views.Dialog_Register;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WFYTitle;
@@ -232,25 +231,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         }
     }
 
-    Dialog_Login dialog_login = null;
-
-    private Dialog_Login initDialogLogin(final Context context, final Class<?> cls, int type) {
-        if (dialog_login == null || dialog_login.type != type) {
-            dialog_login = new Dialog_Login(context, type) {
-                @Override
-                public void loginSuccess() {
-                    // TODO: 2015/10/10 Loading
-                    if (Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), true)) {
-                        GestureLockSetActivity.startActivity(context, cls);
-                    } else if (null != cls) {
-                        startActivity(new Intent(context, cls));
-                    }
-                    dismiss();
-                }
-            };
-        }
-        return dialog_login;
-    }
+    Dialog_Register dialog_login = null;
 
     @JavascriptInterface
     public void call(String phoneNumber) {
@@ -264,14 +245,13 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
 
     @JavascriptInterface
     public void register() {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        UserUtil.showRegisterDialog(this);
     }
 
     //登录窗口
     @JavascriptInterface
     public void login() {
-        UserUtil.loginActivity(initDialogLogin(this, null, 0));
+       UserUtil.showRegisterDialog(this);
     }
 
     //分享接口
@@ -283,13 +263,13 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     //充值页面(需要登录)
     @JavascriptInterface
     public void startIntoActivity() {
-        UserUtil.loginActivity(this, IntoActivity.class, initDialogLogin(this, IntoActivity.class, 1));
+        UserUtil.showRegisterDialog(this, IntoActivity.class);
     }
 
     //红包、券列表页面(需要登录)
     @JavascriptInterface
     public void startTicketActivity() {
-        UserUtil.loginActivity(this, MyTicketActivity.class, initDialogLogin(this, MyTicketActivity.class, 2));
+        UserUtil.showRegisterDialog(this, MyTicketActivity.class);
     }
 
     //定期赚详情页面

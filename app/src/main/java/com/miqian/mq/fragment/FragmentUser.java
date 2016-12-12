@@ -1,5 +1,6 @@
 package com.miqian.mq.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,21 +22,17 @@ import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.IntoActivity;
 import com.miqian.mq.activity.MainActivity;
-import com.miqian.mq.activity.PaymodeActivity;
 import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.NoticeActivity;
-import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
-import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -49,10 +46,10 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTip;
+import com.miqian.mq.views.Dialog_Register;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
-
 import java.math.BigDecimal;
 
 /**
@@ -314,7 +311,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1048");
                 //跳到注册页
-                getActivity().startActivity(new Intent(getActivity(), RegisterActivity.class));
+                showRegisterDialog(getActivity());
 
             }
         });
@@ -387,7 +384,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             view.findViewById(R.id.frame_redbag).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(mContext, RegisterActivity.class));
+                  showRegisterDialog(getActivity());
                 }
             });
         }
@@ -415,7 +412,23 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             }
         }, telephone, password);
     }
-
+    //  弹注册框
+    public static void showRegisterDialog(final Activity context) {
+        Dialog_Register dialog_register = new Dialog_Register(context) {
+            @Override
+            public void toLogin() {
+                dismiss();
+            }
+            @Override
+            public void registerSuccess() {
+                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                    GestureLockSetActivity.startActivity(context, null);
+                }
+                dismiss();
+            }
+        };
+        dialog_register.show();
+    }
 
     @Override
     public void onClick(View v) {

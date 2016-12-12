@@ -146,18 +146,6 @@ public class UserUtil {
         logout();
     }
 
-    public static void loginActivity(final Activity context, final Class<?> cls, Dialog_Login dialog_login) {
-        if (!hasLogin(context)) {
-            dialog_login.show();
-        } else {
-            context.startActivity(new Intent(context, cls));
-        }
-    }
-
-    public static void loginActivity(Dialog_Login dialog_login) {
-        dialog_login.show();
-    }
-
     //  支付时判断是否登录、实名认证
     public static void loginPay(final Activity context, DialogPay dialogPay) {
         if (!UserUtil.hasLogin(context)) {
@@ -167,10 +155,10 @@ public class UserUtil {
         }
     }
 
-    //  手Q活动时判断是否登录，未登录弹注册窗口
+    // 是否登录，未登录弹注册窗口
     public static void registerPay(final Activity context, final DialogPay dialogPay) {
         if (!UserUtil.hasLogin(context)) {
-            Dialog_Register dialog_login = new Dialog_Register(context) {
+            Dialog_Register dialog_register = new Dialog_Register(context) {
                 @Override
                 public void toLogin() {
                     dismiss();
@@ -179,21 +167,50 @@ public class UserUtil {
 
                 @Override
                 public void registerSuccess() {
+                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                        GestureLockSetActivity.startActivity(context, null);
+                    }
                     dismiss();
                     dialogPay.show();
 
                 }
             };
-            dialog_login.show();
+            dialog_register.show();
         } else {
             dialogPay.show();
         }
     }
 
 
-    //  手Q活动认购时弹注册页
+    public static Dialog_Register dialog_register = null;
+
+    public static void showRegisterDialog(final Activity context, final Class<?> cls) {
+        if (dialog_register == null) {
+            dialog_register = new Dialog_Register(context) {
+
+                @Override
+                public void toLogin() {
+                    dismiss();
+                    UserUtil.showLoginDialog(context);
+                }
+
+                @Override
+                public void registerSuccess() {
+                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                        GestureLockSetActivity.startActivity(context, null);
+                    } else if (null != cls) {
+                        getOwnerActivity().startActivity(new Intent(context, cls));
+                    }
+                    dismiss();
+                }
+            };
+        }
+        dialog_register.show();
+    }
+
+    //  弹注册框
     public static void showRegisterDialog(final Activity context) {
-        Dialog_Register dialog_login = new Dialog_Register(context) {
+        Dialog_Register dialog_register = new Dialog_Register(context) {
 
             @Override
             public void toLogin() {
@@ -203,11 +220,15 @@ public class UserUtil {
 
             @Override
             public void registerSuccess() {
+                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                    GestureLockSetActivity.startActivity(context, null);
+                }
                 dismiss();
             }
         };
-        dialog_login.show();
+        dialog_register.show();
     }
+
 
     //  认购时确认是否登录
     public static void showLoginDialog(final Activity context) {

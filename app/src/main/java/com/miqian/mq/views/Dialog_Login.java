@@ -1,5 +1,6 @@
 package com.miqian.mq.views;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +13,6 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -31,25 +31,15 @@ import com.umeng.onlineconfig.OnlineConfigAgent;
  */
 public abstract class Dialog_Login extends Dialog {
 
-    private final Context mContext;
-    public int type;
+    private final Activity mContext;
     private Dialog mWaitingDialog;
 
-    public Dialog_Login(Context context) {
+    public Dialog_Login(Activity context) {
         super(context, R.style.Dialog);
         mContext = context;
         this.setContentView(R.layout.dialog_login);
         initView();
     }
-
-    public Dialog_Login(Context context, int type) {
-        super(context, R.style.Dialog);
-        mContext = context;
-        this.type = type;
-        this.setContentView(R.layout.dialog_login);
-        initView();
-    }
-
     private void initView() {
         mWaitingDialog = ProgressDialogView.create(mContext);
         final EditText editTelephone = (EditText) findViewById(R.id.edit_telephone);
@@ -66,7 +56,7 @@ public abstract class Dialog_Login extends Dialog {
                 MobclickAgent.onEvent(mContext, "1048");
                 //跳到注册页
                 dismiss();
-                mContext.startActivity(new Intent(mContext, RegisterActivity.class));
+                UserUtil.showRegisterDialog(mContext);
 
             }
         });
@@ -126,7 +116,7 @@ public abstract class Dialog_Login extends Dialog {
                 public void onClick(View v) {
                     //跳到注册页
                     dismiss();
-                    mContext.startActivity(new Intent(mContext, RegisterActivity.class));
+                    UserUtil.showRegisterDialog(mContext);
                 }
             });
         }
