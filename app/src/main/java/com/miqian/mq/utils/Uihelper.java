@@ -196,7 +196,7 @@ public class Uihelper {
      */
     public static String timestampToString(String timestamp) {
         if (!TextUtils.isEmpty(timestamp)) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             Date date = new Date(Long.parseLong(timestamp));
             return sdf.format(date);
         }

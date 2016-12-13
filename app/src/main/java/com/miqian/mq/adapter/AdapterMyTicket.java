@@ -168,7 +168,15 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             Promote promote = promList.get(position);
 //            setText(tempViewHoleder.tv_name, promote.getPromProdName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
-            setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
+            String qqString = "";
+            if (!TextUtils.isEmpty(promote.getFitBdTermOrYrt()) && !TextUtils.isEmpty(promote.getMinBuyAmtOrPerc())) {
+                qqString = promote.getMinBuyAmtOrPerc() + ", " + promote.getFitBdTermOrYrt();
+            } else if (!TextUtils.isEmpty(promote.getFitBdTermOrYrt())){
+                qqString = promote.getFitBdTermOrYrt();
+            } else {
+                qqString = promote.getMinBuyAmtOrPerc();
+            }
+            setText(tempViewHoleder.tv_percent_limit, qqString);
 //            setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
             String desUrl = promote.getPromUrl();
