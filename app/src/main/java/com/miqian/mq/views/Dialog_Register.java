@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
+import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
@@ -49,6 +50,7 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
     private MyRunnable myRunnable;
     private Thread thread;
     private static Handler handler;
+    private RegisterListenerFromDialog mRegistListener;
 
     public Dialog_Register(Context context) {
         super(context, R.style.Dialog);
@@ -71,7 +73,13 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
             }
         };
     }
+    public interface RegisterListenerFromDialog{
+        void registerSuccessfromDialog();
+    }
 
+    public void setLoginLister(RegisterListenerFromDialog registListener){
+        this.mRegistListener=registListener;
+    }
     private void initView() {
         mWaitingDialog = ProgressDialogView.create(mContext);
         mEt_Telephone = (EditText) findViewById(R.id.et_account_telephone);
@@ -165,6 +173,7 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mContext, userInfo);
                         registerSuccess();
+                        mRegistListener.registerSuccessfromDialog();
                         end();
                     }
 
@@ -264,5 +273,11 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
         if (mWaitingDialog != null && mWaitingDialog.isShowing()) {
             mWaitingDialog.dismiss();
         }
+    }
+
+    @Override
+    public void dismiss() {
+        isTimer = false;
+        super.dismiss();
     }
 }

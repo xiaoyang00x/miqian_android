@@ -47,7 +47,7 @@ public class QQprojectRegister implements View.OnClickListener {
     private static final int NUM_TYPE_CAPTCHA = 1;
     private static final int NUM_TYPE_TOAST = 3;
 
-    private boolean isTimer;// 是否可以计时
+    public  static boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;
     private Thread thread;
     private static Handler handler;
@@ -63,6 +63,7 @@ public class QQprojectRegister implements View.OnClickListener {
     }
     public interface LoginLister{
         void toLogin();
+        void registerSuccessfromNative();
     }
 
     public void setLoginLister(LoginLister loginLister){
@@ -185,10 +186,7 @@ public class QQprojectRegister implements View.OnClickListener {
                         Uihelper.showToast(mContext, "注册成功");
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mContext, userInfo);
-
-                        if (Pref.getBoolean(Pref.GESTURESTATE, mContext, true)) {
-                            GestureLockSetActivity.startActivity(mContext, null);
-                        }
+                        mLoginLister.registerSuccessfromNative();
                     }
 
                     @Override

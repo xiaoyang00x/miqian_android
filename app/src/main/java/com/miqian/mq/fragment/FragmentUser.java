@@ -1,6 +1,7 @@
 package com.miqian.mq.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -50,6 +51,7 @@ import com.miqian.mq.views.Dialog_Register;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
+
 import java.math.BigDecimal;
 
 /**
@@ -59,7 +61,7 @@ import java.math.BigDecimal;
  * @created 2015-3-18
  */
 
-public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener, QQprojectRegister.LoginLister {
+public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener, QQprojectRegister.LoginLister, Dialog_Register.RegisterListenerFromDialog {
 
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket;
@@ -81,6 +83,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private boolean loginMode;
     private boolean isQQproject;// 手Q活动开关
     private ImageView ivQQ;
+    private Dialog_Register dialog_register;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,9 +127,20 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 QQprojectRegister qQprojectRegister = new QQprojectRegister(getActivity(), view, swipeRefresh);
                 qQprojectRegister.setLoginLister(this);
             }
-
         }
+        if (dialog_register == null) {
+            dialog_register = new Dialog_Register(getActivity()) {
+                @Override
+                public void toLogin() {
+                    dismiss();
+                }
 
+                @Override
+                public void registerSuccess() {
+                }
+            };
+            dialog_register.setLoginLister(FragmentUser.this);
+        }
         super.onStart();
     }
 
@@ -201,7 +215,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             boolean isHasQQImage = Pref.getBoolean(UserUtil.getPrefKey(getActivity(), Pref.HAS_QQ), getActivity(), false);
             if (isQQproject && (isHasQQImage || count == 5)) {
                 ivQQ.setVisibility(View.VISIBLE);
-                Pref.saveBoolean(UserUtil.getPrefKey(getActivity(),Pref.HAS_QQ),true,getActivity());
+                Pref.saveBoolean(UserUtil.getPrefKey(getActivity(), Pref.HAS_QQ), true, getActivity());
             }
             tv_Ticket.setText(count + "张");
         } else {
@@ -311,7 +325,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1048");
                 //跳到注册页
-                showRegisterDialog(getActivity());
+                dialog_register.show();
 
             }
         });
@@ -384,7 +398,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             view.findViewById(R.id.frame_redbag).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  showRegisterDialog(getActivity());
+                    dialog_register.show();
                 }
             });
         }
@@ -411,23 +425,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 Uihelper.showToast(getActivity(), error);
             }
         }, telephone, password);
-    }
-    //  弹注册框
-    public static void showRegisterDialog(final Activity context) {
-        Dialog_Register dialog_register = new Dialog_Register(context) {
-            @Override
-            public void toLogin() {
-                dismiss();
-            }
-            @Override
-            public void registerSuccess() {
-                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                    GestureLockSetActivity.startActivity(context, null);
-                }
-                dismiss();
-            }
-        };
-        dialog_register.show();
     }
 
     @Override
@@ -598,5 +595,31 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");
         editTelephone.setText(telphone);
         editTelephone.setSelection(telphone.length());
+    }
+
+    @Override
+    public void registerSuccessfromNative() {
+        if (Pref.getBoolean(Pref.GESTURESTATE, mContext, true)) {
+            GestureLockSetActivity.startActivity(mContext, null);
+        } else {
+            onStart();
+        }
+    }
+
+    @Override
+    public void registerSuccessfromDialog() {
+        if (Pref.getBoolean(Pref.GESTURESTATE, mContext, true)) {
+            GestureLockSetActivity.startActivity(mContext, null);
+        } else {
+            onStart();
+        }
+        dialog_register.dismiss();
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        QQprojectRegister.isTimer=false;
+        super.onDestroyView();
     }
 }
