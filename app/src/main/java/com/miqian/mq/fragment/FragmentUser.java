@@ -250,6 +250,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     @Override
     public void onDestroy() {
         extendOperationController.unRegisterExtendOperationListener(this);
+        QQprojectRegister.isTimer=false;
         super.onDestroy();
     }
 
@@ -615,11 +616,5 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         }
         dialog_register.dismiss();
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        QQprojectRegister.isTimer=false;
-        super.onDestroyView();
     }
 }

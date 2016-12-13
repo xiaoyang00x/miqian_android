@@ -74,6 +74,7 @@ public class QQprojectRegister implements View.OnClickListener {
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
+                mBtn_sendCaptcha.setEnabled(false);
                 String timeInfo = msg.getData().getString("time");
                 mBtn_sendCaptcha.setText(timeInfo + "秒后重新获取");
                 if ("0".equals(timeInfo)) {
