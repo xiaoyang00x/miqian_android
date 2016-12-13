@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/layout_project"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/bg_project_new_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_project_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/iv_tag"
+            android:maxLines="1"
+            android:gravity="left"
+            android:textColor="@color/mq_b2_v2"
+            android:textSize="@dimen/mq_font7_v2"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@id/iv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="13dp"
+            android:background="@null"
+            android:scaleType="matrix"
+            android:src="@null" />
+
+        <TextView
+            android:id="@+id/temp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_project_name"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="25dp"
+            android:text="年化收益"
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font2_v2" />
+
+        <TextView
+            android:id="@+id/profit_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/temp1"
+            android:layout_below="@+id/temp1"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/mq_r1_v2"
+            android:text="10"
+            android:textSize="@dimen/mq_font11_v2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_add_interest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/profit_rate"
+            android:layout_toRightOf="@+id/profit_rate"
+            android:textColor="@color/mq_r1_v2"
+            android:text="%"
+            android:textSize="@dimen/mq_font5_v2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/temp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/temp1"
+            android:layout_alignTop="@+id/temp1"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginLeft="70dp"
+            android:layout_toRightOf="@id/temp1"
+            android:text="项目期限"
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font2_v2" />
+
+        <TextView
+            android:id="@+id/tv_time_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/temp2"
+            android:layout_below="@+id/temp2"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/mq_r1_v2"
+            android:text="129"
+            android:textSize="@dimen/mq_font11_v2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_time_limit"
+            android:layout_toRightOf="@+id/tv_time_limit"
+            android:text="天"
+            android:textColor="@color/mq_r1_v2"
+            android:textSize="@dimen/mq_font5_v2"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_buy"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:layout_alignBottom="@+id/profit_rate"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="35dp"
+            android:text="立即购买"
+            android:textSize="@dimen/mq_font3_v2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_begin_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/btn_buy"
+            android:layout_marginRight="35dp"
+            android:visibility="gone"
+            android:textColor="@color/mq_bl3_v2"
+            android:textSize="@dimen/mq_font3_v2" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/profit_rate"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/horizontal_dotted_line" />
+
+        <LinearLayout
+            android:id="@+id/llyt_amount"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_below="@+id/line"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_remain_amount"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:maxLines="1"
+                android:paddingLeft="15dp"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/llyt_amount"
+            android:background="@color/mq_b6_v2" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentTop="true"
+            android:background="@color/mq_b6_v2" />
+    </RelativeLayout>
+
+    <com.miqian.mq.views.RotateTextView
+        android:id="@+id/tv_corner_mark"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_project_corner_mark"
+        android:text="上市"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:gravity="top|center_horizontal"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        />
+</RelativeLayout>
