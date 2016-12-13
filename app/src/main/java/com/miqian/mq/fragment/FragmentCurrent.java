@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
@@ -42,7 +43,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     private RelativeLayout frameEarning;
     private RelativeLayout frameSafe;
     private RelativeLayout frameBack;
-    private LinearLayout frameCrowd;
+    private ScrollView frameCrowd;
 
     private Activity mContext;
     private DialogPay dialogPay;
@@ -86,7 +87,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     }
 
     private void findViewById(View view) {
-        frameCrowd = (LinearLayout) view.findViewById(R.id.frame_crowd);
+        frameCrowd = (ScrollView) view.findViewById(R.id.frame_crowd);
         waterWaveView = (WaterWaveView) view.findViewById(R.id.wave_view);
         waterWaveView.startWave();
 
