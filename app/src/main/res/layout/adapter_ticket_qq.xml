@@ -85,5 +85,13 @@
             android:text="限定使用"
             android:textColor="#ffd735"
             android:textSize="@dimen/mq_font2_v2" />
+
+        <ImageView
+            android:id="@+id/promote_choosed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:src="@drawable/promote_choosed" />
     </RelativeLayout>
 </RelativeLayout>
