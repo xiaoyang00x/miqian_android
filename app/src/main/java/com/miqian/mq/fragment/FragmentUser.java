@@ -326,8 +326,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1048");
                 //跳到注册页
-                QQprojectRegister qQprojectRegister = new QQprojectRegister(getActivity(), view, swipeRefresh);
-                qQprojectRegister.setLoginLister(FragmentUser.this);
+                swipeRefresh.setVisibility(View.GONE);
+                view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
+
 
             }
         });
