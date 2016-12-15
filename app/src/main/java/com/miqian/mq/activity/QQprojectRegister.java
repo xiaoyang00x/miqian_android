@@ -37,17 +37,17 @@ public class QQprojectRegister implements View.OnClickListener {
     private final Context mContext;
     private final MySwipeRefresh mSwipeRefresh;
 
-    private EditText mEt_Telephone;
-    private EditText mEt_Captcha;
-    private EditText mEt_Password;
-    private Button mBtn_sendCaptcha;
+    private static EditText mEt_Telephone;
+    private static EditText mEt_Captcha;
+    private static EditText mEt_Password;
+    private static Button mBtn_sendCaptcha;
     private Dialog mWaitingDialog;
 
     private String phone;
     private static final int NUM_TYPE_CAPTCHA = 1;
     private static final int NUM_TYPE_TOAST = 3;
 
-    public  static boolean isTimer;// 是否可以计时
+    public static boolean isTimer;// 是否可以计时
     private MyRunnable myRunnable;
     private Thread thread;
     private static Handler handler;
@@ -61,13 +61,24 @@ public class QQprojectRegister implements View.OnClickListener {
         initView();
         obtainData();
     }
-    public interface LoginLister{
+
+    public static void initData() {
+        isTimer = false;
+        mEt_Telephone.setText("");
+        mEt_Captcha.setText("");
+        mEt_Password.setText("");
+        mBtn_sendCaptcha.setEnabled(true);
+        mBtn_sendCaptcha.setText("获取验证码");
+    }
+
+    public interface LoginLister {
         void toLogin();
+
         void registerSuccessfromNative();
     }
 
-    public void setLoginLister(LoginLister loginLister){
-           this.mLoginLister=loginLister;
+    public void setLoginLister(LoginLister loginLister) {
+        this.mLoginLister = loginLister;
     }
 
     public void obtainData() {

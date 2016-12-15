@@ -250,7 +250,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     @Override
     public void onDestroy() {
         extendOperationController.unRegisterExtendOperationListener(this);
-        QQprojectRegister.isTimer=false;
+        QQprojectRegister.isTimer = false;
         super.onDestroy();
     }
 
@@ -326,9 +326,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1048");
                 //跳到注册页
+
                 swipeRefresh.setVisibility(View.GONE);
                 view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
-
+                QQprojectRegister.initData();
 
             }
         });
