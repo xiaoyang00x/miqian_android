@@ -26,6 +26,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
 
     private static final int VIEW_TYPE_HB = 0;
     private static final int VIEW_TYPE_ADD_INTEREST = 2;              //八八双倍收益卡
+    private static final int VIEW_TYPE_QQ = 3;                  //2017 手Q红包
 
     public AdapterPacket(List<Promote> promList) {
         this.promList = promList;
@@ -39,6 +40,9 @@ public class AdapterPacket extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (viewType) {
+            case VIEW_TYPE_QQ:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket_qq, parent, false);
+                return new QQViewHoleder(view);
             case VIEW_TYPE_HB:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ticket_temp, parent, false);
                 return new BaseViewHoleder(view);
@@ -116,6 +120,41 @@ public class AdapterPacket extends RecyclerView.Adapter {
             } else {
                 tempViewHoleder.promoteChoosed.setVisibility(View.GONE);
             }
+        } else if (holder instanceof QQViewHoleder) {
+            QQViewHoleder tempViewHoleder = (QQViewHoleder) holder;
+            Promote promote = promList.get(position);
+//            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
+            String qqString = "";
+            if (!TextUtils.isEmpty(promote.getFitBdTermOrYrt()) && !TextUtils.isEmpty(promote.getMinBuyAmtOrPerc())) {
+                qqString = promote.getMinBuyAmtOrPerc() + ", " + promote.getFitBdTermOrYrt();
+            } else if (!TextUtils.isEmpty(promote.getFitBdTermOrYrt())) {
+                qqString = promote.getFitBdTermOrYrt();
+            } else {
+                qqString = promote.getMinBuyAmtOrPerc();
+            }
+            setText(tempViewHoleder.tv_percent_limit, qqString);
+//            setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
+            setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
+            if ("000000000000000000000230830444".equals(promote.getPromProdId())) {
+                tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_8);
+            } else if ("000000000000000000000230830581".equals(promote.getPromProdId())) {
+                tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_50);
+            } else if ("000000000000000000000230830662".equals(promote.getPromProdId())) {
+                tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_100);
+            } else if ("000000000000000000000230830778".equals(promote.getPromProdId())) {
+                tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_210);
+            } else if ("000000000000000000000230830828".equals(promote.getPromProdId())) {
+                tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_520);
+            }
+            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+//            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
+            if (mPosition == position) {
+                tempViewHoleder.promoteChoosed.setVisibility(View.VISIBLE);
+            } else {
+                tempViewHoleder.promoteChoosed.setVisibility(View.GONE);
+            }
+//            tempViewHoleder.setViewEnable(isValid);
         }
     }
 
@@ -132,6 +171,8 @@ public class AdapterPacket extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         if (promList.get(position) != null && Promote.TYPE.SK.getValue().equals(promList.get(position).getType())) {
             return VIEW_TYPE_ADD_INTEREST;
+        } else if (AdapterMyTicket.isQQPromote(promList.get(position))) {
+            return VIEW_TYPE_QQ;
         } else {
             return VIEW_TYPE_HB;
         }
@@ -189,6 +230,40 @@ public class AdapterPacket extends RecyclerView.Adapter {
             super(itemView);
             img_background = (ImageView) itemView.findViewById(R.id.img_background);
             img_tag = (ImageView) itemView.findViewById(R.id.img_tag);
+        }
+    }
+
+    class QQViewHoleder extends RecyclerView.ViewHolder {
+
+        protected TextView tv_validate_date;
+        protected TextView tv_percent_limit;
+        protected TextView tv_use_limit;
+        protected TextView tv_amount_unit;
+        protected TextView tv_amount;
+        protected RelativeLayout frame_ticket;
+        public ImageView promoteChoosed;
+
+        public QQViewHoleder(View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mPosition != getLayoutPosition()) {
+                        mPosition = getLayoutPosition();
+                    } else {
+                        mPosition = -1;
+                    }
+                    onItemClickListener.onItemClick(v, mPosition);
+                    notifyDataSetChanged();
+                }
+            });
+            tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
+            tv_amount_unit = (TextView) itemView.findViewById(R.id.tv_amount_unit);
+            tv_percent_limit = (TextView) itemView.findViewById(R.id.tv_percent_limit);
+            tv_validate_date = (TextView) itemView.findViewById(R.id.tv_validate_date);
+            tv_use_limit = (TextView) itemView.findViewById(R.id.tv_use_limit);
+            frame_ticket = (RelativeLayout) itemView.findViewById(R.id.frame_ticket);
+            promoteChoosed = (ImageView) itemView.findViewById(R.id.promote_choosed);
         }
     }
 

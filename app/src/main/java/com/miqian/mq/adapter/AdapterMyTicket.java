@@ -20,7 +20,6 @@ import com.miqian.mq.entity.Promote;
 import com.miqian.mq.utils.Uihelper;
 import com.umeng.onlineconfig.OnlineConfigAgent;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -66,7 +65,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         }
     }
 
-    private boolean isQQPromote(Promote promote) {
+    public static boolean isQQPromote(Promote promote) {
         boolean flag = false;
         switch (promote.getPromProdId()) {
             case "000000000000000000000230830444":
