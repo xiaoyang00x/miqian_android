@@ -91,7 +91,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                         String imgUrl;
                         if (Config.HEIGHT <= 1280) {
                             imgUrl = advert.getImgUrl_android1x();
-				        } else {
+                        } else {
                             imgUrl = advert.getImgUrl_android2x();
                         }
                         Pref.saveString(Pref.CONFIG_ADS + "ImgUrl", imgUrl, SplashActivity.this);
@@ -227,6 +227,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             timer = new Timer();
             TimerTask timerTask = new TimerTask() {
                 int i = 3;
+
                 @Override
                 public void run() {
                     handler.sendEmptyMessage(i--);
@@ -285,11 +286,12 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             ImageView imageView = (ImageView) view.findViewById(R.id.guide);
             if (position == pageCount - 1) {
                 Button btStart = (Button) view.findViewById(R.id.start);
-//				if (Config.HEIGHT <= 800) {
-//					android.widget.RelativeLayout.LayoutParams paramsButton = (android.widget.RelativeLayout.LayoutParams) btStart.getLayoutParams();
-//					paramsButton.bottomMargin = (int) (27 * Config.DENSITY);
-//					btStart.setLayoutParams(paramsButton);
-//				}
+                float f1 = (float) Config.HEIGHT / Config.WIDTH;
+                if (f1 < 1.77 || Config.HEIGHT <= 854) {
+                    android.widget.RelativeLayout.LayoutParams paramsButton = (android.widget.RelativeLayout.LayoutParams) btStart.getLayoutParams();
+                    paramsButton.bottomMargin = (int) (27 * Config.DENSITY);
+                    btStart.setLayoutParams(paramsButton);
+                }
                 btStart.setVisibility(View.VISIBLE);
                 btStart.setOnClickListener(SplashActivity.this);
             }

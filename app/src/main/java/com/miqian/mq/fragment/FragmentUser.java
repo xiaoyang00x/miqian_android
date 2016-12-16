@@ -250,11 +250,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     @Override
     public void onDestroy() {
         extendOperationController.unRegisterExtendOperationListener(this);
-        QQprojectRegister.isTimer=false;
+        QQprojectRegister.isTimer = false;
         super.onDestroy();
     }
 
-    private void findViewById(View view) {
+    private void findViewById(final View view) {
 
         swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -326,7 +326,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1048");
                 //跳到注册页
-                dialog_register.show();
+
+                swipeRefresh.setVisibility(View.GONE);
+                view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
+                QQprojectRegister.initData();
 
             }
         });

@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape_dialog_background"
             android:orientation="vertical"
-            android:paddingBottom="14dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
@@ -171,8 +170,8 @@
                 android:id="@+id/btn_tologin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="45dp"
+                android:layout_marginTop="30dp"
+                android:paddingBottom="35dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/transparent"
                 android:onClick="textLawCick"
