@@ -103,7 +103,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             downLimit = userCurrent.getCurrentBuyDownLimit();
             upLimit = userCurrent.getCurrentBuyUpLimit();
             balance = userCurrent.getBalance();
-            if (money.compareTo(BigDecimal.ZERO) <= 0) {
+            if (money != null && money.compareTo(BigDecimal.ZERO) <= 0) {
                 btRedeem.setEnabled(false);
                 btRedeem.setTextColor(getResources().getColor(R.color.mq_b5));
             }
