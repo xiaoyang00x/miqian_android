@@ -210,7 +210,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.bt_redeem:
-                if (isCrowd) {
+                if (userCurrent.getRedeemSwitch() == 1) {
                     Uihelper.showToast(mActivity, "春节期间，平台参加手机QQ抢红包。因活动期间访问用户过多，暂停赎回操作，待活动高峰结束后(2月1日)恢复赎回操作");
                 } else if (userCurrent!=null){
                     MobclickAgent.onEvent(mActivity, "1038");

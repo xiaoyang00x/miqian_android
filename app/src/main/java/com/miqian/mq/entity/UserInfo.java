@@ -38,6 +38,7 @@ public class UserInfo implements Serializable {
     private String monthAmtLimit ; // 每月限额
     private String ydayProfit;//昨日收益
     private String custLevel;//新增用户等级
+    private int withdrawCashSwitch; //2017手Q 提现开关
 
     public String getCustLevel() {
         return custLevel;
@@ -285,5 +286,13 @@ public class UserInfo implements Serializable {
 
     public void setYdayProfit(String ydayProfit) {
         this.ydayProfit = ydayProfit;
+    }
+
+    public int getWithdrawCashSwitch() {
+        return withdrawCashSwitch;
+    }
+
+    public void setWithdrawCashSwitch(int withdrawCashSwitch) {
+        this.withdrawCashSwitch = withdrawCashSwitch;
     }
 }
