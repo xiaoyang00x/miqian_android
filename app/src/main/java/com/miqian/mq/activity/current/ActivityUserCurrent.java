@@ -97,8 +97,8 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private void refreshView() {
         if (userCurrent != null) {
             textEarning.setText(userCurrent.getCurYesterDayAmt());
-            textCaptial.setText(userCurrent.getCurAsset()+"");
-            textTotalEarning.setText(userCurrent.getCurAmt()+"");
+            textCaptial.setText(userCurrent.getCurAsset() + "");
+            textTotalEarning.setText(userCurrent.getCurAmt() + "");
             BigDecimal money = userCurrent.getCurAsset();
             downLimit = userCurrent.getCurrentBuyDownLimit();
             upLimit = userCurrent.getCurrentBuyUpLimit();
@@ -116,7 +116,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 textInterest.setVisibility(View.GONE);
             } else {
                 textInterest.setVisibility(View.VISIBLE);
-                textInterest.setText(tempInterest+"%");
+                textInterest.setText(tempInterest + "%");
             }
         } else {
             btRedeem.setEnabled(false);
@@ -212,11 +212,11 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             case R.id.bt_redeem:
                 if (userCurrent.getRedeemSwitch() == 1) {
                     Uihelper.showToast(mActivity, "活期赎回服务暂停中，再次开放时间请查阅公告。");
-                } else if (userCurrent!=null){
+                } else if (userCurrent != null && userCurrent.getCurAsset() != null) {
                     MobclickAgent.onEvent(mActivity, "1038");
                     Intent intent = new Intent(mActivity, ActivityRedeem.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putSerializable("userCurrent",userCurrent);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("userCurrent", userCurrent);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
