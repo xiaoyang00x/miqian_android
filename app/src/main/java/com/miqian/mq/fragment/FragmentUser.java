@@ -274,6 +274,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             } else {
                 btn_message.setImageResource(R.drawable.btn_message);
             }
+        }else {
+            btn_message.setVisibility(View.GONE);
         }
         btn_message.setOnClickListener(this);
 
