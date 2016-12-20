@@ -1,16 +1,12 @@
 package com.miqian.mq.activity.current;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -33,7 +29,6 @@ import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogTradePassword;
 import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
-import com.mob.tools.utils.UIHandler;
 import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
