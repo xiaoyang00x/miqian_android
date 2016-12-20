@@ -24,6 +24,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.MySwipeRefresh;
+import com.miqian.mq.views.TextViewEx;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
@@ -53,7 +54,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private boolean launchSuccess;
     private boolean isQQproject;
     private View layoutQQRegular;
-    private TextView tvQQRegular;
+    private TextViewEx tvQQRegular;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -129,7 +130,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     public void initView() {
 
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
-        tvQQRegular = (TextView) findViewById(R.id.tv_qq_nodata);
+        tvQQRegular = (TextViewEx) findViewById(R.id.tv_qq_nodata);
 //        RadioButton btnRight = (RadioButton) findViewById(R.id.bt_right);
 //        if (launchSuccess) {
 //            btnRight.setChecked(true);
@@ -251,8 +252,8 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             if (isQQproject) {
                 swipeRefresh.setVisibility(View.GONE);
                 layoutQQRegular.setVisibility(View.VISIBLE);
-                SpannableString spannableString = new SpannableString("因秒钱联合腾讯举办春节红包活动，我们将暂停已结算标的内容查询，给您带来的不变，深表歉意，待活动高峰结束后恢复操作。");
-                tvQQRegular.setText(spannableString);
+                String spannableString = new String("因秒钱联合腾讯举办春节红包活动，我们将暂停已结算标的内容查询，给您带来的不变，深表歉意，待活动高峰结束后恢复操作。");
+                tvQQRegular.setText(spannableString, true);
                 return;
             }
             obtainData();
