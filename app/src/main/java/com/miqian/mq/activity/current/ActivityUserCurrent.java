@@ -211,7 +211,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.bt_redeem:
                 if (userCurrent.getRedeemSwitch() == 1) {
-                    Uihelper.showToast(mActivity, "春节期间，平台参加手机QQ抢红包。因活动期间访问用户过多，暂停赎回操作，待活动高峰结束后(2月1日)恢复赎回操作");
+                    Uihelper.showToast(mActivity, "活期赎回服务暂停中，再次开放时间请查阅公告。");
                 } else if (userCurrent!=null){
                     MobclickAgent.onEvent(mActivity, "1038");
                     Intent intent = new Intent(mActivity, ActivityRedeem.class);
@@ -224,7 +224,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");
                 if (isCrowd) {
-                    Uihelper.showToast(mActivity, "春节期间，平台参加手机QQ抢红包。因活动期间访问用户过多，暂停认购操作，待活动高峰结束后(2月1日)恢复认购操作");
+                    Uihelper.showToast(mActivity, "活期认购服务暂停中，再次开放时间请查阅公告。");
                 } else {
                     if (balance != null && balance.compareTo(downLimit) >= 0) {
                         dialogPay.setEditMoneyHint("可用余额" + balance + "元");

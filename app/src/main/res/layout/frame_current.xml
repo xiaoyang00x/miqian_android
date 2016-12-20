@@ -216,8 +216,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/frame_title"
         android:background="@color/mq_r1_v2"
-        android:visibility="visible"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -229,34 +229,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="30dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="40dp"
                 android:drawablePadding="15dp"
                 android:drawableTop="@drawable/current_crowd"
                 android:lineSpacingExtra="8dp"
-                android:text="春节期间，平台参与的手机QQ抢红包，因活动期间访问用户过多，暂停活期认购、赎回操作，待活动高峰过后，系统会恢复认购、赎回操作。"
+                android:text="因秒钱联合腾讯举办春节红包活动，我们将暂停活期产品的认购、赎回操作，给您带来的不变，深表歉意。活期产品再次开放的时间，请查阅公告。"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mq_font7_v2" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:text="活动预计开标时间"
-                android:textColor="@color/mq_y1_v2"
-                android:textSize="@dimen/mq_font7_v2" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bt_subscribe"
-                android:text="初五（02月01日）"
-                android:textColor="@color/mq_r1"
-                android:textSize="@dimen/mq_font8_v2" />
         </LinearLayout>
     </ScrollView>
 

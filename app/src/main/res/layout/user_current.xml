@@ -237,7 +237,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:paddingBottom="20dp"
-                    android:text="因平台参与手机QQ抢红包，活动期间可能出现用户访问量过大，为避免操作失败，平台针对认购、赎回、提现进行如下调整：\n(1).1月20日~1月31日，暂停活期认购；\n(2).1月27日~1月31日，暂停活期赎回、提现；"
+                    android:text="因秒钱联合腾讯举办春节红包活动，我们将在近期多次暂停活期产品的认购、赎回服务，给您带来的不变，深表歉意。活期产品再次开放的时间，请查阅公告。"
                     android:textColor="@color/mq_b4_v2"
                     android:textSize="@dimen/mq_font5_v2" />
             </LinearLayout>
