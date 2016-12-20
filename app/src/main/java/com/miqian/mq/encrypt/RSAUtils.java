@@ -47,9 +47,6 @@ public class RSAUtils {
      * @return
      */
     public static String encryptByPublic(String content) {
-        if (!isEncrypt) {
-            return content;
-        }
         try {
             PublicKey pubkey = getPublicKeyFromX509(RSA, Urls.RSA_PUBLICE);
 
@@ -66,6 +63,9 @@ public class RSAUtils {
     public static String encryptURLEncode(String content) {
         if (TextUtils.isEmpty(content)){
             return "";
+        }
+        if (!isEncrypt) {
+            return content;
         }
         try {
             return URLEncoder.encode(encryptByPublic(content), "UTF-8");
