@@ -406,6 +406,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                     jumpToResult(CurrentInvestment.FAIL, orderLian.getAmt(), orderLian.getOrderNo());
                 } else if (orderLianResult.getCode().equals("100097")) {
                     jumpToResult(CurrentInvestment.PROCESSING, orderLian.getAmt(), orderLian.getOrderNo());
+                } else {
+                    Uihelper.showToast(mActivity, orderLianResult.getMessage());
                 }
             }
 
