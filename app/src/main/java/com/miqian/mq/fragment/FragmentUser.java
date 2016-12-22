@@ -274,7 +274,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             } else {
                 btn_message.setImageResource(R.drawable.btn_message);
             }
-        } else {
+        }else {
             btn_message.setVisibility(View.GONE);
         }
         btn_message.setOnClickListener(this);
@@ -456,7 +456,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
 
                         if ("1".equals(userInfo.getBindCardStatus())) {
-                            if (userInfo.getWithdrawCashSwitch() == 0) {
+                            if (userInfo.getWithdrawCashSwitch() == 1) {
                                 Uihelper.showToast(getActivity(), R.string.qq_project_rollout);
                             } else {
                                 Intent intent = new Intent(getActivity(), RolloutActivity.class);
