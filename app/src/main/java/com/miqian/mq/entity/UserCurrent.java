@@ -21,7 +21,7 @@ public class UserCurrent implements Serializable{
     private BigDecimal curDayResidue;//当日剩余可赎回额度
     private String warmPrompt;//温馨提示
     private BigDecimal lmtDayAmt;//赎回限制每日金额
-    private int redeemSwitch; //2017手Q 赎回开关
+    private String redeemSwitch; //2017手Q 赎回开关
 
     public BigDecimal getLmtDayAmt() {
         return lmtDayAmt;
@@ -127,11 +127,11 @@ public class UserCurrent implements Serializable{
         this.balance = balance;
     }
 
-    public int getRedeemSwitch() {
+    public String getRedeemSwitch() {
         return redeemSwitch;
     }
 
-    public void setRedeemSwitch(int redeemSwitch) {
+    public void setRedeemSwitch(String redeemSwitch) {
         this.redeemSwitch = redeemSwitch;
     }
 }
