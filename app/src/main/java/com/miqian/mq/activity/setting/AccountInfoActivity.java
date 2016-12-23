@@ -64,7 +64,7 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void onDestroy() {
-        if (extendOperationController != null) {
+        if (extendOperationController!=null){
             extendOperationController.unRegisterExtendOperationListener(this);
         }
         super.onDestroy();
@@ -92,7 +92,7 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
             frame_bankcard.setVisibility(View.VISIBLE);
             findViewById(R.id.divider_bank).setVisibility(View.VISIBLE);
             String bankNo = RSAUtils.decryptByPrivate(userInfo.getBankNo());
-            if (!TextUtils.isEmpty(bankNo) && bankNo.length() > 4) {
+            if (!TextUtils.isEmpty(bankNo)) {
                 tvCardNum.setText(bankNo.substring(0, 4) + " **** **** " + bankNo.substring(bankNo.length() - 4, bankNo.length()));
             }
             if (!TextUtils.isEmpty(userInfo.getBankName())) {
@@ -125,8 +125,8 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
             case R.id.frame_telephone://修改绑定手机
                 String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
                 if ("YES".equals(value)) {
-                    Uihelper.showToast(mContext, R.string.qq_project_modifyphone);
-                } else {
+                    Uihelper.showToast(mContext,R.string.qq_project_modifyphone);
+                }else {
                     MobclickAgent.onEvent(mActivity, "1025");
                     Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
                     intent_phone.putExtra("isModifyPhone", true);
