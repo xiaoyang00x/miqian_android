@@ -86,7 +86,7 @@
                     style="@style/text_black_item"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="3dp"
-                    android:text="银行名" />
+                    android:text="" />
 
                 <ImageView
                     android:id="@+id/arrow_11"

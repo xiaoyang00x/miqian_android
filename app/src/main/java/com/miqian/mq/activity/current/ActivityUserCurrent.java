@@ -210,7 +210,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.bt_redeem:
-                if (userCurrent.getRedeemSwitch() == 1) {
+                if (userCurrent.getRedeemSwitch() == 0) {
                     Uihelper.showToast(mActivity, "活期赎回服务暂停中，再次开放时间请查阅公告。");
                 } else if (userCurrent != null && userCurrent.getCurAsset() != null) {
                     MobclickAgent.onEvent(mActivity, "1038");
