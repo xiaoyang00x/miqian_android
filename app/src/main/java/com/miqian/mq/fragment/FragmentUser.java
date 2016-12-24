@@ -328,7 +328,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1048");
                 //跳到注册页
-
+                loginMode=false;
                 swipeRefresh.setVisibility(View.GONE);
                 view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
                 QQprojectRegister.initData();
@@ -601,6 +601,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");
         editTelephone.setText(telphone);
         editTelephone.setSelection(telphone.length());
+        loginMode=true;
     }
 
     @Override
