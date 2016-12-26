@@ -252,7 +252,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             if (isQQproject) {
                 swipeRefresh.setVisibility(View.GONE);
                 layoutQQRegular.setVisibility(View.VISIBLE);
-                String spannableString = new String("因秒钱联合腾讯举办春节红包活动，我们将暂停已结算标的内容查询，给您带来的不变，深表歉意，待活动高峰结束后恢复操作。");
+                String spannableString = new String("因秒钱联合腾讯举办春节红包活动，我们将暂停已结算标的内容查询，给您带来的不便，深表歉意，待活动高峰结束后恢复操作。");
                 tvQQRegular.setText(spannableString, true);
                 return;
             }
