@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -166,6 +168,12 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 swipe_refresh.setRefreshing(false);
                 end();
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
+                super.onReceivedSslError(view, handler, error);
             }
         });
         webview.setDownloadListener(new DownloadListener() {
@@ -396,6 +404,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
                     + "document.querySelector('meta[name=\"miaoqian_right_content\"]').getAttribute('content')" + ");");
             super.onPageFinished(view, url);
         }
+
     }
 
     @JavascriptInterface

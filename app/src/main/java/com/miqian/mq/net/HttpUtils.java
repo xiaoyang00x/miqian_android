@@ -15,11 +15,18 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 
 /**
  * Created by Administrator on 2015/9/4.
@@ -37,6 +44,13 @@ public class HttpUtils {
         client.setConnectTimeout(30, TimeUnit.SECONDS);
         client.setWriteTimeout(30, TimeUnit.SECONDS);
         client.setReadTimeout(30, TimeUnit.SECONDS);
+        client.setSslSocketFactory(createSSLSocketFactory());
+        client.setHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        });
         FormEncodingBuilder builder = new FormEncodingBuilder();
         if (list == null) {
             list = new ArrayList<>();
@@ -121,5 +135,19 @@ public class HttpUtils {
         headerBuilder.add("netWorkStandard", MobileOS.getNetworkString(context));
         headerBuilder.add("Connection", "close");
         return headerBuilder;
+    }
+
+    private static SSLSocketFactory createSSLSocketFactory() {
+        SSLSocketFactory ssfFactory = null;
+
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, new TrustManager[]{new TrustAllCerts()}, new SecureRandom());
+
+            ssfFactory = sc.getSocketFactory();
+        } catch (Exception e) {
+        }
+
+        return ssfFactory;
     }
 }
