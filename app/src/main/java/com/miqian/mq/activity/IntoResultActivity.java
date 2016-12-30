@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -91,6 +92,9 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_back:
+                if (status == CurrentInvestment.SUCCESS) {
+                    FragmentUser.refresh = true;
+                }
                 IntoResultActivity.this.finish();
                 break;
             default:

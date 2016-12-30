@@ -16,6 +16,7 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UpdateInfo;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -263,6 +264,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onSucceed(Meta result) {
                 end();
+                FragmentUser.refresh=true;
                 UserUtil.clearUserInfo(mActivity);
                 extendOperationController.doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER,null);
                 finish();

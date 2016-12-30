@@ -84,6 +84,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private boolean isQQproject;// 手Q活动开关
     private ImageView ivQQ;
     private Dialog_Register dialog_register;
+    public static boolean refresh = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,7 +109,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if ("YES".equals(value)) {
             isQQproject = true;
         }
-
+        refresh=true;
         findViewById(view);
         return view;
     }
@@ -145,6 +146,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     }
 
     private void obtainData() {
+        if (isQQproject && !refresh) {
+            return;
+        }
         if (!swipeRefresh.isRefreshing() && userInfo == null) {
             begin();
         }
@@ -260,6 +264,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
+                refresh=true;
                 obtainData();
             }
         });
@@ -328,7 +333,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1048");
                 //跳到注册页
-                loginMode=false;
+                loginMode = false;
                 swipeRefresh.setVisibility(View.GONE);
                 view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
                 QQprojectRegister.initData();
@@ -509,6 +514,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //优惠券
             case R.id.frame_ticket:
+                refresh=false;
                 MobclickAgent.onEvent(getActivity(), "1022");
                 startActivity(new Intent(getActivity(), MyTicketActivity.class));
                 break;
@@ -523,6 +529,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //我的设置
             case R.id.bt_right:
+                refresh=false;
                 MobclickAgent.onEvent(getActivity(), "1016");
                 Intent intent_setting = new Intent(getActivity(), SettingActivity.class);
                 Bundle extra = new Bundle();
@@ -532,6 +539,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //我的邀请
             case R.id.frame_invite:
+                refresh=false;
                 WebActivity.startActivity(mContext, Urls.web_my_invite);
                 break;
             default:
@@ -601,7 +609,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         String telphone = Pref.getString(Pref.TELEPHONE, getActivity(), "");
         editTelephone.setText(telphone);
         editTelephone.setSelection(telphone.length());
-        loginMode=true;
+        loginMode = true;
     }
 
     @Override
