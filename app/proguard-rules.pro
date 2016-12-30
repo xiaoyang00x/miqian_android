@@ -33,10 +33,6 @@
 
 
 -keep class com.miqian.mq.activity.WebActivity { *;}
--keep public class android.net.http.SslError
--dontwarn android.webkit.WebView
--dontwarn android.net.http.SslError
--dontwarn Android.webkit.WebViewClient
 
 -keep class com.miqian.mq.entity.** { *;}
 
