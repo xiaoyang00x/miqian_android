@@ -1,7 +1,11 @@
 package com.miqian.mq.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -264,5 +268,43 @@ public class Uihelper {
 
     public static void setLastClickTime() {
         lastClickTime = 0;
+    }
+
+    /**
+     * 检验程序是否安装
+     * @param context
+     * @param packagename
+     * @return
+     */
+    public static boolean isAppInstalled(Context context, String packagename) {
+        PackageInfo packageInfo;
+        try {
+            packageInfo = context.getPackageManager().getPackageInfo(packagename, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            packageInfo = null;
+            e.printStackTrace();
+        }
+        if (packageInfo == null) {
+            //System.out.println("没有安装");
+            return false;
+        } else {
+            //System.out.println("已经安装");
+            return true;
+        }
+    }
+
+    /**
+     * 获取下载跳转intent
+     * @param context
+     * @param url
+     * @return
+     */
+    public static Intent getDownIntent(Context context, String url) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        if (Uihelper.isAppInstalled(context, "com.android.browser")) {
+            intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+        }
+        return intent;
     }
 }

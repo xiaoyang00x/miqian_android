@@ -20,7 +20,7 @@ public class ChannelUtil {
     private static String mChannel;
 
     public static String getChannel(Context context) {
-        return getChannel(context, "1000");
+        return getChannel(context, MobileOS.getChannelName(context));
     }
 
     public static String getChannel(Context context, String defaultChannel) {

@@ -24,6 +24,7 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileDeviceUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.WFYTitle;
@@ -227,9 +228,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         @Override
                         public void updateClick(String url) {
 //                        // 跳转到外部浏览器下载
-                            Uri uri = Uri.parse(url);
-                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(intent);
+                            startActivity(Uihelper.getDownIntent(mActivity, url));
                         }
                     };
                     dialogUpdate.setCancelable(false);
@@ -240,9 +239,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         @Override
                         public void updateClick(String url) {
 //                        // 跳转到外部浏览器下载
-                            Uri uri = Uri.parse(url);
-                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(intent);
+                            startActivity(Uihelper.getDownIntent(mActivity, url));
                         }
 
                     };
@@ -266,7 +263,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 end();
                 FragmentUser.refresh=true;
                 UserUtil.clearUserInfo(mActivity);
-                extendOperationController.doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER,null);
+                extendOperationController.doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
                 finish();
             }
 
@@ -310,7 +307,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         } else {
             userId = MobileDeviceUtil.getInstance(mApplicationContext).getMobileImei();
         }
-        if(TextUtils.isEmpty(userId)) {
+        if (TextUtils.isEmpty(userId)) {
             userId = MobileDeviceUtil.getInstance(mApplicationContext).getUUID();
         }
 

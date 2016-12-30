@@ -44,6 +44,7 @@ import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTip;
@@ -149,9 +150,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                         @Override
                         public void updateClick(String url) {
 //                        // 跳转到外部浏览器下载
-                            Uri uri = Uri.parse(url);
-                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(intent);
+                            startActivity(Uihelper.getDownIntent(context, url));
                         }
                     };
                     dialogUpdate.setCancelable(false);
@@ -163,9 +162,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                             @Override
                             public void updateClick(String url) {
 //                        // 跳转到外部浏览器下载
-                                Uri uri = Uri.parse(url);
-                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                startActivity(intent);
+                                startActivity(Uihelper.getDownIntent(context, url));
                             }
 
                         };
@@ -265,7 +262,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         int tabImageCount = Pref.getInt(Pref.TAB_IMAGE_COUNT, mApplicationContext, 0);
         final String navigationStr = Pref.getString(Pref.TAB_NAVIGATION_STR, mApplicationContext, "");
         final boolean isChangeTab = Pref.getBoolean(Pref.TAB_NAVIGATION_ON_OFF, mApplicationContext, false);
-        if(tabImageCount == 8 && !TextUtils.isEmpty(navigationStr) && isChangeTab) {
+        if (tabImageCount == 8 && !TextUtils.isEmpty(navigationStr) && isChangeTab) {
             navigation = JsonUtil.parseObject(navigationStr, Navigation.class);
             tabIndicator1 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(0).getImgClick(), R.string.main_tab_home);
             tabIndicator2 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(1).getImg(), R.string.main_tab_current);
@@ -273,14 +270,13 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             tabIndicator4 = new TabIndicator(mContext, tw, navigation.getNavigationList().get(3).getImg(), R.string.main_tab_user);
 
 
-
             tabIndicator1.getTabName().setTextColor(Color.parseColor(navigation.getColorClick()));
             tabIndicator2.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
             tabIndicator3.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
             tabIndicator4.getTabName().setTextColor(Color.parseColor(navigation.getColor()));
 
-        }else {
-            tabIndicator1 = new TabIndicator(mContext, tw,R.drawable.tab_home_selector, R.string.main_tab_home);
+        } else {
+            tabIndicator1 = new TabIndicator(mContext, tw, R.drawable.tab_home_selector, R.string.main_tab_home);
             tabIndicator2 = new TabIndicator(mContext, tw, R.drawable.tab_current_selector, R.string.main_tab_current);
             tabIndicator3 = new TabIndicator(mContext, tw, R.drawable.tab_regular_selector, R.string.main_tab_regular);
             tabIndicator4 = new TabIndicator(mContext, tw, R.drawable.tab_user_selector, R.string.main_tab_user);
@@ -295,14 +291,14 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 if (current_tab == 3) {
                     imgRedPointer.setVisibility(View.GONE);
                 }
-                if(!isChangeTab) return;
-                if(options == null) {
+                if (!isChangeTab) return;
+                if (options == null) {
                     options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
                 }
-                if(imageLoader == null) {
+                if (imageLoader == null) {
                     imageLoader = ImageLoader.getInstance();
                 }
-                if(navigation == null) return;
+                if (navigation == null) return;
                 switch (current_tab) {
                     case 0:
                         imageLoader.displayImage(navigation.getNavigationList().get(0).getImgClick(), tabIndicator1.getTabIcon());
@@ -372,6 +368,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
             setView(drawbleId, nameResId);
         }
+
         private TabIndicator(Context ctx, TabWidget tw, String url, int nameResId) {
             this.ctx = ctx;
             tabIndicator = (MyRelativeLayout) LayoutInflater.from(ctx).inflate(R.layout.tab_indicator, tw, false);
@@ -388,11 +385,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             tabIcon.setImageResource(drawbleId);
             tabName.setText(nameResId);
         }
+
         public void setView(String url, int nameResId) {
-            if(options == null) {
+            if (options == null) {
                 options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
             }
-            if(imageLoader == null) {
+            if (imageLoader == null) {
                 imageLoader = ImageLoader.getInstance();
             }
             imageLoader.displayImage(url, tabIcon);
@@ -691,7 +689,8 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     private void showDialog(JpushInfo jpushInfo) {
         if (dialogTips == null) {
-            dialogTips = new DialogTip(MainActivity.this) {};
+            dialogTips = new DialogTip(MainActivity.this) {
+            };
         }
         if (jpushInfo != null) {
             dialogTips.setInfo(jpushInfo.getContent());
