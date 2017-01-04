@@ -216,7 +216,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
     private void loadAds() {
 //        int adsInt = Pref.getInt(Pref.CONFIG_ADS, SplashActivity.this, 0);
-        int adsInt = 1;//此版本广告一直存在
+        int adsInt = 0;//此版本广告一直不存在
         if (adsInt == 1) {
             frameAds = (RelativeLayout) findViewById(R.id.frame_ads);
             btSkip = (Button) findViewById(R.id.bt_skip);
