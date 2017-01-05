@@ -97,7 +97,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void showEmptyView() {
         super.showEmptyView();
-        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
         if ("YES".equals(value)) {
             ((ImageView) mViewnoresult.findViewById(R.id.iv_data)).setBackgroundResource(R.drawable.bg_ticket_qq_none);
             ((TextView)mViewnoresult.findViewById(R.id.tv_tips)).setText("暂时无可用红包");

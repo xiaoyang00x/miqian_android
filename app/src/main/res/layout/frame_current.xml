@@ -231,10 +231,10 @@
                 android:layout_margin="30dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="40dp"
-                android:drawablePadding="15dp"
+                android:drawablePadding="20dp"
                 android:drawableTop="@drawable/current_crowd"
                 android:lineSpacingExtra="8dp"
-                android:text="因秒钱联合腾讯举办春节红包活动，我们将暂停活期产品的认购、赎回操作，给您带来的不便，深表歉意。活期产品再次开放的时间，请查阅公告。"
+                android:text="因红包活动，现暂停活期产品的认购、赎回操作。活动结束后，将恢复正常。给您带来的不便，深表歉意。\n\n活期产品再次开放的时间请查阅公告。"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mq_font7_v2" />
         </LinearLayout>
