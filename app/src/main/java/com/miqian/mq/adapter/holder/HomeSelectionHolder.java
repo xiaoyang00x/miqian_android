@@ -43,7 +43,7 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
         layout_container = (LinearLayout) itemView.findViewById(R.id.layout_container);
 
         divider.setVisibility(View.GONE);
-        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"));
+        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache_Test"));
 
     }
 

@@ -68,14 +68,14 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         }
         interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "6");
         findViewById(view);
-        String valueCache = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache");
+        String valueCache = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache_Test");
         if ("YES".equals(valueCache)) {
             isCache = true;
         } else {
             isCache = false;
         }
 
-        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
         if ("YES".equals(value)) {
             swipeRefresh.setVisibility(View.GONE);
             frameCrowd.setVisibility(View.VISIBLE);

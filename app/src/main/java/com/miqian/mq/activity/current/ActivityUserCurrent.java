@@ -56,7 +56,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     public void onCreate(Bundle arg0) {
         operationController = ExtendOperationController.getInstance();
         operationController.registerExtendOperationListener(this);
-        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
         if ("YES".equals(value)) {
             isCrowd = true;
         } else {
@@ -195,7 +195,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             case R.id.frame_current_record:
                 MobclickAgent.onEvent(mActivity, "1035");
                 if (isCrowd) {
-                    Uihelper.showToast(mActivity, "活动期间因访问量过大，交易记录服务暂停，活动结束后恢复");
+                    Uihelper.showToast(mActivity, "活动期间因访问量过大，交易记录暂停查询，活动结束后恢复。");
                 } else {
                     startActivity(new Intent(mActivity, ActivityCurrentRecord.class));
                 }
@@ -204,7 +204,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 MobclickAgent.onEvent(mActivity, "1036");
                 //项目匹配
                 if (isCrowd) {
-                    Uihelper.showToast(mActivity, "活动期间因访问量过大，匹配数据暂停查询，活动结束后恢复");
+                    Uihelper.showToast(mActivity, "活动期间因访问量过大，匹配数据暂停查询，活动结束后恢复。");
                 } else {
                     WebActivity.startActivity(mActivity, Urls.project_match + "0");
                 }
