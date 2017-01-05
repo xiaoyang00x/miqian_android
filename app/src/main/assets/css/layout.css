@@ -344,7 +344,7 @@ input::-webkit-inner-spin-button{
 }
 .text-left .dot-text {
     float: left;
-    text-align: right;
+    text-align: left;
 }
 .tree-dot .time {
     padding-bottom: 0.2rem;
@@ -407,14 +407,11 @@ input::-webkit-inner-spin-button{
     left: 0.3rem;
 }
 /* 红包使用说明 */
-.packet-rules {
-
-}
 .packet-rules .banner {
     background: url(../img/packet_banner.png) no-repeat center center;
     background-size: 100%;
     width: 7.5rem;
-    height: 7.29rem;
+    height: 6.54rem;
     margin: 0 auto;
 }
 .packet-rules .packet-con {
@@ -441,12 +438,20 @@ input::-webkit-inner-spin-button{
     margin: 0 auto;
     padding: 0.4rem 0 0.8rem;
 }
+.packet-item .foottip {
+    font-size: 0.28rem;
+    text-align: center;
+    color: #967f40;
+    margin: 0 auto;
+    padding: 0.4rem 0 0;
+}
 .packet-item .select-packet {
     background: url(../img/select_packet.png) no-repeat center center;
     background-size: 100%;
-    width: 3.96rem;
-    height: 7.79rem;
+    width: 5.98rem;
+    height: 10.62rem;
     margin: 0 auto;
+    padding:0.4rem 0 0.8rem;
 }
 .packet-item .sum {
     font-size: 0.36rem;
@@ -480,6 +485,12 @@ input::-webkit-inner-spin-button{
     height: 0.57rem;
     margin: 0 auto;
 }
+.packet-down{ position: fixed; left: 0; right: 0; bottom: 0; height:1.6rem; max-width: 750px; margin: 0 auto;}
+.packet-down img {width: 100%;}
+.rule {padding: 0.3rem 0.8rem}
+.rule>div{padding: 0.2rem 0}
+.rule i { float: left; width: 0.54rem; text-align: center; color: #323232; font-size: 0.28rem;}
+.rule p { padding-left: 0.54rem; font-size: 0.28rem; line-height: 0.36rem}
 /* 秒钱理财携手腾讯qq派送红包 */
 .mq-packet {
     background-color: #df3b43;

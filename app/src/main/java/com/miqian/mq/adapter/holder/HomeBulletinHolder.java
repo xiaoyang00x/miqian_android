@@ -41,7 +41,7 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
         layout_bulletin = itemView.findViewById(R.id.layout_bulletin);
         divider = itemView.findViewById(R.id.divider);
         view_qq = itemView.findViewById(R.id.view_qq);
-        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"));
+//        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"));
 
     }
 

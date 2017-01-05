@@ -79,7 +79,8 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
                         callback.onFail("");
                         return;
                     } else if (response.getCode().equals("900000")) {
-//                        UmengUpdateAgent.forceUpdate(mContext);
+                        callback.onFail(response.getMessage());
+                        return;
                     }
                     callback.onSucceed(result);
                 }

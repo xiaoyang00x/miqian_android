@@ -350,7 +350,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                     MyTicketInvalidActivity.startActivity(mContext);
                 }
             });
-            String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+            String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
             if ("YES".equals(value)) {
                 btOverdue.setVisibility(View.GONE);
             }
