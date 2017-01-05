@@ -182,7 +182,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@color/transparent"
-                android:onClick="textLawCick"
                 android:paddingBottom="35dp"
                 android:text="已有秒钱账号,直接登录 >"
                 android:textColor="@color/mq_r1_v2"
