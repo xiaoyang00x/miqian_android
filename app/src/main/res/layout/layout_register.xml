@@ -146,7 +146,6 @@
                     style="@style/click_btn"
                     android:layout_width="240dp"
                     android:layout_centerHorizontal="true"
-                    android:onClick="btn_click"
                     android:text="注册" />
             </RelativeLayout>
 
@@ -169,7 +168,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:background="@color/transparent"
-                    android:onClick="textLawCick"
                     android:text="《秒钱用户注册协议》"
                     android:textColor="@color/mq_bl2"
                     android:textSize="@dimen/mq_font4" />

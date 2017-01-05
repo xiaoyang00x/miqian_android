@@ -151,7 +151,6 @@
         <Button
             android:id="@+id/btn_next"
             style="@style/click_btn"
-            android:onClick="btn_click"
             android:layout_centerHorizontal="true"
             android:text="下一步" />
     </RelativeLayout>
@@ -175,7 +174,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@color/transparent"
-            android:onClick="textLawCick"
             android:text="《秒钱用户注册协议》"
             android:textColor="@color/mq_bl2"
             android:textSize="@dimen/mq_font4" />

@@ -1,7 +1,5 @@
 package com.miqian.mq.fragment;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.prefill.PreFillType;
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
@@ -51,7 +48,6 @@ import com.miqian.mq.views.Dialog_Register;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
-
 import java.math.BigDecimal;
 
 /**
@@ -85,6 +81,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private ImageView ivQQ;
     private Dialog_Register dialog_register;
     public static boolean refresh = true;
+    private QQprojectRegister qQprojectRegister;
+    private TextView tvForgetPW;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,8 +107,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if ("YES".equals(value)) {
             isQQproject = true;
         }
-        refresh=true;
+        refresh = true;
         findViewById(view);
+        qQprojectRegister = new QQprojectRegister(getActivity(), view, swipeRefresh);
+        qQprojectRegister.setLoginLister(this);
         return view;
     }
 
@@ -125,8 +125,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             if (loginMode) {
                 toLogin();
             } else {
-                QQprojectRegister qQprojectRegister = new QQprojectRegister(getActivity(), view, swipeRefresh);
-                qQprojectRegister.setLoginLister(this);
+                swipeRefresh.setVisibility(View.GONE);
+                view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
+                tvForgetPW.setEnabled(false);
             }
         }
         if (dialog_register == null) {
@@ -264,7 +265,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
-                refresh=true;
+                refresh = true;
                 obtainData();
             }
         });
@@ -336,11 +337,13 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 loginMode = false;
                 swipeRefresh.setVisibility(View.GONE);
                 view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
+                tvForgetPW.setEnabled(false);
                 QQprojectRegister.initData();
 
             }
         });
-        view.findViewById(R.id.tv_login_forgetpw).setOnClickListener(new View.OnClickListener() {
+        tvForgetPW = (TextView) view.findViewById(R.id.tv_login_forgetpw);
+        tvForgetPW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MobclickAgent.onEvent(getActivity(), "1047");
@@ -389,6 +392,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private void initUserView() {
         swipeRefresh.setVisibility(View.VISIBLE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.GONE);
+        tvForgetPW.setEnabled(true);
         if (!isQQproject) {
             view.findViewById(R.id.layout_record_invite).setVisibility(View.VISIBLE);
         }
@@ -401,6 +405,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         swipeRefresh.setVisibility(View.GONE);
         view.findViewById(R.id.layout_register).setVisibility(View.GONE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
+        tvForgetPW.setEnabled(true);
         //在线参数
 //        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
         String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "ShowQQRedBag");
@@ -514,7 +519,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //优惠券
             case R.id.frame_ticket:
-                refresh=false;
+                refresh = false;
                 MobclickAgent.onEvent(getActivity(), "1022");
                 startActivity(new Intent(getActivity(), MyTicketActivity.class));
                 break;
@@ -529,7 +534,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //我的设置
             case R.id.bt_right:
-                refresh=false;
+                refresh = false;
                 MobclickAgent.onEvent(getActivity(), "1016");
                 Intent intent_setting = new Intent(getActivity(), SettingActivity.class);
                 Bundle extra = new Bundle();
@@ -539,7 +544,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //我的邀请
             case R.id.frame_invite:
-                refresh=false;
+                refresh = false;
                 WebActivity.startActivity(mContext, Urls.web_my_invite);
                 break;
             default:

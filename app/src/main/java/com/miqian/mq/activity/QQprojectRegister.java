@@ -100,10 +100,6 @@ public class QQprojectRegister implements View.OnClickListener {
     private void initView() {
 
         mWaitingDialog = ProgressDialogView.create(mContext);
-
-        mSwipeRefresh.setVisibility(View.GONE);
-        mRootView.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
-
         mEt_Telephone = (EditText) mRootView.findViewById(R.id.et_account_telephone);
         mEt_Captcha = (EditText) mRootView.findViewById(R.id.et_account_captcha);
         mEt_Password = (EditText) mRootView.findViewById(R.id.et_account_password);
