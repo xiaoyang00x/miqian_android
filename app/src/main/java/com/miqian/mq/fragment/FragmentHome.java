@@ -27,6 +27,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.MyAsyncTask;
 import com.miqian.mq.receiver.HomeDialogReceiver;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.HomeDialog;
 import com.miqian.mq.views.MySwipeRefresh;
@@ -74,7 +75,7 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
     }
 
     private void setView() {
-        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache_Test"));
+        isQQCache = Uihelper.getConfigCache(mContext);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

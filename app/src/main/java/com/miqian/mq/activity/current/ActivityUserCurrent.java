@@ -56,8 +56,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     public void onCreate(Bundle arg0) {
         operationController = ExtendOperationController.getInstance();
         operationController.registerExtendOperationListener(this);
-        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
-        if ("YES".equals(value)) {
+        if (Uihelper.getConfigCrowd(mContext)) {
             isCrowd = true;
         } else {
             isCrowd = false;

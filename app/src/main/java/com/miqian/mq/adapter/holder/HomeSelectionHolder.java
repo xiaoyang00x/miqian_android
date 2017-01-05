@@ -17,6 +17,7 @@ import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.HomeSelectionProject;
 import com.miqian.mq.entity.RegularProjectInfo;
 import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.Uihelper;
 import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
@@ -43,7 +44,7 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
         layout_container = (LinearLayout) itemView.findViewById(R.id.layout_container);
 
         divider.setVisibility(View.GONE);
-        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache_Test"));
+        isQQCache = Uihelper.getConfigCache(mContext);
 
     }
 
