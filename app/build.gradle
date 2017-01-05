@@ -35,6 +35,25 @@ android {
     // 渠道名称
     productFlavors {
         "1000" {}
+//        "baishou" {}
+//        "360" {}
+//        "xiaomi" {}
+//        "wandoujia" {}
+//        "yingyongbao" {}
+//        "huawei" {}
+//        "meizu" {}
+//        "oppo" {}
+//        "lenovo" {}
+//        "letv" {}
+//        "jinli" {}
+//        "sogou" {}
+//        "pp" {}
+//        "anzhi" {}
+//        "jifeng" {}
+//        "nduo" {}
+//        "youyi" {}
+//        "yingyonghui" {}
+//        "vivo" {}
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [CHANNEL_VALUE: name]
         }

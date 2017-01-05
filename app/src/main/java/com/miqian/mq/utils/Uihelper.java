@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
+import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -306,5 +307,45 @@ public class Uihelper {
             intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
         }
         return intent;
+    }
+
+    /**
+     * 获取友盟在线参数 Cache
+     * @param mContext
+     * @return
+     */
+    public static boolean getConfigCache(Context mContext) {
+        String valueCache;
+        if (Config.DEBUG) {
+            valueCache = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache_Test");
+        } else {
+            valueCache = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache");
+        }
+
+        if ("YES".equals(valueCache)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 获取友盟在线参数 Crowd
+     * @param mContext
+     * @return
+     */
+    public static boolean getConfigCrowd(Context mContext) {
+        String valueCache;
+        if (Config.DEBUG) {
+            valueCache = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
+        } else {
+            valueCache = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd");
+        }
+
+        if ("YES".equals(valueCache)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

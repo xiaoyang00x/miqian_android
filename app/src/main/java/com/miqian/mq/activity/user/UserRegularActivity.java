@@ -59,8 +59,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onCreate(Bundle arg0) {
         //手Q开关
-        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
-        if ("YES".equals(value)) {
+        if (Uihelper.getConfigCrowd(mContext)) {
             isQQproject = true;
         }
         launchSuccess = getIntent().getBooleanExtra("launchSuccess", false);

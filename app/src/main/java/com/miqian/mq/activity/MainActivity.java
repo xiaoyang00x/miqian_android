@@ -670,7 +670,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 mTabHost.setVisibility(View.GONE);
                 maintenance.setVisibility(View.VISIBLE);
                 ((TextView) maintenance.findViewById(R.id.title)).setText(((MaintenanceResult) data).getTitle());
-                ((TextViewEx) maintenance.findViewById(R.id.content)).setText(((MaintenanceResult) data).getContent(), true);
+                ((TextView) maintenance.findViewById(R.id.content)).setText(((MaintenanceResult) data).getContent());
                 ((TextView) maintenance.findViewById(R.id.inscription)).setText(((MaintenanceResult) data).getInscription());
                 break;
             case OperationKey.ShowTips:

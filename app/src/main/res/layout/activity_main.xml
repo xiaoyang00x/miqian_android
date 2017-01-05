@@ -54,7 +54,7 @@
             android:textColor="@color/mq_r1"
             android:textSize="@dimen/mq_font1" />
 
-        <com.miqian.mq.views.TextViewEx
+        <TextView
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

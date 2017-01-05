@@ -103,8 +103,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         MainActivity mainActivity = (MainActivity) getActivity();//.setReshListener(this);
         mainActivity.setReshListener(this);
         //手Q开关
-        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
-        if ("YES".equals(value)) {
+        if (Uihelper.getConfigCrowd(mContext)) {
             isQQproject = true;
         }
         refresh = true;

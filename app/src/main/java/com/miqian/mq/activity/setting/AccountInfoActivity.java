@@ -123,8 +123,7 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
 
             case R.id.frame_telephone://修改绑定手机
-                String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Crowd_Test");
-                if ("YES".equals(value)) {
+                if (Uihelper.getConfigCrowd(mContext)) {
                     Uihelper.showToast(mContext, R.string.qq_project_modifyphone);
                 } else {
                     MobclickAgent.onEvent(mActivity, "1025");
