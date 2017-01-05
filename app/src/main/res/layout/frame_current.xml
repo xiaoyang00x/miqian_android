@@ -234,7 +234,7 @@
                 android:drawablePadding="20dp"
                 android:drawableTop="@drawable/current_crowd"
                 android:lineSpacingExtra="8dp"
-                android:text="因红包活动，现暂停活期产品的认购、赎回操作。活动结束后，将恢复正常。给您带来的不便，深表歉意。\n\n活期产品再次开放的时间请查阅公告。"
+                android:text="因红包活动，现暂停活期产品的认购、赎回操作。活动结束后，将恢复正常。给您带来的不便，请您谅解。\n\n活期产品再次开放的时间请查阅公告。"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mq_font7_v2" />
         </LinearLayout>
