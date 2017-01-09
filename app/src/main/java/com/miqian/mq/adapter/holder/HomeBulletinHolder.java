@@ -15,6 +15,7 @@ import com.miqian.mq.activity.user.NoticeActivity;
 import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.MessageInfo;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.Uihelper;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
 
@@ -41,8 +42,7 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
         layout_bulletin = itemView.findViewById(R.id.layout_bulletin);
         divider = itemView.findViewById(R.id.divider);
         view_qq = itemView.findViewById(R.id.view_qq);
-//        isQQCache = "YES".equals(OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache"));
-
+        isQQCache = Uihelper.getConfigCache(mContext);
     }
 
     @Override
@@ -55,20 +55,14 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
             long bulletinLocalTime = Pref.getLong(Pref.DATA_BULLETIN_TIME, mContext, 0);
 
             if (mData.getBsPushData().getSendTime() > bulletinLocalTime) {
-                img_bulletin.setImageResource(isQQCache?R.drawable.icon_home_bulletin_new_qq:R.drawable.icon_home_bulletin_new);
+                img_bulletin.setImageResource(R.drawable.icon_home_bulletin_new);
             } else {
-                img_bulletin.setImageResource(isQQCache?R.drawable.icon_home_bulletin_qq:R.drawable.icon_home_bulletin);
+                img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
             }
-            if(isQQCache) {
-                tv_content.setTextColor(Color.parseColor("#fbd79d"));
-                layout_bulletin.setBackgroundColor(Color.parseColor("#ce2811"));
-                divider.setBackgroundColor(Color.parseColor("#ac210e"));
-            }else {
-                tv_content.setTextColor(mContext.getResources().getColor(R.color.mq_bl1_v2));
-                layout_bulletin.setBackgroundColor(Color.WHITE);
-                divider.setBackgroundColor(mContext.getResources().getColor(R.color.mq_b6_v2));
-            }
-            view_qq.setVisibility(isQQCache?View.VISIBLE:View.GONE);
+            tv_content.setTextColor(mContext.getResources().getColor(R.color.mq_bl1_v2));
+            layout_bulletin.setBackgroundColor(Color.WHITE);
+            divider.setBackgroundColor(mContext.getResources().getColor(R.color.mq_b6_v2));
+            view_qq.setVisibility(View.GONE);
             tv_content.setOnClickListener(this);
             img_bulletin.setOnClickListener(this);
         }
@@ -115,7 +109,7 @@ public class HomeBulletinHolder extends HomeBaseViewHolder implements View.OnCli
                 mContext.startActivity(intent);
         }
         Pref.saveLong(Pref.DATA_BULLETIN_TIME, data.getBsPushData().getSendTime(), mContext);
-        img_bulletin.setImageResource(isQQCache?R.drawable.icon_home_bulletin_qq:R.drawable.icon_home_bulletin);
+        img_bulletin.setImageResource(R.drawable.icon_home_bulletin);
         boolean isReaded = Pref.getBoolean(Pref.PUSH + messageInfo.getId(), mContext, false);
         if (!isReaded) {
             Pref.saveBoolean(Pref.PUSH + messageInfo.getId(), true, mContext);
