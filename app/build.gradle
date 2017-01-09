@@ -14,6 +14,8 @@ android {
 
         resValue("string", "growingio_project_id", "aabcdf9bad412e4f")
         resValue("string", "growingio_url_scheme", "growing.f20b1d4a79b7e6e4")
+
+        buildConfigField("boolean", "CONFIG", "true")
     }
 
     packagingOptions {
@@ -80,6 +82,7 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled true //开启混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("boolean", "CONFIG", "false")
 
             // 编译自定义配置
             applicationVariants.all { variant ->
