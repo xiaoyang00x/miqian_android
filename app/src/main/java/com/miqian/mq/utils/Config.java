@@ -3,8 +3,6 @@ package com.miqian.mq.utils;
 import android.app.Activity;
 import android.util.DisplayMetrics;
 
-import com.miqian.mq.BuildConfig;
-
 /**
  * Description:配置信息
  * 
@@ -17,7 +15,7 @@ public class Config {
 	/**
 	 * 是否调试.
 	 */
-	public final static boolean DEBUG = BuildConfig.DEBUG;
+	public final static boolean DEBUG = false;
 
 	// 关于手机屏幕的一些属性
 	public static int WIDTH = 480; // 屏幕宽度
