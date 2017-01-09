@@ -73,7 +73,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private EditText editTelephone;
     private EditText editPassword;
     private ExtendOperationController extendOperationController;
-    private View view_QQredBag;
     private CustomDialog tipDialog;
     private boolean hasMessage;
     private boolean loginMode;
@@ -324,9 +323,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         final View relaPassword = view.findViewById(R.id.rela_password);
         editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
         editPassword = (EditText) view.findViewById(R.id.edit_password);
-
-        view_QQredBag = view.findViewById(R.id.layout_qq_redbag);
-
         Button btnLogin = (Button) view.findViewById(R.id.btn_login);
         view.findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -405,18 +401,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         view.findViewById(R.id.layout_register).setVisibility(View.GONE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
         tvForgetPW.setEnabled(true);
-        //在线参数
-//        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
-        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "ShowQQRedBag");
-        if ("YES".equals(value)) {
-            view_QQredBag.setVisibility(View.VISIBLE);
-            view.findViewById(R.id.frame_redbag).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog_register.show();
-                }
-            });
-        }
     }
 
     private void login(String telephone, String password) {
