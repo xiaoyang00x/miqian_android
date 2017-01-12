@@ -8,8 +8,8 @@ android {
         applicationId "com.miqian.mq"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 16
-        versionName '2.3.2'
+        versionCode 17
+        versionName '2.5.0'
         multiDexEnabled true
 
         resValue("string", "growingio_project_id", "aabcdf9bad412e4f")

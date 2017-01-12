@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,6 +20,7 @@ import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -27,7 +28,6 @@ import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WaterWaveView;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
 
@@ -44,6 +44,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     private RelativeLayout frameSafe;
     private RelativeLayout frameBack;
     private ScrollView frameCrowd;
+    private ImageView imageCrowd;
 
     private Activity mContext;
     private DialogPay dialogPay;
@@ -77,6 +78,9 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         if (Uihelper.getConfigCrowd(mContext)) {
             swipeRefresh.setVisibility(View.GONE);
             frameCrowd.setVisibility(View.VISIBLE);
+            android.widget.LinearLayout.LayoutParams paramsImage = (android.widget.LinearLayout.LayoutParams) imageCrowd.getLayoutParams();
+            paramsImage.height = Config.WIDTH * 65 / 72;
+            imageCrowd.setLayoutParams(paramsImage);
         } else {
             obtainData();
         }
@@ -86,6 +90,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
     private void findViewById(View view) {
         frameCrowd = (ScrollView) view.findViewById(R.id.frame_crowd);
+        imageCrowd = (ImageView) view.findViewById(R.id.image_crowd);
         waterWaveView = (WaterWaveView) view.findViewById(R.id.wave_view);
         waterWaveView.startWave();
 

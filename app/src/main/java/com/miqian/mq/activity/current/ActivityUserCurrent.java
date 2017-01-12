@@ -194,7 +194,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             case R.id.frame_current_record:
                 MobclickAgent.onEvent(mActivity, "1035");
                 if (isCrowd) {
-                    Uihelper.showToast(mActivity, "活动期间因访问量过大，交易记录暂停查询，活动结束后恢复。");
+                    Uihelper.showToast(mActivity, R.string.qq_project_current_record);
                 } else {
                     startActivity(new Intent(mActivity, ActivityCurrentRecord.class));
                 }
@@ -203,14 +203,14 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 MobclickAgent.onEvent(mActivity, "1036");
                 //项目匹配
                 if (isCrowd) {
-                    Uihelper.showToast(mActivity, "活动期间因访问量过大，匹配数据暂停查询，活动结束后恢复。");
+                    Uihelper.showToast(mActivity, R.string.qq_project_match);
                 } else {
                     WebActivity.startActivity(mActivity, Urls.project_match + "0");
                 }
                 break;
             case R.id.bt_redeem:
                 if ("0".equals(userCurrent.getRedeemSwitch())) {
-                    Uihelper.showToast(mActivity, "活期赎回服务暂停中，再次开放时间请查阅公告。");
+                    Uihelper.showToast(mActivity, R.string.qq_project_redeem);
                 } else if (userCurrent != null && userCurrent.getCurAsset() != null) {
                     MobclickAgent.onEvent(mActivity, "1038");
                     Intent intent = new Intent(mActivity, ActivityRedeem.class);
@@ -223,7 +223,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
             case R.id.bt_subscribe:
                 MobclickAgent.onEvent(mActivity, "1037");
                 if (isCrowd) {
-                    Uihelper.showToast(mActivity, "活期认购服务暂停中，再次开放时间请查阅公告。");
+                    Uihelper.showToast(mActivity, R.string.qq_project_subscribe);
                 } else {
                     if (balance != null && balance.compareTo(downLimit) >= 0) {
                         dialogPay.setEditMoneyHint("可用余额" + balance + "元");
