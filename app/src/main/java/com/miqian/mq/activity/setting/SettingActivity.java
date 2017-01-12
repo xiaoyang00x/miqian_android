@@ -1,13 +1,17 @@
 package com.miqian.mq.activity.setting;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -67,6 +71,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         View frame_setting_security = findViewById(R.id.frame_setting_security);
         View frame_setting_helpcenter = findViewById(R.id.frame_setting_helpcenter);
         View frame_setting_accountinfo = findViewById(R.id.frame_setting_accountinfo);
+        View frame_setting_telephone = findViewById(R.id.frame_telephone);
 
         View frame_setting_suggest = findViewById(R.id.frame_setting_suggest);
         View frame_setting_about = findViewById(R.id.frame_setting_about);
@@ -83,6 +88,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frame_setting_helpcenter.setOnClickListener(this);
         frame_setting_suggest.setOnClickListener(this);
         frame_setting_about.setOnClickListener(this);
+        frame_setting_telephone.setOnClickListener(this);
         ivPushState.setOnClickListener(this);
 
         extendOperationController = ExtendOperationController.getInstance();
@@ -166,6 +172,24 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 setUdeskUserInfo();
                 UdeskSDKManager.getInstance().showRobotOrConversation(SettingActivity.this);
 
+                break;
+            //客服电话
+            case R.id.frame_telephone:
+                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    MobclickAgent.onEvent(mContext, "1004_5");
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    Toast.makeText(mContext, "您尚未开启通话权限，请开启后再尝试。", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                MobclickAgent.onEvent(mContext, "1004_6");
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:4006656191"));
+                startActivity(intent);
                 break;
             //版本更新
             case R.id.frame_update:
@@ -261,7 +285,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onSucceed(Meta result) {
                 end();
-                FragmentUser.refresh=true;
+                FragmentUser.refresh = true;
                 UserUtil.clearUserInfo(mActivity);
                 extendOperationController.doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
                 finish();

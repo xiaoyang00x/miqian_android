@@ -155,6 +155,39 @@
 
             </RelativeLayout>
 
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                android:id="@+id/frame_telephone"
+                style="@style/listItem">
+
+                <TextView
+                    style="@style/text_black_item"
+                    android:layout_centerVertical="true"
+                    android:text="客服电话" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/arrow_telephone"
+                    android:text="400-615-6191"
+                    android:textColor="@color/mq_bl1_v2"
+                    android:textSize="@dimen/mq_font2"
+                    />
+
+                <ImageView
+                    android:id="@+id/arrow_telephone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/right" />
+
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/frame_setting_push_state"

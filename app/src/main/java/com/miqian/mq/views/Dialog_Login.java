@@ -2,8 +2,6 @@ package com.miqian.mq.views;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -24,7 +22,6 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 /**
  * Created by Administrator on 2015/9/1.
@@ -40,6 +37,7 @@ public abstract class Dialog_Login extends Dialog {
         this.setContentView(R.layout.dialog_login);
         initView();
     }
+
     private void initView() {
         mWaitingDialog = ProgressDialogView.create(mContext);
         final EditText editTelephone = (EditText) findViewById(R.id.edit_telephone);
@@ -105,25 +103,10 @@ public abstract class Dialog_Login extends Dialog {
 
             }
         });
-        View view_QQredBag = findViewById(R.id.layout_qq_redbag);
-        //在线参数
-//        OnlineConfigAgent.getInstance().updateOnlineConfig(mContext);
-        String value = OnlineConfigAgent.getInstance().getConfigParams(mContext, "ShowQQRedBag");
-        if ("YES".equals(value)) {
-            view_QQredBag.setVisibility(View.VISIBLE);
-            findViewById(R.id.frame_redbag).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //跳到注册页
-                    dismiss();
-                    UserUtil.showRegisterDialog(mContext);
-                }
-            });
-        }
-
     }
 
     public abstract void loginSuccess();
+
     public void login(String telephone, String password) {
         begin();
         HttpRequest.login(mContext, new ICallback<LoginResult>() {

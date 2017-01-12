@@ -189,6 +189,8 @@ public class Urls {
      */
     //注册页：《秒钱用户注册协议》
     public final static String web_register_law = "https://res.shicaidai.com/miaoqian/webView/service-items.html";
+    //《网络借贷风险及禁止行为提示》
+    public final static String web_register_law_net = "https://res.shicaidai.com/miaoqian/webView/dengluxieyi.html";
     //充值页面：《资金管理协议》
     public final static String web_recharge_law = "https://res.shicaidai.com/miaoqian/webView/zjglxy.html";
     //活期认购页：《活期赚服务协议》

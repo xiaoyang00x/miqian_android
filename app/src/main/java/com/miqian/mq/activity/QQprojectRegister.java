@@ -8,6 +8,8 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
@@ -104,12 +106,15 @@ public class QQprojectRegister implements View.OnClickListener {
         mEt_Captcha = (EditText) mRootView.findViewById(R.id.et_account_captcha);
         mEt_Password = (EditText) mRootView.findViewById(R.id.et_account_password);
         mBtn_sendCaptcha = (Button) mRootView.findViewById(R.id.btn_send);
-        Button mBtn_register = (Button) mRootView.findViewById(R.id.btn_register);
+        final Button mBtn_register = (Button) mRootView.findViewById(R.id.btn_register);
         Button mBtn_TextLaw = (Button) mRootView.findViewById(R.id.text_law);
+        Button mBtn_TextLaw_Net = (Button) mRootView.findViewById(R.id.text_law_net);
         Button mBtntoLogin = (Button) mRootView.findViewById(R.id.btn_tologin);
+        CheckBox checkBoxLaw = (CheckBox) mRootView.findViewById(R.id.check_law);
 
         mBtn_register.setOnClickListener(this);
         mBtn_TextLaw.setOnClickListener(this);
+        mBtn_TextLaw_Net.setOnClickListener(this);
         mBtntoLogin.setOnClickListener(this);
 
         mEt_Telephone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -126,6 +131,17 @@ public class QQprojectRegister implements View.OnClickListener {
             public void onClick(View v) {
                 MobclickAgent.onEvent(mContext, "1049");
                 watchEdittext(NUM_TYPE_CAPTCHA);
+            }
+        });
+
+        checkBoxLaw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    mBtn_register.setEnabled(true);
+                } else {
+                    mBtn_register.setEnabled(false);
+                }
             }
         });
     }
@@ -220,6 +236,10 @@ public class QQprojectRegister implements View.OnClickListener {
             case R.id.text_law:
                 MobclickAgent.onEvent(mContext, "1051");
                 WebActivity.startActivity(mContext, Urls.web_register_law);
+
+                break;
+            case R.id.text_law_net://网络借贷协议
+                WebActivity.startActivity(mContext, Urls.web_register_law_net);
 
                 break;
             case R.id.btn_tologin:
