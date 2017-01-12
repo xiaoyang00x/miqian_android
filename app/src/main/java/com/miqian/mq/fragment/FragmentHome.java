@@ -28,7 +28,6 @@ import com.miqian.mq.net.MyAsyncTask;
 import com.miqian.mq.receiver.HomeDialogReceiver;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.HomeDialog;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.PromotionDialog;
@@ -37,7 +36,6 @@ import com.miqian.mq.views.ServerBusyView;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.util.ArrayList;
 import java.util.Timer;
