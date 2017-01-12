@@ -57,7 +57,6 @@
                 style="@style/item_divider"
                 android:layout_marginLeft="10dp" />
 
-
             <RelativeLayout
                 android:id="@+id/rela_password"
                 android:layout_width="match_parent"
@@ -99,24 +98,54 @@
                 style="@style/FillContent"
                 android:orientation="vertical"
                 android:paddingTop="35dp">
-
-                <Button
-                    android:id="@+id/btn_login"
-                    android:layout_width="250dp"
-                    android:layout_height="45dp"
+                <LinearLayout
+                    android:id="@+id/layout_law"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_login"
                     android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:background="@drawable/btn_red"
-                    android:text="登录"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/mq_font7_v2" />
+                    android:layout_gravity="center_horizontal">
 
+                    <CheckBox
+                        android:id="@+id/check_law_dialog_login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:checked="true"
+                        />
+                    <LinearLayout
+                        android:id="@+id/layout_net_law"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:id="@+id/text_law"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:text="我已阅读并同意《网络借贷风险"
+                            android:textColor="@color/mq_bl2"
+                            android:textSize="@dimen/mq_font4" />
+                        <Button
+                            android:id="@+id/text_law2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:text="及禁止行为提示》"
+                            android:textColor="@color/mq_bl2"
+                            android:textSize="@dimen/mq_font4" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/btn_login"
                     android:layout_alignRight="@+id/btn_login"
-                    android:layout_below="@+id/btn_login"
+                    android:layout_below="@+id/layout_law"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:paddingLeft="8dp"
@@ -141,6 +170,18 @@
                         android:textColor="@color/mq_r1"
                         android:textSize="@dimen/mq_font4_v2" />
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="220dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_red"
+                    android:text="登录"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/mq_font7_v2" />
             </RelativeLayout>
 
 

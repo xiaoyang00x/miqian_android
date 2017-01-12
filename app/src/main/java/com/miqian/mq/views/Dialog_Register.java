@@ -9,6 +9,8 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
@@ -31,7 +33,7 @@ import com.umeng.analytics.MobclickAgent;
 /**
  * Created by Administrator on 2015/9/1.
  */
-public abstract class Dialog_Register extends Dialog implements View.OnClickListener{
+public abstract class Dialog_Register extends Dialog implements View.OnClickListener {
 
     public int type;
     private final Context mContext;
@@ -59,6 +61,7 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
         initView();
         obtainData();
     }
+
     public void obtainData() {
         handler = new Handler() {
             @Override
@@ -73,26 +76,31 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
             }
         };
     }
-    public interface RegisterListenerFromDialog{
+
+    public interface RegisterListenerFromDialog {
         void registerSuccessfromDialog();
     }
 
-    public void setLoginLister(RegisterListenerFromDialog registListener){
-        this.mRegistListener=registListener;
+    public void setLoginLister(RegisterListenerFromDialog registListener) {
+        this.mRegistListener = registListener;
     }
+
     private void initView() {
         mWaitingDialog = ProgressDialogView.create(mContext);
         mEt_Telephone = (EditText) findViewById(R.id.et_account_telephone);
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
-        mEt_Password = (EditText)findViewById(R.id.et_account_password);
-        mBtn_sendCaptcha = (Button)findViewById(R.id.btn_send);
-        Button mBtn_register = (Button)findViewById(R.id.btn_register);
-        Button mBtn_TextLaw = (Button)findViewById(R.id.text_law);
-        Button mBtntoLogin = (Button)findViewById(R.id.btn_tologin);
+        mEt_Password = (EditText) findViewById(R.id.et_account_password);
+        mBtn_sendCaptcha = (Button) findViewById(R.id.btn_send);
+        final Button mBtn_register = (Button) findViewById(R.id.btn_register);
+        Button mBtn_TextLaw = (Button) findViewById(R.id.tv_law);
+        Button mBtn_TextLaw_Net = (Button) findViewById(R.id.text_law_net);
+        Button mBtntoLogin = (Button) findViewById(R.id.btn_tologin);
+        CheckBox checkBoxLaw = (CheckBox)findViewById(R.id.check_law_dialog);
 
         mBtn_register.setOnClickListener(this);
         mBtn_TextLaw.setOnClickListener(this);
         mBtntoLogin.setOnClickListener(this);
+        mBtn_TextLaw_Net.setOnClickListener(this);
 
         mEt_Telephone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -108,6 +116,17 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
             public void onClick(View v) {
                 MobclickAgent.onEvent(mContext, "1049");
                 watchEdittext(NUM_TYPE_CAPTCHA);
+            }
+        });
+
+        checkBoxLaw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    mBtn_register.setEnabled(true);
+                } else {
+                    mBtn_register.setEnabled(false);
+                }
             }
         });
     }
@@ -197,9 +216,13 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
                 click();
 
                 break;
-            case R.id.text_law:
+            case R.id.tv_law:
                 MobclickAgent.onEvent(mContext, "1051");
                 WebActivity.startActivity(mContext, Urls.web_register_law);
+
+                break;
+            case R.id.text_law_net://网络借贷协议
+                WebActivity.startActivity(mContext, Urls.web_register_law_net);
 
                 break;
             case R.id.btn_tologin:
@@ -209,8 +232,11 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
                 break;
         }
     }
+
     public abstract void toLogin();
+
     public abstract void registerSuccess();
+
     class MyRunnable implements Runnable {
 
         @Override
@@ -257,6 +283,7 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
         }, phone, TypeUtil.CAPTCHA_REGISTER);
 
     }
+
     /**
      * 显示 loading 对话框
      */
