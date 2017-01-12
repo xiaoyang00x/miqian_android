@@ -51,7 +51,15 @@
   <string name="main_tab_user">我的</string>
 
   <!-- 关于手Q的提示文案-->
-  <string name="qq_project_modifyphone">红包活动期间，换绑手机号服务暂停，活动结束后恢复。</string>
-  <string name="qq_project_rollout">因红包活动，暂停提现服务，活动结束后恢复正常。给您带来的不便，我们深表歉意。再次开放时间请查阅公告。</string>
+  <string name="qq_project_current">因参与手机QQ红包活动期间用户访问量过大。为确保基本服务正常，现暂停活期产品的认购、赎回服务。活动结束后，将全部恢复正常。给您带来的不便，深表歉意。\n活期产品再次开放的时间2月2日(初六)。</string>
+  <string name="qq_project_regular">因参与手机QQ红包活动期间用户访问量过大。为确保基本服务正常，我们将暂停已结算标的内容查询，待活动高峰结束后将恢复正常。给您带来的不便，深表歉意。</string>
+  <string name="qq_project_current_tip">因参与手机QQ红包活动期间用户访问量过大。为确保基本服务正常，我们将在近期多次暂停活期产品的认购、赎回服务，活动结束后，将全部恢复正常。给您带来的不便，深表歉意。具体暂停服务时间，请查阅公告。</string>
+  <string name="qq_project_redeem">由于用户访问量过大，为确保基本服务正常，现暂停活期赎回服务，再次开放时间请查阅公告。</string>
+  <string name="qq_project_subscribe">由于用户访问量过大，为确保基本服务正常，现暂停活期认购服务，再次开放时间请查阅公告。</string>
+  <string name="qq_project_match">由于用户访问量过大，为确保基本服务正常，匹配数据暂停查询，活动结束后将恢复正常。</string>
+  <string name="qq_project_current_record">由于用户访问量过大，为确保基本服务正常，交易记录暂停查询，活动结束后将恢复正常。</string>
+  <string name="qq_project_modifyphone">因参与手机QQ红包活动期间用户访问量过大。为确保基本服务正常，现暂停换绑手机号服务，活动结束后将恢复正常。给您带来的不便，深表歉意。</string>
+  <string name="qq_project_rollout">因参与手机QQ红包活动期间用户访问量过大。为确保基本服务正常，现暂停提现服务，活动结束后恢复正常。给您带来的不便，我们深表歉意。再次开放时间请查阅公告。</string>
+
 
 </resources>
