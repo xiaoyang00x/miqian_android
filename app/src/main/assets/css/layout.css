@@ -415,7 +415,7 @@ input::-webkit-inner-spin-button{
     margin: 0 auto;
 }
 .packet-rules .packet-con {
-    background-color: #fff7dd;
+    background: #f5ebcb url(../img/packet_topbg.png) no-repeat top center; background-size: 100%;
 }
 .packet-con .packet-item {
     margin-bottom: 0.6rem;
@@ -462,8 +462,8 @@ input::-webkit-inner-spin-button{
 .packet-item .packet-addr {
     background: url(../img/packet_addr.png) no-repeat center center;
     background-size: 100%;
-    width: 7.34rem;
-    height: 8.85rem;
+    width: 7.5rem;
+    height: 8.9rem;
     margin: 0.8rem auto 0.2rem;
 }
 .packet-item .tips {
