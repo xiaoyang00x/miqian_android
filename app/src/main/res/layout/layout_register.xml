@@ -155,7 +155,7 @@
                 android:layout_gravity="center_horizontal">
 
                 <CheckBox
-                    android:id="@+id/check_law"
+                    android:id="@+id/check_law_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -171,7 +171,7 @@
                     android:textSize="@dimen/mq_font4" />
 
                 <Button
-                    android:id="@+id/text_law"
+                    android:id="@+id/tv_law"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

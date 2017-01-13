@@ -2,12 +2,19 @@ package com.miqian.mq.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -48,6 +55,7 @@ import com.miqian.mq.views.Dialog_Register;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.onlineconfig.OnlineConfigAgent;
+
 import java.math.BigDecimal;
 
 /**
@@ -171,6 +179,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     userInfoTemp.setMobilePhone(userInfo.getMobilePhone());
                     userInfoTemp.setRealName(userInfo.getRealName());
                     setData(userInfo);
+                }else {
+                    Uihelper.showToast(getActivity(), result.getMessage());
                 }
             }
 
@@ -288,7 +298,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         btn_setting.setOnClickListener(this);
 
         //*********已登录的的Ui***************
-        Button btn_RollIn = (Button) view.findViewById(R.id.btn_rollin);
+        final Button btn_RollIn = (Button) view.findViewById(R.id.btn_rollin);
         Button btn_RollOut = (Button) view.findViewById(R.id.btn_rollout);
 
         btn_RollIn.setOnClickListener(this);
@@ -323,7 +333,32 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         final View relaPassword = view.findViewById(R.id.rela_password);
         editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
         editPassword = (EditText) view.findViewById(R.id.edit_password);
-        Button btnLogin = (Button) view.findViewById(R.id.btn_login);
+        final Button btnLogin = (Button) view.findViewById(R.id.btn_login);
+        CheckBox checkBoxLaw = (CheckBox) view.findViewById(R.id.check_law);
+
+        TextView tvLaw = (TextView) view.findViewById(R.id.text_law);
+        SpannableString spanLaw = new SpannableString("我已阅读并同意《网络借贷风险");
+        spanLaw.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.mq_b2)), 0, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvLaw.setText(spanLaw);
+
+        checkBoxLaw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    btnLogin.setEnabled(true);
+                } else {
+                    btnLogin.setEnabled(false);
+                }
+            }
+        });
+        view.findViewById(R.id.layout_net_law).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WebActivity.startActivity(mContext, Urls.web_register_law_net);
+            }
+        });
+
+
         view.findViewById(R.id.tv_login_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

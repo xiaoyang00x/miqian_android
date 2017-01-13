@@ -107,10 +107,10 @@ public class QQprojectRegister implements View.OnClickListener {
         mEt_Password = (EditText) mRootView.findViewById(R.id.et_account_password);
         mBtn_sendCaptcha = (Button) mRootView.findViewById(R.id.btn_send);
         final Button mBtn_register = (Button) mRootView.findViewById(R.id.btn_register);
-        Button mBtn_TextLaw = (Button) mRootView.findViewById(R.id.text_law);
+        Button mBtn_TextLaw = (Button) mRootView.findViewById(R.id.tv_law);
         Button mBtn_TextLaw_Net = (Button) mRootView.findViewById(R.id.text_law_net);
         Button mBtntoLogin = (Button) mRootView.findViewById(R.id.btn_tologin);
-        CheckBox checkBoxLaw = (CheckBox) mRootView.findViewById(R.id.check_law);
+        CheckBox checkBoxLaw = (CheckBox) mRootView.findViewById(R.id.check_law_register);
 
         mBtn_register.setOnClickListener(this);
         mBtn_TextLaw.setOnClickListener(this);
@@ -233,7 +233,7 @@ public class QQprojectRegister implements View.OnClickListener {
                 click();
 
                 break;
-            case R.id.text_law:
+            case R.id.tv_law:
                 MobclickAgent.onEvent(mContext, "1051");
                 WebActivity.startActivity(mContext, Urls.web_register_law);
 

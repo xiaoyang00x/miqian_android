@@ -108,6 +108,9 @@ public class SetPasswordActivity extends BaseActivity {
                     end();
                     Uihelper.showToast(mActivity, "设置密码成功");
                     SetPasswordActivity.this.finish();
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
+
                 }
 
                 @Override
