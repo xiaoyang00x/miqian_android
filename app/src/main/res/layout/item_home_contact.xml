@@ -24,7 +24,7 @@
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/kefu_icon"
             android:drawablePadding="5dp"
-            android:text="客服电话"
+            android:text="在线咨询"
             android:textColor="@color/mq_bl1_v2"
             android:textSize="@dimen/mq_font7_v2" />
 
