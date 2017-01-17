@@ -67,7 +67,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         if (parent != null) {
             parent.removeView(view);
         }
-        interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "6");
+        interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "5");
         findViewById(view);
         if (Uihelper.getConfigCache(mContext)) {
             isCache = true;

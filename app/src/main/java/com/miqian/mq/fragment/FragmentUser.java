@@ -90,6 +90,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     public static boolean refresh = true;
     private QQprojectRegister qQprojectRegister;
     private TextView tvForgetPW;
+    private Button btnLogin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,6 +135,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 swipeRefresh.setVisibility(View.GONE);
                 view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
                 tvForgetPW.setEnabled(false);
+                btnLogin.setEnabled(false);
             }
         }
         if (dialog_register == null) {
@@ -333,7 +335,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         final View relaPassword = view.findViewById(R.id.rela_password);
         editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
         editPassword = (EditText) view.findViewById(R.id.edit_password);
-        final Button btnLogin = (Button) view.findViewById(R.id.btn_login);
+        btnLogin = (Button) view.findViewById(R.id.btn_login);
         CheckBox checkBoxLaw = (CheckBox) view.findViewById(R.id.check_law);
 
         TextView tvLaw = (TextView) view.findViewById(R.id.text_law);
@@ -368,6 +370,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 swipeRefresh.setVisibility(View.GONE);
                 view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
                 tvForgetPW.setEnabled(false);
+                btnLogin.setEnabled(false);
                 QQprojectRegister.initData();
 
             }
@@ -423,6 +426,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         swipeRefresh.setVisibility(View.VISIBLE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.GONE);
         tvForgetPW.setEnabled(true);
+        btnLogin.setEnabled(true);
+
         if (!isQQproject) {
             view.findViewById(R.id.layout_record_invite).setVisibility(View.VISIBLE);
         }
@@ -436,6 +441,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         view.findViewById(R.id.layout_register).setVisibility(View.GONE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
         tvForgetPW.setEnabled(true);
+        btnLogin.setEnabled(true);
     }
 
     private void login(String telephone, String password) {
