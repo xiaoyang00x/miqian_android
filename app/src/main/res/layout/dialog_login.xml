@@ -90,6 +90,10 @@
                     android:typeface="monospace" />
             </RelativeLayout>
 
+            <View
+                style="@style/item_divider"
+                android:layout_marginLeft="10dp" />
+
             <RelativeLayout
                 style="@style/FillContent"
                 android:orientation="vertical"
@@ -184,10 +188,6 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/mq_font7_v2" />
             </RelativeLayout>
-
-            <View
-                style="@style/item_divider"
-                android:layout_marginLeft="10dp" />
 
 
         </LinearLayout>
