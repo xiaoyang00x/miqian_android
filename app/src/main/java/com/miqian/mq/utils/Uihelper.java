@@ -322,7 +322,7 @@ public class Uihelper {
             valueCache = OnlineConfigAgent.getInstance().getConfigParams(mContext, "Cache");
         }
 
-        if (!"YES".equals(valueCache)) {
+        if ("YES".equals(valueCache)) {
             return true;
         } else {
             return false;
