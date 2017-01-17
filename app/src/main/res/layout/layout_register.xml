@@ -109,8 +109,8 @@
                 android:layout_height="@dimen/edit_item"
                 android:background="@color/white"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:paddingLeft="10dp">
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -156,12 +156,12 @@
 
                 <CheckBox
                     android:id="@+id/check_law_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="3dp"
                     android:button="@drawable/btn_checkbox"
-                    android:checked="true"
-                    />
+                    android:checked="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -181,6 +181,7 @@
                     android:textColor="@color/mq_bl2"
                     android:textSize="@dimen/mq_font4" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
