@@ -91,6 +91,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private QQprojectRegister qQprojectRegister;
     private TextView tvForgetPW;
     private Button btnLogin;
+    private CheckBox checkBoxLaw;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -181,7 +182,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     userInfoTemp.setMobilePhone(userInfo.getMobilePhone());
                     userInfoTemp.setRealName(userInfo.getRealName());
                     setData(userInfo);
-                }else {
+                } else {
                     Uihelper.showToast(getActivity(), result.getMessage());
                 }
             }
@@ -336,7 +337,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         editTelephone = (EditText) view.findViewById(R.id.edit_telephone);
         editPassword = (EditText) view.findViewById(R.id.edit_password);
         btnLogin = (Button) view.findViewById(R.id.btn_login);
-        CheckBox checkBoxLaw = (CheckBox) view.findViewById(R.id.check_law);
+        checkBoxLaw = (CheckBox) view.findViewById(R.id.check_law);
 
         TextView tvLaw = (TextView) view.findViewById(R.id.text_law);
         SpannableString spanLaw = new SpannableString("我已阅读并同意《网络借贷风险");
@@ -441,7 +442,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         view.findViewById(R.id.layout_register).setVisibility(View.GONE);
         view.findViewById(R.id.layout_nologin).setVisibility(View.VISIBLE);
         tvForgetPW.setEnabled(true);
-        btnLogin.setEnabled(true);
+        if (checkBoxLaw.isChecked()) {
+            btnLogin.setEnabled(true);
+        }
     }
 
     private void login(String telephone, String password) {
