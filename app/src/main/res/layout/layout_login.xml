@@ -104,49 +104,53 @@
                     style="@style/FillContent"
                     android:orientation="vertical"
                     android:paddingTop="35dp">
+
                     <LinearLayout
                         android:id="@+id/layout_law"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/btn_login"
                         android:layout_centerHorizontal="true"
-                        android:layout_gravity="center_horizontal">
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp">
 
                         <CheckBox
                             android:id="@+id/check_law"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginRight="3dp"
+                            android:layout_marginTop="3dp"
+                            android:button="@drawable/btn_checkbox"
+                            android:checked="true" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_net_law"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:button="@drawable/btn_checkbox"
-                            android:checked="true"
-                            />
-                      <LinearLayout
-                          android:id="@+id/layout_net_law"
-                          android:layout_marginTop="8dp"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"
-                          >
-                          <TextView
-                              android:id="@+id/text_law"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:background="@color/transparent"
-                              android:text="我已阅读并同意《网络借贷风险"
-                              android:textColor="@color/mq_bl2"
-                              android:textSize="@dimen/mq_font4" />
-                          <Button
-                              android:id="@+id/text_law2"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:background="@color/transparent"
-                              android:text="及禁止行为提示》"
-                              android:textColor="@color/mq_bl2"
-                              android:textSize="@dimen/mq_font4" />
-                      </LinearLayout>
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_law"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:text="我已阅读并同意《网络借贷风险"
+                                android:textColor="@color/mq_bl2"
+                                android:textSize="@dimen/mq_font4" />
+
+                            <Button
+                                android:id="@+id/text_law2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:text="及禁止行为提示》"
+                                android:textColor="@color/mq_bl2"
+                                android:textSize="@dimen/mq_font4" />
+                        </LinearLayout>
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

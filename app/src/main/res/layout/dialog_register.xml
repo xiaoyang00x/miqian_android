@@ -2,26 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp" >
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@drawable/shape_dialog_background"
         android:orientation="vertical"
-        android:paddingBottom="14dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:paddingBottom="14dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_marginTop="@dimen/margin_top"
             android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:minHeight="40dp"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
@@ -92,13 +92,14 @@
         </RelativeLayout>
 
         <View style="@style/item_divider" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
-            android:paddingTop="5dp"
             android:background="@color/white"
             android:paddingBottom="5dp"
-            android:paddingLeft="10dp">
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -122,6 +123,7 @@
         </LinearLayout>
 
         <View style="@style/item_divider" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,10 +132,10 @@
 
             <Button
                 android:id="@+id/btn_register"
-                android:layout_width="240dp"
                 style="@style/click_btn"
-                android:onClick="btn_click"
+                android:layout_width="240dp"
                 android:layout_centerHorizontal="true"
+                android:onClick="btn_click"
                 android:text="注册" />
         </RelativeLayout>
 
@@ -144,12 +146,12 @@
 
             <CheckBox
                 android:id="@+id/check_law_dialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="3dp"
                 android:button="@drawable/btn_checkbox"
-                android:checked="true"
-                />
+                android:checked="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -169,6 +171,7 @@
                 android:textColor="@color/mq_bl2"
                 android:textSize="@dimen/mq_font4" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -198,9 +201,9 @@
             android:id="@+id/btn_tologin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="45dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="45dp"
+            android:layout_marginTop="40dp"
             android:background="@color/transparent"
             android:text="已有秒钱账号,直接登录 >"
             android:textColor="@color/mq_r1_v2"
