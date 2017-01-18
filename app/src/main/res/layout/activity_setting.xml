@@ -173,7 +173,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:layout_toLeftOf="@+id/arrow_telephone"
-                    android:text="400-615-6191"
+                    android:text="400-665-6191"
                     android:textColor="@color/mq_bl1_v2"
                     android:textSize="@dimen/mq_font2"
                     />
