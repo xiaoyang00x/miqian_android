@@ -6,10 +6,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:scrollbars="none"
         android:layout_alignParentTop="true"
-        android:scrollbars="none">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -171,20 +171,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:layout_toLeftOf="@+id/arrow_telephone"
+                    android:layout_alignParentRight="true"
                     android:text="400-665-6191"
                     android:textColor="@color/mq_bl1_v2"
                     android:textSize="@dimen/mq_font2"
                     />
 
-                <ImageView
-                    android:id="@+id/arrow_telephone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/right" />
 
             </RelativeLayout>
 
