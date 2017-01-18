@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -51,10 +50,8 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.DialogTip;
-import com.miqian.mq.views.Dialog_Register;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
 
@@ -65,7 +62,7 @@ import java.math.BigDecimal;
  * @created 2015-3-18
  */
 
-public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener, QQprojectRegister.LoginLister, Dialog_Register.RegisterListenerFromDialog {
+public class FragmentUser extends BasicFragment implements View.OnClickListener, MainActivity.RefeshDataListener, ExtendOperationController.ExtendOperationListener, QQprojectRegister.LoginLister {
 
     private View view;
     private TextView tv_Current, tv_Regular, tv_Ticket;
@@ -86,7 +83,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private boolean loginMode;
     private boolean isQQproject;// 手Q活动开关
     private ImageView ivQQ;
-    private Dialog_Register dialog_register;
     public static boolean refresh = true;
     private QQprojectRegister qQprojectRegister;
     private TextView tvForgetPW;
@@ -139,19 +135,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 btnLogin.setEnabled(false);
             }
         }
-        if (dialog_register == null) {
-            dialog_register = new Dialog_Register(getActivity()) {
-                @Override
-                public void toLogin() {
-                    dismiss();
-                }
-
-                @Override
-                public void registerSuccess() {
-                }
-            };
-            dialog_register.setLoginLister(FragmentUser.this);
-        }
         super.onStart();
     }
 
@@ -193,7 +176,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 end();
                 setData(null);
                 Uihelper.showToast(getActivity(), error);
-//                initLoginView();
             }
         });
 
@@ -458,7 +440,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 if (Pref.getBoolean(Pref.GESTURESTATE, getActivity(), true)) {
                     GestureLockSetActivity.startActivity(getActivity(), null);
                 } else {
-                    onStart();
+                    initUserView();
+                    obtainData();
                 }
             }
 
@@ -561,7 +544,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //我的设置
             case R.id.bt_right:
-                refresh = false;
+                if (UserUtil.hasLogin(getActivity())){
+                    refresh = false;
+                }
                 MobclickAgent.onEvent(getActivity(), "1016");
                 Intent intent_setting = new Intent(getActivity(), SettingActivity.class);
                 Bundle extra = new Bundle();
@@ -649,18 +634,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (Pref.getBoolean(Pref.GESTURESTATE, mContext, true)) {
             GestureLockSetActivity.startActivity(mContext, null);
         } else {
-            onStart();
+            initUserView();
+            obtainData();
         }
     }
 
-    @Override
-    public void registerSuccessfromDialog() {
-        if (Pref.getBoolean(Pref.GESTURESTATE, mContext, true)) {
-            GestureLockSetActivity.startActivity(mContext, null);
-        } else {
-            onStart();
-        }
-        dialog_register.dismiss();
-
-    }
 }

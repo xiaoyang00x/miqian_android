@@ -645,6 +645,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 JpushInfo jpushInfo = (JpushInfo) data;
                 UserUtil.clearUserInfo(this);
                 dialogPayDismiss();
+                FragmentUser.refresh=true;
                 current_tab = 3;
                 ActivityStack.getActivityStack().clearActivity();
                 boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
