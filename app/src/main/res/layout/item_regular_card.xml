@@ -60,7 +60,7 @@
             android:layout_toRightOf="@+id/temp1"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="期限"
+            android:text="项目期限"
             android:textColor="@color/mq_y3_v2"
             android:textSize="@dimen/mq_font3_v2" />
 
