@@ -181,30 +181,25 @@ public class UserUtil {
         }
     }
 
-
-    public static Dialog_Register dialog_register = null;
-
     public static void showRegisterDialog(final Activity context, final Class<?> cls) {
-        if (dialog_register == null) {
-            dialog_register = new Dialog_Register(context) {
+        Dialog_Register dialog_register = new Dialog_Register(context) {
 
-                @Override
-                public void toLogin() {
-                    dismiss();
-                    UserUtil.showLoginDialog(context);
-                }
+            @Override
+            public void toLogin() {
+                dismiss();
+                UserUtil.showLoginDialog(context);
+            }
 
-                @Override
-                public void registerSuccess() {
-                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                        GestureLockSetActivity.startActivity(context, null);
-                    } else if (null != cls) {
-                        getOwnerActivity().startActivity(new Intent(context, cls));
-                    }
-                    dismiss();
+            @Override
+            public void registerSuccess() {
+                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                    GestureLockSetActivity.startActivity(context, null);
+                } else if (null != cls) {
+                    getOwnerActivity().startActivity(new Intent(context, cls));
                 }
-            };
-        }
+                dismiss();
+            }
+        };
         dialog_register.show();
     }
 
