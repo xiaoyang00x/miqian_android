@@ -210,7 +210,9 @@ public class QQprojectRegister implements View.OnClickListener {
                         Uihelper.showToast(mContext, "注册成功");
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mContext, userInfo);
-                        mLoginLister.registerSuccessfromNative();
+                        if(mLoginLister != null) {
+                            mLoginLister.registerSuccessfromNative();
+                        }
                     }
 
                     @Override
@@ -243,7 +245,9 @@ public class QQprojectRegister implements View.OnClickListener {
 
                 break;
             case R.id.btn_tologin:
-                mLoginLister.toLogin();
+                if(mLoginLister != null) {
+                    mLoginLister.toLogin();
+                }
                 break;
             default:
                 break;

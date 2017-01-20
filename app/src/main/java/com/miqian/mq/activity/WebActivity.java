@@ -245,13 +245,23 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
 
     @JavascriptInterface
     public void register() {
-        UserUtil.showRegisterDialog(this);
+        WebActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                UserUtil.showRegisterDialog(WebActivity.this);
+            }
+        });
     }
 
     //登录窗口
     @JavascriptInterface
     public void login() {
-       UserUtil.showLoginDialog(this, null);
+        WebActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                UserUtil.showLoginDialog(WebActivity.this, null);
+            }
+        });
     }
 
     //分享接口
@@ -263,7 +273,13 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     //充值页面(需要登录)
     @JavascriptInterface
     public void startIntoActivity() {
-        UserUtil.showRegisterDialog(this, IntoActivity.class);
+        WebActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        UserUtil.showRegisterDialog(WebActivity.this, IntoActivity.class);
+                    }
+                }
+        );
     }
 
     //红包、券列表页面(需要登录)

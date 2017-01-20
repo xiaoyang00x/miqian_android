@@ -192,7 +192,9 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
                         UserInfo userInfo = result.getData();
                         UserUtil.saveUserInfo(mContext, userInfo);
                         registerSuccess();
-                        mRegistListener.registerSuccessfromDialog();
+                        if(mRegistListener != null) {
+                            mRegistListener.registerSuccessfromDialog();
+                        }
                         end();
                     }
 
