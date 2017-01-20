@@ -88,7 +88,7 @@ public abstract class Dialog_Login extends Dialog {
                 MobclickAgent.onEvent(mContext, "1048");
                 //跳到注册页
                 dismiss();
-                UserUtil.showRegisterDialog(mContext);
+                toRegister();
 
             }
         });
@@ -140,6 +140,7 @@ public abstract class Dialog_Login extends Dialog {
     }
 
     public abstract void loginSuccess();
+    public abstract void toRegister();
 
     public void login(String telephone, String password) {
         begin();

@@ -162,7 +162,7 @@ public class UserUtil {
                 @Override
                 public void toLogin() {
                     dismiss();
-                    showLoginDialog(context);
+                    showLoginDialog(context,null);
                 }
 
                 @Override
@@ -182,58 +182,53 @@ public class UserUtil {
     }
 
     public static void showRegisterDialog(final Activity context, final Class<?> cls) {
-        Dialog_Register dialog_register = new Dialog_Register(context) {
+        if (!UserUtil.hasLogin(context)) {
+            Dialog_Register dialog_register = new Dialog_Register(context) {
 
-            @Override
-            public void toLogin() {
-                dismiss();
-                UserUtil.showLoginDialog(context);
-            }
-
-            @Override
-            public void registerSuccess() {
-                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                    GestureLockSetActivity.startActivity(context, null);
-                } else if (null != cls) {
-                    getOwnerActivity().startActivity(new Intent(context, cls));
+                @Override
+                public void toLogin() {
+                    dismiss();
+                    UserUtil.showLoginDialog(context, cls);
                 }
-                dismiss();
-            }
-        };
-        dialog_register.show();
+
+                @Override
+                public void registerSuccess() {
+                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                        GestureLockSetActivity.startActivity(context, null);
+                    } else if (null != cls) {
+                        getOwnerActivity().startActivity(new Intent(context, cls));
+                    }
+                    dismiss();
+                }
+            };
+            dialog_register.show();
+        } else {
+            context.startActivity(new Intent(context, cls));
+        }
+
     }
 
-    //  弹注册框
+    //  弹注册框，登录后无跳转页面
     public static void showRegisterDialog(final Activity context) {
-        Dialog_Register dialog_register = new Dialog_Register(context) {
-
-            @Override
-            public void toLogin() {
-                dismiss();
-                showLoginDialog(context);
-            }
-
-            @Override
-            public void registerSuccess() {
-                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                    GestureLockSetActivity.startActivity(context, null);
-                }
-                dismiss();
-            }
-        };
-        dialog_register.show();
+        showRegisterDialog(context, null);
     }
 
 
-    //  认购时确认是否登录
-    public static void showLoginDialog(final Activity context) {
+    //  弹登录框
+    public static void showLoginDialog(final Activity context, final Class<?> cls) {
         Dialog_Login dialog_login = new Dialog_Login(context) {
             @Override
             public void loginSuccess() {
                 if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
                     GestureLockSetActivity.startActivity(context, null);
+                } else if (null != cls) {
+                    context.startActivity(new Intent(context, cls));
                 }
                 dismiss();
+            }
+            @Override
+            public void toRegister() {
+                showRegisterDialog(context,cls);
             }
         };
         dialog_login.show();
