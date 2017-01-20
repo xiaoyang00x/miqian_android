@@ -251,7 +251,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     //登录窗口
     @JavascriptInterface
     public void login() {
-       UserUtil.showRegisterDialog(this);
+       UserUtil.showLoginDialog(this, null);
     }
 
     //分享接口
