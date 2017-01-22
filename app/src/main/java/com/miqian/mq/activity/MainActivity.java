@@ -735,8 +735,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     @Override
     public void showWeb() {
         if (adsClickStatus == 1) {
-            WebActivity.startActivity(context, "file:///android_asset/mq-packet.html");
-//            WebActivity.startActivity(context, Pref.getString(Pref.CONFIG_ADS + "JumpUrl", context, ""));
+            WebActivity.startActivity(context, Pref.getString(Pref.CONFIG_ADS + "JumpUrl", context, ""));
             adsClickStatus = 0;
         }
     }
