@@ -22,7 +22,6 @@ import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.Amt;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.PayOrder;
@@ -95,7 +94,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private ProducedOrder producedOrder;
     private List<Promote> promList;
     private String promListString = "";
-    private String prodListString = "";
+    private final String prodListString = "";
     private String promoteType = "";
 
     private String money;
@@ -125,7 +124,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     //  支付方式: 余额、银行卡、活期、连连支付
     public static final int PAY_MODE_BALANCE = 0;
     public static final int PAY_MODE_BANK = 1;
-    public static final int PAY_MODE_CURRENT = 2;
+//    public static final int PAY_MODE_CURRENT = 2;
     public static final int PAY_MODE_LIAN = 3;
 
     public static final String PRODID_CURRENT = "1";
@@ -164,7 +163,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private void refreshData() {
         position = -1;
         promListString = "";
-        prodListString = "";
         promoteType = "";
         promoteMoney = BigDecimal.ZERO;
         increaseMoney = BigDecimal.ZERO;
@@ -285,11 +283,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textPayTip.setText("单笔限额" + producedOrder.getSingleAmtLimit() + "元， 单日限额" + producedOrder.getDayAmtLimit() + "元");
                 imageType.setImageResource(R.drawable.icon_bank);
                 imageLoader.displayImage(producedOrder.getBankUrlSmall(), imageType, options);
-            } else if (payModeState == PAY_MODE_CURRENT) {
-                textPayType.setText("活期资产");
-                textPayTip.setText("可用" + producedOrder.getBalanceCurrent() + "元");
-                imageType.setImageResource(R.drawable.current_enable);
-                showErrorView(producedOrder.getBalanceCurrent());
             }
         }
     }
@@ -305,9 +298,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             if (payModeState == PAY_MODE_BALANCE) {
                 imageType.setImageResource(R.drawable.balance_disable);
                 textErrorLian.setText("账户余额不足，请充值或更换支付方式后，再进行认购");
-            } else if (payModeState == PAY_MODE_CURRENT) {
-                imageType.setImageResource(R.drawable.current_disable);
-                textErrorLian.setText("活期余额不足，请充值或更换支付方式后，再进行认购");
             }
         }
     }
@@ -318,10 +308,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private boolean insufficeBalance() {
         if (payModeState == PAY_MODE_BALANCE) {
             if (payMoney.compareTo(producedOrder.getBalance()) > 0) {
-                return true;
-            }
-        } else if (payModeState == PAY_MODE_CURRENT) {
-            if (payMoney.compareTo(producedOrder.getBalanceCurrent()) > 0) {
                 return true;
             }
         }
@@ -504,13 +490,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             startActivityForResult(intent, REQUEST_CODE_ROLLIN);
         } else if (payModeState == PAY_MODE_BANK && payMoney != BigDecimal.ZERO) {
             rollIn();
-        } else if (payModeState == PAY_MODE_CURRENT) {
-            List<Amt> prodListParam = new ArrayList<>();
-            Amt amt = new Amt();
-            amt.setAmt(payMoney);
-            prodListParam.add(amt);
-            prodListString = JSON.toJSONString(prodListParam, true);
-            payOrder();
         } else {
             MobclickAgent.onEvent(mContext, "1068");
             payOrder();
@@ -526,8 +505,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     String tipString = "";
                     if (payModeState == PAY_MODE_BALANCE) {
                         tipString = "账户余额不足，请充值或更换支付方式后，再进行认购";
-                    } else if (payModeState == PAY_MODE_CURRENT) {
-                        tipString = "活期余额不足，请充值或更换支付方式后，再进行认购";
                     }
                     if (mDialogTip==null){
                         mDialogTip=new DialogTip(mActivity) {};
