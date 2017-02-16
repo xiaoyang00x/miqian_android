@@ -95,63 +95,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/frame_current"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
-        android:background="@drawable/list_click"
-        android:paddingLeft="@dimen/margin_left_right">
-
-        <ImageView
-            android:id="@+id/iv_current"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@drawable/current_state" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:layout_toLeftOf="@+id/iv_choose_current"
-            android:layout_toRightOf="@+id/iv_current"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/text_current"
-                style="@style/f7_B1_V2"
-                android:layout_width="wrap_content"
-                android:drawablePadding="9dp"
-                android:drawableRight="@drawable/icon_explaint"
-                android:gravity="left|center"
-                android:maxEms="10"
-                android:text="活期资产" />
-
-            <TextView
-                android:id="@+id/text_current_money"
-                style="@style/WrapContent"
-                android:layout_marginTop="1dp"
-                android:textColor="@color/mq_b4_v2"
-                android:textSize="@dimen/mq_font3_v2" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_choose_current"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@drawable/icon_choose"
-            android:visibility="gone" />
-
-        <View
-            style="@style/item_divider"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/frame_balance"
         android:layout_width="match_parent"
         android:layout_height="@dimen/listitem_height"
