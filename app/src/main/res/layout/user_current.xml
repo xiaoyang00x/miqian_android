@@ -209,40 +209,6 @@
                 android:textSize="@dimen/mq_font7_v2" />
         </LinearLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/frame_subscribe"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:id="@+id/frame_tip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:text="温馨提示："
-                    android:textColor="@color/mq_b4_v2"
-                    android:textSize="@dimen/mq_font5_v2"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:paddingBottom="20dp"
-                    android:text="@string/qq_project_current_tip"
-                    android:textColor="@color/mq_b4_v2"
-                    android:textSize="@dimen/mq_font5_v2" />
-            </LinearLayout>
-        </ScrollView>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
