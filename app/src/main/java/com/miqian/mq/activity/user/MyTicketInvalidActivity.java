@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -50,27 +51,14 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     @Override
     public void onCreate(Bundle arg0) {
         type = "GQ";
-//        String jpushToken = getIntent().getStringExtra("token");
-//        if (!TextUtils.isEmpty(jpushToken)) {
-//            //通知进来的情况下，不是当前用户则退出此界面
-//            String token = UserUtil.getToken(this);
-//            if (UserUtil.hasLogin(this) && !token.equals(jpushToken)) {
-//                isStop = true;
-//                finish();
-//            }
-//        }
         super.onCreate(arg0);
     }
 
     @Override
     public void obtainData() {
-//        if (isStop) {
-//            return;
-//        }
         pageNo = 1;
         begin();
         HttpRequest.getCustPromotion(mActivity, new ICallback<RedPaperData>() {
-
 
             @Override
             public void onSucceed(RedPaperData result) {
@@ -81,12 +69,10 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
                 if (redpaper != null) {
                     if (promList != null && promList.size() > 0) {
                         showContentView();
-                        recyclerView.setVisibility(View.VISIBLE);
-                        frameNone.setVisibility(View.GONE);
+                        showEmptyView(false);
                         refreshView();
                     } else {
-                        recyclerView.setVisibility(View.GONE);
-                        frameNone.setVisibility(View.VISIBLE);
+                        showEmptyView(true);
                     }
                 }
             }
@@ -157,7 +143,11 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
 
     private void refreshView() {
-        adapterMyTicket = new AdapterMyTicket(mActivity, promList, false);
+        if (type.equals("GQ")) {
+            adapterMyTicket = new AdapterMyTicket(mActivity, promList, false, true);
+        } else {
+            adapterMyTicket = new AdapterMyTicket(mActivity, promList, false);
+        }
         adapterMyTicket.setMaxItem(page.getCount());
         recyclerView.setAdapter(adapterMyTicket);
     }
@@ -187,5 +177,24 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
             type = "ZS";
         }
         obtainData();
+    }
+
+    protected void showEmptyView(boolean flag) {
+        if (flag) {
+            recyclerView.setVisibility(View.GONE);
+            frameNone.setVisibility(View.VISIBLE);
+            TextView textTip = (TextView) frameNone.findViewById(R.id.tv_tips);
+            TextView overdueTip = (TextView) frameNone.findViewById(R.id.overdue_tip);
+            if (type.equals("GQ")) {
+                textTip.setVisibility(View.GONE);
+                overdueTip.setVisibility(View.VISIBLE);
+            } else {
+                textTip.setVisibility(View.VISIBLE);
+                overdueTip.setVisibility(View.GONE);
+            }
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            frameNone.setVisibility(View.GONE);
+        }
     }
 }

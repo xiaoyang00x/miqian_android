@@ -225,13 +225,7 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
                 if (isCrowd) {
                     Uihelper.showToast(mActivity, R.string.qq_project_subscribe);
                 } else {
-                    if (balance != null && balance.compareTo(downLimit) >= 0) {
-                        dialogPay.setEditMoneyHint("可用余额" + balance + "元");
-                    } else {
-                        dialogPay.setEditMoneyHint(downLimit + "元起投");
-                    }
-                    UserUtil.loginPay(mActivity, dialogPay);
-//                    UserUtil.registerPay(mActivity, dialogPay);
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_CURRENT, null);
                 }
                 break;
         }

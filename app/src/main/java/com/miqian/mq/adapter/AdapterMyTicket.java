@@ -34,9 +34,11 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_LIST = 1;
     private static final int VIEW_TYPE_ADD_INTEREST = 2;              //八八双倍收益卡
     private static final int VIEW_TYPE_QQ = 3;                  //2017 手Q红包
+    private static final int VIEW_TYPE_FOOTER_TIP = 4;  //过期30天红包提示
 
     private Context mContext;
     private boolean isValid;        //卡券是否有效
+    private boolean isOverdue;        //是否是已过期Tab
 
     /**
      * @param context
@@ -49,15 +51,31 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         this.isValid = isValid;
     }
 
+    /**
+     * @param context
+     * @param promList
+     * @param isValid  卡券是否有效
+     */
+    public AdapterMyTicket(Context context, List<Promote> promList, boolean isValid, boolean isOverdue) {
+        this.promList = promList;
+        this.mContext = context;
+        this.isValid = isValid;
+        this.isOverdue = isOverdue;
+    }
+
     //促销类型 SC：拾财券  HB：红包 JF：积分 LP：礼品卡 TY：体验金
     @Override
     public int getItemViewType(int position) {
         if (position + 1 == getItemCount()) {
-            return VIEW_TYPE_FOOTER;
+            if (isOverdue) {
+                return VIEW_TYPE_FOOTER_TIP;
+            } else {
+                return VIEW_TYPE_FOOTER;
+            }
         } else {
             if (promList.get(position) != null && Promote.TYPE.SK.getValue().equals(promList.get(position).getType())) {
                 return VIEW_TYPE_ADD_INTEREST;
-            } else if (isQQPromote(promList.get(position))) {
+            } else if (isQQPromote(promList.get(position)) && isValid) {
                 return VIEW_TYPE_QQ;
             } else {
                 return VIEW_TYPE_LIST;
@@ -98,6 +116,9 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             case VIEW_TYPE_FOOTER:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
                 return new ProgressViewHolder(view);
+            case VIEW_TYPE_FOOTER_TIP:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loading, parent, false);
+                return new ProgressTip(view);
             default:
                 return null;
         }
@@ -200,6 +221,14 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             } else {
                 ((ProgressViewHolder) holder).frameLoad.setVisibility(View.VISIBLE);
                 ((ProgressViewHolder) holder).frameNone.setVisibility(View.GONE);
+            }
+        }else if (holder instanceof ProgressTip) {
+            if (position >= maxValue) {
+                ((ProgressTip) holder).frameLoad.setVisibility(View.GONE);
+                ((ProgressTip) holder).frameTip.setVisibility(View.VISIBLE);
+            } else {
+                ((ProgressTip) holder).frameLoad.setVisibility(View.VISIBLE);
+                ((ProgressTip) holder).frameTip.setVisibility(View.GONE);
             }
         }
     }
@@ -353,6 +382,18 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             if (Uihelper.getConfigCrowd(mContext)) {
                 btOverdue.setVisibility(View.GONE);
             }
+        }
+    }
+
+    class ProgressTip extends RecyclerView.ViewHolder {
+
+        private LinearLayout frameLoad;
+        private LinearLayout frameTip;
+
+        public ProgressTip(View view) {
+            super(view);
+            frameLoad = (LinearLayout) view.findViewById(R.id.frame_load);
+            frameTip = (LinearLayout) view.findViewById(R.id.frame_tip);
         }
     }
 }
