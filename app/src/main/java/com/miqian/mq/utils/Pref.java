@@ -42,6 +42,7 @@ public class Pref {
     public static final String SERVER_ERROR_CODE = "ServerErrorCode";
 
     public static final String CURRENT_RATE = "CurrentRate";
+    public static final String CURRENT_STATE = "CurrentState";
 
     //用户信息
     public static final String PAY_STATUS = "PayStatus";
