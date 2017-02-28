@@ -109,6 +109,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
         frameBack.setOnClickListener(this);
 
         btInvestment = (Button) view.findViewById(R.id.bt_investment);
+        initInvestmentView(Pref.getString(Pref.CURRENT_STATE, mContext, ""));
         btInvestment.setOnClickListener(this);
 
         dialogPay = new DialogPay(mContext) {
@@ -154,18 +155,22 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
             upLimit = currentInfo.getCurrentBuyUpLimit();
             balance = currentInfo.getBalance();
             initInterestView();
-            if (currentInfo.getCurrentSwitch().equals("0")) {
-                btInvestment.setText("已满额");
-                btInvestment.setEnabled(false);
-            } else {
-                btInvestment.setText("立即认购");
-                btInvestment.setEnabled(true);
-            }
+            initInvestmentView(currentInfo.getCurrentSwitch());
         }
     }
 
     private void initInterestView() {
         textInterest.setText(interestRateString);
+    }
+
+    private void initInvestmentView(String status) {
+        if (status.equals("0")) {
+            btInvestment.setText("已满额");
+            btInvestment.setEnabled(false);
+        } else {
+            btInvestment.setText("立即认购");
+            btInvestment.setEnabled(true);
+        }
     }
 
     public void obtainData() {
@@ -176,6 +181,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 currentInfo = result.getData();
                 interestRateString = currentInfo.getCurrentYearRate();
                 Pref.saveString(Pref.CURRENT_RATE, interestRateString, mContext);
+                Pref.saveString(Pref.CURRENT_STATE, currentInfo.getCurrentSwitch(), mContext);
                 refreshView();
             }
 

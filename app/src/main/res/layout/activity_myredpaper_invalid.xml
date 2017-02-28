@@ -68,7 +68,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
-            android:scrollbars="none"/>
+            android:scrollbars="none" />
 
         <LinearLayout
             android:id="@+id/frame_none"
@@ -79,7 +79,6 @@
             android:orientation="vertical"
             android:paddingBottom="110dp"
             android:visibility="gone">
-
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -97,11 +96,18 @@
                 android:textColor="@color/miqian_gray"
                 android:textSize="@dimen/mq_font2" />
 
+            <TextView
+                android:id="@+id/overdue_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@string/overdue_tip"
+                android:textColor="@color/mq_b2"
+                android:textSize="@dimen/mq_font5"
+                android:visibility="gone" />
         </LinearLayout>
-
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

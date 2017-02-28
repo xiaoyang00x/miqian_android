@@ -215,14 +215,12 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     }
 
     private void loadAds() {
-//        int adsInt = Pref.getInt(Pref.CONFIG_ADS, SplashActivity.this, 0);
-        int adsInt = 0;//此版本广告一直不存在
+        int adsInt = Pref.getInt(Pref.CONFIG_ADS, SplashActivity.this, 0);
         if (adsInt == 1) {
             frameAds = (RelativeLayout) findViewById(R.id.frame_ads);
             btSkip = (Button) findViewById(R.id.bt_skip);
             btSkip.setOnClickListener(this);
             imageAds = (ImageView) findViewById(R.id.image_ads);
-            imageAds.setBackgroundResource(R.drawable.icon_splash_ads);
             imageAds.setOnClickListener(this);
             timer = new Timer();
             TimerTask timerTask = new TimerTask() {
@@ -256,7 +254,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                 if (imageLoader == null) {
                     initImageLoader();
                 }
-//                imageLoader.displayImage(imgUrl, imageAds);
+                imageLoader.displayImage(imgUrl, imageAds);
             }
             super.handleMessage(msg);
         }
