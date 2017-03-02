@@ -164,7 +164,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     }
 
     private void initInvestmentView(String status) {
-        if (status.equals("0")) {
+        if ("0".equals(status)) {
             btInvestment.setText("已满额");
             btInvestment.setEnabled(false);
         } else {
