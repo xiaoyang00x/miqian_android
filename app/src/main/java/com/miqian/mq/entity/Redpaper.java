@@ -9,6 +9,7 @@ public class Redpaper {
 
     private Page page;
     private List<Promote> custPromotion;
+    private String expireState;
 
     public Page getPage() {
         return page;
@@ -24,5 +25,13 @@ public class Redpaper {
 
     public void setCustPromotion(List<Promote> custPromotion) {
         this.custPromotion = custPromotion;
+    }
+
+    public String getExpireState() {
+        return expireState;
+    }
+
+    public void setExpireState(String expireState) {
+        this.expireState = expireState;
     }
 }

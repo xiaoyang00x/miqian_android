@@ -44,17 +44,6 @@
                 android:textColor="@drawable/tab_package_textcolor"
                 android:textSize="@dimen/mq_font3" />
 
-            <RadioButton
-                android:id="@+id/bt_gift"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/tab_package_bg"
-                android:button="@null"
-                android:gravity="center"
-                android:text="已赠送"
-                android:textColor="@drawable/tab_package_textcolor"
-                android:textSize="@dimen/mq_font3" />
         </RadioGroup>
     </LinearLayout>
 
