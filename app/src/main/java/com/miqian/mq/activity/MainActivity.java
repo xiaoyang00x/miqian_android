@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -51,7 +50,6 @@ import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.FragmentTabHost;
 import com.miqian.mq.views.MyRelativeLayout;
-import com.miqian.mq.views.TextViewEx;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -96,8 +94,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        Intent intent = getIntent();
-        adsClickStatus = intent.getIntExtra("onClick", 0);
         checkVersion();
         ListenerManager.registerAdsListener(MainActivity.class.getSimpleName(), this);
         ExtendOperationController.getInstance().registerExtendOperationListener(this);
@@ -734,9 +730,11 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
 
     @Override
     public void showWeb() {
+        Intent intent = getIntent();
+        adsClickStatus = intent.getIntExtra("onClick", 0);
         if (adsClickStatus == 1) {
             WebActivity.startActivity(context, Pref.getString(Pref.CONFIG_ADS + "JumpUrl", context, ""));
-            adsClickStatus = 0;
+            intent.putExtra("onClick", 0);
         }
     }
 }
