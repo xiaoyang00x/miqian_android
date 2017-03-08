@@ -42,6 +42,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     private Page page;
     private boolean isLoading = false;
     private String type;
+    private String expireState;
 
 
     public static void startActivity(Context context) {
@@ -66,6 +67,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
                 Redpaper redpaper = result.getData();
                 promList = redpaper.getCustPromotion();
                 page = redpaper.getPage();
+                expireState = redpaper.getExpireState();
                 if (redpaper != null) {
                     if (promList != null && promList.size() > 0) {
                         showContentView();
@@ -173,8 +175,6 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
             type = "GQ";
         } else if (checkedId == R.id.bt_used) {
             type = "YW";
-        } else if (checkedId == R.id.bt_gift) {
-            type = "ZS";
         }
         obtainData();
     }
@@ -185,7 +185,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
             frameNone.setVisibility(View.VISIBLE);
             TextView textTip = (TextView) frameNone.findViewById(R.id.tv_tips);
             TextView overdueTip = (TextView) frameNone.findViewById(R.id.overdue_tip);
-            if (type.equals("GQ")) {
+            if (type.equals("GQ") && "0".equals(expireState)) {
                 textTip.setVisibility(View.GONE);
                 overdueTip.setVisibility(View.VISIBLE);
             } else {
