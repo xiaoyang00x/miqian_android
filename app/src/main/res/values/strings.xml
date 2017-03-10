@@ -2,9 +2,9 @@
   <string name="app_name">秒钱</string>
 
   <!--极光推送appkey-测试环境-->
-  <string name="jpush_appkey">1efad7e3915accc3bfb9f801</string>
+  <!--<string name="jpush_appkey">1efad7e3915accc3bfb9f801</string>-->
   <!--极光推送appkey-正式环境-->
-  <!--<string name="jpush_appkey">8e7e3b5b32b4603e8aa757c6</string>-->
+  <string name="jpush_appkey">8e7e3b5b32b4603e8aa757c6</string>
 
   <!---->
   <string name="app_loading">处理中…</string>
