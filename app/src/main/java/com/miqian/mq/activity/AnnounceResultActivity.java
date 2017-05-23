@@ -6,7 +6,6 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
