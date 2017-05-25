@@ -249,7 +249,6 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 break;
             case R.id.frame_back:
                 MobclickAgent.onEvent(mContext, "1006");
-                MobclickAgent.onEvent(mContext, "1006");
                 if (isCache) {
                     WebActivity.startActivity(getContext(), "file:///android_asset/current_redeem.html");
                 } else {
