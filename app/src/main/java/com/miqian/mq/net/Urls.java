@@ -52,7 +52,8 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+//    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
 //    public static final String SERVER_TEST = "http://testapi.miaoqian.com/";
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
@@ -247,5 +248,6 @@ public class Urls {
     //我的邀请
     public final static String web_my_invite = base_server + "activityService/inviteMain";
 
-
+    //江西银行跳转接口
+    public final static String jx_rollin_url = base_server + "trans/rechargeForJump";
 }

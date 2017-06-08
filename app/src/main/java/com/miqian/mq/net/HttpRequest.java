@@ -1,11 +1,13 @@
 package com.miqian.mq.net;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.WebBankActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -1557,4 +1559,22 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
+
+//江西银行跳转接口
+    /**
+     * 江西银行充值接口
+     */
+    public static void rollinHf(final Activity activity, String amt,  String bankNo,  String captcha,  String authCode) {
+        ArrayList params = new ArrayList<>();
+//        params.add(new Param("custId", UserUtil.getUserId(activity)));
+        params.add(new Param("custId", "125145556"));
+//        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
+        params.add(new Param("amt", amt));
+        params.add(new Param("bankNo", bankNo));
+        params.add(new Param("captcha", captcha));
+        params.add(new Param("authCode", authCode));
+        params.add(new Param("cType", "android"));
+        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, 1);
+//        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, HfUpdateActivity.REQUEST_CODE_ROLLIN);
+    }
 }

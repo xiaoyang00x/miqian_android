@@ -1,9 +1,11 @@
 package com.miqian.mq.net;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/9/4.
  */
-public class Param {
+public class Param implements Serializable {
 
     public Param(String key, String value) {
         this.key = key;

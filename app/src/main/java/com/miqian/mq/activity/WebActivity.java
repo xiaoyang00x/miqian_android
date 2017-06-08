@@ -52,13 +52,13 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     public static final String JS_INTERFACE_NAME = "MIAOQIAN";
 
     private String url;
-    private SwipeWebView webview;
-    private MySwipeRefresh swipe_refresh;
-    private ProgressBar progressBar;
-    private View load_webview_error;
-    private View tv_refresh;
+    protected SwipeWebView webview;
+    protected MySwipeRefresh swipe_refresh;
+    protected ProgressBar progressBar;
+    protected View load_webview_error;
+    protected View tv_refresh;
     private String defaultAgent;     //默认 UA
-    private boolean isRefresh;       //是否支持下拉刷新
+    protected boolean isRefresh;       //是否支持下拉刷新
 
     public static void startActivity(Context context, String url) {
         context.startActivity(getIntent(context, url));
@@ -364,7 +364,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
      *
      * @param settings
      */
-    private void setUserAgent(WebSettings settings) {
+    protected void setUserAgent(WebSettings settings) {
         if (TextUtils.isEmpty(defaultAgent)) {
             defaultAgent = settings.getUserAgentString();
         }
