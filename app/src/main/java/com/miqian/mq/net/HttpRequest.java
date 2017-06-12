@@ -285,7 +285,7 @@ public class HttpRequest {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("captcha", captcha));
         mList.add(new Param("invitationCode", invitationCode));
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
         new MyAsyncTask(context, Urls.register, mList, new ICallback<String>() {
@@ -336,11 +336,11 @@ public class HttpRequest {
 
     /**
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
-     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现
+     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现   13008 --找回交易密码
      */
     public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String captcha) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("captcha", captcha));
@@ -369,13 +369,14 @@ public class HttpRequest {
     /**
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
+     *@param source  来源 app的为0，appH5的为1，weixin为2，pc为3 ,rz为4
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
+    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType,int source) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(phone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-
+        mList.add(new Param("source", "" + source));
         new MyAsyncTask(context, Urls.getCaptcha, mList, new ICallback<String>() {
 
             @Override

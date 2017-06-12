@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
@@ -131,8 +132,19 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
         }
+        if (current_tab == 4) {//代表登录成功
+            mTabHost.setCurrentTab(3);
+        }
+        if (current_tab == 5) {//代表退出账号成功
+            mTabHost.setCurrentTab(0);
+        }
         //app在当前
         showJushTip();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 
     //  版本更新:1:建议更新 2:强制
@@ -446,6 +458,16 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         FragmentTabHost.TabSpec tabSpecUser = mTabHost.newTabSpec(TAG_USER);
         tabSpecUser.setIndicator(tabIndicator4.getTabIndicator());
         mTabHost.addTab(tabSpecUser, FragmentUser.class, null);
+        mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!UserUtil.hasLogin(MainActivity.this)) {
+                    LoginActivity.enterAcitivty(MainActivity.this);
+                } else {
+                    mTabHost.setCurrentTab(3);
+                }
+            }
+        });
     }
 
     @Override
@@ -641,7 +663,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 JpushInfo jpushInfo = (JpushInfo) data;
                 UserUtil.clearUserInfo(this);
                 dialogPayDismiss();
-                FragmentUser.refresh=true;
+                FragmentUser.refresh = true;
                 current_tab = 3;
                 ActivityStack.getActivityStack().clearActivity();
                 boolean currentActivity = MyApplication.getInstance().isOnMainAcitivity();
@@ -678,6 +700,12 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     current_tab = (int) data;
                     ActivityStack.getActivityStack().clearActivity();
                 }
+                break;
+            case OperationKey.LOGIN_SUCCESS:
+                current_tab = 4;
+                break;
+            case OperationKey.EXIT_SUCCESS:
+                current_tab = 5;
                 break;
             default:
                 break;

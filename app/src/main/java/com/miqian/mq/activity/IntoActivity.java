@@ -171,7 +171,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         if ("1".equals(relaNameStatus)) {
             editCardId.setEnabled(false);
             editName.setEnabled(false);
-            realName = RSAUtils.decryptByPrivate(userInfo.getRealName());
+            realName = RSAUtils.decryptByPrivate(userInfo.getUserName());
             idCard = RSAUtils.decryptByPrivate(userInfo.getIdCard());
             editName.setText(realName);
             editCardId.setText(idCard);

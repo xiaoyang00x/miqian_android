@@ -16,7 +16,9 @@ public class ExtendOperationController {
 	public interface OperationKey {
 
 		/** 登录成功 */
-		int LOGIN_SUCCESS = 1001;
+		int LOGIN_SUCCESS = 6001;
+		/** 退出登录 */
+		int EXIT_SUCCESS = 6002;
 		/**
 		 * 退出主页面
 		 */

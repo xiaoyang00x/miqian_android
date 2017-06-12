@@ -282,7 +282,7 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
                 Uihelper.showToast(mContext, error);
 
             }
-        }, phone, TypeUtil.CAPTCHA_REGISTER);
+        }, phone, TypeUtil.CAPTCHA_REGISTER,0);
 
     }
 

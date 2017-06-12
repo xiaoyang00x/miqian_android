@@ -52,8 +52,7 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
-//    public static final String SERVER_TEST = "http://testapi.miaoqian.com/";
+    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";// https://testapi.shicaidai.com:8443/
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
     //线上
@@ -90,17 +89,17 @@ public class Urls {
     //认购快捷支付
     public final static String quick_subscribe_order = base_server + "assetService/quickPayment";
     //获取用户信息
-    public final static String user_info = base_server + "userService/getUserInfo";
+    public final static String user_info = base_server + "user/getUserInfo";// /userService/getUserInfo
 
     //获取APP配置：广告、tab
     public final static String app_config = base_server + "commonService/getAdverts";
 
     //获取验证码
-    public final static String getCaptcha = base_server + "commonService/getCaptcha";
+    public final static String getCaptcha = base_server + "/captcha/getCaptcha";  /// commonService/getCaptcha
     //登录
-    public final static String login = base_server + "userService/login";
+    public final static String login = base_server + "user/login";// userService/login
     //注册
-    public final static String register = base_server + "userService/register";
+    public final static String register = base_server + "user/register";  // userService/register
     //个人消息列表
     public final static String getMessageList = base_server + "pushService/getMessageList";
     //系统公告列表

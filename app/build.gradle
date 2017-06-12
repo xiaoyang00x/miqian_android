@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.growingio.android'
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 25
@@ -118,4 +119,6 @@ dependencies {
     compile 'com.growingio.android:vds-android-agent:0.9.101@aar'
     compile project(path: ':Udesk_Separate_UI')
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }

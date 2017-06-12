@@ -287,7 +287,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 end();
                 FragmentUser.refresh = true;
                 UserUtil.clearUserInfo(mActivity);
-                extendOperationController.doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
                 finish();
             }
 
@@ -298,6 +297,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 finish();
             }
         });
+        extendOperationController.doNotificationExtendOperation(ExtendOperationController.OperationKey.EXIT_SUCCESS, null);
     }
 
     @Override

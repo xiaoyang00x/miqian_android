@@ -31,6 +31,7 @@ import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
+import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
@@ -54,6 +55,8 @@ import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
+
+import butterknife.BindView;
 
 /**
  * Description:
@@ -124,17 +127,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             initUserView();
             obtainData();
         }
-        //未登录,  显示注册页面
-        else {
-            if (loginMode) {
-                toLogin();
-            } else {
-                swipeRefresh.setVisibility(View.GONE);
-                view.findViewById(R.id.layout_register).setVisibility(View.VISIBLE);
-                tvForgetPW.setEnabled(false);
-                btnLogin.setEnabled(false);
-            }
-        }
         super.onStart();
     }
 
@@ -163,7 +155,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
                     userInfoTemp.setPayPwdStatus(userInfo.getPayPwdStatus());
                     userInfoTemp.setMobilePhone(userInfo.getMobilePhone());
-                    userInfoTemp.setRealName(userInfo.getRealName());
+                    userInfoTemp.setUserName(userInfo.getUserName());
                     setData(userInfo);
                 } else {
                     Uihelper.showToast(getActivity(), result.getMessage());
