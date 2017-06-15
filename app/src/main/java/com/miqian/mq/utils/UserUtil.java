@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.growingio.android.sdk.collection.GrowingIO;
+import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.HomeAdsListener;
@@ -34,7 +36,7 @@ public class UserUtil {
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
         Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobilePhone()), context);
-        Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getRealName()), context);
+        Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getUserName()), context);
         Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getPayPwdStatus()), context);
         Pref.saveString(Pref.CUSTLEVEL, userInfo.getCustLevel(), context);
 
@@ -158,24 +160,26 @@ public class UserUtil {
     // 是否登录，未登录弹注册窗口
     public static void registerPay(final Activity context, final DialogPay dialogPay) {
         if (!UserUtil.hasLogin(context)) {
-            Dialog_Register dialog_register = new Dialog_Register(context) {
-                @Override
-                public void toLogin() {
-                    dismiss();
-                    showLoginDialog(context,null);
-                }
-
-                @Override
-                public void registerSuccess() {
-                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                        GestureLockSetActivity.startActivity(context, null);
-                    }
-                    dismiss();
-                    dialogPay.show();
-
-                }
-            };
-            dialog_register.show();
+//            Dialog_Register dialog_register = new Dialog_Register(context) {
+//                @Override
+//                public void toLogin() {
+//                    dismiss();
+////                    showLoginDialog(context,null);
+//                    LoginActivity.enterAcitivty(context);
+//                }
+//
+//                @Override
+//                public void registerSuccess() {
+//                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+//                        GestureLockSetActivity.startActivity(context, null);
+//                    }
+//                    dismiss();
+//                    dialogPay.show();
+//
+//                }
+//            };
+//            dialog_register.show();
+            LoginActivity.enterAcitivty(context);
         } else {
             dialogPay.show();
         }

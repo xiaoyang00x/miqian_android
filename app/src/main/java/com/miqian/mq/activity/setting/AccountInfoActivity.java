@@ -80,10 +80,10 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
         if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
             //已认证
             if ("1".equals(userInfo.getRealNameStatus())) {
-                if (!TextUtils.isEmpty(userInfo.getRealName())) {
+                if (!TextUtils.isEmpty(userInfo.getUserName())) {
                     frame_name.setVisibility(View.VISIBLE);
                     findViewById(R.id.divider_name).setVisibility(View.VISIBLE);
-                    tvName.setText(RSAUtils.decryptByPrivate(userInfo.getRealName()));
+                    tvName.setText(RSAUtils.decryptByPrivate(userInfo.getUserName()));
                 }
             }
         }

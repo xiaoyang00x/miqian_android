@@ -91,17 +91,17 @@ public class Urls {
     //认购快捷支付
     public final static String quick_subscribe_order = base_server + "assetService/quickPayment";
     //获取用户信息
-    public final static String user_info = base_server + "userService/getUserInfo";
+    public final static String user_info = base_server + "user/getUserInfo";// /userService/getUserInfo
 
     //获取APP配置：广告、tab
     public final static String app_config = base_server + "commonService/getAdverts";
 
     //获取验证码
-    public final static String getCaptcha = base_server + "commonService/getCaptcha";
+    public final static String getCaptcha = base_server + "/captcha/getCaptcha";  /// commonService/getCaptcha
     //登录
-    public final static String login = base_server + "userService/login";
+    public final static String login = base_server + "user/login";// userService/login
     //注册
-    public final static String register = base_server + "userService/register";
+    public final static String register = base_server + "user/register";  // userService/register
     //个人消息列表
     public final static String getMessageList = base_server + "pushService/getMessageList";
     //系统公告列表

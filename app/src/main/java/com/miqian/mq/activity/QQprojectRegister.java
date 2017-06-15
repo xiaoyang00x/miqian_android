@@ -194,10 +194,7 @@ public class QQprojectRegister implements View.OnClickListener {
     }
 
     private void summit(final String captcha, final String password) {
-
-
         if (!TextUtils.isEmpty(password)) {
-
             if (password.length() < 6 || password.length() > 16) {
                 Uihelper.showToast(mContext, R.string.tip_password);
             } else {
@@ -299,7 +296,7 @@ public class QQprojectRegister implements View.OnClickListener {
                 Uihelper.showToast(mContext, error);
 
             }
-        }, phone, TypeUtil.CAPTCHA_REGISTER);
+        }, phone, TypeUtil.CAPTCHA_REGISTER,0);
 
     }
 

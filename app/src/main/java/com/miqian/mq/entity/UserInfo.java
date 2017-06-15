@@ -11,7 +11,6 @@ public class UserInfo implements Serializable {
     private String mobilePhone;//手机号
     private String token;//
     private String loginName;//登录名
-    private String realName;//真实姓名
     private String nickName;//昵称
     private String idCard;//身份证号
     private String bankNo;//银行卡号
@@ -30,7 +29,7 @@ public class UserInfo implements Serializable {
     private String bankUrlSmall;//绑定银行图标url
     private String bankUrlBig;//绑定银行图标url
     private String bankCode;//绑定银行代码
-    private String supportStatus;//是否支持连连绑卡
+    private String supportStatus;//银行支持状态
     private String addRechargeMinValue;//充值最小额度
     private String canRedeem;//可赎回金额
     private String singleAmtLimit; //单笔限额
@@ -39,6 +38,107 @@ public class UserInfo implements Serializable {
     private String ydayProfit;//昨日收益
     private String custLevel;//新增用户等级
     private String withdrawCashSwitch; //2017手Q 提现开关
+
+    //江西银行存管增加字段 2017.6.2
+    private String userName;//真实姓名
+    private String userNameStatus;//用户实名状态
+    private String jxId; //江西银行用户id
+    private String status; //用户状态  激活与未激活
+    private String jxAccountStatus; //是否开通存管账户 1已开通 0 未开通
+    private String newCurrentAmt; //秒钱宝余额
+    private String currentAmt; //老用户活期余额
+    private String currentCanRedeem; //活期可赎回金额
+    private String newCurrentCanRedeem; //秒钱宝可赎回金额
+    private String jxAutoClaimsTransferStatus; //是否开通自动债权转让 1已开通 0 未开通
+    private String jxAutoSubscribeStatus; //是否开通自动投标 1为已开通 0为未开通
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserNameStatus() {
+        return userNameStatus;
+    }
+
+    public void setUserNameStatus(String userNameStatus) {
+        this.userNameStatus = userNameStatus;
+    }
+
+    public String getJxId() {
+        return jxId;
+    }
+
+    public void setJxId(String jxId) {
+        this.jxId = jxId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getJxAccountStatus() {
+        return jxAccountStatus;
+    }
+
+    public void setJxAccountStatus(String jxAccountStatus) {
+        this.jxAccountStatus = jxAccountStatus;
+    }
+
+    public String getNewCurrentAmt() {
+        return newCurrentAmt;
+    }
+
+    public void setNewCurrentAmt(String newCurrentAmt) {
+        this.newCurrentAmt = newCurrentAmt;
+    }
+
+    public String getCurrentAmt() {
+        return currentAmt;
+    }
+
+    public void setCurrentAmt(String currentAmt) {
+        this.currentAmt = currentAmt;
+    }
+
+    public String getCurrentCanRedeem() {
+        return currentCanRedeem;
+    }
+
+    public void setCurrentCanRedeem(String currentCanRedeem) {
+        this.currentCanRedeem = currentCanRedeem;
+    }
+
+    public String getNewCurrentCanRedeem() {
+        return newCurrentCanRedeem;
+    }
+
+    public void setNewCurrentCanRedeem(String newCurrentCanRedeem) {
+        this.newCurrentCanRedeem = newCurrentCanRedeem;
+    }
+
+    public String getJxAutoClaimsTransferStatus() {
+        return jxAutoClaimsTransferStatus;
+    }
+
+    public void setJxAutoClaimsTransferStatus(String jxAutoClaimsTransferStatus) {
+        this.jxAutoClaimsTransferStatus = jxAutoClaimsTransferStatus;
+    }
+
+    public String getJxAutoSubscribeStatus() {
+        return jxAutoSubscribeStatus;
+    }
+
+    public void setJxAutoSubscribeStatus(String jxAutoSubscribeStatus) {
+        this.jxAutoSubscribeStatus = jxAutoSubscribeStatus;
+    }
 
     public String getCustLevel() {
         return custLevel;
@@ -86,14 +186,6 @@ public class UserInfo implements Serializable {
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
     }
 
     public String getNickName() {

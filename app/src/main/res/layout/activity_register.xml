@@ -2,54 +2,77 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/base_background"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_left_right"
+    android:paddingRight="@dimen/margin_left_right">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:layout_marginTop="@dimen/margin_top"
-        android:background="@color/white"
-        android:minHeight="40dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/trans"
-            android:src="@drawable/login_phone" />
-
-        <EditText
-            android:id="@+id/et_account_telephone"
-            style="@style/edittext_item"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/btn_send"
-            android:layout_toRightOf="@+id/tv_register"
-            android:hint="请输入手机号码"
-            android:inputType="number"
-            android:maxLength="11" />
-    </LinearLayout>
+            android:layout_marginLeft="19dp"
+            android:text="Button" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btn_back"
+            android:layout_centerHorizontal="true"
+            android:text="注册"
+            android:textSize="@dimen/mq_font10_v2" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="欢迎回来"
+        android:textSize="@dimen/mq_font12_v2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="分秒必赚，钱尽其用"
+        android:textSize="@dimen/mq_font12_v2" />
+
+    <EditText
+        android:id="@+id/edit_telephone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_toEndOf="@+id/login_image1"
+        android:layout_toRightOf="@+id/login_image1"
+        android:background="@null"
+        android:hint="请输入手机号码"
+        android:inputType="number"
+        android:maxLength="11"
+        android:singleLine="true"
+        android:textColor="@color/mq_b1"
+        android:textColorHint="@color/miqian_gray"
+        android:textSize="15sp"
+        android:typeface="monospace" />
+
 
     <View style="@style/item_divider" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_item"
-        android:background="@color/white"
         android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
         android:paddingTop="5dp">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/trans"
-            android:src="@drawable/captcha" />
 
         <EditText
             android:id="@+id/et_account_captcha"
@@ -78,87 +101,60 @@
             android:textSize="@dimen/textsize_small" />
     </RelativeLayout>
 
+    <View style="@style/item_divider" />
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/et_password"
+        style="@style/edittext_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp">
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/btn_send"
+        android:layout_toRightOf="@+id/tv_register"
+        android:digits="@string/match"
+        android:hint="6~16位数字字母组合"
+        android:inputType="textPassword"
+        android:maxLength="16" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/trans"
-            android:src="@drawable/login_password" />
+    <View style="@style/item_divider" />
 
-        <EditText
-            android:id="@+id/et_account_password"
-            style="@style/edittext_item"
-            android:layout_width="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/btn_send"
-            android:layout_toRightOf="@+id/tv_register"
-            android:digits="@string/match"
-            android:hint="6~16位数字字母组合"
-            android:inputType="textPassword"
-            android:maxLength="16" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/layout_invite"
-        android:visibility="gone"
+    <EditText
+        android:id="@+id/et_invite"
+        style="@style/edittext_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:minHeight="40dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp">
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/btn_send"
+        android:layout_toRightOf="@+id/tv_register"
+        android:digits="@string/match"
+        android:hint="邀请码(选填)"
+        android:inputType="text"
+        android:maxLength="10" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/trans"
-            android:src="@drawable/register_invite" />
-
-        <EditText
-            android:id="@+id/et_account_invite"
-            style="@style/edittext_item"
-            android:layout_width="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/btn_send"
-            android:layout_toRightOf="@+id/tv_register"
-            android:digits="@string/match"
-            android:hint="邀请码(非必填)"
-            android:inputType="text"
-            android:maxLength="10" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bt_under_text"
-        android:layout_marginTop="@dimen/margin_top">
-
-        <Button
-            android:id="@+id/btn_next"
-            style="@style/click_btn"
-            android:layout_centerHorizontal="true"
-            android:text="下一步" />
-    </RelativeLayout>
-
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="220dp"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_red"
+        android:text="注册"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font7_v2" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_gravity="center_horizontal">
+
+        <CheckBox
+            android:id="@+id/check_law_register"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
+            android:button="@drawable/btn_checkbox"
+            android:checked="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -169,7 +165,7 @@
             android:textSize="@dimen/mq_font4" />
 
         <Button
-            android:id="@+id/text_law"
+            android:id="@+id/btn_law"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -179,5 +175,24 @@
             android:textSize="@dimen/mq_font4" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_tologin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@null"
+        android:text="已有账号去登录 >"
+        android:textColor="@color/mq_r1_v2" />
 
 </LinearLayout>
