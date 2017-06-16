@@ -373,12 +373,11 @@ public class HttpRequest {
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
      *@param source  来源 app的为0，appH5的为1，weixin为2，pc为3 ,rz为4
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType,int source) {
+    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobile", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("source", "" + source));
         new MyAsyncTask(context, Urls.getCaptcha, mList, new ICallback<String>() {
 
             @Override

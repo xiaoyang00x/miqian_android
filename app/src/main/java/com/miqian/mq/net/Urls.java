@@ -97,7 +97,7 @@ public class Urls {
     public final static String app_config = base_server + "commonService/getAdverts";
 
     //获取验证码
-    public final static String getCaptcha = base_server + "/captcha/getCaptcha";  /// commonService/getCaptcha
+    public final static String getCaptcha = base_server + "captcha/getCaptcha";  /// commonService/getCaptcha
     //登录
     public final static String login = base_server + "user/login";// userService/login
     //注册

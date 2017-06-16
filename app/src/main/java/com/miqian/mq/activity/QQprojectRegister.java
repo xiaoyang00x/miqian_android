@@ -283,7 +283,6 @@ public class QQprojectRegister implements View.OnClickListener {
             @Override
             public void onSucceed(Meta result) {
                 end();
-                mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
                 thread.start(); // 启动线程，进行倒计时
@@ -296,7 +295,7 @@ public class QQprojectRegister implements View.OnClickListener {
                 Uihelper.showToast(mContext, error);
 
             }
-        }, phone, TypeUtil.CAPTCHA_REGISTER,0);
+        }, phone, TypeUtil.CAPTCHA_REGISTER);
 
     }
 

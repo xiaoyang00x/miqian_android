@@ -18,8 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="19dp"
-            android:text="Button" />
+            android:background="@drawable/icon_close"></Button>
 
         <TextView
             android:id="@+id/tv_title"
@@ -28,23 +27,24 @@
             android:layout_alignTop="@+id/btn_back"
             android:layout_centerHorizontal="true"
             android:text="登录"
-            android:textSize="@dimen/mq_font10_v2" />
+            android:textColor="@color/mq_b1_v2"
+            android:textSize="@dimen/mq_font8_v2" />
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="欢迎回来"
-        android:textSize="@dimen/mq_font12_v2" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="分秒必赚，钱尽其用"
-        android:textSize="@dimen/mq_font12_v2" />
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        >
+        <ImageView
+            android:layout_marginTop="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_text_login"
+            />
 
     <EditText
         android:id="@+id/edit_telephone"
@@ -53,16 +53,13 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="50dp"
-        android:layout_toEndOf="@+id/login_image1"
-        android:layout_toRightOf="@+id/login_image1"
-        android:background="@null"
-        android:hint="请输入手机号码"
+        android:hint="手机号码"
         android:inputType="number"
         android:maxLength="11"
-        android:singleLine="true"
-        android:textColor="@color/mq_b1"
-        android:textColorHint="@color/miqian_gray"
-        android:textSize="15sp"
+        android:textColor="@color/mq_b1_v2"
+        android:textColorHint="@color/mq_b5_v2"
+        android:textSize="@dimen/mq_font7_v2"
+        android:background="@drawable/trans"
         android:typeface="monospace" />
 
 
@@ -75,18 +72,17 @@
         <EditText
             android:id="@+id/edit_password"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/btn_findpassword"
-            android:background="@null"
-            android:hint="请输入登录密码"
+            android:hint="密码"
             android:inputType="textPassword"
             android:maxLength="16"
-            android:singleLine="true"
-            android:textColor="@color/mq_b1"
-            android:textColorHint="@color/miqian_gray"
-            android:textSize="15sp"
+            android:textColor="@color/mq_b1_v2"
+            android:textColorHint="@color/mq_b5_v2"
+            android:textSize="@dimen/mq_font7_v2"
+            android:background="@drawable/trans"
             android:typeface="monospace" />
 
         <Button
@@ -97,37 +93,47 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@null"
-            android:text="找回密码？"
+            android:text="忘记密码？"
+            android:textSize="@dimen/mq_font7_v2"
             android:textColor="@color/mq_r1_v2" />
 
     </RelativeLayout>
 
     <View style="@style/item_divider" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="220dp"
-        android:layout_height="45dp"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/btn_red"
         android:text="登录"
         android:textColor="@color/white"
-        android:textSize="@dimen/mq_font7_v2" />
-
+        android:textSize="@dimen/mq_font8_v2"  />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="110dp"
+    >
     <TextView
         android:id="@+id/tv_2rigister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
-        android:background="@null"
-        android:text="注册送毫礼？"
+        android:text="注册送豪礼>"
+        android:textStyle="bold"
+        android:paddingTop="3dp"
+        android:layout_centerHorizontal="true"
+        android:drawableLeft="@drawable/icon_gift"
+        android:drawablePadding="5dp"
+        android:textSize="@dimen/mq_font8_v2"
         android:textColor="@color/mq_r1_v2" />
+</RelativeLayout>
+
 
 </LinearLayout>

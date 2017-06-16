@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -91,6 +92,20 @@ public class RegisterActivity extends Activity {
                 register();
             }
         });
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                btnSendCaptcha.setEnabled(false);
+                btnSendCaptcha.setTextColor(ContextCompat.getColor(RegisterActivity.this,R.color.mq_b5_v2));
+                String timeInfo = msg.getData().getString("time");
+                btnSendCaptcha.setText(timeInfo + "秒后重新获取");
+                if ("0".equals(timeInfo)) {
+                    btnSendCaptcha.setEnabled(true);
+                    btnSendCaptcha.setText("获取验证码");
+                }
+                super.handleMessage(msg);
+            }
+        };
     }
 
     private void register() {
@@ -191,7 +206,7 @@ public class RegisterActivity extends Activity {
                 Uihelper.showToast(RegisterActivity.this, error);
 
             }
-        }, phone, TypeUtil.CAPTCHA_REGISTER, 0);
+        }, phone, TypeUtil.CAPTCHA_REGISTER);
 
     }
 

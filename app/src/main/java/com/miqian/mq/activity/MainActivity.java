@@ -133,7 +133,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             mTabHost.setCurrentTab(current_tab);
         }
         if (current_tab == 4) {//代表登录成功
-            mTabHost.setCurrentTab(3);
+            mTabHost.setCurrentTab(0);
         }
         if (current_tab == 5) {//代表退出账号成功
             mTabHost.setCurrentTab(0);
