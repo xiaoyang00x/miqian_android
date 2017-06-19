@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/frame_online"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/list_click">
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="在线快捷充值" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@drawable/right" />
+    </RelativeLayout>
+
+    <View style="@style/item_divider_none" />
+
+    <RelativeLayout
+        android:id="@+id/frame_offline"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:background="@drawable/list_click">
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="线下转账充值" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@drawable/right" />
+    </RelativeLayout>
+
+    <View style="@style/item_divider_none" />
+
+    <RelativeLayout
+        android:id="@+id/frame_check"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/listitem_height"
+        android:background="@drawable/list_click">
+
+        <TextView
+            style="@style/text_black_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="充值结果确认" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:src="@drawable/right" />
+    </RelativeLayout>
+
+    <View style="@style/item_divider_none" />
+
+</LinearLayout>

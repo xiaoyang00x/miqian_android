@@ -24,14 +24,13 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.GestureLockSetActivity;
-import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.IntoModeAcitvity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
-import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
@@ -55,8 +54,6 @@ import com.miqian.mq.views.MySwipeRefresh;
 import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
-
-import butterknife.BindView;
 
 /**
  * Description:
@@ -454,7 +451,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     return;
                 }
                 MobclickAgent.onEvent(getActivity(), "1017");
-                startActivity(new Intent(getActivity(), IntoActivity.class));
+                startActivity(new Intent(getActivity(), IntoModeAcitvity.class));
                 break;
             //取现
             case R.id.btn_rollout:
