@@ -25,6 +25,7 @@ import com.miqian.mq.entity.RegTransDetail;
 import com.miqian.mq.entity.RegTransDetailResult;
 import com.miqian.mq.entity.TransFer;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -120,9 +121,9 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
             }
         });
 
-        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+        HttpRequest.getUserInfo(mActivity, new ICallback<UserInfoResult>() {
             @Override
-            public void onSucceed(LoginResult result) {
+            public void onSucceed(UserInfoResult result) {
                 end();
                 userInfo = result.getData();
             }

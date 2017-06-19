@@ -32,6 +32,7 @@ import com.miqian.mq.entity.Promote;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.SupportBankMsgResult;
+import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -625,9 +626,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         int status = Pref.getInt(UserUtil.getPrefKey(mActivity, Pref.PAY_STATUS), mActivity, 0);
         if (status == 0) {
             mWaitingDialog.show();
-            HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+            HttpRequest.getUserInfo(mActivity, new ICallback<UserInfoResult>() {
                 @Override
-                public void onSucceed(LoginResult result) {
+                public void onSucceed(UserInfoResult result) {
                     mWaitingDialog.dismiss();
                     int status = Integer.parseInt(result.getData().getPayPwdStatus());
                     showTradeDialog(status);

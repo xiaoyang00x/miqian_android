@@ -43,6 +43,7 @@ import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserCurrentResult;
+import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.UserRegularResult;
@@ -256,7 +257,7 @@ public class HttpRequest {
     /**
      * 获取用户信息
      */
-    public static void getUserInfo(Context context, final ICallback<LoginResult> callback) {
+    public static void getUserInfo(Context context, final ICallback<UserInfoResult> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
@@ -264,11 +265,11 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
-                if (loginResult.getCode().equals("000000")) {
-                    callback.onSucceed(loginResult);
+                UserInfoResult userInfoResult = JsonUtil.parseObject(result, UserInfoResult.class);
+                if (userInfoResult.getCode().equals("000000")) {
+                    callback.onSucceed(userInfoResult);
                 } else {
-                    callback.onFail(loginResult.getMessage());
+                    callback.onFail(userInfoResult.getMessage());
                 }
             }
 
@@ -371,7 +372,6 @@ public class HttpRequest {
     /**
      * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
      *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
-     *@param source  来源 app的为0，appH5的为1，weixin为2，pc为3 ,rz为4
      */
     public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
         List<Param> mList = new ArrayList<>();

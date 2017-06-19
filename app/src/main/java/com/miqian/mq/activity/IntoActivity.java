@@ -28,6 +28,7 @@ import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.SupportBankMsgResult;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -83,9 +84,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void obtainData() {
         begin();
-        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+        HttpRequest.getUserInfo(mActivity, new ICallback<UserInfoResult>() {
             @Override
-            public void onSucceed(LoginResult result) {
+            public void onSucceed(UserInfoResult result) {
                 end();
                 showContentView();
                 userInfo = result.getData();

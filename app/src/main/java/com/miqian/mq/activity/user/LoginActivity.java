@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
+import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.Login;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -108,8 +110,11 @@ public class LoginActivity extends Activity {
             @Override
             public void onSucceed(LoginResult result) {
                 end();
-                UserInfo userInfo = result.getData();
-                UserUtil.saveUserInfo(LoginActivity.this, userInfo);
+                Login userInfo = result.getData();
+                //保存用户信息
+                Pref.saveString(Pref.TOKEN, userInfo.getToken(), LoginActivity.this);
+                Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), LoginActivity.this);
+                Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobile()), LoginActivity.this);
                 if (Pref.getBoolean(Pref.GESTURESTATE, LoginActivity.this, true)) {
                     GestureLockSetActivity.startActivity(LoginActivity.this, null);
                 }
