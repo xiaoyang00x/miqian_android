@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class UserInfo implements Serializable {
 
     private String custId;//客户id
-    private String mobilePhone;//手机号
+    private String mobile;//手机号
     private String token;//
     private String loginName;//登录名
     private String nickName;//昵称
@@ -164,12 +164,12 @@ public class UserInfo implements Serializable {
         this.custId = custId;
     }
 
-    public String getMobilePhone() {
-        return mobilePhone;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getToken() {

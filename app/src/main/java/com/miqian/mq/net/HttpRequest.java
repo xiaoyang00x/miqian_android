@@ -312,7 +312,7 @@ public class HttpRequest {
     //登录
     public static void login(Context context, final ICallback<LoginResult> callback, String mobilePhone, String password) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("password", RSAUtils.encryptURLEncode(password)));
 
         new MyAsyncTask(context, Urls.login, mList, new ICallback<String>() {
