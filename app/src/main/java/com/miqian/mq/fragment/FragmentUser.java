@@ -14,6 +14,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.IntoModeAcitvity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
