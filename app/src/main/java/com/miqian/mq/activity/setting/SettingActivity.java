@@ -15,7 +15,11 @@ import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.GestureLockSetActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UpdateInfo;
 import com.miqian.mq.entity.UpdateResult;
@@ -28,6 +32,7 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileDeviceUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogUpdate;
@@ -40,6 +45,8 @@ import java.util.Map;
 import cn.udesk.UdeskConst;
 import cn.udesk.UdeskSDKManager;
 
+import static com.miqian.mq.R.id.iv_switch;
+
 /**
  * Created by Administrator on 2015/9/17.
  */
@@ -51,6 +58,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private Button btn_loginout;
     private boolean isPush;
     private ExtendOperationController extendOperationController;
+    private TextView tvPhone;
+    private TextView tvName;
+    private View frameName;
+    private ImageView ivSwitch;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -67,11 +78,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void initView() {
 
+        tvPhone = (TextView) findViewById(R.id.tv_phone);
+        tvName = (TextView) findViewById(R.id.tv_name);
+
+
         btn_loginout = (Button) findViewById(R.id.btn_loginout);
-        View frame_setting_security = findViewById(R.id.frame_setting_security);
         View frame_setting_helpcenter = findViewById(R.id.frame_setting_helpcenter);
-        View frame_setting_accountinfo = findViewById(R.id.frame_setting_accountinfo);
         View frame_setting_telephone = findViewById(R.id.frame_telephone);
+        View frameuserPhone = findViewById(R.id.frame_userhone);
+        View frameDigitalcard = findViewById(R.id.frame_digitalcard);
+        frameName = findViewById(R.id.frame_name);
 
         View frame_setting_suggest = findViewById(R.id.frame_setting_suggest);
         View frame_setting_about = findViewById(R.id.frame_setting_about);
@@ -83,12 +99,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         ivPushState = (ImageView) findViewById(R.id.iv_push_state);
 
         frameUpdate.setOnClickListener(this);
-        frame_setting_accountinfo.setOnClickListener(this);
-        frame_setting_security.setOnClickListener(this);
         frame_setting_helpcenter.setOnClickListener(this);
         frame_setting_suggest.setOnClickListener(this);
         frame_setting_about.setOnClickListener(this);
         frame_setting_telephone.setOnClickListener(this);
+        frameuserPhone.setOnClickListener(this);
+        frameDigitalcard.setOnClickListener(this);
         ivPushState.setOnClickListener(this);
 
         extendOperationController = ExtendOperationController.getInstance();
@@ -112,7 +128,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         } else {
             ivPushState.setImageResource(R.drawable.gesture_switch_close);
         }
-
         if (UserUtil.hasLogin(mActivity)) {
             btn_loginout.setVisibility(View.VISIBLE);
             if (userInfo == null) {
@@ -121,6 +136,29 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             frame_login.setVisibility(View.VISIBLE);
         }
 
+        if (!TextUtils.isEmpty(userInfo.getMobile())) {
+            String phone = RSAUtils.decryptByPrivate(userInfo.getMobile());
+            tvPhone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
+        }
+
+        if (!TextUtils.isEmpty(userInfo.getRealNameStatus())) {
+            //已认证
+            if ("1".equals(userInfo.getRealNameStatus())) {
+                if (!TextUtils.isEmpty(userInfo.getUserName())) {
+                    frameName.setVisibility(View.VISIBLE);
+                    findViewById(R.id.divider_name).setVisibility(View.VISIBLE);
+                    tvName.setText(RSAUtils.decryptByPrivate(userInfo.getUserName()));
+                }
+            }
+        }
+
+        /*
+        修改登录，交易密码，手势密码
+         */
+        ivSwitch = (ImageView) findViewById(iv_switch);
+        findViewById(R.id.password_login).setOnClickListener(this);
+        findViewById(R.id.password_transaction).setOnClickListener(this);
+        ivSwitch.setOnClickListener(this);
     }
 
     @Override
@@ -136,27 +174,33 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //账户信息
-            case R.id.frame_setting_accountinfo:
-                if (userInfo == null) {
-                    return;
-                }
-                Intent intent_bind = new Intent(mActivity, AccountInfoActivity.class);
-                Bundle extra = new Bundle();
-                extra.putSerializable("userInfo", userInfo);
-                intent_bind.putExtras(extra);
-                startActivity(intent_bind);
+            //电子账户
+            case R.id.frame_digitalcard:
                 break;
-            //安全设置
-            case R.id.frame_setting_security:
-                MobclickAgent.onEvent(mActivity, "1026");
-                if (userInfo != null && !TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
-                    Intent intent = new Intent(mActivity, SecuritySettingActivity.class);
-                    intent.putExtra("payPwdStatus", userInfo.getPayPwdStatus());
+            case R.id.password_login://修改登录密码
+                MobclickAgent.onEvent(mActivity, "1027");
+                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, true);
+
+                break;
+            case R.id.password_transaction://修改交易密码
+                if ("0".equals(userInfo.getPayPwdStatus())) {//未设置
+                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+                    intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
+                    startActivity(intent);
+                } else {
+                    MobclickAgent.onEvent(mActivity, "1028");
+                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
                     intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
                     startActivity(intent);
                 }
-
+                break;
+            case R.id.iv_switch://手势密码
+                if (isGestureLockOpen()) {
+                    setGestureLockState(false);
+                    changeGestureSwitchState();
+                } else {
+                    GestureLockSetActivity.startActivity(getBaseContext(), null);
+                }
                 break;
             //帮助中心
             case R.id.frame_setting_helpcenter:
@@ -166,9 +210,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             //意见反馈
             case R.id.frame_setting_suggest:
                 MobclickAgent.onEvent(mActivity, "1029");
-//                Intent feedBackActivity = new Intent(this, CustomFeedBackActivity.class);
-//                startActivity(feedBackActivity);
-
                 setUdeskUserInfo();
                 UdeskSDKManager.getInstance().showRobotOrConversation(SettingActivity.this);
 
@@ -178,12 +219,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     MobclickAgent.onEvent(mContext, "1004_5");
                     // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     Toast.makeText(mContext, "您尚未开启通话权限，请开启后再尝试。", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -195,27 +230,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.frame_update:
                 MobclickAgent.onEvent(mActivity, "1032");
                 checkVersion();
-//                UmengUpdateAgent.setUpdateAutoPopup(false);
-//                UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
-//                    @Override
-//                    public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
-//                        switch (updateStatus) {
-//                            case UpdateStatus.Yes: // has update
-//                                UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
-//                                break;
-//                            case UpdateStatus.No: // has no update
-//                                Toast.makeText(mContext, "当前已是最新版本", Toast.LENGTH_SHORT).show();
-//                                break;
-//                            case UpdateStatus.NoneWifi: // none wifi
-//                                UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
-//                                break;
-//                            case UpdateStatus.Timeout: // time out
-//                                Toast.makeText(mContext, "请求超时", Toast.LENGTH_SHORT).show();
-//                                break;
-//                        }
-//                    }
-//                });
-//                UmengUpdateAgent.forceUpdate(mActivity);
                 break;
             //了解咪钱
             case R.id.frame_setting_about:
@@ -240,6 +254,20 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    // 手势密码是否开启
+    private boolean isGestureLockOpen() {
+        return Pref.getBoolean(Pref.GESTURESTATE, getBaseContext(), false);
+    }
+
+    // 设置 手势密码 开关状态
+    private void setGestureLockState(boolean isOpen) {
+        Pref.saveBoolean(Pref.GESTURESTATE, isOpen, getBaseContext());
+    }
+
+    private void changeGestureSwitchState() {
+        ivSwitch.setImageResource(isGestureLockOpen() ?
+                R.drawable.gesture_swith_open : R.drawable.gesture_switch_close);
+    }
 
     //  版本更新:1:建议更新 2:强制
     private void checkVersion() {
@@ -317,7 +345,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
 
     }
-
 
     /**
      * 设置 udesk 所需用户信息

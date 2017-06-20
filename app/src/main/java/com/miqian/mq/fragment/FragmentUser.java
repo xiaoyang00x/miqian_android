@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -75,6 +76,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @BindView(R.id.bt_left)
     ImageView btn_message;
+    @BindView(R.id.btn_eye)
+    ImageButton btnEye;
 
     @BindView(R.id.frame_account_current)
     View frame_current;
@@ -274,7 +277,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         frame_miaoqianbao.setOnClickListener(this);
         btn_setting.setImageResource(R.drawable.btn_setting);
     }
+    @OnClick(R.id.btn_eye)//资金等是否可见
+    public void eyeState() {
 
+
+    }
     @OnClick(R.id.bt_right)//设置
     public void setting() {
         if (UserUtil.hasLogin(getActivity())) {
