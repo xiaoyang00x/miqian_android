@@ -14,7 +14,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
-import com.miqian.mq.activity.IntoModeAcitvity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
@@ -24,7 +23,6 @@ import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
-import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
@@ -113,10 +111,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (savedInstanceState == null || view == null) {
+        if (view == null) {
             view = inflater.inflate(R.layout.frame_user, null);
         }
-        //绑定fragment
         ButterKnife.bind(this, view);
         ViewGroup parent = (ViewGroup) view.getParent();
         if (parent != null) {
@@ -131,6 +128,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         refresh = true;
         findViewById();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        obtainData();
+        super.onStart();
     }
 
     private void obtainData() {
