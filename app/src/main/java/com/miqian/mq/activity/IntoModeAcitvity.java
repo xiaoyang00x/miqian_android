@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.miqian.mq.R;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -25,8 +26,10 @@ public class IntoModeAcitvity extends BaseActivity implements View.OnClickListen
                 startActivity(new Intent(this, IntoActivity.class));
                 break;
             case R.id.frame_offline:
+                WebActivity.startActivity(mActivity, Urls.web_into_offline);
                 break;
             case R.id.frame_check:
+                startActivity(new Intent(this, IntoCheckAcitvity.class));
                 break;
         }
     }

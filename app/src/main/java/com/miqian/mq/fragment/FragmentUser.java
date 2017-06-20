@@ -15,6 +15,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.IntoModeAcitvity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
@@ -301,7 +302,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             return;
         }
         MobclickAgent.onEvent(getActivity(), "1017");
-        startActivity(new Intent(getActivity(), IntoActivity.class));
+        startActivity(new Intent(getActivity(), IntoModeAcitvity.class));
     }
 
     @OnClick(R.id.bt_rollout)
