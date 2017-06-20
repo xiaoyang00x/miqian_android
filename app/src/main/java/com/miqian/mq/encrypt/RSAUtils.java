@@ -48,7 +48,7 @@ public class RSAUtils {
      */
     public static String encryptByPublic(String content) {
         try {
-            PublicKey pubkey = getPublicKeyFromX509(RSA, Urls.RSA_PUBLICE);
+            PublicKey pubkey = getPublicKeyFromX509(RSA, Urls.getPubliceKey());
 
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.ENCRYPT_MODE, pubkey);
@@ -86,7 +86,7 @@ public class RSAUtils {
             return content;
         }
         try {
-            PrivateKey privateKey = loadPrivateKey(Urls.RSA_PRIVATE);
+            PrivateKey privateKey = loadPrivateKey(Urls.getPrivateKey());
             byte[] encryptedData = Base64.decode(content, Base64.DEFAULT);
             byte[] output = decryptData(encryptedData, privateKey);
             return new String(output);
