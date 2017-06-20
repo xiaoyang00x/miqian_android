@@ -291,7 +291,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             return;
         }
         MobclickAgent.onEvent(getActivity(), "1017");
-        startActivity(new Intent(getActivity(), IntoActivity.class));
+        startActivity(new Intent(getActivity(), IntoModeAcitvity.class));
     }
 
     @OnClick(R.id.bt_rollout)

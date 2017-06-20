@@ -27,6 +27,7 @@ public class IntoModeAcitvity extends BaseActivity implements View.OnClickListen
             case R.id.frame_offline:
                 break;
             case R.id.frame_check:
+                startActivity(new Intent(this, IntoCheckAcitvity.class));
                 break;
         }
     }

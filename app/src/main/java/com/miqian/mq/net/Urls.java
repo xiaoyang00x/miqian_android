@@ -79,7 +79,7 @@ public class Urls {
     //充值转入接口
     public final static String roll_in = base_server + "assetService/v2/recharge";
     //充值转入结果查询接口
-    public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
+    public final static String rollin_result = base_server + "trans/rechargeTransfer";//public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
     //充值失败错误原因上传接口
     public final static String rollin_error = base_server + "assetService/rechargeFailureLianLian";
     //活期首页

@@ -203,16 +203,24 @@ public class HttpRequest {
     /**
      * 充值结果查询
      */
-    public static void rollInResult(Context context, final ICallback<OrderLianResult> callback, String orderNo) {
+    public static void rollInResult(Context context, final ICallback<Meta> callback, String timeType, String transferType) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("orderNo", orderNo));
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("timeType", timeType));
+        mList.add(new Param("transferType", transferType));
 
         new MyAsyncTask(context, Urls.rollin_result, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                OrderLianResult orderLianResult = JsonUtil.parseObject(result, OrderLianResult.class);
-                callback.onSucceed(orderLianResult);
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+//                OrderLianResult orderLianResult = JsonUtil.parseObject(result, OrderLianResult.class);
+//                callback.onSucceed(orderLianResult);
             }
 
             @Override
