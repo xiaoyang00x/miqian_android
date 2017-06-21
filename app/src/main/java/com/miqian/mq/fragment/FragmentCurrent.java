@@ -31,20 +31,12 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class FragmentCurrent extends BasicFragment implements View.OnClickListener {
 
     private View view;
-    private WaterWaveView waterWaveView;
-    private Button btInvestment;
-    private TextView titleText;
-    private RelativeLayout frameImage;
-    private TextView textInterest;
-    private MySwipeRefresh swipeRefresh;
-    private RelativeLayout frameEarning;
-    private RelativeLayout frameSafe;
-    private RelativeLayout frameBack;
-    private ScrollView frameCrowd;
-    private ImageView imageCrowd;
 
     private Activity mContext;
     private DialogPay dialogPay;
@@ -57,58 +49,47 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     private BigDecimal balance;
     private boolean isCache = false;
 
+    @BindView(R.id.frame_title) View frameTitle;
+    @BindView(R.id.title) TextView titleText;
+    //年化收益率
+    @BindView(R.id.text_interest) TextView textInterest;
+    //立即认购
+    @BindView(R.id.bt_investment) TextView btInvestment;
+    @BindView(R.id.swipe_refresh) MySwipeRefresh swipeRefresh;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         if (savedInstanceState == null || view == null) {
             view = inflater.inflate(R.layout.frame_current, null);
         }
+
+        ButterKnife.bind(this, view);
+
         ViewGroup parent = (ViewGroup) view.getParent();
         if (parent != null) {
             parent.removeView(view);
         }
         interestRateString = Pref.getString(Pref.CURRENT_RATE, mContext, "5");
-        findViewById(view);
+        initView();
         if (Uihelper.getConfigCache(mContext)) {
             isCache = true;
         } else {
             isCache = false;
         }
 
-        if (Uihelper.getConfigCrowd(mContext)) {
-            swipeRefresh.setVisibility(View.GONE);
-            frameCrowd.setVisibility(View.VISIBLE);
-            android.widget.LinearLayout.LayoutParams paramsImage = (android.widget.LinearLayout.LayoutParams) imageCrowd.getLayoutParams();
-            paramsImage.height = Config.WIDTH * 65 / 72;
-            imageCrowd.setLayoutParams(paramsImage);
-        } else {
-            obtainData();
-        }
+        obtainData();
         initInterestView();
         return view;
     }
 
-    private void findViewById(View view) {
-        frameCrowd = (ScrollView) view.findViewById(R.id.frame_crowd);
-        imageCrowd = (ImageView) view.findViewById(R.id.image_crowd);
-        waterWaveView = (WaterWaveView) view.findViewById(R.id.wave_view);
-        waterWaveView.startWave();
 
-        titleText = (TextView) view.findViewById(R.id.title);
-        titleText.setText("活期理财");
+    private void initView() {
+        frameTitle.setBackgroundColor(getResources().getColor(R.color.white));
+        titleText.setText("秒钱宝");
+        titleText.setTextColor(getResources().getColor(R.color.black));
 
-        frameImage = (RelativeLayout) view.findViewById(R.id.frame_image);
-        frameImage.setOnClickListener(this);
-        textInterest = (TextView) view.findViewById(R.id.text_interest);
 
-        frameEarning = (RelativeLayout) view.findViewById(R.id.frame_earning);
-        frameSafe = (RelativeLayout) view.findViewById(R.id.frame_safe);
-        frameBack = (RelativeLayout) view.findViewById(R.id.frame_back);
-        frameEarning.setOnClickListener(this);
-        frameSafe.setOnClickListener(this);
-        frameBack.setOnClickListener(this);
-
-        btInvestment = (Button) view.findViewById(R.id.bt_investment);
         initInvestmentView(Pref.getString(Pref.CURRENT_STATE, mContext, ""));
         btInvestment.setOnClickListener(this);
 
@@ -140,7 +121,6 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 this.setTipTextVisibility(View.GONE);
             }
         };
-        swipeRefresh = (MySwipeRefresh) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
@@ -195,10 +175,6 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
     @Override
     public void onDestroy() {
-        if (waterWaveView != null) {
-            waterWaveView.stopWave();
-            waterWaveView = null;
-        }
         if (dialogPay != null) {
             dialogPay = null;
         }
@@ -227,34 +203,34 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
 
                 break;
-            case R.id.frame_image:
-                MobclickAgent.onEvent(mContext, "1006");
-                WebActivity.startActivity(mContext, Urls.web_current);
-                break;
-            case R.id.frame_earning:
-                MobclickAgent.onEvent(mContext, "1006");
-                if (isCache) {
-                    WebActivity.startActivity(getContext(), "file:///android_asset/current_earnings.html");
-                } else {
-                    WebActivity.startActivity(mContext, Urls.web_current_earning);
-                }
-                break;
-            case R.id.frame_safe:
-                MobclickAgent.onEvent(mContext, "1006");
-                if (isCache) {
-                    WebActivity.startActivity(getContext(), "file:///android_asset/current_safeguard.html");
-                } else {
-                    WebActivity.startActivity(mContext, Urls.web_current_safe);
-                }
-                break;
-            case R.id.frame_back:
-                MobclickAgent.onEvent(mContext, "1006");
-                if (isCache) {
-                    WebActivity.startActivity(getContext(), "file:///android_asset/current_redeem.html");
-                } else {
-                    WebActivity.startActivity(mContext, Urls.web_current_back);
-                }
-                break;
+//            case R.id.frame_image:
+//                MobclickAgent.onEvent(mContext, "1006");
+//                WebActivity.startActivity(mContext, Urls.web_current);
+//                break;
+//            case R.id.frame_earning:
+//                MobclickAgent.onEvent(mContext, "1006");
+//                if (isCache) {
+//                    WebActivity.startActivity(getContext(), "file:///android_asset/current_earnings.html");
+//                } else {
+//                    WebActivity.startActivity(mContext, Urls.web_current_earning);
+//                }
+//                break;
+//            case R.id.frame_safe:
+//                MobclickAgent.onEvent(mContext, "1006");
+//                if (isCache) {
+//                    WebActivity.startActivity(getContext(), "file:///android_asset/current_safeguard.html");
+//                } else {
+//                    WebActivity.startActivity(mContext, Urls.web_current_safe);
+//                }
+//                break;
+//            case R.id.frame_back:
+//                MobclickAgent.onEvent(mContext, "1006");
+//                if (isCache) {
+//                    WebActivity.startActivity(getContext(), "file:///android_asset/current_redeem.html");
+//                } else {
+//                    WebActivity.startActivity(mContext, Urls.web_current_back);
+//                }
+//                break;
             default:
                 break;
         }
@@ -262,6 +238,6 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
 
     @Override
     protected String getPageName() {
-        return "首页-活期";
+        return "首页-秒钱宝";
     }
 }
