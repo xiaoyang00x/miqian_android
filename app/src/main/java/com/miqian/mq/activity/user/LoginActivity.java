@@ -16,7 +16,6 @@ import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Login;
 import com.miqian.mq.entity.LoginResult;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -63,6 +62,12 @@ public class LoginActivity extends Activity {
         initView();
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        this.overridePendingTransition(R.anim.activity_anim_scenic_no, R.anim.activity_anim_scenic_out);
+    }
+
     private void initView() {
         mWaitingDialog = ProgressDialogView.create(this);
         tvTorigister.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +75,15 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 finish();
+                overridePendingTransition(R.anim.activity_anim_scenic_in, R.anim.activity_anim_scenic_no);
             }
         });
+    }
+
+    public static void start(Activity activity) {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.activity_anim_scenic_in, R.anim.activity_anim_scenic_no);
     }
 
     @OnClick(R.id.btn_back) //返回按钮
@@ -120,6 +132,7 @@ public class LoginActivity extends Activity {
                 }
                 Uihelper.showToast(LoginActivity.this, "登录成功");
                 ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS,null);
+                UserUtil.loginSuccess();
                 finish();
             }
 
@@ -135,7 +148,6 @@ public class LoginActivity extends Activity {
     public void findPassWord() {
 
     }
-
     /**
      * 显示 loading 对话框
      */
@@ -153,9 +165,5 @@ public class LoginActivity extends Activity {
         if (mWaitingDialog != null && mWaitingDialog.isShowing()) {
             mWaitingDialog.dismiss();
         }
-    }
-
-    public static void enterAcitivty(Activity fromActivity) {
-        fromActivity.startActivity(new Intent(fromActivity, LoginActivity.class));
     }
 }

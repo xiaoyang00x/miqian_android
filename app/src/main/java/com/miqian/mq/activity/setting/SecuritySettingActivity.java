@@ -49,7 +49,7 @@
 //        extendOperationController.registerExtendOperationListener(this);
 //
 //        View frameTelephone = findViewById(R.id.frame_telephone);
-//        frame_digitalcard = findViewById(R.id.frame_digitalcard);
+//        frame_bankcard = findViewById(R.id.frame_digitalcard);
 //        frame_name = findViewById(R.id.frame_name);
 //
 //        tvName = (TextView) findViewById(R.id.tv_name);

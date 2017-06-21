@@ -1,6 +1,7 @@
 package com.miqian.mq.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,10 +14,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.entity.CurrentInfo;
 import com.miqian.mq.entity.CurrentInfoResult;
+import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -31,7 +35,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
 
-public class FragmentCurrent extends BasicFragment implements View.OnClickListener {
+public class FragmentCurrent extends BasicFragment implements View.OnClickListener ,LoginListener{
 
     private View view;
     private WaterWaveView waterWaveView;
@@ -223,8 +227,7 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
                 }
 
 //                UserUtil.loginPay(mContext, dialogPay);
-                UserUtil.registerPay(mContext, dialogPay);
-
+               LoginActivity.start(mContext);
 
                 break;
             case R.id.frame_image:
@@ -263,5 +266,15 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
     @Override
     protected String getPageName() {
         return "首页-活期";
+    }
+
+    @Override
+    public void loginSuccess() {
+        dialogPay.show();
+    }
+
+    @Override
+    public void logout() {
+
     }
 }

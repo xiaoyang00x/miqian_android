@@ -105,7 +105,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_centerVertical="true"
-        android:digits="@string/match"
         android:hint="密码：6~16位字符(数字、字母、符号)"
         android:inputType="textPassword"
         android:textColor="@color/mq_b1_v2"

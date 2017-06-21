@@ -462,7 +462,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             @Override
             public void onClick(View v) {
                 if (!UserUtil.hasLogin(MainActivity.this)) {
-                    LoginActivity.enterAcitivty(MainActivity.this);
+                    LoginActivity.start(MainActivity.this);
                 } else {
                     mTabHost.setCurrentTab(3);
                 }

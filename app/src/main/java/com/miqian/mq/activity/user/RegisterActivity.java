@@ -3,17 +3,20 @@ package com.miqian.mq.activity.user;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
@@ -22,6 +25,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -142,25 +146,29 @@ public class RegisterActivity extends Activity {
             if (password.length() < 6 || password.length() > 16) {
                 Uihelper.showToast(RegisterActivity.this, R.string.tip_password);
             } else {
-                begin();
-                HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
-                    @Override
-                    public void onSucceed(RegisterResult result) {
-                        MobclickAgent.onEvent(RegisterActivity.this, "1053");
-                        end();
-                        Uihelper.showToast(RegisterActivity.this, "注册成功");
-                        UserInfo userInfo = result.getData();
-                        UserUtil.saveUserInfo(RegisterActivity.this, userInfo);
-                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
-                        finish();
-                    }
+                if (password.matches(FormatUtil.PATTERN_PASSWORD)) {
+                    begin();
+                    HttpRequest.register(RegisterActivity.this, new ICallback<RegisterResult>() {
+                        @Override
+                        public void onSucceed(RegisterResult result) {
+                            MobclickAgent.onEvent(RegisterActivity.this, "1053");
+                            end();
+                            Uihelper.showToast(RegisterActivity.this, "注册成功");
+                            UserInfo userInfo = result.getData();
+                            UserUtil.saveUserInfo(RegisterActivity.this, userInfo);
+                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
+                            finish();
+                        }
 
-                    @Override
-                    public void onFail(String error) {
-                        end();
-                        Uihelper.showToast(RegisterActivity.this, error);
-                    }
-                }, phone, captcha, password, "");
+                        @Override
+                        public void onFail(String error) {
+                            end();
+                            Uihelper.showToast(RegisterActivity.this, error);
+                        }
+                    }, phone, captcha, password, "");
+                }else {
+                    Uihelper.showToast(RegisterActivity.this, "密码须是数字、字母、字符组合");
+                }
             }
 
         } else {
@@ -223,10 +231,14 @@ public class RegisterActivity extends Activity {
 
     @OnClick(R.id.btn_tologin) //已有账号去登录
     public void toLogin() {
-        LoginActivity.enterAcitivty(RegisterActivity.this);
+       LoginActivity.start(RegisterActivity.this);
         finish();
     }
-
+    @Override
+    public void finish() {
+        super.finish();
+        this.overridePendingTransition(R.anim.activity_anim_scenic_no, R.anim.activity_anim_scenic_out);
+    }
 
     /**
      * 显示 loading 对话框

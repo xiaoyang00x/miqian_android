@@ -54,7 +54,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private UserInfo userInfo;
     private ImageView ivPushState;
-    private View frame_login;
     private Button btn_loginout;
     private boolean isPush;
     private ExtendOperationController extendOperationController;
@@ -91,7 +90,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         View frame_setting_suggest = findViewById(R.id.frame_setting_suggest);
         View frame_setting_about = findViewById(R.id.frame_setting_about);
-        frame_login = findViewById(R.id.layout_login);
         View frameUpdate = findViewById(R.id.frame_update);
         TextView textVersion = (TextView) findViewById(R.id.text_version);
         textVersion.setText("V" + MobileOS.getAppVersionName(mActivity));
@@ -128,13 +126,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         } else {
             ivPushState.setImageResource(R.drawable.gesture_switch_close);
         }
-        if (UserUtil.hasLogin(mActivity)) {
-            btn_loginout.setVisibility(View.VISIBLE);
-            if (userInfo == null) {
+        if (userInfo == null) {
                 return;
             }
-            frame_login.setVisibility(View.VISIBLE);
-        }
 
         if (!TextUtils.isEmpty(userInfo.getMobile())) {
             String phone = RSAUtils.decryptByPrivate(userInfo.getMobile());
@@ -169,6 +163,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("设置");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        changeGestureSwitchState();
     }
 
     @Override

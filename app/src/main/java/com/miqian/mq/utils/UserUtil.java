@@ -177,7 +177,7 @@ public class UserUtil {
 //                }
 //            };
 //            dialog_register.show();
-            LoginActivity.enterAcitivty(context);
+//            LoginActivity.enterAcitivty(context);
         } else {
             dialogPay.show();
         }
