@@ -20,7 +20,7 @@
             <RelativeLayout
                 android:id="@+id/frame_name"
                 style="@style/listItem"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     style="@style/text_black_item"

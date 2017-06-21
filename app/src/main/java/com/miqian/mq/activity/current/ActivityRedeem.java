@@ -17,6 +17,7 @@ import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.UserCurrent;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -100,9 +101,9 @@ public class ActivityRedeem extends BaseActivity {
             }
         }
         begin();
-        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+        HttpRequest.getUserInfo(mActivity, new ICallback<UserInfoResult>() {
             @Override
-            public void onSucceed(LoginResult result) {
+            public void onSucceed(UserInfoResult result) {
                 end();
                 userInfo = result.getData();
             }

@@ -4,13 +4,13 @@ package com.miqian.mq.entity;
  * Created by Administrator on 2015/9/6.
  */
 public class LoginResult extends Meta {
-    private UserInfo data;
+    private Login data;
 
-    public UserInfo getData() {
+    public Login getData() {
         return data;
     }
 
-    public void setData(UserInfo data) {
+    public void setData(Login data) {
         this.data = data;
     }
 }

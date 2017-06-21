@@ -23,16 +23,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
-
+                android:visibility="visible">
                 <RelativeLayout
-                    android:id="@+id/frame_setting_accountinfo"
+                    android:id="@+id/frame_name"
+                    style="@style/listItem"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/text_black_item"
+                        android:layout_centerVertical="true"
+                        android:text="姓名" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:text=""
+                        android:textColor="@color/mq_r1" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/divider_name"
+                    style="@style/item_divider"
+                    android:visibility="gone"
+                    />
+                <RelativeLayout
+                    android:id="@+id/frame_userhone"
                     style="@style/listItem">
 
                     <TextView
                         style="@style/text_black_item"
                         android:layout_centerVertical="true"
-                        android:text="账户信息" />
+                        android:text="手机账号" />
+
+
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/miqian_gray" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/divider_bank"
+                    style="@style/item_divider"
+                    android:visibility="gone" />
+                <RelativeLayout
+                    android:id="@+id/frame_digitalcard"
+                    style="@style/listItem">
+
+                    <TextView
+                        style="@style/text_black_item"
+                        android:layout_centerVertical="true"
+                        android:text="电子账户" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -44,30 +92,96 @@
 
                 <View style="@style/item_divider" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/frame_setting_security"
-                    style="@style/listItem"
-                    android:layout_marginBottom="10dp">
+                    <RelativeLayout
+                        android:id="@+id/password_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/listitem_height"
+                        android:background="@drawable/list_click">
 
-                    <TextView
-                        style="@style/text_black_item"
-                        android:layout_centerVertical="true"
-                        android:text="安全设置" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/margin_left_right"
+                            android:text="修改登录密码"
+                            android:textColor="@color/mq_b1"
+                            android:textSize="@dimen/mq_font2" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/right" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/margin_left_right"
+                            android:src="@drawable/right" />
+                    </RelativeLayout>
 
-                </RelativeLayout>
+                    <View style="@style/item_divider" />
 
+                    <RelativeLayout
+                        android:id="@+id/password_transaction"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/listitem_height"
+                        android:background="@drawable/list_click">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/margin_left_right"
+                            android:text="修改交易密码"
+                            android:textColor="@color/mq_b1"
+                            android:textSize="@dimen/mq_font2" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/margin_left_right"
+                            android:src="@drawable/right" />
+                    </RelativeLayout>
+
+                    <View style="@style/item_divider" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/listitem_height"
+                        android:background="@drawable/list_click">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="18dp"
+                            android:text="开启手势密码"
+                            android:textColor="@color/mq_b1"
+                            android:textSize="@dimen/mq_font2"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="18dp" />
+
+                        <ImageView
+                            android:id="@+id/iv_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/margin_left_right"
+                            android:src="@drawable/gesture_swith_open" />
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/frame_setting_about"
+                android:layout_marginTop="10dp"
                 style="@style/listItem">
 
                 <TextView
@@ -184,7 +298,7 @@
             <RelativeLayout
                 android:id="@+id/frame_setting_push_state"
                 style="@style/listItem"
-                android:layout_marginTop="10dp">
+                >
 
                 <TextView
                     style="@style/text_black_item"

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +25,8 @@ import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
-import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -76,6 +77,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @BindView(R.id.bt_left)
     ImageView btn_message;
+    @BindView(R.id.btn_eye)
+    ImageButton btnEye;
 
     @BindView(R.id.frame_account_current)
     View frame_current;
@@ -112,10 +115,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (savedInstanceState == null || view == null) {
+        if (view == null) {
             view = inflater.inflate(R.layout.frame_user, null);
         }
-        //绑定fragment
         ButterKnife.bind(this, view);
         ViewGroup parent = (ViewGroup) view.getParent();
         if (parent != null) {
@@ -132,6 +134,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         return view;
     }
 
+    @Override
+    public void onStart() {
+        obtainData();
+        super.onStart();
+    }
+
     private void obtainData() {
         if (isQQproject && !refresh) {
             return;
@@ -139,9 +147,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (!swipeRefresh.isRefreshing() && userInfo == null) {
             begin();
         }
-        HttpRequest.getUserInfo(getActivity(), new ICallback<LoginResult>() {
+        HttpRequest.getUserInfo(getActivity(), new ICallback<UserInfoResult>() {
             @Override
-            public void onSucceed(LoginResult result) {
+            public void onSucceed(UserInfoResult result) {
                 swipeRefresh.setRefreshing(false);
                 end();
                 userInfo = result.getData();
@@ -270,7 +278,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         frame_miaoqianbao.setOnClickListener(this);
         btn_setting.setImageResource(R.drawable.btn_setting);
     }
+    @OnClick(R.id.btn_eye)//资金等是否可见
+    public void eyeState() {
 
+
+    }
     @OnClick(R.id.bt_right)//设置
     public void setting() {
         if (UserUtil.hasLogin(getActivity())) {
@@ -290,7 +302,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             return;
         }
         MobclickAgent.onEvent(getActivity(), "1017");
-        startActivity(new Intent(getActivity(), IntoActivity.class));
+        startActivity(new Intent(getActivity(), IntoModeAcitvity.class));
     }
 
     @OnClick(R.id.bt_rollout)

@@ -39,6 +39,9 @@
   //安卓只输入数字和字母
   <string name="match">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ</string>
 
+  <!--充值-->
+  <string name="into_check">温馨提示：\n1.请充值后再进行充值结果查询\n2.跨行转账存在延迟，具体到账时间，已不同银行规定时效为准。</string>
+
   <!-- 定期相关页面-->
   <string name="regular_plan">定期计划</string>
   <string name="regular_earn">定期赚</string>

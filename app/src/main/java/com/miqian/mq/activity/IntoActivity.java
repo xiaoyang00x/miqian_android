@@ -28,6 +28,7 @@ import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.entity.PayOrderResult;
 import com.miqian.mq.entity.SupportBankMsgResult;
 import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -83,9 +84,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void obtainData() {
         begin();
-        HttpRequest.getUserInfo(mActivity, new ICallback<LoginResult>() {
+        HttpRequest.getUserInfo(mActivity, new ICallback<UserInfoResult>() {
             @Override
-            public void onSucceed(LoginResult result) {
+            public void onSucceed(UserInfoResult result) {
                 end();
                 showContentView();
                 userInfo = result.getData();
@@ -395,28 +396,28 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private void checkOrder(String orderNo) {
         begin();
-        HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
-            @Override
-            public void onSucceed(OrderLianResult orderLianResult) {
-                end();
-                OrderLian orderLian = orderLianResult.getData();
-                if (orderLianResult.getCode().equals("000000")) {
-                    jumpToResult(CurrentInvestment.SUCCESS, orderLian.getAmt(), orderLian.getOrderNo());
-                } else if (orderLianResult.getCode().equals("100096")) {
-                    jumpToResult(CurrentInvestment.FAIL, orderLian.getAmt(), orderLian.getOrderNo());
-                } else if (orderLianResult.getCode().equals("100097")) {
-                    jumpToResult(CurrentInvestment.PROCESSING, orderLian.getAmt(), orderLian.getOrderNo());
-                } else {
-                    Uihelper.showToast(mActivity, orderLianResult.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                end();
-                Uihelper.showToast(mActivity, error);
-            }
-        }, orderNo);
+//        HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
+//            @Override
+//            public void onSucceed(OrderLianResult orderLianResult) {
+//                end();
+//                OrderLian orderLian = orderLianResult.getData();
+//                if (orderLianResult.getCode().equals("000000")) {
+//                    jumpToResult(CurrentInvestment.SUCCESS, orderLian.getAmt(), orderLian.getOrderNo());
+//                } else if (orderLianResult.getCode().equals("100096")) {
+//                    jumpToResult(CurrentInvestment.FAIL, orderLian.getAmt(), orderLian.getOrderNo());
+//                } else if (orderLianResult.getCode().equals("100097")) {
+//                    jumpToResult(CurrentInvestment.PROCESSING, orderLian.getAmt(), orderLian.getOrderNo());
+//                } else {
+//                    Uihelper.showToast(mActivity, orderLianResult.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//                end();
+//                Uihelper.showToast(mActivity, error);
+//            }
+//        }, orderNo);
     }
 
     /**

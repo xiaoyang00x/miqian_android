@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.growingio.android.sdk.collection.GrowingIO;
-import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.activity.user.LoginActivity;
@@ -17,7 +16,6 @@ import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.receiver.JpushHelper;
 import com.miqian.mq.views.DialogPay;
-import com.miqian.mq.views.Dialog_Login;
 import com.miqian.mq.views.Dialog_Register;
 
 import java.lang.ref.WeakReference;
@@ -220,22 +218,22 @@ public class UserUtil {
 
     //  弹登录框
     public static void showLoginDialog(final Activity context, final Class<?> cls) {
-        Dialog_Login dialog_login = new Dialog_Login(context) {
-            @Override
-            public void loginSuccess() {
-                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                    GestureLockSetActivity.startActivity(context, null);
-                } else if (null != cls) {
-                    context.startActivity(new Intent(context, cls));
-                }
-                dismiss();
-            }
-            @Override
-            public void toRegister() {
-                showRegisterDialog(context,cls);
-            }
-        };
-        dialog_login.show();
+//        Dialog_Login dialog_login = new Dialog_Login(context) {
+//            @Override
+//            public void loginSuccess() {
+//                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+//                    GestureLockSetActivity.startActivity(context, null);
+//                } else if (null != cls) {
+//                    context.startActivity(new Intent(context, cls));
+//                }
+//                dismiss();
+//            }
+//            @Override
+//            public void toRegister() {
+//                showRegisterDialog(context,cls);
+//            }
+//        };
+//        dialog_login.show();
     }
 
     /**
