@@ -775,31 +775,31 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
      */
     private void rollIn() {
         begin();
-        HttpRequest.rollIn(mActivity, new ICallback<String>() {
-            @Override
-            public void onSucceed(String result) {
-                end();
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if ("000000".equals(meta.getCode())) {
-                    PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
-                    payOrder = IntoActivity.constructPreCardPayOrder(payOrderResult.getData());
-                    String content4Pay = JSON.toJSONString(payOrder);
-                    MobileSecurePayer msp = new MobileSecurePayer();
-                    msp.pay(content4Pay, new MyHandler(CurrentInvestment.this), Constants.RQF_PAY, mActivity, false);
-                } else if ("999991".equals(meta.getCode())) {
-                    SupportBankMsgResult supportBankMsgResult = JsonUtil.parseObject(result, SupportBankMsgResult.class);
-                    Uihelper.showToast(mActivity, supportBankMsgResult.getMessage());
-                } else if ("996633".equals(meta.getCode())) {
-                    Uihelper.showToast(mActivity, meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                end();
-                Uihelper.showToast(mActivity, error);
-            }
-        }, payMoney.toString(), bankNumber, "", "");
+//        HttpRequest.rollIn(mActivity, new ICallback<String>() {
+//            @Override
+//            public void onSucceed(String result) {
+//                end();
+//                Meta meta = JsonUtil.parseObject(result, Meta.class);
+//                if ("000000".equals(meta.getCode())) {
+//                    PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
+//                    payOrder = IntoActivity.constructPreCardPayOrder(payOrderResult.getData());
+//                    String content4Pay = JSON.toJSONString(payOrder);
+//                    MobileSecurePayer msp = new MobileSecurePayer();
+//                    msp.pay(content4Pay, new MyHandler(CurrentInvestment.this), Constants.RQF_PAY, mActivity, false);
+//                } else if ("999991".equals(meta.getCode())) {
+//                    SupportBankMsgResult supportBankMsgResult = JsonUtil.parseObject(result, SupportBankMsgResult.class);
+//                    Uihelper.showToast(mActivity, supportBankMsgResult.getMessage());
+//                } else if ("996633".equals(meta.getCode())) {
+//                    Uihelper.showToast(mActivity, meta.getMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFail(String error) {
+//                end();
+//                Uihelper.showToast(mActivity, error);
+//            }
+//        }, payMoney.toString(), bankNumber, "", "");
     }
 
     class MyHandler extends Handler {

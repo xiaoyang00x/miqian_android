@@ -30,9 +30,9 @@ public class UserInfo implements Serializable {
     private String bankUrlBig;//绑定银行图标url
     private String bankCode;//绑定银行代码
     private String supportStatus;//银行支持状态
-    private String addRechargeMinValue;//充值最小额度
+    private String amtMinLimit;//充值最小额度
     private String canRedeem;//可赎回金额
-    private String singleAmtLimit; //单笔限额
+    private String amtPerLimit; //单笔限额
     private String dayAmtLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
     private String ydayProfit;//昨日收益
@@ -340,20 +340,20 @@ public class UserInfo implements Serializable {
         this.supportStatus = supportStatus;
     }
 
-    public String getAddRechargeMinValue() {
-        return addRechargeMinValue;
+    public String getAmtMinLimit() {
+        return amtMinLimit;
     }
 
-    public void setAddRechargeMinValue(String addRechargeMinValue) {
-        this.addRechargeMinValue = addRechargeMinValue;
+    public void setAmtMinLimit(String amtMinLimit) {
+        this.amtMinLimit = amtMinLimit;
     }
 
-    public String getSingleAmtLimit() {
-        return singleAmtLimit;
+    public String getAmtPerLimit() {
+        return amtPerLimit;
     }
 
-    public void setSingleAmtLimit(String singleAmtLimit) {
-        this.singleAmtLimit = singleAmtLimit;
+    public void setAmtPerLimit(String amtPerLimit) {
+        this.amtPerLimit = amtPerLimit;
     }
 
     public String getDayAmtLimit() {

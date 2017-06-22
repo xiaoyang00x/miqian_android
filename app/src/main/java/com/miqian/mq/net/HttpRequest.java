@@ -26,6 +26,7 @@ import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OperationResult;
 import com.miqian.mq.entity.OrderLianResult;
+import com.miqian.mq.entity.OrderRechargeResult;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
@@ -171,17 +172,13 @@ public class HttpRequest {
     }
 
     /**
-     * 充值
+     * 充值预处理
      */
-    public static void rollIn(Context context, final ICallback<String> callback, String amt, String bankNo, String realName, String idCard) {
+    public static void rollInPreprocess(Context context, final ICallback<String> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("amt", amt));
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
-        mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
-        mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
 
-        new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.roll_in_preprocess, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -190,6 +187,35 @@ public class HttpRequest {
                     callback.onSucceed(result);
                 } else {
                     callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 充值
+     */
+    public static void rollIn(Context context, final ICallback<OrderRechargeResult> callback, String amt, String bankNo, String captcha) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("amt", amt));
+        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
+        mList.add(new Param("captcha", "captcha"));
+
+        new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                OrderRechargeResult orderRechargeResult = JsonUtil.parseObject(result, OrderRechargeResult.class);
+                if (orderRechargeResult.getCode().equals("000000")) {
+                    callback.onSucceed(orderRechargeResult);
+                } else {
+                    callback.onFail(orderRechargeResult.getMessage());
                 }
             }
 
@@ -1572,7 +1598,7 @@ public class HttpRequest {
     /**
      * 江西银行充值接口
      */
-    public static void rollinHf(final Activity activity, String amt,  String bankNo,  String captcha,  String authCode) {
+    public static void rollinJx(final Activity activity, String amt,  String bankNo,  String captcha,  String authCode) {
         ArrayList params = new ArrayList<>();
 //        params.add(new Param("custId", UserUtil.getUserId(activity)));
         params.add(new Param("custId", "125145556"));

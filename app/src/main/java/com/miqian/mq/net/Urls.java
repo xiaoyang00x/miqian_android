@@ -99,8 +99,10 @@ public class Urls {
 
     //身份认证
     public final static String idcard_check = getServer() + "commonService/idCardAuth";
+    //充值预处理接口
+    public final static String roll_in_preprocess = getServer() + "trans/rechargePreprocess";
     //充值转入接口
-    public final static String roll_in = getServer() + "assetService/v2/recharge";
+    public final static String roll_in = getServer() + "trans/recharge";//getServer() + "assetService/v2/recharge";
     //充值转入结果查询接口
     public final static String rollin_result = getServer() + "trans/rechargeTransfer";//public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
     //充值失败错误原因上传接口
