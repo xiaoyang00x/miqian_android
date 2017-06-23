@@ -1,10 +1,12 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.rollin;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.views.WFYTitle;
 

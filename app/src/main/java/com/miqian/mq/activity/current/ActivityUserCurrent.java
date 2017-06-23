@@ -23,7 +23,6 @@ import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.DialogPay;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
 
@@ -46,7 +45,6 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
     private BigDecimal downLimit = BigDecimal.ONE;
     private BigDecimal upLimit = new BigDecimal(9999999999L);
     private BigDecimal balance;
-    private DialogPay dialogPay;
 
     private String interestRateString = "";
     private ExtendOperationController operationController;
@@ -143,34 +141,34 @@ public class ActivityUserCurrent extends BaseActivity implements View.OnClickLis
         btRedeem.setOnClickListener(this);
         btSubscribe.setOnClickListener(this);
 
-        dialogPay = new DialogPay(mActivity) {
-            @Override
-            public void positionBtnClick(String moneyString) {
-                if (!TextUtils.isEmpty(moneyString)) {
-                    BigDecimal money = new BigDecimal(moneyString);
-                    if (money.compareTo(downLimit) < 0) {
-                        this.setTipText("提示：" + downLimit + "元起投");
-                    } else if (money.compareTo(upLimit) > 0) {
-                        this.setTipText("提示：请输入小于等于" + upLimit + "元");
-                    } else {
-                        MobclickAgent.onEvent(mActivity, "1037_1");
-                        UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, TextUtils.isEmpty(interestRateString) ? "" : interestRateString + "%");
-                        this.setEditMoney("");
-                        this.setTipTextVisibility(View.GONE);
-                        this.dismiss();
-                    }
-                } else {
-                    this.setTipText("提示：请输入金额");
-                }
-            }
-
-            @Override
-            public void negativeBtnClick() {
-                MobclickAgent.onEvent(mActivity, "1037_2");
-                this.setEditMoney("");
-                this.setTipTextVisibility(View.GONE);
-            }
-        };
+//        dialogPay = new DialogPay(mActivity) {
+//            @Override
+//            public void positionBtnClick(String moneyString) {
+//                if (!TextUtils.isEmpty(moneyString)) {
+//                    BigDecimal money = new BigDecimal(moneyString);
+//                    if (money.compareTo(downLimit) < 0) {
+//                        this.setTipText("提示：" + downLimit + "元起投");
+//                    } else if (money.compareTo(upLimit) > 0) {
+//                        this.setTipText("提示：请输入小于等于" + upLimit + "元");
+//                    } else {
+//                        MobclickAgent.onEvent(mActivity, "1037_1");
+//                        UserUtil.currenPay(mActivity, moneyString, CurrentInvestment.PRODID_CURRENT, CurrentInvestment.SUBJECTID_CURRENT, TextUtils.isEmpty(interestRateString) ? "" : interestRateString + "%");
+//                        this.setEditMoney("");
+//                        this.setTipTextVisibility(View.GONE);
+//                        this.dismiss();
+//                    }
+//                } else {
+//                    this.setTipText("提示：请输入金额");
+//                }
+//            }
+//
+//            @Override
+//            public void negativeBtnClick() {
+//                MobclickAgent.onEvent(mActivity, "1037_2");
+//                this.setEditMoney("");
+//                this.setTipTextVisibility(View.GONE);
+//            }
+//        };
     }
 
     @Override

@@ -104,10 +104,10 @@
     </style>
 
 
-    <style name="f9_R1_V2" parent="WrapContent">
+    <style name="f8_R1_V2" parent="WrapContent">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/mq_r1_v2</item>
-        <item name="android:textSize">@dimen/mq_font9_v2</item>
+        <item name="android:textSize">@dimen/mq_font8_v2</item>
     </style>
 
     <style name="f3_R1_V2" parent="WrapContent">

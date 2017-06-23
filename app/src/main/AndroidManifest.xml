@@ -147,15 +147,15 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.IntoActivity"
+            android:name=".activity.rollin.IntoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.IntoModeAcitvity"
+            android:name=".activity.rollin.IntoModeAcitvity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.IntoCheckAcitvity"
+            android:name=".activity.rollin.IntoCheckAcitvity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
@@ -163,7 +163,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.IntoResultActivity"
+            android:name=".activity.rollin.IntoResultActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity

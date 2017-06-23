@@ -1,10 +1,11 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.rollin;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;

@@ -1,7 +1,6 @@
 package com.miqian.mq.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -25,6 +24,7 @@ import android.widget.ProgressBar;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.Base64;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.ShareData;

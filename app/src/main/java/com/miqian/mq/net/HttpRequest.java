@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.miqian.mq.activity.IntoActivity;
+import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.activity.WebBankActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
@@ -25,7 +25,6 @@ import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OperationResult;
-import com.miqian.mq.entity.OrderLianResult;
 import com.miqian.mq.entity.OrderRechargeResult;
 import com.miqian.mq.entity.ProducedOrderResult;
 import com.miqian.mq.entity.PushDataResult;
@@ -1205,18 +1204,15 @@ public class HttpRequest {
      * 认购接口
      *
      * @param amt       金额
-     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-     * @param subjectId 0:活期
+     * @param subjectId 标的id
+     * @param promList  红包列表
      */
-    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String payPassword, String subjectId, String promList, String prodList) {
+    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String subjectId, String promList) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("prodId", prodId));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
         mList.add(new Param("subjectId", subjectId));
         mList.add(new Param("promList", promList));
-        mList.add(new Param("prodList", prodList));
         new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
 
             @Override

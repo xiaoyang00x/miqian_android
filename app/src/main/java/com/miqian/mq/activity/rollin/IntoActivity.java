@@ -1,4 +1,4 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.rollin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Meta;
@@ -42,8 +44,6 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.Map;
-
-import butterknife.BindView;
 
 /**
  * Created by Joy on 2015/9/10.

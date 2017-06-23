@@ -112,7 +112,7 @@ public class Urls {
     //认购预处理
     public final static String order_produced = getServer() + "assetService/subscribePreprocess";
     //认购
-    public final static String subscribe_order = getServer() + "assetService/subscribe";
+    public final static String subscribe_order = getServer() + "trans/subscribe";//"assetService/subscribe";
     //认购快捷支付
     public final static String quick_subscribe_order = getServer() + "assetService/quickPayment";
     //获取用户信息

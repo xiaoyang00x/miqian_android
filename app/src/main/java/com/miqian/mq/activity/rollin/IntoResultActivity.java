@@ -1,15 +1,14 @@
-package com.miqian.mq.activity;
+package com.miqian.mq.activity.rollin;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.views.WFYTitle;
 

@@ -118,10 +118,10 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         }
         if (payModeState == CurrentInvestment.PAY_MODE_BALANCE) {
             textPayType.setText("余额支付");
-        } else if (payModeState == CurrentInvestment.PAY_MODE_BANK) {
-            textPayType.setText("银行卡充值支付");
-        } else if (payModeState == CurrentInvestment.PAY_MODE_LIAN) {
-            textPayType.setText("连连快捷支付");
+//        } else if (payModeState == CurrentInvestment.PAY_MODE_BANK) {
+//            textPayType.setText("银行卡充值支付");
+//        } else if (payModeState == CurrentInvestment.PAY_MODE_LIAN) {
+//            textPayType.setText("连连快捷支付");
         }
         textPayMoney.setText(payMoney+ "元");
         textMoney.setText(money + "元");
