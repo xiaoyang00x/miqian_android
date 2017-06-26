@@ -7,7 +7,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +33,6 @@ import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
-import com.miqian.mq.pay.BaseHelper;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
@@ -39,9 +42,6 @@ import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
-import org.json.JSONObject;
-
-import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -54,8 +54,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private Button btRollin;
     private EditText editMoney;
     private TextView bindBankNumber;
+    private TextView textMobile;
     private TextView textLimit;
-    private TextView textErrorLian;
     private EditText editCaptcha;
     private Button btnSendCaptcha;
 
@@ -125,12 +125,18 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         btRollin = (Button) findViewById(R.id.bt_rollin);
         btRollin.setOnClickListener(this);
         editMoney = (EditText) findViewById(R.id.edit_money);
+
+        SpannableString ss = new SpannableString("请输入金额");//定义hint的值
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(16, true);//设置字体大小 true表示单位是sp
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editMoney.setHint(new SpannedString(ss));
+
         editMoney.addTextChangedListener(new MyTextWatcher() {
 
             @Override
             public void myAfterTextChanged(Editable s) {
                 try {
-                    textErrorLian.setVisibility(View.GONE);
+//                    textErrorLian.setVisibility(View.GONE);
                     String temp = s.toString();
                     if (temp.matches(FormatUtil.PATTERN_MONEY)) {
                         return;
@@ -144,8 +150,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             money = intent.getStringExtra("money");
         }
         bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
+        textMobile = (TextView) findViewById(R.id.text_mobile);
         textLimit = (TextView) findViewById(R.id.text_limit);
-        textErrorLian = (TextView) findViewById(R.id.text_error_lian);
+        textLimit.setOnClickListener(this);
         editCaptcha = (EditText) findViewById(R.id.et_account_captcha);
         btnSendCaptcha = (Button) findViewById(R.id.btn_send);
         btnSendCaptcha.setOnClickListener(this);
@@ -171,6 +178,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //            frameBound.setVisibility(View.VISIBLE);
         bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
         bindBankNumber.setText(bankNumber);
+        textMobile.setText(userInfo.getMobile());
 //            if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
 //                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
 //            }
@@ -295,6 +303,8 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_send:
                 sendMessage();
                 break;
+            case R.id.text_limit:
+                break;
             default:
                 break;
         }
@@ -357,62 +367,62 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         return payOrder;
     }
 
-    class MyHandler extends Handler {
-        WeakReference<IntoActivity> weakActivity;
-
-        public MyHandler(IntoActivity activity) {
-            weakActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            String strRet = (String) msg.obj;
-            textErrorLian.setVisibility(View.GONE);
-            switch (msg.what) {
-                case Constants.RQF_PAY:
-                    JSONObject objContent = BaseHelper.string2JSON(strRet);
-                    String retCode = objContent.optString("ret_code");
-                    String retMsg = objContent.optString("ret_msg");
-                    String orderNo = payOrder.getNo_order();
-                    // //先判断状态码，状态码为 成功或处理中 的需要 验签
-                    if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
-                        String resulPay = objContent.optString("result_pay");
-                        if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
-                            // 支付成功后续处理
-                            if (rollType == 1) {
-                                backSubscribePage(orderNo);
-                            } else {
-                                checkOrder(orderNo);
-                            }
-                        } else {
-                            Uihelper.showToast(mActivity, retMsg);
-                        }
-                    } else if (Constants.RET_CODE_PROCESS.equals(retCode)) {
-                        String resulPay = objContent.optString("result_pay");
-                        if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
-                            if (rollType == 1) {
-                                setResult(CurrentInvestment.PROCESSING);
-//                                jumpToResult(CurrentInvestment.PROCESSING, money, orderNo);
-                            } else {
-                                checkOrder(orderNo);
-                            }
-                        }
-                    } else if (retCode.equals("1006")) {
-                        Uihelper.showToast(mActivity, "您已取消当前交易");
-                    } else {
-                        rollInError(mActivity, orderNo, strRet);
-                        textErrorLian.setVisibility(View.VISIBLE);
-                        String errorString = showErrorString(mActivity, retCode);
-                        if (TextUtils.isEmpty(errorString)) {
-                            errorString = retMsg;
-                        }
-                        textErrorLian.setText(errorString);
-                    }
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    }
+//    class MyHandler extends Handler {
+//        WeakReference<IntoActivity> weakActivity;
+//
+//        public MyHandler(IntoActivity activity) {
+//            weakActivity = new WeakReference<>(activity);
+//        }
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            String strRet = (String) msg.obj;
+//            textErrorLian.setVisibility(View.GONE);
+//            switch (msg.what) {
+//                case Constants.RQF_PAY:
+//                    JSONObject objContent = BaseHelper.string2JSON(strRet);
+//                    String retCode = objContent.optString("ret_code");
+//                    String retMsg = objContent.optString("ret_msg");
+//                    String orderNo = payOrder.getNo_order();
+//                    // //先判断状态码，状态码为 成功或处理中 的需要 验签
+//                    if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
+//                        String resulPay = objContent.optString("result_pay");
+//                        if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
+//                            // 支付成功后续处理
+//                            if (rollType == 1) {
+//                                backSubscribePage(orderNo);
+//                            } else {
+//                                checkOrder(orderNo);
+//                            }
+//                        } else {
+//                            Uihelper.showToast(mActivity, retMsg);
+//                        }
+//                    } else if (Constants.RET_CODE_PROCESS.equals(retCode)) {
+//                        String resulPay = objContent.optString("result_pay");
+//                        if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
+//                            if (rollType == 1) {
+//                                setResult(CurrentInvestment.PROCESSING);
+////                                jumpToResult(CurrentInvestment.PROCESSING, money, orderNo);
+//                            } else {
+//                                checkOrder(orderNo);
+//                            }
+//                        }
+//                    } else if (retCode.equals("1006")) {
+//                        Uihelper.showToast(mActivity, "您已取消当前交易");
+//                    } else {
+//                        rollInError(mActivity, orderNo, strRet);
+//                        textErrorLian.setVisibility(View.VISIBLE);
+//                        String errorString = showErrorString(mActivity, retCode);
+//                        if (TextUtils.isEmpty(errorString)) {
+//                            errorString = retMsg;
+//                        }
+//                        textErrorLian.setText(errorString);
+//                    }
+//                    break;
+//            }
+//            super.handleMessage(msg);
+//        }
+//    }
 
     public static void rollInError(Context context, String orderNo, String error) {
         HttpRequest.rollInError(context, orderNo, error);
@@ -499,12 +509,12 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         return "在线快捷充值";
     }
 
-    MyTextWatcher textWatcherLian = new MyTextWatcher() {
-        @Override
-        public void myAfterTextChanged(Editable arg0) {
-            textErrorLian.setVisibility(View.GONE);
-        }
-    };
+//    MyTextWatcher textWatcherLian = new MyTextWatcher() {
+//        @Override
+//        public void myAfterTextChanged(Editable arg0) {
+//            textErrorLian.setVisibility(View.GONE);
+//        }
+//    };
 
     @Override
     protected void onDestroy() {
