@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_left_right">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/shape_dialog_background"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_save_top" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:text="江西银行资金存管"
+            android:textColor="@color/mq_b1_v2"
+            android:textSize="@dimen/mq_font8_v2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/remarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="激活存管账户成为您个人实名电子账户平台，他人无法触碰您的资金"
+            android:textColor="@color/mq_r1_v2"
+            android:textSize="@dimen/mq_font5_v2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginRight="@dimen/margin_left_right"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:paddingBottom="30dp">
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="@style/click_btn"
+                android:layout_gravity="center"
+                android:text="激活资金存管账户" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
