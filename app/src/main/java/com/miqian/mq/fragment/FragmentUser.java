@@ -146,6 +146,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             frame_logined.setVisibility(View.VISIBLE);
             btnLogin.setVisibility(View.GONE);
             obtainData();
+            swipeRefresh.setEnabled(true);
         }else {
             btnLogin.setVisibility(View.VISIBLE);
             frame_logined.setVisibility(View.GONE);
@@ -153,6 +154,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             tv_Current.setText("");
             tv_Regular.setText("");
             tv_Ticket.setText("");
+            swipeRefresh.setEnabled(false);
         }
 
         super.onStart();

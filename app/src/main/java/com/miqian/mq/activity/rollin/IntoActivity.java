@@ -24,6 +24,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OrderRecharge;
 import com.miqian.mq.entity.OrderRechargeResult;
@@ -313,9 +314,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private void sendMessage() {
         begin();
-        HttpRequest.getCaptcha(this, new ICallback<Meta>() {
+        HttpRequest.getCaptcha(this, new ICallback<CaptchaResult>() {
             @Override
-            public void onSucceed(Meta result) {
+            public void onSucceed(CaptchaResult result) {
                 end();
                 btnSendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();

@@ -15,6 +15,7 @@ import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardInfoResult;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.ConfigResult;
 import com.miqian.mq.entity.CurrentInfoResult;
@@ -372,10 +373,6 @@ public class HttpRequest {
 
     //检验验证码
 
-    /**
-     * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
-     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现   13008 --找回交易密码
-     */
     public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobile", RSAUtils.encryptURLEncode(phone)));
@@ -404,11 +401,7 @@ public class HttpRequest {
 
     //获取验证码
 
-    /**
-     * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
-     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
-     */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
+    public static void getCaptcha(Context context, final ICallback<CaptchaResult> callback, String phone, int operationType) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobile", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
@@ -417,7 +410,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                CaptchaResult meta = JsonUtil.parseObject(result, CaptchaResult.class);
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -627,7 +620,7 @@ public class HttpRequest {
     }
 
     //修改登录密码
-    public static void changePassword(Context context, final ICallback<LoginResult> callback,
+    public static void changePassword(Context context, final ICallback<Meta> callback,
                                       String oldPassword, String newPassword, String confirmPassword) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
@@ -639,11 +632,11 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
-                if (loginResult.getCode().equals("000000")) {
-                    callback.onSucceed(loginResult);
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(loginResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 

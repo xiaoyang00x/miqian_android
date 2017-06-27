@@ -17,6 +17,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.UserInfo;
@@ -265,9 +266,9 @@ public abstract class Dialog_Register extends Dialog implements View.OnClickList
 
     private void sendMessage() {
         begin();
-        HttpRequest.getCaptcha(mContext, new ICallback<Meta>() {
+        HttpRequest.getCaptcha(mContext, new ICallback<CaptchaResult>() {
             @Override
-            public void onSucceed(Meta result) {
+            public void onSucceed(CaptchaResult result) {
                 end();
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
