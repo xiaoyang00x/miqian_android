@@ -6,8 +6,8 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.activity.WebBankActivity;
+import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -1555,6 +1555,7 @@ public class HttpRequest {
                     callback.onFail(meta.getMessage());
                 }
             }
+
             @Override
             public void onFail(String error) {
                 callback.onFail(error);
@@ -1591,12 +1592,12 @@ public class HttpRequest {
 
 
 //江西银行跳转接口
+
     /**
      * 江西银行充值接口
      */
-    public static void rollinJx(final Activity activity, String amt,  String bankNo,  String captcha,  String authCode) {
+    public static void rollinJx(final Activity activity, String amt, String bankNo, String captcha, String authCode) {
         ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId", UserUtil.getUserId(activity)));
         params.add(new Param("custId", "125145556"));
 //        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
         params.add(new Param("amt", amt));
@@ -1606,5 +1607,39 @@ public class HttpRequest {
         params.add(new Param("cType", "android"));
         WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, 1);
 //        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, HfUpdateActivity.REQUEST_CODE_ROLLIN);
+    }
+
+    /**
+     * 江西银行充值接口
+     * authCode 授权码 (获取短信验证码返回)
+     */
+    public static void openJx(Context context, String idCard, String userName, String mobile, String bankCardNo, String authCode, String captcha, final ICallback<Meta> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("idCard", idCard));
+        params.add(new Param("userName", userName));
+        params.add(new Param("mobile", mobile));
+        params.add(new Param("bankCardNo", bankCardNo));
+        params.add(new Param("authCode", authCode));
+        params.add(new Param("captcha", captcha));
+
+        new MyAsyncTask(context, Urls.user_info, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if ("000000".equals(meta.getCode())) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
     }
 }

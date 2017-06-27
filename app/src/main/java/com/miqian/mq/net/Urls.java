@@ -278,4 +278,6 @@ public class Urls {
 
     //江西银行跳转接口
     public final static String jx_rollin_url = getServer() + "trans/rechargeForJump";
+
+    public final static String jx_open = getServer() + "user/openAccount";
 }

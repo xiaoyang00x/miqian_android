@@ -266,15 +266,6 @@
         android:layout_marginTop="40dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_error_lian"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingBottom="3dp"
-            android:textColor="@color/mq_r1"
-            android:visibility="gone" />
-
         <Button
             android:id="@+id/bt_rollin"
             style="@style/click_btn"
