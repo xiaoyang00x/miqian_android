@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/account_head_bg"
+        android:paddingBottom="10dp"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:id="@+id/frame_bound"
@@ -18,15 +18,14 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/bind_card_bg"
             android:orientation="vertical"
-            android:padding="25dp"
-            android:paddingBottom="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
+                android:layout_marginTop="45dp">
 
                 <TextView
                     android:id="@+id/bind_bank_name"
@@ -62,76 +61,70 @@
                 android:id="@+id/frame_money_bound"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:background="@color/mq_b7_v2">
 
                 <EditText
                     android:id="@+id/edit_money"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
-                    android:background="@color/mq_b7_v2"
+                    android:layout_marginLeft="30dp"
                     android:inputType="numberDecimal"
+                    android:paddingLeft="5dp"
                     android:maxLines="1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="30dp"
+                    android:background="@null"
                     android:textColor="@color/mq_r1_v2"
+                    android:textColorHint="@color/mq_b5_v2"
                     android:textSize="@dimen/mq_font9_v2" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:text="元"
+                    android:layout_marginLeft="15dp"
+                    android:text="￥"
                     android:textColor="@color/mq_r1_v2"
                     android:textSize="@dimen/mq_font7_v2" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/bt_under_text">
-
-                <CheckBox
-                    android:id="@+id/check_law"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:button="@drawable/btn_checkbox"
-                    android:checked="true" />
 
                 <TextView
+                    android:id="@+id/text_limit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="7dp"
-                    android:text="我已阅读并了解"
-                    android:textColor="@color/mq_b4_v2"
-                    android:textSize="@dimen/mq_font3_v2" />
-
-                <Button
-                    android:id="@+id/text_law"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/transparent"
-                    android:onClick="textLawCick"
-                    android:text="《银行存管协议》"
-                    android:textColor="@color/mq_bl2"
-                    android:textSize="@dimen/mq_font3_v2" />
-            </LinearLayout>
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="限额说明"
+                    android:textColor="@color/mq_bl4_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+            </RelativeLayout>
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_tip"
+            android:id="@+id/text_tip1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="25dp"
-            android:text="已超过快捷充值限额5万元，建议使用转账充值" />
+            android:textSize="@dimen/mq_font4_v2"
+            android:textColor="@color/mq_b5_v2"
+            android:text="温馨提示：已超过快捷充值限额5万元，建议使用转账充值" />
+
+        <TextView
+            android:id="@+id/text_tip2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/mq_font4_v2"
+            android:textColor="@color/mq_r1_v2"
+            android:text="温馨提示：已超过快捷充值限额5万元，建议使用转账充值, 由于存管银行维护" />
+
     </LinearLayout>
+
 
     <!--<LinearLayout-->
     <!--android:id="@+id/frame_real_name"-->
@@ -219,9 +212,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right"
-                android:text="15873245632"
+                android:text="--.--"
                 android:textColor="@color/mq_b1_v2"
-                android:textSize="@dimen/mq_font7_v2"/>
+                android:textSize="@dimen/mq_font7_v2" />
         </RelativeLayout>
 
         <View style="@style/item_divider_none" />
@@ -250,7 +243,6 @@
                 android:id="@+id/et_account_captcha"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:layout_toLeftOf="@id/btn_send"
                 android:background="@drawable/trans"
@@ -288,6 +280,42 @@
             style="@style/click_btn"
             android:layout_gravity="center"
             android:text="确认" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/bt_under_text">
+
+        <CheckBox
+            android:id="@+id/check_law"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:button="@drawable/btn_checkbox"
+            android:checked="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="7dp"
+            android:text="我已阅读并了解"
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font3_v2" />
+
+        <Button
+            android:id="@+id/text_law"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/transparent"
+            android:onClick="textLawCick"
+            android:text="《银行存管协议》"
+            android:textColor="@color/mq_bl4_v2"
+            android:textSize="@dimen/mq_font3_v2" />
     </LinearLayout>
 
     <!--<LinearLayout-->

@@ -261,6 +261,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.CurrentDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.user.OperationRecordAcitivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
