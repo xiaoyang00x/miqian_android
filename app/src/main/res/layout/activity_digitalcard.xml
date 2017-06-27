@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/margin_left_right"
+    android:paddingLeft="@dimen/margin_left_right"
+    android:paddingRight="@dimen/margin_left_right"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/view_content"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_left_right"
+        android:background="@color/mq_bl1_v2"
+        >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="@dimen/margin_left_right"
+      android:paddingBottom="@dimen/margin_left_right"
+      android:orientation="horizontal"
+      >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="收款方户名"
+          android:textColor="#B7E2F7"
+          android:textSize="@dimen/mq_font5_v2"
+          />
+      <TextView
+          android:id="@+id/tv_name"
+          android:layout_marginLeft="10dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text=""
+          android:textStyle="bold"
+          android:textColor="@color/white"
+          android:textSize="@dimen/mq_font5_v2"
+          />
+
+  </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:background="#60caed"
+            ></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/margin_left_right"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingTop="@dimen/margin_left_right">
+
+            <TextView
+                android:id="@+id/tv_cardno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收款方账号"
+                android:layout_centerVertical="true"
+                android:textColor="#B7E2F7"
+                android:textSize="@dimen/mq_font5_v2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_cardno"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <TextView
+                android:id="@+id/tv_copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复制"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/mq_y3_v2"
+                android:textSize="@dimen/mq_font5_v2" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingBottom="@dimen/margin_left_right"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收款方开户行"
+                android:textColor="#B7E2F7"
+                android:textSize="@dimen/mq_font5_v2"
+                />
+            <TextView
+                android:id="@+id/tv_openbank"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/mq_font5_v2"
+                />
+
+        </LinearLayout>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="40dp"
+         android:background="@color/mq_b7_v2"
+         > <TextView
+         android:layout_marginLeft="15dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="注：银行请选择江西银行或南昌银行"
+         android:layout_centerVertical="true"
+         android:textColor="#fc830d"
+         android:textSize="@dimen/mq_font4_v2"
+         /></RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

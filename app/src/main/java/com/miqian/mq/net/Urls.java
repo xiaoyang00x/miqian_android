@@ -57,7 +57,7 @@ public class Urls {
 //    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
-    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
+    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
     public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
 
     //线上
@@ -278,4 +278,7 @@ public class Urls {
 
     //江西银行跳转接口
     public final static String jx_rollin_url = getServer() + "trans/rechargeForJump";
+
+    //江西银行跳转接口
+    public final static String jx_custbankcardinfo = getServer() + "bank/custBankCardInfo";
 }
