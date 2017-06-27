@@ -2,10 +2,12 @@ package com.miqian.mq.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.setting.SettingActivity;
+import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
@@ -78,6 +81,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     ImageView btn_message;
     @BindView(R.id.btn_eye)
     ImageButton btnEye;
+    @BindView(R.id.bt_login)
+    Button btnLogin;
 
     @BindView(R.id.frame_account_current)
     View frame_current;
@@ -91,6 +96,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     View frame_invite;
     @BindView(R.id.frame_account_miaoqianbao)
     View frame_miaoqianbao;
+    @BindView(R.id.frame_logined)
+    View frame_logined;
 
     @BindView(R.id.swipe_refresh)
     MySwipeRefresh swipeRefresh;
@@ -135,7 +142,19 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void onStart() {
-        obtainData();
+        if (UserUtil.hasLogin(mContext)){
+            frame_logined.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.GONE);
+            obtainData();
+        }else {
+            btnLogin.setVisibility(View.VISIBLE);
+            frame_logined.setVisibility(View.GONE);
+            tv_totalasset.setText("****");
+            tv_Current.setText("");
+            tv_Regular.setText("");
+            tv_Ticket.setText("");
+        }
+
         super.onStart();
     }
 
@@ -183,7 +202,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     }
 
     private void setData(UserInfo userInfo) {
-
+        tv_totalasset.setTextColor(ContextCompat.getColor(getActivity(),R.color.mq_b1_v2));
         //历史收益
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalProfit())) {
             tv_TotalProfit.setText(FormatUtil.formatAmountStr(userInfo.getTotalProfit()));
@@ -280,6 +299,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     @OnClick(R.id.btn_eye)//资金等是否可见
     public void eyeState() {
 
+
+    }
+    @OnClick(R.id.bt_login)//登录
+    public void loGin() {
+        LoginActivity.start(getActivity());
 
     }
     @OnClick(R.id.bt_right)//设置

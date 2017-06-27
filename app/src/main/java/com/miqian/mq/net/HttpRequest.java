@@ -11,6 +11,7 @@ import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
+import com.miqian.mq.entity.BankCardInfoResult;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CityInfoResult;
@@ -1623,7 +1624,7 @@ public class HttpRequest {
         params.add(new Param("authCode", authCode));
         params.add(new Param("captcha", captcha));
 
-        new MyAsyncTask(context, Urls.user_info, params, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.jx_open, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
@@ -1633,7 +1634,34 @@ public class HttpRequest {
                 } else {
                     callback.onFail(meta.getMessage());
                 }
+            }
 
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 标的相关记录
+     */
+    public static void jxCustCardInfo(Context context, final ICallback<BankCardInfoResult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        new MyAsyncTask(context, Urls.jx_custbankcardinfo, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                BankCardInfoResult data = JsonUtil.parseObject(result, BankCardInfoResult.class);
+                if (data.getCode().equals("000000")) {
+                    callback.onSucceed(data);
+                } else {
+                    callback.onFail(data.getMessage());
+                }
             }
 
             @Override
