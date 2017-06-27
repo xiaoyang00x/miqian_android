@@ -16,8 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.MainActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.UserInfo;
@@ -27,6 +30,7 @@ import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
@@ -105,6 +109,7 @@ public class RegisterActivity extends Activity {
                 btnSendCaptcha.setText(timeInfo + "秒后重新获取");
                 if ("0".equals(timeInfo)) {
                     btnSendCaptcha.setEnabled(true);
+                    btnSendCaptcha.setTextColor(ContextCompat.getColor(RegisterActivity.this,R.color.mq_r1_v2));
                     btnSendCaptcha.setText("获取验证码");
                 }
                 super.handleMessage(msg);
@@ -156,6 +161,9 @@ public class RegisterActivity extends Activity {
                             Uihelper.showToast(RegisterActivity.this, "注册成功");
                             UserInfo userInfo = result.getData();
                             UserUtil.saveUserInfo(RegisterActivity.this, userInfo);
+                            if (Pref.getBoolean(Pref.GESTURESTATE, RegisterActivity.this, true)) {
+                                GestureLockSetActivity.startActivity(RegisterActivity.this, null);
+                            }
                             ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
                             finish();
                         }
@@ -197,9 +205,9 @@ public class RegisterActivity extends Activity {
 
     private void sendMessage() {
         begin();
-        HttpRequest.getCaptcha(RegisterActivity.this, new ICallback<Meta>() {
+        HttpRequest.getCaptcha(RegisterActivity.this, new ICallback<CaptchaResult>() {
             @Override
-            public void onSucceed(Meta result) {
+            public void onSucceed(CaptchaResult result) {
                 end();
                 btnSendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();

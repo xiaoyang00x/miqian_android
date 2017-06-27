@@ -8,14 +8,12 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 /**
  * Created by Administrator on 2016/1/21.
@@ -127,9 +125,9 @@ public class AccountInfoActivity extends BaseActivity implements View.OnClickLis
                     Uihelper.showToast(mContext, R.string.qq_project_modifyphone);
                 } else {
                     MobclickAgent.onEvent(mActivity, "1025");
-                    Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent_phone.putExtra("isModifyPhone", true);
-                    startActivity(intent_phone);
+//                    Intent intent_phone = new Intent(mActivity, TradePsCaptchaActivity.class);
+//                    intent_phone.putExtra("isModifyPhone", true);
+//                    startActivity(intent_phone);
                 }
                 break;
             case R.id.frame_bankcard://设置银行卡

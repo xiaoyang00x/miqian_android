@@ -3,9 +3,7 @@ package com.miqian.mq.views;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Uihelper;
@@ -135,9 +132,9 @@ public abstract class DialogTradePassword extends Dialog {
 
                     break;
                 case R.id.forget_psw:
-                    Intent intent = new Intent(mContext, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", "1");
-                    mContext.startActivity(intent);
+//                    Intent intent = new Intent(mContext, TradePsCaptchaActivity.class);
+//                    intent.putExtra("realNameStatus", "1");
+//                    mContext.startActivity(intent);
                     break;
                 default:
                     break;

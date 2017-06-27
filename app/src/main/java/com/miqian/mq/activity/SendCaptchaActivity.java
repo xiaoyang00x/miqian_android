@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -13,16 +14,16 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Joy on 2015/9/4.
@@ -37,13 +38,9 @@ public class SendCaptchaActivity extends BaseActivity {
     private MyRunnable myRunnable;
     private Thread thread;
     private static Handler handler;
-    private static final int NUM_TYPE_CAPTCHA = 1;
-    private static final int NUM_TYPE_SUMMIT = 2;
-    private static final int NUM_TYPE_TOAST = 3;
-    private TextView tv_phone;
-    private int type;   //忘记密码，绑定手机号
-    private boolean isModifyPhone;
-    private String oldCaptcha;
+    private TextView tvPhone;
+    private int type;
+    private View frameTelephone;
 
 
     @Override
@@ -52,10 +49,12 @@ public class SendCaptchaActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 mBtn_sendCaptcha.setEnabled(false);
+                mBtn_sendCaptcha.setTextColor(ContextCompat.getColor(SendCaptchaActivity.this, R.color.mq_b5_v2));
                 String timeInfo = msg.getData().getString("time");
                 mBtn_sendCaptcha.setText(timeInfo + "秒后重新获取");
                 if ("0".equals(timeInfo)) {
                     mBtn_sendCaptcha.setEnabled(true);
+                    mBtn_sendCaptcha.setTextColor(ContextCompat.getColor(SendCaptchaActivity.this, R.color.mq_r1_v2));
                     mBtn_sendCaptcha.setText("获取验证码");
                 }
                 super.handleMessage(msg);
@@ -68,58 +67,37 @@ public class SendCaptchaActivity extends BaseActivity {
 
         Intent intent = getIntent();
         type = intent.getIntExtra("type", 0);
-        if (type == TypeUtil.SENDCAPTCHA_FORGETPSW) {
-            mTitle.setTitleText("忘记密码");
-            if (intent.getBooleanExtra("isModify", false)) {
-                mTitle.setTitleText("修改登录密码");
-            }
 
-        } else if (type == TypeUtil.MODIFY_PHONE) {
-            mTitle.setTitleText("绑定手机号码");
-            isModifyPhone = true;
-            oldCaptcha = intent.getStringExtra("captcha");
-        }
-        tv_phone = (TextView) findViewById(R.id.tv_modifyphone_captcha);
-
+        tvPhone = (TextView) findViewById(R.id.tv_phone);
+        frameTelephone = findViewById(R.id.frame_telephone);
         mEt_Telephone = (EditText) findViewById(R.id.et_account_telephone);
         mEt_Captcha = (EditText) findViewById(R.id.et_account_captcha);
         mBtn_sendCaptcha = (Button) findViewById(R.id.btn_send);
 
-
-        mEt_Telephone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    watchEdittext(NUM_TYPE_TOAST);
-                }
-            }
-        });
-
         mBtn_sendCaptcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                watchEdittext(NUM_TYPE_CAPTCHA);
+                sendCaptcha();
             }
         });
+        if (type == TypeUtil.CAPTHCA_MODIFYLOGINPW) {
+            tvPhone.setVisibility(View.VISIBLE);
+            phone = Pref.getString(UserUtil.getPrefKey(SendCaptchaActivity.this, Pref.TELEPHONE), mActivity, "");
+            if (!TextUtils.isEmpty(phone)) {
+                tvPhone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
+            }
+        } else {
+            frameTelephone.setVisibility(View.VISIBLE);
+        }
 
     }
 
-    private void watchEdittext(int type) {
+    private void sendCaptcha() {
         phone = mEt_Telephone.getText().toString();
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
-                switch (type) {
-                    case NUM_TYPE_TOAST:
-                        break;
-                    case NUM_TYPE_CAPTCHA:
-                        //发送验证码
-                        sendMessage();
-
-                        break;
-                    case NUM_TYPE_SUMMIT:
-                        break;
-                }
-
+                //发送验证码
+                sendMessage();
             } else {
                 Uihelper.showToast(this, R.string.phone_noeffect);
             }
@@ -130,30 +108,16 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void sendMessage() {
-        int summitType = 0;
-        switch (type) {
-            case TypeUtil.SENDCAPTCHA_FORGETPSW:
-                MobclickAgent.onEvent(mContext, "1049");
-                summitType = TypeUtil.CAPTCHA_FINDPASSWORD;
-                break;
-            case TypeUtil.MODIFY_PHONE:
-                MobclickAgent.onEvent(mContext, "1050");
-                summitType = TypeUtil.CAPTCHA_BINTTEL_SECOND;
-                break;
-            default:
-                break;
-        }
         begin();
-        HttpRequest.getCaptcha(mActivity, new ICallback<Meta>() {
+        HttpRequest.getCaptcha(mActivity, new ICallback<CaptchaResult>() {
             @Override
-            public void onSucceed(Meta result) {
+            public void onSucceed(CaptchaResult result) {
                 end();
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
                 thread.start(); // 启动线程，进行倒计时
                 isTimer = true;
-
             }
 
             @Override
@@ -161,7 +125,7 @@ public class SendCaptchaActivity extends BaseActivity {
                 end();
                 Uihelper.showToast(mActivity, error);
             }
-        }, phone, summitType);
+        }, phone, type);
 
     }
 
@@ -190,61 +154,30 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void checkCaptcha(final String phone, final String captcha) {
-        int type = 0;
-        if (isModifyPhone) {
-            summit(phone, captcha);
-        } else {
-            type = TypeUtil.CAPTCHA_FINDPASSWORD;
-            HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
-                @Override
-                public void onSucceed(Meta result) {
-                    summit(phone, captcha);
-                }
+        type = TypeUtil.CAPTCHA_FINDPASSWORD;
+        HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
+            @Override
+            public void onSucceed(Meta result) {
+                summit(phone, captcha);
+            }
 
-                @Override
-                public void onFail(String error) {
+            @Override
+            public void onFail(String error) {
 
-                    Uihelper.showToast(mActivity, error);
+                Uihelper.showToast(mActivity, error);
 
-                }
-            }, phone, type, captcha);
-        }
-
+            }
+        }, phone, type, captcha);
     }
 
     private void summit(final String phone, final String captcha) {
 
-        if (isModifyPhone) {
-            //绑定新手机号码
-            String oldPhone = Pref.getString(Pref.TELEPHONE, mActivity, "");
-            if (!TextUtils.isEmpty(oldPhone) && !TextUtils.isEmpty(captcha)) {
-                begin();
-                HttpRequest.changePhone(mActivity, new ICallback<Meta>() {
-                    @Override
-                    public void onSucceed(Meta result) {
-                        end();
-                        Uihelper.showToast(mActivity, "绑定成功");
-                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.MODIFYPHONE, phone);
-                        finish();
-                    }
-
-                    @Override
-                    public void onFail(String error) {
-                        end();
-                        Uihelper.showToast(mActivity, error);
-
-                    }
-                }, oldPhone, oldCaptcha, phone, captcha);
-            }
-
-        } else {
-            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-            intent.putExtra("captcha", captcha);
-            intent.putExtra("phone", phone);
-            intent.putExtra("type", TypeUtil.PASSWORD_LOGIN);
-            startActivity(intent);
-            finish();
-        }
+        Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+        intent.putExtra("captcha", captcha);
+        intent.putExtra("phone", phone);
+        intent.putExtra("type", type);
+        startActivity(intent);
+        finish();
 
     }
 
@@ -279,21 +212,27 @@ public class SendCaptchaActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-
-        mTitle.setTitleText("注册");
+        if (type == TypeUtil.CAPTCHA_FINDPASSWORD) {
+            mTitle.setTitleText("忘记密码");
+        } else {
+            mTitle.setTitleText("修改登录密码");
+        }
 
     }
 
     @Override
     protected String getPageName() {
-        return "注册";
+        if (type == TypeUtil.CAPTCHA_FINDPASSWORD) {
+            return "忘记密码";
+        } else {
+            return "修改登录密码";
+        }
     }
 
-    public static void enterActivity(Context context, int type, boolean isModify) {
+    public static void enterActivity(Context context, int type) {
 
         Intent intent = new Intent(context, SendCaptchaActivity.class);
         intent.putExtra("type", type);
-        intent.putExtra("isModify", isModify);
         context.startActivity(intent);
 
     }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
@@ -26,25 +25,20 @@ import com.miqian.mq.views.WFYTitle;
  */
 public class SetPasswordActivity extends BaseActivity {
 
-    private String phone;
     private String captcha;
     private EditText et_password_confirm;
     private EditText et_password;
-    private String idCard;
-    private String style;
-    private TextView tv_newpassword, tv_comfirmpassword;
     private int mType;
-    private String telephone;
+    private String phone;
+    private EditText et_oldpassword;
 
     @Override
     public void onCreate(Bundle arg0) {
         // getIntent
         Intent intent = getIntent();
+        mType = intent.getIntExtra("type", 0);
         captcha = intent.getStringExtra("captcha");
         phone = intent.getStringExtra("phone");
-        idCard = intent.getStringExtra("idCard");
-        telephone = intent.getStringExtra("telephone");
-        mType = intent.getIntExtra("type", 0);
         super.onCreate(arg0);
     }
 
@@ -55,16 +49,12 @@ public class SetPasswordActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
         et_password = (EditText) findViewById(R.id.et_password);
+        et_oldpassword = (EditText) findViewById(R.id.et_oldpassword);
         et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
-        tv_comfirmpassword = (TextView) findViewById(R.id.tv_comfirmpassword);
-        tv_newpassword = (TextView) findViewById(R.id.tv_newpassword);
-        if (mType == TypeUtil.PASSWORD_TRADE || mType == TypeUtil.TRADEPASSWORD_FIRST_SETTING) {
-            mTitle.setTitleText("设置交易密码");
-            tv_newpassword.setText("设置交易密码");
-            tv_comfirmpassword.setText("确定交易密码");
-            et_password.setHint("输入6-16位数字字母组合");
+        if (mType == TypeUtil.CAPTHCA_MODIFYLOGINPW) {
+            findViewById(R.id.layout_oldpassword).setVisibility(View.VISIBLE);
+            findViewById(R.id.divider_oldpassword).setVisibility(View.VISIBLE);
         }
     }
 
@@ -76,14 +66,26 @@ public class SetPasswordActivity extends BaseActivity {
     public void btn_click(View v) {
 
         String password = et_password.getText().toString();
+        String oldpassword = et_oldpassword.getText().toString();
         String password_confirm = et_password_confirm.getText().toString();
+        if (mType == TypeUtil.CAPTHCA_MODIFYLOGINPW) {
+            if (TextUtils.isEmpty(oldpassword)) {
+                Uihelper.showToast(this, "请输入旧密码");
+                return;
+            } else {
+                if (password.length() < 6 || password.length() > 20) {
+                    Uihelper.showToast(this, R.string.tip_password);
+                    return;
+                }
+            }
+        }
         if (!TextUtils.isEmpty(password)) {
             if (password.length() < 6 || password.length() > 20) {
                 Uihelper.showToast(this, R.string.tip_password);
             } else {
                 if (!TextUtils.isEmpty(password_confirm)) {
                     if (password_confirm.equals(password)) {
-                        forget_summit(password_confirm);
+                        forget_summit(oldpassword, password_confirm);
                     } else {
                         Uihelper.showToast(this, "两次密码不一致，请重新输入");
                     }
@@ -98,9 +100,9 @@ public class SetPasswordActivity extends BaseActivity {
 
     }
 
-    private void forget_summit(String password_confirm) {
+    private void forget_summit(String oldpassword, String password_confirm) {
         //设置登录密码
-        if (mType == TypeUtil.PASSWORD_LOGIN) {
+        if (mType == TypeUtil.CAPTCHA_FINDPASSWORD) {
             begin();
             HttpRequest.getPassword(this, new ICallback<Meta>() {
                 @Override
@@ -110,7 +112,6 @@ public class SetPasswordActivity extends BaseActivity {
                     SetPasswordActivity.this.finish();
                     ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
                     ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
-
                 }
 
                 @Override
@@ -120,19 +121,18 @@ public class SetPasswordActivity extends BaseActivity {
                 }
             }, phone, password_confirm, password_confirm, captcha);
         }
-        //修改交易密码
 
-        else if (mType == TypeUtil.PASSWORD_TRADE) {
-            if (TextUtils.isEmpty(idCard)) {
-                idCard = "";
-            }
+        //修改登录密码
+        else {
             begin();
-            HttpRequest.changePayPassword(this, new ICallback<Meta>() {
+            HttpRequest.changePassword(this, new ICallback<Meta>() {
                 @Override
                 public void onSucceed(Meta result) {
                     end();
                     Uihelper.showToast(mActivity, "设置密码成功");
                     SetPasswordActivity.this.finish();
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
                 }
 
                 @Override
@@ -140,41 +140,28 @@ public class SetPasswordActivity extends BaseActivity {
                     end();
                     Uihelper.showToast(mActivity, error);
                 }
-            }, "SXJ1", idCard, telephone, captcha, password_confirm, password_confirm);
-        }
-        //设置交易密码
-        else if (mType == TypeUtil.TRADEPASSWORD_FIRST_SETTING) {
-            begin();
-            HttpRequest.setPayPassword(mActivity, new ICallback<Meta>() {
-                @Override
-                public void onSucceed(Meta result) {
-                    end();
-                    Uihelper.showToast(mActivity, "设置成功");
-                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS, null);
-                    Intent intent = new Intent();
-                    setResult(TypeUtil.TRADEPASSWORD_SETTING_SUCCESS, intent);
-                    SetPasswordActivity.this.finish();
-
-                }
-
-                @Override
-                public void onFail(String error) {
-                    end();
-                    Uihelper.showToast(mActivity, error);
-                }
-            }, password_confirm, password_confirm);
+            }, oldpassword, password_confirm, password_confirm);
         }
     }
 
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("设置登录密码");
+
+        if (mType == TypeUtil.CAPTCHA_FINDPASSWORD) {
+            mTitle.setTitleText("设置登录密码");
+        } else {
+            mTitle.setTitleText("修改登录密码");
+        }
 
     }
 
     @Override
     protected String getPageName() {
-        return "设置登录密码";
+        if (mType == TypeUtil.CAPTCHA_FINDPASSWORD) {
+            return "设置登录密码";
+        } else {
+            return "修改登录密码";
+        }
     }
 }

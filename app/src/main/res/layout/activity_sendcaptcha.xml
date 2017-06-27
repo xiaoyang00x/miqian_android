@@ -6,8 +6,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/frame_telephone"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
+        android:layout_height="50dp"
         android:layout_marginTop="@dimen/margin_top"
         android:background="@color/white"
         android:minHeight="40dp"
@@ -15,71 +17,40 @@
         android:paddingLeft="10dp"
         android:paddingTop="5dp" >
 
-      <ImageView
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:background="@drawable/trans"
-          android:layout_gravity="center_vertical"
-          android:src="@drawable/login_phone"
-          />
         <EditText
             android:id="@+id/et_account_telephone"
             style="@style/edittext_item"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/btn_send"
-            android:layout_toRightOf="@+id/tv_register"
-            android:hint="请输入手机号码"
+            android:hint="手机号"
+            android:paddingLeft="10dp"
             android:inputType="number"
             android:maxLength="11" >
         </EditText>
     </LinearLayout>
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listitem_height"
-        android:background="@drawable/list_click"
-        >
-
         <TextView
-            android:id="@+id/tv_modifyphone_captcha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_phone"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:paddingLeft="20dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:text="验证码发送至 1365665985"
+            android:text=""
             android:textColor="@color/mq_b1"
             android:textSize="@dimen/mq_font2" />
-
-        ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:src="@drawable/arrow_right" />
-    </RelativeLayout>
-
     <View style="@style/item_divider" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_item"
+        android:layout_height="50dp"
         android:background="@color/white"
         android:minHeight="40dp"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        >
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/trans"
-            android:layout_centerVertical="true"
-            android:src="@drawable/captcha"
-            android:id="@+id/imageView" />
+        android:paddingTop="5dp">
 
         <EditText
             android:id="@+id/et_account_captcha"
@@ -87,26 +58,24 @@
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_send"
-            android:hint="请输入验证码"
+            android:hint="验证码"
+            android:paddingLeft="10dp"
             android:inputType="number"
-            android:maxLength="6"
-            android:layout_toRightOf="@+id/imageView"
-            android:layout_toEndOf="@+id/imageView">
-        </EditText>
+            android:maxLength="6"></EditText>
 
         <Button
             android:id="@+id/btn_send"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
+            android:layout_height="35dp"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:background="@drawable/btn_red"
+            android:background="@drawable/btn_sendcaptcha"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="获取验证码"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textsize_small" />
+            android:textColor="@color/mq_r1_v2"
+            android:textSize="@dimen/mq_font5_v2" />
     </RelativeLayout>
 
 

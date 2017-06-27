@@ -144,11 +144,11 @@ public class Urls {
     //修改交易密码
     public final static String setPayPassword = getServer() + "userService/setPayPassword";
     //修改登录密码
-    public final static String changePassword = getServer() + "userService/changePassword";
+    public final static String changePassword = getServer() + "user/changePassword";//user/changePassword
     //找回登录密码
-    public final static String getPassword = getServer() + "userService/getPassword";
+    public final static String getPassword = getServer() + "user/getPassword";///userService/getPassword
     //检验验证码
-    public final static String checkCaptcha = getServer() + "commonService/checkCaptcha";
+    public final static String checkCaptcha = getServer() + "captcha/checkCaptcha";//commonService/checkCaptcha
     //获取用户的银行卡
     public final static String getUserBankCard = getServer() + "userService/getUserBankCard";
     //自动识别银行卡

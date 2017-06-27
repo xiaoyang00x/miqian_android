@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
+import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Login;
 import com.miqian.mq.entity.LoginResult;
@@ -21,6 +23,7 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.ProgressDialogView;
@@ -126,12 +129,12 @@ public class LoginActivity extends Activity {
                 //保存用户信息
                 Pref.saveString(Pref.TOKEN, userInfo.getToken(), LoginActivity.this);
                 Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), LoginActivity.this);
-                Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobile()), LoginActivity.this);
+                Pref.saveString(UserUtil.getPrefKey(LoginActivity.this, Pref.TELEPHONE), userInfo.getMobile(), LoginActivity.this);
                 if (Pref.getBoolean(Pref.GESTURESTATE, LoginActivity.this, true)) {
                     GestureLockSetActivity.startActivity(LoginActivity.this, null);
                 }
                 Uihelper.showToast(LoginActivity.this, "登录成功");
-                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS,null);
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
                 UserUtil.loginSuccess();
                 finish();
             }
@@ -146,8 +149,13 @@ public class LoginActivity extends Activity {
 
     @OnClick(R.id.btn_findpassword) //找回登录密码
     public void findPassWord() {
+        Intent intent = new Intent(LoginActivity.this, SendCaptchaActivity.class);
+        intent.putExtra("type", TypeUtil.CAPTCHA_FINDPASSWORD);
+        startActivity(intent);
+        finish();
 
     }
+
     /**
      * 显示 loading 对话框
      */

@@ -17,7 +17,6 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.UserDigitalCardActivity;
 import com.miqian.mq.encrypt.RSAUtils;
@@ -179,7 +178,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.password_login://修改登录密码
                 MobclickAgent.onEvent(mActivity, "1027");
-                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, true);
+                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.CAPTHCA_MODIFYLOGINPW);
 
                 break;
             case R.id.password_transaction://修改交易密码
@@ -189,9 +188,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     startActivity(intent);
                 } else {
                     MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-                    startActivity(intent);
+//                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
+//                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
+//                    startActivity(intent);
                 }
                 break;
             case R.id.iv_switch://手势密码

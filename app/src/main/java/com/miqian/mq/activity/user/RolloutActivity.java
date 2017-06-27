@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.setting.BankBranchActivity;
 import com.miqian.mq.activity.setting.CityListActivity;
@@ -436,9 +435,9 @@ public class RolloutActivity extends BaseActivity {
                 @Override
                 public void positionBtnClick() {
                     MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-                    startActivity(intent);
+//                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
+//                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
+//                    startActivity(intent);
                     dismiss();
                 }
 
