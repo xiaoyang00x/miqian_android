@@ -80,9 +80,9 @@ public class SendCaptchaActivity extends BaseActivity {
                 sendCaptcha();
             }
         });
-        if (type == TypeUtil.CAPTHCA_MODIFYLOGINPW) {
+        if (type == TypeUtil.CAPTHCA_MODIFYLOGINPW || type == TypeUtil.CAPTCHA_TRADE_PW) {
             tvPhone.setVisibility(View.VISIBLE);
-            phone = Pref.getString(UserUtil.getPrefKey(SendCaptchaActivity.this, Pref.TELEPHONE), mActivity, "");
+            phone = Pref.getString(Pref.TELEPHONE, mActivity, "");
             if (!TextUtils.isEmpty(phone)) {
                 tvPhone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
             }
@@ -93,7 +93,9 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void sendCaptcha() {
-        phone = mEt_Telephone.getText().toString();
+        if (type == TypeUtil.CAPTCHA_FINDPASSWORD) {
+            phone = mEt_Telephone.getText().toString();
+        }
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
                 //发送验证码
@@ -132,7 +134,9 @@ public class SendCaptchaActivity extends BaseActivity {
     public void btn_click(View v) {
 
         String captcha = mEt_Captcha.getText().toString();
-        phone = mEt_Telephone.getText().toString();
+        if (type == TypeUtil.CAPTCHA_FINDPASSWORD) {
+            phone = mEt_Telephone.getText().toString();
+        }
 
         if (!TextUtils.isEmpty(phone)) {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
@@ -154,7 +158,7 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void checkCaptcha(final String phone, final String captcha) {
-        type = TypeUtil.CAPTCHA_FINDPASSWORD;
+
         HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
@@ -172,12 +176,18 @@ public class SendCaptchaActivity extends BaseActivity {
 
     private void summit(final String phone, final String captcha) {
 
-        Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-        intent.putExtra("captcha", captcha);
-        intent.putExtra("phone", phone);
-        intent.putExtra("type", type);
-        startActivity(intent);
-        finish();
+        if (type==TypeUtil.CAPTCHA_TRADE_PW){
+            //跳转江西银行网页
+
+        }else {
+            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+            intent.putExtra("captcha", captcha);
+            intent.putExtra("phone", phone);
+            intent.putExtra("type", type);
+            startActivity(intent);
+            finish();
+        }
+
 
     }
 
@@ -214,6 +224,8 @@ public class SendCaptchaActivity extends BaseActivity {
     public void initTitle(WFYTitle mTitle) {
         if (type == TypeUtil.CAPTCHA_FINDPASSWORD) {
             mTitle.setTitleText("忘记密码");
+        } else if (type == TypeUtil.CAPTCHA_TRADE_PW) {
+            mTitle.setTitleText("修改交易密码");
         } else {
             mTitle.setTitleText("修改登录密码");
         }
@@ -224,6 +236,8 @@ public class SendCaptchaActivity extends BaseActivity {
     protected String getPageName() {
         if (type == TypeUtil.CAPTCHA_FINDPASSWORD) {
             return "忘记密码";
+        } else if (type == TypeUtil.CAPTCHA_TRADE_PW) {
+            return "修改交易密码";
         } else {
             return "修改登录密码";
         }

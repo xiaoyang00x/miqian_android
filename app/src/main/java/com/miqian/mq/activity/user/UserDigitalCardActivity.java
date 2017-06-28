@@ -45,7 +45,7 @@ public class UserDigitalCardActivity extends BaseActivity {
                         viewContent.setVisibility(View.VISIBLE);
                         tvName.setText(data.getCustName());
                         tvOpenbank.setText(data.getBankNo());
-                        electronicNo = data.getElectronicNo();
+                        electronicNo = data.getJxId();
                         tvCardNo.setText(electronicNo);
                     }
             }

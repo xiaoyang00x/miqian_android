@@ -7,15 +7,15 @@ public class RegInvest {
 
     private String id;//投资ID(投资编号)
     private String prodId;//产品ID 定期计划 “4”  定期赚“3”
-    private String prodName;//产品名称
+    private String productName;//产品名称
     private String bdNm;//标的名称
     private String bdTyp;//标的类型  00  标准标的 01  新手专属 02  众人拾财专属 03  老财主专享回馈 04 定向大额投资人 88 88专属
     private String bdTypeName;//标的类型名称
     private String sta;//项目状态    审核SH ；计息中JH；已到期JQ ；关闭GB
     private String dueDt;//计息到期日期
     private String crtDt;//创建日期
-    private String realInterest;//实际利率
-    private String presentInterest;//赠送收益
+    private String productRate;//产品原始利率
+    private String productPlusRate;//产品促销增加年利率
     private String prnTransSa;//投资可转让金额
     private String transSta;//转让状态  WZ:未转让 ZR:转让中
     private String transing;//转让中金额
@@ -31,6 +31,30 @@ public class RegInvest {
     private String prnAmt;//总投资本金
     private String subjectType;//标的类型      "88": 88专属  "07":双倍收益卡
     private String transedAmt;//已转金额
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductRate() {
+        return productRate;
+    }
+
+    public void setProductRate(String productRate) {
+        this.productRate = productRate;
+    }
+
+    public String getProductPlusRate() {
+        return productPlusRate;
+    }
+
+    public void setProductPlusRate(String productPlusRate) {
+        this.productPlusRate = productPlusRate;
+    }
 
     public String getSubjectType() {
         return subjectType;
@@ -56,13 +80,6 @@ public class RegInvest {
         this.prnIncome = prnIncome;
     }
 
-    public String getPresentInterest() {
-        return presentInterest;
-    }
-
-    public void setPresentInterest(String presentInterest) {
-        this.presentInterest = presentInterest;
-    }
 
     public String getId() {
         return id;
@@ -80,13 +97,6 @@ public class RegInvest {
         this.prodId = prodId;
     }
 
-    public String getProdName() {
-        return prodName;
-    }
-
-    public void setProdName(String prodName) {
-        this.prodName = prodName;
-    }
 
     public String getBdNm() {
         return bdNm;
@@ -136,13 +146,6 @@ public class RegInvest {
         this.crtDt = crtDt;
     }
 
-    public String getRealInterest() {
-        return realInterest;
-    }
-
-    public void setRealInterest(String realInterest) {
-        this.realInterest = realInterest;
-    }
 
     public String getPrnTransSa() {
         return prnTransSa;

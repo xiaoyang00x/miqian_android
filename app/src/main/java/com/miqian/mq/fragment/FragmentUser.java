@@ -16,11 +16,11 @@ import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.CapitalRecordActivity;
-import com.miqian.mq.activity.rollin.IntoModeAcitvity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
+import com.miqian.mq.activity.rollin.IntoModeAcitvity;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
@@ -111,6 +111,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     private boolean hasMessage;
     private boolean isQQproject;// 手Q活动开关
     public static boolean refresh = true;
+    private boolean isOpeneye;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -142,12 +143,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @Override
     public void onStart() {
-        if (UserUtil.hasLogin(mContext)){
+        if (UserUtil.hasLogin(mContext)) {
             frame_logined.setVisibility(View.VISIBLE);
             btnLogin.setVisibility(View.GONE);
             obtainData();
             swipeRefresh.setEnabled(true);
-        }else {
+        } else {
             btnLogin.setVisibility(View.VISIBLE);
             frame_logined.setVisibility(View.GONE);
             tv_totalasset.setText("****");
@@ -183,10 +184,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     userInfoTemp.setBalance(userInfo.getBalance());
                     userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
                     userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
-                    userInfoTemp.setPayPwdStatus(userInfo.getPayPwdStatus());
+                    userInfoTemp.setJxPayPwdStatus(userInfo.getJxPayPwdStatus());
                     userInfoTemp.setMobile(userInfo.getMobile());
                     userInfoTemp.setUserName(userInfo.getUserName());
                     setData(userInfo);
+                    UserUtil.saveUserInfo(getActivity(), userInfo);
                 } else {
                     Uihelper.showToast(getActivity(), result.getMessage());
                 }
@@ -204,7 +206,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     }
 
     private void setData(UserInfo userInfo) {
-        tv_totalasset.setTextColor(ContextCompat.getColor(getActivity(),R.color.mq_b1_v2));
+        tv_totalasset.setTextColor(ContextCompat.getColor(getActivity(), R.color.mq_b1_v2));
         //历史收益
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalProfit())) {
             tv_TotalProfit.setText(FormatUtil.formatAmountStr(userInfo.getTotalProfit()));
@@ -298,16 +300,34 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         frame_miaoqianbao.setOnClickListener(this);
         btn_setting.setImageResource(R.drawable.btn_setting);
     }
+
     @OnClick(R.id.btn_eye)//资金等是否可见
     public void eyeState() {
-
-
+        if (UserUtil.hasLogin(mActivity)){
+            if (isOpeneye) {
+                btnEye.setBackgroundResource(R.drawable.icon_closeeye);
+                tv_totalasset.setText("****");
+                tv_Current.setText("");
+                tv_Regular.setText("");
+                tv_Ticket.setText("");
+                tv_balance.setText("--.--");
+                tv_TotalProfit.setText("--.--");
+                tv_ydayprofit.setText("--.--");
+                isOpeneye = false;
+            } else {
+                btnEye.setBackgroundResource(R.drawable.icon_openeye);
+                isOpeneye = true;
+                setData(userInfo);
+            }
+        }
     }
+
     @OnClick(R.id.bt_login)//登录
     public void loGin() {
         LoginActivity.start(getActivity());
 
     }
+
     @OnClick(R.id.bt_right)//设置
     public void setting() {
         if (UserUtil.hasLogin(getActivity())) {
@@ -467,7 +487,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 }
                 break;
             case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
-                userInfoTemp.setPayPwdStatus("1");
+                userInfoTemp.setJxPayPwdStatus("1");
                 break;
             case ExtendOperationController.OperationKey.BACK_USER:
                 ivQQ.setVisibility(View.GONE);

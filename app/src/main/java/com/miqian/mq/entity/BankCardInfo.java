@@ -7,8 +7,16 @@ package com.miqian.mq.entity;
 public class BankCardInfo {
 
     private  String custName;
-    private  String electronicNo;
+    private  String jxId;
     private  String bankNo;
+
+    public String getJxId() {
+        return jxId;
+    }
+
+    public void setJxId(String jxId) {
+        this.jxId = jxId;
+    }
 
     public String getCustName() {
         return custName;
@@ -16,14 +24,6 @@ public class BankCardInfo {
 
     public void setCustName(String custName) {
         this.custName = custName;
-    }
-
-    public String getElectronicNo() {
-        return electronicNo;
-    }
-
-    public void setElectronicNo(String electronicNo) {
-        this.electronicNo = electronicNo;
     }
 
     public String getBankNo() {

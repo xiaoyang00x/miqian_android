@@ -175,7 +175,7 @@ public class RolloutActivity extends BaseActivity {
             }
             //设置交易密码成功
         } else if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
-            userInfo.setPayPwdStatus("1");
+            userInfo.setJxPayPwdStatus("1");
             rollOutHttp();
         }
     }
@@ -457,8 +457,8 @@ public class RolloutActivity extends BaseActivity {
     }
 
     private void rollOutHttp() {
-        if (userInfo.getPayPwdStatus() != null) {
-            int state = Integer.parseInt(userInfo.getPayPwdStatus());
+        if (userInfo.getJxPayPwdStatus() != null) {
+            int state = Integer.parseInt(userInfo.getJxPayPwdStatus());
             initDialogTradePassword(state);
         }
 

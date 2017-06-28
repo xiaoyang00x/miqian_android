@@ -175,8 +175,8 @@ public class ActivityRedeem extends BaseActivity {
                 mDialogTip.setSureInfo("我知道了");
                 mDialogTip.show();
             } else {
-                if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
-                    int state = Integer.parseInt(userInfo.getPayPwdStatus());
+                if (!TextUtils.isEmpty(userInfo.getJxPayPwdStatus())) {
+                    int state = Integer.parseInt(userInfo.getJxPayPwdStatus());
                     initDialogTradePassword(state);
                 }
             }
@@ -219,7 +219,7 @@ public class ActivityRedeem extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //设置交易密码成功
         if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
-            userInfo.setPayPwdStatus("1");
+            userInfo.setJxPayPwdStatus("1");
             initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
         }
     }

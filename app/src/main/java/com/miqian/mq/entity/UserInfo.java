@@ -14,7 +14,7 @@ public class UserInfo implements Serializable {
     private String nickName;//昵称
     private String idCard;//身份证号
     private String bankNo;//银行卡号
-    private String payPwdStatus;//支付密码是否设置 0 未设置 1 已设置
+    private String jxPayPwdStatus;//支付密码是否设置 0 未设置 1 已设置
     private String balance;//可用余额
     private String curAmt;//活期总额
     private String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
@@ -51,6 +51,14 @@ public class UserInfo implements Serializable {
     private String newCurrentCanRedeem; //秒钱宝可赎回金额
     private String jxAutoClaimsTransferStatus; //是否开通自动债权转让 1已开通 0 未开通
     private String jxAutoSubscribeStatus; //是否开通自动投标 1为已开通 0为未开通
+
+    public String getJxPayPwdStatus() {
+        return jxPayPwdStatus;
+    }
+
+    public void setJxPayPwdStatus(String jxPayPwdStatus) {
+        this.jxPayPwdStatus = jxPayPwdStatus;
+    }
 
     public String getUserName() {
         return userName;
@@ -210,14 +218,6 @@ public class UserInfo implements Serializable {
 
     public void setBankNo(String bankNo) {
         this.bankNo = bankNo;
-    }
-
-    public String getPayPwdStatus() {
-        return payPwdStatus;
-    }
-
-    public void setPayPwdStatus(String payPwdStatus) {
-        this.payPwdStatus = payPwdStatus;
     }
 
     public String getBalance() {

@@ -132,7 +132,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
     private void loadMore() {
         if (!isLoading) {
-            if (promList.size() >= page.getCount()) {
+            if (promList.size() >= page.getTotalPage()) {
                 return;
             }
             isLoading = true;
@@ -161,7 +161,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
     private void refreshView() {
         adapterMyTicket = new AdapterMyTicket(mActivity, promList, true);
-        adapterMyTicket.setMaxItem(page.getCount());
+        adapterMyTicket.setMaxItem(page.getTotalPage());
         recyclerView.setAdapter(adapterMyTicket);
     }
 

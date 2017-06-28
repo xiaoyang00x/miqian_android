@@ -371,6 +371,17 @@ public class HttpRequest {
     }
 
     //检验验证码
+    /**
+     * @param operationType //    13001——注册
+     *                      //    13002——找回登录密码
+     *                      //    13003— 秒钱宝赎回
+     *                      //    13004——旧活期赎回
+     *                      //    13005——修改登录密码
+     *                      //    15001——开户
+     *                      //    15002——快捷充值
+     *                      //    15003——绑卡 已开户未绑卡
+     *                      //    15004——修改交易密码
+     */
 
     public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String captcha) {
         List<Param> mList = new ArrayList<>();
@@ -399,6 +410,18 @@ public class HttpRequest {
     }
 
     //获取验证码
+
+    /**
+     * @param operationType //    13001——注册
+     *                      //    13002——找回登录密码
+     *                      //    13003— 秒钱宝赎回
+     *                      //    13004——旧活期赎回
+     *                      //    13005——修改登录密码
+     *                      //    15001——开户
+     *                      //    15002——快捷充值
+     *                      //    15003——绑卡 已开户未绑卡
+     *                      //    15004——修改交易密码
+     */
 
     public static void getCaptcha(Context context, final ICallback<CaptchaResult> callback, String phone, int operationType) {
         List<Param> mList = new ArrayList<>();

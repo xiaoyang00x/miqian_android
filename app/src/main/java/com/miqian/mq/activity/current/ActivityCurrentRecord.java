@@ -70,7 +70,7 @@ public class ActivityCurrentRecord extends BaseActivity {
 
     private void refreshView() {
         adapterCurrrentRecord = new AdapterCurrrentRecord(dataList);
-        adapterCurrrentRecord.setMaxItem(page.getCount());
+        adapterCurrrentRecord.setMaxItem(page.getTotalPage());
         textHistory.setText("历史赎回收益(元)");
         recyclerView.setAdapter(adapterCurrrentRecord);
     }
@@ -112,7 +112,7 @@ public class ActivityCurrentRecord extends BaseActivity {
 
     private void loadMore() {
         if (!isLoading) {
-            if (dataList.size() >= page.getCount()) {
+            if (dataList.size() >= page.getTotalPage()) {
                 return;
             }
             isLoading = true;
