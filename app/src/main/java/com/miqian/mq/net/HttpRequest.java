@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.activity.WebBankActivity;
 import com.miqian.mq.activity.rollin.IntoActivity;
+import com.miqian.mq.activity.save.SaveBindAcitvity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -1630,7 +1631,7 @@ public class HttpRequest {
      * 江西银行充值接口
      * authCode 授权码 (获取短信验证码返回)
      */
-    public static void openJx(Context context, String idCard, String userName, String mobile, String bankCardNo, String authCode, String captcha, final ICallback<Meta> callback) {
+    public static void openJx(Context context, final ICallback<Meta> callback, String idCard, String userName, String mobile, String bankCardNo, String authCode, String captcha) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         params.add(new Param("idCard", idCard));

@@ -1,11 +1,11 @@
 package com.miqian.mq.activity.save;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -23,7 +23,7 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_open:
-//                HttpRequest.openJx();
+                startActivity(new Intent(this, SaveBindAcitvity.class));
                 break;
             case R.id.bt_product:
                 break;
