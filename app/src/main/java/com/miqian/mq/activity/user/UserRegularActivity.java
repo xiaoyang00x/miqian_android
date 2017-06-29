@@ -98,7 +98,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     private void loadMore() {
         if (!isLoading) {
-            if (regInvestList.size() >= userRegular.getPage().getCount()) {
+            if (regInvestList.size() >= userRegular.getPage().getTotalPage()) {
 //                mAdapter.notifyItemChanged(regInvestList.size() + 1);
                 return;
             }
@@ -165,7 +165,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private void refreshView() {
         mAdapter = new AdapterUserRegular(this, regInvestList, userRegular.getReg(), userRegular.getPage(), mType);
         mAdapter.setOnItemClickListener(this);
-        mAdapter.setMaxItem(userRegular.getPage().getCount());
+        mAdapter.setMaxItem(userRegular.getPage().getTotalPage());
         mRecyclerView.setAdapter(mAdapter);
     }
 

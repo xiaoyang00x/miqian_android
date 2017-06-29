@@ -108,12 +108,12 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                     ((ViewHolder) holder).textInterestRatePresent.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
                 }
             }
-            String realInterest = regInvest.getRealInterest();
-            String presentInterest = regInvest.getPresentInterest();
+            String realInterest = regInvest.getProductRate();
+            String presentInterest = regInvest.getProductPlusRate();
             ((ViewHolder) holder).textInterestRate.setText(realInterest);
             ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
-            int showType = CalculateUtil.getShowInterest(regInvest.getProjectState(), regInvest.getSubjectType(), regInvest.getRealInterest()
-                    , regInvest.getPresentInterest(), regInvest.getTransedAmt());
+            int showType = CalculateUtil.getShowInterest(regInvest.getProjectState(), regInvest.getSubjectType(), regInvest.getProductRate()
+                    , regInvest.getProductPlusRate(), regInvest.getTransedAmt());
             String projectState = regInvest.getProjectState();
 
             switch (showType) {
@@ -174,7 +174,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             }
         } else if (holder instanceof HeaderViewHolder) {
 
-            ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getCount() + "");
+            ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getTotalPage() + "");
             if (mType == 1) {
                 ((HeaderViewHolder) holder).textCapitalName.setText("投资本金(元)");
                 ((HeaderViewHolder) holder).textEarningName.setText("已获收益(元)");

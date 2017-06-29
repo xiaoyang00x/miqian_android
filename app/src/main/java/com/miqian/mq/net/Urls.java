@@ -160,13 +160,13 @@ public class Urls {
     //获取支行
     public final static String getSubBranch = getServer() + "commonService/getSubBranch";
     //登出
-    public final static String loginOut = getServer() + "userService/logout";
+    public final static String loginOut = getServer() + "user/logout";//userService/logout
     //提现
     public final static String withdrawCash = getServer() + "assetService/withdrawCash";
     //我的活期
     public final static String user_current = getServer() + "userService/getMyCurrent";
     //我的定期
-    public final static String user_regular = getServer() + "userRegService/v2/getMyRegBuyList";
+    public final static String user_regular = getServer() + "mine/getMyRegBuyList";  ///userRegService/v2/getMyRegBuyList
     //我的定期详情
     public final static String user_regular_detail = getServer() + "userRegService/v2/getRegDetail";
     //项目匹配

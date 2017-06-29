@@ -373,8 +373,8 @@ public class LaunchTransferRegularAcitivity extends BaseActivity implements View
     }
 
     private void showTradeDialog() {
-        if (userInfo.getPayPwdStatus() != null) {
-            int state = Integer.parseInt(userInfo.getPayPwdStatus());
+        if (userInfo.getJxPayPwdStatus() != null) {
+            int state = Integer.parseInt(userInfo.getJxPayPwdStatus());
             initDialogTradePassword(state);
         }
     }

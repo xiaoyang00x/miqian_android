@@ -182,15 +182,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.password_transaction://修改交易密码
-                if ("0".equals(userInfo.getPayPwdStatus())) {//未设置
-                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-                    intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-                    startActivity(intent);
+                if ("0".equals(userInfo.getJxPayPwdStatus())) {//未设置
+//                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+//                    intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
+//                    startActivity(intent);
                 } else {
                     MobclickAgent.onEvent(mActivity, "1028");
-//                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-//                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-//                    startActivity(intent);
+                    MobclickAgent.onEvent(mActivity, "1027");
+                    SendCaptchaActivity.enterActivity(mActivity, TypeUtil.CAPTCHA_TRADE_PW);
                 }
                 break;
             case R.id.iv_switch://手势密码
@@ -337,7 +336,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         switch (operationKey) {
             case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
-                userInfo.setPayPwdStatus("1");
+                userInfo.setJxPayPwdStatus("1");
                 break;
             default:
                 break;

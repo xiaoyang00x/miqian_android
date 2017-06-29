@@ -129,7 +129,7 @@ public class LoginActivity extends Activity {
                 //保存用户信息
                 Pref.saveString(Pref.TOKEN, userInfo.getToken(), LoginActivity.this);
                 Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), LoginActivity.this);
-                Pref.saveString(UserUtil.getPrefKey(LoginActivity.this, Pref.TELEPHONE), userInfo.getMobile(), LoginActivity.this);
+                Pref.saveString(Pref.TELEPHONE, userInfo.getMobile(), LoginActivity.this);
                 if (Pref.getBoolean(Pref.GESTURESTATE, LoginActivity.this, true)) {
                     GestureLockSetActivity.startActivity(LoginActivity.this, null);
                 }
