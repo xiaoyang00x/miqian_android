@@ -24,7 +24,6 @@ import com.miqian.mq.activity.rollin.IntoModeAcitvity;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
-import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.UserInfo;
@@ -188,7 +187,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     userInfoTemp.setMobile(userInfo.getMobile());
                     userInfoTemp.setUserName(userInfo.getUserName());
                     setData(userInfo);
-                    UserUtil.saveUserInfo(getActivity(), userInfo);
                 } else {
                     Uihelper.showToast(getActivity(), result.getMessage());
                 }
@@ -364,11 +362,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     if ("0".equals(userInfo.getWithdrawCashSwitch())) {
                         Uihelper.showToast(getActivity(), R.string.qq_project_rollout);
                     } else {
-                        Intent intent = new Intent(getActivity(), RolloutActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("userInfo", userInfoTemp);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+//                        Intent intent = new Intent(getActivity(), RolloutActivity.class);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable("userInfo", userInfoTemp);
+//                        intent.putExtras(bundle);
+//                        startActivity(intent);
                     }
                 } else {//提示绑卡
                     if (tipDialog == null) {

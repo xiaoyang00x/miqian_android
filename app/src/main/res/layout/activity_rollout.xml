@@ -1,257 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="可提现金额"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <TextView
+                android:id="@+id/tv_amt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <ImageView
+                android:id="@+id/iv_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/icon_tip_roolout" />
+
+            <TextView
+                android:id="@+id/tv_remain_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@+id/iv_tip"
+                android:text="本月可提现次数"
+                android:textColor="@color/mq_y2_v2"
+                android:textSize="@dimen/mq_font3_v2" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="收款账号"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <TextView
+                android:id="@+id/tv_cardnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <ImageView
+                android:id="@+id/iv_bankicon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:layout_toLeftOf="@+id/tv_cardnum" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/mq_b3_v2"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="可提现金额"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <EditText
+                android:id="@+id/et_amt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_toEndOf="@+id/textView2"
+                android:layout_toRightOf="@+id/textView2"
+                android:background="@drawable/trans"
+                android:gravity="right"
+                android:hint="请输入提现金额，1元起"
+                android:textColor="@color/mq_r1_v2"
+                android:textColorHint="@color/mq_b3_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/mq_b3_v2"></View>
+
+        <RelativeLayout
+            android:id="@+id/layout_bankunion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="开户行联行号"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <TextView
+                android:id="@+id/tv_bankunion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="220000"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_openbank"
+                android:layout_width="160dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_sendcaptcha_normal"
+                android:text="完善银行卡信息"
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font7_v2"
+                android:visibility="gone"></Button>
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/layout_below5amt"
+            layout="@layout/layout_below5amt"
+            android:visibility="gone"></include>
+
+        <include
+            android:id="@+id/layout_aboveamt"
+            layout="@layout/layout_above5amt"
+            android:visibility="gone"></include>
+
+        <Button
+            android:id="@+id/btn_summit"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/btn_red"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mq_font8_v2" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/account_head_bg"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_tips"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bind_card_bg"
-                    android:orientation="vertical"
-                    android:padding="25dp">
-
-
-                    <LinearLayout
-                        android:id="@+id/frame_bank"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="visible">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp">
-
-                            <ImageView
-                                android:id="@+id/image_bank"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="15dp"
-                                android:src="@drawable/icon_bank" />
-
-                            <TextView
-                                android:id="@+id/bind_bank_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_toRightOf="@id/image_bank"
-                                android:text="工商银行"
-                                android:textColor="@color/mq_b1_v2"
-                                android:textSize="@dimen/mq_font7_v2"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/bind_bank_number"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="10dp"
-                                android:maxLength="30"
-                                android:text="6214 8559 2026 0037"
-                                android:textColor="@color/mq_b1_v2"
-                                android:textSize="@dimen/mq_font7_v2"
-                                android:textStyle="bold" />
-                        </RelativeLayout>
-
-                        <TextView
-                            android:id="@+id/text_limit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="预计2个工作日内到账"
-                            android:textColor="@color/mq_b4_v2"
-                            android:textSize="@dimen/mq_font3_v2"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/white"
-                        android:orientation="vertical">
-
-
-                        <RelativeLayout
-                            android:id="@+id/frame_money"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/edit_item">
-
-                            <ImageView
-                                style="@style/WrapContent"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="15dp"
-                                android:src="@drawable/icon_money" />
-
-                            <EditText
-                                android:id="@+id/edit_money"
-                                style="@style/edittext_item"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="40dp"
-                                android:background="@null"
-                                android:inputType="numberDecimal"
-                                android:singleLine="true" />
-                        </RelativeLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/frame_bindbranch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                    android:layout_centerVertical="true"
+                    android:text="温馨提示："
+                    android:textColor="@color/mq_b2_v2"
+                    android:textSize="@dimen/mq_font5_v2"
+                    android:textStyle="bold"></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:text="完善银行信息"
-                    android:textColor="@color/mq_b1"
-                    android:textSize="@dimen/mq_font3" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/scroke_bg"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:id="@+id/frame_bank_province"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="@dimen/margin_left_right"
-                        android:layout_marginRight="@dimen/margin_left_right">
-
-                        <TextView
-                            style="@style/text_black_item"
-                            android:layout_centerVertical="true"
-                            android:text="所在省市" />
-
-                        <ImageView
-                            android:id="@+id/arrow_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/right" />
-
-                        <TextView
-                            android:id="@+id/tv_bank_province"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/arrow_1"
-                            android:text="请选择"
-                            android:textColor="@color/miqian_gray" />
-                    </RelativeLayout>
-
-                    <View style="@style/item_divider" />
-
-                    <RelativeLayout
-                        android:id="@+id/frame_bank_branch"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="@dimen/margin_left_right"
-                        android:layout_marginRight="@dimen/margin_left_right">
-
-                        <TextView
-                            android:id="@+id/text_bank_branch"
-                            style="@style/text_black_item"
-                            android:layout_centerVertical="true"
-                            android:text="支行名称" />
-
-                        <ImageView
-                            android:id="@+id/arrow_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/right" />
-
-                        <TextView
-                            android:id="@+id/tv_bank_branch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@+id/arrow_2"
-                            android:layout_toRightOf="@id/text_bank_branch"
-                            android:gravity="right"
-                            android:singleLine="true"
-                            android:text="请选择"
-                            android:textColor="@color/miqian_gray" />
-                    </RelativeLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_left_right"
-                android:layout_marginRight="@dimen/margin_left_right"
-                android:layout_marginTop="15dp">
-
-                <Button
-                    android:id="@+id/bt_rollout"
-                    style="@style/click_btn"
-                    android:enabled="false"
-                    android:onClick="btn_click"
-                    android:text="确定" />
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_tips"
+                    android:text="提现时间(周一到周日)"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font3_v2"></TextView>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:visibility="visible">
+                android:layout_centerVertical="true"
+                android:layout_marginTop="15dp"
+                android:text="1.普通提现：支持单笔5万(含5万)以下资金提现，实时到账。"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"></TextView>
 
-                <com.miqian.mq.views.TextViewEx
-                    android:id="@+id/tv_rollout_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/margin_left_right"
-                    android:layout_marginRight="@dimen/margin_left_right"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="30dp"
-                    android:text=""
-                    android:textColor="@color/mq_b2"
-                    android:textSize="@dimen/mq_font4" />
-            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:text="2.大额提现：支持单笔5万以上资金提现。可以大额提现时间"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:text="为：工作日9：00——16：40。为避免大额提现资金锁定情况，建"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:text="议拆分每笔资金，实现实时提现。"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:text="3.最低提现金额1元，每月8次免费提现，超过8次后提现收取"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:text="0.2%手续费（最低1元）。每日提现次数最多2次。"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2"></TextView>
+
         </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+    </LinearLayout>
+
+
+</ScrollView>

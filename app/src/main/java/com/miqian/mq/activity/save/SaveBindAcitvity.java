@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
@@ -116,9 +117,9 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
         }
         editMobile.setEnabled(false);
         begin();
-        HttpRequest.getCaptcha(this, new ICallback<Meta>() {
+        HttpRequest.getCaptcha(this, new ICallback<CaptchaResult>() {
             @Override
-            public void onSucceed(Meta result) {
+            public void onSucceed(CaptchaResult result) {
                 end();
                 btCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();

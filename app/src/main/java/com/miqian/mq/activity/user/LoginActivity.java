@@ -14,10 +14,10 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.setting.SetPasswordActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Login;
 import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -39,6 +39,7 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends Activity {
 
+    private static LoginListener mLoginListener;
     @BindView(R.id.edit_telephone)
     EditText editPhone;
     @BindView(R.id.edit_password)
@@ -89,6 +90,13 @@ public class LoginActivity extends Activity {
         activity.overridePendingTransition(R.anim.activity_anim_scenic_in, R.anim.activity_anim_scenic_no);
     }
 
+    public static void start(Activity activity, LoginListener loginListener) {
+        mLoginListener = loginListener;
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.activity_anim_scenic_in, R.anim.activity_anim_scenic_no);
+    }
+
     @OnClick(R.id.btn_back) //返回按钮
     public void back() {
         this.finish();
@@ -130,12 +138,16 @@ public class LoginActivity extends Activity {
                 Pref.saveString(Pref.TOKEN, userInfo.getToken(), LoginActivity.this);
                 Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), LoginActivity.this);
                 Pref.saveString(Pref.TELEPHONE, userInfo.getMobile(), LoginActivity.this);
+                Pref.saveString(Pref.IS_SAVE_BEFORE, userInfo.getIsBeforeDepositRegisterStatus(), LoginActivity.this);
                 if (Pref.getBoolean(Pref.GESTURESTATE, LoginActivity.this, true)) {
                     GestureLockSetActivity.startActivity(LoginActivity.this, null);
                 }
                 Uihelper.showToast(LoginActivity.this, "登录成功");
                 ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
                 UserUtil.loginSuccess();
+                if (mLoginListener!=null){
+                    mLoginListener.loginSuccess();
+                }
                 finish();
             }
 
