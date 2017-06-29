@@ -60,6 +60,8 @@ public class ExtendOperationController {
 		int REFRESH_CURRENTINFO = 1013;
 		/**系统维护*/
 		int SYSTEM_MAINTENANCE = 1014;
+		/**老用户存管弹窗*/
+		int JX_SAVE = 1015;
 	}
 
 	/**

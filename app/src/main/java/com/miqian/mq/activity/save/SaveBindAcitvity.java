@@ -12,9 +12,12 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -58,7 +61,18 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void obtainData() {
+        begin();
+        HttpRequest.openJxPreprocess(this, new ICallback<SaveInfoResult>() {
+            @Override
+            public void onSucceed(SaveInfoResult result) {
+                end();
+            }
 
+            @Override
+            public void onFail(String error) {
+                end();
+            }
+        });
     }
 
     private boolean isMobile() {
@@ -95,6 +109,34 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
 //        String mobile = editMobile.getText().toString();
         String captcha = editCaptcha.getText().toString();
 
+//        if ("0".equals(relaNameStatus)) {
+        if (TextUtils.isEmpty(userName)) {
+            Uihelper.showToast(mActivity, "姓名不能为空");
+            return;
+        }
+        if (userName.length() < 2) {
+            Uihelper.showToast(mActivity, "字数不满足2-4个字");
+            return;
+        }
+        if (TextUtils.isEmpty(idCard)) {
+            Uihelper.showToast(mActivity, "身份证号码不能为空");
+            return;
+        }
+
+        if (!idCard.matches(FormatUtil.PATTERN_IDCARD)) {
+            Uihelper.showToast(mActivity, "身份证号码不正确");
+            return;
+        }
+
+        if (TextUtils.isEmpty(bankCardNo)) {
+            Uihelper.showToast(mActivity, "银行卡号不能为空");
+            return;
+        }
+        if (!isMobile()) {
+            return;
+        }
+//        }
+
         begin();
         HttpRequest.openJx(this, new ICallback<Meta>() {
             @Override
@@ -114,12 +156,12 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
         if (!isMobile()) {
             return;
         }
-        editMobile.setEnabled(false);
         begin();
-        HttpRequest.getCaptcha(this, new ICallback<Meta>() {
+        HttpRequest.getCaptcha(this, new ICallback<CaptchaResult>() {
             @Override
-            public void onSucceed(Meta result) {
+            public void onSucceed(CaptchaResult result) {
                 end();
+                authCode = result.getData().getAuthCode();
                 btCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -133,7 +175,7 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, editMobile.getText().toString(), TypeUtil.CAPTCHA_REGISTER);
+        }, editMobile.getText().toString(), TypeUtil.CAPTCHA_OPENACCOUNT);
 
     }
 
@@ -182,6 +224,7 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
                 if ("0".equals(timeInfo)) {
                     btCaptcha.setEnabled(true);
                     btCaptcha.setText("获取验证码");
+                    btCaptcha.setTextColor(ContextCompat.getColor(mActivity, R.color.mq_r1_v2));
                 }
                 super.handleMessage(msg);
             }

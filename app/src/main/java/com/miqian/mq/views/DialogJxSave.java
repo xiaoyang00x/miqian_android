@@ -35,7 +35,6 @@ public abstract class DialogJxSave extends Dialog {
         btnSure.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                dismiss();
                 positionBtnClick();
             }
         });

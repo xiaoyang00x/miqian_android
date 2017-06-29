@@ -15,6 +15,7 @@
         android:paddingTop="30dp">
 
         <TextView
+            android:id="@+id/text_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
@@ -23,13 +24,16 @@
             android:textColor="@color/mq_b5_v2"
             android:textSize="@dimen/mq_font4_v2" />
 
+
         <TextView
+            android:id="@+id/text_line1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="30dp"
             android:text="------------" />
 
         <TextView
+            android:id="@+id/text_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
@@ -39,12 +43,14 @@
             android:textSize="@dimen/mq_font4_v2" />
 
         <TextView
+            android:id="@+id/text_line2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="30dp"
             android:text="------------" />
 
         <TextView
+            android:id="@+id/text_auto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"

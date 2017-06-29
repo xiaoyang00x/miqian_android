@@ -117,6 +117,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 if ("0".equals(timeInfo)) {
                     btnSendCaptcha.setEnabled(true);
                     btnSendCaptcha.setText("获取验证码");
+                    btnSendCaptcha.setTextColor(ContextCompat.getColor(mActivity, R.color.mq_r1_v2));
                 }
                 super.handleMessage(msg);
             }
@@ -331,7 +332,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, userInfo.getMobile(), TypeUtil.CAPTCHA_REGISTER);
+        }, userInfo.getMobile(), TypeUtil.CAPTCHA_QUICK_RECHARGE);
 
     }
 
@@ -465,17 +466,17 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //        }, orderNo);
     }
 
-    /**
-     * 返回订单页面认购
-     *
-     * @param orderNo
-     */
-    private void backSubscribePage(String orderNo) {
-        Intent intent = new Intent();
-        intent.putExtra("orderNo", orderNo);
-        setResult(CurrentInvestment.SUCCESS, intent);
-        IntoActivity.this.finish();
-    }
+//    /**
+//     * 返回订单页面认购
+//     *
+//     * @param orderNo
+//     */
+//    private void backSubscribePage(String orderNo) {
+//        Intent intent = new Intent();
+//        intent.putExtra("orderNo", orderNo);
+//        setResult(CurrentInvestment.SUCCESS, intent);
+//        IntoActivity.this.finish();
+//    }
 
     /**
      * 跳转充值结果
