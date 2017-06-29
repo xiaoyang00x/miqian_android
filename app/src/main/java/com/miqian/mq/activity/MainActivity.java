@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
-import com.miqian.mq.activity.user.LoginActivity;
+import com.miqian.mq.activity.save.SaveBindAcitvity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
@@ -48,6 +48,7 @@ import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.DialogJxSave;
 import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.FragmentTabHost;
@@ -640,6 +641,11 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 current_tab = 0;
                 ActivityStack.getActivityStack().clearActivity();
                 break;
+            case OperationKey.JX_SAVE:
+                current_tab = 0;
+                ActivityStack.getActivityStack().clearActivity();
+                showJxSave();
+                break;
             case OperationKey.BACK_CURRENT:
                 current_tab = 1;
                 ActivityStack.getActivityStack().clearActivity();
@@ -741,6 +747,20 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (imgRedPointer != null) {
             imgRedPointer.setVisibility(View.VISIBLE);
         }
+    }
+
+
+    /**
+     * 江西银行存管弹窗--老用户
+     */
+    public void showJxSave() {
+        DialogJxSave dialogJxSave = new DialogJxSave(this) {
+            @Override
+            public void positionBtnClick() {
+                startActivity(new Intent(MainActivity.this, SaveBindAcitvity.class));
+            }
+        };
+        dialogJxSave.show();
     }
 
 

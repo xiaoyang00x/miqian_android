@@ -1,17 +1,12 @@
 package com.miqian.mq.activity.save;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.rollin.IntoActivity;
-import com.miqian.mq.activity.rollin.IntoCheckAcitvity;
-import com.miqian.mq.net.Urls;
+import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -32,6 +27,7 @@ public class SavePasswordAcitvity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_submit:
+                HttpRequest.setJxPassword(SavePasswordAcitvity.this);
                 break;
         }
     }
