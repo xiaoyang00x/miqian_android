@@ -1,148 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="30dp"
-        android:paddingTop="30dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_account"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:drawableTop="@drawable/save_step1"
-            android:text="开通账户"
-            android:textColor="@color/mq_b5_v2"
-            android:textSize="@dimen/mq_font4_v2" />
-
-
-        <TextView
-            android:id="@+id/text_line1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:paddingBottom="30dp"
-            android:text="------------" />
+            android:paddingTop="30dp">
 
-        <TextView
-            android:id="@+id/text_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:drawableTop="@drawable/save_step2"
-            android:text="设置交易密码"
-            android:textColor="@color/mq_b5_v2"
-            android:textSize="@dimen/mq_font4_v2" />
+            <TextView
+                android:id="@+id/text_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/save_step1"
+                android:text="开通账户"
+                android:textColor="@color/mq_b5_v2"
+                android:textSize="@dimen/mq_font4_v2" />
 
-        <TextView
-            android:id="@+id/text_line2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="30dp"
-            android:text="------------" />
 
-        <TextView
-            android:id="@+id/text_auto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="10dp"
-            android:drawableTop="@drawable/save_step3"
-            android:text="签署协议"
-            android:textColor="@color/mq_b5_v2"
-            android:textSize="@dimen/mq_font4_v2" />
+            <TextView
+                android:id="@+id/text_line1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp"
+                android:text="------------" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/text_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/save_step2"
+                android:text="设置交易密码"
+                android:textColor="@color/mq_b5_v2"
+                android:textSize="@dimen/mq_font4_v2" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="35dp"
-        android:paddingTop="35dp">
+            <TextView
+                android:id="@+id/text_line2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp"
+                android:text="------------" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/save_icon_jx" />
+            <TextView
+                android:id="@+id/text_auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/save_step3"
+                android:text="签署协议"
+                android:textColor="@color/mq_b5_v2"
+                android:textSize="@dimen/mq_font4_v2" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="   ---------------   " />
+        </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/save_icon_mq" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="第三方资金存管"
-            android:textColor="@color/mq_b1_v2"
-            android:textSize="@dimen/mq_font7_v2"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="激活江西银行存管账户，保障您的资金安全"
-            android:textColor="@color/mq_b2_v2"
-            android:textSize="@dimen/mq_font7_v2" />
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="35dp"
+            android:paddingTop="35dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/save_icon_jx" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="   ---------------   " />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/save_icon_mq" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="温馨提示："
-            android:textColor="@color/mq_r1_v2"
-            android:textSize="@dimen/mq_font3_v2"
-            android:textStyle="bold" />
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="存管账户为您的个人实名电子账户，平台无法触碰您的资金"
-            android:layout_marginTop="7dp"
-            android:textColor="@color/mq_r1_v2"
-            android:textSize="@dimen/mq_font3_v2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="第三方资金存管"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/bt_open"
-            style="@style/click_btn"
-            android:layout_marginTop="65dp"
-            android:layout_gravity="center"
-            android:text="激活资金存管账户" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="激活江西银行存管账户，保障您的资金安全"
+                android:textColor="@color/mq_b2_v2"
+                android:textSize="@dimen/mq_font7_v2" />
 
-        <Button
-            android:id="@+id/bt_product"
-            style="@style/click_btn"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
-            android:text="先看看理财产品"
-            android:background="@drawable/btn_sendcaptcha"
-            android:textColor="@color/mq_r1_v2"
-            android:textSize="@dimen/mq_font7_v2"
-            android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="温馨提示："
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font3_v2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="存管账户为您的个人实名电子账户，平台无法触碰您的资金"
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <Button
+                android:id="@+id/bt_open"
+                style="@style/click_btn"
+                android:layout_gravity="center"
+                android:layout_marginTop="65dp"
+                android:text="激活资金存管账户" />
+
+            <Button
+                android:id="@+id/bt_product"
+                style="@style/click_btn"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_sendcaptcha"
+                android:text="先看看理财产品"
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

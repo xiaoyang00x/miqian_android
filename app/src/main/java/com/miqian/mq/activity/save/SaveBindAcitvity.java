@@ -142,12 +142,13 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSucceed(Meta result) {
                 end();
-                startActivity(new Intent(SaveBindAcitvity.this, SavePasswordAcitvity.class));
+                startActivity(new Intent(SaveBindAcitvity.this, SaveResultAcitvity.class));
             }
 
             @Override
             public void onFail(String error) {
                 end();
+                Uihelper.showToast(SaveBindAcitvity.this, error);
             }
         }, idCard, userName, mobile, bankCardNo, authCode, captcha);
     }

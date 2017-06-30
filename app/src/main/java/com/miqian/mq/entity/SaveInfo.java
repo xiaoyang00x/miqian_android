@@ -8,6 +8,7 @@ public class SaveInfo {
 
     private String jxPayPwdStatus;      //是否设置支付密码 1 已设置 0 未设置
     private String jxId;            //江西银行用户ID
+    private String bindCardStatus;            //绑卡状态 1 已绑卡 0 未绑卡
     private String jxAccountStatus;     //是否开通存管账户 1已开通 0 未开通
     private String jxAutoClaimsTransferStatus;  //是否开通自动债权转让 1已开通 0 未开通
     private String jxAutoSubscribeStatus;       //是否开通自动投标 1已开通 0未开通
@@ -31,6 +32,14 @@ public class SaveInfo {
 
     public void setJxId(String jxId) {
         this.jxId = jxId;
+    }
+
+    public String getBindCardStatus() {
+        return bindCardStatus;
+    }
+
+    public void setBindCardStatus(String bindCardStatus) {
+        this.bindCardStatus = bindCardStatus;
     }
 
     public String getJxAccountStatus() {
