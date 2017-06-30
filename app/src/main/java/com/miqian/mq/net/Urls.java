@@ -187,7 +187,7 @@ public class Urls {
     //home
     public final static String homeInfo = getServer() + "commonService/v3/getHome";
     //records of capital
-    public final static String recordsCapital = getServer() + "userService/getAssetRecord";
+    public final static String recordsCapital = getServer() + "mine/getFundFlow";// userService/getAssetRecord
 
     //我的促销接口
     public final static String getCustPromotion = getServer() + "userService/getCustPromotion";
@@ -253,7 +253,7 @@ public class Urls {
      */
     //提现初始化
     public final static String withdrawinit_jx = getServer() + "trans/withdrawInit/";
-    //提现初始化
+    //提现预处理
     public final static String withdrawPreprocess_jx = getServer() + "trans/withdrawPreprocess/";
 
     /**

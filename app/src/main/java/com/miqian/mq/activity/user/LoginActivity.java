@@ -20,6 +20,7 @@ import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
@@ -28,6 +29,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.ProgressDialogView;
 import com.miqian.mq.views.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +66,16 @@ public class LoginActivity extends Activity {
         }
         ButterKnife.bind(this);
         initView();
+        //增加栈管理器
+        ActivityStack.getActivityStack().pushActivity(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        //友盟统计
+        MobclickAgent.onPageStart("登录");
     }
 
     @Override

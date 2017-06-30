@@ -9,25 +9,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
-import com.miqian.mq.activity.MainActivity;
-import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.save.SaveAcitvity;
 import com.miqian.mq.entity.CaptchaResult;
-import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
@@ -59,6 +58,8 @@ public class RegisterActivity extends Activity {
     Button btnSendCaptcha;
     @BindView(R.id.btn_register)
     Button btnRegister;
+    @BindView(R.id.check_law_register)
+    CheckBox checkboxLaw;
     private Dialog mWaitingDialog;
     private static final int NUM_TYPE_CAPTCHA = 1;
     private static final int NUM_TYPE_TOAST = 3;
@@ -84,6 +85,8 @@ public class RegisterActivity extends Activity {
         }
         ButterKnife.bind(this);
         initView();
+        //增加栈管理器
+        ActivityStack.getActivityStack().pushActivity(this);
     }
 
     private void initView() {
@@ -105,17 +108,35 @@ public class RegisterActivity extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 btnSendCaptcha.setEnabled(false);
-                btnSendCaptcha.setTextColor(ContextCompat.getColor(RegisterActivity.this,R.color.mq_b5_v2));
+                btnSendCaptcha.setTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.mq_b5_v2));
                 String timeInfo = msg.getData().getString("time");
                 btnSendCaptcha.setText(timeInfo + "秒后重新获取");
                 if ("0".equals(timeInfo)) {
                     btnSendCaptcha.setEnabled(true);
-                    btnSendCaptcha.setTextColor(ContextCompat.getColor(RegisterActivity.this,R.color.mq_r1_v2));
+                    btnSendCaptcha.setTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.mq_r1_v2));
                     btnSendCaptcha.setText("获取验证码");
                 }
                 super.handleMessage(msg);
             }
         };
+        checkboxLaw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    btnRegister.setEnabled(true);
+                } else {
+                    btnRegister.setEnabled(false);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        //友盟统计
+        MobclickAgent.onPageStart("注册");
     }
 
     private void register() {
@@ -164,8 +185,8 @@ public class RegisterActivity extends Activity {
                             UserUtil.saveUserInfo(RegisterActivity.this, userInfo);
                             if (Pref.getBoolean(Pref.GESTURESTATE, RegisterActivity.this, true)) {
                                 GestureLockSetActivity.startActivity(RegisterActivity.this, SaveAcitvity.class);
-                            }else {
-                                startActivity(new Intent(RegisterActivity.this,SaveAcitvity.class));
+                            } else {
+                                startActivity(new Intent(RegisterActivity.this, SaveAcitvity.class));
                             }
                             ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
                             finish();
@@ -177,7 +198,7 @@ public class RegisterActivity extends Activity {
                             Uihelper.showToast(RegisterActivity.this, error);
                         }
                     }, phone, captcha, password, "");
-                }else {
+                } else {
                     Uihelper.showToast(RegisterActivity.this, "密码须是数字、字母、字符组合");
                 }
             }
@@ -242,9 +263,10 @@ public class RegisterActivity extends Activity {
 
     @OnClick(R.id.btn_tologin) //已有账号去登录
     public void toLogin() {
-       LoginActivity.start(RegisterActivity.this);
+        LoginActivity.start(RegisterActivity.this);
         finish();
     }
+
     @Override
     public void finish() {
         super.finish();
