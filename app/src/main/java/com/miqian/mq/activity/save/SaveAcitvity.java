@@ -1,7 +1,6 @@
 package com.miqian.mq.activity.save;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
@@ -9,12 +8,11 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.SaveInfo;
 import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -35,15 +33,15 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
     private TextView textLine1;
     private TextView textLine2;
 
-
-
     private SaveInfo saveInfo;
+
+    private int jxState;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_open:
-                startActivity(new Intent(this, SaveBindAcitvity.class));
+                startActivity();
                 break;
             case R.id.bt_product:
                 break;
@@ -83,24 +81,58 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
         btProduct.setOnClickListener(this);
     }
 
-
     private void refreshView() {
+        initState();
         if ("1".equals(saveInfo.getJxAccountStatus())) {
-            Drawable drawable=getResources().getDrawable(R.drawable.save_step1_on);
-            textAccount.setCompoundDrawables(null, drawable, null, null);
+            textAccount.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.save_step1_on, 0, 0);
             textAccount.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
             textLine1.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
         }
         if ("1".equals(saveInfo.getJxPayPwdStatus())) {
-            Drawable drawable=getResources().getDrawable(R.drawable.save_step1_on);
-            textPassword.setCompoundDrawables(null, drawable, null, null);
+            textPassword.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.save_step2_on, 0, 0);
             textPassword.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
             textLine2.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
         }
         if ("1".equals(saveInfo.getJxAutoClaimsTransferStatus()) && "1".equals(saveInfo.getJxAutoSubscribeStatus())) {
-            Drawable drawable=getResources().getDrawable(R.drawable.save_step1_on);
-            textAuto.setCompoundDrawables(null, drawable, null, null);
+            textAuto.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.save_step3_on, 0, 0);
             textAuto.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
+        }
+        refreshButtonView();
+    }
+
+    private void refreshButtonView() {
+        switch (jxState) {
+            case 4:
+                btOpen.setText("已完成存管");
+                break;
+            case 3:
+                btOpen.setText("签署自动投标");
+                break;
+            case 2:
+                btOpen.setText("设置交易密码");
+                break;
+            case 1:
+                btOpen.setText("绑定银行卡");
+                break;
+            case 0:
+                btOpen.setText("激活资金存管账户");
+                break;
+
+        }
+
+    }
+
+    private void initState() {
+        if ("0".equals(saveInfo.getJxAccountStatus())) {
+            jxState = 0;
+        } else if ("0".equals(saveInfo.getBindCardStatus())) {
+            jxState = 1;
+        } else if ("0".equals(saveInfo.getJxPayPwdStatus())) {
+            jxState = 2;
+        } else if ("0".equals(saveInfo.getJxAutoClaimsTransferStatus()) || "0".equals(saveInfo.getJxAutoSubscribeStatus())) {
+            jxState = 3;
+        } else {
+            jxState = 4;
         }
     }
 
@@ -118,4 +150,21 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
     protected String getPageName() {
         return "激活资金存管";
     }
+
+    private void startActivity() {
+        switch (jxState) {
+            case 0:
+            case 1:
+                startActivity(new Intent(this, SaveBindAcitvity.class));
+                break;
+            case 2:
+            case 3:
+                startActivity(new Intent(this, SaveResultAcitvity.class));
+                break;
+            case 4:
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
+                break;
+        }
+    }
+
 }

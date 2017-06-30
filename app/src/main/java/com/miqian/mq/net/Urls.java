@@ -279,6 +279,8 @@ public class Urls {
     //江西银行跳转接口
     public final static String jx_rollin_url = getServer() + "trans/rechargeForJump";
     public final static String jx_password_url = getServer() + "user/setPayPasswordForJump";
+    public final static String jx_auto_claims_url = getServer() + "signProtocol/autoClaimsTransferForJump";
+    public final static String jx_auto_subscribe_url = getServer() + "signProtocol/autoSubscribeForJump";
 
     //江西银行开通存管
     public final static String jx_open = getServer() + "user/openAccount";

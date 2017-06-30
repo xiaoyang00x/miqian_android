@@ -1636,6 +1636,22 @@ public class HttpRequest {
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         WebBankActivity.startActivity(activity, Urls.jx_password_url, params, 1);
     }
+    /**
+     * 江西银行:签署自动债权转让协议
+     */
+    public static void autoClaims(final Activity activity) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        WebBankActivity.startActivity(activity, Urls.jx_auto_claims_url, params, 1);
+    }
+    /**
+     * 江西银行:签署自动认购协议
+     */
+    public static void autoSubscribe(final Activity activity) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        WebBankActivity.startActivity(activity, Urls.jx_auto_subscribe_url, params, 1);
+    }
 
     /**
      * 江西银行开通存管
