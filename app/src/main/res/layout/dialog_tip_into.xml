@@ -25,7 +25,6 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="充值结果确认"
                 android:textColor="@color/mq_b2_v2"
                 android:textSize="@dimen/mq_font8_v2"
                 android:textStyle="bold"/>
@@ -39,7 +38,6 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
             android:gravity="center"
-            android:text="充值结果确认查询已提交\n请关注您的账户余额及资产"
             android:textColor="@color/mq_b1_v2"
             android:textSize="@dimen/mq_font7_v2" />
 

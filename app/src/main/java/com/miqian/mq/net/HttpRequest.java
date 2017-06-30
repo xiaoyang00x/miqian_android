@@ -51,6 +51,8 @@ import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.UserRegularResult;
+import com.miqian.mq.entity.WithDrawInitReSult;
+import com.miqian.mq.entity.WithDrawPrepressResult;
 import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
@@ -1712,7 +1714,7 @@ public class HttpRequest {
     }
 
     /**
-     * 标的相关记录
+     * 我的电子银行账户
      */
     public static void jxCustCardInfo(Context context, final ICallback<BankCardInfoResult> callback) {
         ArrayList params = new ArrayList<>();
@@ -1725,6 +1727,61 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 BankCardInfoResult data = JsonUtil.parseObject(result, BankCardInfoResult.class);
+                if (data.getCode().equals("000000")) {
+                    callback.onSucceed(data);
+                } else {
+                    callback.onFail(data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+    /**
+     * 提现初始化
+     */
+    public static void withDrawInit(Context context, final ICallback<WithDrawInitReSult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        new MyAsyncTask(context, Urls.withdrawinit_jx, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                WithDrawInitReSult data = JsonUtil.parseObject(result, WithDrawInitReSult.class);
+                if (data.getCode().equals("000000")) {
+                    callback.onSucceed(data);
+                } else {
+                    callback.onFail(data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+    /**
+     * 提现预处理
+     */
+    public static void withDrawPreprocess(Context context,String amt, final ICallback<WithDrawPrepressResult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        params.add(new Param("amt", amt));
+        new MyAsyncTask(context, Urls.withdrawPreprocess_jx, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                WithDrawPrepressResult data = JsonUtil.parseObject(result, WithDrawPrepressResult.class);
                 if (data.getCode().equals("000000")) {
                     callback.onSucceed(data);
                 } else {

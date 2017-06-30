@@ -248,7 +248,17 @@ public class Urls {
     //帮助中心
     public final static String web_help = "https://res.shicaidai.com/miaoqian/webView/helpCenter.html";
 
+    /**
+     * 小坛的接口start
+     */
+    //提现初始化
+    public final static String withdrawinit_jx = getServer() + "trans/withdrawInit/";
+    //提现初始化
+    public final static String withdrawPreprocess_jx = getServer() + "trans/withdrawPreprocess/";
 
+    /**
+     * 小坛的接口end
+     */
     //首页运营活动
     public final static String get_home_activity = getServer() + "activityService/getHomeActivity";
     public final static String get_activity_feedback = getServer() + "activityService/getActivityFeedback";

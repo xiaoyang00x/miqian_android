@@ -210,6 +210,30 @@ public class UserUtil {
 
     }
 
+    public static void afterLoginActivity(final Activity context, final Class<?> cls) {
+        if (!UserUtil.hasLogin(context)) {
+
+            LoginActivity.start(context, new LoginListener() {
+                @Override
+                public void loginSuccess() {
+                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
+                        GestureLockSetActivity.startActivity(context, null);
+                    } else if (null != cls) {
+                        context.startActivity(new Intent(context, cls));
+                    }
+                }
+                @Override
+                public void logout() {
+
+                }
+            });
+
+        } else {
+            context.startActivity(new Intent(context, cls));
+        }
+
+    }
+
     //  弹注册框，登录后无跳转页面
     public static void showRegisterDialog(final Activity context) {
         showRegisterDialog(context, null);

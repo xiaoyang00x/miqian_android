@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="1.您的提现金额已达大额提现标准，预计到账时间T+1个"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font3_v2"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="工作日，如急需资金，可拆分多笔提现。"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font3_v2"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="2.点击确定，您申请的提现金额将被冻结15分钟，若未完成"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font3_v2"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="提现操作或提现失败，资金将在15分钟后解冻，并返还至账户"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font3_v2"></TextView>
+
+</LinearLayout>

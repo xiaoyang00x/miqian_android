@@ -20,6 +20,7 @@ import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.save.SaveAcitvity;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.RegisterResult;
@@ -162,7 +163,9 @@ public class RegisterActivity extends Activity {
                             UserInfo userInfo = result.getData();
                             UserUtil.saveUserInfo(RegisterActivity.this, userInfo);
                             if (Pref.getBoolean(Pref.GESTURESTATE, RegisterActivity.this, true)) {
-                                GestureLockSetActivity.startActivity(RegisterActivity.this, null);
+                                GestureLockSetActivity.startActivity(RegisterActivity.this, SaveAcitvity.class);
+                            }else {
+                                startActivity(new Intent(RegisterActivity.this,SaveAcitvity.class));
                             }
                             ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
                             finish();
