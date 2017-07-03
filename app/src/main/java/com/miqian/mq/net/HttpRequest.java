@@ -205,12 +205,12 @@ public class HttpRequest {
     /**
      * 充值
      */
-    public static void rollIn(Context context, final ICallback<OrderRechargeResult> callback, String amt, String bankNo, String captcha) {
+    public static void rollIn(Context context, final ICallback<OrderRechargeResult> callback, String amt, String authCode, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
-        mList.add(new Param("captcha", "captcha"));
+        mList.add(new Param("authCode", authCode));
+        mList.add(new Param("captcha", captcha));
 
         new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
 

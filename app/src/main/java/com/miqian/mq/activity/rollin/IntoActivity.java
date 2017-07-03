@@ -64,7 +64,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private PayOrder payOrder;
 
     private String money;
-    private String bankNumber;
+    private String authCode;
     //    private String realName;
 //    private String idCard;
     private int rollType;//为1时传入充值金额，为0时不传
@@ -178,8 +178,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //            frameRealName.setVisibility(View.GONE);
 //            frameBind.setVisibility(View.GONE);
 //            frameBound.setVisibility(View.VISIBLE);
-        bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
-        bindBankNumber.setText(bankNumber);
+        bindBankNumber.setText( RSAUtils.decryptByPrivate(userInfo.getBankNo()));
         textMobile.setText(userInfo.getMobile());
 //            if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
 //                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
@@ -195,7 +194,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void rollIn() {
-//        HttpRequest.rollinJx(this, "amt", "bankNo", "captcha", "authCode");
         if (rollType == 0) {
             money = editMoney.getText().toString();
             if (TextUtils.isEmpty(money)) {
@@ -251,6 +249,12 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             Uihelper.showToast(this, R.string.tip_captcha);
             return;
         }
+
+        if (TextUtils.isEmpty(authCode)) {
+            Uihelper.showToast(this, "请获取验证码");
+            return;
+        }
+
         begin();
         HttpRequest.rollIn(mActivity, new ICallback<OrderRechargeResult>() {
             @Override
@@ -278,7 +282,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 end();
                 Uihelper.showToast(mActivity, error);
             }
-        }, money, bankNumber, captcha);
+        }, money, authCode, captcha);
     }
 
     @Override
@@ -315,6 +319,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onSucceed(CaptchaResult result) {
                 end();
+                authCode = result.getData().getAuthCode();
                 btnSendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
