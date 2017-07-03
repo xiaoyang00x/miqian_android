@@ -262,38 +262,6 @@ public class HttpRequest {
     }
 
     /**
-     * 充值失败原因上传
-     */
-    public static void rollInError(final Context context, String orderNo, String error) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("orderNo", orderNo));
-        mList.add(new Param("llJson", error));
-        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, IntoActivity.showErrorString(context, "llErrorCodeVersion"))));
-
-        new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                ErrorLianResult errorLianResult = JsonUtil.parseObject(result, ErrorLianResult.class);
-                String errorData = errorLianResult.getData();
-                Map<String, String> userMap = null;
-                if (!TextUtils.isEmpty(errorData)) {
-                    userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
-                    });
-                    if (userMap.size() > 0) {
-                        Pref.saveString(Pref.ERROR_LIAN, errorData, context);
-                        Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
-                    }
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
      * 获取用户信息
      */
     public static void getUserInfo(final Context context, final ICallback<UserInfoResult> callback) {

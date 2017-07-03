@@ -242,6 +242,15 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //            }
 //        }
         String captcha = editCaptcha.getText().toString();
+        if (!TextUtils.isEmpty(captcha)) {
+            if (captcha.length() < 6) {
+                Uihelper.showToast(this, R.string.capthcha_num);
+                return;
+            }
+        } else {
+            Uihelper.showToast(this, R.string.tip_captcha);
+            return;
+        }
         begin();
         HttpRequest.rollIn(mActivity, new ICallback<OrderRechargeResult>() {
             @Override
@@ -282,16 +291,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         mTitle.setTitleText("在线快捷充值");
     }
 
-    private void showBankLimit() {
-        mTitle.setRightText("银行列表");
-        mTitle.setOnRightClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WebActivity.startActivity(mActivity, Urls.web_support_bank);
-            }
-        });
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -302,6 +301,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 sendMessage();
                 break;
             case R.id.text_limit:
+                WebActivity.startActivity(mActivity, Urls.web_support_bank);
                 break;
             default:
                 break;
@@ -357,74 +357,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    public static PayOrder constructPreCardPayOrder(PayOrder payOrder) {
-        payOrder.setAcct_name(RSAUtils.decryptByPrivate(payOrder.getAcct_name()));
-        payOrder.setCard_no(RSAUtils.decryptByPrivate(payOrder.getCard_no()));
-        payOrder.setUser_id(RSAUtils.decryptByPrivate(payOrder.getUser_id()));
-        payOrder.setId_no(RSAUtils.decryptByPrivate(payOrder.getId_no()));
-        return payOrder;
-    }
-
-//    class MyHandler extends Handler {
-//        WeakReference<IntoActivity> weakActivity;
-//
-//        public MyHandler(IntoActivity activity) {
-//            weakActivity = new WeakReference<>(activity);
-//        }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            String strRet = (String) msg.obj;
-//            textErrorLian.setVisibility(View.GONE);
-//            switch (msg.what) {
-//                case Constants.RQF_PAY:
-//                    JSONObject objContent = BaseHelper.string2JSON(strRet);
-//                    String retCode = objContent.optString("ret_code");
-//                    String retMsg = objContent.optString("ret_msg");
-//                    String orderNo = payOrder.getNo_order();
-//                    // //先判断状态码，状态码为 成功或处理中 的需要 验签
-//                    if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
-//                        String resulPay = objContent.optString("result_pay");
-//                        if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
-//                            // 支付成功后续处理
-//                            if (rollType == 1) {
-//                                backSubscribePage(orderNo);
-//                            } else {
-//                                checkOrder(orderNo);
-//                            }
-//                        } else {
-//                            Uihelper.showToast(mActivity, retMsg);
-//                        }
-//                    } else if (Constants.RET_CODE_PROCESS.equals(retCode)) {
-//                        String resulPay = objContent.optString("result_pay");
-//                        if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
-//                            if (rollType == 1) {
-//                                setResult(CurrentInvestment.PROCESSING);
-////                                jumpToResult(CurrentInvestment.PROCESSING, money, orderNo);
-//                            } else {
-//                                checkOrder(orderNo);
-//                            }
-//                        }
-//                    } else if (retCode.equals("1006")) {
-//                        Uihelper.showToast(mActivity, "您已取消当前交易");
-//                    } else {
-//                        rollInError(mActivity, orderNo, strRet);
-//                        textErrorLian.setVisibility(View.VISIBLE);
-//                        String errorString = showErrorString(mActivity, retCode);
-//                        if (TextUtils.isEmpty(errorString)) {
-//                            errorString = retMsg;
-//                        }
-//                        textErrorLian.setText(errorString);
-//                    }
-//                    break;
-//            }
-//            super.handleMessage(msg);
-//        }
-//    }
-
-    public static void rollInError(Context context, String orderNo, String error) {
-        HttpRequest.rollInError(context, orderNo, error);
-    }
 
     public static String showErrorString(Context context, String key) {
         String errorData = Pref.getString(Pref.ERROR_LIAN, context, Constants.ERROR_LIAN_DEFAULT);
