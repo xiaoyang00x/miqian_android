@@ -69,4 +69,5 @@
     <!-- 提现文案-->
     <string name="rollout_tip_enable">您的提现金额已达大额提现标准,非银行\n工作时间，无法进行大额提现，详情见\n温馨提示，如急需资金，可拆分多笔提现</string>
     <string name="rollout_tip_openbank">大额需匹配开户行联行号，请\n先完善银行卡信息。如银行卡信息未完\n善，仅支持普通提现</string>
+    <string name="setting_issave">抱歉，您银行存管尚未开通\n请开通存管后，再进行此操作</string>
 </resources>

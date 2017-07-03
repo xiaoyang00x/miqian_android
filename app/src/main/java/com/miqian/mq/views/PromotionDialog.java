@@ -74,7 +74,7 @@ public class PromotionDialog extends Dialog implements View.OnClickListener {
                     if("3".equals(mData.getJumpNative())) {
                         ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_REGULAR, null);
                     }else if("2".equals(mData.getJumpNative())) {
-                     UserUtil.showRegisterDialog(getOwnerActivity(), MyTicketActivity.class);
+                     UserUtil.afterLoginActivity(getOwnerActivity(), MyTicketActivity.class);
                     }
                 }else {
                     WebActivity.startActivity(getOwnerActivity(), mData.getJumpUrl());

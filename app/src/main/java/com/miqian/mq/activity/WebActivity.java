@@ -38,7 +38,6 @@ import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.ShareUtils;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
-import com.miqian.mq.views.Dialog_Register;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.SwipeWebView;
 import com.miqian.mq.views.WFYTitle;
@@ -231,8 +230,6 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         }
     }
 
-    Dialog_Register dialog_login = null;
-
     @JavascriptInterface
     public void call(String phoneNumber) {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -248,7 +245,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         WebActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                UserUtil.showRegisterDialog(WebActivity.this);
+                UserUtil.toRegisterctivity(WebActivity.this);
             }
         });
     }
@@ -259,7 +256,7 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         WebActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                UserUtil.showLoginDialog(WebActivity.this, null);
+                UserUtil.toLoginActivity(WebActivity.this);
             }
         });
     }
@@ -274,18 +271,18 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     @JavascriptInterface
     public void startIntoActivity() {
         WebActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        UserUtil.showRegisterDialog(WebActivity.this, IntoActivity.class);
-                    }
-                }
+                                           @Override
+                                           public void run() {
+                                               UserUtil.afterLoginActivity(WebActivity.this, IntoActivity.class);
+                                           }
+                                       }
         );
     }
 
     //红包、券列表页面(需要登录)
     @JavascriptInterface
     public void startTicketActivity() {
-        UserUtil.showRegisterDialog(this, MyTicketActivity.class);
+        UserUtil.afterLoginActivity(this, MyTicketActivity.class);
     }
 
     //定期赚详情页面
@@ -323,7 +320,6 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
         ListenerManager.unregisterLoginListener(WebActivity.class.getSimpleName());
         webview.removeAllViews();
         webview.destroy();
-        dialog_login = null;
         super.onDestroy();
     }
 

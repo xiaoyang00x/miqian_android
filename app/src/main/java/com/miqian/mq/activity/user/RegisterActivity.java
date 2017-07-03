@@ -266,7 +266,11 @@ public class RegisterActivity extends Activity {
         LoginActivity.start(RegisterActivity.this);
         finish();
     }
-
+    public static void start(Activity activity) {
+        Intent intent = new Intent(activity, RegisterActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.activity_anim_scenic_in, R.anim.activity_anim_scenic_no);
+    }
     @Override
     public void finish() {
         super.finish();

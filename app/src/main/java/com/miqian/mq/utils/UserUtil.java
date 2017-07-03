@@ -9,14 +9,13 @@ import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.activity.user.LoginActivity;
+import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.HomeAdsListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.receiver.JpushHelper;
-import com.miqian.mq.views.DialogPay;
-import com.miqian.mq.views.Dialog_Register;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
@@ -39,12 +38,11 @@ public class UserUtil {
     }
 
     /**
-     *
      * @param context
-     * @param userInfo  通过用户信息判断是否完成
-     * @param isFinish  直接判断是否完成
+     * @param userInfo 通过用户信息判断是否完成
+     * @param isFinish 直接判断是否完成
      */
-    public static void saveJxSave(Context context,  UserInfo userInfo, boolean isFinish) {
+    public static void saveJxSave(Context context, UserInfo userInfo, boolean isFinish) {
         if ("1".equals(userInfo.getJxAccountStatus()) && "1".equals(userInfo.getJxPayPwdStatus()) && "1".equals(userInfo.getJxAutoClaimsTransferStatus()) && "1".equals(userInfo.getJxAutoSubscribeStatus())) {
             Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
         }
@@ -169,68 +167,15 @@ public class UserUtil {
         logout();
     }
 
-    //  支付时判断是否登录、实名认证
-    public static void loginPay(final Activity context, DialogPay dialogPay) {
+    public static void toLoginActivity(final Activity context) {
         if (!UserUtil.hasLogin(context)) {
-            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.CHANGE_TOKEN, null);
-        } else {
-            dialogPay.show();
+            LoginActivity.start(context);
         }
     }
-
-    // 是否登录，未登录弹注册窗口
-    public static void registerPay(final Activity context, final DialogPay dialogPay) {
+    public static void toRegisterctivity(final Activity context) {
         if (!UserUtil.hasLogin(context)) {
-//            Dialog_Register dialog_register = new Dialog_Register(context) {
-//                @Override
-//                public void toLogin() {
-//                    dismiss();
-////                    showLoginDialog(context,null);
-//                    LoginActivity.enterAcitivty(context);
-//                }
-//
-//                @Override
-//                public void registerSuccess() {
-//                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-//                        GestureLockSetActivity.startActivity(context, null);
-//                    }
-//                    dismiss();
-//                    dialogPay.show();
-//
-//                }
-//            };
-//            dialog_register.show();
-//            LoginActivity.enterAcitivty(context);
-        } else {
-            dialogPay.show();
+            RegisterActivity.start(context);
         }
-    }
-
-    public static void showRegisterDialog(final Activity context, final Class<?> cls) {
-        if (!UserUtil.hasLogin(context)) {
-            Dialog_Register dialog_register = new Dialog_Register(context) {
-
-                @Override
-                public void toLogin() {
-                    dismiss();
-                    UserUtil.showLoginDialog(context, cls);
-                }
-
-                @Override
-                public void registerSuccess() {
-                    if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-                        GestureLockSetActivity.startActivity(context, null);
-                    } else if (null != cls) {
-                        getOwnerActivity().startActivity(new Intent(context, cls));
-                    }
-                    dismiss();
-                }
-            };
-            dialog_register.show();
-        } else {
-            context.startActivity(new Intent(context, cls));
-        }
-
     }
 
     public static void afterLoginActivity(final Activity context, final Class<?> cls) {
@@ -245,6 +190,7 @@ public class UserUtil {
                         context.startActivity(new Intent(context, cls));
                     }
                 }
+
                 @Override
                 public void logout() {
 
@@ -255,32 +201,6 @@ public class UserUtil {
             context.startActivity(new Intent(context, cls));
         }
 
-    }
-
-    //  弹注册框，登录后无跳转页面
-    public static void showRegisterDialog(final Activity context) {
-        showRegisterDialog(context, null);
-    }
-
-
-    //  弹登录框
-    public static void showLoginDialog(final Activity context, final Class<?> cls) {
-//        Dialog_Login dialog_login = new Dialog_Login(context) {
-//            @Override
-//            public void loginSuccess() {
-//                if (Pref.getBoolean(Pref.GESTURESTATE, context, true)) {
-//                    GestureLockSetActivity.startActivity(context, null);
-//                } else if (null != cls) {
-//                    context.startActivity(new Intent(context, cls));
-//                }
-//                dismiss();
-//            }
-//            @Override
-//            public void toRegister() {
-//                showRegisterDialog(context,cls);
-//            }
-//        };
-//        dialog_login.show();
     }
 
     /**

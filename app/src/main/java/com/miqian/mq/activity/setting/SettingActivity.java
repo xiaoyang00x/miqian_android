@@ -35,6 +35,7 @@ import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.DialogTipSave;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -59,6 +60,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView tvName;
     private View frameName;
     private ImageView ivSwitch;
+    private DialogTipSave dialogTip;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -174,7 +176,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             //电子账户
             case R.id.frame_digitalcard:
-                startActivity(new Intent(this, UserDigitalCardActivity.class));
+                if (UserUtil.isFinishSave(mActivity)) {
+                    startActivity(new Intent(this, UserDigitalCardActivity.class));
+                } else {
+                    showDialog();
+                }
                 break;
             case R.id.password_login://修改登录密码
                 MobclickAgent.onEvent(mActivity, "1027");
@@ -182,14 +188,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.password_transaction://修改交易密码
-                if ("0".equals(userInfo.getJxPayPwdStatus())) {//未设置
-//                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-//                    intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-//                    startActivity(intent);
-                } else {
-                    MobclickAgent.onEvent(mActivity, "1028");
+
+                if (UserUtil.isFinishSave(mActivity)) {
                     MobclickAgent.onEvent(mActivity, "1027");
                     SendCaptchaActivity.enterActivity(mActivity, TypeUtil.CAPTCHA_TRADE_PW);
+                } else {
+                    showDialog();
                 }
                 break;
             case R.id.iv_switch://手势密码
@@ -250,6 +254,20 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
         }
+    }
+
+    private void showDialog() {
+        if (dialogTip == null) {
+            dialogTip = new DialogTipSave(mActivity, "提示", getResources().getText(R.string.setting_issave).toString()) {
+
+                @Override
+                public void positionBtnClick() {
+                    dismiss();
+
+                }
+            };
+        }
+        dialogTip.show();
     }
 
     // 手势密码是否开启
