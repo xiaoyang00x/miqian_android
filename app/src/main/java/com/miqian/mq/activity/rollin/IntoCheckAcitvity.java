@@ -62,7 +62,7 @@ public class IntoCheckAcitvity extends BaseActivity implements View.OnClickListe
 
     private void showDialog() {
         if (dialogTipInto == null) {
-            dialogTipInto = new DialogTipSave(this,"充值结果确认","充值结果确认查询已提交\\n请关注您的账户余额及资产") {
+            dialogTipInto = new DialogTipSave(this,"充值结果确认","充值结果确认查询已提交\n请关注您的账户余额及资产") {
                 @Override
                 public void positionBtnClick() {
                     ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);

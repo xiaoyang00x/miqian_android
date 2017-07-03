@@ -244,8 +244,8 @@ public class Urls {
     public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
 
 
-    //连连支付支持绑定的银行界面
-    public final static String web_support_bank = getServer() + "webView/querySupportBankLianLian";
+    //银行限额说明
+    public final static String web_support_bank = getWebServer() + "Client/limitDescription.html";
 
     //活期详情
     public final static String web_current = getServer() + "webView/currentDetail";
