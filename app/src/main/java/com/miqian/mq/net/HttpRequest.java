@@ -1341,13 +1341,19 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    //我的促销接口，包括红包，拾财券等
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String state, String pageNum, String pageSize) {
+    /**
+     *  我的促销接口，包括红包，拾财券等
+     * @param context
+     * @param callback
+     * @param status    0 可使用 1 使用完  2 已过期
+     * @param pageNo    页码（默认1）
+     * @param pageSize  每页条数（默认20）
+     */
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String status, String pageNo, String pageSize) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("promTypCd", ""));
-        mList.add(new Param("sta", state));
-        mList.add(new Param("pageNum", pageNum));
+        mList.add(new Param("status", status));
+        mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
         new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {
 

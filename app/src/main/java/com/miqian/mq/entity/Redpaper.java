@@ -7,31 +7,31 @@ import java.util.List;
  */
 public class Redpaper {
 
-    private Page page;
-    private List<Promote> custPromotion;
-    private String expireState;
+    private Page pageInfo;
+    private List<Promote> promList;
+    private CountInfo countInfo;
 
-    public Page getPage() {
-        return page;
+    public Page getPageInfo() {
+        return pageInfo;
     }
 
-    public void setPage(Page page) {
-        this.page = page;
+    public void setPageInfo(Page pageInfo) {
+        this.pageInfo = pageInfo;
     }
 
-    public List<Promote> getCustPromotion() {
-        return custPromotion;
+    public List<Promote> getPromList() {
+        return promList;
     }
 
-    public void setCustPromotion(List<Promote> custPromotion) {
-        this.custPromotion = custPromotion;
+    public void setPromList(List<Promote> promList) {
+        this.promList = promList;
     }
 
-    public String getExpireState() {
-        return expireState;
+    public CountInfo getCountInfo() {
+        return countInfo;
     }
 
-    public void setExpireState(String expireState) {
-        this.expireState = expireState;
+    public void setCountInfo(CountInfo countInfo) {
+        this.countInfo = countInfo;
     }
 }

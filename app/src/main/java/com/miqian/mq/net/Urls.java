@@ -190,7 +190,7 @@ public class Urls {
     public final static String recordsCapital = getServer() + "mine/getFundFlow";// userService/getAssetRecord
 
     //我的促销接口
-    public final static String getCustPromotion = getServer() + "userService/getCustPromotion";
+    public final static String getCustPromotion = getServer() + "promotion/getCustPromotion";//"userService/getCustPromotion";
     //赎回
     public final static String redeem = getServer() + "assetService/redeem";
     //我的活期资金记录
