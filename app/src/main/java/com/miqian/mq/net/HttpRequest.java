@@ -8,7 +8,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.activity.WebBankActivity;
 import com.miqian.mq.activity.rollin.IntoActivity;
-import com.miqian.mq.activity.save.SaveBindAcitvity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -20,6 +19,7 @@ import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.ConfigResult;
 import com.miqian.mq.entity.CurrentInfoResult;
 import com.miqian.mq.entity.CurrentRecordResult;
+import com.miqian.mq.entity.CustBindBankBranch;
 import com.miqian.mq.entity.ErrorLianResult;
 import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.entity.GetRegularResult;
@@ -344,6 +344,7 @@ public class HttpRequest {
     }
 
     //检验验证码
+
     /**
      * @param operationType //    13001——注册
      *                      //    13002——找回登录密码
@@ -749,23 +750,18 @@ public class HttpRequest {
     }
 
     //绑定银行卡
-    public static void bindBank(Context context, final ICallback<Meta> callback, String bankNo,
-                                String tradeType, String bankCode, String bankName, String branchName, String prov,
-                                String city) {
+    public static void bindBank(Context context, final ICallback<CustBindBankBranch> callback, String bankUnionNumber) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
-        mList.add(new Param("tradeType", tradeType));
-        mList.add(new Param("bankCode", bankCode));
-        mList.add(new Param("bankName", bankName));
-        mList.add(new Param("branchName", branchName));
-        mList.add(new Param("prov", prov));
-        mList.add(new Param("city", city));
+        mList.add(new Param("bankUnionNumber", bankUnionNumber));
+        mList.add(new Param("branchName", ""));
+        mList.add(new Param("prov", ""));
+        mList.add(new Param("city", ""));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         new MyAsyncTask(context, Urls.bindBank, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                CustBindBankBranch meta = JsonUtil.parseObject(result, CustBindBankBranch.class);
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -929,11 +925,11 @@ public class HttpRequest {
 
     //获取支行接口
     public static void getSubBranch(Context context, final ICallback<BankBranchResult> callback,
-                                    String provinceName, String city, String bankCode) {
+                                    String province, String city, String bankName) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("provinceName", provinceName));
+        mList.add(new Param("province", province));
         mList.add(new Param("city", city));
-        mList.add(new Param("bankCode", bankCode));
+        mList.add(new Param("bankName", bankName));
         new MyAsyncTask(context, Urls.getSubBranch, mList, new ICallback<String>() {
 
             @Override
@@ -1069,6 +1065,7 @@ public class HttpRequest {
 
     /**
      * 获取资金记录
+     * @param operateType 10 充值 20 认购 30 到期 40 赎回 50 提现
      */
     public static void getCapitalRecords(Context context, final ICallback<CapitalRecordResult> callback, String pageNo, String pageSize, String operateType) {
         List<Param> mList = new ArrayList<>();
@@ -1613,6 +1610,7 @@ public class HttpRequest {
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         WebBankActivity.startActivity(activity, Urls.jx_password_url, params, 1);
     }
+
     /**
      * 江西银行:签署自动债权转让协议
      */
@@ -1621,6 +1619,7 @@ public class HttpRequest {
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         WebBankActivity.startActivity(activity, Urls.jx_auto_claims_url, params, 1);
     }
+
     /**
      * 江西银行:签署自动认购协议
      */
@@ -1628,6 +1627,17 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         WebBankActivity.startActivity(activity, Urls.jx_auto_subscribe_url, params, 1);
+    }
+
+    /**
+     * 江西银行:存管-提现跳转
+     */
+    public static void autoWithdraw(final Activity activity) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        params.add(new Param("cType", "android"));
+        params.add(new Param("amt", "amt"));
+        WebBankActivity.startActivity(activity, Urls.jx_auto_withdraw_url, params, 1);
     }
 
     /**
@@ -1662,6 +1672,7 @@ public class HttpRequest {
             }
         }).executeOnExecutor();
     }
+
     /**
      * 获取开通存管状态
      */
@@ -1715,6 +1726,7 @@ public class HttpRequest {
             }
         }).executeOnExecutor();
     }
+
     /**
      * 提现初始化
      */
@@ -1742,10 +1754,11 @@ public class HttpRequest {
             }
         }).executeOnExecutor();
     }
+
     /**
      * 提现预处理
      */
-    public static void withDrawPreprocess(Context context,String amt, final ICallback<WithDrawPrepressResult> callback) {
+    public static void withDrawPreprocess(Context context, String amt, final ICallback<WithDrawPrepressResult> callback) {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
         if (!TextUtils.isEmpty(custId)) {

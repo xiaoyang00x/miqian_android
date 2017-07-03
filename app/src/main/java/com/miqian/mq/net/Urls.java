@@ -154,11 +154,11 @@ public class Urls {
     //自动识别银行卡
     public final static String autoIdentifyBankCard = getServer() + "assetService/autoIdentifyBankCard";
     //绑定银行卡
-    public final static String bindBank = getServer() + "commonService/bindBank";
+    public final static String bindBank = getServer() + "bank/custBindBankBranch";//  commonService/bindBank
     //获取城市接口
-    public final static String getAllCity = getServer() + "commonService/getAllCity";
+    public final static String getAllCity = getServer() + "areaData/getCityByProv";// commonService/getAllCity
     //获取支行
-    public final static String getSubBranch = getServer() + "commonService/getSubBranch";
+    public final static String getSubBranch = getServer() + "bank/getBranch";//commonService/getSubBranch
     //登出
     public final static String loginOut = getServer() + "user/logout";//userService/logout
     //提现
@@ -256,9 +256,9 @@ public class Urls {
      * 小坛的接口start
      */
     //提现初始化
-    public final static String withdrawinit_jx = getServer() + "trans/withdrawInit/";
+    public final static String withdrawinit_jx = getServer() + "trans/withdrawInit";
     //提现预处理
-    public final static String withdrawPreprocess_jx = getServer() + "trans/withdrawPreprocess/";
+    public final static String withdrawPreprocess_jx = getServer() + "trans/withdrawPreprocess";
 
     /**
      * 小坛的接口end
@@ -295,6 +295,7 @@ public class Urls {
     public final static String jx_password_url = getServer() + "user/setPayPasswordForJump";
     public final static String jx_auto_claims_url = getServer() + "signProtocol/autoClaimsTransferForJump";
     public final static String jx_auto_subscribe_url = getServer() + "signProtocol/autoSubscribeForJump";
+    public final static String jx_auto_withdraw_url = getServer() + "trans/withdrawForJum";//提现
 
     //江西银行开通存管
     public final static String jx_open = getServer() + "user/openAccount";
