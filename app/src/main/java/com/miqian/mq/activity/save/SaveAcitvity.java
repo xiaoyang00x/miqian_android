@@ -44,6 +44,7 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
                 startActivity();
                 break;
             case R.id.bt_product:
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_REGULAR, null);
                 break;
         }
     }
@@ -117,9 +118,13 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
             case 0:
                 btOpen.setText("激活资金存管账户");
                 break;
-
         }
+    }
 
+    @Override
+    protected void onResume() {
+        obtainData();
+        super.onResume();
     }
 
     private void initState() {

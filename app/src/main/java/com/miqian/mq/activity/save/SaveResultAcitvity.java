@@ -14,6 +14,7 @@ import com.miqian.mq.entity.SaveInfo;
 import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
@@ -59,6 +60,7 @@ public class SaveResultAcitvity extends BaseActivity implements View.OnClickList
                 ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_REGULAR, null);
                 break;
             case R.id.bt_rollin:
+                ActivityStack.getActivityStack().clearActivity();
                 startActivity(new Intent(this, IntoActivity.class));
                 break;
         }

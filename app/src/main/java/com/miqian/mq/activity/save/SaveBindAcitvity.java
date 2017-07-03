@@ -8,15 +8,21 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.SaveInfo;
 import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
@@ -29,7 +35,7 @@ import com.miqian.mq.views.WFYTitle;
  * 绑定银行卡
  */
 
-public class SaveBindAcitvity extends BaseActivity implements View.OnClickListener {
+public class SaveBindAcitvity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private EditText editName;
     private EditText editIdcard;
@@ -39,6 +45,12 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
     private Button btCaptcha;
     private Button btSubmit;
 
+    private TextView textTip;
+
+    private CheckBox checkLaw;
+    private Button btLaw;
+    private Button btLaw2;
+
     private String authCode;
     private String mobile;
 
@@ -46,6 +58,8 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
     private Thread thread;
     public static boolean isTimer;// 是否可以计时
     private static Handler handler;
+
+    private SaveInfo saveInfo;
 
     @Override
     public void onClick(View v) {
@@ -55,6 +69,12 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.bt_submit:
                 open();
+                break;
+            case R.id.bt_law:
+                WebActivity.startActivity(this, Urls.web_authority_law);
+                break;
+            case R.id.bt_law2:
+                WebActivity.startActivity(this, Urls.web_otth_law);
                 break;
         }
     }
@@ -66,32 +86,33 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSucceed(SaveInfoResult result) {
                 end();
+                saveInfo = result.getData();
+                refreshView();
             }
 
             @Override
             public void onFail(String error) {
                 end();
+                Uihelper.showToast(SaveBindAcitvity.this, error);
             }
         });
     }
 
+    private void refreshView() {
+        textTip.setText(saveInfo.getWarmthTips());
+        if (null != saveInfo.getUserName() && null != saveInfo.getCustId()) {
+            editName.setText(saveInfo.getUserName());
+            editIdcard.setText(saveInfo.getIdCard());
+            editName.setEnabled(false);
+            editIdcard.setEnabled(false);
+        }
+    }
+
     private boolean isMobile() {
-
         mobile = editMobile.getText().toString();
-
         if (!TextUtils.isEmpty(mobile)) {
             if (MobileOS.isMobileNO(mobile) && mobile.length() == 11) {
                 return true;
-//                if (!TextUtils.isEmpty(captcha)) {
-//                    if (captcha.length() < 6) {
-//                        Uihelper.showToast(this, R.string.capthcha_num);
-//                    } else {
-//                        summit(captcha, password);
-//                    }
-//
-//                } else {
-//                    Uihelper.showToast(this, R.string.tip_captcha);
-//                }
             } else {
                 Uihelper.showToast(this, R.string.phone_noeffect);
             }
@@ -106,16 +127,14 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
         String userName = editName.getText().toString();
         String idCard = editIdcard.getText().toString();
         String bankCardNo = editBank.getText().toString();
-//        String mobile = editMobile.getText().toString();
         String captcha = editCaptcha.getText().toString();
 
-//        if ("0".equals(relaNameStatus)) {
         if (TextUtils.isEmpty(userName)) {
             Uihelper.showToast(mActivity, "姓名不能为空");
             return;
         }
         if (userName.length() < 2) {
-            Uihelper.showToast(mActivity, "字数不满足2-4个字");
+            Uihelper.showToast(mActivity, "请输入正确的姓名");
             return;
         }
         if (TextUtils.isEmpty(idCard)) {
@@ -135,7 +154,21 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
         if (!isMobile()) {
             return;
         }
-//        }
+
+        if (!TextUtils.isEmpty(captcha)) {
+            if (captcha.length() < 6) {
+                Uihelper.showToast(this, R.string.capthcha_num);
+                return;
+            }
+        } else {
+            Uihelper.showToast(this, R.string.tip_captcha);
+            return;
+        }
+
+        if (TextUtils.isEmpty(authCode)) {
+            Uihelper.showToast(this, "请获取验证码");
+            return;
+        }
 
         begin();
         HttpRequest.openJx(this, new ICallback<Meta>() {
@@ -143,6 +176,7 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
             public void onSucceed(Meta result) {
                 end();
                 startActivity(new Intent(SaveBindAcitvity.this, SaveResultAcitvity.class));
+                SaveBindAcitvity.this.finish();
             }
 
             @Override
@@ -180,6 +214,15 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
 
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        if (isChecked) {
+            btSubmit.setEnabled(true);
+        } else {
+            btSubmit.setEnabled(false);
+        }
+    }
+
     public class MyRunnable implements Runnable {
 
         @Override
@@ -206,6 +249,13 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
+        checkLaw = (CheckBox) findViewById(R.id.check_law);
+        checkLaw.setOnCheckedChangeListener(this);
+        btLaw = (Button) findViewById(R.id.bt_law);
+        btLaw2 = (Button) findViewById(R.id.bt_law2);
+        btLaw.setOnClickListener(this);
+        btLaw2.setOnClickListener(this);
+        textTip = (TextView) findViewById(R.id.text_tip);
         editName = (EditText) findViewById(R.id.edit_name);
         editIdcard = (EditText) findViewById(R.id.edit_idcard);
         editBank = (EditText) findViewById(R.id.edit_bank);
