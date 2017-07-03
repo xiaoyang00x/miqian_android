@@ -32,43 +32,27 @@ public class Promote {
     /**
      * 促销产品类别的ID(核心cs_prom_prod_c表的ID)
      */
-    private String promProdId;
+    private String couponsId;
     /**
      * 促销产品类别的名称
      */
     private String promProdName;
     /**
-     * 客户促销余额的ID(核心cs_cust_prom_sa_b表的ID)
-     */
-    private String id;
-    /**
      * 促销类型：SC:拾财券 HB:红包 JF:积分 LP:礼品卡 TY:体验金 JX:加息券 FXQ:分享券 DK:抵扣券  SK:双倍收益卡
      */
     private String type;
-    /**
-     * 转化比率
-     */
-    private String transformRate;
     /**
      * 总额(单位不一定是RMB，有可能是积分什么的，协同转化比率才能算出RMB)
      */
     private BigDecimal totalAmt;
     /**
-     * 已用额度
-     */
-    private BigDecimal usedAmt;
-    /**
      * 可用余额
      */
-    private BigDecimal canUseAmt;
+    private BigDecimal useableAmt;
     /**
      * 抵用比率
      */
     private String toUseRate;
-    /**
-     * 加息券浮动利率
-     */
-    private String giveYrt;
     /**
      * 加息券额外收益
      */
@@ -86,14 +70,6 @@ public class Promote {
      */
     private BigDecimal willUseAmt;
     /**
-     * 促销使用的限制范围信息
-     */
-    private String limitMsg;
-    /**
-     * 适用最小金额信息
-     */
-    private String minBuyAmtMsg;
-    /**
      * 促销状态
      **/
     private String status;
@@ -101,7 +77,6 @@ public class Promote {
     private String minBuyAmtOrPerc;
     private String fitBdTermOrYrt;
     private String fitProdOrBdType;
-    private String shareUrl;
     /**
      * 是否跳转状态:到h5
      */
@@ -111,12 +86,12 @@ public class Promote {
      **/
     private String promUrl;
 
-    public String getPromProdId() {
-        return promProdId;
+    public String getCouponsId() {
+        return couponsId;
     }
 
-    public void setPromProdId(String promProdId) {
-        this.promProdId = promProdId;
+    public void setCouponsId(String couponsId) {
+        this.couponsId = couponsId;
     }
 
     public String getPromProdName() {
@@ -127,28 +102,12 @@ public class Promote {
         this.promProdName = promProdName;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getTransformRate() {
-        return transformRate;
-    }
-
-    public void setTransformRate(String transformRate) {
-        this.transformRate = transformRate;
     }
 
     public BigDecimal getTotalAmt() {
@@ -159,20 +118,12 @@ public class Promote {
         this.totalAmt = totalAmt;
     }
 
-    public BigDecimal getUsedAmt() {
-        return usedAmt;
+    public BigDecimal getUseableAmt() {
+        return useableAmt;
     }
 
-    public void setUsedAmt(BigDecimal usedAmt) {
-        this.usedAmt = usedAmt;
-    }
-
-    public BigDecimal getCanUseAmt() {
-        return canUseAmt;
-    }
-
-    public void setCanUseAmt(BigDecimal canUseAmt) {
-        this.canUseAmt = canUseAmt;
+    public void setUseableAmt(BigDecimal useableAmt) {
+        this.useableAmt = useableAmt;
     }
 
     public String getToUseRate() {
@@ -181,14 +132,6 @@ public class Promote {
 
     public void setToUseRate(String toUseRate) {
         this.toUseRate = toUseRate;
-    }
-
-    public String getGiveYrt() {
-        return giveYrt;
-    }
-
-    public void setGiveYrt(String giveYrt) {
-        this.giveYrt = giveYrt;
     }
 
     public BigDecimal getExtraIncome() {
@@ -223,22 +166,6 @@ public class Promote {
         this.willUseAmt = willUseAmt;
     }
 
-    public String getLimitMsg() {
-        return limitMsg;
-    }
-
-    public void setLimitMsg(String limitMsg) {
-        this.limitMsg = limitMsg;
-    }
-
-    public String getMinBuyAmtMsg() {
-        return minBuyAmtMsg;
-    }
-
-    public void setMinBuyAmtMsg(String minBuyAmtMsg) {
-        this.minBuyAmtMsg = minBuyAmtMsg;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -269,14 +196,6 @@ public class Promote {
 
     public void setFitProdOrBdType(String fitProdOrBdType) {
         this.fitProdOrBdType = fitProdOrBdType;
-    }
-
-    public String getShareUrl() {
-        return shareUrl;
-    }
-
-    public void setShareUrl(String shareUrl) {
-        this.shareUrl = shareUrl;
     }
 
     public String getPromUrl() {

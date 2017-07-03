@@ -21,6 +21,7 @@ import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.rollin.IntoModeAcitvity;
+import com.miqian.mq.activity.save.SaveAcitvity;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
@@ -344,8 +345,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (userInfo == null) {
             return;
         }
-        MobclickAgent.onEvent(getActivity(), "1017");
-        startActivity(new Intent(getActivity(), IntoModeAcitvity.class));
+        if (UserUtil.isFinishSave(getActivity())) {
+            MobclickAgent.onEvent(getActivity(), "1017");
+            startActivity(new Intent(getActivity(), IntoModeAcitvity.class));
+        } else {
+            startActivity(new Intent(getActivity(), SaveAcitvity.class));
+        }
     }
 
     @OnClick(R.id.bt_rollout)

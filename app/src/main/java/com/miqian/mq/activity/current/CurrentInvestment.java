@@ -207,7 +207,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textPromoteUnit.setText("元");
             } else if (Promote.TYPE.JX.getValue().equals(promoteType)) {
                 Promote promote = promList.get(position);
-                textPromoteType.setText(promote.getGiveYrt() + "%加息卡");
+                textPromoteType.setText(promote.getUseableAmt() + "%加息卡");
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
                 textPromote.setText("收益增加");
                 textPromoteMoney.setText("" + increaseMoney);

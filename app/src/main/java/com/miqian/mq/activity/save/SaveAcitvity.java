@@ -14,6 +14,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -104,6 +105,7 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
     private void refreshButtonView() {
         switch (jxState) {
             case 4:
+                UserUtil.saveJxSave(SaveAcitvity.this, null, true);
                 btOpen.setText("已完成存管");
                 break;
             case 3:
