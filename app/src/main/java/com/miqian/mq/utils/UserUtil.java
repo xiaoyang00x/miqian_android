@@ -30,6 +30,29 @@ public class UserUtil {
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userId), context);
     }
 
+    public static boolean isFinishSave(Context context) {
+        int flag = Pref.getInt(getPrefKey(context, Pref.IS_SAVE_FINISH), context, 0);
+        if (flag == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param context
+     * @param userInfo  通过用户信息判断是否完成
+     * @param isFinish  直接判断是否完成
+     */
+    public static void saveJxSave(Context context,  UserInfo userInfo, boolean isFinish) {
+        if ("1".equals(userInfo.getJxAccountStatus()) && "1".equals(userInfo.getJxPayPwdStatus()) && "1".equals(userInfo.getJxAutoClaimsTransferStatus()) && "1".equals(userInfo.getJxAutoSubscribeStatus())) {
+            Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
+        }
+        if (null == userInfo && isFinish) {
+            Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
+        }
+    }
+
     public static void saveUserInfo(Context context, UserInfo userInfo) {
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);

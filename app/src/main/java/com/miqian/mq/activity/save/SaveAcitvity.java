@@ -14,6 +14,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -44,6 +45,7 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
                 startActivity();
                 break;
             case R.id.bt_product:
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_REGULAR, null);
                 break;
         }
     }
@@ -103,6 +105,7 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
     private void refreshButtonView() {
         switch (jxState) {
             case 4:
+                UserUtil.saveJxSave(SaveAcitvity.this, null, true);
                 btOpen.setText("已完成存管");
                 break;
             case 3:
@@ -117,9 +120,13 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
             case 0:
                 btOpen.setText("激活资金存管账户");
                 break;
-
         }
+    }
 
+    @Override
+    protected void onResume() {
+        obtainData();
+        super.onResume();
     }
 
     private void initState() {

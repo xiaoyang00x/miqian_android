@@ -292,10 +292,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    public void textLawCick(View v) {
-        WebActivity.startActivity(mActivity, Urls.web_recharge_law);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

@@ -14,8 +14,10 @@ import com.miqian.mq.entity.SaveInfo;
 import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -59,6 +61,7 @@ public class SaveResultAcitvity extends BaseActivity implements View.OnClickList
                 ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_REGULAR, null);
                 break;
             case R.id.bt_rollin:
+                ActivityStack.getActivityStack().clearActivity();
                 startActivity(new Intent(this, IntoActivity.class));
                 break;
         }
@@ -118,19 +121,10 @@ public class SaveResultAcitvity extends BaseActivity implements View.OnClickList
                 textState2.setText("已签署");
                 textState2.setBackgroundResource(R.drawable.save_auto_agreement_selector);
                 textState2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.save_tick, 0, 0, 0);
+                UserUtil.saveJxSave(SaveResultAcitvity.this, null, true);
             }
         }
     }
-
-//    private void initState() {
-//        if ("0".equals(saveInfo.getJxPayPwdStatus())) {
-//            jxState = 2;
-//        } else if ("0".equals(saveInfo.getJxAutoClaimsTransferStatus()) || "0".equals(saveInfo.getJxAutoSubscribeStatus())) {
-//            jxState = 3;
-//        } else {
-//            jxState = 4;
-//        }
-//    }
 
     @Override
     public void initView() {
@@ -189,8 +183,6 @@ public class SaveResultAcitvity extends BaseActivity implements View.OnClickList
         if (requestCode == 1) {
             if (resultCode == 1) {
                 obtainData();
-            } else if (resultCode == 1) {
-
             }
         } else if (requestCode == 2) {
 
