@@ -141,6 +141,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.user.UserRecordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.user.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
@@ -432,10 +437,6 @@
             android:value="@string/jpush_appkey" />
 
         <!--  </>值来自开发者平台取得的AppKey-->
-        <activity
-            android:name=".activity.CapitalRecordActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.user.UserRegularActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

@@ -7,22 +7,23 @@ import java.util.List;
  */
 public class CapitalRecord {
 
-    private Page page;
-    private List<CapitalItem> assetRecord;
+    private Page pageInfo;
 
-    public Page getPage() {
-        return page;
+    public Page getPageInfo() {
+        return pageInfo;
     }
 
-    public void setPage(Page page) {
-        this.page = page;
+    public void setPageInfo(Page pageInfo) {
+        this.pageInfo = pageInfo;
     }
 
-    public List<CapitalItem> getAssetRecord() {
-        return assetRecord;
+    private List<CapitalItem> list;
+
+    public List<CapitalItem> getList() {
+        return list;
     }
 
-    public void setAssetRecord(List<CapitalItem> assetRecord) {
-        this.assetRecord = assetRecord;
+    public void setList(List<CapitalItem> list) {
+        this.list = list;
     }
 }

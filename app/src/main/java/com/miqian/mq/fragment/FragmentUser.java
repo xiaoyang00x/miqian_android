@@ -15,15 +15,14 @@ import android.widget.TextView;
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.AnnounceActivity;
-import com.miqian.mq.activity.CapitalRecordActivity;
 import com.miqian.mq.activity.MainActivity;
-import com.miqian.mq.activity.QQprojectRegister;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
 import com.miqian.mq.activity.rollin.IntoModeAcitvity;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
+import com.miqian.mq.activity.user.UserRecordActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
 import com.miqian.mq.entity.UserInfo;
@@ -264,7 +263,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     @Override
     public void onDestroy() {
         extendOperationController.unRegisterExtendOperationListener(this);
-        QQprojectRegister.isTimer = false;
         super.onDestroy();
     }
 
@@ -410,7 +408,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             //资金记录
             case R.id.frame_record:
                 MobclickAgent.onEvent(getActivity(), "1021");
-                startActivity(new Intent(getActivity(), CapitalRecordActivity.class));
+                startActivity(new Intent(getActivity(), UserRecordActivity.class));
                 break;
             //优惠券
             case R.id.frame_ticket:

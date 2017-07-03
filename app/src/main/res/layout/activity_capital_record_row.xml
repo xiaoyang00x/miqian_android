@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="--"
+                    android:text="-ddd-"
                     android:textColor="@color/mq_b1"
                     android:textSize="@dimen/mq_font3" />
 
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:text="--"
+                    android:text="-ddd-"
                     android:textColor="@color/mq_b2"
                     android:textSize="@dimen/mq_font5" />
             </LinearLayout>

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.CapitalItem;
+import com.miqian.mq.utils.Uihelper;
 
 import java.util.List;
 
@@ -56,10 +57,9 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
             if (list.get(position) != null) {
                 CapitalItem item = list.get(position);
                 ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
-                ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getPeerCustLoginNm());
-                ((ItemVH) vh).tvTraOpNm.setText(item.getTraOpNm());
-                ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm());
-                ((ItemVH) vh).tvTime.setText(item.getTraDt() + " " + item.getTraTm() + "(" + item.getRem() + ")");
+                ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getProductName());
+                ((ItemVH) vh).tvTraOpNm.setText(item.getProductType());
+                ((ItemVH) vh).tvTime.setText(Uihelper.timestampToDateStr_other(item.getTraTime()));
             }
         } else if (vh instanceof ProgressViewHolder) {
             if (position >= maxValue) {

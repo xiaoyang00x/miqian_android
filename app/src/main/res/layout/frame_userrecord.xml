@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/data_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_record"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/frame_hide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#88b0b0b0"
+            android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/frame_no_recorddata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="120dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/iv_record_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/nodata" />
+
+            <TextView
+                android:id="@+id/tv_recordtip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="数据获取失败，点击重新获取"
+                android:textColor="@color/miqian_gray"
+                android:textSize="@dimen/mq_font2" />
+
+            <TextView
+                android:id="@+id/tv_refreshdata"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edit_normal"
+                android:gravity="center"
+                android:text="再试一次"
+                android:textSize="@dimen/mq_font2" />
+        </LinearLayout>
+
+</LinearLayout>

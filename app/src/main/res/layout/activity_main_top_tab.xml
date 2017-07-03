@@ -1,0 +1,124 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/id_switch_tab_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/id_tab_charge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/trans"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dip">
+
+                <TextView
+                    android:id="@+id/tv_charge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="充值"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font5_v2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/id_tab_buy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/trans"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dip"
+                android:saveEnabled="false">
+
+                <TextView
+                    android:id="@+id/tv_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="认购"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font5_v2"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/id_tab_expired"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/trans"
+                android:focusable="false"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dip">
+
+                <TextView
+                    android:id="@+id/tv_expired"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="到期"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font5_v2" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/id_tab_redeem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/trans"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dip">
+
+                <TextView
+                    android:id="@+id/tv_redeem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="赎回"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font5_v2" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/id_tab_withraw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/trans"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dip">
+
+                <TextView
+                    android:id="@+id/tv_withraw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="提现"
+                    android:textColor="@color/mq_b4_v2"
+                    android:textSize="@dimen/mq_font5_v2" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/id_tab_line_iv"
+            android:layout_width="80dp"
+            android:layout_height="3dp"
+            android:background="@color/mq_r1_v2"
+            android:contentDescription="tab"></ImageView>
+
+
+    </LinearLayout>

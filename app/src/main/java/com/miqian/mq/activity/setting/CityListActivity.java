@@ -47,13 +47,6 @@ public class CityListActivity extends BaseActivity {
      */
     private PinyinComparator pinyinComparator;
 
-    private String bankId = "";
-    private String bankName = "";
-
-    private String branch;
-    private String province;
-    private String city;
-
     /**
      * 根据输入框中的值来过滤数据并更新ListView
      */

@@ -69,6 +69,7 @@ public class RolloutActivity extends BaseActivity {
     private DialogTipSave disableDialog;
     private DialogTipSave feeDialog;
     private DialogTipSave openBankDialog;
+    private String bankUnionNumber;
 
     @Override
     public void obtainData() {
@@ -92,6 +93,21 @@ public class RolloutActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            bankUnionNumber = data.getStringExtra("bankUnionNumber");
+            if (!TextUtils.isEmpty(bankUnionNumber)) {
+                btnOpenBank.setVisibility(View.GONE);
+                tvBankUnion.setVisibility(View.VISIBLE);
+                tvBankUnion.setText(bankUnionNumber);
+            }
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void setdata(WithDrawInit data) {
@@ -224,14 +240,19 @@ public class RolloutActivity extends BaseActivity {
     //开通联行号
     @OnClick(R.id.btn_openbank)
     public void openBank() {
-
+        String bankName = data.getBankName();
+        if (!TextUtils.isEmpty(bankName)) {
+            Intent intent = new Intent(RolloutActivity.this, SetBankActivity.class);
+            intent.putExtra("bankName", data.getBankName());
+            startActivity(intent);
+        }
     }
 
     //确认
     @OnClick(R.id.btn_summit)
     public void summit() {
 
-          startActivity(new Intent(mActivity, SetBankActivity.class));
+        HttpRequest.autoWithdraw(mActivity);
 
     }
 
