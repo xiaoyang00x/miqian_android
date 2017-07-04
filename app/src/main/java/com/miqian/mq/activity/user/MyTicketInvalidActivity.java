@@ -48,6 +48,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
         Intent intent = new Intent(context, MyTicketInvalidActivity.class);
         context.startActivity(intent);
     }
+
     @Override
     public void onCreate(Bundle arg0) {
         type = "2";
@@ -66,7 +67,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
                 Redpaper redpaper = result.getData();
                 promList = redpaper.getPromList();
                 page = redpaper.getPageInfo();
-                expireCount = redpaper.getCountInfo().getExpireCount();
+                expireCount = redpaper.getCountInfo() != null ? redpaper.getCountInfo().getExpireCount() : "";
                 if (redpaper != null) {
                     if (promList != null && promList.size() > 0) {
                         showContentView();

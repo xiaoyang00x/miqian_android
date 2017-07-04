@@ -60,6 +60,9 @@ public class UserUtil {
      * @param isFinish 直接判断是否完成
      */
     public static void saveJxSave(Context context, UserInfo userInfo, boolean isFinish) {
+        if (isFinishSave(context)) {
+            return;
+        }
         if ("1".equals(userInfo.getJxAccountStatus()) && "1".equals(userInfo.getJxPayPwdStatus()) && "1".equals(userInfo.getJxAutoClaimsTransferStatus()) && "1".equals(userInfo.getJxAutoSubscribeStatus())) {
             Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
         }

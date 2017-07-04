@@ -528,7 +528,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     } else if (Promote.TYPE.SK.getValue().equals(promote.getType())) {
                         increaseMoney = promote.getExtraIncome();
                     } else {
-                        promoteMoney = promote.getWillUseAmt();
+                        promoteMoney = promote.getExtraIncome();
                     }
                     List<Promote> promListParam = new ArrayList<>();
                     promListParam.add(promote);

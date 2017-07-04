@@ -70,7 +70,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
         if (holder instanceof BaBaViewHoleder) {
             BaBaViewHoleder tempViewHoleder = (BaBaViewHoleder) holder;
             final Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
@@ -87,7 +87,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
         } else if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             final Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());

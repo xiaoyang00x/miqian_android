@@ -10,13 +10,11 @@ import java.math.BigDecimal;
 public class Promote {
 
     public enum TYPE { // 促销类型
-        SC("SC"), // 拾财券
-        HB("HB"), //红包
-        TY("TY"), //体验金
-        JX("JX"), //加息券
-        FXQ("FXQ"), //分享券
-        DK("DK"), //抵扣券
-        SK("SK"); //双倍收益卡
+        HB("0"), //红包
+        SC("1"), // 拾财券
+        JX("2"), //加息券
+        SK("3"), //双倍加息卡
+        CA("4"); //现金
 
         private final String value;
 
@@ -36,13 +34,13 @@ public class Promote {
     /**
      * 促销产品类别的名称
      */
-    private String promProdName;
+    private String name;
     /**
      * 促销类型：SC:拾财券 HB:红包 JF:积分 LP:礼品卡 TY:体验金 JX:加息券 FXQ:分享券 DK:抵扣券  SK:双倍收益卡
      */
     private String type;
     /**
-     * 总额(单位不一定是RMB，有可能是积分什么的，协同转化比率才能算出RMB)
+     * 总额度(单位不一定是RMB，有可能是积分什么的，协同转化比率才能算出RMB)
      */
     private BigDecimal totalAmt;
     /**
@@ -66,17 +64,14 @@ public class Promote {
      */
     private String endTimestamp;
     /**
-     * 认购时，如果选择本促销，将抵用的实际金额（根据客户认购金额，促销可用余额等计算出来）
-     */
-    private BigDecimal willUseAmt;
-    /**
      * 促销状态
+     * 0 可使用 1 使用完 2 已过期
      **/
     private String status;
 
-    private String minBuyAmtOrPerc;
-    private String fitBdTermOrYrt;
-    private String fitProdOrBdType;
+    private String minBuyAmtOrPerc;//促销最小使用金额和抵用比例
+    private String fitBdTermOrYrt;//使用期限和适用利率
+    private String fitProdOrBdType;//促销产品适用产品类型和标的类型
     /**
      * 是否跳转状态:到h5
      */
@@ -94,12 +89,12 @@ public class Promote {
         this.couponsId = couponsId;
     }
 
-    public String getPromProdName() {
-        return promProdName;
+    public String getName() {
+        return name;
     }
 
-    public void setPromProdName(String promProdName) {
-        this.promProdName = promProdName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -156,14 +151,6 @@ public class Promote {
 
     public void setEndTimestamp(String endTimestamp) {
         this.endTimestamp = endTimestamp;
-    }
-
-    public BigDecimal getWillUseAmt() {
-        return willUseAmt;
-    }
-
-    public void setWillUseAmt(BigDecimal willUseAmt) {
-        this.willUseAmt = willUseAmt;
     }
 
     public String getStatus() {
