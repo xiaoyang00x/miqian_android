@@ -363,15 +363,15 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    public static String showErrorString(Context context, String key) {
-        String errorData = Pref.getString(Pref.ERROR_LIAN, context, Constants.ERROR_LIAN_DEFAULT);
-        if (!TextUtils.isEmpty(errorData)) {
-            Map<String, String> userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
-            });
-            return userMap.get(key);
-        }
-        return null;
-    }
+//    public static String showErrorString(Context context, String key) {
+//        String errorData = Pref.getString(Pref.ERROR_LIAN, context, Constants.ERROR_LIAN_DEFAULT);
+//        if (!TextUtils.isEmpty(errorData)) {
+//            Map<String, String> userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
+//            });
+//            return userMap.get(key);
+//        }
+//        return null;
+//    }
 
     private void checkOrder(String orderNo) {
         begin();
