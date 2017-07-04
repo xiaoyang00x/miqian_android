@@ -58,7 +58,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //    private TextView textPayTip;
     private TextView textPayMoney;
     private TextView factMoney;
-    private TextView textErrorLian;
+//    private TextView textErrorLian;
     private ImageView imageType;
 
     private RelativeLayout frameTip;
@@ -207,7 +207,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 textPromoteUnit.setText("元");
             } else if (Promote.TYPE.JX.getValue().equals(promoteType)) {
                 Promote promote = promList.get(position);
-                textPromoteType.setText(promote.getGiveYrt() + "%加息卡");
+                textPromoteType.setText(promote.getUseableAmt() + "%加息卡");
                 textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
                 textPromote.setText("收益增加");
                 textPromoteMoney.setText("" + increaseMoney);
@@ -237,7 +237,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
      * 根据支付状态刷新view
      */
     private void refreshPayView() {
-        textErrorLian.setVisibility(View.GONE);
+//        textErrorLian.setVisibility(View.GONE);
 //        if (payModeState == PAY_MODE_LIAN) {
 ////            showLianView(true);
 ////            textLian.setText("" + payMoney);
@@ -266,12 +266,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
      */
     private void showErrorView(BigDecimal balance) {
         if (payMoney.compareTo(balance) > 0) {
-            textErrorLian.setVisibility(View.VISIBLE);
+//            textErrorLian.setVisibility(View.VISIBLE);
             textPayType.setTextColor(ContextCompat.getColor(this, R.color.mq_b5_v2));
             textPayMoney.setTextColor(ContextCompat.getColor(this, R.color.mq_b5_v2));
             if (payModeState == PAY_MODE_BALANCE) {
                 imageType.setImageResource(R.drawable.balance_disable);
-                textErrorLian.setText("账户余额不足，请充值或更换支付方式后，再进行认购");
+//                textErrorLian.setText("账户余额不足，请充值或更换支付方式后，再进行认购");
             }
         }
     }
@@ -393,7 +393,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         textPromoteType = (TextView) findViewById(R.id.text_promote_type);
         textPromoteMoney = (TextView) findViewById(R.id.text_promote_money);
         textPromoteUnit = (TextView) findViewById(R.id.text_promote_unit);
-        textErrorLian = (TextView) findViewById(R.id.text_error_lian);
+//        textErrorLian = (TextView) findViewById(R.id.text_error_lian);
 
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -528,7 +528,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     } else if (Promote.TYPE.SK.getValue().equals(promote.getType())) {
                         increaseMoney = promote.getExtraIncome();
                     } else {
-                        promoteMoney = promote.getWillUseAmt();
+                        promoteMoney = promote.getExtraIncome();
                     }
                     List<Promote> promListParam = new ArrayList<>();
                     promListParam.add(promote);

@@ -19,7 +19,7 @@
             <TextView
                 style="@style/text_black_item"
                 android:layout_centerVertical="true"
-                android:text="所在省市" />
+                android:text="所在城市" />
 
             <ImageView
                 android:id="@+id/arrow_1"
@@ -88,7 +88,7 @@
             android:id="@+id/btn_next"
             style="@style/click_btn"
             android:onClick="btn_click"
-            android:text="确定" />
+            android:text="提交" />
     </RelativeLayout>
 
 

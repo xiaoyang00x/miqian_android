@@ -11,7 +11,7 @@ import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.DialogTipInto;
+import com.miqian.mq.views.DialogTipSave;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -24,7 +24,7 @@ public class IntoCheckAcitvity extends BaseActivity implements View.OnClickListe
     private Button btConfirm;
     private RadioGroup radioGroup;
 
-    private DialogTipInto dialogTipInto;
+    private DialogTipSave dialogTipInto;
 
     private String timeType = "1";
     private String transferType = "1";
@@ -62,7 +62,7 @@ public class IntoCheckAcitvity extends BaseActivity implements View.OnClickListe
 
     private void showDialog() {
         if (dialogTipInto == null) {
-            dialogTipInto = new DialogTipInto(this) {
+            dialogTipInto = new DialogTipSave(this,"充值结果确认","充值结果确认查询已提交\n请关注您的账户余额及资产") {
                 @Override
                 public void positionBtnClick() {
                     ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);

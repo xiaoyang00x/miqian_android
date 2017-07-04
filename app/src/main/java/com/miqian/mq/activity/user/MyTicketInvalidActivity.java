@@ -42,16 +42,16 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     private Page page;
     private boolean isLoading = false;
     private String type;
-    private String expireState;
-
+    private String expireCount;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MyTicketInvalidActivity.class);
         context.startActivity(intent);
     }
+
     @Override
     public void onCreate(Bundle arg0) {
-        type = "GQ";
+        type = "2";
         super.onCreate(arg0);
     }
 
@@ -65,9 +65,9 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
             public void onSucceed(RedPaperData result) {
                 end();
                 Redpaper redpaper = result.getData();
-                promList = redpaper.getCustPromotion();
-                page = redpaper.getPage();
-                expireState = redpaper.getExpireState();
+                promList = redpaper.getPromList();
+                page = redpaper.getPageInfo();
+                expireCount = redpaper.getCountInfo() != null ? redpaper.getCountInfo().getExpireCount() : "";
                 if (redpaper != null) {
                     if (promList != null && promList.size() > 0) {
                         showContentView();
@@ -116,7 +116,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
     private void loadMore() {
         if (!isLoading) {
-            if (promList.size() >= page.getCount()) {
+            if (promList.size() >= page.getTotalPage()) {
                 return;
             }
             isLoading = true;
@@ -126,7 +126,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
                 @Override
                 public void onSucceed(RedPaperData result) {
-                    List<Promote> tempList = result.getData().getCustPromotion();
+                    List<Promote> tempList = result.getData().getPromList();
                     if (promList != null && tempList != null && tempList.size() > 0) {
                         promList.addAll(tempList);
                         adapterMyTicket.notifyItemInserted(promList.size());
@@ -145,12 +145,12 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
 
 
     private void refreshView() {
-        if (type.equals("GQ")) {
+        if (type.equals("2")) {
             adapterMyTicket = new AdapterMyTicket(mActivity, promList, false, true);
         } else {
             adapterMyTicket = new AdapterMyTicket(mActivity, promList, false);
         }
-        adapterMyTicket.setMaxItem(page.getCount());
+        adapterMyTicket.setMaxItem(page.getTotalPage());
         recyclerView.setAdapter(adapterMyTicket);
     }
 
@@ -172,9 +172,9 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if (checkedId == R.id.bt_overdue) {
-            type = "GQ";
+            type = "2";
         } else if (checkedId == R.id.bt_used) {
-            type = "YW";
+            type = "1";
         }
         obtainData();
     }
@@ -185,7 +185,7 @@ public class MyTicketInvalidActivity extends BaseActivity implements RadioGroup.
             frameNone.setVisibility(View.VISIBLE);
             TextView textTip = (TextView) frameNone.findViewById(R.id.tv_tips);
             TextView overdueTip = (TextView) frameNone.findViewById(R.id.overdue_tip);
-            if (type.equals("GQ") && "0".equals(expireState)) {
+            if (type.equals("2") && !"0".equals(expireCount)) {
                 textTip.setVisibility(View.GONE);
                 overdueTip.setVisibility(View.VISIBLE);
             } else {

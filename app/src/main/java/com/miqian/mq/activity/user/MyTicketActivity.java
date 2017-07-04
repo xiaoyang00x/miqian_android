@@ -73,8 +73,8 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
                 end();
                 Redpaper redpaper = result.getData();
                 if (redpaper != null) {
-                    promList = redpaper.getCustPromotion();
-                    page = redpaper.getPage();
+                    promList = redpaper.getPromList();
+                    page = redpaper.getPageInfo();
                     if (promList != null && promList.size() > 0) {
                         showContentView();
                         refreshView();
@@ -90,7 +90,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
                 Uihelper.showToast(mActivity, error);
                 showErrorView();
             }
-        }, "JH", String.valueOf(pageNo), pageSize);
+        }, "0", String.valueOf(pageNo), pageSize);
 
     }
 
@@ -132,7 +132,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
     private void loadMore() {
         if (!isLoading) {
-            if (promList.size() >= page.getCount()) {
+            if (promList.size() >= page.getTotalPage()) {
                 return;
             }
             isLoading = true;
@@ -142,7 +142,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
                 @Override
                 public void onSucceed(RedPaperData result) {
-                    List<Promote> tempList = result.getData().getCustPromotion();
+                    List<Promote> tempList = result.getData().getPromList();
                     if (promList != null && tempList != null && tempList.size() > 0) {
                         promList.addAll(tempList);
                         adapterMyTicket.notifyItemInserted(promList.size());
@@ -155,13 +155,13 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
                     isLoading = false;
                     --pageNo;
                 }
-            }, "JH", String.valueOf(pageNo), pageSize);
+            }, "0", String.valueOf(pageNo), pageSize);
         }
     }
 
     private void refreshView() {
         adapterMyTicket = new AdapterMyTicket(mActivity, promList, true);
-        adapterMyTicket.setMaxItem(page.getCount());
+        adapterMyTicket.setMaxItem(page.getTotalPage());
         recyclerView.setAdapter(adapterMyTicket);
     }
 

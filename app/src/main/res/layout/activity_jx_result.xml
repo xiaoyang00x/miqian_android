@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:background="@drawable/account_head_bg">
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/result_success"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:drawablePadding="10dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font5_v2"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/save_wave"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/save_step1_on"
+                android:text="开通账户"
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font4_v2" />
+
+
+            <TextView
+                android:id="@+id/text_line1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp"
+                android:text="------------"
+                android:textColor="@color/mq_r1_v2" />
+
+            <TextView
+                android:id="@+id/text_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/save_step2"
+                android:text="设置交易密码"
+                android:textColor="@color/mq_b5_v2"
+                android:textSize="@dimen/mq_font4_v2" />
+
+            <TextView
+                android:id="@+id/text_line2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp"
+                android:text="------------" />
+
+            <TextView
+                android:id="@+id/text_auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/save_step3"
+                android:text="签署协议"
+                android:textColor="@color/mq_b5_v2"
+                android:textSize="@dimen/mq_font4_v2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/frame_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/listitem_height"
+                android:background="@drawable/list_click">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:maxLength="16"
+                    android:maxLines="1"
+                    android:text="开户银行"
+                    android:textColor="@color/mq_b1_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+
+                <TextView
+                    android:id="@+id/text_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="90dp"
+                    android:layout_marginRight="@dimen/margin_left_right"
+                    android:gravity="right"
+                    android:text="江西银行"
+                    android:textColor="@color/mq_b1_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider_none" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/listitem_height"
+                android:background="@drawable/list_click">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:text="开户姓名"
+                    android:textColor="@color/mq_b1_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+
+                <TextView
+                    android:id="@+id/text_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="90dp"
+                    android:layout_marginRight="@dimen/margin_left_right"
+                    android:gravity="right"
+                    android:maxLines="1"
+                    android:textColor="@color/mq_b1_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider_none" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/listitem_height"
+                android:background="@drawable/list_click">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:text="开户账号"
+                    android:textColor="@color/mq_b1_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+
+                <TextView
+                    android:id="@+id/text_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="90dp"
+                    android:layout_marginRight="@dimen/margin_left_right"
+                    android:gravity="right"
+                    android:maxLines="1"
+                    android:textColor="@color/mq_b1_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider_none" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/frame_agreement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/margin_left_right"
+                android:paddingRight="@dimen/margin_left_right">
+
+                <TextView
+                    android:id="@+id/title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:layout_marginTop="15dp"
+                    android:maxLines="1"
+                    android:text="签约自动债权转让协议"
+                    android:textColor="@color/mq_b1_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+
+                <TextView
+                    android:id="@+id/text_state1"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:textSize="@dimen/mq_font5_v2"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:maxLines="1"
+                    android:text="签署协议"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_default_selector"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title1"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="@dimen/margin_left_right"
+                    android:text="@string/auto_claims"
+                    android:textColor="@color/mq_b3_v2"
+                    android:textSize="@dimen/mq_font5_v2" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider_none" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/margin_left_right"
+                android:paddingRight="@dimen/margin_left_right">
+
+                <TextView
+                    android:id="@+id/title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_right"
+                    android:layout_marginTop="15dp"
+                    android:maxLines="1"
+                    android:text="签约自动投标协议"
+                    android:textColor="@color/mq_b1_v2"
+                    android:textSize="@dimen/mq_font7_v2" />
+
+                <TextView
+                    android:id="@+id/text_state2"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:textSize="@dimen/mq_font5_v2"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:maxLines="1"
+                    android:text="签署协议"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_default_selector"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title2"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="@dimen/margin_left_right"
+                    android:text="@string/auto_subscribe"
+                    android:textColor="@color/mq_b3_v2"
+                    android:textSize="@dimen/mq_font5_v2" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/frame_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp">
+
+            <Button
+                android:id="@+id/bt_submit"
+                style="@style/click_btn"
+                android:layout_gravity="center"
+                android:text="确定" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/frame_fish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/bt_rollin"
+                style="@style/click_btn"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="立即充值" />
+
+            <Button
+                android:id="@+id/bt_product"
+                style="@style/click_btn"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_sendcaptcha"
+                android:text="先看理财产品"
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

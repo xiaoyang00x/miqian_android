@@ -17,8 +17,8 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.SendCaptchaActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.user.UserDigitalCardActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.UpdateInfo;
@@ -35,6 +35,7 @@ import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
+import com.miqian.mq.views.DialogTipSave;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
@@ -44,8 +45,6 @@ import java.util.Map;
 
 import cn.udesk.UdeskConst;
 import cn.udesk.UdeskSDKManager;
-
-import static com.miqian.mq.R.id.iv_switch;
 
 /**
  * Created by Administrator on 2015/9/17.
@@ -61,6 +60,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView tvName;
     private View frameName;
     private ImageView ivSwitch;
+    private DialogTipSave dialogTip;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -79,8 +79,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         tvPhone = (TextView) findViewById(R.id.tv_phone);
         tvName = (TextView) findViewById(R.id.tv_name);
-
-
         btn_loginout = (Button) findViewById(R.id.btn_loginout);
         View frame_setting_helpcenter = findViewById(R.id.frame_setting_helpcenter);
         View frame_setting_telephone = findViewById(R.id.frame_telephone);
@@ -95,8 +93,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         textVersion.setText("V" + MobileOS.getAppVersionName(mActivity));
         //通知开关
         ivPushState = (ImageView) findViewById(R.id.iv_push_state);
-
+        ivSwitch = (ImageView) findViewById(R.id.iv_switch);
         frameUpdate.setOnClickListener(this);
+        ivSwitch.setOnClickListener(this);
         frame_setting_helpcenter.setOnClickListener(this);
         frame_setting_suggest.setOnClickListener(this);
         frame_setting_about.setOnClickListener(this);
@@ -104,6 +103,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         frameuserPhone.setOnClickListener(this);
         frameDigitalcard.setOnClickListener(this);
         ivPushState.setOnClickListener(this);
+/*
+        修改登录，交易密码，手势密码
+         */
+        findViewById(R.id.password_login).setOnClickListener(this);
+        findViewById(R.id.password_transaction).setOnClickListener(this);
 
         extendOperationController = ExtendOperationController.getInstance();
         extendOperationController.registerExtendOperationListener(this);
@@ -119,6 +123,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setData() {
+        if (UserUtil.hasLogin(mActivity)) {
+            findViewById(R.id.frame_userinfo).setVisibility(View.VISIBLE);
+            btn_loginout.setVisibility(View.VISIBLE);
+        }
         //推送开关
         isPush = Pref.getBoolean(Pref.PUSH_STATE, mActivity, true);
         if (isPush) {
@@ -127,8 +135,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             ivPushState.setImageResource(R.drawable.gesture_switch_close);
         }
         if (userInfo == null) {
-                return;
-            }
+            return;
+        }
 
         if (!TextUtils.isEmpty(userInfo.getMobile())) {
             String phone = RSAUtils.decryptByPrivate(userInfo.getMobile());
@@ -145,14 +153,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         }
-
-        /*
-        修改登录，交易密码，手势密码
-         */
-        ivSwitch = (ImageView) findViewById(iv_switch);
-        findViewById(R.id.password_login).setOnClickListener(this);
-        findViewById(R.id.password_transaction).setOnClickListener(this);
-        ivSwitch.setOnClickListener(this);
     }
 
     @Override
@@ -176,22 +176,24 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             //电子账户
             case R.id.frame_digitalcard:
+                if (UserUtil.isFinishSave(mActivity)) {
+                    startActivity(new Intent(this, UserDigitalCardActivity.class));
+                } else {
+                    showDialog();
+                }
                 break;
             case R.id.password_login://修改登录密码
                 MobclickAgent.onEvent(mActivity, "1027");
-                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.SENDCAPTCHA_FORGETPSW, true);
+                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.CAPTHCA_MODIFYLOGINPW);
 
                 break;
             case R.id.password_transaction://修改交易密码
-                if ("0".equals(userInfo.getPayPwdStatus())) {//未设置
-                    Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-                    intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-                    startActivity(intent);
+
+                if (UserUtil.isFinishSave(mActivity)) {
+                    MobclickAgent.onEvent(mActivity, "1027");
+                    SendCaptchaActivity.enterActivity(mActivity, TypeUtil.CAPTCHA_TRADE_PW);
                 } else {
-                    MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-                    startActivity(intent);
+                    showDialog();
                 }
                 break;
             case R.id.iv_switch://手势密码
@@ -252,6 +254,20 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
         }
+    }
+
+    private void showDialog() {
+        if (dialogTip == null) {
+            dialogTip = new DialogTipSave(mActivity, "提示", getResources().getText(R.string.setting_issave).toString()) {
+
+                @Override
+                public void positionBtnClick() {
+                    dismiss();
+
+                }
+            };
+        }
+        dialogTip.show();
     }
 
     // 手势密码是否开启
@@ -338,7 +354,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         switch (operationKey) {
             case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
-                userInfo.setPayPwdStatus("1");
+                userInfo.setJxPayPwdStatus("1");
                 break;
             default:
                 break;

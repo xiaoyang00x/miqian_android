@@ -10,9 +10,7 @@ import android.widget.EditText;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
-import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.UserCurrent;
@@ -177,8 +175,8 @@ public class ActivityRedeem extends BaseActivity {
                 mDialogTip.setSureInfo("我知道了");
                 mDialogTip.show();
             } else {
-                if (!TextUtils.isEmpty(userInfo.getPayPwdStatus())) {
-                    int state = Integer.parseInt(userInfo.getPayPwdStatus());
+                if (!TextUtils.isEmpty(userInfo.getJxPayPwdStatus())) {
+                    int state = Integer.parseInt(userInfo.getJxPayPwdStatus());
                     initDialogTradePassword(state);
                 }
             }
@@ -221,7 +219,7 @@ public class ActivityRedeem extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //设置交易密码成功
         if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
-            userInfo.setPayPwdStatus("1");
+            userInfo.setJxPayPwdStatus("1");
             initDialogTradePassword(DialogTradePassword.TYPE_INPUTPASSWORD);
         }
     }
@@ -285,9 +283,9 @@ public class ActivityRedeem extends BaseActivity {
                 @Override
                 public void positionBtnClick() {
                     MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-                    startActivity(intent);
+//                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
+//                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
+//                    startActivity(intent);
                     dismiss();
                 }
 

@@ -52,7 +52,7 @@ public class BankBranchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof ViewHolder) {
 
             ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.tv_bank_branch.setText(bankBranch.getShortBranchName());
+            viewHolder.tv_bank_branch.setText(bankBranch.getBranchName());
         }
 
     }

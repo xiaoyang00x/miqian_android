@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff6db"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_right"
+            android:layout_marginTop="@dimen/margin_left_right"
+            android:src="@drawable/save_tip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_left_right"
+            android:layout_marginTop="@dimen/margin_left_right"
+            android:text="秒钱理财已上线银行存管系统，并为您开通降息银行存管电子账户。存管电子账户为您的个人实名电子账户，平台无法触碰您的资金。"
+            android:textColor="@color/mq_y2_v2"
+            android:textSize="@dimen/mq_font3_v2" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@drawable/list_click">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:maxLines="1"
+                android:text="开户姓名"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="90dp"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:background="@drawable/trans"
+                android:gravity="right"
+                android:hint="请与身份证姓名保持一致"
+                android:maxLength="15"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </RelativeLayout>
+
+        <View style="@style/item_divider_none" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@drawable/list_click">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="身份证号"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <EditText
+                android:id="@+id/edit_idcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="90dp"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:background="@drawable/trans"
+                android:gravity="right"
+                android:hint="仅支持二代身份证"
+                android:maxLength="18"
+                android:maxLines="1"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </RelativeLayout>
+
+        <View style="@style/item_divider_none" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@drawable/list_click">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="银行卡号"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <EditText
+                android:id="@+id/edit_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="90dp"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:background="@drawable/trans"
+                android:gravity="right"
+                android:hint="请确保卡号对应身份证号"
+                android:inputType="number"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </RelativeLayout>
+
+        <View style="@style/item_divider_none" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/text_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_left_right"
+        android:textColor="@color/mq_b2_v2"
+        android:textSize="@dimen/mq_font3_v2" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@drawable/list_click">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="手机号码"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+
+
+            <EditText
+                android:id="@+id/edit_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="90dp"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:background="@drawable/trans"
+                android:gravity="right"
+                android:hint="请输入绑定银行卡手机号"
+                android:inputType="number"
+                android:maxLength="11"
+                android:textColor="@color/mq_b1_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </RelativeLayout>
+
+        <View style="@style/item_divider_none" />
+
+        <RelativeLayout
+            android:id="@+id/frame_offline"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/listitem_height"
+            android:background="@drawable/list_click">
+
+            <Button
+                android:id="@+id/bt_captcha"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:background="@drawable/btn_sendcaptcha"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="获取验证码"
+                android:textColor="@color/mq_r1_v2"
+                android:textSize="@dimen/mq_font5_v2" />
+
+            <EditText
+                android:id="@+id/edit_captcha"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:layout_toLeftOf="@id/bt_captcha"
+                android:background="@drawable/trans"
+                android:hint="请输入手机验证码"
+                android:inputType="number"
+                android:maxLength="6"
+                android:textColor="@color/mq_b1_v2"
+                android:textColorHint="@color/mq_b5_v2"
+                android:textSize="@dimen/mq_font7_v2" />
+        </RelativeLayout>
+
+        <View style="@style/item_divider_none" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <Button
+            android:id="@+id/bt_submit"
+            style="@style/click_btn"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="65dp"
+            android:text="提交" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <CheckBox
+                android:id="@+id/check_law"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:button="@drawable/btn_checkbox"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="7dp"
+                android:text="同意江西银行"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <Button
+                android:id="@+id/bt_law"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/transparent"
+                android:maxLines="1"
+                android:text="《用户授权协议》"
+                android:textColor="@color/mq_bl4_v2"
+                android:textSize="@dimen/mq_font3_v2" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_law2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:text="《网络交易资金账户服务第三方协议》"
+            android:textColor="@color/mq_bl4_v2"
+            android:textSize="@dimen/mq_font3_v2" />
+    </LinearLayout>
+</LinearLayout>

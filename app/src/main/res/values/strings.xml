@@ -1,68 +1,73 @@
 <resources>
-  <string name="app_name">秒钱</string>
+    <string name="app_name">秒钱</string>
 
-  <!--极光推送appkey-测试环境-->
-  <string name="jpush_appkey">1efad7e3915accc3bfb9f801</string>
-  <!--极光推送appkey-正式环境-->
-  <!--<string name="jpush_appkey">8e7e3b5b32b4603e8aa757c6</string>-->
+    <!--极光推送appkey-测试环境-->
+    <string name="jpush_appkey">1efad7e3915accc3bfb9f801</string>
+    <!--极光推送appkey-正式环境-->
+    <!--<string name="jpush_appkey">8e7e3b5b32b4603e8aa757c6</string>-->
 
-  <!---->
-  <string name="app_loading">处理中…</string>
-  <string name="app_loading_more">加载中…</string>
-  <string name="net_error">网络出错，轻触屏幕重新加载</string>
-  <string name="overdue_tip">浪费太多福利了，过期30天以上的红包/卡，我们也不记得了呢~</string>
+    <!---->
+    <string name="app_loading">处理中…</string>
+    <string name="app_loading_more">加载中…</string>
+    <string name="net_error">网络出错，轻触屏幕重新加载</string>
+    <string name="overdue_tip">浪费太多福利了，过期30天以上的红包/卡，我们也不记得了呢~</string>
 
-  <string name="phone_noeffect">请输入正确的手机号码</string>
-  <string name="phone_null">手机号码不能为空</string>
-  <string name="tip_password">请输入6到16位的数字或字母组合</string>
-  <string name="tip_password_pc">请输入6到16位的交易密码</string>
-  <string name="tip_password_login">请输入6到16位的登录密码</string>
-  <string name="feedback_prompt">请描述您的问题，最多240个字。</string>
-  <string name="tip_captcha">请输入验证码</string>
-  <string name="please_input_old_password">请输入原密码</string>
-  <string name="please_input_new_password">请输入新密码</string>
-  <string name="please_check_password">请再次输入新密码</string>
+    <string name="phone_noeffect">请输入正确的手机号码</string>
+    <string name="phone_null">手机号码不能为空</string>
+    <string name="tip_password">请输入6到16位的数字或字母组合</string>
+    <string name="tip_password_pc">请输入6到16位的交易密码</string>
+    <string name="tip_password_login">请输入6到16位的登录密码</string>
+    <string name="feedback_prompt">请描述您的问题，最多240个字。</string>
+    <string name="tip_captcha">请输入验证码</string>
+    <string name="please_input_old_password">请输入原密码</string>
+    <string name="please_input_new_password">请输入新密码</string>
+    <string name="please_check_password">请再次输入新密码</string>
 
-  <string name="capthcha_num">请输入6位的验证码</string>
-  <string name="invite_num">请输入正确格式的邀请码，4到10位的数字字母组合</string>
-
-
-
-  <string name="time_unknow">未知时间</string>
-  <string name="time_year_ago">年前</string>
-  <string name="time_month_ago">月前</string>
-  <string name="time_day_ago">天前</string>
-  <string name="time_hour_ago">小时前</string>
-  <string name="time_minute_ago">分钟前</string>
-  <string name="time_one_minute_inner">刚刚</string>
-
-  //安卓只输入数字和字母
-  <string name="match">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ</string>
-
-  <!--充值-->
-  <string name="into_check">温馨提示：\n1.请充值后再进行充值结果查询\n2.跨行转账存在延迟，具体到账时间，已不同银行规定时效为准。</string>
-
-  <!-- 定期相关页面-->
-  <string name="regular_plan">定期计划</string>
-  <string name="regular_earn">定期赚</string>
-  <string name="investment_security">投资安全</string>
-  <string name="buy_now">立即认购</string>
-
-  <!-- 首页-->
-  <string name="main_tab_home">秒钱</string>
-  <string name="main_tab_current"> 活期</string>
-  <string name="main_tab_regular">定期</string>
-  <string name="main_tab_user">我的</string>
-
-  <!-- 关于手Q的提示文案-->
-  <string name="qq_project_current">因参与手机QQ红包活动期间用户访问量过大，为确保基本服务正常，现暂停活期产品的认购、赎回服务。活动结束后，将全部恢复正常。给您带来的不便，深表歉意。\n活期产品开放时间:2月2日(初六)。</string>
-  <string name="qq_project_regular">因参与手机QQ红包活动期间用户访问量过大，为确保基本服务正常，我们将暂停已结算标的内容查询，待活动高峰结束后将恢复正常。给您带来的不便，深表歉意。</string>
-  <string name="qq_project_redeem">由于用户访问量过大，为确保基本服务正常，现暂停活期赎回服务，再次开放时间请查阅公告。</string>
-  <string name="qq_project_subscribe">由于用户访问量过大，为确保基本服务正常，现暂停活期认购服务，再次开放时间请查阅公告。</string>
-  <string name="qq_project_match">由于用户访问量过大，为确保基本服务正常，匹配数据暂停查询，活动结束后将恢复正常。</string>
-  <string name="qq_project_current_record">由于用户访问量过大，为确保基本服务正常，交易记录暂停查询，活动结束后将恢复正常。</string>
-  <string name="qq_project_modifyphone">因参与手机QQ红包活动期间用户访问量过大，为确保基本服务正常，现暂停换绑手机号服务，活动结束后将恢复正常。给您带来的不便，深表歉意。</string>
-  <string name="qq_project_rollout">因参与手机QQ红包活动期间用户访问量过大，为确保基本服务正常，现暂停提现服务，活动结束后恢复正常。给您带来的不便，我们深表歉意。再次开放时间请查阅公告。</string>
+    <string name="capthcha_num">请输入6位的验证码</string>
+    <string name="invite_num">请输入正确格式的邀请码，4到10位的数字字母组合</string>
 
 
+    <string name="time_unknow">未知时间</string>
+    <string name="time_year_ago">年前</string>
+    <string name="time_month_ago">月前</string>
+    <string name="time_day_ago">天前</string>
+    <string name="time_hour_ago">小时前</string>
+    <string name="time_minute_ago">分钟前</string>
+    <string name="time_one_minute_inner">刚刚</string>
+
+    //安卓只输入数字和字母
+    <string name="match">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ</string>
+
+    <!--充值-->
+    <string name="into_check">温馨提示：\n1.请充值后再进行充值结果查询\n2.跨行转账存在延迟，具体到账时间，已不同银行规定时效为准。</string>
+
+    <string name="auto_claims">自动债权转让，即平台得到债权承接方的授权后，在债权承接方电子账户有可用余额的条件时代投资人进行签约金额范围内的债权承接操作</string>
+    <string name="auto_subscribe">自动投标，即平台得到投资人授权后，在投资人电子账户有可用余额的条件时代投资人进行签约金额（默认1千万）范围内的投标操作</string>
+
+    <!-- 定期相关页面-->
+    <string name="regular_plan">定期计划</string>
+    <string name="regular_earn">定期赚</string>
+    <string name="investment_security">投资安全</string>
+    <string name="buy_now">立即认购</string>
+
+    <!-- 首页-->
+    <string name="main_tab_home">秒钱</string>
+    <string name="main_tab_current"> 活期</string>
+    <string name="main_tab_regular">定期</string>
+    <string name="main_tab_user">我的</string>
+
+    <!-- 关于手Q的提示文案-->
+    <string name="qq_project_current">因参与手机QQ红包活动期间用户访问量过大，为确保基本服务正常，现暂停活期产品的认购、赎回服务。活动结束后，将全部恢复正常。给您带来的不便，深表歉意。\n活期产品开放时间:2月2日(初六)。</string>
+    <string name="qq_project_regular">因参与手机QQ红包活动期间用户访问量过大，为确保基本服务正常，我们将暂停已结算标的内容查询，待活动高峰结束后将恢复正常。给您带来的不便，深表歉意。</string>
+    <string name="qq_project_redeem">由于用户访问量过大，为确保基本服务正常，现暂停活期赎回服务，再次开放时间请查阅公告。</string>
+    <string name="qq_project_subscribe">由于用户访问量过大，为确保基本服务正常，现暂停活期认购服务，再次开放时间请查阅公告。</string>
+    <string name="qq_project_match">由于用户访问量过大，为确保基本服务正常，匹配数据暂停查询，活动结束后将恢复正常。</string>
+    <string name="qq_project_current_record">由于用户访问量过大，为确保基本服务正常，交易记录暂停查询，活动结束后将恢复正常。</string>
+    <string name="qq_project_modifyphone">因参与手机QQ红包活动期间用户访问量过大，为确保基本服务正常，现暂停换绑手机号服务，活动结束后将恢复正常。给您带来的不便，深表歉意。</string>
+    <string name="qq_project_rollout">因参与手机QQ红包活动期间用户访问量过大，为确保基本服务正常，现暂停提现服务，活动结束后恢复正常。给您带来的不便，我们深表歉意。再次开放时间请查阅公告。</string>
+
+    <!-- 提现文案-->
+    <string name="rollout_tip_enable">您的提现金额已达大额提现标准,非银行\n工作时间，无法进行大额提现，详情见\n温馨提示，如急需资金，可拆分多笔提现</string>
+    <string name="rollout_tip_openbank">大额需匹配开户行联行号，请\n先完善银行卡信息。如银行卡信息未完\n善，仅支持普通提现</string>
+    <string name="setting_issave">抱歉，您银行存管尚未开通\n请开通存管后，再进行此操作</string>
 </resources>

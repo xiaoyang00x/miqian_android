@@ -5,38 +5,33 @@ package com.miqian.mq.entity;
  */
 public class CapitalItem {
 
-    private String traDt;//操作日期
-    private String traTm;//操作时间
-    private String traOpNm;//操作类型
-    private String traAmt;//交易金额
-    private String peerCustLoginNm;//操作方
-    private String rem;//备注
-    private String saChgDire;//金额变动方向
-    private String traFundNm;//资金类型名称
-    private String traFundCd;//资金类型编码
+//    private String traDt;//操作日期
+//    private String traTm;//操作时间
+//    private String traOpNm;//操作类型
+//    private String traAmt;//交易金额
+//    private String peerCustLoginNm;//操作方
+//    private String rem;//备注
+//    private String saChgDire;//金额变动方向
+//    private String traFundNm;//资金类型名称
+//    private String traFundCd;//资金类型编码
 
-    public String getTraDt() {
-        return traDt;
+      private Long traTime;//操作时间
+      private String traAmt;//交易金额
+      private String interest;//利息
+      private String fee;//手续费
+      private String productType;//产品类型1 定期项目2 定期计划3 秒钱宝 99 老活期
+      private String productName;//产品名 比如秒钱宝一期
+      private String status;//状态  00: 处理中 01: 成功 02: 失败
+      private String promotionName;//促销名 （红包，秒钱卡）只有认购的返回中有
+      private String promotionAmount;//促销金额  只有认购的返回中有
+      private String rechargeTypeName;//充值方式名 只有充值的返回中有
+
+    public Long getTraTime() {
+        return traTime;
     }
 
-    public void setTraDt(String traDt) {
-        this.traDt = traDt;
-    }
-
-    public String getTraTm() {
-        return traTm;
-    }
-
-    public void setTraTm(String traTm) {
-        this.traTm = traTm;
-    }
-
-    public String getTraOpNm() {
-        return traOpNm;
-    }
-
-    public void setTraOpNm(String traOpNm) {
-        this.traOpNm = traOpNm;
+    public void setTraTime(Long traTime) {
+        this.traTime = traTime;
     }
 
     public String getTraAmt() {
@@ -47,43 +42,67 @@ public class CapitalItem {
         this.traAmt = traAmt;
     }
 
-    public String getPeerCustLoginNm() {
-        return peerCustLoginNm;
+    public String getInterest() {
+        return interest;
     }
 
-    public void setPeerCustLoginNm(String peerCustLoginNm) {
-        this.peerCustLoginNm = peerCustLoginNm;
+    public void setInterest(String interest) {
+        this.interest = interest;
     }
 
-    public String getRem() {
-        return rem;
+    public String getFee() {
+        return fee;
     }
 
-    public void setRem(String rem) {
-        this.rem = rem;
+    public void setFee(String fee) {
+        this.fee = fee;
     }
 
-    public String getSaChgDire() {
-        return saChgDire;
+    public String getProductType() {
+        return productType;
     }
 
-    public void setSaChgDire(String saChgDire) {
-        this.saChgDire = saChgDire;
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 
-    public String getTraFundNm() {
-        return traFundNm;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setTraFundNm(String traFundNm) {
-        this.traFundNm = traFundNm;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getTraFundCd() {
-        return traFundCd;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTraFundCd(String traFundCd) {
-        this.traFundCd = traFundCd;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPromotionName() {
+        return promotionName;
+    }
+
+    public void setPromotionName(String promotionName) {
+        this.promotionName = promotionName;
+    }
+
+    public String getPromotionAmount() {
+        return promotionAmount;
+    }
+
+    public void setPromotionAmount(String promotionAmount) {
+        this.promotionAmount = promotionAmount;
+    }
+
+    public String getRechargeTypeName() {
+        return rechargeTypeName;
+    }
+
+    public void setRechargeTypeName(String rechargeTypeName) {
+        this.rechargeTypeName = rechargeTypeName;
     }
 }

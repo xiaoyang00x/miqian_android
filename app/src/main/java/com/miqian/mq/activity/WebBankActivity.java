@@ -69,7 +69,7 @@ public class WebBankActivity extends WebActivity {
         sign = HttpUtils.getSign(list);
         url_hf = getIntent().getStringExtra(KEY_URL);
         url_hf += HttpUtils.getUrl(list);
-        LogUtil.e("", "url : " + url_hf);
+        LogUtil.e("", "WebBankActivity url : " + url_hf);
         Uri uri = Uri.parse(url_hf);
         isRefresh = "1".equals(uri.getQueryParameter("refresh"));
         super.onCreate(savedInstanceState);
@@ -219,24 +219,10 @@ public class WebBankActivity extends WebActivity {
     }
 
     @JavascriptInterface
-    public void hfCallback(String code) {
-        LogUtil.e("", "hfCallback : " + code);
-        if ("200".equals(code)) {
-            state = CurrentInvestment.SUCCESS;
-        } else {
-            state = CurrentInvestment.FAIL;
-        }
+    public void jxBankCallBak(String code) {
+        LogUtil.e("", "WebBankActivity :hfCallback : " + code);
+        state = 1;
         goBack();
-    }
-
-    @JavascriptInterface
-    public void getHfResult(String code) {
-        LogUtil.e("", "getHfResult : " + code);
-        if ("200".equals(code)) {
-            state = CurrentInvestment.SUCCESS;
-        } else {
-            state = CurrentInvestment.FAIL;
-        }
     }
 
     @Override
@@ -252,7 +238,7 @@ public class WebBankActivity extends WebActivity {
      * HF返回只能返回原生页面
      */
     private void goBack() {
-        LogUtil.e("", "goBack : " + state);
+        LogUtil.e("", "WebBankActivity : goBack : " + state);
         Intent intent = new Intent();
         setResult(state, intent);
         finish();

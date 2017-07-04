@@ -8,12 +8,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.encrypt.Encrypt;
-import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.BankCard;
-import com.miqian.mq.entity.BankCardResult;
-import com.miqian.mq.entity.Meta;
-import com.miqian.mq.entity.UserInfo;
+import com.miqian.mq.entity.CustBindBankBranch;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Uihelper;
@@ -25,58 +20,22 @@ import com.miqian.mq.views.WFYTitle;
 public class SetBankActivity extends BaseActivity {
 
     private View frame_bank_branch, frame_bank_province;
-    private String city, branch, province;
+    private String city, bankUnionNumber, province;
     private TextView textBranch, tv_bank_province;
-    private UserInfo userInfo;
     private boolean isChooseCity;
-    private BankCard bankCard;
-    private String bankCardNo;
+    private String bankName;
+    private String branchName;
 
     @Override
     public void onCreate(Bundle arg0) {
 
         Intent intent = getIntent();
-        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-        if (userInfo != null) {
-            bankCardNo = userInfo.getBankNo();
-        }
+        bankName = intent.getStringExtra("bankName");
         super.onCreate(arg0);
     }
 
     @Override
     public void obtainData() {
-
-        begin();
-        HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
-            @Override
-            public void onSucceed(BankCardResult result) {
-                end();
-                bankCard = result.getData();
-                setData(bankCard);
-            }
-
-            @Override
-            public void onFail(String error) {
-                end();
-                Uihelper.showToast(mActivity, error);
-            }
-        });
-
-    }
-
-    private void setData(BankCard bankCard) {
-
-        if (!TextUtils.isEmpty(bankCard.getCity())) {
-            tv_bank_province.setText(bankCard.getCity());
-            isChooseCity = true;
-            city = bankCard.getCity();
-            province = bankCard.getProvince();
-            branch = bankCard.getBankOpenName();
-        }
-        if (!TextUtils.isEmpty(bankCard.getBankOpenName())) {
-            textBranch.setText(bankCard.getBankOpenName());
-        }
-
     }
 
     @Override
@@ -103,14 +62,12 @@ public class SetBankActivity extends BaseActivity {
                     Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
                     intent_branch.putExtra("city", city);
                     intent_branch.putExtra("province", province);
-                    intent_branch.putExtra("bankcode", userInfo.getBankCode());
-                    intent_branch.putExtra("fromsetting", true);
+                    intent_branch.putExtra("bankName", bankName);
                     startActivityForResult(intent_branch, 0);
 
                 } else {
                     Uihelper.showToast(mActivity, "请先选择城市");
                 }
-
             }
         });
 
@@ -123,9 +80,10 @@ public class SetBankActivity extends BaseActivity {
             return;
         }
         if (resultCode == 1) {
-            branch = data.getStringExtra("branch");
-            if (!TextUtils.isEmpty(branch)) {
-                textBranch.setText(branch);
+            bankUnionNumber = data.getStringExtra("bankUnionNumber");
+            branchName = data.getStringExtra("branchName");
+            if (!TextUtils.isEmpty(branchName)) {
+                textBranch.setText(branchName);
             }
 
         } else if (resultCode == 0) {
@@ -136,7 +94,7 @@ public class SetBankActivity extends BaseActivity {
                 tv_bank_province.setText(city);
             }
             textBranch.setText("请选择");
-            branch="";
+            branchName = "";
         }
 
     }
@@ -148,35 +106,34 @@ public class SetBankActivity extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("设置银行卡");
+        mTitle.setTitleText("完善银行卡信息");
 
     }
 
     public void btn_click(View v) {
 
         if (!TextUtils.isEmpty(city)) {
-            if (!TextUtils.isEmpty(branch)) {
-                if ((!TextUtils.isEmpty(bankCardNo)) && userInfo != null) {
-                    //绑定银行卡
-                    begin();
-                    HttpRequest.bindBank(mActivity, new ICallback<Meta>() {
-                        @Override
-                        public void onSucceed(Meta result) {
-                            end();
-                            Uihelper.showToast(mActivity, "设置成功");
-                            finish();
-                        }
+            if (!TextUtils.isEmpty(branchName)) {
+                //绑定银行卡
+                begin();
+                HttpRequest.bindBank(mActivity, new ICallback<CustBindBankBranch>() {
+                    @Override
+                    public void onSucceed(CustBindBankBranch result) {
+                        end();
+                        Uihelper.showToast(mActivity, "设置成功");
+                        Intent intent=new Intent();
+                        intent.putExtra("bankUnionNumber",result.getData());
+                        setResult(1,intent);
+                        finish();
+                    }
 
-                        @Override
-                        public void onFail(String error) {
-                            end();
-                            Uihelper.showToast(mActivity, error);
+                    @Override
+                    public void onFail(String error) {
+                        end();
+                        Uihelper.showToast(mActivity, error);
 
-                        }
-                    }, RSAUtils.decryptByPrivate(bankCardNo), "XG", userInfo.getBankCode(), userInfo.getBankName(), branch, province, city);
-                } else {
-                    Uihelper.showToast(mActivity, "信息不全");
-                }
+                    }
+                }, bankUnionNumber);
 
             } else {
                 Uihelper.showToast(mActivity, "支行名称不能为空");

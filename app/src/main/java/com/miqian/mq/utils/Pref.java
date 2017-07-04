@@ -89,6 +89,10 @@ public class Pref {
 
     //本地保存是否显示过QQ图标
     public final static String HAS_QQ = "hasqq";
+    //是否在存管前注册
+    public final static String IS_SAVE_BEFORE = "IsSaveBefore";
+    //是否完成存管
+    public final static String IS_SAVE_FINISH = "IsSaveFinish";
 
     private static SharedPreferences getSettings(final Context contex) {
         SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);

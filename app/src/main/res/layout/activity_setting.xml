@@ -19,6 +19,8 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/frame_userinfo"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -323,6 +325,7 @@
 
                 <Button
                     android:id="@+id/btn_loginout"
+                    android:visibility="gone"
                     style="@style/click_btn"
                     android:onClick="btn_click"
                     android:text="退出登录"

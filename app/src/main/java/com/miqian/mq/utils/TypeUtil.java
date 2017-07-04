@@ -5,22 +5,16 @@ package com.miqian.mq.utils;
  */
 public class TypeUtil {
     //验证码
-//    13001——注册
-//    13002——找回密码
-//    13003——重新绑定手机号第一次获取验证码
-//    13004——重新绑定手机号第二次获取验证码
-//    13005——银行卡信息补全
-//    13006——修改银行卡
-//    13007——非首次提现
-//    13008——找回交易密码
-    public static final int CAPTCHA_REGISTER = 13001;
-    public static final int CAPTCHA_FINDPASSWORD = 13002;
-    public static final int CAPTCHA_BINDTEL_FIRST = 13003;
-    public static final int CAPTCHA_BINTTEL_SECOND = 13004;
-    public static final int CAPTCHA_BANDINFO = 13005;
-    public static final int CAPTCHA_MODIFYBNADCARD = 13006;
-    public static final int CAPTCHA_WITHDRAW = 13007;
-    public static final int CAPTCHA_TRADEPASSWORD = 13008;
+    public static final int CAPTCHA_REGISTER = 13001;//注册
+    public static final int CAPTCHA_FINDPASSWORD = 13002;//找回登录密码
+    public static final int CAPTCHA_REDEEM_MIAOQIANBAO = 13003;//秒钱宝赎回
+    public static final int CAPTCHA_REDEEM_CURRENT = 13004;//旧活期赎回
+    public static final int CAPTHCA_MODIFYLOGINPW = 13005;//修改登录密码
+    public static final int CAPTCHA_OPENACCOUNT = 15001;//开户
+    public static final int CAPTCHA_QUICK_RECHARGE = 15002;//快捷充值
+    public static final int CAPTCHA_BIND_CAR = 15003;//绑卡 已开户未绑卡
+    public static final int CAPTCHA_TRADE_PW = 15004; //修改交易密码
+
 
     //是否设置交易密码
     public static final int TRADEPASS_NOSET = 20001;
@@ -32,8 +26,6 @@ public class TypeUtil {
     //发送验证码的类型
     public static final int SENDCAPTCHA_FORGETPSW =30001 ;
 
-    //修改绑定手机
-    public static final int MODIFY_PHONE =30002 ;
 
     //设置交易密码
     public static final int TRADEPASSWORD_FIRST_SETTING =40001 ;

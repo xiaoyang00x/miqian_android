@@ -70,13 +70,13 @@ public class AdapterPacket extends RecyclerView.Adapter {
         if (holder instanceof BaBaViewHoleder) {
             BaBaViewHoleder tempViewHoleder = (BaBaViewHoleder) holder;
             final Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
 //            String desUrl = promote.getPromUrl();
-            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUseableAmt()));
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
             tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
             if (mPosition == position) {
@@ -84,14 +84,10 @@ public class AdapterPacket extends RecyclerView.Adapter {
             } else {
                 tempViewHoleder.promoteChoosed.setVisibility(View.GONE);
             }
-
-//            clickEvent(holder, promote.getType(), promote.getPromProdId(), promote.getPromState(), desUrl);
-
-//            tempViewHoleder.setViewEnable(isValid);
         } else if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             final Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
@@ -100,9 +96,9 @@ public class AdapterPacket extends RecyclerView.Adapter {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_blue);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.VISIBLE);
-                setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
+                setText(tempViewHoleder.tv_amount, promote.getUseableAmt().toString());
             } else {
-                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUseableAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
@@ -123,7 +119,6 @@ public class AdapterPacket extends RecyclerView.Adapter {
         } else if (holder instanceof QQViewHoleder) {
             QQViewHoleder tempViewHoleder = (QQViewHoleder) holder;
             Promote promote = promList.get(position);
-//            setText(tempViewHoleder.tv_name, promote.getPromProdName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             String qqString = "";
             if (!TextUtils.isEmpty(promote.getFitBdTermOrYrt()) && !TextUtils.isEmpty(promote.getMinBuyAmtOrPerc())) {
@@ -136,18 +131,18 @@ public class AdapterPacket extends RecyclerView.Adapter {
             setText(tempViewHoleder.tv_percent_limit, qqString);
 //            setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
-            if ("000000000000000000000230830444".equals(promote.getPromProdId())) {
+            if ("000000000000000000000230830444".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_8);
-            } else if ("000000000000000000000230830581".equals(promote.getPromProdId())) {
+            } else if ("000000000000000000000230830581".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_50);
-            } else if ("000000000000000000000230830662".equals(promote.getPromProdId())) {
+            } else if ("000000000000000000000230830662".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_100);
-            } else if ("000000000000000000000230830778".equals(promote.getPromProdId())) {
+            } else if ("000000000000000000000230830778".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_210);
-            } else if ("000000000000000000000230830828".equals(promote.getPromProdId())) {
+            } else if ("000000000000000000000230830828".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_520);
             }
-            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getCanUseAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUseableAmt()));
 //            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
             if (mPosition == position) {
                 tempViewHoleder.promoteChoosed.setVisibility(View.VISIBLE);

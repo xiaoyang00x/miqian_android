@@ -24,6 +24,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OrderRecharge;
 import com.miqian.mq.entity.OrderRechargeResult;
@@ -63,7 +64,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private PayOrder payOrder;
 
     private String money;
-    private String bankNumber;
+    private String authCode;
     //    private String realName;
 //    private String idCard;
     private int rollType;//为1时传入充值金额，为0时不传
@@ -116,6 +117,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 if ("0".equals(timeInfo)) {
                     btnSendCaptcha.setEnabled(true);
                     btnSendCaptcha.setText("获取验证码");
+                    btnSendCaptcha.setTextColor(ContextCompat.getColor(mActivity, R.color.mq_r1_v2));
                 }
                 super.handleMessage(msg);
             }
@@ -176,8 +178,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //            frameRealName.setVisibility(View.GONE);
 //            frameBind.setVisibility(View.GONE);
 //            frameBound.setVisibility(View.VISIBLE);
-        bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
-        bindBankNumber.setText(bankNumber);
+        bindBankNumber.setText( RSAUtils.decryptByPrivate(userInfo.getBankNo()));
         textMobile.setText(userInfo.getMobile());
 //            if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
 //                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
@@ -193,7 +194,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void rollIn() {
-//        HttpRequest.rollinJx(this, "amt", "bankNo", "captcha", "authCode");
         if (rollType == 0) {
             money = editMoney.getText().toString();
             if (TextUtils.isEmpty(money)) {
@@ -240,6 +240,21 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //            }
 //        }
         String captcha = editCaptcha.getText().toString();
+        if (!TextUtils.isEmpty(captcha)) {
+            if (captcha.length() < 6) {
+                Uihelper.showToast(this, R.string.capthcha_num);
+                return;
+            }
+        } else {
+            Uihelper.showToast(this, R.string.tip_captcha);
+            return;
+        }
+
+        if (TextUtils.isEmpty(authCode)) {
+            Uihelper.showToast(this, "请获取验证码");
+            return;
+        }
+
         begin();
         HttpRequest.rollIn(mActivity, new ICallback<OrderRechargeResult>() {
             @Override
@@ -267,7 +282,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 end();
                 Uihelper.showToast(mActivity, error);
             }
-        }, money, bankNumber, captcha);
+        }, money, authCode, captcha);
     }
 
     @Override
@@ -280,20 +295,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         mTitle.setTitleText("在线快捷充值");
     }
 
-    private void showBankLimit() {
-        mTitle.setRightText("银行列表");
-        mTitle.setOnRightClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WebActivity.startActivity(mActivity, Urls.web_support_bank);
-            }
-        });
-    }
-
-    public void textLawCick(View v) {
-        WebActivity.startActivity(mActivity, Urls.web_recharge_law);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -304,6 +305,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 sendMessage();
                 break;
             case R.id.text_limit:
+                WebActivity.startActivity(mActivity, Urls.web_support_bank);
                 break;
             default:
                 break;
@@ -313,10 +315,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     private void sendMessage() {
         begin();
-        HttpRequest.getCaptcha(this, new ICallback<Meta>() {
+        HttpRequest.getCaptcha(this, new ICallback<CaptchaResult>() {
             @Override
-            public void onSucceed(Meta result) {
+            public void onSucceed(CaptchaResult result) {
                 end();
+                authCode = result.getData().getAuthCode();
                 btnSendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -330,7 +333,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, userInfo.getMobile(), TypeUtil.CAPTCHA_REGISTER);
+        }, userInfo.getMobile(), TypeUtil.CAPTCHA_QUICK_RECHARGE);
 
     }
 
@@ -359,84 +362,16 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    public static PayOrder constructPreCardPayOrder(PayOrder payOrder) {
-        payOrder.setAcct_name(RSAUtils.decryptByPrivate(payOrder.getAcct_name()));
-        payOrder.setCard_no(RSAUtils.decryptByPrivate(payOrder.getCard_no()));
-        payOrder.setUser_id(RSAUtils.decryptByPrivate(payOrder.getUser_id()));
-        payOrder.setId_no(RSAUtils.decryptByPrivate(payOrder.getId_no()));
-        return payOrder;
-    }
 
-//    class MyHandler extends Handler {
-//        WeakReference<IntoActivity> weakActivity;
-//
-//        public MyHandler(IntoActivity activity) {
-//            weakActivity = new WeakReference<>(activity);
+//    public static String showErrorString(Context context, String key) {
+//        String errorData = Pref.getString(Pref.ERROR_LIAN, context, Constants.ERROR_LIAN_DEFAULT);
+//        if (!TextUtils.isEmpty(errorData)) {
+//            Map<String, String> userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
+//            });
+//            return userMap.get(key);
 //        }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            String strRet = (String) msg.obj;
-//            textErrorLian.setVisibility(View.GONE);
-//            switch (msg.what) {
-//                case Constants.RQF_PAY:
-//                    JSONObject objContent = BaseHelper.string2JSON(strRet);
-//                    String retCode = objContent.optString("ret_code");
-//                    String retMsg = objContent.optString("ret_msg");
-//                    String orderNo = payOrder.getNo_order();
-//                    // //先判断状态码，状态码为 成功或处理中 的需要 验签
-//                    if (Constants.RET_CODE_SUCCESS.equals(retCode)) {
-//                        String resulPay = objContent.optString("result_pay");
-//                        if (Constants.RESULT_PAY_SUCCESS.equalsIgnoreCase(resulPay)) {
-//                            // 支付成功后续处理
-//                            if (rollType == 1) {
-//                                backSubscribePage(orderNo);
-//                            } else {
-//                                checkOrder(orderNo);
-//                            }
-//                        } else {
-//                            Uihelper.showToast(mActivity, retMsg);
-//                        }
-//                    } else if (Constants.RET_CODE_PROCESS.equals(retCode)) {
-//                        String resulPay = objContent.optString("result_pay");
-//                        if (Constants.RESULT_PAY_PROCESSING.equalsIgnoreCase(resulPay)) {
-//                            if (rollType == 1) {
-//                                setResult(CurrentInvestment.PROCESSING);
-////                                jumpToResult(CurrentInvestment.PROCESSING, money, orderNo);
-//                            } else {
-//                                checkOrder(orderNo);
-//                            }
-//                        }
-//                    } else if (retCode.equals("1006")) {
-//                        Uihelper.showToast(mActivity, "您已取消当前交易");
-//                    } else {
-//                        rollInError(mActivity, orderNo, strRet);
-//                        textErrorLian.setVisibility(View.VISIBLE);
-//                        String errorString = showErrorString(mActivity, retCode);
-//                        if (TextUtils.isEmpty(errorString)) {
-//                            errorString = retMsg;
-//                        }
-//                        textErrorLian.setText(errorString);
-//                    }
-//                    break;
-//            }
-//            super.handleMessage(msg);
-//        }
+//        return null;
 //    }
-
-    public static void rollInError(Context context, String orderNo, String error) {
-        HttpRequest.rollInError(context, orderNo, error);
-    }
-
-    public static String showErrorString(Context context, String key) {
-        String errorData = Pref.getString(Pref.ERROR_LIAN, context, Constants.ERROR_LIAN_DEFAULT);
-        if (!TextUtils.isEmpty(errorData)) {
-            Map<String, String> userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
-            });
-            return userMap.get(key);
-        }
-        return null;
-    }
 
     private void checkOrder(String orderNo) {
         begin();
@@ -464,17 +399,17 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //        }, orderNo);
     }
 
-    /**
-     * 返回订单页面认购
-     *
-     * @param orderNo
-     */
-    private void backSubscribePage(String orderNo) {
-        Intent intent = new Intent();
-        intent.putExtra("orderNo", orderNo);
-        setResult(CurrentInvestment.SUCCESS, intent);
-        IntoActivity.this.finish();
-    }
+//    /**
+//     * 返回订单页面认购
+//     *
+//     * @param orderNo
+//     */
+//    private void backSubscribePage(String orderNo) {
+//        Intent intent = new Intent();
+//        intent.putExtra("orderNo", orderNo);
+//        setResult(CurrentInvestment.SUCCESS, intent);
+//        IntoActivity.this.finish();
+//    }
 
     /**
      * 跳转充值结果

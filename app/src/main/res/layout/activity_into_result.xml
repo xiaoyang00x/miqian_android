@@ -16,12 +16,6 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/result_bg" />
-
-            <ImageView
                 android:id="@+id/image_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,6 +32,12 @@
                 android:text="充值成功"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mq_font6_v2" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/save_wave" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -115,25 +115,5 @@
                 style="@style/click_btn"
                 android:text="确定" />
         </RelativeLayout>
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/frame_tip"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="@dimen/margin_left_right"-->
-            <!--android:layout_marginRight="@dimen/margin_left_right"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:orientation="vertical"-->
-            <!--android:paddingBottom="50dp"-->
-            <!--android:visibility="visible">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/text_tip"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--android:textColor="@color/mq_b2"-->
-                <!--android:textSize="@dimen/mq_font4" />-->
-        <!--</LinearLayout>-->
     </LinearLayout>
 </ScrollView>

@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
-import com.miqian.mq.activity.user.LoginActivity;
+import com.miqian.mq.activity.save.SaveAcitvity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
@@ -43,14 +43,17 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.ExtendOperationListener;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.JsonUtil;
+import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
+import com.miqian.mq.views.DialogJxSave;
 import com.miqian.mq.views.DialogTip;
 import com.miqian.mq.views.DialogUpdate;
 import com.miqian.mq.views.FragmentTabHost;
 import com.miqian.mq.views.MyRelativeLayout;
+import com.miqian.mq.views.SystemBarTintManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -117,6 +120,14 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             GestureLockVerifyActivity.startActivity(getBaseContext(), MainActivity.class);
         }
         MyApplication.setIsBackStage(false);
+        if (MobileOS.isKitOrNewer()) {
+            // 创建状态栏的管理实例
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            // 激活状态栏设置
+            tintManager.setStatusBarTintEnabled(true);
+            // 设置一个颜色给系统栏
+            tintManager.setStatusBarTintResource(R.color.base_background);
+        }
     }
 
     @Override
@@ -131,12 +142,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         }
         if (mTabHost != null && current_tab != mTabHost.getCurrentTab()) {
             mTabHost.setCurrentTab(current_tab);
-        }
-        if (current_tab == 4) {//代表登录成功
-            mTabHost.setCurrentTab(0);
-        }
-        if (current_tab == 5) {//代表退出账号成功
-            mTabHost.setCurrentTab(0);
         }
         //app在当前
         showJushTip();
@@ -458,16 +463,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         FragmentTabHost.TabSpec tabSpecUser = mTabHost.newTabSpec(TAG_USER);
         tabSpecUser.setIndicator(tabIndicator4.getTabIndicator());
         mTabHost.addTab(tabSpecUser, FragmentUser.class, null);
-        mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!UserUtil.hasLogin(MainActivity.this)) {
-                    LoginActivity.start(MainActivity.this);
-                } else {
-                    mTabHost.setCurrentTab(3);
-                }
-            }
-        });
     }
 
     @Override
@@ -646,6 +641,11 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                 current_tab = 0;
                 ActivityStack.getActivityStack().clearActivity();
                 break;
+            case OperationKey.JX_SAVE:
+                current_tab = 0;
+                ActivityStack.getActivityStack().clearActivity();
+                showJxSave();
+                break;
             case OperationKey.BACK_CURRENT:
                 current_tab = 1;
                 ActivityStack.getActivityStack().clearActivity();
@@ -701,12 +701,6 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
                     ActivityStack.getActivityStack().clearActivity();
                 }
                 break;
-            case OperationKey.LOGIN_SUCCESS:
-                current_tab = 4;
-                break;
-            case OperationKey.EXIT_SUCCESS:
-                current_tab = 5;
-                break;
             default:
                 break;
         }
@@ -753,6 +747,20 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         if (imgRedPointer != null) {
             imgRedPointer.setVisibility(View.VISIBLE);
         }
+    }
+
+
+    /**
+     * 江西银行存管弹窗--老用户
+     */
+    public void showJxSave() {
+        DialogJxSave dialogJxSave = new DialogJxSave(this) {
+            @Override
+            public void positionBtnClick() {
+                startActivity(new Intent(MainActivity.this, SaveAcitvity.class));
+            }
+        };
+        dialogJxSave.show();
     }
 
 

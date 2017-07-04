@@ -141,6 +141,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.user.UserRecordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.user.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
@@ -159,11 +164,23 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PaymodeActivity"
+            android:name=".activity.rollin.IntoResultActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.rollin.IntoResultActivity"
+            android:name=".activity.save.SaveAcitvity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.save.SaveBindAcitvity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.save.SaveAutoAcitvity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.save.SaveResultAcitvity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
@@ -269,14 +286,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.user.MyRegularTransferDetailActivity"
+            android:name=".activity.user.UserDigitalCardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.user.LaunchTransferRegularAcitivity"
+            android:name=".activity.user.MyRegularTransferDetailActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".receiver.HomeDialogReceiver"
@@ -416,10 +432,6 @@
             android:value="@string/jpush_appkey" />
 
         <!--  </>值来自开发者平台取得的AppKey-->
-        <activity
-            android:name=".activity.CapitalRecordActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.user.UserRegularActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

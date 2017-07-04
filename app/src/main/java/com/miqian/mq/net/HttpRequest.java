@@ -6,13 +6,15 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.activity.WebBankActivity;
+import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
+import com.miqian.mq.entity.BankCardInfoResult;
 import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
+import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.ConfigResult;
 import com.miqian.mq.entity.CurrentDetailsInfo;
@@ -21,6 +23,7 @@ import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.MqListResult;
 import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.CurrentRecordResult;
+import com.miqian.mq.entity.CustBindBankBranch;
 import com.miqian.mq.entity.ErrorLianResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.LoginResult;
@@ -41,6 +44,7 @@ import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
+import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.entity.SubscribeOrderResult;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UpdateResult;
@@ -49,6 +53,8 @@ import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.UserRegularResult;
+import com.miqian.mq.entity.WithDrawInitReSult;
+import com.miqian.mq.entity.WithDrawPrepressResult;
 import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
@@ -201,12 +207,12 @@ public class HttpRequest {
     /**
      * 充值
      */
-    public static void rollIn(Context context, final ICallback<OrderRechargeResult> callback, String amt, String bankNo, String captcha) {
+    public static void rollIn(Context context, final ICallback<OrderRechargeResult> callback, String amt, String authCode, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
-        mList.add(new Param("captcha", "captcha"));
+        mList.add(new Param("authCode", authCode));
+        mList.add(new Param("captcha", captcha));
 
         new MyAsyncTask(context, Urls.roll_in, mList, new ICallback<String>() {
 
@@ -258,41 +264,9 @@ public class HttpRequest {
     }
 
     /**
-     * 充值失败原因上传
-     */
-    public static void rollInError(final Context context, String orderNo, String error) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("orderNo", orderNo));
-        mList.add(new Param("llJson", error));
-        mList.add(new Param("llErrorCodeVersion", Pref.getString(Pref.ERROR_LIAN_VERSION, context, IntoActivity.showErrorString(context, "llErrorCodeVersion"))));
-
-        new MyAsyncTask(context, Urls.rollin_error, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                ErrorLianResult errorLianResult = JsonUtil.parseObject(result, ErrorLianResult.class);
-                String errorData = errorLianResult.getData();
-                Map<String, String> userMap = null;
-                if (!TextUtils.isEmpty(errorData)) {
-                    userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
-                    });
-                    if (userMap.size() > 0) {
-                        Pref.saveString(Pref.ERROR_LIAN, errorData, context);
-                        Pref.saveString(Pref.ERROR_LIAN_VERSION, userMap.get("llErrorCodeVersion"), context);
-                    }
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
      * 获取用户信息
      */
-    public static void getUserInfo(Context context, final ICallback<UserInfoResult> callback) {
+    public static void getUserInfo(final Context context, final ICallback<UserInfoResult> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
@@ -302,6 +276,7 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 UserInfoResult userInfoResult = JsonUtil.parseObject(result, UserInfoResult.class);
                 if (userInfoResult.getCode().equals("000000")) {
+                    UserUtil.saveJxSave(context, userInfoResult.getData(), false);
                     callback.onSucceed(userInfoResult);
                 } else {
                     callback.onFail(userInfoResult.getMessage());
@@ -373,9 +348,17 @@ public class HttpRequest {
     //检验验证码
 
     /**
-     * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
-     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现   13008 --找回交易密码
+     * @param operationType //    13001——注册
+     *                      //    13002——找回登录密码
+     *                      //    13003— 秒钱宝赎回
+     *                      //    13004——旧活期赎回
+     *                      //    13005——修改登录密码
+     *                      //    15001——开户
+     *                      //    15002——快捷充值
+     *                      //    15003——绑卡 已开户未绑卡
+     *                      //    15004——修改交易密码
      */
+
     public static void checkCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobile", RSAUtils.encryptURLEncode(phone)));
@@ -405,10 +388,18 @@ public class HttpRequest {
     //获取验证码
 
     /**
-     * @param operationType 13001——注册  ；13002——找回密码 ；13003——重新绑定手机号第一次获取验证码 ；13004——重新绑定手机号第二次获取验证码
-     *                      13005——银行卡信息补全        13006——修改银行卡         13007——非首次提现  13008——找回交易密码
+     * @param operationType //    13001——注册
+     *                      //    13002——找回登录密码
+     *                      //    13003— 秒钱宝赎回
+     *                      //    13004——旧活期赎回
+     *                      //    13005——修改登录密码
+     *                      //    15001——开户
+     *                      //    15002——快捷充值
+     *                      //    15003——绑卡 已开户未绑卡
+     *                      //    15004——修改交易密码
      */
-    public static void getCaptcha(Context context, final ICallback<Meta> callback, String phone, int operationType) {
+
+    public static void getCaptcha(Context context, final ICallback<CaptchaResult> callback, String phone, int operationType) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("mobile", RSAUtils.encryptURLEncode(phone)));
         mList.add(new Param("operationType", "" + operationType));
@@ -417,7 +408,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                CaptchaResult meta = JsonUtil.parseObject(result, CaptchaResult.class);
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -627,7 +618,7 @@ public class HttpRequest {
     }
 
     //修改登录密码
-    public static void changePassword(Context context, final ICallback<LoginResult> callback,
+    public static void changePassword(Context context, final ICallback<Meta> callback,
                                       String oldPassword, String newPassword, String confirmPassword) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
@@ -639,11 +630,11 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                LoginResult loginResult = JsonUtil.parseObject(result, LoginResult.class);
-                if (loginResult.getCode().equals("000000")) {
-                    callback.onSucceed(loginResult);
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(loginResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
@@ -761,23 +752,18 @@ public class HttpRequest {
     }
 
     //绑定银行卡
-    public static void bindBank(Context context, final ICallback<Meta> callback, String bankNo,
-                                String tradeType, String bankCode, String bankName, String branchName, String prov,
-                                String city) {
+    public static void bindBank(Context context, final ICallback<CustBindBankBranch> callback, String bankUnionNumber) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("bankNo", RSAUtils.encryptURLEncode(bankNo)));
-        mList.add(new Param("tradeType", tradeType));
-        mList.add(new Param("bankCode", bankCode));
-        mList.add(new Param("bankName", bankName));
-        mList.add(new Param("branchName", branchName));
-        mList.add(new Param("prov", prov));
-        mList.add(new Param("city", city));
+        mList.add(new Param("bankUnionNumber", bankUnionNumber));
+        mList.add(new Param("branchName", ""));
+        mList.add(new Param("prov", ""));
+        mList.add(new Param("city", ""));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         new MyAsyncTask(context, Urls.bindBank, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                CustBindBankBranch meta = JsonUtil.parseObject(result, CustBindBankBranch.class);
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -972,11 +958,11 @@ public class HttpRequest {
 
     //获取支行接口
     public static void getSubBranch(Context context, final ICallback<BankBranchResult> callback,
-                                    String provinceName, String city, String bankCode) {
+                                    String province, String city, String bankName) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("provinceName", provinceName));
+        mList.add(new Param("province", province));
         mList.add(new Param("city", city));
-        mList.add(new Param("bankCode", bankCode));
+        mList.add(new Param("bankName", bankName));
         new MyAsyncTask(context, Urls.getSubBranch, mList, new ICallback<String>() {
 
             @Override
@@ -1112,6 +1098,7 @@ public class HttpRequest {
 
     /**
      * 获取资金记录
+     * @param operateType 10 充值 20 认购 30 到期 40 赎回 50 提现
      */
     public static void getCapitalRecords(Context context, final ICallback<CapitalRecordResult> callback, String pageNo, String pageSize, String operateType) {
         List<Param> mList = new ArrayList<>();
@@ -1353,13 +1340,19 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    //我的促销接口，包括红包，拾财券等
-    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String state, String pageNum, String pageSize) {
+    /**
+     *  我的促销接口，包括红包，拾财券等
+     * @param context
+     * @param callback
+     * @param status    0 可使用 1 使用完  2 已过期
+     * @param pageNo    页码（默认1）
+     * @param pageSize  每页条数（默认20）
+     */
+    public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String status, String pageNo, String pageSize) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("promTypCd", ""));
-        mList.add(new Param("sta", state));
-        mList.add(new Param("pageNum", pageNum));
+        mList.add(new Param("status", status));
+        mList.add(new Param("pageNo", pageNo));
         mList.add(new Param("pageSize", pageSize));
         new MyAsyncTask(context, Urls.getCustPromotion, mList, new ICallback<String>() {
 
@@ -1588,6 +1581,7 @@ public class HttpRequest {
                     callback.onFail(meta.getMessage());
                 }
             }
+
             @Override
             public void onFail(String error) {
                 callback.onFail(error);
@@ -1624,20 +1618,202 @@ public class HttpRequest {
 
 
 //江西银行跳转接口
+
+//    /**
+//     * 江西银行充值接口
+//     */
+//    public static void rollinJx(final Activity activity, String amt, String bankNo, String captcha, String authCode) {
+//        ArrayList params = new ArrayList<>();
+//        params.add(new Param("custId", "125145556"));
+////        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
+//        params.add(new Param("amt", amt));
+//        params.add(new Param("bankNo", bankNo));
+//        params.add(new Param("captcha", captcha));
+//        params.add(new Param("authCode", authCode));
+//        params.add(new Param("cType", "android"));
+//        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, 1);
+////        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, HfUpdateActivity.REQUEST_CODE_ROLLIN);
+//    }
+
     /**
-     * 江西银行充值接口
+     * 江西银行设置交易密码
      */
-    public static void rollinJx(final Activity activity, String amt,  String bankNo,  String captcha,  String authCode) {
+    public static void setJxPassword(final Activity activity) {
         ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId", UserUtil.getUserId(activity)));
-        params.add(new Param("custId", "125145556"));
-//        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
-        params.add(new Param("amt", amt));
-        params.add(new Param("bankNo", bankNo));
-        params.add(new Param("captcha", captcha));
-        params.add(new Param("authCode", authCode));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        WebBankActivity.startActivity(activity, Urls.jx_password_url, params, 1);
+    }
+
+    /**
+     * 江西银行:签署自动债权转让协议
+     */
+    public static void autoClaims(final Activity activity) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        WebBankActivity.startActivity(activity, Urls.jx_auto_claims_url, params, 1);
+    }
+
+    /**
+     * 江西银行:签署自动认购协议
+     */
+    public static void autoSubscribe(final Activity activity) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        WebBankActivity.startActivity(activity, Urls.jx_auto_subscribe_url, params, 1);
+    }
+
+    /**
+     * 江西银行:存管-提现跳转
+     */
+    public static void autoWithdraw(final Activity activity) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         params.add(new Param("cType", "android"));
-        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, 1);
-//        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, HfUpdateActivity.REQUEST_CODE_ROLLIN);
+        params.add(new Param("amt", "amt"));
+        WebBankActivity.startActivity(activity, Urls.jx_auto_withdraw_url, params, 1);
+    }
+
+    /**
+     * 江西银行开通存管
+     * authCode 授权码 (获取短信验证码返回)
+     */
+    public static void openJx(Context context, final ICallback<Meta> callback, String idCard, String userName, String mobile, String bankCardNo, String authCode, String captcha) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("idCard", idCard));
+        params.add(new Param("userName", userName));
+        params.add(new Param("mobile", mobile));
+        params.add(new Param("bankCardNo", bankCardNo));
+        params.add(new Param("authCode", authCode));
+        params.add(new Param("captcha", captcha));
+
+        new MyAsyncTask(context, Urls.jx_open, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if ("000000".equals(meta.getCode())) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 获取开通存管状态
+     */
+    public static void openJxPreprocess(Context context, final ICallback<SaveInfoResult> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.jx_open_preprocess, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                SaveInfoResult meta = JsonUtil.parseObject(result, SaveInfoResult.class);
+                if ("000000".equals(meta.getCode())) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 我的电子银行账户
+     */
+    public static void jxCustCardInfo(Context context, final ICallback<BankCardInfoResult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        new MyAsyncTask(context, Urls.jx_custbankcardinfo, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                BankCardInfoResult data = JsonUtil.parseObject(result, BankCardInfoResult.class);
+                if (data.getCode().equals("000000")) {
+                    callback.onSucceed(data);
+                } else {
+                    callback.onFail(data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 提现初始化
+     */
+    public static void withDrawInit(Context context, final ICallback<WithDrawInitReSult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        new MyAsyncTask(context, Urls.withdrawinit_jx, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                WithDrawInitReSult data = JsonUtil.parseObject(result, WithDrawInitReSult.class);
+                if (data.getCode().equals("000000")) {
+                    callback.onSucceed(data);
+                } else {
+                    callback.onFail(data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 提现预处理
+     */
+    public static void withDrawPreprocess(Context context, String amt, final ICallback<WithDrawPrepressResult> callback) {
+        ArrayList params = new ArrayList<>();
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
+        params.add(new Param("amt", amt));
+        new MyAsyncTask(context, Urls.withdrawPreprocess_jx, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                WithDrawPrepressResult data = JsonUtil.parseObject(result, WithDrawPrepressResult.class);
+                if (data.getCode().equals("000000")) {
+                    callback.onSucceed(data);
+                } else {
+                    callback.onFail(data.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
     }
 }

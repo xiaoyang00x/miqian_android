@@ -13,18 +13,23 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.GestureLockSetActivity;
+import com.miqian.mq.activity.SendCaptchaActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Login;
 import com.miqian.mq.entity.LoginResult;
+import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ActivityStack;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.ProgressDialogView;
 import com.miqian.mq.views.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +41,7 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends Activity {
 
+    private static LoginListener mLoginListener;
     @BindView(R.id.edit_telephone)
     EditText editPhone;
     @BindView(R.id.edit_password)
@@ -60,6 +66,16 @@ public class LoginActivity extends Activity {
         }
         ButterKnife.bind(this);
         initView();
+        //增加栈管理器
+        ActivityStack.getActivityStack().pushActivity(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        //友盟统计
+        MobclickAgent.onPageStart("登录");
     }
 
     @Override
@@ -81,6 +97,13 @@ public class LoginActivity extends Activity {
     }
 
     public static void start(Activity activity) {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.activity_anim_scenic_in, R.anim.activity_anim_scenic_no);
+    }
+
+    public static void start(Activity activity, LoginListener loginListener) {
+        mLoginListener = loginListener;
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.activity_anim_scenic_in, R.anim.activity_anim_scenic_no);
@@ -126,13 +149,17 @@ public class LoginActivity extends Activity {
                 //保存用户信息
                 Pref.saveString(Pref.TOKEN, userInfo.getToken(), LoginActivity.this);
                 Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), LoginActivity.this);
-                Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobile()), LoginActivity.this);
+                Pref.saveString(Pref.TELEPHONE, userInfo.getMobile(), LoginActivity.this);
+                Pref.saveString(UserUtil.getPrefKey(LoginActivity.this, Pref.IS_SAVE_BEFORE), userInfo.getIsBeforeDepositRegisterStatus(), LoginActivity.this);
                 if (Pref.getBoolean(Pref.GESTURESTATE, LoginActivity.this, true)) {
                     GestureLockSetActivity.startActivity(LoginActivity.this, null);
                 }
                 Uihelper.showToast(LoginActivity.this, "登录成功");
-                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS,null);
+                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
                 UserUtil.loginSuccess();
+                if (mLoginListener!=null){
+                    mLoginListener.loginSuccess();
+                }
                 finish();
             }
 
@@ -146,8 +173,13 @@ public class LoginActivity extends Activity {
 
     @OnClick(R.id.btn_findpassword) //找回登录密码
     public void findPassWord() {
+        Intent intent = new Intent(LoginActivity.this, SendCaptchaActivity.class);
+        intent.putExtra("type", TypeUtil.CAPTCHA_FINDPASSWORD);
+        startActivity(intent);
+        finish();
 
     }
+
     /**
      * 显示 loading 对话框
      */

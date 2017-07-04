@@ -18,7 +18,6 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.MyTicketInvalidActivity;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.utils.Uihelper;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.util.List;
 
@@ -85,7 +84,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
 
     public static boolean isQQPromote(Promote promote) {
         boolean flag = false;
-        switch (promote.getPromProdId()) {
+        switch (promote.getCouponsId()) {
             case "000000000000000000000230830444":
             case "000000000000000000000230830581":
             case "000000000000000000000230830662":
@@ -139,23 +138,23 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
         if (holder instanceof BaBaViewHoleder) {
             BaBaViewHoleder tempViewHoleder = (BaBaViewHoleder) holder;
             Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
             String desUrl = promote.getPromUrl();
-            setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getCanUseAmt() : promote.getTotalAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUseableAmt() : promote.getTotalAmt()));
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
             tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
-            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
+            clickEvent(holder, promote.getCouponsId(), promote.getPromState(), desUrl);
 
             tempViewHoleder.setViewEnable(isValid);
         } else if (holder instanceof BaseViewHoleder) {
             BaseViewHoleder tempViewHoleder = (BaseViewHoleder) holder;
             Promote promote = promList.get(position);
-            setText(tempViewHoleder.tv_name, promote.getPromProdName());
+            setText(tempViewHoleder.tv_name, promote.getName());
             setText(tempViewHoleder.tv_validate_date, Uihelper.redPaperTime(promote.getEndTimestamp()));
             setText(tempViewHoleder.tv_percent_limit, promote.getMinBuyAmtOrPerc());
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
@@ -165,9 +164,9 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_blue);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.VISIBLE);
-                setText(tempViewHoleder.tv_amount, promote.getGiveYrt());
+                setText(tempViewHoleder.tv_amount, promote.getUseableAmt().toString());
             } else {
-                setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getCanUseAmt() : promote.getTotalAmt()));
+                setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUseableAmt() : promote.getTotalAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
@@ -180,7 +179,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 }
 
             }
-            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
+            clickEvent(holder, promote.getCouponsId(), promote.getPromState(), desUrl);
 
             tempViewHoleder.setViewEnable(isValid);
         } else if (holder instanceof QQViewHoleder) {
@@ -200,19 +199,19 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
 //            setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
             String desUrl = promote.getPromUrl();
-            if ("000000000000000000000230830444".equals(promote.getPromProdId())) {
+            if ("000000000000000000000230830444".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_8);
-            } else if ("000000000000000000000230830581".equals(promote.getPromProdId())) {
+            } else if ("000000000000000000000230830581".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_50);
-            } else if ("000000000000000000000230830662".equals(promote.getPromProdId())) {
+            } else if ("000000000000000000000230830662".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_100);
-            } else if ("000000000000000000000230830778".equals(promote.getPromProdId())) {
+            } else if ("000000000000000000000230830778".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_210);
-            } else if ("000000000000000000000230830828".equals(promote.getPromProdId())) {
+            } else if ("000000000000000000000230830828".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_520);
             }
-            setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getCanUseAmt() : promote.getTotalAmt()));
-            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
+            setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUseableAmt() : promote.getTotalAmt()));
+            clickEvent(holder, promote.getCouponsId(), promote.getPromState(), desUrl);
 //            tempViewHoleder.setViewEnable(isValid);
         } else if (holder instanceof ProgressViewHolder) {
             if (position >= maxValue) {

@@ -381,7 +381,7 @@ public class CurrentDetailActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.btn_buy:
                     if (!UserUtil.hasLogin(CurrentDetailActivity.this)) {
-                        UserUtil.showRegisterDialog(CurrentDetailActivity.this);
+                        UserUtil.toRegisterctivity(CurrentDetailActivity.this);
                     } else {
                         jumpToNextPageIfInputValid();
                     }

@@ -1,104 +1,89 @@
 package com.miqian.mq.activity.user;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.TradePsCaptchaActivity;
-import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.setting.BankBranchActivity;
-import com.miqian.mq.activity.setting.CityListActivity;
-import com.miqian.mq.activity.setting.SetPasswordActivity;
-import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.BankCard;
-import com.miqian.mq.entity.BankCardResult;
-import com.miqian.mq.entity.RollOut;
-import com.miqian.mq.entity.RollOutResult;
-import com.miqian.mq.entity.UserInfo;
-import com.miqian.mq.entity.WithDrawResult;
-import com.miqian.mq.entity.WithdrawItem;
+import com.miqian.mq.activity.setting.SetBankActivity;
+import com.miqian.mq.entity.WithDrawInit;
+import com.miqian.mq.entity.WithDrawInitReSult;
+import com.miqian.mq.entity.WithDrawPrepress;
+import com.miqian.mq.entity.WithDrawPrepressResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.net.Urls;
-import com.miqian.mq.utils.FormatUtil;
-import com.miqian.mq.utils.MyTextWatcher;
-import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.views.CustomDialog;
-import com.miqian.mq.views.DialogTradePassword;
-import com.miqian.mq.views.TextViewEx;
+import com.miqian.mq.views.DialogTipSave;
 import com.miqian.mq.views.WFYTitle;
-import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
-import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 /**
- * Created by Joy on 2015/9/22.
+ * Created by Administrator on 2017/6/29.
  */
-public class RolloutActivity extends BaseActivity {
-    private UserInfo userInfo;
-    private TextView
-            bindBankId,
-            bindBankName,
-            textBranch,
-            tv_bank_province;
-    private View frame_bindbranch,
-            frame_bank_branch,
-            frame_bank_province;
-    private EditText editMoney;
-    private String bankOpenName,
-            city,
-            province,
-            moneyString,
-            cardNum,
-            totalMoney;
-    private CustomDialog dialogTips, dialogTipsReput;
-    private DialogTradePassword dialogTradePassword_input;
-    private boolean isChooseCity;
-    private BankCard bankCard;
-    private boolean isSuccessBindBranch;
-    private View btnRollout;
-    private BigDecimal mLimitLowestMoney = BigDecimal.TEN;  //最低提现金额，默认10元
-    private TextViewEx tvTips;
-    private ImageView imageBank;
 
-    @Override
-    public void onCreate(Bundle arg0) {
-        Intent intent = getIntent();
-        userInfo = (UserInfo) intent.getSerializableExtra("userInfo");
-        super.onCreate(arg0);
-    }
+public class RolloutActivity extends BaseActivity {
+
+    @BindView(R.id.tv_amt)
+    TextView tvAmt;
+    @BindView(R.id.tv_remain_count)
+    TextView tvRemainCount;
+    @BindView(R.id.iv_bankicon)
+    ImageView ivBankIcon;
+    @BindView(R.id.tv_cardnum)
+    TextView tvCardNum;
+    @BindView(R.id.et_amt)
+    EditText etAmt;
+    @BindView(R.id.layout_bankunion)
+    View layoutBankUnion;
+    @BindView(R.id.tv_bankunion)
+    EditText tvBankUnion;
+    @BindView(R.id.btn_summit)
+    Button btnSummit;
+
+    @BindView(R.id.layout_below5amt)
+    View layoutBelow5amt;
+    @BindView(R.id.layout_aboveamt)
+    View layoutAboveamt;
+    @BindView(R.id.btn_openbank)
+    Button btnOpenBank;
+
+
+    public String inputAmt;
+    private int monthRemain;
+    private int dayRemain;
+    private BigDecimal amt;
+    private WithDrawInit data;
+    private DialogTipSave disableDialog;
+    private DialogTipSave feeDialog;
+    private DialogTipSave openBankDialog;
+    private String bankUnionNumber;
 
     @Override
     public void obtainData() {
+        //提现初始化
         begin();
-        HttpRequest.getUserBankCard(mActivity, new ICallback<BankCardResult>() {
+        HttpRequest.withDrawInit(mActivity, new ICallback<WithDrawInitReSult>() {
             @Override
-            public void onSucceed(BankCardResult result) {
+            public void onSucceed(WithDrawInitReSult result) {
                 end();
-                btnRollout.setEnabled(true);
-                bankCard = result.getData();
-                if (bankCard != null) {
-                    bankOpenName = bankCard.getBankOpenName();
-                    String limitLowestMoney = bankCard.getWithdrawLimitLowestAmt();
-                    if (!TextUtils.isEmpty(limitLowestMoney)) {
-                        mLimitLowestMoney = new BigDecimal(limitLowestMoney);
-                    }
-                    String limitTips = bankCard.getWithdrawLimitPrompt();
-                    if (!TextUtils.isEmpty(limitTips)) {
-                        limitTips = limitTips.replace("|n", "\n");
-                        tvTips.setText(limitTips,true);
-                    }
+                data = result.getData();
+                if (data != null) {
+                    amt = data.getAmt();
+                    setdata(data);
                 }
-                initBindBranchView();
             }
 
             @Override
@@ -111,125 +96,139 @@ public class RolloutActivity extends BaseActivity {
     }
 
     @Override
-    public void initView() {
-        findView();
-        initBindView();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            bankUnionNumber = data.getStringExtra("bankUnionNumber");
+            if (!TextUtils.isEmpty(bankUnionNumber)) {
+                btnOpenBank.setVisibility(View.GONE);
+                tvBankUnion.setVisibility(View.VISIBLE);
+                tvBankUnion.setText(bankUnionNumber);
+            }
+        }
 
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void initBindBranchView() {
-        if (TextUtils.isEmpty(bankOpenName)) {
-            frame_bindbranch.setVisibility(View.VISIBLE);
-            frame_bank_province.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+    private void setdata(WithDrawInit data) {
 
-                    Intent intent_city = new Intent(mActivity, CityListActivity.class);
-                    startActivityForResult(intent_city, 0);
-                }
-            });
-
-            frame_bank_branch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (isChooseCity) {
-                        Intent intent_branch = new Intent(mActivity, BankBranchActivity.class);
-                        intent_branch.putExtra("city", city);
-                        intent_branch.putExtra("province", province);
-                        intent_branch.putExtra("bankcode", bankCard.getBankCode());
-                        intent_branch.putExtra("fromsetting", false);
-                        intent_branch.putExtra("bankName", userInfo.getBankName());
-                        intent_branch.putExtra("bankCard", cardNum);
-                        startActivityForResult(intent_branch, 0);
-
-                    } else {
-                        Uihelper.showToast(mActivity, "请先选择城市");
-                    }
-
-                }
-            });
-
-        } else {
+        tvAmt.setText(amt + "元");
+        tvRemainCount.setText("本月可免费提现" + data.getMonthRemain() + "次");
+        String bankUrlSmall = data.getBankUrlSmall();
+        if (!TextUtils.isEmpty(bankUrlSmall)) {
+            imageLoader.displayImage(bankUrlSmall, ivBankIcon, options);
         }
+        String bankNo = data.getBankNo();
+        if (!TextUtils.isEmpty(bankNo)) {
+            tvCardNum.setText(bankNo.substring(bankNo.length() - 4, bankNo.length()));
+        }
+
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        if (resultCode == 2) {
-            isSuccessBindBranch = true;
-            String branch = data.getStringExtra("branchbank");
-            if (!TextUtils.isEmpty(branch)) {
-                textBranch.setText(branch);
-            }
+    public void initView() {
+        ButterKnife.bind(this);
+        etAmt.addTextChangedListener(new TextWatcher() {
 
-        } else if (resultCode == 0) {
-            isChooseCity = true;
-            city = data.getStringExtra("city");
-            province = data.getStringExtra("province");
-            if (!TextUtils.isEmpty(city)) {
-                tv_bank_province.setText(city);
-            }
-            //设置交易密码成功
-        } else if (resultCode == TypeUtil.TRADEPASSWORD_SETTING_SUCCESS) {
-            userInfo.setPayPwdStatus("1");
-            rollOutHttp();
-        }
-    }
-
-    private void initBindView() {
-        if (userInfo == null) {
-            return;
-        }
-        if (!TextUtils.isEmpty(userInfo.getBankNo())) {
-            cardNum = RSAUtils.decryptByPrivate(userInfo.getBankNo());
-            bindBankId.setText("**** **** **** " + cardNum.substring(cardNum.length() - 4, cardNum.length()));
-        }
-        if (!TextUtils.isEmpty(userInfo.getBankName())) {
-            bindBankName.setText(userInfo.getBankName());
-        }
-        imageLoader.displayImage(userInfo.getBankUrlSmall(), imageBank, options);
-
-        if (!TextUtils.isEmpty(userInfo.getBalance())) {
-            totalMoney = userInfo.getBalance();
-            editMoney.setHint("本次最多可提现" + totalMoney + "元");
-        }
-
-    }
-
-    private void findView() {
-        bindBankId = (TextView) findViewById(R.id.bind_bank_number);
-        bindBankName = (TextView) findViewById(R.id.bind_bank_name);
-        textBranch = (TextView) findViewById(R.id.tv_bank_branch);
-        tv_bank_province = (TextView) findViewById(R.id.tv_bank_province);
-        tvTips = (TextViewEx) findViewById(R.id.tv_rollout_tip);
-        imageBank = (ImageView) findViewById(R.id.image_bank);
-
-        frame_bindbranch = findViewById(R.id.frame_bindbranch);
-        frame_bank_province = findViewById(R.id.frame_bank_province);
-        frame_bank_branch = findViewById(R.id.frame_bank_branch);
-
-        btnRollout = findViewById(R.id.bt_rollout);
-
-        editMoney = (EditText) findViewById(R.id.edit_money);
-        editMoney.addTextChangedListener(new MyTextWatcher() {
 
             @Override
-            public void myAfterTextChanged(Editable s) {
-                try {
-                    String temp = s.toString();
-                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-                        return;
-                    }
-                    s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
-                }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                inputAmt = s.toString();
+                handledata(inputAmt);
+            }
+
+
         });
+
+    }
+
+    private void handledata(String inputAmt) {
+        //UI回复原样
+        layoutBankUnion.setVisibility(View.GONE);
+        btnOpenBank.setVisibility(View.GONE);
+        tvBankUnion.setVisibility(View.GONE);
+        layoutBelow5amt.setVisibility(View.GONE);
+        layoutAboveamt.setVisibility(View.GONE);
+        btnSummit.setEnabled(false);
+
+        BigDecimal inputmoney;
+        data.getBankUnionNumber();
+        if (!TextUtils.isEmpty(inputAmt)) {
+            inputmoney = new BigDecimal(inputAmt);
+            if (amt.compareTo(amt) < 0) {//提现金额大于可提现金额
+                Uihelper.showToast(mActivity, "提现金额大于可提现金额，请重新输入");
+                return;
+            }
+            if (inputmoney.compareTo(new BigDecimal(50000)) < 0) {//小额提现
+                layoutBelow5amt.setVisibility(View.VISIBLE);
+                btnSummit.setEnabled(true);
+            } else {//大于5万的大额提现 分情况处理
+                HttpRequest.withDrawPreprocess(mActivity, inputAmt + "", new ICallback<WithDrawPrepressResult>() {
+                    @Override
+                    public void onSucceed(WithDrawPrepressResult result) {
+                        WithDrawPrepress data = result.getData();
+                        if (data.isEnable()) {
+                            if (data.isBindBankStatus()) {// 是绑卡状态
+                                layoutBankUnion.setVisibility(View.VISIBLE);
+                                tvBankUnion.setText(data.getBankUnionNumber());
+                                layoutAboveamt.setVisibility(View.VISIBLE);
+                                if (feeDialog == null) {
+                                    feeDialog = new DialogTipSave(mActivity, "温馨提示", "此次提现收取手续费" + data.getFeeAmt() + "元") {
+                                        @Override
+                                        public void positionBtnClick() {
+                                            btnSummit.setEnabled(true);
+                                        }
+                                    };
+                                }
+                                feeDialog.show();
+
+                            } else {//未绑卡状态
+                                layoutBankUnion.setVisibility(View.VISIBLE);
+                                btnOpenBank.setVisibility(View.VISIBLE);
+                                if (openBankDialog == null) {
+                                    openBankDialog = new DialogTipSave(mActivity, "温馨提示", getResources().getText(R.string.rollout_tip_openbank).toString()) {
+                                        @Override
+                                        public void positionBtnClick() {
+                                            dismiss();
+                                        }
+                                    };
+                                }
+                                openBankDialog.show();
+
+                            }
+
+                        } else {//非工作日不可提现
+                            if (disableDialog == null) {
+                                disableDialog = new DialogTipSave(mActivity, "温馨提示", getResources().getText(R.string.rollout_tip_enable).toString()) {
+                                    @Override
+                                    public void positionBtnClick() {
+                                        dismiss();
+                                    }
+                                };
+                            }
+                            disableDialog.show();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFail(String error) {
+                        Uihelper.showToast(mActivity, error);
+                    }
+                });
+
+            }
+        }
 
     }
 
@@ -238,230 +237,32 @@ public class RolloutActivity extends BaseActivity {
         return R.layout.activity_rollout;
     }
 
+    //开通联行号
+    @OnClick(R.id.btn_openbank)
+    public void openBank() {
+        String bankName = data.getBankName();
+        if (!TextUtils.isEmpty(bankName)) {
+            Intent intent = new Intent(RolloutActivity.this, SetBankActivity.class);
+            intent.putExtra("bankName", data.getBankName());
+            startActivity(intent);
+        }
+    }
+
+    //确认
+    @OnClick(R.id.btn_summit)
+    public void summit() {
+
+        HttpRequest.autoWithdraw(mActivity);
+
+    }
+
     @Override
     public void initTitle(WFYTitle mTitle) {
         mTitle.setTitleText("提现");
-        mTitle.setRightText("提现说明");
-        mTitle.setOnRightClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                WebActivity.startActivity(mActivity, Urls.web_rollout);
-            }
-        });
-
     }
 
     @Override
     protected String getPageName() {
         return "提现";
-    }
-
-    public void btn_click(View v) {
-        moneyString = editMoney.getText().toString();
-        if (TextUtils.isEmpty(moneyString)) {
-            Uihelper.showToast(mActivity, "交易金额不能为空");
-            return;
-        }
-        if (TextUtils.isEmpty(bankOpenName) && !isSuccessBindBranch) {
-            Uihelper.showToast(mActivity, "未绑定支行");
-        } else {
-            handleData();
-        }
-    }
-
-    private void handleData() {
-        BigDecimal moneyCurrent = new BigDecimal(moneyString);
-        BigDecimal moneyTotal = new BigDecimal(totalMoney);
-        if (moneyCurrent.compareTo(moneyTotal) > 0) {
-            initTipDialog(0);
-            dialogTips.setRemarks("转出金额超限");
-            dialogTips.show();
-            return;
-        } else if (moneyCurrent.compareTo(mLimitLowestMoney) < 0) {
-            initTipDialog(0);
-            dialogTips.setRemarks("转出金额不能小于" + mLimitLowestMoney + "元");
-            dialogTips.show();
-            return;
-        } else {
-            //提现预处理
-            HttpRequest.withdrawPreprocess(mActivity, new ICallback<WithDrawResult>() {
-                @Override
-                public void onSucceed(WithDrawResult result) {
-                    List<WithdrawItem> data = result.getData();
-                    StringBuilder tip = new StringBuilder();
-                    for (WithdrawItem item : data) {
-                        if (!"0".equals(item.getFeeAmt())) {
-                            tip.append("；").append(item.getName()).append(item.getFeeAmt()).append("元");
-                        }
-                    }
-                    if (!TextUtils.isEmpty(tip)) {
-                        tip.deleteCharAt(0);
-                        initTipDialog(1);
-                        dialogTipsReput.setRemarks(tip.toString());
-                        dialogTipsReput.show();
-                    } else {
-                        rollOutHttp();
-                    }
-
-                }
-
-                @Override
-                public void onFail(String error) {
-                    Uihelper.showToast(mActivity, error);
-
-                }
-            }, moneyString);
-
-        }
-    }
-
-
-    public void initTipDialog(int code) {
-
-        if (code == 0 && dialogTips == null) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-
-                @Override
-                public void positionBtnClick() {
-                    dismiss();
-                }
-
-                @Override
-                public void negativeBtnClick() {
-
-                }
-            };
-        } else {
-            dialogTipsReput = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-
-                @Override
-                public void positionBtnClick() {
-                    rollOutHttp();
-                    dismiss();
-                }
-
-                @Override
-                public void negativeBtnClick() {
-
-                }
-            };
-        }
-    }
-
-    private void initDialogTradePassword(int type) {
-
-        if (type == DialogTradePassword.TYPE_SETPASSWORD) {
-
-            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-            intent.putExtra("type", TypeUtil.TRADEPASSWORD_FIRST_SETTING);
-            startActivityForResult(intent, 0);
-            Uihelper.showToast(mActivity, "保障交易安全，请先设置交易密码");
-
-        } else {
-            if (dialogTradePassword_input == null) {
-                dialogTradePassword_input = new DialogTradePassword(mActivity, DialogTradePassword.TYPE_INPUTPASSWORD) {
-                    @Override
-                    public void positionBtnClick(String s) {
-                        dismiss();
-                        //提现
-                        rollOut(s);
-                    }
-                };
-            }
-            dialogTradePassword_input.show();
-        }
-    }
-
-    private void rollOut(String password) {
-        mWaitingDialog.show();
-        HttpRequest.withdrawCash(mActivity, new ICallback<RollOutResult>() {
-            @Override
-            public void onSucceed(RollOutResult result) {
-                mWaitingDialog.dismiss();
-                String resultCode = result.getCode();
-                //999999为失败
-                if (resultCode.equals("999999")) {
-                    RollOut rollOut = new RollOut();
-                    rollOut.setBankName(userInfo.getBankName());
-                    if (!TextUtils.isEmpty(cardNum)) {
-                        rollOut.setCardNum(cardNum);
-                    }
-                    rollOut.setMoneyOrder(moneyString);
-                    rollOut.setState("0");//失败
-                    Intent intent = new Intent(mActivity, RollOutResultActivity.class);
-                    Bundle extra = new Bundle();
-                    extra.putSerializable("rollOutResult", rollOut);
-                    intent.putExtras(extra);
-                    startActivity(intent);
-                    finish();
-                } else if (resultCode.equals("000000")) {
-                    RollOut rollOut = result.getData();
-                    if (rollOut == null) {
-                        return;
-                    }
-                    rollOut.setBankName(userInfo.getBankName());
-                    if (!TextUtils.isEmpty(cardNum)) {
-                        rollOut.setCardNum(cardNum);
-                    }
-                    rollOut.setState("1");//成功
-                    Intent intent = new Intent(mActivity, RollOutResultActivity.class);
-                    Bundle extra = new Bundle();
-                    extra.putSerializable("rollOutResult", rollOut);
-                    intent.putExtras(extra);
-                    startActivity(intent);
-                    finish();
-                }//交易密码错误4次提示框
-                else if (resultCode.equals("999992")) {
-                    showPwdError4Dialog(result.getMessage());
-                } else {
-                    Uihelper.showToast(mActivity, result.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                mWaitingDialog.dismiss();
-                Uihelper.showToast(mActivity, error);
-            }
-        }, moneyString, userInfo.getBankCode(), cardNum, password);
-
-
-    }
-
-    private void showPwdError4Dialog(String message) {
-
-        if (dialogTips == null) {
-            dialogTips = new CustomDialog(this, CustomDialog.CODE_TIPS) {
-                @Override
-                public void positionBtnClick() {
-                    MobclickAgent.onEvent(mActivity, "1028");
-                    Intent intent = new Intent(mActivity, TradePsCaptchaActivity.class);
-                    intent.putExtra("realNameStatus", userInfo.getRealNameStatus());
-                    startActivity(intent);
-                    dismiss();
-                }
-
-                @Override
-                public void negativeBtnClick() {
-                    rollOutHttp();
-                }
-            };
-            dialogTips.setRemarks(message);
-            dialogTips.setNegative("继续尝试");
-            dialogTips.setPositive("找回密码");
-            dialogTips.setTitle("交易密码错误");
-            dialogTips.setCanceledOnTouchOutside(false);
-        }
-        dialogTips.show();
-
-    }
-
-    private void rollOutHttp() {
-        if (userInfo.getPayPwdStatus() != null) {
-            int state = Integer.parseInt(userInfo.getPayPwdStatus());
-            initDialogTradePassword(state);
-        }
-
     }
 }
