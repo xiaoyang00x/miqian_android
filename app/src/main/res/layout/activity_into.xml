@@ -112,7 +112,6 @@
             android:id="@+id/text_tip1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="温馨提示：已超过快捷充值限额5万元，建议使用转账充值"
             android:textColor="@color/mq_b5_v2"
             android:textSize="@dimen/mq_font4_v2" />
 
@@ -120,7 +119,6 @@
             android:id="@+id/text_tip2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="温馨提示：已超过快捷充值限额5万元，建议使用转账充值, 由于存管银行维护"
             android:textColor="@color/mq_r1_v2"
             android:textSize="@dimen/mq_font4_v2" />
 

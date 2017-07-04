@@ -147,29 +147,29 @@ public class Urls {
     //修改交易密码
     public final static String setPayPassword = getServer() + "userService/setPayPassword";
     //修改登录密码
-    public final static String changePassword = getServer() + "userService/changePassword";
+    public final static String changePassword = getServer() + "user/changePassword";//user/changePassword
     //找回登录密码
-    public final static String getPassword = getServer() + "userService/getPassword";
+    public final static String getPassword = getServer() + "user/getPassword";///userService/getPassword
     //检验验证码
-    public final static String checkCaptcha = getServer() + "commonService/checkCaptcha";
+    public final static String checkCaptcha = getServer() + "captcha/checkCaptcha";//commonService/checkCaptcha
     //获取用户的银行卡
     public final static String getUserBankCard = getServer() + "userService/getUserBankCard";
     //自动识别银行卡
     public final static String autoIdentifyBankCard = getServer() + "assetService/autoIdentifyBankCard";
     //绑定银行卡
-    public final static String bindBank = getServer() + "commonService/bindBank";
+    public final static String bindBank = getServer() + "bank/custBindBankBranch";//  commonService/bindBank
     //获取城市接口
-    public final static String getAllCity = getServer() + "commonService/getAllCity";
+    public final static String getAllCity = getServer() + "areaData/getCityByProv";// commonService/getAllCity
     //获取支行
-    public final static String getSubBranch = getServer() + "commonService/getSubBranch";
+    public final static String getSubBranch = getServer() + "bank/getBranch";//commonService/getSubBranch
     //登出
-    public final static String loginOut = getServer() + "userService/logout";
+    public final static String loginOut = getServer() + "user/logout";//userService/logout
     //提现
     public final static String withdrawCash = getServer() + "assetService/withdrawCash";
     //我的活期
     public final static String user_current = getServer() + "userService/getMyCurrent";
     //我的定期
-    public final static String user_regular = getServer() + "userRegService/v2/getMyRegBuyList";
+    public final static String user_regular = getServer() + "mine/getMyRegBuyList";  ///userRegService/v2/getMyRegBuyList
     //我的定期详情
     public final static String user_regular_detail = getServer() + "userRegService/v2/getRegDetail";
     //项目匹配
@@ -190,10 +190,10 @@ public class Urls {
     //home
     public final static String homeInfo = getServer() + "home/getAppHome";
     //records of capital
-    public final static String recordsCapital = getServer() + "userService/getAssetRecord";
+    public final static String recordsCapital = getServer() + "mine/getFundFlow";// userService/getAssetRecord
 
     //我的促销接口
-    public final static String getCustPromotion = getServer() + "userService/getCustPromotion";
+    public final static String getCustPromotion = getServer() + "promotion/getCustPromotion";//"userService/getCustPromotion";
     //赎回
     public final static String redeem = getServer() + "assetService/redeem";
     //我的活期资金记录
@@ -220,6 +220,10 @@ public class Urls {
     public final static String web_register_law = "https://res.shicaidai.com/miaoqian/webView/service-items.html";
     //《网络借贷风险及禁止行为提示》
     public final static String web_register_law_net = "https://res.shicaidai.com/miaoqian/webView/dengluxieyi.html";
+    //网络交易资金账户服务第三方协议:
+    public final static String web_otth_law = getWebServer() + "Client/netOTTHProtocol.html";
+    //用户授权协议：
+    public final static String web_authority_law = getWebServer() + "Client/userAuthorityProtocol.html";
     //充值页面：《资金管理协议》
     public final static String web_recharge_law = "https://res.shicaidai.com/miaoqian/webView/zjglxy.html";
     //活期认购页：《活期赚服务协议》
@@ -243,15 +247,25 @@ public class Urls {
     public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
 
 
-    //连连支付支持绑定的银行界面
-    public final static String web_support_bank = getServer() + "webView/querySupportBankLianLian";
+    //银行限额说明
+    public final static String web_support_bank = getWebServer() + "Client/limitDescription.html";
 
     //活期详情
     public final static String web_current = getServer() + "webView/currentDetail";
     //帮助中心
     public final static String web_help = "https://res.shicaidai.com/miaoqian/webView/helpCenter.html";
 
+    /**
+     * 小坛的接口start
+     */
+    //提现初始化
+    public final static String withdrawinit_jx = getServer() + "trans/withdrawInit";
+    //提现预处理
+    public final static String withdrawPreprocess_jx = getServer() + "trans/withdrawPreprocess";
 
+    /**
+     * 小坛的接口end
+     */
     //首页运营活动
     public final static String get_home_activity = getServer() + "home/getAppHomeActivity";
     public final static String get_activity_feedback = getServer() + "home/getActivityFeedback";
@@ -281,4 +295,15 @@ public class Urls {
 
     //江西银行跳转接口
     public final static String jx_rollin_url = getServer() + "trans/rechargeForJump";
+    public final static String jx_password_url = getServer() + "user/setPayPasswordForJump";
+    public final static String jx_auto_claims_url = getServer() + "signProtocol/autoClaimsTransferForJump";
+    public final static String jx_auto_subscribe_url = getServer() + "signProtocol/autoSubscribeForJump";
+    public final static String jx_auto_withdraw_url = getServer() + "trans/withdrawForJum";//提现
+
+    //江西银行开通存管
+    public final static String jx_open = getServer() + "user/openAccount";
+    //江西银行存管状态
+    public final static String jx_open_preprocess = getServer() + "user/openAccountPreprocess";
+
+    public final static String jx_custbankcardinfo = getServer() + "bank/custBankCardInfo";
 }

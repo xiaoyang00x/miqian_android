@@ -33,7 +33,7 @@ public class UserInfo implements Serializable {
     private String amtMinLimit;//充值最小额度
     private String canRedeem;//可赎回金额
     private String amtPerLimit; //单笔限额
-    private String dayAmtLimit; // 每日限额
+    private String amtDayLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
     private String ydayProfit;//昨日收益
     private String custLevel;//新增用户等级
@@ -356,12 +356,12 @@ public class UserInfo implements Serializable {
         this.amtPerLimit = amtPerLimit;
     }
 
-    public String getDayAmtLimit() {
-        return dayAmtLimit;
+    public String getAmtDayLimit() {
+        return amtDayLimit;
     }
 
-    public void setDayAmtLimit(String dayAmtLimit) {
-        this.dayAmtLimit = dayAmtLimit;
+    public void setAmtDayLimit(String amtDayLimit) {
+        this.amtDayLimit = amtDayLimit;
     }
 
     public String getMonthAmtLimit() {

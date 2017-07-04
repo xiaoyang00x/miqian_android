@@ -1,6 +1,5 @@
 package com.miqian.mq.activity.rollin;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,40 +10,34 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.OrderRecharge;
 import com.miqian.mq.entity.OrderRechargeResult;
-import com.miqian.mq.entity.PayOrder;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
-import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MyTextWatcher;
-import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * Created by Joy on 2015/9/10.
@@ -57,19 +50,16 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private TextView bindBankNumber;
     private TextView textMobile;
     private TextView textLimit;
+    private TextView textTip1;
+    private TextView textTip2;
     private EditText editCaptcha;
     private Button btnSendCaptcha;
 
     private UserInfo userInfo;
-    private PayOrder payOrder;
 
     private String money;
     private String authCode;
-    //    private String realName;
-//    private String idCard;
     private int rollType;//为1时传入充值金额，为0时不传
-    private int bindStatus;
-//    private String relaNameStatus;
 
     private MyRunnable myRunnable;
     private Thread thread;
@@ -88,11 +78,13 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 if ("000000".equals(meta.getCode())) {
                     UserInfoResult userInfoResult = JsonUtil.parseObject(result, UserInfoResult.class);
                     userInfo = userInfoResult.getData();
+                    refreshView();
                 } else if ("999991".equals(meta.getCode())) {
+                    textTip2.setVisibility(View.VISIBLE);
+                    textTip2.setText(meta.getMessage());
                 } else if ("996633".equals(meta.getCode())) {
                     Uihelper.showToast(mActivity, meta.getMessage());
                 }
-                refreshView();
             }
 
             @Override
@@ -132,22 +124,20 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         AbsoluteSizeSpan ass = new AbsoluteSizeSpan(16, true);//设置字体大小 true表示单位是sp
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editMoney.setHint(new SpannedString(ss));
-
-        editMoney.addTextChangedListener(new MyTextWatcher() {
-
-            @Override
-            public void myAfterTextChanged(Editable s) {
-                try {
-//                    textErrorLian.setVisibility(View.GONE);
-                    String temp = s.toString();
-                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-                        return;
-                    }
-                    s.delete(temp.length() - 1, temp.length());
-                } catch (Exception e) {
-                }
-            }
-        });
+//        editMoney.addTextChangedListener(new MyTextWatcher() {
+//
+//            @Override
+//            public void myAfterTextChanged(Editable s) {
+//                try {
+//                    String temp = s.toString();
+//                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
+//                        return;
+//                    }
+//                    s.delete(temp.length() - 1, temp.length());
+//                } catch (Exception e) {
+//                }
+//            }
+//        });
         if (rollType == 1 || rollType == 2) {
             money = intent.getStringExtra("money");
         }
@@ -158,39 +148,15 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         editCaptcha = (EditText) findViewById(R.id.et_account_captcha);
         btnSendCaptcha = (Button) findViewById(R.id.btn_send);
         btnSendCaptcha.setOnClickListener(this);
+        textTip1 = (TextView) findViewById(R.id.text_tip1);
+        textTip2 = (TextView) findViewById(R.id.text_tip2);
     }
 
     private void refreshView() {
+        textTip1.setText("温馨提示：单笔限额" + userInfo.getAmtPerLimit() + "万， 单日限额" + userInfo.getAmtDayLimit() + "万。若充值金额超过限额您可以选择\"转账充值\"。");
         btRollin.setEnabled(true);
-//        relaNameStatus = userInfo.getRealNameStatus();
-//        if ("1".equals(relaNameStatus)) {
-//            realName = RSAUtils.decryptByPrivate(userInfo.getUserName());
-//            idCard = RSAUtils.decryptByPrivate(userInfo.getIdCard());
-//            editName.setText(realName);
-//            editCardId.setText(idCard);
-//        } else {
-//            frameRealName.setVisibility(View.VISIBLE);
-//        }
-//        if ("1".equals(userInfo.getBindCardStatus()) && "1".equals(userInfo.getSupportStatus())) {
-//            bindStatus = 1;
-//        }
-//        if (bindStatus == 1) {
-//            frameRealName.setVisibility(View.GONE);
-//            frameBind.setVisibility(View.GONE);
-//            frameBound.setVisibility(View.VISIBLE);
-        bindBankNumber.setText( RSAUtils.decryptByPrivate(userInfo.getBankNo()));
+        bindBankNumber.setText(RSAUtils.decryptByPrivate(userInfo.getBankNo()));
         textMobile.setText(userInfo.getMobile());
-//            if (!TextUtils.isEmpty(bankNumber) && bankNumber.length() > 4) {
-//                bankNumber = "**** **** **** " + bankNumber.substring(bankNumber.length() - 4, bankNumber.length());
-//            }
-//            bindBankName.setText(userInfo.getBankName());
-//            imageLoader.displayImage(userInfo.getBankUrlSmall(), imageBank, options);
-//        } else {
-//            frameRealName.setVisibility(View.VISIBLE);
-//            frameBind.setVisibility(View.VISIBLE);
-//            frameBound.setVisibility(View.GONE);
-//            showBankLimit();
-//        }
     }
 
     private void rollIn() {
@@ -207,38 +173,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 return;
             }
         }
-//
-//        if (bindStatus == 0) {
-//            bankNumber = editBankNumber.getText().toString().replaceAll(" ", "");
-//            if (TextUtils.isEmpty(bankNumber)) {
-//                Uihelper.showToast(mActivity, "卡号不能为空");
-//                return;
-//            }
-//        } else {
-//            bankNumber = RSAUtils.decryptByPrivate(userInfo.getBankNo());
-//        }
-//
-//        if ("0".equals(relaNameStatus)) {
-//            realName = editName.getText().toString();
-//            idCard = editCardId.getText().toString();
-//            if (TextUtils.isEmpty(realName)) {
-//                Uihelper.showToast(mActivity, "姓名不能为空");
-//                return;
-//            }
-//            if (realName.length() < 2) {
-//                Uihelper.showToast(mActivity, "姓名输入有误");
-//                return;
-//            }
-//            if (TextUtils.isEmpty(idCard)) {
-//                Uihelper.showToast(mActivity, "身份证号码不能为空");
-//                return;
-//            }
-//
-//            if (!idCard.matches(FormatUtil.PATTERN_IDCARD)) {
-//                Uihelper.showToast(mActivity, "身份证号码不正确");
-//                return;
-//            }
-//        }
         String captcha = editCaptcha.getText().toString();
         if (!TextUtils.isEmpty(captcha)) {
             if (captcha.length() < 6) {
@@ -262,19 +196,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 end();
                 OrderRecharge orderRecharge = orderRechargeResult.getData();
                 jumpToResult(orderRecharge);
-//                Meta meta = JsonUtil.parseObject(result, Meta.class);
-//                if ("000000".equals(meta.getCode())) {
-////                    PayOrderResult payOrderResult = JsonUtil.parseObject(result, PayOrderResult.class);
-////                    payOrder = constructPreCardPayOrder(payOrderResult.getData());
-////                    String content4Pay = JSON.toJSONString(payOrder);
-////                    MobileSecurePayer msp = new MobileSecurePayer();
-////                    msp.pay(content4Pay, mHandler, Constants.RQF_PAY, mActivity, false);
-//                } else if ("999991".equals(meta.getCode())) {
-////                    SupportBankMsgResult supportBankMsgResult = JsonUtil.parseObject(result, SupportBankMsgResult.class);
-////                    Uihelper.showToast(mActivity, supportBankMsgResult.getMessage());
-//                } else if ("996633".equals(meta.getCode())) {
-////                    Uihelper.showToast(mActivity, meta.getMessage());
-//                }
             }
 
             @Override
@@ -362,7 +283,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-
 //    public static String showErrorString(Context context, String key) {
 //        String errorData = Pref.getString(Pref.ERROR_LIAN, context, Constants.ERROR_LIAN_DEFAULT);
 //        if (!TextUtils.isEmpty(errorData)) {
@@ -373,43 +293,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 //        return null;
 //    }
 
-    private void checkOrder(String orderNo) {
-        begin();
-//        HttpRequest.rollInResult(mActivity, new ICallback<OrderLianResult>() {
-//            @Override
-//            public void onSucceed(OrderLianResult orderLianResult) {
-//                end();
-//                OrderLian orderLian = orderLianResult.getData();
-//                if (orderLianResult.getCode().equals("000000")) {
-//                    jumpToResult(CurrentInvestment.SUCCESS, orderLian.getAmt(), orderLian.getOrderNo());
-//                } else if (orderLianResult.getCode().equals("100096")) {
-//                    jumpToResult(CurrentInvestment.FAIL, orderLian.getAmt(), orderLian.getOrderNo());
-//                } else if (orderLianResult.getCode().equals("100097")) {
-//                    jumpToResult(CurrentInvestment.PROCESSING, orderLian.getAmt(), orderLian.getOrderNo());
-//                } else {
-//                    Uihelper.showToast(mActivity, orderLianResult.getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFail(String error) {
-//                end();
-//                Uihelper.showToast(mActivity, error);
-//            }
-//        }, orderNo);
-    }
-
-//    /**
-//     * 返回订单页面认购
-//     *
-//     * @param orderNo
-//     */
-//    private void backSubscribePage(String orderNo) {
-//        Intent intent = new Intent();
-//        intent.putExtra("orderNo", orderNo);
-//        setResult(CurrentInvestment.SUCCESS, intent);
-//        IntoActivity.this.finish();
-//    }
 
     /**
      * 跳转充值结果
@@ -417,19 +300,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
      * @param orderRecharge
      */
     private void jumpToResult(OrderRecharge orderRecharge) {
-//        if (rollType == 0 || status == CurrentInvestment.PROCESSING) {
-//            Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-//            intent.putExtra("status", status);
-//            intent.putExtra("money", money);
-//            intent.putExtra("orderNo", orderNo);
-//            intent.putExtra("tip", orderNo);
-//            startActivity(intent);
-//        } else {
-//            Intent intent = new Intent();
-//            intent.putExtra("orderNo", orderNo);
-//            setResult(status, intent);
-//        }
-
         Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
         intent.putExtra("status", orderRecharge.getStatus());
         intent.putExtra("money", orderRecharge.getAmt());
@@ -456,85 +326,4 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         isTimer = false;
         super.onDestroy();
     }
-
-    //    //  银行卡4位1空格
-//    TextWatcher textWatcher = new TextWatcher() {
-//        int beforeTextLength = 0;
-//        int onTextLength = 0;
-//        boolean isChanged = false;
-//
-//        int location = 0;// 记录光标的位置
-//        private char[] tempChar;
-//        private StringBuffer buffer = new StringBuffer();
-//        int konggeNumberB = 0;
-//
-//        @Override
-//        public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            onTextLength = s.length();
-//            buffer.append(s.toString());
-//            if (onTextLength == beforeTextLength || onTextLength <= 3 || isChanged) {
-//                isChanged = false;
-//                return;
-//            }
-//            isChanged = true;
-//        }
-//
-//        @Override
-//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            beforeTextLength = s.length();
-//            if (buffer.length() > 0) {
-//                buffer.delete(0, buffer.length());
-//            }
-//            konggeNumberB = 0;
-//            for (int i = 0; i < s.length(); i++) {
-//                if (s.charAt(i) == ' ') {
-//                    konggeNumberB++;
-//                }
-//            }
-//        }
-//
-//        @Override
-//        public void afterTextChanged(Editable s) {
-//            if (isChanged) {
-//                textErrorLian.setVisibility(View.GONE);
-////                location = editBankNumber.getSelectionEnd();
-//                int index = 0;
-//                while (index < buffer.length()) {
-//                    if (buffer.charAt(index) == ' ') {
-//                        buffer.deleteCharAt(index);
-//                    } else {
-//                        index++;
-//                    }
-//                }
-//
-//                index = 0;
-//                int konggeNumberC = 0;
-//                while (index < buffer.length()) {
-//                    if (index % 5 == 4) {
-//                        buffer.insert(index, ' ');
-//                        konggeNumberC++;
-//                    }
-//                    index++;
-//                }
-//
-//                if (konggeNumberC > konggeNumberB) {
-//                    location += (konggeNumberC - konggeNumberB);
-//                }
-//
-//                tempChar = new char[buffer.length()];
-//                buffer.getChars(0, buffer.length(), tempChar, 0);
-//                String str = buffer.toString();
-//                if (location > str.length()) {
-//                    location = str.length();
-//                } else if (location < 0) {
-//                    location = 0;
-//                }
-//
-////                editBankNumber.setText(str);
-////                Editable etable = editBankNumber.getText();
-////                Selection.setSelection(etable, location);
-//                isChanged = false;
-//            }
-//        }
-//    };
 }
