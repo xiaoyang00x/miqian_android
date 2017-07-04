@@ -150,7 +150,7 @@ public class LoginActivity extends Activity {
                 Pref.saveString(Pref.TOKEN, userInfo.getToken(), LoginActivity.this);
                 Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), LoginActivity.this);
                 Pref.saveString(Pref.TELEPHONE, userInfo.getMobile(), LoginActivity.this);
-                Pref.saveString(Pref.IS_SAVE_BEFORE, userInfo.getIsBeforeDepositRegisterStatus(), LoginActivity.this);
+                Pref.saveString(UserUtil.getPrefKey(LoginActivity.this, Pref.IS_SAVE_BEFORE), userInfo.getIsBeforeDepositRegisterStatus(), LoginActivity.this);
                 if (Pref.getBoolean(Pref.GESTURESTATE, LoginActivity.this, true)) {
                     GestureLockSetActivity.startActivity(LoginActivity.this, null);
                 }

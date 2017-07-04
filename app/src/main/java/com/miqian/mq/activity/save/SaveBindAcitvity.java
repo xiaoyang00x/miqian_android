@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,6 +28,7 @@ import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
+import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -280,6 +282,9 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
                 super.handleMessage(msg);
             }
         };
+        if (UserUtil.isSaveBefore(this)) {
+            getmTitle().setIvLeftVisiable(View.GONE);
+        }
     }
 
     @Override
@@ -301,5 +306,13 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
     protected void onDestroy() {
         isTimer = false;
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (UserUtil.isSaveBefore(this) && keyCode == KeyEvent.KEYCODE_BACK) {
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

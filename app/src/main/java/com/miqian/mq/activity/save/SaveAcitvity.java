@@ -2,6 +2,7 @@ package com.miqian.mq.activity.save;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -81,6 +82,11 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
         btOpen.setOnClickListener(this);
         btProduct = (Button) findViewById(R.id.bt_product);
         btProduct.setOnClickListener(this);
+
+        if (UserUtil.isSaveBefore(this)) {
+            getmTitle().setIvLeftVisiable(View.GONE);
+            btProduct.setVisibility(View.GONE);
+        }
     }
 
     private void refreshView() {
@@ -174,4 +180,12 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (UserUtil.isSaveBefore(this) && keyCode == KeyEvent.KEYCODE_BACK) {
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

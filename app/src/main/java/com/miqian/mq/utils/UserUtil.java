@@ -29,6 +29,23 @@ public class UserUtil {
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userId), context);
     }
 
+    /**
+     * 是否存管之前的老用户
+     * @param context
+     * @return
+     */
+    public static boolean isSaveBefore(Context context) {
+        if ("1".equals(Pref.getString(getPrefKey(context, Pref.IS_SAVE_BEFORE), context, null))) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 用户是否完成存管
+     * @param context
+     * @return
+     */
     public static boolean isFinishSave(Context context) {
         int flag = Pref.getInt(getPrefKey(context, Pref.IS_SAVE_FINISH), context, 0);
         if (flag == 1) {
@@ -68,7 +85,6 @@ public class UserUtil {
         JpushHelper.setAlias(context);
         loginSuccess();
     }
-
 
     /**
      * 显示广告跳转
