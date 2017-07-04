@@ -66,6 +66,8 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
 //                    TCAgent.onEvent(mContext, Pref.SERVER_ERROR_CODE, Pref.getString(Pref.USERID, mContext, Pref.VISITOR) + result);
                     callback.onFail(SERVER_ERROR);
                 } else {
+//                    MqResult<ProductBaseInfo> response = JSON.parseObject(result, new TypeReference<MqResult<ProductBaseInfo>>(){});
+
                     Meta response = JsonUtil.parseObject(result, Meta.class);
                     if (response.getCode().equals("999995")) {//token失效
                         JpushInfo jpushInfo = new JpushInfo();

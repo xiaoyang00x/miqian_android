@@ -15,15 +15,18 @@ import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.ConfigResult;
-import com.miqian.mq.entity.CurrentInfoResult;
+import com.miqian.mq.entity.CurrentDetailsInfo;
+import com.miqian.mq.entity.GetHomeActivity;
+import com.miqian.mq.entity.HomePageInfo;
+import com.miqian.mq.entity.MqListResult;
+import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.ErrorLianResult;
-import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.entity.GetRegularResult;
-import com.miqian.mq.entity.HomePageInfoResult;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.OperationResult;
 import com.miqian.mq.entity.OrderRechargeResult;
 import com.miqian.mq.entity.ProducedOrderResult;
@@ -33,7 +36,6 @@ import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.RegTransDetailResult;
 import com.miqian.mq.entity.RegTransFerredDetailResult;
 import com.miqian.mq.entity.RegisterResult;
-import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularDetailResult;
 import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.entity.RegularTransferListResult;
@@ -116,14 +118,14 @@ public class HttpRequest {
     /**
      * 活期首页
      */
-    public static void getCurrentHome(Context context, final ICallback<CurrentInfoResult> callback) {
+    public static void getCurrentHome(Context context, final ICallback<MqResult<ProductBaseInfo>> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         new MyAsyncTask(context, Urls.current_home, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                CurrentInfoResult currentInfoResult = JsonUtil.parseObject(result, CurrentInfoResult.class);
+                MqResult<ProductBaseInfo> currentInfoResult = JsonUtil.parseObject(result, new TypeReference<MqResult<ProductBaseInfo>>(){});
                 if (currentInfoResult.getCode().equals("000000")) {
                     callback.onSucceed(currentInfoResult);
                 } else {
@@ -683,7 +685,7 @@ public class HttpRequest {
     /**
      * 获取首页信息
      */
-    public static void getHomePageInfo(Context context, final ICallback<HomePageInfoResult> callback) {
+    public static void getHomePageInfo(Context context, final ICallback<MqListResult<HomePageInfo>> callback) {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
         if (!TextUtils.isEmpty(custId)) {
@@ -693,12 +695,12 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                HomePageInfoResult homePageInfoResult = JSON.parseObject(result, HomePageInfoResult.class);
+                MqListResult<HomePageInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqListResult<HomePageInfo>>(){});
 
-                if (homePageInfoResult.getCode().equals("000000")) {
-                    callback.onSucceed(homePageInfoResult);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(homePageInfoResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
@@ -796,7 +798,8 @@ public class HttpRequest {
     public static void getRegularProjectList(Context context, final ICallback<RegularProjectListResult> callback) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("pageNo", "1"));
-        params.add(new Param("pageSize", "50"));
+//        params.add(new Param("pageSize", "50"));
+        params.add(new Param("staGroup", "1"));
         new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
 
             @Override
@@ -881,12 +884,42 @@ public class HttpRequest {
         params.add(new Param("subjectId", subjectId));
         params.add(new Param("pageNo", "1"));
         params.add(new Param("pageSize", "50"));
-        String url = prodId == RegularBase.REGULAR_03 || prodId == RegularBase.REGULAR_05 ?
-                Urls.REGULA_PROJECT : Urls.REGULA_PROJECT_TRANSFER;
+        String url = Urls.REGULA_PROJECT_TRANSFER;
+//        String url = prodId == RegularBase.REGULAR_03 || prodId == RegularBase.REGULAR_05 ?
+//                Urls.REGULA_PROJECT : Urls.REGULA_PROJECT_TRANSFER;
         new MyAsyncTask(context, url, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
                 RegularDetailResult meta = JsonUtil.parseObject(result, RegularDetailResult.class);
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 获取定期详情
+     *
+     * @param prodId 秒钱产品类型：3 秒钱宝 1 定期项目 2 定期计划
+     */
+    public static void getCurrentDetail(Context context, String prodId, final ICallback<MqResult<CurrentDetailsInfo>> callback) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("productCode", prodId));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        String url = Urls.current_detail;
+        new MyAsyncTask(context, url, params, new ICallback<String>() {
+            @Override
+            public void onSucceed(String result) {
+                MqResult<CurrentDetailsInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<CurrentDetailsInfo>>(){});
+
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -1452,7 +1485,7 @@ public class HttpRequest {
     /**
      * 获取首页运营活动列表
      */
-    public static void getHomeActivity(Context context, final ICallback<GetHomeActivityResult> callback) {
+    public static void getHomeActivity(Context context, final ICallback<MqResult<GetHomeActivity>> callback) {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
         if (!TextUtils.isEmpty(custId)) {
@@ -1462,7 +1495,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                GetHomeActivityResult meta = JsonUtil.parseObject(result, GetHomeActivityResult.class);
+                MqResult<GetHomeActivity> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<GetHomeActivity>>(){});
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {

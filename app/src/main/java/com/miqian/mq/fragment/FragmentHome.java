@@ -17,9 +17,9 @@ import android.view.ViewGroup;
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.HomeAdapter;
 import com.miqian.mq.entity.GetHomeActivity;
-import com.miqian.mq.entity.GetHomeActivityResult;
 import com.miqian.mq.entity.HomePageInfo;
-import com.miqian.mq.entity.HomePageInfoResult;
+import com.miqian.mq.entity.MqListResult;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.listener.HomeDialogListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.net.HttpRequest;
@@ -169,10 +169,10 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
             isFirstLoading = false;
         }
         swipeRefresh.setRefreshing(true);
-        HttpRequest.getHomePageInfo(getActivity(), new ICallback<HomePageInfoResult>() {
+        HttpRequest.getHomePageInfo(getActivity(), new ICallback<MqListResult<HomePageInfo>>() {
 
             @Override
-            public void onSucceed(HomePageInfoResult result) {
+            public void onSucceed(MqListResult<HomePageInfo> result) {
                 synchronized (mLock) {
                     inProcess = false;
                 }
@@ -277,10 +277,10 @@ public class FragmentHome extends BasicFragment implements ImageLoadingListener,
         synchronized (mActivityLock) {
             inActivityProcess = true;
         }
-        HttpRequest.getHomeActivity(getActivity(), new ICallback<GetHomeActivityResult>() {
+        HttpRequest.getHomeActivity(getActivity(), new ICallback<MqResult<GetHomeActivity>>() {
 
             @Override
-            public void onSucceed(GetHomeActivityResult result) {
+            public void onSucceed(MqResult<GetHomeActivity> result) {
                 synchronized (mActivityLock) {
                     inActivityProcess = false;
                 }

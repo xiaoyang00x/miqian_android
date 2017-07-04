@@ -57,7 +57,8 @@ public class Urls {
 //    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
-    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
+
+    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
     public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
 
     //线上
@@ -108,7 +109,9 @@ public class Urls {
     //充值失败错误原因上传接口
     public final static String rollin_error = getServer() + "assetService/rechargeFailureLianLian";
     //活期首页
-    public final static String current_home = getServer() + "currentService/getCurrentMain";
+    public final static String current_home = getServer() + "newCurrent/queryNewCurrentForApp";
+    //活期首页
+    public final static String current_detail = getServer() + "newCurrent/queryNewCurrentDetail";
     //认购预处理
     public final static String order_produced = getServer() + "assetService/subscribePreprocess";
     //认购
@@ -177,7 +180,7 @@ public class Urls {
     public final static String repayment_detail = getServer() + "commonService/getRepaymentList";
 
     //定期首页
-    public final static String REGULA_PROJECT = getServer() + "subjectService/regularList";
+    public final static String REGULA_PROJECT = getServer() + "regular/queryRegularList";
     //定期转让首页
     public final static String REGULA_PROJECT_TRANSFER = getServer() + "transferService/regularList";
 
@@ -185,7 +188,7 @@ public class Urls {
     public final static String getFitSubject = getServer() + "subjectService/getFitSubject";
 
     //home
-    public final static String homeInfo = getServer() + "commonService/v3/getHome";
+    public final static String homeInfo = getServer() + "home/getAppHome";
     //records of capital
     public final static String recordsCapital = getServer() + "userService/getAssetRecord";
 
@@ -250,8 +253,8 @@ public class Urls {
 
 
     //首页运营活动
-    public final static String get_home_activity = getServer() + "activityService/getHomeActivity";
-    public final static String get_activity_feedback = getServer() + "activityService/getActivityFeedback";
+    public final static String get_home_activity = getServer() + "home/getAppHomeActivity";
+    public final static String get_activity_feedback = getServer() + "home/getActivityFeedback";
 
     //每日计息
     public final static String web_current_earning = "https://res.shicaidai.com/miaoqian/current/meirijixi.html";

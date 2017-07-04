@@ -4,25 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/mq_b7_v2">
 
-    <TextView
-        android:id="@+id/tv_begin_countdown"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#FAECBC"
-        android:drawableLeft="@drawable/ic_clock"
-        android:drawablePadding="5dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:singleLine="true"
-        android:textColor="@color/mq_y3_v2"
-        android:textSize="@dimen/mq_font5_v2"
-        android:visibility="gone" />
-
     <com.miqian.mq.views.MySwipeRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tv_begin_countdown">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -142,21 +127,13 @@
                         android:id="@+id/tv_time_limit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_profit_rate"
                         android:layout_alignLeft="@+id/temp2"
-                        android:layout_below="@+id/temp2"
-                        android:text="60"
+                        android:text="活存活取"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/mq_font15_v2"
+                        android:textSize="@dimen/mq_font10_v2"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/tv_time_limit"
-                        android:layout_toRightOf="@+id/tv_time_limit"
-                        android:text="天"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/mq_font5_v2" />
 
                     <TextView
                         android:id="@+id/tv_remain_amount"
@@ -203,24 +180,24 @@
                     android:id="@+id/tv_88"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/mq_b7_v2"
                     android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:singleLine="true"
                     android:gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:paddingTop="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/mq_bl1_v2"
                     android:textSize="@dimen/mq_font3_v2" />
 
-                <ViewStub
-                    android:id="@+id/viewstub_detail"
+                <LinearLayout
+                    android:id="@+id/layout_details"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
 
                 <View
                     android:layout_width="match_parent"

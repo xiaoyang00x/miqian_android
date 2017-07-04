@@ -33,6 +33,8 @@ public class JsonUtil {
 		try {
 			return JSON.parseObject(httpString, type);
 		} catch (Exception e) {
+			e.printStackTrace();
+			LogUtil.d(e.getMessage());
 			return null;
 		}
 	}

@@ -33,7 +33,6 @@
                         android:layout_width="220dp"
                         android:layout_height="220dp"
                         android:layout_centerInParent="true"
-                        android:progress="50"
                         app:draw_progress_text="false"
                         app:line_count="120"
                         app:line_width="12dp"
@@ -110,6 +109,7 @@
                     android:background="@drawable/bg_current_time"
                     android:gravity="center"
                     android:text="09月20日 09:00发售"
+                    android:visibility="invisible"
                     />
             </LinearLayout>
 
@@ -210,6 +210,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="6dp"
                         android:text="立即认购"
+                        android:background="@drawable/btn_red"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mq_font8_v2" />
 

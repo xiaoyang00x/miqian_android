@@ -22,7 +22,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.util.Base64;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
@@ -31,6 +30,7 @@ import com.miqian.mq.entity.ShareData;
 import com.miqian.mq.listener.JsShareListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
+import com.miqian.mq.utils.Base64;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;

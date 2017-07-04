@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_height"
-    android:background="@color/mq_r1_v2">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_regular_project"
@@ -11,8 +11,8 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="定期理财"
-        android:textColor="@color/white"
+        android:text="定期"
+        android:textColor="@color/black"
         android:textSize="@dimen/mq_font8_v2" />
 
     <!--<View

@@ -39,4 +39,52 @@ public class Constants {
             "\"llErrorCodeVersion\": \"1.1\"" +
             "}";
 
+    /**
+     * 秒钱产品类型：3 秒钱宝 1 定期项目 2 定期计划
+     */
+    public static final int PRODUCT_TYPE_REGULAR_PROJECT = 1;
+    public static final int PRODUCT_TYPE_REGULART_PLAN = 2;
+    public static final int PRODUCT_TYPE_MQB = 3;
+
+    /**
+     * 产品状态： 1 创建,2 待审核,3 待上线, 4 待开标,5 开标,6 满标,7 已结束未满标,8 满标下线,9 未认购下线
+     */
+    public static final String PRODUCT_STATUS_CJ = "1";
+    public static final String PRODUCT_STATUS_DSH = "2";
+    public static final String PRODUCT_STATUS_DSX = "3";
+    public static final String PRODUCT_STATUS_DKB = "4";
+    public static final String PRODUCT_STATUS_KB = "5";
+    public static final String PRODUCT_STATUS_MB = "6";
+    public static final String PRODUCT_STATUS_JSWMB = "7";
+    public static final String PRODUCT_STATUS_MBXX = "8";
+    public static final String PRODUCT_STATUS_WRGXX = "9";
+
+    /**
+     * 聚合产品状态，将明细的产品状态聚合为三种状态：0待开标、1已开标、2已满额
+     * 待开标：1 创建,2 待审核,3 待上线, 4 待开标,
+     * 已开标：5 开标
+     * 已满额：7 已结束未满标,8 满标下线,9 未认购下线
+     */
+    public static final int STATUS_DKB = 0;
+    public static final int STATUS_YKB = 1;
+    public static final int STATUS_YMB = 2;
+
+    /**
+     * 根据服务器的明细产品状态判断返回聚合产品状态
+     * @param productStatus
+     * @return
+     */
+    public static int getCurrentStatus(String productStatus) {
+        if(PRODUCT_STATUS_CJ.equals(productStatus) ||
+                PRODUCT_STATUS_DSH.equals(productStatus) ||
+                PRODUCT_STATUS_DSX.equals(productStatus) ||
+                PRODUCT_STATUS_DKB.equals(productStatus) ) {
+            return STATUS_DKB;
+        }else if(PRODUCT_STATUS_KB.equals(productStatus)) {
+            return STATUS_YKB;
+        }else {
+            return STATUS_YMB;
+        }
+    }
+
 }
