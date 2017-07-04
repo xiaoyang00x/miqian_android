@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.activity.WebBankActivity;
-import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -24,7 +22,6 @@ import com.miqian.mq.entity.MqListResult;
 import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.CustBindBankBranch;
-import com.miqian.mq.entity.ErrorLianResult;
 import com.miqian.mq.entity.GetRegularResult;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
@@ -40,7 +37,8 @@ import com.miqian.mq.entity.RegTransDetailResult;
 import com.miqian.mq.entity.RegTransFerredDetailResult;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularDetailResult;
-import com.miqian.mq.entity.RegularProjectListResult;
+import com.miqian.mq.entity.RegularProjectData;
+import com.miqian.mq.entity.RegularProjectList;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
@@ -62,7 +60,6 @@ import com.miqian.mq.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Jackie on 2015/9/4.
@@ -781,16 +778,17 @@ public class HttpRequest {
     /**
      * 获取定期首页列表数据
      */
-    public static void getRegularProjectList(Context context, final ICallback<RegularProjectListResult> callback) {
+    public static void getRegularProjectList(Context context, final ICallback<MqResult<RegularProjectList>> callback) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("pageNo", "1"));
-//        params.add(new Param("pageSize", "50"));
-        params.add(new Param("staGroup", "1"));
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
         new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                RegularProjectListResult meta = JsonUtil.parseObject(result, RegularProjectListResult.class);
+                MqResult<RegularProjectList> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RegularProjectList>>(){});
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {

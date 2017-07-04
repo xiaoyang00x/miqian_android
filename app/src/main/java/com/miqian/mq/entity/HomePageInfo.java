@@ -22,7 +22,7 @@ public class HomePageInfo {
     private MessageInfo bsPushData;                                             //公告
     private ArrayList<HomeOperationData> operationDatas;                        //运营数据
     private ArrayList<HomeRecommendData> hotRecommendData;                      //热门推荐
-    private ArrayList<HomeSelectionProject> subjectInfoData;                    //精选项目
+    private ArrayList<ProductRegularBaseInfo> subjectInfoData;                    //精选项目
     private ArrayList<HomeNewActivitiesData> hotActivityData;                   //新手活动
     private ArrayList<HomeNewsData> hotNewsData;                                //新闻动态
     private String consumerHotLine;                                             //客服电话
@@ -75,11 +75,11 @@ public class HomePageInfo {
         this.hotRecommendData = hotRecommendData;
     }
 
-    public ArrayList<HomeSelectionProject> getSubjectInfoData() {
+    public ArrayList<ProductRegularBaseInfo> getSubjectInfoData() {
         return subjectInfoData;
     }
 
-    public void setSubjectInfoData(ArrayList<HomeSelectionProject> subjectInfoData) {
+    public void setSubjectInfoData(ArrayList<ProductRegularBaseInfo> subjectInfoData) {
         this.subjectInfoData = subjectInfoData;
     }
 

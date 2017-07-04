@@ -12,13 +12,11 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.RegularDetailActivity;
-import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.HomePageInfo;
-import com.miqian.mq.entity.HomeSelectionProject;
-import com.miqian.mq.entity.RegularProjectInfo;
+import com.miqian.mq.entity.ProductRegularBaseInfo;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.math.BigDecimal;
 
@@ -72,7 +70,7 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
      * @param data
      * @return
      */
-    private View initProjectView(final HomeSelectionProject data) {
+    private View initProjectView(final ProductRegularBaseInfo data) {
         View projectView = inflater.inflate(R.layout.item_home_project, null);
         //项目名称
         TextView tv_project_name = (TextView)projectView.findViewById(R.id.tv_project_name);
@@ -104,86 +102,84 @@ public class HomeSelectionHolder extends HomeBaseViewHolder {
             layout_project.setBackgroundColor(Color.WHITE);
         }
 
-        tv_project_name.setText(data.getSubjectName());
-        profit_rate.setText(data.getYearInterest());
-        if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-            profit_rate.setText((new BigDecimal(data.getYearInterest()).multiply(new BigDecimal("2")).toString()));
+        tv_project_name.setText(data.getProductName());
+        profit_rate.setText(data.getProductRate());
+        if (Constants.BID_TYPE_SBB.equals(data.getBidType())) {
+            profit_rate.setText(data.getYearRate());
             tv_add_interest.setText("%");
-        } else if (1 == data.getPresentationYesNo()) {
-            tv_add_interest.setText("+ " + data.getPresentationYearInterest() + "%");
+        } else if ((new BigDecimal(data.getAddInterestRate()).compareTo(BigDecimal.ZERO)) == 1) {
+            tv_add_interest.setText("+ " + data.getAddInterestRate() + "%");
         }else {
             tv_add_interest.setText("%");
         }
-        tv_time_limit.setText(data.getLimit());
+        tv_time_limit.setText(data.getProductTerm());
         if(TextUtils.isEmpty(data.getSubscript())) {
             tv_corner_mark.setVisibility(View.INVISIBLE);
         }else {
             tv_corner_mark.setText(data.getSubscript());
             tv_corner_mark.setVisibility(View.VISIBLE);
         }
-        tv_remain_amount.setText("可认购金额:￥"+ FormatUtil.formatAmount(data.getResidueAmt())+"/" + FormatUtil.formatAmount(data.getSubjectTotalPrice()));
+        tv_remain_amount.setText("可认购金额:￥"+ FormatUtil.formatAmount(data.getRemainAmount())+"/" + FormatUtil.formatAmount(data.getBidAmount()));
 
-        //待开标
-        if ("00".equals(data.getSubjectStatus())) {
-            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
-            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
-            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
-            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
-            btn_buy.setBackgroundResource(R.drawable.btn_no_begin);
-            btn_buy.setText("待开标");
-            if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                iv_tag.setImageResource(R.drawable.double_rate_nobegin);
-            } else if (data.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                iv_tag.setImageResource(R.drawable.double_card_nobegin);
-            } else {
-                iv_tag.setImageResource(0);
-            }
+        switch (Constants.getCurrentStatus(data.getStatus())) {
+            case Constants.STATUS_DKB:
+                profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+                tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+                tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+                tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_bl3_v2));
+                btn_buy.setBackgroundResource(R.drawable.btn_no_begin);
+                btn_buy.setText("待开标");
+                if (data.getBidType().equals(Constants.BID_TYPE_SBB)) {
+                    iv_tag.setImageResource(R.drawable.double_rate_card_normal);
+                } else if (data.getBidType().equals(Constants.BID_TYPE_SBSYK)) {
+                    iv_tag.setImageResource(R.drawable.double_card_normal);
+                } else {
+                    iv_tag.setImageResource(0);
+                }
 
-            tv_begin_time.setText(FormatUtil.formatDate(data.getStartTimestamp(), "MM月dd日 HH:mm发售"));
-            tv_begin_time.setVisibility(View.VISIBLE);
-        } else if ("01".equals(data.getSubjectStatus())) {
-            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-            btn_buy.setBackgroundResource(R.drawable.btn_default_selector);
-            btn_buy.setText(R.string.buy_now);
-            if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                iv_tag.setImageResource(R.drawable.double_rate_normal);
-            } else if (data.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                iv_tag.setImageResource(R.drawable.double_card_normal);
-            } else {
-                iv_tag.setImageResource(0);
-            }
+                tv_begin_time.setText(FormatUtil.formatDate(data.getStartTimeStamp(), "MM月dd日 HH:mm发售"));
+                tv_begin_time.setVisibility(View.VISIBLE);
+                break;
+             case Constants.STATUS_YKB:
+                 profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                 tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                 tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                 tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
+                 btn_buy.setBackgroundResource(R.drawable.btn_default_selector);
+                 btn_buy.setText(R.string.buy_now);
+                 if (data.getBidType().equals(Constants.BID_TYPE_SBB)) {
+                     iv_tag.setImageResource(R.drawable.double_rate_card_normal);
+                 } else if (data.getBidType().equals(Constants.BID_TYPE_SBSYK)) {
+                     iv_tag.setImageResource(R.drawable.double_card_normal);
+                 } else {
+                     iv_tag.setImageResource(0);
+                 }
 
-            tv_begin_time.setVisibility(View.GONE);
+                 tv_begin_time.setVisibility(View.GONE);
+                 break;
+             default:
+                 profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                 tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                 tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                 tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
+                 btn_buy.setBackgroundResource(R.drawable.btn_has_done);
+                 btn_buy.setText("已满额");
+                 if (data.getBidType().equals(Constants.BID_TYPE_SBB)) {
+                     iv_tag.setImageResource(R.drawable.double_rate_card_normal);
+                 } else if (data.getBidType().equals(Constants.BID_TYPE_SBSYK)) {
+                     iv_tag.setImageResource(R.drawable.double_card_normal);
+                 } else {
+                     iv_tag.setImageResource(0);
+                 }
 
-        } else {
-            profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-            tv_add_interest.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-            tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-            tv_day.setTextColor(mContext.getResources().getColor(R.color.mq_b5_v2));
-            btn_buy.setBackgroundResource(R.drawable.btn_has_done);
-            btn_buy.setText("已满额");
-            if (data.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                iv_tag.setImageResource(R.drawable.double_rate_hasdone);
-            } else if (data.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                iv_tag.setImageResource(R.drawable.double_card_hasdone);
-            } else {
-                iv_tag.setImageResource(0);
-            }
-
-            tv_begin_time.setVisibility(View.GONE);
+                 tv_begin_time.setVisibility(View.GONE);
+                 break;
         }
         View.OnClickListener onClickListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(data.getJumpProjectUrl())) {
-                    RegularDetailActivity.startActivity(mContext, data.getSubjectId(), data.getProdId());
-                } else {
-                    WebActivity.startActivity(view.getContext(), data.getJumpProjectUrl());
-                }
+                RegularDetailActivity.startActivity(mContext, data.getProductCode(), data.getProductType());
             }
         };
         btn_buy.setOnClickListener(onClickListener);

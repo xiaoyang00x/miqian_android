@@ -180,7 +180,7 @@ public class Urls {
     public final static String repayment_detail = getServer() + "commonService/getRepaymentList";
 
     //定期首页
-    public final static String REGULA_PROJECT = getServer() + "regular/queryRegularList";
+    public final static String REGULA_PROJECT = getServer() + "regular/queryRegularListForApp";
     //定期转让首页
     public final static String REGULA_PROJECT_TRANSFER = getServer() + "transferService/regularList";
 
