@@ -10,8 +10,9 @@ import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.adapter.RegularProjectAdapter;
+import com.miqian.mq.entity.MqResult;
+import com.miqian.mq.entity.RegularProjectData;
 import com.miqian.mq.entity.RegularProjectList;
-import com.miqian.mq.entity.RegularProjectListResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.MyAsyncTask;
@@ -88,10 +89,10 @@ public class RegularProjectView {
             inProcess = true;
         }
         swipeRefresh.setRefreshing(true);
-        HttpRequest.getRegularProjectList(mContext, new ICallback<RegularProjectListResult>() {
+        HttpRequest.getRegularProjectList(mContext, new ICallback<MqResult<RegularProjectList>>() {
 
             @Override
-            public void onSucceed(RegularProjectListResult result) {
+            public void onSucceed(MqResult<RegularProjectList> result) {
                 synchronized (mLock) {
                     inProcess = false;
                 }

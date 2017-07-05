@@ -14,7 +14,7 @@ public class RegularProjectData {
     private String jumpUrl;
     private String name;
     private String iconUrl;
-    private ArrayList<RegularProjectInfo> subjectData;
+    private ArrayList<ProductRegularBaseInfo> subjectData;
 
     public String getTitle() {
         return title;
@@ -40,11 +40,11 @@ public class RegularProjectData {
         this.name = name;
     }
 
-    public ArrayList<RegularProjectInfo> getSubjectData() {
+    public ArrayList<ProductRegularBaseInfo> getSubjectData() {
         return subjectData;
     }
 
-    public void setSubjectData(ArrayList<RegularProjectInfo> subjectData) {
+    public void setSubjectData(ArrayList<ProductRegularBaseInfo> subjectData) {
         this.subjectData = subjectData;
     }
 

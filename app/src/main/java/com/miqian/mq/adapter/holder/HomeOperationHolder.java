@@ -1,16 +1,11 @@
 package com.miqian.mq.adapter.holder;
 
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.entity.HomeOperationData;
 import com.miqian.mq.entity.HomePageInfo;
-import com.miqian.mq.entity.HomeSelectionProject;
 import com.miqian.mq.utils.FormatUtil;
 
 /**

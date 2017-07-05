@@ -88,9 +88,10 @@ public class ProductBaseInfo {
      */
     private String interestAccrualMode;
 
+
     /**
      * 标的类型
-     * PTB 普通标,QDB 渠道标,XSB 新手标1,XSB2 新手标2
+     * PTB 普通标,QDB 渠道标,XSB1 新手标1,XSB2 新手标2,SBB 双倍收益标,SBSYK 可使用双倍收益卡标
      */
     private String bidType;
 
@@ -172,6 +173,11 @@ public class ProductBaseInfo {
      * 0 不可以 1 可以
      */
     private int canTransfer;
+
+    /**
+     * 产品期限
+     */
+    private String productTerm;
 
     public String getProductCode() {
         return productCode;
@@ -364,5 +370,13 @@ public class ProductBaseInfo {
 
     public void setInvestedProgress(float investedProgress) {
         this.investedProgress = investedProgress;
+    }
+
+    public String getProductTerm() {
+        return productTerm;
+    }
+
+    public void setProductTerm(String productTerm) {
+        this.productTerm = productTerm;
     }
 }

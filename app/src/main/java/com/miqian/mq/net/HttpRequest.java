@@ -37,7 +37,7 @@ import com.miqian.mq.entity.RegTransDetailResult;
 import com.miqian.mq.entity.RegTransFerredDetailResult;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularDetailResult;
-import com.miqian.mq.entity.RegularProjectListResult;
+import com.miqian.mq.entity.RegularProjectList;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
@@ -127,7 +127,8 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqResult<ProductBaseInfo> currentInfoResult = JsonUtil.parseObject(result, new TypeReference<MqResult<ProductBaseInfo>>(){});
+                MqResult<ProductBaseInfo> currentInfoResult = JsonUtil.parseObject(result, new TypeReference<MqResult<ProductBaseInfo>>() {
+                });
                 if (currentInfoResult.getCode().equals("000000")) {
                     callback.onSucceed(currentInfoResult);
                 } else {
@@ -682,7 +683,8 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqListResult<HomePageInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqListResult<HomePageInfo>>(){});
+                MqListResult<HomePageInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqListResult<HomePageInfo>>() {
+                });
 
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
@@ -777,16 +779,18 @@ public class HttpRequest {
     /**
      * 获取定期首页列表数据
      */
-    public static void getRegularProjectList(Context context, final ICallback<RegularProjectListResult> callback) {
+    public static void getRegularProjectList(Context context, final ICallback<MqResult<RegularProjectList>> callback) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("pageNo", "1"));
-//        params.add(new Param("pageSize", "50"));
-        params.add(new Param("staGroup", "1"));
+        String custId = Pref.getString(Pref.USERID, context, null);
+        if (!TextUtils.isEmpty(custId)) {
+            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
+        }
         new MyAsyncTask(context, Urls.REGULA_PROJECT, params, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                RegularProjectListResult meta = JsonUtil.parseObject(result, RegularProjectListResult.class);
+                MqResult<RegularProjectList> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RegularProjectList>>() {
+                });
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -900,7 +904,8 @@ public class HttpRequest {
         new MyAsyncTask(context, url, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
-                MqResult<CurrentDetailsInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<CurrentDetailsInfo>>(){});
+                MqResult<CurrentDetailsInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<CurrentDetailsInfo>>() {
+                });
 
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
@@ -1094,6 +1099,7 @@ public class HttpRequest {
 
     /**
      * 获取资金记录
+     *
      * @param operateType 10 充值 20 认购 30 到期 40 赎回 50 提现
      */
     public static void getCapitalRecords(Context context, final ICallback<CapitalRecordResult> callback, String pageNo, String pageSize, String operateType) {
@@ -1337,12 +1343,13 @@ public class HttpRequest {
     }
 
     /**
-     *  我的促销接口，包括红包，拾财券等
+     * 我的促销接口，包括红包，拾财券等
+     *
      * @param context
      * @param callback
-     * @param status    0 可使用 1 使用完  2 已过期
-     * @param pageNo    页码（默认1）
-     * @param pageSize  每页条数（默认20）
+     * @param status   0 可使用 1 使用完  2 已过期
+     * @param pageNo   页码（默认1）
+     * @param pageSize 每页条数（默认20）
      */
     public static void getCustPromotion(Context context, final ICallback<RedPaperData> callback, String status, String pageNo, String pageSize) {
         List<Param> mList = new ArrayList<>();
@@ -1484,7 +1491,8 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqResult<GetHomeActivity> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<GetHomeActivity>>(){});
+                MqResult<GetHomeActivity> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<GetHomeActivity>>() {
+                });
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {

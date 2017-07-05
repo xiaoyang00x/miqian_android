@@ -10,24 +10,23 @@ import java.util.ArrayList;
  */
 public class RegularProjectList {
 
-    private ArrayList<RegularProjectInfo> featureData;
+    private ProductRegularBaseInfo recommendProductDto;
 
-    private ArrayList<RegularProjectData> regularData;
+    private ArrayList<RegularProjectData> regularDatas;
 
-    public ArrayList<RegularProjectInfo> getFeatureData() {
-        return featureData;
+    public ProductRegularBaseInfo getRecommendProductDto() {
+        return recommendProductDto;
     }
 
-    public void setFeatureData(ArrayList<RegularProjectInfo> featureData) {
-        this.featureData = featureData;
+    public void setRecommendProductDto(ProductRegularBaseInfo recommendProductDto) {
+        this.recommendProductDto = recommendProductDto;
     }
 
-    public ArrayList<RegularProjectData> getRegularData() {
-        return regularData;
+    public ArrayList<RegularProjectData> getRegularDatas() {
+        return regularDatas;
     }
 
-    public void setRegularData(ArrayList<RegularProjectData> regularData) {
-        this.regularData = regularData;
+    public void setRegularDatas(ArrayList<RegularProjectData> regularDatas) {
+        this.regularDatas = regularDatas;
     }
-
 }

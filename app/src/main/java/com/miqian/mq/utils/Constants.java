@@ -69,6 +69,17 @@ public class Constants {
     public static final int STATUS_YKB = 1;
     public static final int STATUS_YMB = 2;
 
+
+    /**
+     * 标的类型  PTB 普通标,QDB 渠道标,XSB1 新手标1,XSB2 新手标2,SBB 双倍收益标,SBSYK 可使用双倍收益卡标
+     */
+    public static final String BID_TYPE_PTB = "PTB";
+    public static final String BID_TYPE_QDB = "QDB";
+    public static final String BID_TYPE_XSB1 = "XSB1";
+    public static final String BID_TYPE_XSB2 = "XSB2";
+    public static final String BID_TYPE_SBB = "SBB";
+    public static final String BID_TYPE_SBSYK = "SBSYK";
+
     /**
      * 根据服务器的明细产品状态判断返回聚合产品状态
      * @param productStatus

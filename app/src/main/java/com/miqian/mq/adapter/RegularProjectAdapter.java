@@ -13,11 +13,11 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.RegularDetailActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.entity.ProductRegularBaseInfo;
 import com.miqian.mq.entity.RegularBase;
 import com.miqian.mq.entity.RegularProjectData;
-import com.miqian.mq.entity.RegularProjectHeader;
-import com.miqian.mq.entity.RegularProjectInfo;
 import com.miqian.mq.entity.RegularProjectList;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<RegularBase> mList; // 所有item
+    private ArrayList<ProductRegularBaseInfo> mList; // 所有item
     private Context mContext;
 
     public RegularProjectAdapter(Context mContext) {
@@ -45,23 +45,21 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public void addAll(RegularProjectList mData) {
         // 定期首页 最上面的card 目前版本最多只有一个 可能没有
-        if (null != mData.getFeatureData() && mData.getFeatureData().size() > 0) {
-            RegularProjectInfo info = mData.getFeatureData().get(0);
-            if (null != info) {
-                info.setType(RegularBase.ITEM_TYPE_CARD);
-                mList.add(info);
-            }
+        if (null != mData.getRecommendProductDto()) {
+            ProductRegularBaseInfo info = mData.getRecommendProductDto();
+            info.setType(RegularBase.ITEM_TYPE_CARD);
+            mList.add(info);
         }
 
-        if (null == mData.getRegularData() || mData.getRegularData().size() <= 0) {
+        if (null == mData.getRegularDatas() || mData.getRegularDatas().size() <= 0) {
             return;
         }
 
-        for (RegularProjectData regularProjectData : mData.getRegularData()) {
+        for (RegularProjectData regularProjectData : mData.getRegularDatas()) {
             if (regularProjectData.getSubjectData() == null || regularProjectData.getSubjectData().size() <= 0) {
                 continue;
             }
-            RegularProjectHeader regularProjectHeader = new RegularProjectHeader();
+            ProductRegularBaseInfo regularProjectHeader = new ProductRegularBaseInfo();
             regularProjectHeader.setType(RegularBase.ITEM_TYPE_TITLE);
             regularProjectHeader.setName(regularProjectData.getName());
             regularProjectHeader.setTitle(regularProjectData.getTitle());
@@ -69,7 +67,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             regularProjectHeader.setIconUrl(regularProjectData.getIconUrl());
             mList.add(regularProjectHeader);
 
-            for (RegularProjectInfo info : regularProjectData.getSubjectData()) {
+            for (ProductRegularBaseInfo info : regularProjectData.getSubjectData()) {
                 info.setType(RegularBase.ITEM_TYPE_LIST);
                 mList.add(info);
             }
@@ -146,27 +144,27 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         public void bindData(final int position) {
-            final RegularProjectInfo info = (RegularProjectInfo) mList.get(position);
-            tv_name.setText(info.getSubjectName());
-            tv_profit_rate.setText(info.getYearInterest());
+            final ProductRegularBaseInfo info = (ProductRegularBaseInfo) mList.get(position);
+            tv_name.setText(info.getProductName());
+            tv_profit_rate.setText(info.getProductRate());
             tv_profit_rate_unit.setText("%");
-            tv_time_limit.setText(info.getLimit());
+            tv_time_limit.setText(info.getProductTerm());
             tv_remain_amount.setText(
                     new StringBuilder("可认购金额:￥").
-                            append(FormatUtil.formatAmount(info.getResidueAmt())).
+                            append(FormatUtil.formatAmount(info.getRemainAmount())).
                             append("/￥").
-                            append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
-            if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                tv_profit_rate.setText((new BigDecimal(info.getYearInterest()).multiply(new BigDecimal("2")).toString()));
-            } else if ("Y".equals(info.getPresentationYesNo())) {
+                            append(FormatUtil.formatAmount(info.getBidAmount())));
+            if (Constants.BID_TYPE_SBB.equals(info.getBidType())) {
+                tv_profit_rate.setText(info.getYearRate());
+            } else if ((new BigDecimal(info.getAddInterestRate()).compareTo(BigDecimal.ZERO)) == 1) {
                 tv_profit_rate_unit.setText(
                         new StringBuilder("+").
-                                append(info.getPresentationYearInterest()).
+                                append(info.getAddInterestRate()).
                                 append("%"));
             }
-            if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
+            if (info.getBidType().equals(Constants.BID_TYPE_SBB)) {
                 iv_tag.setImageResource(R.drawable.double_rate_card_normal);
-            } else if (info.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
+            } else if (info.getBidType().equals(Constants.BID_TYPE_SBSYK)) {
                 iv_tag.setImageResource(R.drawable.double_card_normal);
             } else {
                 iv_tag.setImageResource(0);
@@ -176,7 +174,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void onClick(View v) {
                     MobclickAgent.onEvent(mContext, "1010_1");
                     RegularDetailActivity.startActivity(
-                            mContext, info.getSubjectId(), info.getProdId());
+                            mContext, info.getProductCode(), info.getProductType());
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +182,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void onClick(View v) {
                     MobclickAgent.onEvent(mContext, "1010_1");
                     RegularDetailActivity.startActivity(
-                            mContext, info.getSubjectId(), info.getProdId());
+                            mContext, info.getProductCode(), info.getProductType());
                 }
             });
         }
@@ -214,7 +212,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         public void bindData(final int position) {
-            final RegularProjectHeader info = (RegularProjectHeader) mList.get(position);
+            final ProductRegularBaseInfo info = (ProductRegularBaseInfo) mList.get(position);
             tv_name.setText(info.getTitle());
             if (!TextUtils.isEmpty(info.getName())) {
                 if (!TextUtils.isEmpty(info.getJumpUrl())) {
@@ -272,24 +270,27 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         public void bindData(final int position) {
-            final RegularProjectInfo info = (RegularProjectInfo) mList.get(position);
-            tv_name.setText(info.getSubjectName());
-            tv_profit_rate.setText(info.getYearInterest());
+            final ProductRegularBaseInfo info = (ProductRegularBaseInfo) mList.get(position);
+            tv_name.setText(info.getProductName());
+            tv_profit_rate.setText(info.getProductRate());
             tv_profit_rate_unit.setText("%");
-            if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                tv_profit_rate.setText((new BigDecimal(info.getYearInterest()).multiply(new BigDecimal("2")).toString()));
-            } else if ("Y".equals(info.getPresentationYesNo())) {
+
+            if (Constants.BID_TYPE_SBB.equals(info.getBidType())) {
+                tv_profit_rate.setText(info.getYearRate());
+            } else if ((new BigDecimal(info.getAddInterestRate()).compareTo(BigDecimal.ZERO)) == 1) {
                 tv_profit_rate_unit.setText(
                         new StringBuilder("+").
-                                append(info.getPresentationYearInterest()).
+                                append(info.getAddInterestRate()).
                                 append("%"));
             }
-            tv_time_limit.setText(info.getLimit());
+
+
+            tv_time_limit.setText(info.getProductTerm());
             tv_remain_amount.setText(
                     new StringBuilder("可认购金额:￥").
-                            append(FormatUtil.formatAmount(info.getResidueAmt())).
+                            append(FormatUtil.formatAmount(info.getRemainAmount())).
                             append("/￥").
-                            append(FormatUtil.formatAmount(info.getSubjectTotalPrice())));
+                            append(FormatUtil.formatAmount(info.getBidAmount())));
             if (position + 1 == getItemCount()) {
                 divider.setVisibility(View.GONE);
             } else if (position + 1 < getItemCount() &&
@@ -298,25 +299,25 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 divider.setVisibility(View.VISIBLE);
             }
-            switch (info.getSubjectStatus()) {
-                case RegularBase.STATE_00:
+            switch (Constants.getCurrentStatus(info.getStatus())) {
+                case Constants.STATUS_DKB:
                     tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_time_limit_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
-                    tv_begin_time.setText(Uihelper.timeToDateRegular(info.getStartTimestamp()));
+                    tv_begin_time.setText(Uihelper.timeToDateRegular(info.getStartTimeStamp()));
                     tv_begin_time.setVisibility(View.VISIBLE);
                     btn_state.setBackgroundResource(R.drawable.btn_no_begin);
                     btn_state.setText("待开标");
-                    if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                        iv_tag.setImageResource(R.drawable.double_rate_nobegin);
-                    } else if (info.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                        iv_tag.setImageResource(R.drawable.double_card_nobegin);
+                    if (info.getBidType().equals(Constants.BID_TYPE_SBB)) {
+                        iv_tag.setImageResource(R.drawable.double_rate_card_normal);
+                    } else if (info.getBidType().equals(Constants.BID_TYPE_SBSYK)) {
+                        iv_tag.setImageResource(R.drawable.double_card_normal);
                     } else {
                         iv_tag.setImageResource(0);
                     }
                     break;
-                case RegularBase.STATE_01:
+                case Constants.STATUS_YKB:
                     tv_profit_rate.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_profit_rate_unit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
                     tv_time_limit.setTextColor(mContext.getResources().getColor(R.color.mq_r1_v2));
@@ -324,9 +325,9 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     tv_begin_time.setVisibility(View.GONE);
                     btn_state.setBackgroundResource(R.drawable.btn_default_selector);
                     btn_state.setText("立即认购");
-                    if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                        iv_tag.setImageResource(R.drawable.double_rate_normal);
-                    } else if (info.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
+                    if (info.getBidType().equals(Constants.BID_TYPE_SBB)) {
+                        iv_tag.setImageResource(R.drawable.double_rate_card_normal);
+                    } else if (info.getBidType().equals(Constants.BID_TYPE_SBSYK)) {
                         iv_tag.setImageResource(R.drawable.double_card_normal);
                     } else {
                         iv_tag.setImageResource(0);
@@ -340,10 +341,10 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     tv_begin_time.setVisibility(View.GONE);
                     btn_state.setBackgroundResource(R.drawable.btn_has_done);
                     btn_state.setText("已满额");
-                    if (info.getSubjectType().equals(RegularProjectInfo.TYPE_RATE)) {
-                        iv_tag.setImageResource(R.drawable.double_rate_hasdone);
-                    } else if (info.getSubjectType().equals(RegularProjectInfo.TYPE_CARD)) {
-                        iv_tag.setImageResource(R.drawable.double_card_hasdone);
+                    if (info.getBidType().equals(Constants.BID_TYPE_SBB)) {
+                        iv_tag.setImageResource(R.drawable.double_rate_card_normal);
+                    } else if (info.getBidType().equals(Constants.BID_TYPE_SBSYK)) {
+                        iv_tag.setImageResource(R.drawable.double_card_normal);
                     } else {
                         iv_tag.setImageResource(0);
                     }
@@ -354,7 +355,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void onClick(View v) {
                     MobclickAgent.onEvent(mContext, "1014");
                     RegularDetailActivity.startActivity(
-                            mContext, info.getSubjectId(), info.getProdId());
+                            mContext, info.getProductCode(), info.getProductType());
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -362,7 +363,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void onClick(View v) {
                     MobclickAgent.onEvent(mContext, "1014");
                     RegularDetailActivity.startActivity(
-                            mContext, info.getSubjectId(), info.getProdId());
+                            mContext, info.getProductCode(), info.getProductType());
                 }
             });
         }
