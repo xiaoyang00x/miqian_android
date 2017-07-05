@@ -616,12 +616,13 @@ public class HttpRequest {
 
     //修改登录密码
     public static void changePassword(Context context, final ICallback<Meta> callback,
-                                      String oldPassword, String newPassword, String confirmPassword) {
+                                      String oldPassword, String newPassword, String confirmPassword,String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldPassword", RSAUtils.encryptURLEncode(oldPassword)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
+        mList.add(new Param("captcha",captcha));
 
         new MyAsyncTask(context, Urls.changePassword, mList, new ICallback<String>() {
 
@@ -1671,9 +1672,10 @@ public class HttpRequest {
      */
     public static void autoWithdraw(final Activity activity) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+//        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        params.add(new Param("custId", "000000000020170628104802478704"));
         params.add(new Param("cType", "android"));
-        params.add(new Param("amt", "amt"));
+        params.add(new Param("amt", "50"));
         WebBankActivity.startActivity(activity, Urls.jx_auto_withdraw_url, params, 1);
     }
 
@@ -1770,6 +1772,7 @@ public class HttpRequest {
     public static void withDrawInit(Context context, final ICallback<WithDrawInitReSult> callback) {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
+        custId="000000000020170628104802478704";
         if (!TextUtils.isEmpty(custId)) {
             params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
         }
@@ -1798,6 +1801,7 @@ public class HttpRequest {
     public static void withDrawPreprocess(Context context, String amt, final ICallback<WithDrawPrepressResult> callback) {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
+        custId="000000000020170628104802478704";
         if (!TextUtils.isEmpty(custId)) {
             params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
         }
@@ -1807,7 +1811,8 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 WithDrawPrepressResult data = JsonUtil.parseObject(result, WithDrawPrepressResult.class);
-                if (data.getCode().equals("000000")) {
+                 String code = data.getCode();
+                if (code.equals("000000")||code.equals("200016")||code.equals("400007")||code.equals("101006")||code.equals("101001")) {
                     callback.onSucceed(data);
                 } else {
                     callback.onFail(data.getMessage());
