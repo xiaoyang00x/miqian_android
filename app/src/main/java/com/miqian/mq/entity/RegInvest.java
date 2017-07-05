@@ -1,36 +1,100 @@
 package com.miqian.mq.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Jackie on 2015/10/21.
  */
-public class RegInvest {
+public class RegInvest implements Serializable{
 
-    private String id;//投资ID(投资编号)
-    private String prodId;//产品ID 定期计划 “4”  定期赚“3”
+//    private String id;//投资ID(投资编号)
+//    private String prodId;//产品ID 定期计划 “4”  定期赚“3”
+//    private String productName;//产品名称
+//    private String bdNm;//标的名称
+//    private String bdTyp;//标的类型  00  标准标的 01  新手专属 02  众人拾财专属 03  老财主专享回馈 04 定向大额投资人 88 88专属
+//    private String bdTypeName;//标的类型名称
+//    private String sta;//项目状态    审核SH ；计息中JH；已到期JQ ；关闭GB
+//    private String dueDt;//计息到期日期
+//    private String crtDt;//创建日期
+//    private String productRate;//产品原始利率
+//    private String productPlusRate;//产品促销增加年利率
+//    private String prnTransSa;//投资可转让金额
+//    private String transSta;//转让状态  WZ:未转让 ZR:转让中
+//    private String transing;//转让中金额
+//    private String transed;//已转让金额
+//    private String hasTransOper;//是否有转让标识
+//    private String payMeansName;//月付息，到期还本"
+//    private String limitCnt;//定期计划期限
+//    private String projectState;//项目状态 0未结息 1转让中 2已转让 3已到期
+//    private String bearingStatus;//结息状态 Y:已结息 N：未结息
+//    private String regAmt;//待收本金
+//    private String regIncome;//待收收益
+//    private String prnIncome;//已收收益
+//    private String prnAmt;//总投资本金
+//    private String subjectType;//标的类型      "88": 88专属  "07":双倍收益卡
+//    private String transedAmt;//已转金额
+
+
+    private String purchaseSeqno;//认购时的交易流水号
+    private String productType;//产品类型  1: 定期项目2: 定期计划  98:老的定期计划    97:老的定期项目
+    private String bidType;//  标的类型 PTB：普通标  XSB1：新⼿手标1 XSB2：新⼿手标2 QDB：渠道标
+    private String productCode;//产品编号
     private String productName;//产品名称
-    private String bdNm;//标的名称
-    private String bdTyp;//标的类型  00  标准标的 01  新手专属 02  众人拾财专属 03  老财主专享回馈 04 定向大额投资人 88 88专属
-    private String bdTypeName;//标的类型名称
-    private String sta;//项目状态    审核SH ；计息中JH；已到期JQ ；关闭GB
-    private String dueDt;//计息到期日期
-    private String crtDt;//创建日期
     private String productRate;//产品原始利率
     private String productPlusRate;//产品促销增加年利率
-    private String prnTransSa;//投资可转让金额
-    private String transSta;//转让状态  WZ:未转让 ZR:转让中
-    private String transing;//转让中金额
-    private String transed;//已转让金额
-    private String hasTransOper;//是否有转让标识
-    private String payMeansName;//月付息，到期还本"
-    private String limitCnt;//定期计划期限
-    private String projectState;//项目状态 0未结息 1转让中 2已转让 3已到期
-    private String bearingStatus;//结息状态 Y:已结息 N：未结息
-    private String regAmt;//待收本金
-    private String regIncome;//待收收益
-    private String prnIncome;//已收收益
-    private String prnAmt;//总投资本金
-    private String subjectType;//标的类型      "88": 88专属  "07":双倍收益卡
-    private String transedAmt;//已转金额
+    private String ticketType;//   促销券类型   0: 红包  1: 秒钱卡   2: 加息卡   3: 双倍加息卡   4: 现金
+    private String ticketRate;//使用加息券利息
+    private String ticketAmount;//使用红包金额
+    private String purchaseAmount;//认购金额
+    private String dsAmount;//待收本金
+    private String dsProfit;//待收利息
+    private String ysAmount;//已收本金
+    private String ysProfit;//已收利息
+    private String startTime;//认购时间
+    private String endTime;//到期时间
+    private String productTerm;//产品期限(多少天的产品)
+    private String status; //    状态   01: 认购处理中 02: 认购成功 03: 计息中 04: 已结清
+    private String repayType; // 还款方式
+
+    public String getRepayType() {
+        return repayType;
+    }
+
+    public void setRepayType(String repayType) {
+        this.repayType = repayType;
+    }
+
+    public String getPurchaseSeqno() {
+        return purchaseSeqno;
+    }
+
+    public void setPurchaseSeqno(String purchaseSeqno) {
+        this.purchaseSeqno = purchaseSeqno;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getBidType() {
+        return bidType;
+    }
+
+    public void setBidType(String bidType) {
+        this.bidType = bidType;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
 
     public String getProductName() {
         return productName;
@@ -56,190 +120,99 @@ public class RegInvest {
         this.productPlusRate = productPlusRate;
     }
 
-    public String getSubjectType() {
-        return subjectType;
+    public String getTicketType() {
+        return ticketType;
     }
 
-    public void setSubjectType(String subjectType) {
-        this.subjectType = subjectType;
+    public void setTicketType(String ticketType) {
+        this.ticketType = ticketType;
     }
 
-    public String getTransedAmt() {
-        return transedAmt;
+    public String getTicketRate() {
+        return ticketRate;
     }
 
-    public void setTransedAmt(String transedAmt) {
-        this.transedAmt = transedAmt;
+    public void setTicketRate(String ticketRate) {
+        this.ticketRate = ticketRate;
     }
 
-    public String getPrnIncome() {
-        return prnIncome;
+    public String getTicketAmount() {
+        return ticketAmount;
     }
 
-    public void setPrnIncome(String prnIncome) {
-        this.prnIncome = prnIncome;
+    public void setTicketAmount(String ticketAmount) {
+        this.ticketAmount = ticketAmount;
     }
 
-
-    public String getId() {
-        return id;
+    public String getPurchaseAmount() {
+        return purchaseAmount;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPurchaseAmount(String purchaseAmount) {
+        this.purchaseAmount = purchaseAmount;
     }
 
-    public String getProdId() {
-        return prodId;
+    public String getDsAmount() {
+        return dsAmount;
     }
 
-    public void setProdId(String prodId) {
-        this.prodId = prodId;
+    public void setDsAmount(String dsAmount) {
+        this.dsAmount = dsAmount;
     }
 
-
-    public String getBdNm() {
-        return bdNm;
+    public String getDsProfit() {
+        return dsProfit;
     }
 
-    public void setBdNm(String bdNm) {
-        this.bdNm = bdNm;
+    public void setDsProfit(String dsProfit) {
+        this.dsProfit = dsProfit;
     }
 
-    public String getBdTyp() {
-        return bdTyp;
+    public String getYsAmount() {
+        return ysAmount;
     }
 
-    public void setBdTyp(String bdTyp) {
-        this.bdTyp = bdTyp;
+    public void setYsAmount(String ysAmount) {
+        this.ysAmount = ysAmount;
     }
 
-    public String getBdTypeName() {
-        return bdTypeName;
+    public String getYsProfit() {
+        return ysProfit;
     }
 
-    public void setBdTypeName(String bdTypeName) {
-        this.bdTypeName = bdTypeName;
+    public void setYsProfit(String ysProfit) {
+        this.ysProfit = ysProfit;
     }
 
-    public String getSta() {
-        return sta;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setSta(String sta) {
-        this.sta = sta;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getDueDt() {
-        return dueDt;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setDueDt(String dueDt) {
-        this.dueDt = dueDt;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
-    public String getCrtDt() {
-        return crtDt;
+    public String getProductTerm() {
+        return productTerm;
     }
 
-    public void setCrtDt(String crtDt) {
-        this.crtDt = crtDt;
+    public void setProductTerm(String productTerm) {
+        this.productTerm = productTerm;
     }
 
-
-    public String getPrnTransSa() {
-        return prnTransSa;
+    public String getStatus() {
+        return status;
     }
 
-    public void setPrnTransSa(String prnTransSa) {
-        this.prnTransSa = prnTransSa;
-    }
-
-    public String getTransSta() {
-        return transSta;
-    }
-
-    public void setTransSta(String transSta) {
-        this.transSta = transSta;
-    }
-
-    public String getTransing() {
-        return transing;
-    }
-
-    public void setTransing(String transing) {
-        this.transing = transing;
-    }
-
-    public String getTransed() {
-        return transed;
-    }
-
-    public void setTransed(String transed) {
-        this.transed = transed;
-    }
-
-    public String getHasTransOper() {
-        return hasTransOper;
-    }
-
-    public void setHasTransOper(String hasTransOper) {
-        this.hasTransOper = hasTransOper;
-    }
-
-    public String getPayMeansName() {
-        return payMeansName;
-    }
-
-    public void setPayMeansName(String payMeansName) {
-        this.payMeansName = payMeansName;
-    }
-
-    public String getLimitCnt() {
-        return limitCnt;
-    }
-
-    public void setLimitCnt(String limitCnt) {
-        this.limitCnt = limitCnt;
-    }
-
-    public String getProjectState() {
-        return projectState;
-    }
-
-    public void setProjectState(String projectState) {
-        this.projectState = projectState;
-    }
-
-    public String getBearingStatus() {
-        return bearingStatus;
-    }
-
-    public void setBearingStatus(String bearingStatus) {
-        this.bearingStatus = bearingStatus;
-    }
-
-    public String getRegAmt() {
-        return regAmt;
-    }
-
-    public void setRegAmt(String regAmt) {
-        this.regAmt = regAmt;
-    }
-
-    public String getRegIncome() {
-        return regIncome;
-    }
-
-    public void setRegIncome(String regIncome) {
-        this.regIncome = regIncome;
-    }
-
-    public String getPrnAmt() {
-        return prnAmt;
-    }
-
-    public void setPrnAmt(String prnAmt) {
-        this.prnAmt = prnAmt;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.activity.WebBankActivity;
-import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
@@ -18,21 +16,20 @@ import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.ConfigResult;
 import com.miqian.mq.entity.CurrentDetailsInfo;
-import com.miqian.mq.entity.GetHomeActivity;
-import com.miqian.mq.entity.HomePageInfo;
-import com.miqian.mq.entity.MqListResult;
-import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.CustBindBankBranch;
-import com.miqian.mq.entity.ErrorLianResult;
+import com.miqian.mq.entity.GetHomeActivity;
 import com.miqian.mq.entity.GetRegularResult;
+import com.miqian.mq.entity.HomePageInfo;
 import com.miqian.mq.entity.LoginResult;
 import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.MqListResult;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.OperationResult;
 import com.miqian.mq.entity.OrderRechargeResult;
 import com.miqian.mq.entity.ProducedOrderResult;
+import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
@@ -62,7 +59,6 @@ import com.miqian.mq.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Jackie on 2015/9/4.
@@ -1532,13 +1528,13 @@ public class HttpRequest {
     /**
      * 标的相关记录
      */
-    public static void findInvestInfo(Context context, String investId, final ICallback<OperationResult> callback) {
+    public static void findInvestInfo(Context context, String purchaseSeqno, final ICallback<OperationResult> callback) {
         ArrayList params = new ArrayList<>();
         String custId = Pref.getString(Pref.USERID, context, null);
         if (!TextUtils.isEmpty(custId)) {
             params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
         }
-        params.add(new Param("investId", investId));
+        params.add(new Param("purchaseSeqno", purchaseSeqno));
         new MyAsyncTask(context, Urls.findInvestInfo, params, new ICallback<String>() {
 
             @Override

@@ -140,7 +140,7 @@ public class SetPasswordActivity extends BaseActivity {
                     end();
                     Uihelper.showToast(mActivity, error);
                 }
-            }, oldpassword, password_confirm, password_confirm);
+            }, oldpassword, password_confirm, password_confirm, captcha);
         }
     }
 

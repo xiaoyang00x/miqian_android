@@ -17,7 +17,7 @@ public class CalculateUtil {
     public static final int INTEREST_SHOWTYPE_SEVEN = 7;
 
     /**
-     * @param projectState    项目状态
+     * @param projectState    项目状态 0未结息 1转让中 2已转让 3已到期
      * @param transedAmt      已转金额
      * @param subjectType     标的类型      "88": 88专属  "07":双倍收益卡  88节不可转让
      * @param realInterest    实际利率

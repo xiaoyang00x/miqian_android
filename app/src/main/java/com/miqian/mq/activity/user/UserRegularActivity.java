@@ -62,11 +62,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
         if (Uihelper.getConfigCrowd(mContext)) {
             isQQproject = true;
         }
-        launchSuccess = getIntent().getBooleanExtra("launchSuccess", false);
-        if (launchSuccess) {
-            isExpiry = "ZR";
-            mType = 2;
-        }
         super.onCreate(arg0);
     }
 
@@ -163,7 +158,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void refreshView() {
-        mAdapter = new AdapterUserRegular(this, regInvestList, userRegular.getReg(), userRegular.getPage(), mType);
+        mAdapter = new AdapterUserRegular(this, regInvestList, userRegular.getReg(), userRegular.getPage(), isExpiry);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setMaxItem(userRegular.getPage().getTotalPage());
         mRecyclerView.setAdapter(mAdapter);
@@ -210,21 +205,18 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         RegInvest regInvest = regInvestList.get(postion);
-        if (regInvest.getBearingStatus().equals("Y")) {
+        if (isExpiry.equals("Y")) {
             MobclickAgent.onEvent(mActivity, "1040");
         } else {
             MobclickAgent.onEvent(mActivity, "1039");
         }
 
-        Intent intent = null;
-        if (mType == 2) {
-            intent = new Intent(mActivity, MyRegularTransferDetailActivity.class);
-        } else {
-            intent = new Intent(mActivity, UserRegularDetailActivity.class);
-        }
-        intent.putExtra("investId", regInvest.getId());
-        intent.putExtra("clearYn", regInvest.getBearingStatus());
-        intent.putExtra("projectType", regInvest.getProdId());
+        Intent intent = new Intent(mActivity, UserRegularDetailActivity.class);
+        Bundle  bundle=new Bundle();
+        bundle.putSerializable("reginvest",regInvest);
+        intent.putExtras(bundle);
+        intent.putExtra("isExpiry",isExpiry);
+
         startActivity(intent);
     }
 
@@ -256,12 +248,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
                 return;
             }
             obtainData();
-        } else if (checkId == R.id.bt_right) {
-            isExpiry = "ZR";
-            mType = 2;
-            obtainData();
         }
-        obtainData();
 
     }
 }

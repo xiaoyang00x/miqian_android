@@ -205,7 +205,7 @@ public class Urls {
     //版本更新
     public final static String forceUpdate = getServer() + "commonService/v2/forceUpdate";
     //查询标的相关记录
-    public final static String findInvestInfo = getServer() + "userRegService/v2/findInvestInfo";
+    public final static String findInvestInfo = getServer() + "mine/getRegRepayRecord";//userRegService/v2/findInvestInfo
     //查询标的相关记录
     public final static String getRegTransDetail = getServer() + "userRegService/v2/getRegTransDetail";
     //我的转让详情
