@@ -54,11 +54,11 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-//    public static final String SERVER_TEST = "https://testapi.shicaidai.com:8443/";
+    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 
-    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
+//    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
     public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
 
     //线上
@@ -298,7 +298,7 @@ public class Urls {
     public final static String jx_password_url = getServer() + "user/setPayPasswordForJump";
     public final static String jx_auto_claims_url = getServer() + "signProtocol/autoClaimsTransferForJump";
     public final static String jx_auto_subscribe_url = getServer() + "signProtocol/autoSubscribeForJump";
-    public final static String jx_auto_withdraw_url = getServer() + "trans/withdrawForJum";//提现
+    public final static String jx_auto_withdraw_url = getServer() + "trans/withdrawForJump";//提现
 
     //江西银行开通存管
     public final static String jx_open = getServer() + "user/openAccount";
