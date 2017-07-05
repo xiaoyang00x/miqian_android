@@ -15,7 +15,6 @@ import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.CityInfoResult;
 import com.miqian.mq.entity.ConfigResult;
-import com.miqian.mq.entity.CurrentDetailsInfo;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.CustBindBankBranch;
 import com.miqian.mq.entity.GetHomeActivity;
@@ -36,7 +35,7 @@ import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.RegTransDetailResult;
 import com.miqian.mq.entity.RegTransFerredDetailResult;
 import com.miqian.mq.entity.RegisterResult;
-import com.miqian.mq.entity.RegularDetailResult;
+import com.miqian.mq.entity.RegularDetailsInfo;
 import com.miqian.mq.entity.RegularProjectList;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
@@ -864,20 +863,17 @@ public class HttpRequest {
     /**
      * 获取定期详情
      *
-     * @param subjectId 标的编号，如传入则返回改标的相关信息
+     * @param productCode 标的编号，如传入则返回改标的相关信息
      */
-    public static void getRegularDetail(Context context, String subjectId, int prodId, final ICallback<RegularDetailResult> callback) {
+    public static void getRegularDetail(Context context, String productCode, final ICallback<MqResult<RegularDetailsInfo>> callback) {
         ArrayList params = new ArrayList<>();
-        params.add(new Param("subjectId", subjectId));
-        params.add(new Param("pageNo", "1"));
-        params.add(new Param("pageSize", "50"));
-        String url = Urls.REGULA_PROJECT_TRANSFER;
-//        String url = prodId == RegularBase.REGULAR_03 || prodId == RegularBase.REGULAR_05 ?
-//                Urls.REGULA_PROJECT : Urls.REGULA_PROJECT_TRANSFER;
+        params.add(new Param("productCode", productCode));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        String url = Urls.REGULA_DETAILS;
         new MyAsyncTask(context, url, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
-                RegularDetailResult meta = JsonUtil.parseObject(result, RegularDetailResult.class);
+                MqResult<RegularDetailsInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RegularDetailsInfo>>(){});
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -897,7 +893,7 @@ public class HttpRequest {
      *
      * @param prodId 秒钱产品类型：3 秒钱宝 1 定期项目 2 定期计划
      */
-    public static void getCurrentDetail(Context context, String prodId, final ICallback<MqResult<CurrentDetailsInfo>> callback) {
+    public static void getCurrentDetail(Context context, String prodId, final ICallback<MqResult<ProductBaseInfo>> callback) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("productCode", prodId));
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
@@ -905,7 +901,7 @@ public class HttpRequest {
         new MyAsyncTask(context, url, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
-                MqResult<CurrentDetailsInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<CurrentDetailsInfo>>() {
+                MqResult<ProductBaseInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<ProductBaseInfo>>() {
                 });
 
                 if (meta.getCode().equals("000000")) {

@@ -1,6 +1,11 @@
 package com.miqian.mq.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by guolei_wang on 2017/6/26.
@@ -178,6 +183,86 @@ public class ProductBaseInfo {
      * 产品期限
      */
     private String productTerm;
+
+    private ArrayList<ColumnInfo> titleColumn;
+
+    /**
+     * 标签
+     */
+    private ArrayList<String> productTags;
+
+    /**
+     * 活动标题
+     */
+    private String activityTitle;
+
+    /**
+     * 活动跳转地址
+     */
+    private String activityJumpUrl;
+
+
+    public ArrayList<String> getProductTags() {
+        return productTags;
+    }
+
+    public void setProductTags(ArrayList<String> productTags) {
+        this.productTags = productTags;
+    }
+
+    public String getActivityTitle() {
+        return activityTitle;
+    }
+
+    public void setActivityTitle(String activityTitle) {
+        this.activityTitle = activityTitle;
+    }
+
+    public String getActivityJumpUrl() {
+        return activityJumpUrl;
+    }
+
+    public void setActivityJumpUrl(String activityJumpUrl) {
+        this.activityJumpUrl = activityJumpUrl;
+    }
+
+    public ArrayList<ColumnInfo> getTitleColumn() {
+        return titleColumn;
+    }
+
+    public void setTitleColumn(ArrayList<ColumnInfo> titleColumn) {
+        this.titleColumn = titleColumn;
+    }
+
+    public class ColumnInfo {
+        private String title;
+        private String value;
+        private String jumpUrl;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getJumpUrl() {
+            return jumpUrl;
+        }
+
+        public void setJumpUrl(String jumpUrl) {
+            this.jumpUrl = jumpUrl;
+        }
+    }
 
     public String getProductCode() {
         return productCode;
@@ -379,4 +464,76 @@ public class ProductBaseInfo {
     public void setProductTerm(String productTerm) {
         this.productTerm = productTerm;
     }
+
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel parcel, int flags) {
+//        parcel.writeString(productCode);
+//        parcel.writeString(productName);
+//        parcel.writeLong(startTimeStamp);
+//        parcel.writeLong(endTimeStamp);
+//        parcel.writeInt(productType);
+//        parcel.writeString(description);
+//        parcel.writeString(status);
+//        parcel.writeString(interestAccrualMode);
+//        parcel.writeSerializable(maxInvestAmount);
+//        parcel.writeSerializable(unitAmount);
+//        parcel.writeSerializable(minInvestAmount);
+//        parcel.writeString(maxRate);
+//        parcel.writeSerializable(bidAmount);
+//        parcel.writeSerializable(investedAmount);
+//        parcel.writeSerializable(frozenAmount);
+//        parcel.writeSerializable(remainAmount);
+//        parcel.writeString(yearRate);
+//        parcel.writeString(addInterestRate);
+//        parcel.writeInt(interestStartDay);
+//        parcel.writeInt(investedCount);
+//        parcel.writeString(productRate);
+//        parcel.writeFloat(investedProgress);
+//        parcel.writeInt(canTransfer);
+//        parcel.writeString(productTerm);
+//    }
+//
+//    public ProductBaseInfo(Parcel source) {
+//        productCode = source.readString();
+//        productName = source.readString();
+//        startTimeStamp = source.readLong();
+//        endTimeStamp = source.readLong();
+//        productType = source.readInt();
+//        description = source.readString();
+//        status = source.readString();
+//        interestAccrualMode = source.readString();
+//        maxInvestAmount = (BigDecimal) source.readSerializable();
+//        unitAmount = (BigDecimal) source.readSerializable();
+//        minInvestAmount = (BigDecimal) source.readSerializable();
+//        maxRate = source.readString();
+//        bidAmount = (BigDecimal) source.readSerializable();
+//        investedAmount = (BigDecimal) source.readSerializable();
+//        frozenAmount = (BigDecimal) source.readSerializable();
+//        remainAmount = (BigDecimal) source.readSerializable();
+//        yearRate = source.readString();
+//        addInterestRate = source.readString();
+//        interestStartDay = source.readInt();
+//        investedCount = source.readInt();
+//        productRate = source.readString();
+//        investedProgress = source.readFloat();
+//        canTransfer = source.readInt();
+//        productTerm = source.readString();
+//    }
+//
+//    public static final Creator<ProductBaseInfo> CREATOR = new Creator<ProductBaseInfo>() {
+//        @Override
+//        public ProductBaseInfo createFromParcel(Parcel parcel) {
+//            return null;
+//        }
+//
+//        @Override
+//        public ProductBaseInfo[] newArray(int i) {
+//            return new ProductBaseInfo[i];
+//        }
+//    };
 }
