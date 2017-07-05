@@ -181,6 +181,8 @@ public class Urls {
 
     //定期首页
     public final static String REGULA_PROJECT = getServer() + "regular/queryRegularListForApp";
+    //定期首页
+    public final static String REGULA_DETAILS = getServer() + "regular/queryRegularDetail";
     //定期转让首页
     public final static String REGULA_PROJECT_TRANSFER = getServer() + "transferService/regularList";
 

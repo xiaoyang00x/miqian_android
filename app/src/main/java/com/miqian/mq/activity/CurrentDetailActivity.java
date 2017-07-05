@@ -25,15 +25,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
-import com.miqian.mq.entity.CurrentDetailsInfo;
-import com.miqian.mq.entity.CurrentDetailsInfoResult;
 import com.miqian.mq.entity.MqResult;
+import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileOS;
-import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MQMarqueeTextView;
 import com.miqian.mq.views.MySwipeRefresh;
@@ -89,7 +87,7 @@ public class CurrentDetailActivity extends BaseActivity {
 
     private String total_profit_rate; // 标的总年化利率:原始+赠送利率
 
-    private CurrentDetailsInfo mInfo;
+    private ProductBaseInfo mInfo;
 
     private String input; // 用户输入金额
     private String paymentAmount; // 用户实际支付金额
@@ -214,10 +212,10 @@ public class CurrentDetailActivity extends BaseActivity {
         }
         begin();
         swipeRefresh.setRefreshing(true);
-        HttpRequest.getCurrentDetail(mContext, prodId, new ICallback<MqResult<CurrentDetailsInfo>>() {
+        HttpRequest.getCurrentDetail(mContext, prodId, new ICallback<MqResult<ProductBaseInfo>>() {
 
             @Override
-            public void onSucceed(MqResult<CurrentDetailsInfo> result) {
+            public void onSucceed(MqResult<ProductBaseInfo> result) {
                 synchronized (mLock) {
                     inProcess = false;
                 }
@@ -341,7 +339,7 @@ public class CurrentDetailActivity extends BaseActivity {
                 TextView tv_lable = (TextView)product_detail_item.findViewById(R.id.tv_lable);
                 TextView tv_value = (TextView)product_detail_item.findViewById(R.id.tv_value);
 
-                final CurrentDetailsInfo.ColumnInfo columnInfo = mInfo.getTitleColumn().get(i);
+                final ProductBaseInfo.ColumnInfo columnInfo = mInfo.getTitleColumn().get(i);
                 tv_lable.setText(columnInfo.getTitle());
                 if(TextUtils.isEmpty(columnInfo.getJumpUrl())) {
                     tv_value.setText(columnInfo.getValue());
