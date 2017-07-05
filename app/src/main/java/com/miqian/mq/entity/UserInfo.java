@@ -1,6 +1,7 @@
 package com.miqian.mq.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by Administrator on 2015/9/6.
@@ -30,10 +31,10 @@ public class UserInfo implements Serializable {
     private String bankUrlBig;//绑定银行图标url
     private String bankCode;//绑定银行代码
     private String supportStatus;//银行支持状态
-    private String amtMinLimit;//充值最小额度
+    private BigDecimal amtMinLimit;//充值最小额度
     private String canRedeem;//可赎回金额
-    private String amtPerLimit; //单笔限额
-    private String amtDayLimit; // 每日限额
+    private BigDecimal amtPerLimit; //单笔限额
+    private BigDecimal amtDayLimit; // 每日限额
     private String monthAmtLimit ; // 每月限额
     private String ydayProfit;//昨日收益
     private String custLevel;//新增用户等级
@@ -340,27 +341,27 @@ public class UserInfo implements Serializable {
         this.supportStatus = supportStatus;
     }
 
-    public String getAmtMinLimit() {
+    public BigDecimal getAmtMinLimit() {
         return amtMinLimit;
     }
 
-    public void setAmtMinLimit(String amtMinLimit) {
+    public void setAmtMinLimit(BigDecimal amtMinLimit) {
         this.amtMinLimit = amtMinLimit;
     }
 
-    public String getAmtPerLimit() {
+    public BigDecimal getAmtPerLimit() {
         return amtPerLimit;
     }
 
-    public void setAmtPerLimit(String amtPerLimit) {
+    public void setAmtPerLimit(BigDecimal amtPerLimit) {
         this.amtPerLimit = amtPerLimit;
     }
 
-    public String getAmtDayLimit() {
+    public BigDecimal getAmtDayLimit() {
         return amtDayLimit;
     }
 
-    public void setAmtDayLimit(String amtDayLimit) {
+    public void setAmtDayLimit(BigDecimal amtDayLimit) {
         this.amtDayLimit = amtDayLimit;
     }
 

@@ -32,7 +32,6 @@ import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
-import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
@@ -45,7 +44,6 @@ import java.math.BigDecimal;
  */
 public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
-    private Button btRollin;
     private EditText editMoney;
     private TextView bindBankNumber;
     private TextView textMobile;
@@ -54,10 +52,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     private TextView textTip2;
     private EditText editCaptcha;
     private Button btnSendCaptcha;
+    private Button btRollin;
 
     private UserInfo userInfo;
+    private BigDecimal limitMoney;
 
-    private String money;
     private String authCode;
     private int rollType;//为1时传入充值金额，为0时不传
 
@@ -78,6 +77,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 if ("000000".equals(meta.getCode())) {
                     UserInfoResult userInfoResult = JsonUtil.parseObject(result, UserInfoResult.class);
                     userInfo = userInfoResult.getData();
+                    limitMoney = userInfo.getAmtPerLimit();
                     refreshView();
                 } else if ("999991".equals(meta.getCode())) {
                     textTip2.setVisibility(View.VISIBLE);
@@ -99,6 +99,50 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
+        Intent intent = getIntent();
+        rollType = intent.getIntExtra("rollType", 0);
+        btRollin = (Button) findViewById(R.id.bt_rollin);
+        btRollin.setOnClickListener(this);
+        editMoney = (EditText) findViewById(R.id.edit_money);
+        SpannableString ss = new SpannableString("请输入金额");//定义hint的值
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(16, true);//设置字体大小 true表示单位是sp
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editMoney.setHint(new SpannedString(ss));
+        editMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() <= 0) return;
+                String string = s.toString().replaceAll(",", "");
+                if (count != before && string.matches(FormatUtil.PATTERN_MONEY)) {
+                    editMoney.setText(FormatUtil.formatAmtForInto(string));
+                }
+                editMoney.setSelection(editMoney.getText().length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String temp = s.toString().replaceAll(",", "");
+                if (TextUtils.isEmpty(temp) || temp.matches(FormatUtil.PATTERN_MONEY)) {
+                    showTip2(temp);
+                    return;
+                }
+                s.delete(s.toString().length() - 1, s.toString().length());
+            }
+        });
+        bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
+        textMobile = (TextView) findViewById(R.id.text_mobile);
+        textLimit = (TextView) findViewById(R.id.text_limit);
+        textLimit.setOnClickListener(this);
+        textTip1 = (TextView) findViewById(R.id.text_tip1);
+        textTip2 = (TextView) findViewById(R.id.text_tip2);
+        editCaptcha = (EditText) findViewById(R.id.et_account_captcha);
+        btnSendCaptcha = (Button) findViewById(R.id.btn_send);
+        btnSendCaptcha.setOnClickListener(this);
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -114,42 +158,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 super.handleMessage(msg);
             }
         };
-        Intent intent = getIntent();
-        rollType = intent.getIntExtra("rollType", 0);
-        btRollin = (Button) findViewById(R.id.bt_rollin);
-        btRollin.setOnClickListener(this);
-        editMoney = (EditText) findViewById(R.id.edit_money);
-
-        SpannableString ss = new SpannableString("请输入金额");//定义hint的值
-        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(16, true);//设置字体大小 true表示单位是sp
-        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        editMoney.setHint(new SpannedString(ss));
-//        editMoney.addTextChangedListener(new MyTextWatcher() {
-//
-//            @Override
-//            public void myAfterTextChanged(Editable s) {
-//                try {
-//                    String temp = s.toString();
-//                    if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-//                        return;
-//                    }
-//                    s.delete(temp.length() - 1, temp.length());
-//                } catch (Exception e) {
-//                }
-//            }
-//        });
-        if (rollType == 1 || rollType == 2) {
-            money = intent.getStringExtra("money");
-        }
-        bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
-        textMobile = (TextView) findViewById(R.id.text_mobile);
-        textLimit = (TextView) findViewById(R.id.text_limit);
-        textLimit.setOnClickListener(this);
-        editCaptcha = (EditText) findViewById(R.id.et_account_captcha);
-        btnSendCaptcha = (Button) findViewById(R.id.btn_send);
-        btnSendCaptcha.setOnClickListener(this);
-        textTip1 = (TextView) findViewById(R.id.text_tip1);
-        textTip2 = (TextView) findViewById(R.id.text_tip2);
     }
 
     private void refreshView() {
@@ -160,18 +168,16 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void rollIn() {
-        if (rollType == 0) {
-            money = editMoney.getText().toString();
-            if (TextUtils.isEmpty(money)) {
-                Uihelper.showToast(mActivity, "转入金额不能为空");
-                return;
-            }
-            BigDecimal tempMoney = new BigDecimal(money);
-            BigDecimal minMoney = new BigDecimal(userInfo.getAmtMinLimit());
-            if (minMoney.compareTo(tempMoney) > 0) {
-                Uihelper.showToast(mActivity, "转入金额不能为小于" + minMoney + "元");
-                return;
-            }
+        String money = editMoney.getText().toString().replaceAll(",", "");
+        if (TextUtils.isEmpty(money)) {
+            Uihelper.showToast(mActivity, "转入金额不能为空");
+            return;
+        }
+        BigDecimal tempMoney = new BigDecimal(money);
+        BigDecimal minMoney = userInfo.getAmtMinLimit();
+        if (minMoney.compareTo(tempMoney) > 0) {
+            Uihelper.showToast(mActivity, "转入金额不能为小于" + minMoney + "元");
+            return;
         }
         String captcha = editCaptcha.getText().toString();
         if (!TextUtils.isEmpty(captcha)) {
@@ -233,7 +239,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-
     private void sendMessage() {
         begin();
         HttpRequest.getCaptcha(this, new ICallback<CaptchaResult>() {
@@ -279,20 +284,20 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
             isTimer = false;
-
         }
     }
 
-//    public static String showErrorString(Context context, String key) {
-//        String errorData = Pref.getString(Pref.ERROR_LIAN, context, Constants.ERROR_LIAN_DEFAULT);
-//        if (!TextUtils.isEmpty(errorData)) {
-//            Map<String, String> userMap = JSON.parseObject(errorData, new TypeReference<Map<String, String>>() {
-//            });
-//            return userMap.get(key);
-//        }
-//        return null;
-//    }
-
+    public void showTip2(String temp) {
+        BigDecimal tempMoney = new BigDecimal(temp);
+        if (tempMoney.compareTo(limitMoney) > 0) {
+            textTip2.setVisibility(View.VISIBLE);
+            textTip2.setText("已超过快捷充值限额" + userInfo.getAmtPerLimit() + "万元， 建议使用转账充值");
+            btRollin.setEnabled(false);
+        } else {
+            textTip2.setVisibility(View.GONE);
+            btRollin.setEnabled(true);
+        }
+    }
 
     /**
      * 跳转充值结果
@@ -300,12 +305,14 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
      * @param orderRecharge
      */
     private void jumpToResult(OrderRecharge orderRecharge) {
-        Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
-        intent.putExtra("status", orderRecharge.getStatus());
-        intent.putExtra("money", orderRecharge.getAmt());
-        intent.putExtra("orderNo", orderRecharge.getOrderNo());
-        intent.putExtra("bankNo", orderRecharge.getBankNo());
-        startActivity(intent);
+        if (rollType != 1) {
+            Intent intent = new Intent(IntoActivity.this, IntoResultActivity.class);
+            intent.putExtra("status", orderRecharge.getStatus());
+            intent.putExtra("money", orderRecharge.getAmt());
+            intent.putExtra("orderNo", orderRecharge.getOrderNo());
+            intent.putExtra("bankNo", orderRecharge.getBankNo());
+            startActivity(intent);
+        }
         IntoActivity.this.finish();
     }
 
@@ -313,13 +320,6 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     protected String getPageName() {
         return "在线快捷充值";
     }
-
-//    MyTextWatcher textWatcherLian = new MyTextWatcher() {
-//        @Override
-//        public void myAfterTextChanged(Editable arg0) {
-//            textErrorLian.setVisibility(View.GONE);
-//        }
-//    };
 
     @Override
     protected void onDestroy() {
