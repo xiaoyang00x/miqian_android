@@ -11,6 +11,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.CustBindBankBranch;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
@@ -121,9 +122,7 @@ public class SetBankActivity extends BaseActivity {
                     public void onSucceed(CustBindBankBranch result) {
                         end();
                         Uihelper.showToast(mActivity, "设置成功");
-                        Intent intent=new Intent();
-                        intent.putExtra("bankUnionNumber",result.getData());
-                        setResult(1,intent);
+                        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BANK_UNIONNUM,result.getData());
                         finish();
                     }
 

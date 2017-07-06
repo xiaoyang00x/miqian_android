@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="您的提现金额已达大额提现标准，非银行工作时间，无法进行"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font3_v2"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="大额提现，详情见温馨提示，如急需资金，可拆分多笔提现"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font3_v2"></TextView>
+
+</LinearLayout>

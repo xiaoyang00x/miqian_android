@@ -93,7 +93,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     private void loadMore() {
         if (!isLoading) {
-            if (regInvestList.size() >= userRegular.getPage().getTotalPage()) {
+            if (regInvestList.size() >= userRegular.getPageInfo().getTotalPage()) {
 //                mAdapter.notifyItemChanged(regInvestList.size() + 1);
                 return;
             }
@@ -158,9 +158,9 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void refreshView() {
-        mAdapter = new AdapterUserRegular(this, regInvestList, userRegular.getReg(), userRegular.getPage(), isExpiry);
+        mAdapter = new AdapterUserRegular(this, regInvestList, userRegular.getReg(), userRegular.getPageInfo(), isExpiry);
         mAdapter.setOnItemClickListener(this);
-        mAdapter.setMaxItem(userRegular.getPage().getTotalPage());
+        mAdapter.setMaxItem(userRegular.getPageInfo().getTotalPage());
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -176,27 +176,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.title_left:
-//                titleLeft.setTextColor(getResources().getColor(R.color.mq_r1));
-//                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left_selected);
-//                titleRight.setTextColor(getResources().getColor(R.color.white));
-//                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right);
-//                isExpiry = "N";
-//                mType = 0;
-//                obtainData();
-//                break;
-//            case R.id.title_right:
-//
-//                titleLeft.setTextColor(getResources().getColor(R.color.white));
-//                titleLeft.setBackgroundResource(R.drawable.bt_regualr_tab_left);
-//                titleRight.setTextColor(getResources().getColor(R.color.mq_r1));
-//                titleRight.setBackgroundResource(R.drawable.bt_regualr_tab_right_selected);
-//                isExpiry = "Y";
-//                mType = 1;
-//                obtainData();
-//                break;
-//        }
     }
 
     @Override

@@ -18,11 +18,13 @@ import com.miqian.mq.activity.AnnounceActivity;
 import com.miqian.mq.activity.MainActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.current.ActivityUserCurrent;
+import com.miqian.mq.activity.rollin.IntoCheckAcitvity;
 import com.miqian.mq.activity.rollin.IntoModeAcitvity;
 import com.miqian.mq.activity.save.SaveAcitvity;
 import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
+import com.miqian.mq.activity.user.RolloutActivity;
 import com.miqian.mq.activity.user.UserRecordActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
@@ -63,6 +65,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     TextView tv_Regular;
     @BindView(R.id.account_ticket)
     TextView tv_Ticket;
+    @BindView(R.id.tv_question)
+    TextView tvQuestion;
     @BindView(R.id.tv_balance)
     TextView tv_balance;//可用余额
     @BindView(R.id.tv_totalProfit)//总收益
@@ -217,12 +221,6 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         } else {
             tv_balance.setText("--.--");
         }
-        //我的活期
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.getCurAmt())) {
-            tv_Current.setText(FormatUtil.formatAmountStr(userInfo.getCurAmt()) + "元");
-        } else {
-            tv_Current.setText("--");
-        }
         //我的定期
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getRegTotal())) {
             tv_Regular.setText(userInfo.getRegTotal() + "笔");
@@ -254,6 +252,18 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         } else {
             tv_ydayprofit.setText("--.--");
         }
+
+        //新用户不会给currentAmt这个字段，  老用户 没给这个字段 则不显示 ‘‘我的活期’’
+        String currentAmt = userInfo.getCurrentAmt();
+        if (!TextUtils.isEmpty(currentAmt)) {
+            BigDecimal bdCurrent = new BigDecimal(currentAmt);
+            if (bdCurrent.compareTo(BigDecimal.ZERO) > 0) {
+                frame_current.setVisibility(View.VISIBLE);
+                view.findViewById(R.id.divider_current).setVisibility(View.VISIBLE);
+                tv_Current.setText(FormatUtil.formatAmountStr(userInfo.getCurAmt()) + "元");
+            }
+        }
+
     }
 
     @Override
@@ -296,11 +306,12 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         frame_invite.setOnClickListener(this);
         frame_miaoqianbao.setOnClickListener(this);
         btn_setting.setImageResource(R.drawable.btn_setting);
+        tvQuestion.setOnClickListener(this);
     }
 
     @OnClick(R.id.btn_eye)//资金等是否可见
     public void eyeState() {
-        if (UserUtil.hasLogin(mActivity)){
+        if (UserUtil.hasLogin(mActivity)) {
             if (isOpeneye) {
                 btnEye.setBackgroundResource(R.drawable.icon_closeeye);
                 tv_totalasset.setText("****");
@@ -353,48 +364,11 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @OnClick(R.id.bt_rollout)
     public void rollOut() {//取现
-        MobclickAgent.onEvent(getActivity(), "1018");
-        if (userInfo == null) {
-            return;
-        }
-        String balance = userInfo.getBalance();
-        if (!TextUtils.isEmpty(balance)) {
-            if (new BigDecimal(balance).compareTo(new BigDecimal(0)) > 0) {
-
-                if ("1".equals(userInfo.getBindCardStatus())) {
-                    if ("0".equals(userInfo.getWithdrawCashSwitch())) {
-                        Uihelper.showToast(getActivity(), R.string.qq_project_rollout);
-                    } else {
-//                        Intent intent = new Intent(getActivity(), RolloutActivity.class);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable("userInfo", userInfoTemp);
-//                        intent.putExtras(bundle);
-//                        startActivity(intent);
-                    }
-                } else {//提示绑卡
-                    if (tipDialog == null) {
-                        tipDialog = new CustomDialog(getActivity(), CustomDialog.CODE_TIPS) {
-                            @Override
-                            public void positionBtnClick() {
-                                dismiss();
-                            }
-
-                            @Override
-                            public void negativeBtnClick() {
-                            }
-                        };
-                        tipDialog.setTitle("提示");
-                        tipDialog.setRemarks("请先充值完成绑卡流程");
-                    }
-                    tipDialog.show();
-                }
-
-
-            } else {
-                Uihelper.showToast(getActivity(), "账户无余额，无法提现");
-            }
-
-        }
+        Intent intent = new Intent(getActivity(), RolloutActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("userInfo", userInfoTemp);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override
@@ -439,6 +413,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             case R.id.account_miaoqianbao:
                 refresh = false;
                 WebActivity.startActivity(mContext, Urls.web_my_invite);
+                break;
+            //充值未到账
+            case R.id.tv_question:
+                startActivity(new Intent(mContext, IntoCheckAcitvity.class));
                 break;
             default:
                 break;

@@ -28,10 +28,12 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
         View frame_introduce = findViewById(R.id.frame_aboutus_introduce);
         View frame_team = findViewById(R.id.frame_aboutus_team);
         View frame_cooperation = findViewById(R.id.frame_aboutus_cooperation);
+        View frame_development = findViewById(R.id.frame_aboutus_development);
 
         frame_introduce.setOnClickListener(this);
         frame_team.setOnClickListener(this);
         frame_cooperation.setOnClickListener(this);
+        frame_development.setOnClickListener(this);
 
     }
 
@@ -67,6 +69,10 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
             case R.id.frame_aboutus_cooperation://合作伙伴
 
                 WebActivity.startActivity(mActivity, Urls.web_aboutus_cooperation);
+                break;
+            case R.id.frame_aboutus_development://发展历程
+
+                WebActivity.startActivity(mActivity, Urls.web_aboutus_development);
                 break;
         }
 

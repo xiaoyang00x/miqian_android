@@ -3,6 +3,7 @@ package com.miqian.mq.adapter;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.entity.Page;
 import com.miqian.mq.entity.Reg;
 import com.miqian.mq.entity.RegInvest;
+import com.miqian.mq.utils.Constants;
 
 import java.util.List;
 
@@ -101,7 +103,19 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             String realInterest = regInvest.getProductRate();
             String presentInterest = regInvest.getProductPlusRate();
             ((ViewHolder) holder).textInterestRate.setText(realInterest);
-            ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
+//            ((ViewHolder) holder).imageProjectStatus.setVisibility(View.GONE);
+
+            String bidType = regInvest.getBidType();
+            if (Constants.BID_TYPE_SBB.equals(bidType)) {
+                if (!TextUtils.isEmpty(realInterest)) {
+                    ((ViewHolder) holder).textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
+                    ((ViewHolder) holder).textInterestRatePresent.setText("%");
+                }
+            } else {
+                ((ViewHolder) holder).textInterestRate.setText(Float.parseFloat(realInterest) + "");
+                ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
+            }
+
 //            int showType = CalculateUtil.getShowInterest(regInvest.getProjectState(), regInvest.getSubjectType(), regInvest.getProductRate()
 //                    , regInvest.getProductPlusRate(), regInvest.getTransedAmt());
 //            String projectState = regInvest.getProjectState();
@@ -197,16 +211,16 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
         }
     }
 
-    public void showProjectImage(String projectstatus, ViewHolder holder) {
-        holder.imageProjectStatus.setVisibility(View.VISIBLE);
-        if (projectstatus.equals("0")) {
-            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
-        } else if (projectstatus.equals("1")) {
-            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_wjx);
-        } else if (projectstatus.equals("2")) {
-            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfered);
-        }
-    }
+//    public void showProjectImage(String projectstatus, ViewHolder holder) {
+//        holder.imageProjectStatus.setVisibility(View.VISIBLE);
+//        if (projectstatus.equals("0")) {
+//            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfering);
+//        } else if (projectstatus.equals("1")) {
+//            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfer_wjx);
+//        } else if (projectstatus.equals("2")) {
+//            holder.imageProjectStatus.setImageResource(R.drawable.user_regular_transfered);
+//        }
+//    }
 
     @Override
     public int getItemCount() {
@@ -223,7 +237,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView bdName;
-        public ImageView imageProjectStatus;
+//        public ImageView imageProjectStatus;
 
         public TextView textCapital;
         public TextView textCapitalMoney;
@@ -241,7 +255,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
         public ViewHolder(View itemView) {
             super(itemView);
             bdName = (TextView) itemView.findViewById(R.id.text_name);
-            imageProjectStatus = (ImageView) itemView.findViewById(R.id.image_project_status);
+//            imageProjectStatus = (ImageView) itemView.findViewById(R.id.image_project_status);
             textCapital = (TextView) itemView.findViewById(R.id.text_capital);
             textCapitalMoney = (TextView) itemView.findViewById(R.id.text_capital_money);
             textEarning = (TextView) itemView.findViewById(R.id.text_earning);

@@ -73,7 +73,7 @@ public class UserUtil {
 
     public static void saveUserInfo(Context context, UserInfo userInfo) {
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
-        Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
+        Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate("000000000020170628104802478704"), context);
         Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobile()), context);
         Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getUserName()), context);
         Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getJxPayPwdStatus()), context);
