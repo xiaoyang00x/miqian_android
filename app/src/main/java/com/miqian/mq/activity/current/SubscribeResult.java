@@ -107,6 +107,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             if (CurrentInvestment.PRODID_CURRENT == productType) {
                 textTip.setText("认购成功后，请前往我的秒钱宝查看");
             } else {
+                btMyProduct.setText("前往我的定期");
                 textTip.setText("认购成功后，请前往我的定期查看");
             }
         } else {
@@ -162,7 +163,11 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private void closeActivity() {
         MobclickAgent.onEvent(mContext, "1065");
         if (status == 1) {
-            ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_REGULAR, null);
+            if (CurrentInvestment.PRODID_CURRENT == productType) {
+                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_CURRENT, null);
+            } else {
+                ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_REGULAR, null);
+            }
         } else {
             SubscribeResult.this.finish();
             ActivityStack.getActivityStack().popActivity();
