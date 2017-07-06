@@ -27,7 +27,7 @@
                     android:background="#ffeebc"
                     android:paddingLeft="@dimen/margin_left_right"
                     android:paddingRight="@dimen/margin_left_right"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/text_tip"
@@ -59,6 +59,7 @@
                         android:id="@+id/text_project_info"
                         style="@style/f7_B4_V2"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
                         android:text="年化收益：" />
 
                 </RelativeLayout>
@@ -150,7 +151,7 @@
                         style="@style/f7_B4_V2"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp" />
+                        android:layout_marginRight="30dp" />
 
                     <TextView
                         android:id="@+id/text_promote_money"
@@ -179,13 +180,6 @@
                         android:layout_marginRight="0dp" />
                 </RelativeLayout>
 
-
-                <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:orientation="vertical">-->
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/listitem_height"
@@ -200,15 +194,6 @@
                         android:layout_marginLeft="@dimen/margin_left_right"
                         android:src="@drawable/icon_balance" />
 
-                    <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_toLeftOf="@+id/text_pay_money"-->
-                    <!--android:layout_toRightOf="@+id/image_type"-->
-                    <!--android:orientation="vertical">-->
-
                     <TextView
                         style="@style/f7_B1_V2"
                         android:layout_centerVertical="true"
@@ -222,8 +207,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="40dp"
                         android:layout_toRightOf="@id/image_type"
-                        android:maxLines="1"
-                        android:text="1000000" />
+                        android:maxLines="1" />
 
                     <Button
                         android:id="@+id/bt_rollin"
@@ -236,26 +220,30 @@
                         android:text="充值"
                         android:textColor="@color/mq_r1_v2"
                         android:textSize="@dimen/mq_font5_v2" />
-                    <!--</LinearLayout>-->
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/text_pay_money_unit"-->
-                    <!--style="@style/f7_B4_V2"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_marginRight="15dp"-->
-                    <!--android:text="元" />-->
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/image_arrow"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:src="@drawable/right" />-->
                 </RelativeLayout>
 
-                <!--</LinearLayout>-->
+                <RelativeLayout
+                    android:id="@+id/frame_contract"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/listitem_height"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/f7_B1_V2"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/margin_left_right"
+                        android:text="查看合同" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_left_right"
+                        android:src="@drawable/right" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
