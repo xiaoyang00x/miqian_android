@@ -36,7 +36,7 @@
                 android:layout_below="@id/image_status"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="认购成功"
+                android:text="认购申请成功"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mq_font6_v2" />
 
@@ -52,7 +52,7 @@
 
             <TextView
                 style="@style/f7_B1_V2"
-                android:text="认购金额" />
+                android:text="认购申请金额" />
 
             <TextView
                 android:id="@+id/text_money"
@@ -101,7 +101,7 @@
             <TextView
                 style="@style/f7_B1_V2"
                 android:layout_centerVertical="true"
-                android:text="红包/卡" />
+                android:text="使用红包/卡" />
 
             <TextView
                 android:id="@+id/text_promote"
@@ -126,7 +126,7 @@
             <TextView
                 style="@style/f7_B1_V2"
                 android:layout_centerVertical="true"
-                android:text="交易编号" />
+                android:text="业务编号" />
 
             <TextView
                 android:id="@+id/trade_number"

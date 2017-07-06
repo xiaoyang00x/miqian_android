@@ -10,6 +10,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -53,7 +54,7 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
     }
 
     private void refreshView() {
-        textOrderMoney.setText(money + "元");
+        textOrderMoney.setText(FormatUtil.formatAmountStr(money));
         textOrderNo.setText(orderNo);
         textBank.setText(bankNo);
     }

@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:scrollbars="none">
 
     <LinearLayout
@@ -43,7 +44,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
-            android:background="@color/white"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right">
@@ -53,19 +53,24 @@
                 android:text="充值金额" />
 
             <TextView
-                android:id="@+id/text_order_money"
-                style="@style/f3_B1"
+                android:id="@+id/order_money_unit"
+                style="@style/f7_B1_V2"
                 android:layout_alignParentRight="true"
-                android:text="--" />
+                android:text="元" />
 
+            <TextView
+                android:id="@+id/text_order_money"
+                style="@style/f8_R1_V2"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@id/order_money_unit"
+                android:text="--" />
         </RelativeLayout>
 
-        <View style="@style/item_divider" />
+        <View style="@style/item_divider_none" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
-            android:background="@color/white"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right">
@@ -81,12 +86,11 @@
                 android:textColor="@color/mq_b4_v2" />
         </RelativeLayout>
 
-        <View style="@style/item_divider" />
+        <View style="@style/item_divider_none" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
-            android:background="@color/white"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right">
@@ -102,13 +106,14 @@
                 android:textColor="@color/mq_b4_v2" />
         </RelativeLayout>
 
+        <View style="@style/item_divider_none" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="30dp">
 
             <Button
                 android:id="@+id/bt_back"

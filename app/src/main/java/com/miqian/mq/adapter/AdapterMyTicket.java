@@ -144,7 +144,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
             String desUrl = promote.getPromUrl();
-            setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUseableAmt() : promote.getTotalAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUsableAmt() : promote.getTotalAmt()));
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
             tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
@@ -164,9 +164,9 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_blue);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.VISIBLE);
-                setText(tempViewHoleder.tv_amount, promote.getUseableAmt().toString());
+                setText(tempViewHoleder.tv_amount, promote.getTotalAmt().toString());
             } else {
-                setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUseableAmt() : promote.getTotalAmt()));
+                setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUsableAmt() : promote.getTotalAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
@@ -210,7 +210,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
             } else if ("000000000000000000000230830828".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_520);
             }
-            setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUseableAmt() : promote.getTotalAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(isValid ? promote.getUsableAmt() : promote.getTotalAmt()));
             clickEvent(holder, promote.getCouponsId(), promote.getPromState(), desUrl);
 //            tempViewHoleder.setViewEnable(isValid);
         } else if (holder instanceof ProgressViewHolder) {

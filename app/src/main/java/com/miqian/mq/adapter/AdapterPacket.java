@@ -76,7 +76,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
             setText(tempViewHoleder.tv_date_limit, promote.getFitBdTermOrYrt());
             setText(tempViewHoleder.tv_use_limit, promote.getFitProdOrBdType());
 //            String desUrl = promote.getPromUrl();
-            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUseableAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUsableAmt()));
             tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
             tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
             if (mPosition == position) {
@@ -96,9 +96,9 @@ public class AdapterPacket extends RecyclerView.Adapter {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_blue);
                 tempViewHoleder.tv_amount_unit.setVisibility(View.GONE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.VISIBLE);
-                setText(tempViewHoleder.tv_amount, promote.getUseableAmt().toString());
+                setText(tempViewHoleder.tv_amount, promote.getUsableAmt().toString());
             } else {
-                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUseableAmt()));
+                setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUsableAmt()));
                 tempViewHoleder.tv_amount_unit.setVisibility(View.VISIBLE);
                 tempViewHoleder.tv_precent_unit.setVisibility(View.GONE);
 
@@ -142,7 +142,7 @@ public class AdapterPacket extends RecyclerView.Adapter {
             } else if ("000000000000000000000230830828".equals(promote.getCouponsId())) {
                 tempViewHoleder.frame_ticket.setBackgroundResource(R.drawable.bg_ticket_qq_520);
             }
-            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUseableAmt()));
+            setText(tempViewHoleder.tv_amount, String.valueOf(promote.getUsableAmt()));
 //            clickEvent(holder, promote.getPromProdId(), promote.getPromState(), desUrl);
             if (mPosition == position) {
                 tempViewHoleder.promoteChoosed.setVisibility(View.VISIBLE);

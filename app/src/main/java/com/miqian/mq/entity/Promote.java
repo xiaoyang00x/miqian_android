@@ -46,7 +46,7 @@ public class Promote {
     /**
      * 可用余额
      */
-    private BigDecimal useableAmt;
+    private BigDecimal usableAmt;
     /**
      * 抵用比率
      */
@@ -113,12 +113,12 @@ public class Promote {
         this.totalAmt = totalAmt;
     }
 
-    public BigDecimal getUseableAmt() {
-        return useableAmt;
+    public BigDecimal getUsableAmt() {
+        return usableAmt;
     }
 
-    public void setUseableAmt(BigDecimal useableAmt) {
-        this.useableAmt = useableAmt;
+    public void setUsableAmt(BigDecimal usableAmt) {
+        this.usableAmt = usableAmt;
     }
 
     public String getToUseRate() {
