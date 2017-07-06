@@ -16,12 +16,14 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.entity.Title;
 import com.miqian.mq.net.HttpUtils;
 import com.miqian.mq.net.Param;
 import com.miqian.mq.utils.ChannelUtil;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.SwipeWebView;
@@ -221,6 +223,13 @@ public class WebBankActivity extends WebActivity {
     @JavascriptInterface
     public void jxBankCallBak(String code) {
         LogUtil.e("", "WebBankActivity :hfCallback : " + code);
+        Title title = JsonUtil.parseObject(code, Title.class);
+        int num = title.getTitle();
+        switch (num) {
+            case 5://跳转修改交易密码
+                SendCaptchaActivity.enterActivity(mActivity, TypeUtil.CAPTCHA_TRADE_PW);
+                break;
+        }
         state = 1;
         goBack();
     }

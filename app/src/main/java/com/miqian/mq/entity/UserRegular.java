@@ -7,16 +7,16 @@ import java.util.List;
  */
 public class UserRegular {
 
-    private Page page;
+    private Page pageInfo;
     private List<RegInvest> regInvest;
     private Reg reg;
 
-    public Page getPage() {
-        return page;
+    public Page getPageInfo() {
+        return pageInfo;
     }
 
-    public void setPage(Page page) {
-        this.page = page;
+    public void setPageInfo(Page pageInfo) {
+        this.pageInfo = pageInfo;
     }
 
     public List<RegInvest> getRegInvest() {

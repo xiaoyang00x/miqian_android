@@ -13,6 +13,8 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.adapter.BankBranchAdapter;
 import com.miqian.mq.entity.BankBranch;
 import com.miqian.mq.entity.BankBranchResult;
+import com.miqian.mq.entity.MqResult;
+import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.views.WFYTitle;
@@ -42,13 +44,15 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
     @Override
     public void obtainData() {
         begin();
-        HttpRequest.getSubBranch(mActivity, new ICallback<BankBranchResult>() {
+        HttpRequest.getSubBranch(mActivity, new ICallback<MqResult<BankBranchResult>>() {
             @Override
-            public void onSucceed(BankBranchResult result) {
+            public void onSucceed(MqResult<BankBranchResult> result) {
                 end();
-                items = result.getData();
+                BankBranchResult data = result.getData();
+                if (data!=null){
+                    items = data.getList();
+                }
                 setView();
-
             }
 
             @Override
@@ -63,7 +67,6 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
     public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         items = new ArrayList<>();
-        setView();
 
     }
 

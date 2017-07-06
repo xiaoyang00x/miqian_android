@@ -42,20 +42,17 @@
             android:textSize="@dimen/mq_font5_v2" />
 
         <TextView
+            android:id="@+id/tv_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="7dp"
-            android:layout_toLeftOf="@+id/btn_question"
+            android:drawablePadding="3dp"
+            android:drawableRight="@drawable/icon_me_question"
             android:text="充值未到账"
             android:textColor="@color/mq_bl4_v2"
             android:textSize="@dimen/mq_font5_v2" />
 
-        <ImageView
-            android:id="@+id/btn_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/icon_me_question" />
     </RelativeLayout>
 
     <LinearLayout

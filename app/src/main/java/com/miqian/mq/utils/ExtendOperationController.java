@@ -62,6 +62,8 @@ public class ExtendOperationController {
 		int SYSTEM_MAINTENANCE = 1014;
 		/**老用户存管弹窗*/
 		int JX_SAVE = 1015;
+		/**银行联合号*/
+		int BANK_UNIONNUM = 1016;
 	}
 
 	/**

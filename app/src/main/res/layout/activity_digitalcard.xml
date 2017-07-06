@@ -115,7 +115,7 @@
      <RelativeLayout
          android:layout_width="match_parent"
          android:layout_height="40dp"
-         android:background="@color/mq_b7_v2"
+         android:background="#e6f6fb"
          > <TextView
          android:layout_marginLeft="15dp"
          android:layout_width="wrap_content"

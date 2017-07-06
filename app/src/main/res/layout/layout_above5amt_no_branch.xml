@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="大额提现需匹配开户行联行号，请先完善银行卡信息~"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font3_v2"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="如银行卡信息未完善，仅支持普通提现"
+        android:textColor="@color/mq_r1_v2"
+        android:textSize="@dimen/mq_font3_v2"></TextView>
+
+</LinearLayout>

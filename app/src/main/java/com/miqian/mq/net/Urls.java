@@ -58,7 +58,7 @@ public class Urls {
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 
-//    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
+    //    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
     public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
 
     //线上
@@ -218,8 +218,8 @@ public class Urls {
     /**
      * 网页的URL
      */
-    //注册页：《秒钱用户注册协议》
-    public final static String web_register_law = "https://res.shicaidai.com/miaoqian/webView/service-items.html";
+    //注册页：《秒钱会员注册协议》
+    public final static String web_register_law = getWebServer() + "Client/registerProtocol.html";
     //《网络借贷风险及禁止行为提示》
     public final static String web_register_law_net = "https://res.shicaidai.com/miaoqian/webView/dengluxieyi.html";
     //网络交易资金账户服务第三方协议:
@@ -255,7 +255,25 @@ public class Urls {
     //活期详情
     public final static String web_current = getServer() + "webView/currentDetail";
     //帮助中心
-    public final static String web_help = "https://res.shicaidai.com/miaoqian/webView/helpCenter.html";
+    public final static String web_help = getWebServer() + "Client/help.html";
+    //每日计息
+    public final static String web_current_earning = "https://res.shicaidai.com/miaoqian/current/meirijixi.html";
+    //本息保障
+    public final static String web_current_safe = "https://res.shicaidai.com/miaoqian/current/benxibaozhang.html";
+    //活存活取
+    public final static String web_current_back = "https://res.shicaidai.com/miaoqian/current/huocunhuoqu.html";
+
+
+    //管理团队
+    public final static String web_aboutus_team = getWebServer() + "Client/manageTeam.html";
+    //合作伙伴
+    public final static String web_aboutus_cooperation = getWebServer() + "Client/cooperationPartner.html";
+    //关于秒钱
+    public final static String web_aboutus_introduce = getWebServer() + "Client/aboutMiaoqian.html";
+    //战略团队
+    public final static String web_aboutus_zhanlue = getWebServer() + "webView/currentDetail";
+    //发展历程
+    public final static String web_aboutus_development = getWebServer() + "Client/progress.html";
 
     /**
      * 小坛的接口start
@@ -271,23 +289,6 @@ public class Urls {
     //首页运营活动
     public final static String get_home_activity = getServer() + "home/getAppHomeActivity";
     public final static String get_activity_feedback = getServer() + "home/getActivityFeedback";
-
-    //每日计息
-    public final static String web_current_earning = "https://res.shicaidai.com/miaoqian/current/meirijixi.html";
-    //本息保障
-    public final static String web_current_safe = "https://res.shicaidai.com/miaoqian/current/benxibaozhang.html";
-    //活存活取
-    public final static String web_current_back = "https://res.shicaidai.com/miaoqian/current/huocunhuoqu.html";
-
-
-    //管理团队
-    public final static String web_aboutus_team = "https://res.shicaidai.com/miaoqian/about/guanlituandui.html";
-    //合作伙伴
-    public final static String web_aboutus_cooperation = "https://res.shicaidai.com/miaoqian/about/hezuohuoban.html";
-    //关于秒钱
-    public final static String web_aboutus_introduce = "https://res.shicaidai.com/miaoqian/about/miaoqianjianjie.html";
-    //战略团队
-    public final static String web_aboutus_zhanlue = "https://res.shicaidai.com/miaoqian/about/zhanluehuoban.html";
 
     //我的邀请
     public final static String web_my_invite = getServer() + "activityService/inviteMain";

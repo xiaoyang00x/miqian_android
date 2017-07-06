@@ -955,7 +955,7 @@ public class HttpRequest {
     }
 
     //获取支行接口
-    public static void getSubBranch(Context context, final ICallback<BankBranchResult> callback,
+    public static void getSubBranch(Context context, final ICallback<MqResult<BankBranchResult>> callback,
                                     String province, String city, String bankName) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("province", province));
@@ -965,11 +965,12 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                BankBranchResult bankBranchResult = JsonUtil.parseObject(result, BankBranchResult.class);
-                if (bankBranchResult.getCode().equals("000000")) {
-                    callback.onSucceed(bankBranchResult);
+                MqResult<BankBranchResult> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<BankBranchResult>>() {
+                });
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(bankBranchResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
@@ -1636,12 +1637,12 @@ public class HttpRequest {
     /**
      * 江西银行:存管-提现跳转
      */
-    public static void autoWithdraw(final Activity activity) {
+    public static void autoWithdraw(final Activity activity,String amt) {
         ArrayList params = new ArrayList<>();
 //        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         params.add(new Param("custId", "000000000020170628104802478704"));
         params.add(new Param("cType", "android"));
-        params.add(new Param("amt", "50"));
+        params.add(new Param("amt", amt));
         WebBankActivity.startActivity(activity, Urls.jx_auto_withdraw_url, params, 1);
     }
 
