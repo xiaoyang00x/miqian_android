@@ -113,7 +113,7 @@ public class Urls {
     //活期首页
     public final static String current_detail = getServer() + "newCurrent/queryNewCurrentDetail";
     //认购预处理
-    public final static String order_produced = getServer() + "assetService/subscribePreprocess";
+    public final static String order_produced = getServer() + "trans/subscribePreprocess";//assetService/subscribePreprocess
     //认购
     public final static String subscribe_order = getServer() + "trans/subscribe";//"assetService/subscribe";
     //认购快捷支付

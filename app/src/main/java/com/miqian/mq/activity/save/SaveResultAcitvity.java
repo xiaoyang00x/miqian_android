@@ -101,27 +101,32 @@ public class SaveResultAcitvity extends BaseActivity implements View.OnClickList
             textPassword.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.save_step2_on, 0, 0);
             textPassword.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
             textLine2.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
+
+            if ("1".equals(saveInfo.getJxAutoClaimsTransferStatus())) {
+                textState1.setText("已签署");
+                textState1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.save_tick, 0, 0, 0);
+                textState1.setBackgroundResource(R.drawable.save_auto_agreement_selector);
+            }
+
+            if ("1".equals(saveInfo.getJxAutoSubscribeStatus())) {
+                textState2.setText("已签署");
+                textState2.setBackgroundResource(R.drawable.save_auto_agreement_selector);
+                textState2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.save_tick, 0, 0, 0);
+            }
+
+
             if ("0".equals(saveInfo.getJxAutoClaimsTransferStatus())) {
                 textStatus.setText("设置成功");
                 btSubmit.setText("签署自动债权转让协议");
             } else if ("0".equals(saveInfo.getJxAutoSubscribeStatus())) {
                 textStatus.setText("签署成功");
                 btSubmit.setText("签署自动投标协议");
-                textState1.setText("已签署");
-                textState1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.save_tick, 0, 0, 0);
-                textState1.setBackgroundResource(R.drawable.save_auto_agreement_selector);
             } else {
                 textStatus.setText("签署成功\n恭喜您，开通存管成功，即刻投资理财吧");
                 textAuto.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.save_step3_on, 0, 0);
                 textAuto.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
                 frameStep.setVisibility(View.GONE);
                 frameFish.setVisibility(View.VISIBLE);
-                textState1.setText("已签署");
-                textState1.setBackgroundResource(R.drawable.save_auto_agreement_selector);
-                textState1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.save_tick, 0, 0, 0);
-                textState2.setText("已签署");
-                textState2.setBackgroundResource(R.drawable.save_auto_agreement_selector);
-                textState2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.save_tick, 0, 0, 0);
                 UserUtil.saveJxSave(SaveResultAcitvity.this, null, true);
             }
         }

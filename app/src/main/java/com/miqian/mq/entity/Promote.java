@@ -32,6 +32,10 @@ public class Promote {
      */
     private String couponsId;
     /**
+     * 促销Id
+     */
+    private String id;
+    /**
      * 促销产品类别的名称
      */
     private String name;
@@ -46,7 +50,7 @@ public class Promote {
     /**
      * 可用余额
      */
-    private BigDecimal useableAmt;
+    private BigDecimal usableAmt;
     /**
      * 抵用比率
      */
@@ -81,12 +85,22 @@ public class Promote {
      **/
     private String promUrl;
 
+
     public String getCouponsId() {
         return couponsId;
     }
 
     public void setCouponsId(String couponsId) {
         this.couponsId = couponsId;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -113,12 +127,12 @@ public class Promote {
         this.totalAmt = totalAmt;
     }
 
-    public BigDecimal getUseableAmt() {
-        return useableAmt;
+    public BigDecimal getUsableAmt() {
+        return usableAmt;
     }
 
-    public void setUseableAmt(BigDecimal useableAmt) {
-        this.useableAmt = useableAmt;
+    public void setUsableAmt(BigDecimal usableAmt) {
+        this.usableAmt = usableAmt;
     }
 
     public String getToUseRate() {

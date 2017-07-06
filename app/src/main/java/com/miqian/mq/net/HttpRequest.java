@@ -27,7 +27,7 @@ import com.miqian.mq.entity.MqListResult;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.OperationResult;
 import com.miqian.mq.entity.OrderRechargeResult;
-import com.miqian.mq.entity.ProducedOrderResult;
+import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
@@ -41,7 +41,7 @@ import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.SaveInfoResult;
-import com.miqian.mq.entity.SubscribeOrderResult;
+import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserCurrentResult;
@@ -144,26 +144,26 @@ public class HttpRequest {
 
     /**
      * 活期、定期赚、定期计划
-     * 认购订单生成页面
+     * 认购预处理，订单页面
      *
-     * @param amt    金额
-     * @param prodId 0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
+     * @param amt         金额
+     * @param productCode 标的id
      */
-    public static void getProduceOrder(Context context, final ICallback<ProducedOrderResult> callback, String amt, String subjectId, String prodId) {
+    public static void getProduceOrder(Context context, final ICallback<MqResult<ProducedOrder>> callback, String amt, String productCode) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("prodId", prodId));
+        mList.add(new Param("productCode", productCode));
         new MyAsyncTask(context, Urls.order_produced, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                ProducedOrderResult producedOrderResult = JsonUtil.parseObject(result, ProducedOrderResult.class);
-                if ("000000".equals(producedOrderResult.getCode()) || "996633".equals(producedOrderResult.getCode())) {
-                    callback.onSucceed(producedOrderResult);
+                MqResult<ProducedOrder> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<ProducedOrder>>() {
+                });
+                if ("000000".equals(meta.getCode()) || "996633".equals(meta.getCode())) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(producedOrderResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
@@ -1224,53 +1224,23 @@ public class HttpRequest {
      * 认购接口
      *
      * @param amt       金额
-     * @param subjectId 标的id
-     * @param promList  红包列表
+     * @param productCode 标的id
+     * @param deliveryId  认购预处理的promList中的id 促销Id
      */
-    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String subjectId, String promList) {
+    public static void subscribeOrder(Context context, final ICallback<MqResult<SubscribeOrder>> callback, String amt, String productCode, String deliveryId) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
-        mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("promList", promList));
+        mList.add(new Param("productCode", productCode));
+        mList.add(new Param("deliveryId", deliveryId));
         new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
-                callback.onSucceed(subscribeOrderResult);
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 活期、定期赚、定期计划
-     * 快捷认购接口
-     *
-     * @param amt       金额
-     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-     * @param subjectId 0:活期
-     */
-    public static void subscribeQuickOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String orderNo, String subjectId, String promList, String prodList) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("amt", amt));
-        mList.add(new Param("prodId", prodId));
-        mList.add(new Param("orderNo", orderNo));
-        mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("promList", promList));
-        mList.add(new Param("prodList", prodList));
-        new MyAsyncTask(context, Urls.quick_subscribe_order, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
-                callback.onSucceed(subscribeOrderResult);
+//                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
+                MqResult<SubscribeOrder> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<SubscribeOrder>>(){
+                });
+                callback.onSucceed(meta);
             }
 
             @Override
