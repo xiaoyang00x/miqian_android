@@ -148,7 +148,7 @@ public class LoginActivity extends Activity {
                 Login userInfo = result.getData();
                 //保存用户信息
                 Pref.saveString(Pref.TOKEN, userInfo.getToken(), LoginActivity.this);
-                Pref.saveString(Pref.USERID, "000000000020170628104802478704", LoginActivity.this);
+                Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), LoginActivity.this);
                 Pref.saveString(Pref.TELEPHONE, userInfo.getMobile(), LoginActivity.this);
                 Pref.saveString(UserUtil.getPrefKey(LoginActivity.this, Pref.IS_SAVE_BEFORE), userInfo.getIsBeforeDepositRegisterStatus(), LoginActivity.this);
                 if (Pref.getBoolean(Pref.GESTURESTATE, LoginActivity.this, true)) {

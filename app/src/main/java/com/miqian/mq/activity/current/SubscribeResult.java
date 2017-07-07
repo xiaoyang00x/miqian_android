@@ -92,8 +92,8 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     }
 
     private void refreshView() {
-        if (subscribeOrder == null) return;
         if (status == 1) {
+            if (subscribeOrder == null) return;
             textStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.result_success, 0, 0);
             textStatus.setText("认购申请成功");
             textMoney.setText(FormatUtil.formatAmount(subscribeOrder.getAmt()));
@@ -110,6 +110,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
                 btMyProduct.setText("前往我的定期");
                 textTip.setText("认购成功后，请前往我的定期查看");
             }
+            tradeNumber.setText(subscribeOrder.getOrderNo());
         } else {
             textStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.result_fail, 0, 0);
             textStatus.setText("认购申请失败");
@@ -120,8 +121,11 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             textError.setText(errorReason);
             btBack.setText("确定");
             btMyProduct.setVisibility(View.GONE);
+            if (subscribeOrder != null) {
+                tradeNumber.setText(subscribeOrder.getOrderNo());
+            }
         }
-        tradeNumber.setText(subscribeOrder.getOrderNo());
+
     }
 
     @Override

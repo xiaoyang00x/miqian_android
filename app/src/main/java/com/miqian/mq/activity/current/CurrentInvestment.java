@@ -60,8 +60,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     RelativeLayout frameExpect; //预期收益
     @BindView(R.id.frame_red_package)
     RelativeLayout frameRedPackage; //红包/卡
-    @BindView(R.id.frame_contract)
-    RelativeLayout frameContract; //查看合同
 
     @BindView(R.id.text_project_type)
     TextView textProjectType;//项目名称
@@ -126,7 +124,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         productType = intent.getStringExtra("productType");
 //        productCode = intent.getStringExtra("productCode");
         productCode = "MQBXSB11707051748001";
-//        productCode = "DQJHPTB1707032039001";
+        productCode = "DQJHPTB1707032039001";
 //        interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
     }
@@ -256,12 +254,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
         textOrderMoney.setText(FormatUtil.formatAmountStr(money));
         frameRedPackage.setOnClickListener(this);
-        frameContract.setOnClickListener(this);
 
         if (PRODID_CURRENT.equals(productType)) {
             frameExpect.setVisibility(View.GONE);
             frameRedPackage.setVisibility(View.GONE);
-            frameContract.setVisibility(View.GONE);
 
             btLaw1.setText("《秒钱宝服务协议》、");
             btLaw2.setText("《秒钱宝债权转让合同》、");
@@ -271,7 +267,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         } else {
             frameExpect.setVisibility(View.VISIBLE);
             frameRedPackage.setVisibility(View.VISIBLE);
-            frameContract.setVisibility(View.VISIBLE);
             if (PRODID_REGULAR.equals(productType)) {
                 btLaw1.setText("《定期计划服务协议》、");
                 btLaw2.setText("《定期项目债权转让合同》、");
@@ -374,8 +369,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     intent.putExtra("position", position);
                     startActivityForResult(intent, REQUEST_CODE_REDPACKET);
                 }
-                break;
-            case R.id.frame_contract:
                 break;
             case R.id.bt_rollin:
                 Intent intent = new Intent(CurrentInvestment.this, IntoActivity.class);
