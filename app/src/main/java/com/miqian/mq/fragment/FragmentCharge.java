@@ -85,6 +85,7 @@ public class FragmentCharge extends BasicFragment {
             }
         });
     }
+
     /**
      * 无数据
      */
@@ -106,8 +107,9 @@ public class FragmentCharge extends BasicFragment {
         mRecyclerView.setVisibility(View.VISIBLE);
 
     }
+
     @OnClick(R.id.tv_refreshdata)
-    public  void reFreshData(){
+    public void reFreshData() {
         showContentView();
         obtainData();
     }
@@ -124,11 +126,12 @@ public class FragmentCharge extends BasicFragment {
         if (MobileOS.getNetworkType(mContext) == -1) {
             tvTips.setText("暂时没有网络");
             ivData.setBackgroundResource(R.drawable.nonetwork);
-        }else {
+        } else {
             tvTips.setText("数据获取失败，请重新获取");
             ivData.setBackgroundResource(R.drawable.error_data);
         }
     }
+
     private void obtainData() {
         begin();
         pageNo = 1;
@@ -189,6 +192,7 @@ public class FragmentCharge extends BasicFragment {
 
         }
     }
+
     private void refreshView() {
         adapter = new CapitalRecordAdapter(list);
         adapter.setMaxItem(page.getTotalPage());

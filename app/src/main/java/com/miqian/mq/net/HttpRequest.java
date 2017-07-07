@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.TypeReference;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.WebBankActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.AutoIdentyCardResult;
@@ -56,6 +57,7 @@ import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -1134,11 +1136,10 @@ public class HttpRequest {
      * @param investId 投资产品id
      * @param clearYn  默认为N  N：计息中  Y：已结息
      */
-    public static void getUserRegularDetail(Context context, final ICallback<UserRegularDetailResult> callback, String investId, String clearYn) {
+    public static void getUserRegularDetail(Context context, final ICallback<UserRegularDetailResult> callback, String purchaseSeqno) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("investId", investId));
-        mList.add(new Param("clearYn", clearYn));
+        mList.add(new Param("purchaseSeqno", purchaseSeqno));
 
         new MyAsyncTask(context, Urls.user_regular_detail, mList, new ICallback<String>() {
 
@@ -1644,6 +1645,28 @@ public class HttpRequest {
         params.add(new Param("cType", "android"));
         params.add(new Param("amt", amt));
         WebBankActivity.startActivity(activity, Urls.jx_auto_withdraw_url, params, 1);
+    }
+    /**
+     * 跳定期计划详情
+     */
+    public static void toRegularPlanDetail(final Activity activity,String productCode ,String projectCode) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("productCode", productCode));
+        params.add(new Param("projectCode", projectCode));
+        params.add(new Param("custId", UserUtil.getUserId(activity)));
+        String params_url = HttpUtils.getUrl(params);
+        WebActivity.startActivity(activity, Urls.web_regular_earn_detail+params_url);
+    }
+    /**
+     * 跳定期详情
+     */
+    public static void toRegularDetail(final Activity activity,String productCode ,String projectCode) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("productCode", productCode));
+        params.add(new Param("projectCode", projectCode));
+        params.add(new Param("custId", UserUtil.getUserId(activity)));
+        String params_url = HttpUtils.getUrl(params);
+        WebActivity.startActivity(activity, Urls.web_regular_earn_detail+params_url);
     }
 
     /**

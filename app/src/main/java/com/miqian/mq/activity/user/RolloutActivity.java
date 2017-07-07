@@ -76,7 +76,6 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
     private DialogTipSave disableDialog;
     private DialogTipSave feeDialog;
     private DialogTipSave openBankDialog;
-    private String bankUnionNumber;
     private BigDecimal amtMinLimit;
     private ExtendOperationController operationController;
 
@@ -203,15 +202,15 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                                 layoutBankUnion.setVisibility(View.VISIBLE);
                                 layoutNoBranch.setVisibility(View.VISIBLE);
                                 btnOpenBank.setVisibility(View.VISIBLE);
-                                if (openBankDialog == null) {
-                                    openBankDialog = new DialogTipSave(mActivity, "温馨提示", getResources().getText(R.string.rollout_tip_openbank).toString()) {
-                                        @Override
-                                        public void positionBtnClick() {
-                                            dismiss();
-                                        }
-                                    };
-                                }
-                                openBankDialog.show();
+//                                if (openBankDialog == null) {
+//                                    openBankDialog = new DialogTipSave(mActivity, "温馨提示", getResources().getText(R.string.rollout_tip_openbank).toString()) {
+//                                        @Override
+//                                        public void positionBtnClick() {
+//                                            dismiss();
+//                                        }
+//                                    };
+//                                }
+//                                openBankDialog.show();
                                 break;
                             case "101006"://小于最小提现金额
                                 Uihelper.showToast(mActivity, result.getMessage());
@@ -224,6 +223,7 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                                     layoutBankUnion.setVisibility(View.VISIBLE);
                                     tvBankUnion.setText(data.getBankUnionNumber());
                                     layoutAboveamt.setVisibility(View.VISIBLE);
+                                    btnSummit.setEnabled(true);
                                     if (feeDialog == null) {
                                         feeDialog = new DialogTipSave(mActivity, "温馨提示", "此次提现收取手续费" + data.getFeeAmt() + "元") {
                                             @Override

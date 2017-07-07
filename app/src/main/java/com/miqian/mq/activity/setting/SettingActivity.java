@@ -49,7 +49,7 @@ import cn.udesk.UdeskSDKManager;
 /**
  * Created by Administrator on 2015/9/17.
  */
-public class SettingActivity extends BaseActivity implements View.OnClickListener, ExtendOperationController.ExtendOperationListener {
+public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
     private UserInfo userInfo;
     private ImageView ivPushState;
@@ -110,18 +110,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.password_transaction).setOnClickListener(this);
 
         extendOperationController = ExtendOperationController.getInstance();
-        extendOperationController.registerExtendOperationListener(this);
         setData();
     }
-
-    @Override
-    protected void onDestroy() {
-        if (extendOperationController != null) {
-            extendOperationController.unRegisterExtendOperationListener(this);
-        }
-        super.onDestroy();
-    }
-
     private void setData() {
         if (UserUtil.hasLogin(mActivity)) {
             findViewById(R.id.frame_userinfo).setVisibility(View.VISIBLE);
@@ -349,18 +339,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         return "设置";
     }
 
-    @Override
-    public void excuteExtendOperation(int operationKey, Object data) {
-
-        switch (operationKey) {
-            case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
-                userInfo.setJxPayPwdStatus("1");
-                break;
-            default:
-                break;
-        }
-
-    }
 
     /**
      * 设置 udesk 所需用户信息
