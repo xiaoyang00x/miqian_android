@@ -1,5 +1,6 @@
 package com.miqian.mq.activity.current;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.CurrentDetailActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.entity.MqResult;
@@ -167,6 +169,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         }, money, productCode);
     }
 
+    public static void startActivity(Context context, String money, ProductBaseInfo productInfo) {
+        Intent intent = new Intent(context, CurrentInvestment.class);
+        intent.putExtra("money", money);
+        intent.putExtra("productInfo", JSON.toJSONString(productInfo));
+        context.startActivity(intent);
+    }
+
     private void showTips(boolean flag, MqResult<ProducedOrder> result) {
         if (flag) {
             frameTip.setVisibility(View.VISIBLE);
@@ -277,7 +286,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 btLaw2.setText("《定期计划债权转让合同》、");
                 btLaw3.setText("《定期计划收益转让合同》");
             }
-            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "% 期限 " + productInfo.getProductTerm());
+            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "%  期限 " + productInfo.getProductTerm());
         }
 
         btPay.setOnClickListener(this);

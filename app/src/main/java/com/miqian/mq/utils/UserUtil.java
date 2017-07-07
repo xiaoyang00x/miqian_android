@@ -14,10 +14,14 @@ import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.ProductBaseInfo;
+import com.miqian.mq.entity.SaveInfo;
+import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.HomeAdsListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
+import com.miqian.mq.net.HttpRequest;
+import com.miqian.mq.net.ICallback;
 import com.miqian.mq.receiver.JpushHelper;
 
 import java.lang.ref.WeakReference;
@@ -235,23 +239,27 @@ public class UserUtil {
      * @param money       认购金额
      * @param productInfo 标的信息
      */
-    public static void subscribeOrder(Activity activity, String money, ProductBaseInfo productInfo) {
-        if (UserUtil.isFinishSave(activity)) {
-            Intent intent = new Intent(activity, CurrentInvestment.class);
-            intent.putExtra("money", money);
-            intent.putExtra("productInfo", JSON.toJSONString(productInfo));
-            activity.startActivity(intent);
+    public static void subscribeOrder(final Context context, final String money, final ProductBaseInfo productInfo) {
+        if (UserUtil.isFinishSave(context)) {
+            CurrentInvestment.startActivity(context, money, productInfo);
         } else {
-//            HttpRequest.openJxPreprocess(this, new ICallback<SaveInfoResult>() {
-//                @Override
-//                public void onSucceed(SaveInfoResult saveInfoResult) {
-//                }
-//
-//                @Override
-//                public void onFail(String error) {
-//                }
-//            });
-            activity.startActivity(new Intent(activity, SaveAcitvity.class));
+            HttpRequest.openJxPreprocess(context, new ICallback<SaveInfoResult>() {
+                @Override
+                public void onSucceed(SaveInfoResult saveInfoResult) {
+                    SaveInfo saveInfo = saveInfoResult.getData();
+                    if (saveInfo != null && "1".equals(saveInfo.getJxAccountStatus()) && "1".equals(saveInfo.getJxPayPwdStatus()) && "1".equals(saveInfo.getJxAutoClaimsTransferStatus()) && "1".equals(saveInfo.getJxAutoSubscribeStatus())) {
+                        Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
+                        CurrentInvestment.startActivity(context, money, productInfo);
+                    } else {
+                        SaveAcitvity.startActivity(context);
+                    }
+                }
+
+                @Override
+                public void onFail(String error) {
+
+                }
+            });
         }
     }
 
