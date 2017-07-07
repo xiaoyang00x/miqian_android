@@ -25,6 +25,7 @@ import com.miqian.mq.entity.MessageInfoResult;
 import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.MqListResult;
 import com.miqian.mq.entity.MqResult;
+import com.miqian.mq.entity.NewCurrentFoundFlow;
 import com.miqian.mq.entity.OperationResult;
 import com.miqian.mq.entity.OrderRechargeResult;
 import com.miqian.mq.entity.ProducedOrder;
@@ -1084,6 +1085,36 @@ public class HttpRequest {
                     callback.onSucceed(userRegularResult);
                 } else {
                     callback.onFail(userRegularResult.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 我的秒钱宝
+     * @param context
+     * @param callback
+     * @param pageNo
+     */
+    public static void getUserMqb(Context context, final ICallback<MqResult<NewCurrentFoundFlow>> callback, String pageNo) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("pageNo", pageNo));
+
+        new MyAsyncTask(context, Urls.user_mqb, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                MqResult<NewCurrentFoundFlow> data = JsonUtil.parseObject(result, new TypeReference<MqResult<NewCurrentFoundFlow>>(){});
+                if (data.getCode().equals("000000")) {
+                    callback.onSucceed(data);
+                } else {
+                    callback.onFail(data.getMessage());
                 }
             }
 

@@ -91,6 +91,10 @@
             android:name=".activity.current.ActivityUserCurrent"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.user.UserMqbActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.user.UserRegularDetailActivity"
