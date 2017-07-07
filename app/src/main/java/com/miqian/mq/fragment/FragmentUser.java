@@ -209,7 +209,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     }
 
     private void setData(UserInfo userInfo) {
-        tv_totalasset.setTextColor(ContextCompat.getColor(getActivity(), R.color.mq_b1_v2));
+        tv_totalasset.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b1_v2));
         //历史收益
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalProfit())) {
             tv_TotalProfit.setText(FormatUtil.formatAmountStr(userInfo.getTotalProfit()));
