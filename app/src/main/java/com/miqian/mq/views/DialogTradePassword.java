@@ -124,11 +124,11 @@ public abstract class DialogTradePassword extends Dialog {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.text_law:
-                    if (mType == TYPE_INPUTPASSWORD_LaunchTransfer){
-                        WebActivity.startActivity(mContext, Urls.web_transfer_law);
-                    }else {
-                        WebActivity.startActivity(mContext, Urls.web_recharge_law);
-                    }
+//                    if (mType == TYPE_INPUTPASSWORD_LaunchTransfer){
+//                        WebActivity.startActivity(mContext, Urls.web_transfer_law);
+//                    }else {
+//                        WebActivity.startActivity(mContext, Urls.web_recharge_law);
+//                    }
 
                     break;
                 case R.id.forget_psw:

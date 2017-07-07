@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
@@ -312,6 +313,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             intent.putExtra("orderNo", orderRecharge.getOrderNo());
             intent.putExtra("bankNo", orderRecharge.getBankNo());
             startActivity(intent);
+        } else {
+            Intent intent = new Intent();
+            setResult(CurrentInvestment.SUCCESS, intent);
         }
         IntoActivity.this.finish();
     }

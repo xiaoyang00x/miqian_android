@@ -93,7 +93,6 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private void refreshView() {
         if (subscribeOrder == null) return;
         if (status == 1) {
-
             tvStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.result_success, 0, 0);
             tvStatus.setText("认购申请成功");
             textMoney.setText(FormatUtil.formatAmount(subscribeOrder.getAmt()));
@@ -104,7 +103,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             } else {
                 textPromote.setText(FormatUtil.formatAmount(subscribeOrder.getUsePromAmt()));
             }
-            if (CurrentInvestment.PRODID_CURRENT == productType) {
+            if (CurrentInvestment.PRODID_CURRENT.equals(productType)) {
                 textTip.setText("认购成功后，请前往我的秒钱宝查看");
             } else {
                 btMyProduct.setText("前往我的定期");
@@ -148,7 +147,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
                 closeActivity();
                 break;
             case R.id.bt_my_product:
-                if (CurrentInvestment.PRODID_CURRENT == productType) {
+                if (CurrentInvestment.PRODID_CURRENT.equals(productType)) {
 
                 } else {
                     ActivityStack.getActivityStack().clearActivity();
@@ -163,7 +162,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private void closeActivity() {
         MobclickAgent.onEvent(mContext, "1065");
         if (status == 1) {
-            if (CurrentInvestment.PRODID_CURRENT == productType) {
+            if (CurrentInvestment.PRODID_CURRENT.equals(productType)) {
                 ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_CURRENT, null);
             } else {
                 ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_REGULAR, null);
