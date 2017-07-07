@@ -11,7 +11,7 @@ public class Promote {
 
     public enum TYPE { // 促销类型
         HB("0"), //红包
-        SC("1"), // 拾财券
+        SC("1"), //秒钱卡
         JX("2"), //加息券
         SK("3"), //双倍加息卡
         CA("4"); //现金
