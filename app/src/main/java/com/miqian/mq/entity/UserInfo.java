@@ -17,7 +17,6 @@ public class UserInfo implements Serializable {
     private String bankNo;//银行卡号
     private String jxPayPwdStatus;//支付密码是否设置 0 未设置 1 已设置
     private String balance;//可用余额
-    private String curAmt;//活期总额
     private String bindCardStatus;//银行卡绑定状态 0未绑定 1 已绑定
     private String totalProfit;//历史收益
     private String regTotal;//定期认购笔数
@@ -47,7 +46,7 @@ public class UserInfo implements Serializable {
     private String status; //用户状态  激活与未激活
     private String jxAccountStatus; //是否开通存管账户 1已开通 0 未开通
     private String newCurrentAmt; //秒钱宝余额
-    private String currentAmt; //老用户活期余额
+    private BigDecimal currentAmt; //老用户活期余额
     private String currentCanRedeem; //活期可赎回金额
     private String newCurrentCanRedeem; //秒钱宝可赎回金额
     private String jxAutoClaimsTransferStatus; //是否开通自动债权转让 1已开通 0 未开通
@@ -109,11 +108,11 @@ public class UserInfo implements Serializable {
         this.newCurrentAmt = newCurrentAmt;
     }
 
-    public String getCurrentAmt() {
+    public BigDecimal getCurrentAmt() {
         return currentAmt;
     }
 
-    public void setCurrentAmt(String currentAmt) {
+    public void setCurrentAmt(BigDecimal currentAmt) {
         this.currentAmt = currentAmt;
     }
 
@@ -227,14 +226,6 @@ public class UserInfo implements Serializable {
 
     public void setBalance(String balance) {
         this.balance = balance;
-    }
-
-    public String getCurAmt() {
-        return curAmt;
-    }
-
-    public void setCurAmt(String curAmt) {
-        this.curAmt = curAmt;
     }
 
     public String getBindCardStatus() {

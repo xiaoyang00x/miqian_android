@@ -25,6 +25,7 @@ import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
+import com.miqian.mq.activity.user.UserMqbActivity;
 import com.miqian.mq.activity.user.UserRecordActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
@@ -192,6 +193,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onFail(String error) {
                 swipeRefresh.setRefreshing(false);
                 end();
+
                 setData(null);
                 Uihelper.showToast(getActivity(), error);
             }
@@ -200,7 +202,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     }
 
     private void setData(UserInfo userInfo) {
-        tv_totalasset.setTextColor(ContextCompat.getColor(getActivity(), R.color.mq_b1_v2));
+        tv_totalasset.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b1_v2));
         //历史收益
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalProfit())) {
             tv_TotalProfit.setText(FormatUtil.formatAmountStr(userInfo.getTotalProfit()));
@@ -246,14 +248,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         }
 
         //新用户不会给currentAmt这个字段，  老用户 没给这个字段 则不显示 ‘‘我的活期’’
-        String currentAmt = userInfo.getCurrentAmt();
-        if (!TextUtils.isEmpty(currentAmt)) {
-            BigDecimal bdCurrent = new BigDecimal(currentAmt);
-            if (bdCurrent.compareTo(BigDecimal.ZERO) > 0) {
-                frame_current.setVisibility(View.VISIBLE);
-                view.findViewById(R.id.divider_current).setVisibility(View.VISIBLE);
-                tv_Current.setText(FormatUtil.formatAmountStr(userInfo.getCurAmt()) + "元");
-            }
+        if (userInfo != null && userInfo.getCurrentAmt() != null && userInfo.getCurrentAmt().compareTo(BigDecimal.ZERO) > 0) {
+            frame_current.setVisibility(View.VISIBLE);
+            view.findViewById(R.id.divider_current).setVisibility(View.VISIBLE);
+            tv_Current.setText(FormatUtil.formatAmount(userInfo.getCurrentAmt()) + "元");
         }
 
     }
@@ -402,9 +400,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 WebActivity.startActivity(mContext, Urls.web_my_invite);
                 break;
             //我的秒钱宝
-            case R.id.account_miaoqianbao:
+            case R.id.frame_account_miaoqianbao:
                 refresh = false;
-                WebActivity.startActivity(mContext, Urls.web_my_invite);
+                startActivity(new Intent(getActivity(), UserMqbActivity.class));
                 break;
             //充值未到账
             case R.id.tv_question:

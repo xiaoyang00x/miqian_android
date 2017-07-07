@@ -2,6 +2,7 @@ package com.miqian.mq.activity.current;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -14,12 +15,15 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.ProducedOrder;
+import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
@@ -27,35 +31,60 @@ import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Jackie on 2015/9/19.
  */
 public class CurrentInvestment extends BaseActivity implements View.OnClickListener {
 
-    private TextView expectMoney;
-    private TextView textPromote;
-    private TextView textPromoteType;
-    private TextView textPromoteMoney;
-    private TextView textPromoteUnit;
+    @BindView(R.id.bt_law1)
+    Button btLaw1;//xxx服务协议
+    @BindView(R.id.bt_law2)
+    Button btLaw2;//xxx债权转让合同
+    @BindView(R.id.bt_law3)
+    Button btLaw3;//xxx收益转让合同
 
-    private RelativeLayout frameExpect; //预期收益
-    private RelativeLayout frameRedPackage; //红包/卡
-    private RelativeLayout frameContract; //查看合同
+    @BindView(R.id.expect_money)
+    TextView expectMoney;
+    @BindView(R.id.text_promote)
+    TextView textPromote;
+    @BindView(R.id.text_promote_type)
+    TextView textPromoteType;
+    @BindView(R.id.text_promote_money)
+    TextView textPromoteMoney;
+    @BindView(R.id.text_promote_unit)
+    TextView textPromoteUnit;
 
-    private TextView textProjectType;//项目名称
-    private TextView textProjectInfo;//项目年化利率及期限
-    private TextView textOrderMoney;//认购金额
-    private TextView textBalance;//余额
+    @BindView(R.id.frame_expect)
+    RelativeLayout frameExpect; //预期收益
+    @BindView(R.id.frame_red_package)
+    RelativeLayout frameRedPackage; //红包/卡
 
-    private Button btPay;
-    private Button btRollin;
+    @BindView(R.id.text_project_type)
+    TextView textProjectType;//项目名称
+    @BindView(R.id.text_project_info)
+    TextView textProjectInfo;//项目年化利率及期限
+    @BindView(R.id.order_money)
+    TextView textOrderMoney;//认购金额
+    @BindView(R.id.text_balance)
+    TextView textBalance;//余额
 
-    private RelativeLayout frameTip;
-    private TextView textTip;
-    private MySwipeRefresh swipeRefresh;
+    @BindView(R.id.bt_pay)
+    Button btPay;
+    @BindView(R.id.bt_rollin)
+    Button btRollin;
+
+    @BindView(R.id.frame_tip)
+    RelativeLayout frameTip;
+    @BindView(R.id.text_tip)
+    TextView textTip;
+
+    @BindView(R.id.swipe_refresh)
+    MySwipeRefresh swipeRefresh;
 
     private ProducedOrder producedOrder;
     private List<Promote> promList;
@@ -63,30 +92,24 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private String promoteType = "";
 
     private String money;
-    private String productType; //1:定期项目 2:定期计划 3:秒钱宝
-    private String productCode; //标的id，活期默认为0
-//    private String interestRateString; //年化收益和期限
+    private int productType; //1:定期项目 2:定期计划 3:秒钱宝
+    private String productCode; //标的id
+    //    private String interestRateString; //年化收益和期限
     private int position = -1;//使用的红包位置，用于获取list
+    private ProductBaseInfo productInfo;
 //    private PayOrder payOrder;
 
     private BigDecimal orderMoney;//订单金额
     private BigDecimal promoteMoney = BigDecimal.ZERO;//优惠金额： 红包、拾财券
     private BigDecimal increaseMoney = BigDecimal.ZERO;//加息金额
-//    private BigDecimal payMoney;//需支付的金额
+    //    private BigDecimal payMoney;//需支付的金额
     private BigDecimal bFlag = BigDecimal.ZERO;
 
     public static final int REQUEST_CODE_ROLLIN = 1;
     private static final int REQUEST_CODE_REDPACKET = 2;
-    private static final int REQUEST_CODE_PAYMODE = 3;
-    private static final int REQUEST_CODE_PASSWORD = 4;
 
     public static final int FAIL = 0;
     public static final int SUCCESS = 1;
-    public static final int PROCESSING = 2;
-
-    public static final String PRODID_REGULAR = "1";
-    public static final String PRODID_REGULAR_PLAN = "2";
-    public static final String PRODID_CURRENT = "3";
 
     private CustomDialog packageTips;
 
@@ -95,8 +118,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         money = intent.getStringExtra("money");
         orderMoney = new BigDecimal(money);
-        productType = intent.getStringExtra("productType");
-//        productCode = intent.getStringExtra("productCode");
+        productInfo = JsonUtil.parseObject(intent.getStringExtra("productInfo"), ProductBaseInfo.class);
+        productType = productInfo.getProductType();
+        productCode = productInfo.getProductCode();
+        productType = Constants.PRODUCT_TYPE_REGULAR_PROJECT;
         productCode = "MQBXSB11707051748001";
         productCode = "DQJHPTB1707032039001";
 //        interestRateString = intent.getStringExtra("interestRateString");
@@ -173,20 +198,20 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 } else {
                     textPromoteType.setText(promote.getToUseRate() + "%秒钱卡");
                 }
-                textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
+                textPromote.setTextColor(ContextCompat.getColor(mActivity, R.color.mq_b1));
                 textPromote.setText("少支付");
                 textPromoteMoney.setText("" + promoteMoney);
                 textPromoteUnit.setText("元");
             } else if (Promote.TYPE.JX.getValue().equals(promoteType)) {
                 Promote promote = promList.get(position);
                 textPromoteType.setText(promote.getUsableAmt() + "%加息卡");
-                textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
+                textPromote.setTextColor(ContextCompat.getColor(mActivity, R.color.mq_b1));
                 textPromote.setText("收益增加");
                 textPromoteMoney.setText("" + increaseMoney);
                 textPromoteUnit.setText("元");
             } else if (Promote.TYPE.SK.getValue().equals(promoteType)) {
                 textPromoteType.setText("双倍收益卡");
-                textPromote.setTextColor(getResources().getColor(R.color.mq_b1));
+                textPromote.setTextColor(ContextCompat.getColor(mActivity, R.color.mq_b1));
                 textPromote.setText("收益增加");
                 textPromoteMoney.setText("" + increaseMoney);
                 textPromoteUnit.setText("元");
@@ -198,7 +223,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             }
         } else {
             textPromoteType.setText("红包/卡");
-            textPromote.setTextColor(getResources().getColor(R.color.mq_b2));
+            textPromote.setTextColor(ContextCompat.getColor(mActivity, R.color.mq_b2));
             textPromote.setText("无可用");
             textPromoteMoney.setText("");
             textPromoteUnit.setText("");
@@ -218,54 +243,44 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initView() {
+        ButterKnife.bind(this);
         getmTitle().setOnLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
-        textTip = (TextView) findViewById(R.id.text_tip);
-        frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
 
-        textProjectType = (TextView) findViewById(R.id.text_project_type);
-        textProjectInfo = (TextView) findViewById(R.id.text_project_info);
-
-        textOrderMoney = (TextView) findViewById(R.id.order_money);
-        textOrderMoney.setText(FormatUtil.formatAmountStr(money));
-
-        frameExpect = (RelativeLayout) findViewById(R.id.frame_expect);
-        expectMoney = (TextView) findViewById(R.id.expect_money);
-
-        frameRedPackage = (RelativeLayout) findViewById(R.id.frame_red_package);
+        textOrderMoney.setText(FormatUtil.formatAmount(orderMoney));
+        textProjectType.setText(productInfo.getProductName());
         frameRedPackage.setOnClickListener(this);
-        textPromote = (TextView) findViewById(R.id.text_promote);
-        textPromoteType = (TextView) findViewById(R.id.text_promote_type);
-        textPromoteMoney = (TextView) findViewById(R.id.text_promote_money);
-        textPromoteUnit = (TextView) findViewById(R.id.text_promote_unit);
 
-        textBalance = (TextView) findViewById(R.id.text_balance);
-
-        frameContract = (RelativeLayout) findViewById(R.id.frame_contract);
-        frameContract.setOnClickListener(this);
-
-        if (PRODID_CURRENT.equals(productType)) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
             frameExpect.setVisibility(View.GONE);
             frameRedPackage.setVisibility(View.GONE);
-            frameContract.setVisibility(View.GONE);
+
+            btLaw1.setText("《秒钱宝服务协议》、");
+            btLaw2.setText("《秒钱宝债权转让合同》、");
+            btLaw3.setText("《秒钱宝收益转让合同》");
+            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "%");
         } else {
             frameExpect.setVisibility(View.VISIBLE);
             frameRedPackage.setVisibility(View.VISIBLE);
-            frameContract.setVisibility(View.VISIBLE);
-//            textProjectType.setText("");
-//            textProjectInfo.setText("");
+            if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
+                btLaw1.setText("《定期计划服务协议》、");
+                btLaw2.setText("《定期项目债权转让合同》、");
+                btLaw3.setText("《定期项目收益转让合同》");
+            } else {
+                btLaw1.setText("《定期计划服务协议》、");
+                btLaw2.setText("《定期计划债权转让合同》、");
+                btLaw3.setText("《定期计划收益转让合同》");
+            }
+            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "% 期限 " + productInfo.getProductTerm());
         }
 
-        btPay = (Button) findViewById(R.id.bt_pay);
         btPay.setOnClickListener(this);
-        btRollin = (Button) findViewById(R.id.bt_rollin);
         btRollin.setOnClickListener(this);
 
-        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
@@ -279,35 +294,49 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         return R.layout.current_investment;
     }
 
-    //产品协议
-    public void textLawCickProduct(View v) {
-        //活期
-        if (PRODID_CURRENT.equals(productType)) {
-            WebActivity.startActivity(mActivity, Urls.web_current_law);
-
-        }//定期
-        else if (PRODID_REGULAR.equals(productType)) {
-            WebActivity.startActivity(mActivity, Urls.web_regular_law);
-
-        } //定期计划
-        else if (PRODID_REGULAR_PLAN.equals(productType)) {
-            WebActivity.startActivity(mActivity, Urls.web_regplan_law);
-
+    //服务协议
+    public void textLaw1(View v) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_current_law_server);
+        } else if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_regular_law_server);
+        } else if (Constants.PRODUCT_TYPE_REGULART_PLAN == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_plan_law_server);
         }
     }
 
-    //资金管理协议
-    public void textLawCickMoney(View v) {
-        WebActivity.startActivity(mActivity, Urls.web_recharge_law);
+    //债权转让合同
+    public void textLaw2(View v) {
+        //秒钱宝
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_current_law_claims);
+        }//定期项目
+        else if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_regular_law_claims);
+        } //定期计划
+        else if (Constants.PRODUCT_TYPE_REGULART_PLAN == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_plan_law_claims);
+        }
+    }
+
+    //收益权转让合同
+    public void textLaw3(View v) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_current_law_earnings);
+        } else if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_regular_law_earnings);
+        } else if (Constants.PRODUCT_TYPE_REGULART_PLAN == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_plan_law_earnings);
+        }
     }
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        if (PRODID_CURRENT.equals(productType)) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
             mTitle.setTitleText("秒钱宝认购");
-        } else if (PRODID_REGULAR.equals(productType)) {
+        } else if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
             mTitle.setTitleText("定期项目认购");
-        } else if (PRODID_REGULAR_PLAN.equals(productType)) {
+        } else if (Constants.PRODUCT_TYPE_REGULART_PLAN == productType) {
             mTitle.setTitleText("定期计划认购");
         } else {
             mTitle.setTitleText("确认订单");
@@ -319,27 +348,12 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         return "确认订单";
     }
 
-//    private void clickToPayOrder() {
-////        if (payModeState == PAY_MODE_LIAN && payMoney != BigDecimal.ZERO) {
-////            MobclickAgent.onEvent(mContext, "1067");
-////            Intent intent = new Intent(CurrentInvestment.this, IntoActivity.class);
-////            intent.putExtra("rollType", 1);
-////            intent.putExtra("money", payMoney.toString());
-////            startActivityForResult(intent, REQUEST_CODE_ROLLIN);
-////        } else if (payModeState == PAY_MODE_BANK && payMoney != BigDecimal.ZERO) {
-////            rollIn();
-////        } else {
-//            MobclickAgent.onEvent(mContext, "1068");
-//            payOrder();
-////        }
-//    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
                 MobclickAgent.onEvent(mActivity, "1069");
-                if ((PRODID_REGULAR_PLAN.equals(productType) || PRODID_REGULAR.equals(productType)) && promList != null && promList.size() > 0 && position < 0) {
+                if ((Constants.PRODUCT_TYPE_REGULART_PLAN == productType || Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) && promList != null && promList.size() > 0 && position < 0) {
                     showPackageTips();
                 } else {
                     payOrder();
@@ -353,8 +367,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     intent.putExtra("position", position);
                     startActivityForResult(intent, REQUEST_CODE_REDPACKET);
                 }
-                break;
-            case R.id.frame_contract:
                 break;
             case R.id.bt_rollin:
                 Intent intent = new Intent(CurrentInvestment.this, IntoActivity.class);
@@ -370,10 +382,8 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_ROLLIN) {
             if (resultCode == SUCCESS) {
-                String orderNo = data.getStringExtra("orderNo");
-//                payQuickOrder(orderNo);
-//            } else if (resultCode == PROCESSING) {
-//                CurrentInvestment.this.finish();
+                Uihelper.showToast(mActivity, "充值成功");
+                refreshData();
             } else if (resultCode == FAIL) {
                 Uihelper.showToast(mActivity, "充值失败，请重新充值");
             }

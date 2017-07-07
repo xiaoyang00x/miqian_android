@@ -5,9 +5,6 @@ package com.miqian.mq.utils;
  */
 public class Constants {
 
-    public static final int BASE_ID = 0;
-    public static final int RQF_PAY = BASE_ID + 1;
-
     public final static int MAXCOUNT = 5; // 图案锁 最大验证次数
     public final static String VERIFYFAILED = "verifyFailed"; // 图案锁验证失败
 
@@ -40,7 +37,7 @@ public class Constants {
             "}";
 
     /**
-     * 秒钱产品类型：3 秒钱宝 1 定期项目 2 定期计划
+     * 秒钱产品类型： 1 定期项目 2 定期计划 3 秒钱宝
      */
     public static final int PRODUCT_TYPE_REGULAR_PROJECT = 1;
     public static final int PRODUCT_TYPE_REGULART_PLAN = 2;

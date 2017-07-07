@@ -116,8 +116,6 @@ public class Urls {
     public final static String order_produced = getServer() + "trans/subscribePreprocess";//assetService/subscribePreprocess
     //认购
     public final static String subscribe_order = getServer() + "trans/subscribe";//"assetService/subscribe";
-    //认购快捷支付
-    public final static String quick_subscribe_order = getServer() + "assetService/quickPayment";
     //获取用户信息
     public final static String user_info = getServer() + "user/getUserInfo";// /userService/getUserInfo
 
@@ -168,6 +166,8 @@ public class Urls {
     public final static String withdrawCash = getServer() + "assetService/withdrawCash";
     //我的活期
     public final static String user_current = getServer() + "userService/getMyCurrent";
+    //我的秒钱宝
+    public final static String user_mqb = getServer() + "mine/newCurrent";
     //我的定期
     public final static String user_regular = getServer() + "mine/getMyRegBuyList";  ///userRegService/v2/getMyRegBuyList
     //我的定期详情
@@ -219,32 +219,37 @@ public class Urls {
      * 网页的URL
      */
     //注册页：《秒钱会员注册协议》
-    public final static String web_register_law = getWebServer() + "Client/registerProtocol.html";
-    //《网络借贷风险及禁止行为提示》
-    public final static String web_register_law_net = "https://res.shicaidai.com/miaoqian/webView/dengluxieyi.html";
+    public final static String web_register_law = getWebServer() + "Client/protocol/registerProtocol.html";
     //网络交易资金账户服务第三方协议:
-    public final static String web_otth_law = getWebServer() + "Client/netOTTHProtocol.html";
+    public final static String web_otth_law = getWebServer() + "Client/protocol/netOTTHProtocol.html";
     //用户授权协议：
-    public final static String web_authority_law = getWebServer() + "Client/userAuthorityProtocol.html";
-    //充值页面：《资金管理协议》
-    public final static String web_recharge_law = "https://res.shicaidai.com/miaoqian/webView/zjglxy.html";
-    //活期认购页：《活期赚服务协议》
-    public final static String web_current_law = "https://res.shicaidai.com/miaoqian/webView/hqzfwxy.html";
-    //定期赚认购页面：《定期赚服务协议》
-    public final static String web_regular_law = "https://res.shicaidai.com/miaoqian/webView/dqzfwxy.html";
-    //定期计划认购页面：《定期计划服务协议》
-    public final static String web_regplan_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
-    //发起转让页面：秒钱债权转让协议
-    public final static String web_transfer_law = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
-    //发起转让页面：可转金额说明
-    public final static String web_transferamt_expaint = "https://res.shicaidai.com/miaoqian/webView/regplan-buy.html";
+    public final static String web_authority_law = getWebServer() + "Client/protocol/userAuthorityProtocol.html";
+    //秒钱宝服务协议:
+    public final static String web_current_law_server = getWebServer() + "Client/protocol/protocol-mqb.html";
+    //秒钱宝债权转让合同:
+    public final static String web_current_law_claims = getWebServer() + "Client/protocol/protocol-mqbCT.html";
+    //秒钱宝收益权转让合同:
+    public final static String web_current_law_earnings = getWebServer() + "Client/protocol/protocol-mqbIT.html";
+    //定期项目服务协议:
+    public final static String web_regular_law_server = getWebServer() + "Client/protocol/protocol-regProject.html";
+    //定期项目债权转让合同:
+    public final static String web_regular_law_claims = getWebServer() + "Client/protocol/protocol-regProjectCT.html";
+    //定期项目收益权转让合同:
+    public final static String web_regular_law_earnings = getWebServer() + "Client/protocol/protocol-regProjectIT.html";
+    //定期计划服务协议:
+    public final static String web_plan_law_server = getWebServer() + "Client/protocol/protocol-regPlan.html";
+    //定期计划债权转让合同:
+    public final static String web_plan_law_claims = getWebServer() + "Client/protocol/protocol-regPlanCT.html";
+    //定期计划收益权转让合同:
+    public final static String web_plan_law_earnings = getWebServer() + "Client/protocol/protocol-regPlanIT.html";
+
     //定期赚详情
     public final static String web_regular_earn_detail = getWebServer() + "/Client/regProjectDetail.html";
     //定期计划详情
     public final static String web_regular_plan_detail = getWebServer() + "/Client/regPlanDetail.html";
 
-    //提现说明
-    public final static String web_rollout = "https://res.shicaidai.com/miaoqian/webView/presentDescription.html";
+//    //提现说明
+//    public final static String web_rollout = "https://res.shicaidai.com/miaoqian/webView/presentDescription.html";
     //红包、拾财券使用规则(认购页面)
     public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
 
@@ -256,12 +261,12 @@ public class Urls {
     public final static String web_current = getServer() + "webView/currentDetail";
     //帮助中心
     public final static String web_help = getWebServer() + "Client/help.html";
-    //每日计息
-    public final static String web_current_earning = "https://res.shicaidai.com/miaoqian/current/meirijixi.html";
-    //本息保障
-    public final static String web_current_safe = "https://res.shicaidai.com/miaoqian/current/benxibaozhang.html";
-    //活存活取
-    public final static String web_current_back = "https://res.shicaidai.com/miaoqian/current/huocunhuoqu.html";
+//    //每日计息
+//    public final static String web_current_earning = "https://res.shicaidai.com/miaoqian/current/meirijixi.html";
+//    //本息保障
+//    public final static String web_current_safe = "https://res.shicaidai.com/miaoqian/current/benxibaozhang.html";
+//    //活存活取
+//    public final static String web_current_back = "https://res.shicaidai.com/miaoqian/current/huocunhuoqu.html";
 
 
     //管理团队
@@ -298,9 +303,9 @@ public class Urls {
 
     //江西银行跳转接口
     public final static String jx_rollin_url = getServer() + "trans/rechargeForJump";
-    public final static String jx_password_url = getServer() + "user/setPayPasswordForJump";
-    public final static String jx_auto_claims_url = getServer() + "signProtocol/autoClaimsTransferForJump";
-    public final static String jx_auto_subscribe_url = getServer() + "signProtocol/autoSubscribeForJump";
+    public final static String jx_password_url = getServer() + "user/setPayPasswordForJump";//设置交易密码
+    public final static String jx_auto_claims_url = getServer() + "signProtocol/autoClaimsTransferForJump";//自动债权转让
+    public final static String jx_auto_subscribe_url = getServer() + "signProtocol/autoSubscribeForJump";//自动投标
     public final static String jx_auto_withdraw_url = getServer() + "trans/withdrawForJump";//提现
 
     //江西银行开通存管

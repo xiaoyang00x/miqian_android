@@ -114,7 +114,6 @@ public class SaveResultAcitvity extends BaseActivity implements View.OnClickList
                 textState2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.save_tick, 0, 0, 0);
             }
 
-
             if ("0".equals(saveInfo.getJxAutoClaimsTransferStatus())) {
                 textStatus.setText("设置成功");
                 btSubmit.setText("签署自动债权转让协议");
