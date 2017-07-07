@@ -13,6 +13,7 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.utils.ActivityStack;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.FormatUtil;
@@ -60,7 +61,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private int status;
 
     private SubscribeOrder subscribeOrder;
-    private String productType;
+    private int productType;
     private String errorReason;
 
     @Override
@@ -68,7 +69,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
         Intent intent = getIntent();
         status = intent.getIntExtra("status", 0);
         String result = intent.getStringExtra("subscribeOrder");
-        productType = intent.getStringExtra("productType");
+        productType = intent.getIntExtra("productType", 1);
         errorReason = intent.getStringExtra("errorReason");
         subscribeOrder = JsonUtil.parseObject(result, SubscribeOrder.class);
         super.onCreate(bundle);
@@ -104,7 +105,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
             } else {
                 textPromote.setText(subscribeOrder.getPromDesc());
             }
-            if (CurrentInvestment.PRODID_CURRENT.equals(productType)) {
+            if (Constants.PRODUCT_TYPE_MQB == productType) {
                 textTip.setText("认购成功后，请前往我的秒钱宝查看");
             } else {
                 btMyProduct.setText("前往我的定期");
@@ -152,7 +153,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
                 closeActivity();
                 break;
             case R.id.bt_my_product:
-                if (CurrentInvestment.PRODID_CURRENT.equals(productType)) {
+                if (Constants.PRODUCT_TYPE_MQB == productType) {
 
                 } else {
                     ActivityStack.getActivityStack().clearActivity();
@@ -167,7 +168,7 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
     private void closeActivity() {
         MobclickAgent.onEvent(mContext, "1065");
         if (status == 1) {
-            if (CurrentInvestment.PRODID_CURRENT.equals(productType)) {
+            if (Constants.PRODUCT_TYPE_MQB == productType) {
                 ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_CURRENT, null);
             } else {
                 ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_REGULAR, null);

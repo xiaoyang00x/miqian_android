@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
+import com.miqian.mq.activity.save.SaveAcitvity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.HomeAdsListener;
 import com.miqian.mq.listener.ListenerManager;
@@ -31,6 +34,7 @@ public class UserUtil {
 
     /**
      * 是否存管之前的老用户
+     *
      * @param context
      * @return
      */
@@ -43,6 +47,7 @@ public class UserUtil {
 
     /**
      * 用户是否完成存管
+     *
      * @param context
      * @return
      */
@@ -63,17 +68,18 @@ public class UserUtil {
         if (isFinishSave(context)) {
             return;
         }
-        if ("1".equals(userInfo.getJxAccountStatus()) && "1".equals(userInfo.getJxPayPwdStatus()) && "1".equals(userInfo.getJxAutoClaimsTransferStatus()) && "1".equals(userInfo.getJxAutoSubscribeStatus())) {
-            Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
-        }
         if (null == userInfo && isFinish) {
+            Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
+            return;
+        }
+        if (userInfo != null && "1".equals(userInfo.getJxAccountStatus()) && "1".equals(userInfo.getJxPayPwdStatus()) && "1".equals(userInfo.getJxAutoClaimsTransferStatus()) && "1".equals(userInfo.getJxAutoSubscribeStatus())) {
             Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
         }
     }
 
     public static void saveUserInfo(Context context, UserInfo userInfo) {
         Pref.saveString(Pref.TOKEN, userInfo.getToken(), context);
-        Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate("000000000020170628104802478704"), context);
+        Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
         Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobile()), context);
         Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getUserName()), context);
         Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getJxPayPwdStatus()), context);
@@ -191,6 +197,7 @@ public class UserUtil {
             LoginActivity.start(context);
         }
     }
+
     public static void toRegisterctivity(final Activity context) {
         if (!UserUtil.hasLogin(context)) {
             RegisterActivity.start(context);
@@ -225,32 +232,27 @@ public class UserUtil {
     /**
      * 跳转认购页
      *
-     * @param money              认购金额
-     * @param prodId             0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-     * @param subjectId          标的id，活期默认为0
-     * @param interestRateString 定期计划和定期赚的利率和期限
+     * @param money       认购金额
+     * @param productInfo 标的信息
      */
-    public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString) {
-        currenPay(activity, money, prodId, subjectId, interestRateString, null);
-    }
-
-    /**
-     * 跳转认购页
-     *
-     * @param money              认购金额
-     * @param prodId             0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-     * @param subjectId          标的id，活期默认为0
-     * @param interestRateString 定期计划和定期赚的利率和期限
-     * @param realMoney          实际支付金额（认购转让标的显示）
-     */
-    public static void currenPay(Activity activity, String money, String prodId, String subjectId, String interestRateString, String realMoney) {
-        Intent intent = new Intent(activity, CurrentInvestment.class);
-        intent.putExtra("money", money);
-        intent.putExtra("prodId", prodId);
-        intent.putExtra("subjectId", subjectId);
-        intent.putExtra("interestRateString", interestRateString);
-        intent.putExtra("realMoney", realMoney);
-        activity.startActivity(intent);
+    public static void subscribeOrder(Activity activity, String money, ProductBaseInfo productInfo) {
+        if (UserUtil.isFinishSave(activity)) {
+            Intent intent = new Intent(activity, CurrentInvestment.class);
+            intent.putExtra("money", money);
+            intent.putExtra("productInfo", JSON.toJSONString(productInfo));
+            activity.startActivity(intent);
+        } else {
+//            HttpRequest.openJxPreprocess(this, new ICallback<SaveInfoResult>() {
+//                @Override
+//                public void onSucceed(SaveInfoResult saveInfoResult) {
+//                }
+//
+//                @Override
+//                public void onFail(String error) {
+//                }
+//            });
+            activity.startActivity(new Intent(activity, SaveAcitvity.class));
+        }
     }
 
     //  显示认购额度

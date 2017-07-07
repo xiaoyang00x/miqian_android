@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -188,6 +189,8 @@ public class CurrentDetailActivity extends BaseActivity {
             } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
                 Toast.makeText(getBaseContext(), "提示：请输入" + remainderLimit + "的整数倍", Toast.LENGTH_SHORT).show();
             } else {
+                UserUtil.subscribeOrder(CurrentDetailActivity.this, paymentAmount, mInfo);
+
                 //TODO 跳转到认购页
 //                String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
 //                UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString, paymentAmount);

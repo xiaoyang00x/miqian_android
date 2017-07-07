@@ -15,12 +15,15 @@ import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.ProducedOrder;
+import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
+import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.CustomDialog;
 import com.miqian.mq.views.MySwipeRefresh;
@@ -89,10 +92,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     private String promoteType = "";
 
     private String money;
-    private String productType; //1:定期项目 2:定期计划 3:秒钱宝
-    private String productCode; //标的id，活期默认为0
+    private int productType; //1:定期项目 2:定期计划 3:秒钱宝
+    private String productCode; //标的id
     //    private String interestRateString; //年化收益和期限
     private int position = -1;//使用的红包位置，用于获取list
+    private ProductBaseInfo productInfo;
 //    private PayOrder payOrder;
 
     private BigDecimal orderMoney;//订单金额
@@ -103,16 +107,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     public static final int REQUEST_CODE_ROLLIN = 1;
     private static final int REQUEST_CODE_REDPACKET = 2;
-    private static final int REQUEST_CODE_PAYMODE = 3;
-    private static final int REQUEST_CODE_PASSWORD = 4;
 
     public static final int FAIL = 0;
     public static final int SUCCESS = 1;
-    public static final int PROCESSING = 2;
-
-    public static final String PRODID_REGULAR = "1";
-    public static final String PRODID_REGULAR_PLAN = "2";
-    public static final String PRODID_CURRENT = "3";
 
     private CustomDialog packageTips;
 
@@ -121,8 +118,10 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         money = intent.getStringExtra("money");
         orderMoney = new BigDecimal(money);
-        productType = intent.getStringExtra("productType");
-//        productCode = intent.getStringExtra("productCode");
+        productInfo = JsonUtil.parseObject(intent.getStringExtra("productInfo"), ProductBaseInfo.class);
+        productType = productInfo.getProductType();
+        productCode = productInfo.getProductCode();
+        productType = Constants.PRODUCT_TYPE_REGULAR_PROJECT;
         productCode = "MQBXSB11707051748001";
         productCode = "DQJHPTB1707032039001";
 //        interestRateString = intent.getStringExtra("interestRateString");
@@ -252,22 +251,22 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             }
         });
 
-        textOrderMoney.setText(FormatUtil.formatAmountStr(money));
+        textOrderMoney.setText(FormatUtil.formatAmount(orderMoney));
+        textProjectType.setText(productInfo.getProductName());
         frameRedPackage.setOnClickListener(this);
 
-        if (PRODID_CURRENT.equals(productType)) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
             frameExpect.setVisibility(View.GONE);
             frameRedPackage.setVisibility(View.GONE);
 
             btLaw1.setText("《秒钱宝服务协议》、");
             btLaw2.setText("《秒钱宝债权转让合同》、");
             btLaw3.setText("《秒钱宝收益转让合同》");
-//            textProjectType.setText("");
-//            textProjectInfo.setText("");
+            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "%");
         } else {
             frameExpect.setVisibility(View.VISIBLE);
             frameRedPackage.setVisibility(View.VISIBLE);
-            if (PRODID_REGULAR.equals(productType)) {
+            if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
                 btLaw1.setText("《定期计划服务协议》、");
                 btLaw2.setText("《定期项目债权转让合同》、");
                 btLaw3.setText("《定期项目收益转让合同》");
@@ -276,8 +275,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 btLaw2.setText("《定期计划债权转让合同》、");
                 btLaw3.setText("《定期计划收益转让合同》");
             }
-//            textProjectType.setText("");
-//            textProjectInfo.setText("");
+            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "% 期限 " + productInfo.getProductTerm());
         }
 
         btPay.setOnClickListener(this);
@@ -298,11 +296,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 
     //服务协议
     public void textLaw1(View v) {
-        if (PRODID_CURRENT.equals(productType)) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
             WebActivity.startActivity(mActivity, Urls.web_current_law_server);
-        } else if (PRODID_REGULAR.equals(productType)) {
+        } else if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
             WebActivity.startActivity(mActivity, Urls.web_regular_law_server);
-        } else if (PRODID_REGULAR_PLAN.equals(productType)) {
+        } else if (Constants.PRODUCT_TYPE_REGULART_PLAN == productType) {
             WebActivity.startActivity(mActivity, Urls.web_plan_law_server);
         }
     }
@@ -310,35 +308,35 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     //债权转让合同
     public void textLaw2(View v) {
         //秒钱宝
-        if (PRODID_CURRENT.equals(productType)) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
             WebActivity.startActivity(mActivity, Urls.web_current_law_claims);
         }//定期项目
-        else if (PRODID_REGULAR.equals(productType)) {
+        else if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
             WebActivity.startActivity(mActivity, Urls.web_regular_law_claims);
         } //定期计划
-        else if (PRODID_REGULAR_PLAN.equals(productType)) {
+        else if (Constants.PRODUCT_TYPE_REGULART_PLAN == productType) {
             WebActivity.startActivity(mActivity, Urls.web_plan_law_claims);
         }
     }
 
     //收益权转让合同
     public void textLaw3(View v) {
-        if (PRODID_CURRENT.equals(productType)) {
-            WebActivity.startActivity(mActivity, Urls.web_current_earning);
-        } else if (PRODID_REGULAR.equals(productType)) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
+            WebActivity.startActivity(mActivity, Urls.web_current_law_earnings);
+        } else if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
             WebActivity.startActivity(mActivity, Urls.web_regular_law_earnings);
-        } else if (PRODID_REGULAR_PLAN.equals(productType)) {
+        } else if (Constants.PRODUCT_TYPE_REGULART_PLAN == productType) {
             WebActivity.startActivity(mActivity, Urls.web_plan_law_earnings);
         }
     }
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        if (PRODID_CURRENT.equals(productType)) {
+        if (Constants.PRODUCT_TYPE_MQB == productType) {
             mTitle.setTitleText("秒钱宝认购");
-        } else if (PRODID_REGULAR.equals(productType)) {
+        } else if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
             mTitle.setTitleText("定期项目认购");
-        } else if (PRODID_REGULAR_PLAN.equals(productType)) {
+        } else if (Constants.PRODUCT_TYPE_REGULART_PLAN == productType) {
             mTitle.setTitleText("定期计划认购");
         } else {
             mTitle.setTitleText("确认订单");
@@ -355,7 +353,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_pay:
                 MobclickAgent.onEvent(mActivity, "1069");
-                if ((PRODID_REGULAR_PLAN.equals(productType) || PRODID_REGULAR.equals(productType)) && promList != null && promList.size() > 0 && position < 0) {
+                if ((Constants.PRODUCT_TYPE_REGULART_PLAN == productType || Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) && promList != null && promList.size() > 0 && position < 0) {
                     showPackageTips();
                 } else {
                     payOrder();

@@ -270,8 +270,7 @@ public class RegularDetailActivity extends BaseActivity {
             } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
                 Toast.makeText(getBaseContext(), "提示：请输入" + remainderLimit + "的整数倍", Toast.LENGTH_SHORT).show();
             } else {
-                String interestRateString = mInfo.getYearRate() + "%  期限：" + mInfo.getProductTerm() + "天";
-                UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString, paymentAmount);
+                UserUtil.subscribeOrder(mActivity, paymentAmount, mInfo);
                 et_input.setText("");
             }
         } else {
