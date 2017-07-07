@@ -10,7 +10,8 @@ public class SubscribeOrder {
     private String orderNo;//订单号
     private String orderTime;//订单时间
     private BigDecimal amt;//认购金额
-    private BigDecimal usePromAmt;//使用的促销金额
+    private BigDecimal realPayAmt;//余额支付
+    private String promDesc;//红包使用
 
     public String getOrderNo() {
         return orderNo;
@@ -36,11 +37,19 @@ public class SubscribeOrder {
         this.amt = amt;
     }
 
-    public BigDecimal getUsePromAmt() {
-        return usePromAmt;
+    public BigDecimal getRealPayAmt() {
+        return realPayAmt;
     }
 
-    public void setUsePromAmt(BigDecimal usePromAmt) {
-        this.usePromAmt = usePromAmt;
+    public void setRealPayAmt(BigDecimal realPayAmt) {
+        this.realPayAmt = realPayAmt;
+    }
+
+    public String getPromDesc() {
+        return promDesc;
+    }
+
+    public void setPromDesc(String promDesc) {
+        this.promDesc = promDesc;
     }
 }

@@ -45,27 +45,45 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     @BindView(R.id.bt_law3)
     Button btLaw3;//xxx收益转让合同
 
-    private TextView expectMoney;
-    private TextView textPromote;
-    private TextView textPromoteType;
-    private TextView textPromoteMoney;
-    private TextView textPromoteUnit;
+    @BindView(R.id.expect_money)
+    TextView expectMoney;
+    @BindView(R.id.text_promote)
+    TextView textPromote;
+    @BindView(R.id.text_promote_type)
+    TextView textPromoteType;
+    @BindView(R.id.text_promote_money)
+    TextView textPromoteMoney;
+    @BindView(R.id.text_promote_unit)
+    TextView textPromoteUnit;
 
-    private RelativeLayout frameExpect; //预期收益
-    private RelativeLayout frameRedPackage; //红包/卡
-    private RelativeLayout frameContract; //查看合同
+    @BindView(R.id.frame_expect)
+    RelativeLayout frameExpect; //预期收益
+    @BindView(R.id.frame_red_package)
+    RelativeLayout frameRedPackage; //红包/卡
+    @BindView(R.id.frame_contract)
+    RelativeLayout frameContract; //查看合同
 
-    private TextView textProjectType;//项目名称
-    private TextView textProjectInfo;//项目年化利率及期限
-    private TextView textOrderMoney;//认购金额
-    private TextView textBalance;//余额
+    @BindView(R.id.text_project_type)
+    TextView textProjectType;//项目名称
+    @BindView(R.id.text_project_info)
+    TextView textProjectInfo;//项目年化利率及期限
+    @BindView(R.id.order_money)
+    TextView textOrderMoney;//认购金额
+    @BindView(R.id.text_balance)
+    TextView textBalance;//余额
 
-    private Button btPay;
-    private Button btRollin;
+    @BindView(R.id.bt_pay)
+    Button btPay;
+    @BindView(R.id.bt_rollin)
+    Button btRollin;
 
-    private RelativeLayout frameTip;
-    private TextView textTip;
-    private MySwipeRefresh swipeRefresh;
+    @BindView(R.id.frame_tip)
+    RelativeLayout frameTip;
+    @BindView(R.id.text_tip)
+    TextView textTip;
+
+    @BindView(R.id.swipe_refresh)
+    MySwipeRefresh swipeRefresh;
 
     private ProducedOrder producedOrder;
     private List<Promote> promList;
@@ -235,28 +253,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 onBackPressed();
             }
         });
-        textTip = (TextView) findViewById(R.id.text_tip);
-        frameTip = (RelativeLayout) findViewById(R.id.frame_tip);
 
-        textProjectType = (TextView) findViewById(R.id.text_project_type);
-        textProjectInfo = (TextView) findViewById(R.id.text_project_info);
-
-        textOrderMoney = (TextView) findViewById(R.id.order_money);
         textOrderMoney.setText(FormatUtil.formatAmountStr(money));
-
-        frameExpect = (RelativeLayout) findViewById(R.id.frame_expect);
-        expectMoney = (TextView) findViewById(R.id.expect_money);
-
-        frameRedPackage = (RelativeLayout) findViewById(R.id.frame_red_package);
         frameRedPackage.setOnClickListener(this);
-        textPromote = (TextView) findViewById(R.id.text_promote);
-        textPromoteType = (TextView) findViewById(R.id.text_promote_type);
-        textPromoteMoney = (TextView) findViewById(R.id.text_promote_money);
-        textPromoteUnit = (TextView) findViewById(R.id.text_promote_unit);
-
-        textBalance = (TextView) findViewById(R.id.text_balance);
-
-        frameContract = (RelativeLayout) findViewById(R.id.frame_contract);
         frameContract.setOnClickListener(this);
 
         if (PRODID_CURRENT.equals(productType)) {
@@ -286,12 +285,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
 //            textProjectInfo.setText("");
         }
 
-        btPay = (Button) findViewById(R.id.bt_pay);
         btPay.setOnClickListener(this);
-        btRollin = (Button) findViewById(R.id.bt_rollin);
         btRollin.setOnClickListener(this);
 
-        swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
             @Override
             public void onRefresh() {

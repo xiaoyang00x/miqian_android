@@ -2,6 +2,7 @@ package com.miqian.mq.activity.current;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -19,28 +20,42 @@ import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
-import java.math.BigDecimal;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Jackie on 2015/9/29.
  */
 public class SubscribeResult extends BaseActivity implements View.OnClickListener {
 
-    private TextView tvStatus;
-    private TextView textMoney;
-    private TextView textPayMoney;
-    private TextView textPromote;
-    private TextView tradeNumber;
-    private TextView textError;
+    @BindView(R.id.text_status)
+    TextView textStatus;
+    @BindView(R.id.text_money)
+    TextView textMoney;//订单金额
+    @BindView(R.id.text_pay_money)
+    TextView textPayMoney;//余额支付
+    @BindView(R.id.text_promote)
+    TextView textPromote;
+    @BindView(R.id.trade_number)
+    TextView tradeNumber;
+    @BindView(R.id.text_error)
+    TextView textError;
 
-    private TextView textTip;
-    private RelativeLayout frameMoney;
-    private RelativeLayout frameBalance;
-    private RelativeLayout framePromote;
-    private RelativeLayout frameError;
+    @BindView(R.id.text_tip)
+    TextView textTip;
+    @BindView(R.id.frame_money)
+    RelativeLayout frameMoney;
+    @BindView(R.id.frame_balance)
+    RelativeLayout frameBalance;
+    @BindView(R.id.frame_promote)
+    RelativeLayout framePromote;
+    @BindView(R.id.frame_error)
+    RelativeLayout frameError;
 
-    private Button btBack;
-    private Button btMyProduct;
+    @BindView(R.id.bt_back)
+    Button btBack;
+    @BindView(R.id.bt_my_product)
+    Button btMyProduct;
 
     private int status;
 
@@ -71,37 +86,23 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initView() {
-        tvStatus = (TextView) findViewById(R.id.text_status);
-        textMoney = (TextView) findViewById(R.id.text_money);
-        textPayMoney = (TextView) findViewById(R.id.text_pay_money);
-        textPromote = (TextView) findViewById(R.id.text_promote);
-        textError = (TextView) findViewById(R.id.text_error);
-        tradeNumber = (TextView) findViewById(R.id.trade_number);
-        textTip = (TextView) findViewById(R.id.text_tip);
-
-        frameMoney = (RelativeLayout) findViewById(R.id.frame_money);
-        frameBalance = (RelativeLayout) findViewById(R.id.frame_balance);
-        framePromote = (RelativeLayout) findViewById(R.id.frame_promote);
-        frameError = (RelativeLayout) findViewById(R.id.frame_error);
-
-        btBack = (Button) findViewById(R.id.bt_back);
+        ButterKnife.bind(this);
         btBack.setOnClickListener(this);
-        btMyProduct = (Button) findViewById(R.id.bt_my_product);
         btMyProduct.setOnClickListener(this);
     }
 
     private void refreshView() {
         if (subscribeOrder == null) return;
         if (status == 1) {
-            tvStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.result_success, 0, 0);
-            tvStatus.setText("认购申请成功");
+            textStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.result_success, 0, 0);
+            textStatus.setText("认购申请成功");
             textMoney.setText(FormatUtil.formatAmount(subscribeOrder.getAmt()));
-            textPayMoney.setText(FormatUtil.formatAmount(subscribeOrder.getAmt().subtract(subscribeOrder.getUsePromAmt())));
+            textPayMoney.setText(FormatUtil.formatAmount(subscribeOrder.getRealPayAmt()));
 
-            if (subscribeOrder.getUsePromAmt().compareTo(BigDecimal.ZERO) == 0) {
+            if (TextUtils.isEmpty(subscribeOrder.getPromDesc())) {
                 framePromote.setVisibility(View.GONE);
             } else {
-                textPromote.setText(FormatUtil.formatAmount(subscribeOrder.getUsePromAmt()));
+                textPromote.setText(subscribeOrder.getPromDesc());
             }
             if (CurrentInvestment.PRODID_CURRENT.equals(productType)) {
                 textTip.setText("认购成功后，请前往我的秒钱宝查看");
@@ -110,8 +111,8 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
                 textTip.setText("认购成功后，请前往我的定期查看");
             }
         } else {
-            tvStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.result_fail, 0, 0);
-            tvStatus.setText("认购申请失败");
+            textStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.result_fail, 0, 0);
+            textStatus.setText("认购申请失败");
             frameMoney.setVisibility(View.GONE);
             frameBalance.setVisibility(View.GONE);
             framePromote.setVisibility(View.GONE);
