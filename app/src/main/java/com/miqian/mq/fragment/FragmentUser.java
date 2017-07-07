@@ -200,6 +200,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             public void onFail(String error) {
                 swipeRefresh.setRefreshing(false);
                 end();
+
                 setData(null);
                 Uihelper.showToast(getActivity(), error);
             }
@@ -254,14 +255,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         }
 
         //新用户不会给currentAmt这个字段，  老用户 没给这个字段 则不显示 ‘‘我的活期’’
-        String currentAmt = userInfo.getCurrentAmt();
-        if (!TextUtils.isEmpty(currentAmt)) {
-            BigDecimal bdCurrent = new BigDecimal(currentAmt);
-            if (bdCurrent.compareTo(BigDecimal.ZERO) > 0) {
-                frame_current.setVisibility(View.VISIBLE);
-                view.findViewById(R.id.divider_current).setVisibility(View.VISIBLE);
-                tv_Current.setText(FormatUtil.formatAmountStr(userInfo.getCurAmt()) + "元");
-            }
+        if (userInfo != null && userInfo.getCurrentAmt() != null && userInfo.getCurrentAmt().compareTo(BigDecimal.ZERO) > 0) {
+            frame_current.setVisibility(View.VISIBLE);
+            view.findViewById(R.id.divider_current).setVisibility(View.VISIBLE);
+            tv_Current.setText(FormatUtil.formatAmount(userInfo.getCurrentAmt()) + "元");
         }
 
     }
