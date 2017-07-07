@@ -56,10 +56,10 @@ public class CapitalRecordAdapter extends RecyclerView.Adapter {
         if ((vh instanceof ItemVH)) {
             if (list.get(position) != null) {
                 CapitalItem item = list.get(position);
-                ((ItemVH) vh).tvMoney.setText(item.getTraAmt());
-                ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getProductName());
-                ((ItemVH) vh).tvTraOpNm.setText(item.getProductType());
-                ((ItemVH) vh).tvTime.setText(Uihelper.timestampToDateStr_other(item.getTraTime()));
+                ((ItemVH) vh).tvMoney.setText("￥"+item.getAmt());
+                ((ItemVH) vh).tvPeerCustLoginNm.setText(item.getFromName());
+                ((ItemVH) vh).tvTraOpNm.setText(item.getOperateName());
+                ((ItemVH) vh).tvTime.setText(Uihelper.timestampToDateStr_other(item.getTraTime())+item.getRemark());
             }
         } else if (vh instanceof ProgressViewHolder) {
             if (position >= maxValue) {

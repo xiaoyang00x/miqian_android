@@ -56,6 +56,7 @@ public class RegInvest implements Serializable{
     private String status; //    状态   01: 认购处理中 02: 认购成功 03: 计息中 04: 已结清
     private String repayType; // 还款方式
 
+
     public String getRepayType() {
         return repayType;
     }

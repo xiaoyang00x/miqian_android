@@ -171,7 +171,7 @@ public class Urls {
     //我的定期
     public final static String user_regular = getServer() + "mine/getMyRegBuyList";  ///userRegService/v2/getMyRegBuyList
     //我的定期详情
-    public final static String user_regular_detail = getServer() + "userRegService/v2/getRegDetail";
+    public final static String user_regular_detail = "http://172.20.50.100:8080/" + "mine/getRegDetail";
     //项目匹配
     public final static String project_match = getServer() + "webView/getProjMatchList/";
     //我的定期转让情况
@@ -244,9 +244,9 @@ public class Urls {
     public final static String web_plan_law_earnings = getWebServer() + "Client/protocol/protocol-regPlanIT.html";
 
     //定期赚详情
-    public final static String web_regular_earn_detail = getServer() + "webView/getRegDetail/";
+    public final static String web_regular_earn_detail = getWebServer() + "/Client/regProjectDetail.html";
     //定期计划详情
-    public final static String web_regular_plan_detail = getServer() + "webView/regPlanDetail/";
+    public final static String web_regular_plan_detail = getWebServer() + "/Client/regPlanDetail.html";
 
 //    //提现说明
 //    public final static String web_rollout = "https://res.shicaidai.com/miaoqian/webView/presentDescription.html";

@@ -194,8 +194,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
         Bundle  bundle=new Bundle();
         bundle.putSerializable("reginvest",regInvest);
         intent.putExtras(bundle);
-        intent.putExtra("isExpiry",isExpiry);
-
         startActivity(intent);
     }
 

@@ -180,15 +180,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 userInfo = result.getData();
                 if (userInfo != null) {
                     userInfoTemp = new UserInfo();
-                    userInfoTemp.setBindCardStatus(userInfo.getBindCardStatus());
-                    userInfoTemp.setBankNo(userInfo.getBankNo());
-                    userInfoTemp.setBankName(userInfo.getBankName());
-                    userInfoTemp.setBankUrlSmall(userInfo.getBankUrlSmall());
-                    userInfoTemp.setBankCode(userInfo.getBankCode());
-                    userInfoTemp.setBalance(userInfo.getBalance());
-                    userInfoTemp.setSupportStatus(userInfo.getSupportStatus());
                     userInfoTemp.setRealNameStatus(userInfo.getRealNameStatus());
-                    userInfoTemp.setJxPayPwdStatus(userInfo.getJxPayPwdStatus());
                     userInfoTemp.setMobile(userInfo.getMobile());
                     userInfoTemp.setUserName(userInfo.getUserName());
                     setData(userInfo);
