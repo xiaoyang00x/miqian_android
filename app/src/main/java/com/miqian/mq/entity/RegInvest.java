@@ -36,7 +36,7 @@ public class RegInvest implements Serializable{
 
 
     private String purchaseSeqno;//认购时的交易流水号
-    private String productType;//产品类型  1: 定期项目2: 定期计划  98:老的定期计划    97:老的定期项目
+    private String productType;//产品类型  1: 定期项目2: 定期计划
     private String bidType;//  标的类型 PTB：普通标  XSB1：新⼿手标1 XSB2：新⼿手标2 QDB：渠道标
     private String productCode;//产品编号
     private String productName;//产品名称

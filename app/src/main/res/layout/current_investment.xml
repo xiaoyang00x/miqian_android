@@ -222,29 +222,6 @@
                         android:textSize="@dimen/mq_font5_v2" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/frame_contract"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/listitem_height"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:visibility="gone">
-
-                    <TextView
-                        style="@style/f7_B1_V2"
-                        android:layout_centerVertical="true"
-                        android:paddingLeft="@dimen/margin_left_right"
-                        android:text="查看合同" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/margin_left_right"
-                        android:src="@drawable/right" />
-                </RelativeLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -275,30 +252,38 @@
                         android:textSize="@dimen/mq_font4" />
 
                     <Button
+                        android:id="@+id/bt_law1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:background="@color/transparent"
-                        android:onClick="textLawCickProduct"
-                        android:text="《产品协议》"
+                        android:onClick="textLaw1"
+                        android:textColor="@color/mq_bl2"
+                        android:textSize="@dimen/mq_font4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <Button
+                        android:id="@+id/bt_law2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/transparent"
+                        android:onClick="textLaw2"
                         android:textColor="@color/mq_bl2"
                         android:textSize="@dimen/mq_font4" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="和"
-                        android:textColor="@color/mq_b2"
-                        android:textSize="@dimen/mq_font4" />
-
                     <Button
+                        android:id="@+id/bt_law3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:background="@color/transparent"
-                        android:onClick="textLawCickMoney"
-                        android:text="《资金管理协议》"
+                        android:onClick="textLaw3"
                         android:textColor="@color/mq_bl2"
                         android:textSize="@dimen/mq_font4" />
                 </LinearLayout>

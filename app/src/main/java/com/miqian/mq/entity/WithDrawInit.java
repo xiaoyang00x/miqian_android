@@ -17,6 +17,15 @@ public class WithDrawInit {
     private int monthRemain;  //本月剩余提现次数
     private int dayRemain;  //今日剩余提现次数
     private BigDecimal amt;  //可提现金额
+    private BigDecimal amtMinLimit;  //最小提现金额
+
+    public BigDecimal getAmtMinLimit() {
+        return amtMinLimit;
+    }
+
+    public void setAmtMinLimit(BigDecimal amtMinLimit) {
+        this.amtMinLimit = amtMinLimit;
+    }
 
     public String getBankUnionNumber() {
         return bankUnionNumber;

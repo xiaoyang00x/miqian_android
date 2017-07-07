@@ -52,6 +52,27 @@
             android:layout_marginRight="0dp" />
 
         <RelativeLayout
+            android:id="@+id/frame_aboutus_development"
+            style="@style/listItem">
+
+            <TextView
+                style="@style/text_black_item"
+                android:layout_centerVertical="true"
+                android:text="发展历程" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right" />
+
+        </RelativeLayout>
+
+        <View
+            style="@style/item_divider"
+            android:layout_marginRight="0dp" />
+        <RelativeLayout
             android:id="@+id/frame_aboutus_team"
             style="@style/listItem">
 

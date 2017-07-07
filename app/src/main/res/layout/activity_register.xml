@@ -173,7 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@color/transparent"
-            android:text="《秒钱用户注册协议》"
+            android:text="《秒钱会员注册协议》"
             android:textColor="@color/mq_bl4_v2"
             android:textSize="@dimen/mq_font3_v2" />
     </LinearLayout>

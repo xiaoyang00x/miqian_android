@@ -2,15 +2,15 @@ package com.miqian.mq.entity;
 
 import java.util.List;
 
-public class BankBranchResult extends Meta {
+public class BankBranchResult{
 	
-	private List<BankBranch> data;
+	private List<BankBranch> list;
 
-	public List<BankBranch> getData() {
-		return data;
+	public List<BankBranch> getList() {
+		return list;
 	}
 
-	public void setData(List<BankBranch> data) {
-		this.data = data;
+	public void setList(List<BankBranch> list) {
+		this.list = list;
 	}
 }

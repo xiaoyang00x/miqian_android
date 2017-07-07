@@ -32,6 +32,10 @@ public class Promote {
      */
     private String couponsId;
     /**
+     * 促销Id
+     */
+    private String id;
+    /**
      * 促销产品类别的名称
      */
     private String name;
@@ -81,12 +85,22 @@ public class Promote {
      **/
     private String promUrl;
 
+
     public String getCouponsId() {
         return couponsId;
     }
 
     public void setCouponsId(String couponsId) {
         this.couponsId = couponsId;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

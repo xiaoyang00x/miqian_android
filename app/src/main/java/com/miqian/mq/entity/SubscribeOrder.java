@@ -1,15 +1,17 @@
 package com.miqian.mq.entity;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Jackie on 2015/9/29.
  */
 public class SubscribeOrder {
 
-    private String orderNo;
-    private String goldCoin;
-    private String goldCoin_url;
-    private ShareData shareLink;
-    private Popup popup;
+    private String orderNo;//订单号
+    private String orderTime;//订单时间
+    private BigDecimal amt;//认购金额
+    private BigDecimal realPayAmt;//余额支付
+    private String promDesc;//红包使用
 
     public String getOrderNo() {
         return orderNo;
@@ -19,35 +21,35 @@ public class SubscribeOrder {
         this.orderNo = orderNo;
     }
 
-    public String getGoldCoin() {
-        return goldCoin;
+    public String getOrderTime() {
+        return orderTime;
     }
 
-    public void setGoldCoin(String goldCoin) {
-        this.goldCoin = goldCoin;
+    public void setOrderTime(String orderTime) {
+        this.orderTime = orderTime;
     }
 
-    public String getGoldCoin_url() {
-        return goldCoin_url;
+    public BigDecimal getAmt() {
+        return amt;
     }
 
-    public void setGoldCoin_url(String goldCoin_url) {
-        this.goldCoin_url = goldCoin_url;
+    public void setAmt(BigDecimal amt) {
+        this.amt = amt;
     }
 
-    public ShareData getShareLink() {
-        return shareLink;
+    public BigDecimal getRealPayAmt() {
+        return realPayAmt;
     }
 
-    public void setShareLink(ShareData shareLink) {
-        this.shareLink = shareLink;
+    public void setRealPayAmt(BigDecimal realPayAmt) {
+        this.realPayAmt = realPayAmt;
     }
 
-    public Popup getPopup() {
-        return popup;
+    public String getPromDesc() {
+        return promDesc;
     }
 
-    public void setPopup(Popup popup) {
-        this.popup = popup;
+    public void setPromDesc(String promDesc) {
+        this.promDesc = promDesc;
     }
 }

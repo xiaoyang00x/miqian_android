@@ -42,7 +42,7 @@ import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.SaveInfoResult;
-import com.miqian.mq.entity.SubscribeOrderResult;
+import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserCurrentResult;
@@ -956,7 +956,7 @@ public class HttpRequest {
     }
 
     //获取支行接口
-    public static void getSubBranch(Context context, final ICallback<BankBranchResult> callback,
+    public static void getSubBranch(Context context, final ICallback<MqResult<BankBranchResult>> callback,
                                     String province, String city, String bankName) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("province", province));
@@ -966,11 +966,12 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                BankBranchResult bankBranchResult = JsonUtil.parseObject(result, BankBranchResult.class);
-                if (bankBranchResult.getCode().equals("000000")) {
-                    callback.onSucceed(bankBranchResult);
+                MqResult<BankBranchResult> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<BankBranchResult>>() {
+                });
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(bankBranchResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
@@ -1257,7 +1258,7 @@ public class HttpRequest {
      * @param productCode 标的id
      * @param deliveryId  认购预处理的promList中的id 促销Id
      */
-    public static void subscribeOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String productCode, String deliveryId) {
+    public static void subscribeOrder(Context context, final ICallback<MqResult<SubscribeOrder>> callback, String amt, String productCode, String deliveryId) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
@@ -1267,40 +1268,10 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
-                callback.onSucceed(subscribeOrderResult);
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 活期、定期赚、定期计划
-     * 快捷认购接口
-     *
-     * @param amt       金额
-     * @param prodId    0:充值产品  1:活期赚 2:活期转让赚 3:定期赚 4:定期转让赚 5: 定期计划 6: 计划转让
-     * @param subjectId 0:活期
-     */
-    public static void subscribeQuickOrder(Context context, final ICallback<SubscribeOrderResult> callback, String amt, String prodId, String orderNo, String subjectId, String promList, String prodList) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("amt", amt));
-        mList.add(new Param("prodId", prodId));
-        mList.add(new Param("orderNo", orderNo));
-        mList.add(new Param("subjectId", subjectId));
-        mList.add(new Param("promList", promList));
-        mList.add(new Param("prodList", prodList));
-        new MyAsyncTask(context, Urls.quick_subscribe_order, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
-                callback.onSucceed(subscribeOrderResult);
+//                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
+                MqResult<SubscribeOrder> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<SubscribeOrder>>(){
+                });
+                callback.onSucceed(meta);
             }
 
             @Override
@@ -1697,12 +1668,12 @@ public class HttpRequest {
     /**
      * 江西银行:存管-提现跳转
      */
-    public static void autoWithdraw(final Activity activity) {
+    public static void autoWithdraw(final Activity activity,String amt) {
         ArrayList params = new ArrayList<>();
 //        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         params.add(new Param("custId", "000000000020170628104802478704"));
         params.add(new Param("cType", "android"));
-        params.add(new Param("amt", "50"));
+        params.add(new Param("amt", amt));
         WebBankActivity.startActivity(activity, Urls.jx_auto_withdraw_url, params, 1);
     }
 
