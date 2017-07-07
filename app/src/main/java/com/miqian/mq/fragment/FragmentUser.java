@@ -25,6 +25,7 @@ import com.miqian.mq.activity.setting.SettingActivity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.activity.user.RolloutActivity;
+import com.miqian.mq.activity.user.UserMqbActivity;
 import com.miqian.mq.activity.user.UserRecordActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
@@ -407,9 +408,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 WebActivity.startActivity(mContext, Urls.web_my_invite);
                 break;
             //我的秒钱宝
-            case R.id.account_miaoqianbao:
+            case R.id.frame_account_miaoqianbao:
                 refresh = false;
-                WebActivity.startActivity(mContext, Urls.web_my_invite);
+                startActivity(new Intent(getActivity(), UserMqbActivity.class));
                 break;
             //充值未到账
             case R.id.tv_question:

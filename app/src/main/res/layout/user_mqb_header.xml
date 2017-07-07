@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/account_head_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="昨日收益(元)"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font3_v2" />
+
+    <TextView
+        android:id="@+id/earning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="--:--"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font15_v2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="在投本金(元)"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font3_v2" />
+
+    <TextView
+        android:id="@+id/captial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="--:--"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mq_font11_v2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="30dp">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="持有笔数(笔)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <TextView
+                android:id="@+id/total_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="--"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font4_v2" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="在投收益(元)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <TextView
+                android:id="@+id/total_earning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="--"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font4_v2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="年化收益率"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font3_v2" />
+
+            <TextView
+                android:id="@+id/text_interest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="--"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mq_font4_v2" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

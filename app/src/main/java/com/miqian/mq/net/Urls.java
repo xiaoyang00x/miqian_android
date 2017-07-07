@@ -166,6 +166,8 @@ public class Urls {
     public final static String withdrawCash = getServer() + "assetService/withdrawCash";
     //我的活期
     public final static String user_current = getServer() + "userService/getMyCurrent";
+    //我的秒钱宝
+    public final static String user_mqb = getServer() + "mine/newCurrent";
     //我的定期
     public final static String user_regular = getServer() + "mine/getMyRegBuyList";  ///userRegService/v2/getMyRegBuyList
     //我的定期详情
