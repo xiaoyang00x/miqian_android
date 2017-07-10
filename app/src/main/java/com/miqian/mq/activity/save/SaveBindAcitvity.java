@@ -31,6 +31,9 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Jackie on 2017/6/15.
  * 江西银行存管
@@ -39,19 +42,30 @@ import com.miqian.mq.views.WFYTitle;
 
 public class SaveBindAcitvity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private EditText editName;
-    private EditText editIdcard;
-    private EditText editBank;
-    private EditText editMobile;
-    private EditText editCaptcha;
-    private Button btCaptcha;
-    private Button btSubmit;
+    @BindView(R.id.edit_name)
+    EditText editName;
+    @BindView(R.id.edit_idcard)
+    EditText editIdcard;
+    @BindView(R.id.edit_bank)
+    EditText editBank;
+    @BindView(R.id.edit_mobile)
+    EditText editMobile;
+    @BindView(R.id.edit_captcha)
+    EditText editCaptcha;
+    @BindView(R.id.bt_captcha)
+    Button btCaptcha;
+    @BindView(R.id.bt_submit)
+    Button btSubmit;
 
-    private TextView textTip;
+    @BindView(R.id.text_tip)
+    TextView textTip;
 
-    private CheckBox checkLaw;
-    private Button btLaw;
-    private Button btLaw2;
+    @BindView(R.id.check_law)
+    CheckBox checkLaw;
+    @BindView(R.id.bt_law)
+    Button btLaw;
+    @BindView(R.id.bt_law2)
+    Button btLaw2;
 
     private String authCode;
     private String mobile;
@@ -251,21 +265,13 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
-        checkLaw = (CheckBox) findViewById(R.id.check_law);
+        ButterKnife.bind(this);
+
         checkLaw.setOnCheckedChangeListener(this);
-        btLaw = (Button) findViewById(R.id.bt_law);
-        btLaw2 = (Button) findViewById(R.id.bt_law2);
         btLaw.setOnClickListener(this);
         btLaw2.setOnClickListener(this);
-        textTip = (TextView) findViewById(R.id.text_tip);
-        editName = (EditText) findViewById(R.id.edit_name);
-        editIdcard = (EditText) findViewById(R.id.edit_idcard);
-        editBank = (EditText) findViewById(R.id.edit_bank);
-        editMobile = (EditText) findViewById(R.id.edit_mobile);
-        editCaptcha = (EditText) findViewById(R.id.edit_captcha);
-        btCaptcha = (Button) findViewById(R.id.bt_captcha);
+
         btCaptcha.setOnClickListener(this);
-        btSubmit = (Button) findViewById(R.id.bt_submit);
         btSubmit.setOnClickListener(this);
         handler = new Handler() {
             @Override

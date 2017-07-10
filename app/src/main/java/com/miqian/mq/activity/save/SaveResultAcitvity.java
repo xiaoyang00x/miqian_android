@@ -21,6 +21,9 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Jackie on 2017/6/15.
  * 江西银行存管
@@ -29,26 +32,41 @@ import com.miqian.mq.views.WFYTitle;
 
 public class SaveResultAcitvity extends BaseActivity implements View.OnClickListener {
 
-    private LinearLayout frameAccount;
-    private LinearLayout frameAgreement;
-    private LinearLayout frameStep;
-    private LinearLayout frameFish;
+    @BindView(R.id.frame_account)
+    LinearLayout frameAccount;
+    @BindView(R.id.frame_agreement)
+    LinearLayout frameAgreement;
+    @BindView(R.id.frame_step)
+    LinearLayout frameStep;
+    @BindView(R.id.frame_fish)
+    LinearLayout frameFish;
 
-    private TextView textStatus;
+    @BindView(R.id.text_status)
+    TextView textStatus;
 
-    private TextView textName;
-    private TextView textNo;
+    @BindView(R.id.text_name)
+    TextView textName;
+    @BindView(R.id.text_no)
+    TextView textNo;
 
-    private TextView textPassword;
-    private TextView textLine2;
-    private TextView textAuto;
+    @BindView(R.id.text_password)
+    TextView textPassword;
+    @BindView(R.id.text_line2)
+    TextView textLine2;
+    @BindView(R.id.text_auto)
+    TextView textAuto;
 
-    private TextView textState1;
-    private TextView textState2;
+    @BindView(R.id.text_state1)
+    TextView textState1;
+    @BindView(R.id.text_state2)
+    TextView textState2;
 
-    private Button btSubmit;
-    private Button btRollin;
-    private Button btProduct;
+    @BindView(R.id.bt_submit)
+    Button btSubmit;
+    @BindView(R.id.bt_rollin)
+    Button btRollin;
+    @BindView(R.id.bt_product)
+    Button btProduct;
 
     private SaveInfo saveInfo;
 
@@ -133,28 +151,9 @@ public class SaveResultAcitvity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initView() {
-        frameAccount = (LinearLayout) findViewById(R.id.frame_account);
-        frameAgreement = (LinearLayout) findViewById(R.id.frame_agreement);
-        frameStep = (LinearLayout) findViewById(R.id.frame_step);
-        frameFish = (LinearLayout) findViewById(R.id.frame_fish);
-
-        textStatus = (TextView) findViewById(R.id.text_status);
-
-        textPassword = (TextView) findViewById(R.id.text_password);
-        textLine2 = (TextView) findViewById(R.id.text_line2);
-        textAuto = (TextView) findViewById(R.id.text_auto);
-
-        textName = (TextView) findViewById(R.id.text_name);
-        textNo = (TextView) findViewById(R.id.text_no);
-
-        textState1 = (TextView) findViewById(R.id.text_state1);
-        textState2 = (TextView) findViewById(R.id.text_state2);
-
-        btSubmit = (Button) findViewById(R.id.bt_submit);
+        ButterKnife.bind(this);
         btSubmit.setOnClickListener(this);
-        btRollin = (Button) findViewById(R.id.bt_rollin);
         btRollin.setOnClickListener(this);
-        btProduct = (Button) findViewById(R.id.bt_product);
         btProduct.setOnClickListener(this);
 
         if (UserUtil.isSaveBefore(this)) {
