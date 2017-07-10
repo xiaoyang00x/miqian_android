@@ -159,6 +159,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             tv_Current.setText("");
             tv_Regular.setText("");
             tv_Ticket.setText("");
+            btnEye.setBackgroundResource(R.drawable.icon_closeeye);
+            tv_balance.setText("--.--");
+            tv_TotalProfit.setText("--.--");
+            tv_ydayprofit.setText("--.--");
             swipeRefresh.setEnabled(false);
         }
 
@@ -202,6 +206,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     }
 
     private void setData(UserInfo userInfo) {
+        btnEye.setBackgroundResource(R.drawable.icon_openeye);
+        isOpeneye = true;
         tv_totalasset.setTextColor(ContextCompat.getColor(mContext, R.color.mq_b1_v2));
         //历史收益
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getTotalProfit())) {
@@ -371,19 +377,32 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //我的定期
             case R.id.frame_regular:
-                MobclickAgent.onEvent(getActivity(), "1020");
-                startActivity(new Intent(getActivity(), UserRegularActivity.class));
+                if (UserUtil.hasLogin(mContext)) {
+                    MobclickAgent.onEvent(getActivity(), "1020");
+                    startActivity(new Intent(getActivity(), UserRegularActivity.class));
+                } else {
+                    LoginActivity.start(mActivity);
+                }
                 break;
             //资金记录
             case R.id.frame_record:
-                MobclickAgent.onEvent(getActivity(), "1021");
-                startActivity(new Intent(getActivity(), UserRecordActivity.class));
+                if (UserUtil.hasLogin(mContext)) {
+                    MobclickAgent.onEvent(getActivity(), "1021");
+                    startActivity(new Intent(getActivity(), UserRecordActivity.class));
+                } else {
+                    LoginActivity.start(mActivity);
+                }
+
                 break;
             //优惠券
             case R.id.frame_ticket:
-                refresh = false;
-                MobclickAgent.onEvent(getActivity(), "1022");
-                startActivity(new Intent(getActivity(), MyTicketActivity.class));
+                if (UserUtil.hasLogin(mContext)) {
+                    refresh = false;
+                    MobclickAgent.onEvent(getActivity(), "1022");
+                    startActivity(new Intent(getActivity(), MyTicketActivity.class));
+                } else {
+                    LoginActivity.start(mActivity);
+                }
                 break;
             //我的消息
             case R.id.bt_left:
@@ -396,17 +415,29 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 break;
             //我的邀请
             case R.id.frame_invite:
-                refresh = false;
-                WebActivity.startActivity(mContext, Urls.web_my_invite);
+                if (UserUtil.hasLogin(mContext)) {
+                    refresh = false;
+                    WebActivity.startActivity(mContext, Urls.web_my_invite);
+                } else {
+                    LoginActivity.start(mActivity);
+                }
                 break;
             //我的秒钱宝
             case R.id.frame_account_miaoqianbao:
-                refresh = false;
-                startActivity(new Intent(getActivity(), UserMqbActivity.class));
+                if (UserUtil.hasLogin(mContext)) {
+                    refresh = false;
+                    startActivity(new Intent(getActivity(), UserMqbActivity.class));
+                } else {
+                    LoginActivity.start(mActivity);
+                }
                 break;
             //充值未到账
             case R.id.tv_question:
-                startActivity(new Intent(mContext, IntoCheckAcitvity.class));
+                if (UserUtil.hasLogin(mContext)) {
+                    startActivity(new Intent(mContext, IntoCheckAcitvity.class));
+                } else {
+                    LoginActivity.start(mActivity);
+                }
                 break;
             default:
                 break;

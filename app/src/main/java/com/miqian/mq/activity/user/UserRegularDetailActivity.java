@@ -52,7 +52,9 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     private List<Operation> operationList;
     private TextView tvContentFirst;
     private TextView tvDateFirst;
-//    private TextView tvTimeFirst;
+    //    private TextView tvTimeFirst;
+    private boolean inProcess = false;
+    private final Object mLock = new Object();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -89,6 +91,12 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
     public void obtainData() {
         //查询标的记录
+        if (inProcess) {
+            return;
+        }
+        synchronized (mLock) {
+            inProcess = true;
+        }
         begin();
         HttpRequest.getUserRegularDetail(mActivity, new ICallback<UserRegularDetailResult>() {
             @Override
@@ -105,6 +113,9 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 
             @Override
             public void onFail(String error) {
+                synchronized (mLock) {
+                    inProcess = false;
+                }
                 end();
                 Uihelper.showToast(mActivity, error);
             }
@@ -172,9 +183,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     }
 
     private void refreshView() {
-        if (reginvest == null) {
-            return;
-        }
+        if (reginvest!=null) {
         textProjectName.setText(regInvest.getProductName());
         textLimit.setText(regInvest.getProductTerm());
 
@@ -184,12 +193,12 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         textRepayment.setText(regInvest.getRepayType());
 
         if (!"4".equals(regInvest.getStatus())) {
-            if ("2".equals(regInvest.getProductType())||"98".equals(regInvest.getProductType())) {//定期计划和定期计划转让
+            if ("2".equals(regInvest.getProductType()) || "98".equals(regInvest.getProductType())) {//定期计划和定期计划转让
                 frameProjectMatch.setVisibility(View.VISIBLE);
                 textProject.setText("项目匹配");
             }
         }
-        if ("2".equals(regInvest.getProductType())||"98".equals(regInvest.getProductType())) {//定期赚和定期赚转让详情
+        if ("2".equals(regInvest.getProductType()) || "98".equals(regInvest.getProductType())) {//定期赚和定期赚转让详情
             frameProjectMatch.setVisibility(View.VISIBLE);
             textProject.setText("项目详情");
         }
@@ -257,7 +266,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //            default:
 //                break;
 //        }
-
+        }
     }
 
     private void productRecord() {

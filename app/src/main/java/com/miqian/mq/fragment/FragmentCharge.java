@@ -135,7 +135,6 @@ public class FragmentCharge extends BasicFragment {
     private void obtainData() {
         begin();
         pageNo = 1;
-        begin();
         //取全部
         HttpRequest.getCapitalRecords(mActivity, new ICallback<CapitalRecordResult>() {
 

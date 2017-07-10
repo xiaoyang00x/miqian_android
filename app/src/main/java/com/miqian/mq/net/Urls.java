@@ -171,7 +171,7 @@ public class Urls {
     //我的定期
     public final static String user_regular = getServer() + "mine/getMyRegBuyList";  ///userRegService/v2/getMyRegBuyList
     //我的定期详情
-    public final static String user_regular_detail = "http://172.20.50.100:8080/" + "mine/getRegDetail";
+    public final static String user_regular_detail = getServer() + "mine/getRegDetail";
     //项目匹配
     public final static String project_match = getServer() + "webView/getProjMatchList/";
     //我的定期转让情况
