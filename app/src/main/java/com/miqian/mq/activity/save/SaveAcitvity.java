@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.SaveInfo;
-import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -55,11 +55,11 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
     @Override
     public void obtainData() {
         begin();
-        HttpRequest.openJxPreprocess(this, new ICallback<SaveInfoResult>() {
+        HttpRequest.openJxPreprocess(this, new ICallback<MqResult<SaveInfo>>() {
             @Override
-            public void onSucceed(SaveInfoResult saveInfoResult) {
+            public void onSucceed(MqResult<SaveInfo> result) {
                 end();
-                saveInfo = saveInfoResult.getData();
+                saveInfo = result.getData();
                 refreshView();
             }
 

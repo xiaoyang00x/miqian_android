@@ -19,8 +19,8 @@ import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.SaveInfo;
-import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -84,9 +84,9 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
     @Override
     public void obtainData() {
         begin();
-        HttpRequest.openJxPreprocess(this, new ICallback<SaveInfoResult>() {
+        HttpRequest.openJxPreprocess(this, new ICallback<MqResult<SaveInfo>>() {
             @Override
-            public void onSucceed(SaveInfoResult result) {
+            public void onSucceed(MqResult<SaveInfo> result) {
                 end();
                 saveInfo = result.getData();
                 refreshView();

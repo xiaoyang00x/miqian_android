@@ -42,7 +42,7 @@ import com.miqian.mq.entity.RegularProjectList;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
 import com.miqian.mq.entity.RollOutResult;
-import com.miqian.mq.entity.SaveInfoResult;
+import com.miqian.mq.entity.SaveInfo;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UpdateResult;
@@ -1736,7 +1736,7 @@ public class HttpRequest {
     /**
      * 获取开通存管状态
      */
-    public static void openJxPreprocess(Context context, final ICallback<SaveInfoResult> callback) {
+    public static void openJxPreprocess(Context context, final ICallback<MqResult<SaveInfo>> callback) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
@@ -1744,7 +1744,9 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                SaveInfoResult meta = JsonUtil.parseObject(result, SaveInfoResult.class);
+                MqResult<SaveInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<SaveInfo>>() {
+
+                });
                 if ("000000".equals(meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {

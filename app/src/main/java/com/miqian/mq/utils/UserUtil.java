@@ -13,9 +13,9 @@ import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.Login;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.SaveInfo;
-import com.miqian.mq.entity.SaveInfoResult;
 import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.listener.HomeAdsListener;
 import com.miqian.mq.listener.ListenerManager;
@@ -254,10 +254,10 @@ public class UserUtil {
         if (UserUtil.isFinishSave(context)) {
             CurrentInvestment.startActivity(context, money, productInfo);
         } else {
-            HttpRequest.openJxPreprocess(context, new ICallback<SaveInfoResult>() {
+            HttpRequest.openJxPreprocess(context, new ICallback<MqResult<SaveInfo>>() {
                 @Override
-                public void onSucceed(SaveInfoResult saveInfoResult) {
-                    SaveInfo saveInfo = saveInfoResult.getData();
+                public void onSucceed(MqResult<SaveInfo> result) {
+                    SaveInfo saveInfo = result.getData();
                     if (saveInfo != null && "1".equals(saveInfo.getJxAccountStatus()) && "1".equals(saveInfo.getJxPayPwdStatus()) && "1".equals(saveInfo.getJxAutoClaimsTransferStatus()) && "1".equals(saveInfo.getJxAutoSubscribeStatus())) {
                         Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
                         CurrentInvestment.startActivity(context, money, productInfo);
