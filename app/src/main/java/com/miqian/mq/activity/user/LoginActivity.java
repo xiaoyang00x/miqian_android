@@ -152,13 +152,20 @@ public class LoginActivity extends Activity {
                 Pref.saveString(Pref.TELEPHONE, userInfo.getMobile(), LoginActivity.this);
                 Pref.saveString(UserUtil.getPrefKey(LoginActivity.this, Pref.IS_SAVE_BEFORE), userInfo.getIsBeforeDepositRegisterStatus(), LoginActivity.this);
                 if (Pref.getBoolean(Pref.GESTURESTATE, LoginActivity.this, true)) {
-                    GestureLockSetActivity.startActivity(LoginActivity.this, null);
+                    if (UserUtil.isBeforeNotSave(userInfo)) {
+                        GestureLockSetActivity.startActivity(LoginActivity.this, true);//老用户未开通存管
+                    } else {
+                        GestureLockSetActivity.startActivity(LoginActivity.this, null);
+                    }
                 }
                 Uihelper.showToast(LoginActivity.this, "登录成功");
-                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
-                UserUtil.loginSuccess();
-                if (mLoginListener!=null){
-                    mLoginListener.loginSuccess();
+                if (UserUtil.isBeforeNotSave(userInfo)) {
+                    ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.JX_SAVE, null);
+                } else {
+                    UserUtil.loginSuccess();
+                    if (mLoginListener!=null){
+                        mLoginListener.loginSuccess();
+                    }
                 }
                 finish();
             }

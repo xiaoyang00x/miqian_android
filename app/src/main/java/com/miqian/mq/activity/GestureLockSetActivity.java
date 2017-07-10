@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.miqian.mq.R;
 import com.miqian.mq.utils.Constants;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.views.GestureCueView;
 import com.miqian.mq.views.GestureLockView;
@@ -27,6 +28,7 @@ public class GestureLockSetActivity extends BaseActivity {
     private GestureLockView lockView;
     private String firstEnterPsw; // 缓存第一次设置的密码
     private boolean isFirstSet; // 是否第一次设置密码
+    private static boolean isBeforeSave; // 老用户未开通存管
 
     private static final int MINLENGTH_PSW = 4; // 密码最小长度
 
@@ -44,8 +46,19 @@ public class GestureLockSetActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    public static void startActivity(Context context, boolean flag) {
+        isBeforeSave = flag;
+        Intent intent = new Intent(context, GestureLockSetActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
     public void startActivity(Class cls) {
-        startActivity(new Intent(mContext, cls));
+        if (isBeforeSave) {
+            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.JX_SAVE, null);
+        } else {
+            startActivity(new Intent(mContext, cls));
+        }
     }
 
     @Override

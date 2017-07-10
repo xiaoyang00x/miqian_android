@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
 import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.activity.GestureLockSetActivity;
 import com.miqian.mq.activity.current.CurrentInvestment;
@@ -13,6 +12,7 @@ import com.miqian.mq.activity.save.SaveAcitvity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.activity.user.RegisterActivity;
 import com.miqian.mq.encrypt.RSAUtils;
+import com.miqian.mq.entity.Login;
 import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.SaveInfo;
 import com.miqian.mq.entity.SaveInfoResult;
@@ -44,6 +44,17 @@ public class UserUtil {
      */
     public static boolean isSaveBefore(Context context) {
         if ("1".equals(Pref.getString(getPrefKey(context, Pref.IS_SAVE_BEFORE), context, null))) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 用户是否是老用户未开通存管
+     * @return true
+     */
+    public static boolean isBeforeNotSave(Login userInfo) {
+        if ("1".equals(userInfo.getIsBeforeDepositRegisterStatus()) && "0".equals(userInfo.getJxAccountStatus())) {
             return true;
         }
         return false;

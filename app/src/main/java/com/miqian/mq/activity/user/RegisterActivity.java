@@ -188,7 +188,6 @@ public class RegisterActivity extends Activity {
                             } else {
                                 SaveAcitvity.startActivity(RegisterActivity.this);
                             }
-                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
                             finish();
                         }
 
