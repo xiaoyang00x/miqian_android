@@ -15,6 +15,7 @@ public class FormatUtil {
 
     public static final String PATTERN_IDCARD = "^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|[Xx])$"; // 身份证匹配
     public static final String PATTERN_MONEY = "^(([1-9]{1}\\d{0,6})|([0]{1}))(\\.\\d{0,2})?$";
+    public static final String PATTERN_URL = "[a-zA-z]+://[^\\s]*";//URL匹配
     public static final String PATTERN_PASSWORD = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![\\x21-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\x7e]+$)(?![\\x21-\\x40\\x5b-\\x60\\x7b-\\x7e]+$)(?![\\x21-\\x2f\\x3a-\\x7e]+$)[\\x21-\\x7e]{6,16}$";
 
     /**

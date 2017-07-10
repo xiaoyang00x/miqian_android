@@ -29,17 +29,10 @@ public class Pref {
 
     public static final String VISITOR = "Visitor_0000";
 
-    public static final String NICKNAME = "Nickname";
-
-    public static final String ERROR_LIAN = "ErrorLian";
-    public static final String ERROR_LIAN_VERSION = "ErrorLianVersion";
-
     public static final String TELEPHONE = "Telephone";
 
     //真实姓名
     public static final String REAL_NAME = "REAL_NAME";
-
-    public static final String SERVER_ERROR_CODE = "ServerErrorCode";
 
     public static final String CURRENT_RATE = "CurrentRate";
     public static final String CURRENT_STATE = "CurrentState";
@@ -93,6 +86,8 @@ public class Pref {
     public final static String IS_SAVE_BEFORE = "IsSaveBefore";
     //是否完成存管
     public final static String IS_SAVE_FINISH = "IsSaveFinish";
+    //服务器地址
+    public final static String SERVER_HOST = "ServerHost";
 
     private static SharedPreferences getSettings(final Context contex) {
         SharedPreferences mSharedPreferences = contex.getSharedPreferences(PREFS_NAME, 0);
