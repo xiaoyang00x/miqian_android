@@ -22,7 +22,7 @@ import com.growingio.android.sdk.collection.GrowingIO;
 import com.miqian.mq.R;
 import com.miqian.mq.entity.Advert;
 import com.miqian.mq.entity.ConfigInfo;
-import com.miqian.mq.entity.ConfigResult;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.Navigation;
 import com.miqian.mq.entity.TabInfo;
 import com.miqian.mq.net.HttpRequest;
@@ -91,9 +91,9 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     }
 
     private void loadConfig() {
-        HttpRequest.getConfig(SplashActivity.this, new ICallback<ConfigResult>() {
+        HttpRequest.getConfig(SplashActivity.this, new ICallback<MqResult<ConfigInfo>>() {
             @Override
-            public void onSucceed(ConfigResult result) {
+            public void onSucceed(MqResult<ConfigInfo> result) {
                 ConfigInfo configInfo = result.getData();
                 if (configInfo != null) {
                     Advert advert = configInfo.getAdvert();

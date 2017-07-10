@@ -15,7 +15,7 @@ import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.CityInfoResult;
-import com.miqian.mq.entity.ConfigResult;
+import com.miqian.mq.entity.ConfigInfo;
 import com.miqian.mq.entity.CurrentRecordResult;
 import com.miqian.mq.entity.CustBindBankBranch;
 import com.miqian.mq.entity.GetHomeActivity;
@@ -97,17 +97,18 @@ public class HttpRequest {
     /**
      * APP的配置：广告，tab图标
      */
-    public static void getConfig(Context context, final ICallback<ConfigResult> callback) {
+    public static void getConfig(Context context, final ICallback<MqResult<ConfigInfo>> callback) {
         List<Param> mList = new ArrayList<>();
         new MyAsyncTask(context, Urls.app_config, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
-                ConfigResult configResult = JsonUtil.parseObject(result, ConfigResult.class);
-                if (configResult.getCode().equals("000000")) {
-                    callback.onSucceed(configResult);
+                MqResult<ConfigInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<ConfigInfo>>(){
+                });
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(configResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
