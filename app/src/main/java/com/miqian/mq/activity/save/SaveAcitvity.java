@@ -19,6 +19,9 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Jackie on 2017/6/15.
  * 江西银行存管
@@ -27,17 +30,23 @@ import com.miqian.mq.views.WFYTitle;
 
 public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
 
-    private Button btOpen;
-    private Button btProduct;
+    @BindView(R.id.bt_open)
+    Button btOpen;
+    @BindView(R.id.bt_product)
+    Button btProduct;
 
-    private TextView textAccount;
-    private TextView textPassword;
-    private TextView textAuto;
-    private TextView textLine1;
-    private TextView textLine2;
+    @BindView(R.id.text_account)
+    TextView textAccount;
+    @BindView(R.id.text_password)
+    TextView textPassword;
+    @BindView(R.id.text_auto)
+    TextView textAuto;
+    @BindView(R.id.text_line1)
+    TextView textLine1;
+    @BindView(R.id.text_line2)
+    TextView textLine2;
 
     private SaveInfo saveInfo;
-
     private int jxState;
 
     @Override
@@ -79,15 +88,8 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
-        textAccount = (TextView) findViewById(R.id.text_account);
-        textPassword = (TextView) findViewById(R.id.text_password);
-        textAuto = (TextView) findViewById(R.id.text_auto);
-        textLine1 = (TextView) findViewById(R.id.text_line1);
-        textLine2 = (TextView) findViewById(R.id.text_line2);
-
-        btOpen = (Button) findViewById(R.id.bt_open);
+        ButterKnife.bind(this);
         btOpen.setOnClickListener(this);
-        btProduct = (Button) findViewById(R.id.bt_product);
         btProduct.setOnClickListener(this);
 
         if (UserUtil.isSaveBefore(this)) {
