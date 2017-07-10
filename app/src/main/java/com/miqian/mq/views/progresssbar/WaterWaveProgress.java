@@ -1,30 +1,26 @@
 package com.miqian.mq.views.progresssbar;
 
-import java.lang.ref.WeakReference;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Path.Direction;
 import android.graphics.Point;
 import android.graphics.RectF;
-import android.graphics.Region;
-import android.graphics.Path.Direction;
 import android.graphics.Region.Op;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ProgressBar;
+
+import java.lang.ref.WeakReference;
 
 /**
  * @author Administrator
- * 
+ *
  */
 public class WaterWaveProgress extends View {
 	// 水的画笔 // 画圆环的画笔// 进度百分比的画笔
@@ -36,7 +32,7 @@ public class WaterWaveProgress extends View {
 			mFontSize, mTextColor;
 	// 进度 //浪峰个数
 	float  crestCount = 1.5f;
-	
+
 	int mProgress = 10, mMaxProgress = 100;
 
 	// 画布中心点
@@ -296,7 +292,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置水的透明度
-	 * 
+	 *
 	 * @param alpha
 	 *            透明的百分比，值为0到1之间的小数，越接近0越透明
 	 */
@@ -333,7 +329,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 是否显示进度条
-	 * 
+	 *
 	 * @param b
 	 */
 	public void setShowProgress(boolean b) {
@@ -342,7 +338,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 是否显示进度值
-	 * 
+	 *
 	 * @param b
 	 */
 	public void setShowNumerical(boolean b) {
@@ -351,7 +347,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置进度条前景色
-	 * 
+	 *
 	 * @param mRingColor
 	 */
 	public void setmRingColor(int mRingColor) {
@@ -360,7 +356,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置进度条背景色
-	 * 
+	 *
 	 * @param mRingBgColor
 	 */
 	public void setmRingBgColor(int mRingBgColor) {
@@ -369,7 +365,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置水波颜色
-	 * 
+	 *
 	 * @param mWaterColor
 	 */
 	public void setmWaterColor(int mWaterColor) {
@@ -378,7 +374,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置水波背景色
-	 * 
+	 *
 	 * @param mWaterBgColor
 	 */
 	public void setWaterBgColor(int mWaterBgColor) {
@@ -387,7 +383,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置进度值显示字体大小
-	 * 
+	 *
 	 * @param mFontSize
 	 */
 	public void setFontSize(int mFontSize) {
@@ -396,7 +392,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置进度值显示字体颜色
-	 * 
+	 *
 	 * @param mTextColor
 	 */
 	public void setTextColor(int mTextColor) {
@@ -405,7 +401,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置进度条最大值
-	 * 
+	 *
 	 * @param mMaxProgress
 	 */
 	public void setMaxProgress(int mMaxProgress) {
@@ -414,7 +410,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置浪峰个数
-	 * 
+	 *
 	 * @param crestCount
 	 */
 	public void setCrestCount(float crestCount) {
@@ -423,7 +419,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置进度条宽度
-	 * 
+	 *
 	 * @param mRingWidth
 	 */
 	public void setRingWidth(float mRingWidth) {
@@ -432,7 +428,7 @@ public class WaterWaveProgress extends View {
 
 	/**
 	 * 设置水波到进度条之间的距离
-	 * 
+	 *
 	 * @param mProgress2WaterWidth
 	 */
 	public void setProgress2WaterWidth(float mProgress2WaterWidth) {
