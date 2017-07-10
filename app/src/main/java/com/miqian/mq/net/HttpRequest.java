@@ -28,7 +28,7 @@ import com.miqian.mq.entity.MqListResult;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.NewCurrentFoundFlow;
 import com.miqian.mq.entity.OperationResult;
-import com.miqian.mq.entity.OrderRechargeResult;
+import com.miqian.mq.entity.OrderRecharge;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.PushDataResult;
@@ -47,7 +47,7 @@ import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.TransferDetailResult;
 import com.miqian.mq.entity.UpdateResult;
 import com.miqian.mq.entity.UserCurrentResult;
-import com.miqian.mq.entity.UserInfoResult;
+import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.entity.UserMessageResult;
 import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.UserRegularResult;
@@ -58,7 +58,6 @@ import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -206,7 +205,7 @@ public class HttpRequest {
     /**
      * 充值
      */
-    public static void rollIn(Context context, final ICallback<OrderRechargeResult> callback, String amt, String authCode, String captcha) {
+    public static void rollIn(Context context, final ICallback<MqResult<OrderRecharge>> callback, String amt, String authCode, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("amt", amt));
@@ -217,11 +216,12 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                OrderRechargeResult orderRechargeResult = JsonUtil.parseObject(result, OrderRechargeResult.class);
-                if (orderRechargeResult.getCode().equals("000000")) {
-                    callback.onSucceed(orderRechargeResult);
+                MqResult<OrderRecharge> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<OrderRecharge>>() {
+                });
+                if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(orderRechargeResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 
@@ -263,7 +263,7 @@ public class HttpRequest {
     /**
      * 获取用户信息
      */
-    public static void getUserInfo(final Context context, final ICallback<UserInfoResult> callback) {
+    public static void getUserInfo(final Context context, final ICallback<MqResult<UserInfo>> callback) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
 
@@ -271,12 +271,13 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                UserInfoResult userInfoResult = JsonUtil.parseObject(result, UserInfoResult.class);
-                if (userInfoResult.getCode().equals("000000")) {
-                    UserUtil.saveJxSave(context, userInfoResult.getData(), false);
-                    callback.onSucceed(userInfoResult);
+                MqResult<UserInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<UserInfo>>(){
+                });
+                if (meta.getCode().equals("000000")) {
+                    UserUtil.saveJxSave(context, meta.getData(), false);
+                    callback.onSucceed(meta);
                 } else {
-                    callback.onFail(userInfoResult.getMessage());
+                    callback.onFail(meta.getMessage());
                 }
             }
 

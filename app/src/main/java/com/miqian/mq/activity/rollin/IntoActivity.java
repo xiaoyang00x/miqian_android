@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
@@ -24,10 +25,9 @@ import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.OrderRecharge;
-import com.miqian.mq.entity.OrderRechargeResult;
 import com.miqian.mq.entity.UserInfo;
-import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -76,8 +76,9 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
                 showContentView();
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
                 if ("000000".equals(meta.getCode())) {
-                    UserInfoResult userInfoResult = JsonUtil.parseObject(result, UserInfoResult.class);
-                    userInfo = userInfoResult.getData();
+                    MqResult<UserInfo> userInfoMqResult = JsonUtil.parseObject(result, new TypeReference<MqResult<UserInfo>>(){
+                    });
+                    userInfo = userInfoMqResult.getData();
                     limitMoney = userInfo.getAmtPerLimit();
                     refreshView();
                 } else if ("999991".equals(meta.getCode())) {
@@ -200,11 +201,11 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         }
 
         begin();
-        HttpRequest.rollIn(mActivity, new ICallback<OrderRechargeResult>() {
+        HttpRequest.rollIn(mActivity, new ICallback<MqResult<OrderRecharge>>() {
             @Override
-            public void onSucceed(OrderRechargeResult orderRechargeResult) {
+            public void onSucceed(MqResult<OrderRecharge> result) {
                 end();
-                OrderRecharge orderRecharge = orderRechargeResult.getData();
+                OrderRecharge orderRecharge = result.getData();
                 jumpToResult(orderRecharge);
             }
 
