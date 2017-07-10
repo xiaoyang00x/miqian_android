@@ -58,7 +58,7 @@ public class Urls {
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
 
-    //    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
+//    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
     public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
 
     //线上
@@ -244,12 +244,12 @@ public class Urls {
     public final static String web_plan_law_earnings = getWebServer() + "Client/protocol/protocol-regPlanIT.html";
 
     //定期赚详情
-    public final static String web_regular_earn_detail = getWebServer() + "/Client/regProjectDetail.html";
+    public final static String web_regular_earn_detail = getServer() + "regular/getProjectDetail";
     //定期计划详情
-    public final static String web_regular_plan_detail = getWebServer() + "/Client/regPlanDetail.html";
+    public final static String web_regular_plan_detail = getServer() + "regular/getProductProjectRelations";
 
     //红包、拾财券使用规则(认购页面)
-    public final static String web_promote =  getWebServer() + "Client/preferServiceRegulations.html";
+    public final static String web_promote = getWebServer() + "Client/preferServiceRegulations.html";
 
     //银行限额说明
     public final static String web_support_bank = getWebServer() + "Client/limitDescription.html";

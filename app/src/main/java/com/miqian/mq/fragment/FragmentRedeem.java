@@ -133,7 +133,6 @@ public class FragmentRedeem extends BasicFragment {
     }
 
     private void obtainData() {
-        begin();
         pageNo = 1;
         begin();
         //取全部

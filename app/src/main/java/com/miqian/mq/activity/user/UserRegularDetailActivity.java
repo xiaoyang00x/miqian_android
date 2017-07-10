@@ -1,7 +1,6 @@
 package com.miqian.mq.activity.user;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -26,32 +25,67 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class UserRegularDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView textCapital;
-    private TextView textCapitalMoney;
-    private TextView textInterestRate;
+    @BindView(R.id.text_capital)
+    public TextView textCapital;
 
-    private TextView textLimit;
-    private TextView textDateStart;
-    private TextView textDateEnd;
+    @BindView(R.id.text_capital_money)
+    public TextView textCapitalMoney;
 
-    private RelativeLayout frameProjectMatch;//项目匹配
-    private TextView textProjectName;//项目名称
-    private TextView textRepayment;
+    @BindView(R.id.text_interest_rate)
+    public TextView textInterestRate;
 
-    private TextView textEarningType;
-    private TextView textEarning;
-    private TextView textTransferMoney;
+    @BindView(R.id.text_interest_rate_present)
+    public TextView textInterestRatePresent;
+
+    @BindView(R.id.text_limit)
+    public TextView textLimit;
+
+    @BindView(R.id.text_date_start)
+    public TextView textDateStart;
+
+    @BindView(R.id.text_date_end)
+    public TextView textDateEnd;
+
+    @BindView(R.id.text_project_name)
+    public TextView textProjectName;//项目名称
+
+    @BindView(R.id.text_project)
+    public TextView textProject;
+
+    @BindView(R.id.text_repayment)
+    public TextView textRepayment;
+
+    @BindView(R.id.text_earning_type)
+    public TextView textEarningType;
+
+    @BindView(R.id.frame_project_match)
+    public RelativeLayout frameProjectMatch;//项目匹配
+
+    @BindView(R.id.text_earning)
+    public TextView textEarning;
+
+    @BindView(R.id.tv_date_first)
+    public TextView tvDateFirst;
+
+    @BindView(R.id.tv_content_first)
+    public TextView tvContentFirst;
+
+    @BindView(R.id.linear_record)
+    public LinearLayout linearLayoutRecord;
+
+    @BindView(R.id.layout_first)
+    public LinearLayout layoutFirst;
+
+
     private String investId;//投资产品id
     private String clearYn;//Y:已结息  N:未结息
     private String subjectId;//标的id
-    private TextView textProject;
-    private TextView textInterestRatePresent;
-    private RegInvest regInvest;
     private List<Operation> operationList;
-    private TextView tvContentFirst;
-    private TextView tvDateFirst;
     //    private TextView tvTimeFirst;
     private boolean inProcess = false;
     private final Object mLock = new Object();
@@ -59,20 +93,8 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private LinearLayout linearLayoutRecord;
-    //    private View layoutPriginproject;
     private ImageView ivProjectState;
-    //    private View layoutTransferDetail;
-//    private TextView tvTransferedMoney;
-    private LinearLayout layoutFirst;
     private RegInvest reginvest;
-
-    @Override
-    public void onCreate(Bundle bundle) {
-        Intent intent = getIntent();
-        reginvest = (RegInvest) intent.getSerializableExtra("reginvest");
-        super.onCreate(bundle);
-    }
 
     @Override
     protected String getPageName() {
@@ -107,7 +129,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                     operationList = data.getOperation();
                     productRecord();
                     setData(data);
-                    refreshView();
                 }
             }
 
@@ -140,86 +161,67 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
     }
 
     public void initView() {
-        textCapital = (TextView) findViewById(R.id.text_capital);
-        textCapitalMoney = (TextView) findViewById(R.id.text_capital_money);
-        textInterestRate = (TextView) findViewById(R.id.text_interest_rate);
-        textInterestRatePresent = (TextView) findViewById(R.id.text_interest_rate_present);
-
-        textLimit = (TextView) findViewById(R.id.text_limit);
-        textDateStart = (TextView) findViewById(R.id.text_date_start);
-        textDateEnd = (TextView) findViewById(R.id.text_date_end);
-
-        textProjectName = (TextView) findViewById(R.id.text_project_name);
-        textProject = (TextView) findViewById(R.id.text_project);
-        frameProjectMatch = (RelativeLayout) findViewById(R.id.frame_project_match);
-        textRepayment = (TextView) findViewById(R.id.text_repayment);
-
-        textEarningType = (TextView) findViewById(R.id.text_earning_type);
-        textEarning = (TextView) findViewById(R.id.text_earning);
-        textTransferMoney = (TextView) findViewById(R.id.text_transfer_money);
-
-        tvDateFirst = (TextView) findViewById(R.id.tv_date_first);
-//        tvTimeFirst = (TextView) findViewById(R.id.tv_time_first);
-        tvContentFirst = (TextView) findViewById(R.id.tv_content_first);
-        linearLayoutRecord = (LinearLayout) findViewById(R.id.linear_record);
-        layoutFirst = (LinearLayout) findViewById(R.id.layout_first);
-
-        //购买转让的Ui
-//        layoutPriginproject = findViewById(R.id.layout_originproject);
-//        tvOriginproject = (TextView) findViewById(R.id.tv_originproject);
-//        tvOriginprojectName = (TextView) findViewById(R.id.tv_originproject_name);
-//        ivProjectState = (ImageView) findViewById(R.id.image_project_status);
-
-//        //转让记录
-//        layoutTransferDetail = findViewById(R.id.layout_transfer_detail);
-//        tvTransferedMoney = (TextView) findViewById(R.id.tv_transfered_money);
-
-
+        Intent intent = getIntent();
+        reginvest = (RegInvest) intent.getSerializableExtra("reginvest");
+        ButterKnife.bind(this);
         frameProjectMatch.setOnClickListener(this);
         findViewById(R.id.tv_referrecord).setOnClickListener(this);
-//        layoutPriginproject.setOnClickListener(this);
-//        layoutTransferDetail.setOnClickListener(this);
-
+        refreshView();
     }
 
     private void refreshView() {
-        if (reginvest!=null) {
-        textProjectName.setText(regInvest.getProductName());
-        textLimit.setText(regInvest.getProductTerm());
+        if (reginvest != null && reginvest.getProductName() != null) {
+            textProjectName.setText(reginvest.getProductName());
+        }
+        if (reginvest != null && reginvest.getProductTerm() != null) {
+            textLimit.setText(reginvest.getProductTerm());
+        }
+        if (reginvest != null && reginvest.getStartTime() != null) {
+            textDateStart.setText("认购日期:" + reginvest.getStartTime());
+        }
+        if (reginvest != null && reginvest.getEndTime() != null) {
+            textDateEnd.setText("结束日期:" + reginvest.getEndTime());
+        }
+        if (reginvest != null && reginvest.getRepayType() != null) {
+            textRepayment.setText(reginvest.getRepayType());
+        }
 
-
-        textDateStart.setText("认购日期:" + regInvest.getStartTime());
-        textDateEnd.setText("结束日期:" + regInvest.getEndTime());
-        textRepayment.setText(regInvest.getRepayType());
-
-        if (!"4".equals(regInvest.getStatus())) {
-            if ("2".equals(regInvest.getProductType()) || "98".equals(regInvest.getProductType())) {//定期计划和定期计划转让
+        if (reginvest != null) {
+            String status = reginvest.getStatus();
+            if (!"4".equals(status)) {
+                if ("2".equals(reginvest.getProductType()) || "98".equals(reginvest.getProductType())) {//定期计划和定期计划转让
+                    frameProjectMatch.setVisibility(View.VISIBLE);
+                    textProject.setText("项目匹配");
+                }
+            }
+            if ("2".equals(reginvest.getProductType()) || "98".equals(reginvest.getProductType())) {//定期赚和定期赚转让详情
                 frameProjectMatch.setVisibility(View.VISIBLE);
-                textProject.setText("项目匹配");
+                textProject.setText("项目详情");
+            }
+            String realInterest = reginvest.getProductRate();
+            String presentInterest = reginvest.getProductPlusRate();
+            String bidType = reginvest.getBidType();
+            if (Constants.BID_TYPE_SBB.equals(bidType)) {
+                if (!TextUtils.isEmpty(realInterest)) {
+                    textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
+                    textInterestRatePresent.setText("%");
+                }
+            } else if (Constants.BID_TYPE_SBSYK.equals(bidType)) {
+                if (!TextUtils.isEmpty(realInterest) && !TextUtils.isEmpty(presentInterest)) {
+                    float realprofit = Float.parseFloat(realInterest) * 2 + Float.parseFloat(presentInterest) * 2;
+                    textInterestRate.setText(realprofit + "");
+                    textInterestRatePresent.setText("%");
+                }
+
+
+            } else {
+                if (!TextUtils.isEmpty(realInterest) && !TextUtils.isEmpty(presentInterest)) {
+                    textInterestRate.setText(Float.parseFloat(realInterest) + "");
+                    textInterestRatePresent.setText("+" + presentInterest + "%");
+                }
             }
         }
-        if ("2".equals(regInvest.getProductType()) || "98".equals(regInvest.getProductType())) {//定期赚和定期赚转让详情
-            frameProjectMatch.setVisibility(View.VISIBLE);
-            textProject.setText("项目详情");
-        }
-        String realInterest = regInvest.getProductRate();
-        String presentInterest = regInvest.getProductPlusRate();
-        String bidType = regInvest.getBidType();
-        if (Constants.BID_TYPE_SBB.equals(bidType)) {
-            if (!TextUtils.isEmpty(realInterest)) {
-                textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
-                textInterestRatePresent.setText("%");
-            }
-        } else if (Constants.BID_TYPE_SBSYK.equals(bidType)) {
 
-            float realprofit = Float.parseFloat(realInterest) * 2 + Float.parseFloat(presentInterest) * 2;
-            textInterestRate.setText(realprofit + "");
-            textInterestRatePresent.setText("%");
-
-        } else {
-            textInterestRate.setText(Float.parseFloat(realInterest) + "");
-            textInterestRatePresent.setText("+" + presentInterest + "%");
-        }
 
 //        int showType = CalculateUtil.getShowInterest(regInvest.getProjectState(), regInvest.getSubjectType(), regInvest.getRealInterest()
 //                , regInvest.getPresentInterest(), regInvest.getTransedAmt());
@@ -266,7 +268,6 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
 //            default:
 //                break;
 //        }
-        }
     }
 
     private void productRecord() {
@@ -345,7 +346,7 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 if (reginvest == null) {
                     return;
                 }
-                if ("2".equals(regInvest.getProductType()) || "98".equals(regInvest.getProductType())) {//定期计划
+                if ("2".equals(reginvest.getProductType()) || "98".equals(reginvest.getProductType())) {//定期计划
                     HttpRequest.toRegularPlanDetail(mActivity, reginvest.getProductCode(), "");
                 } else {
                     HttpRequest.toRegularDetail(mActivity, reginvest.getProductCode(), "");
@@ -355,7 +356,9 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             case R.id.tv_referrecord:  //查看标的操作记录详情
 
                 Intent intent = new Intent(this, OperationRecordAcitivity.class);
-                intent.putExtra("investId", regInvest.getPurchaseSeqno());
+                if (reginvest != null) {
+                    intent.putExtra("investId", reginvest.getPurchaseSeqno());
+                }
                 startActivity(intent);
                 break;
 //
