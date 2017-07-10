@@ -6,10 +6,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,11 +20,11 @@
 
             <LinearLayout
                 android:id="@+id/frame_userinfo"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-               >
+                android:visibility="gone">
+
                 <RelativeLayout
                     android:id="@+id/frame_name"
                     style="@style/listItem"
@@ -49,8 +49,8 @@
                 <View
                     android:id="@+id/divider_name"
                     style="@style/item_divider"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
+
                 <RelativeLayout
                     android:id="@+id/frame_userhone"
                     style="@style/listItem">
@@ -65,8 +65,8 @@
                         android:id="@+id/tv_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/miqian_gray" />
                 </RelativeLayout>
 
@@ -74,6 +74,7 @@
                     android:id="@+id/divider_bank"
                     style="@style/item_divider"
                     android:visibility="gone" />
+
                 <RelativeLayout
                     android:id="@+id/frame_digitalcard"
                     style="@style/listItem">
@@ -159,14 +160,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="18dp"
-                            android:text="开启手势密码"
-                            android:textColor="@color/mq_b1"
-                            android:textSize="@dimen/mq_font2"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
-                            android:layout_marginStart="18dp" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="18dp"
+                            android:layout_marginStart="18dp"
+                            android:text="开启手势密码"
+                            android:textColor="@color/mq_b1"
+                            android:textSize="@dimen/mq_font2" />
 
                         <ImageView
                             android:id="@+id/iv_switch"
@@ -182,8 +183,8 @@
 
             <RelativeLayout
                 android:id="@+id/frame_setting_about"
-                android:layout_marginTop="10dp"
-                style="@style/listItem">
+                style="@style/listItem"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     style="@style/text_black_item"
@@ -247,7 +248,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/right" />
-
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -267,7 +267,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/right" />
-
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -285,21 +284,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:text="400-665-6191"
                     android:textColor="@color/mq_bl1_v2"
-                    android:textSize="@dimen/mq_font2"
-                    />
-
-
+                    android:textSize="@dimen/mq_font2" />
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/frame_setting_push_state"
-                style="@style/listItem"
-                >
+                style="@style/listItem">
 
                 <TextView
                     style="@style/text_black_item"
@@ -313,7 +307,18 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/gesture_swith_open" />
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/frame_host"
+                style="@style/listItem"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/edit_host"
+                    style="@style/text_black_item"
+                    android:layout_centerVertical="true"
+                    android:hint="输入服务器地址" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -325,13 +330,11 @@
 
                 <Button
                     android:id="@+id/btn_loginout"
-                    android:visibility="gone"
                     style="@style/click_btn"
                     android:onClick="btn_click"
                     android:text="退出登录"
-                    />
+                    android:visibility="gone" />
             </RelativeLayout>
-
 
         </LinearLayout>
     </ScrollView>

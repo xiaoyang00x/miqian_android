@@ -4,9 +4,9 @@ package com.miqian.mq.entity;
  * Created by Administrator on 2017/6/27.
  */
 
-public class BankCardInfoResult extends Meta{
+public class BankCardInfoResult extends Meta {
 
-    private    BankCardInfo  data;
+    private BankCardInfo data;
 
     public BankCardInfo getData() {
         return data;

@@ -11,11 +11,11 @@ import android.widget.EditText;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.setting.SetPasswordActivity;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.Redeem;
 import com.miqian.mq.entity.RedeemData;
 import com.miqian.mq.entity.UserCurrent;
 import com.miqian.mq.entity.UserInfo;
-import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.utils.ExtendOperationController;
@@ -99,9 +99,9 @@ public class ActivityRedeem extends BaseActivity {
             }
         }
         begin();
-        HttpRequest.getUserInfo(mActivity, new ICallback<UserInfoResult>() {
+        HttpRequest.getUserInfo(mActivity, new ICallback<MqResult<UserInfo>>() {
             @Override
-            public void onSucceed(UserInfoResult result) {
+            public void onSucceed(MqResult<UserInfo> result) {
                 end();
                 userInfo = result.getData();
             }

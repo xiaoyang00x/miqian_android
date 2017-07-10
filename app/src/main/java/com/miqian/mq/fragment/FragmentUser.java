@@ -29,8 +29,8 @@ import com.miqian.mq.activity.user.UserMqbActivity;
 import com.miqian.mq.activity.user.UserRecordActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.JpushInfo;
+import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.UserInfo;
-import com.miqian.mq.entity.UserInfoResult;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
@@ -176,9 +176,9 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (!swipeRefresh.isRefreshing() && userInfo == null) {
             begin();
         }
-        HttpRequest.getUserInfo(getActivity(), new ICallback<UserInfoResult>() {
+        HttpRequest.getUserInfo(getActivity(), new ICallback<MqResult<UserInfo>>() {
             @Override
-            public void onSucceed(UserInfoResult result) {
+            public void onSucceed(MqResult<UserInfo> result) {
                 swipeRefresh.setRefreshing(false);
                 end();
                 userInfo = result.getData();

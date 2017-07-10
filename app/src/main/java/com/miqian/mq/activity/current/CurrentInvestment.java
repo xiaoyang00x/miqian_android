@@ -99,7 +99,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     //    private String interestRateString; //年化收益和期限
     private int position = -1;//使用的红包位置，用于获取list
     private ProductBaseInfo productInfo;
-//    private PayOrder payOrder;
 
     private BigDecimal orderMoney;//订单金额
     private BigDecimal promoteMoney = BigDecimal.ZERO;//优惠金额： 红包、拾财券

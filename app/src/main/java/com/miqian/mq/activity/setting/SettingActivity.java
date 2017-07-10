@@ -6,10 +6,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +31,12 @@ import com.miqian.mq.fragment.FragmentUser;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Config;
 import com.miqian.mq.utils.ExtendOperationController;
+import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.MobileDeviceUtil;
 import com.miqian.mq.utils.MobileOS;
+import com.miqian.mq.utils.MyTextWatcher;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
@@ -43,6 +49,8 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.udesk.UdeskConst;
 import cn.udesk.UdeskSDKManager;
 
@@ -61,6 +69,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private View frameName;
     private ImageView ivSwitch;
     private DialogTipSave dialogTip;
+    @BindView(R.id.frame_host)
+    RelativeLayout frameHost;
+    @BindView(R.id.edit_host)
+    EditText editHost;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -76,7 +88,21 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initView() {
-
+        ButterKnife.bind(this);
+        if (Config.DEBUG) {
+            frameHost.setVisibility(View.VISIBLE);
+            editHost.addTextChangedListener(new MyTextWatcher() {
+                @Override
+                public void myAfterTextChanged(Editable s) {
+                    String temp = s.toString();
+                    if (temp.matches(FormatUtil.PATTERN_URL)) {
+                        Pref.saveString(Pref.SERVER_HOST, s.toString(), mActivity);
+                        return;
+                    }
+                }
+            });
+            editHost.setText(Pref.getString(Pref.SERVER_HOST, mActivity, ""));
+        }
         tvPhone = (TextView) findViewById(R.id.tv_phone);
         tvName = (TextView) findViewById(R.id.tv_name);
         btn_loginout = (Button) findViewById(R.id.btn_loginout);
@@ -112,6 +138,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         extendOperationController = ExtendOperationController.getInstance();
         setData();
     }
+
     private void setData() {
         if (UserUtil.hasLogin(mActivity)) {
             findViewById(R.id.frame_userinfo).setVisibility(View.VISIBLE);

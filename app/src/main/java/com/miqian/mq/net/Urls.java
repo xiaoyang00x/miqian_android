@@ -1,6 +1,10 @@
 package com.miqian.mq.net;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 import com.miqian.mq.utils.Config;
+import com.miqian.mq.utils.Pref;
 
 /**
  * Created by Administrator on 2015/9/4.
@@ -70,9 +74,10 @@ public class Urls {
      * Config.DEBUG = true 为测试环境
      * Config.DEBUG = flase 为线上环境
      */
-    private static String getServer() {
+    public static String getServer(Context mContext) {
         if (Config.DEBUG) {
-            return SERVER_TEST;
+            String host = Pref.getString(Pref.SERVER_HOST, mContext, "");
+            return TextUtils.isEmpty(host) ? SERVER_TEST : host;
         }
         return SERVER_ONLINE;
     }
@@ -99,121 +104,121 @@ public class Urls {
     }
 
     //身份认证
-    public final static String idcard_check = getServer() + "commonService/idCardAuth";
+    public final static String idcard_check = "commonService/idCardAuth";
     //充值预处理接口
-    public final static String roll_in_preprocess = getServer() + "trans/rechargePreprocess";
+    public final static String roll_in_preprocess = "trans/rechargePreprocess";
     //充值转入接口
-    public final static String roll_in = getServer() + "trans/recharge";//getServer() + "assetService/v2/recharge";
+    public final static String roll_in =  "trans/recharge";// "assetService/v2/recharge";
     //充值转入结果查询接口
-    public final static String rollin_result = getServer() + "trans/rechargeTransfer";//public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
+    public final static String rollin_result =  "trans/rechargeTransfer";//public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
     //充值失败错误原因上传接口
-    public final static String rollin_error = getServer() + "assetService/rechargeFailureLianLian";
+    public final static String rollin_error =  "assetService/rechargeFailureLianLian";
     //活期首页
-    public final static String current_home = getServer() + "newCurrent/queryNewCurrentForApp";
+    public final static String current_home =  "newCurrent/queryNewCurrentForApp";
     //活期首页
-    public final static String current_detail = getServer() + "newCurrent/queryNewCurrentDetail";
+    public final static String current_detail =  "newCurrent/queryNewCurrentDetail";
     //认购预处理
-    public final static String order_produced = getServer() + "trans/subscribePreprocess";//assetService/subscribePreprocess
+    public final static String order_produced =  "trans/subscribePreprocess";//assetService/subscribePreprocess
     //认购
-    public final static String subscribe_order = getServer() + "trans/subscribe";//"assetService/subscribe";
+    public final static String subscribe_order =  "trans/subscribe";//"assetService/subscribe";
     //获取用户信息
-    public final static String user_info = getServer() + "user/getUserInfo";// /userService/getUserInfo
+    public final static String user_info =  "user/getUserInfo";// /userService/getUserInfo
 
     //获取APP配置：广告、tab
-    public final static String app_config = getServer() + "commonService/getAdverts";
+    public final static String app_config =  "commonService/getAdverts";
 
     //获取验证码
-    public final static String getCaptcha = getServer() + "captcha/getCaptcha";  /// commonService/getCaptcha
+    public final static String getCaptcha =  "captcha/getCaptcha";  /// commonService/getCaptcha
     //登录
-    public final static String login = getServer() + "user/login";// userService/login
+    public final static String login =  "user/login";// userService/login
     //注册
-    public final static String register = getServer() + "user/register";  // userService/register
+    public final static String register =  "user/register";  // userService/register
     //个人消息列表
-    public final static String getMessageList = getServer() + "pushService/getMessageList";
+    public final static String getMessageList =  "pushService/getMessageList";
     //系统公告列表
-    public final static String getPushList = getServer() + "pushService/getPushList";
+    public final static String getPushList =  "pushService/getPushList";
     //系统消息详情
-    public final static String getPushDetail = getServer() + "pushService/v2/getPushDetail";
+    public final static String getPushDetail =  "pushService/v2/getPushDetail";
     //个人消息详情
-    public final static String getMessageDetail = getServer() + "pushService/v2/getMessageDetail";
+    public final static String getMessageDetail =  "pushService/v2/getMessageDetail";
     //设置消息已读
-    public final static String setMessageReaded = getServer() + "pushService/setMessageReaded";
+    public final static String setMessageReaded =  "pushService/setMessageReaded";
     //删除消息
-    public final static String deleteMessage = getServer() + "pushService/deleteMessage";
+    public final static String deleteMessage =  "pushService/deleteMessage";
     //设置交易密码
-    public final static String changePayPassword = getServer() + "userService/changePayPassword";
+    public final static String changePayPassword =  "userService/changePayPassword";
     //修改交易密码
-    public final static String setPayPassword = getServer() + "userService/setPayPassword";
+    public final static String setPayPassword =  "userService/setPayPassword";
     //修改登录密码
-    public final static String changePassword = getServer() + "user/changePassword";//user/changePassword
+    public final static String changePassword =  "user/changePassword";//user/changePassword
     //找回登录密码
-    public final static String getPassword = getServer() + "user/getPassword";///userService/getPassword
+    public final static String getPassword =  "user/getPassword";///userService/getPassword
     //检验验证码
-    public final static String checkCaptcha = getServer() + "captcha/checkCaptcha";//commonService/checkCaptcha
+    public final static String checkCaptcha =  "captcha/checkCaptcha";//commonService/checkCaptcha
     //获取用户的银行卡
-    public final static String getUserBankCard = getServer() + "userService/getUserBankCard";
+    public final static String getUserBankCard =  "userService/getUserBankCard";
     //自动识别银行卡
-    public final static String autoIdentifyBankCard = getServer() + "assetService/autoIdentifyBankCard";
+    public final static String autoIdentifyBankCard =  "assetService/autoIdentifyBankCard";
     //绑定银行卡
-    public final static String bindBank = getServer() + "bank/custBindBankBranch";//  commonService/bindBank
+    public final static String bindBank =  "bank/custBindBankBranch";//  commonService/bindBank
     //获取城市接口
-    public final static String getAllCity = getServer() + "areaData/getCityByProv";// commonService/getAllCity
+    public final static String getAllCity =  "areaData/getCityByProv";// commonService/getAllCity
     //获取支行
-    public final static String getSubBranch = getServer() + "bank/getBranch";//commonService/getSubBranch
+    public final static String getSubBranch =  "bank/getBranch";//commonService/getSubBranch
     //登出
-    public final static String loginOut = getServer() + "user/logout";//userService/logout
+    public final static String loginOut =  "user/logout";//userService/logout
     //提现
-    public final static String withdrawCash = getServer() + "assetService/withdrawCash";
+    public final static String withdrawCash =  "assetService/withdrawCash";
     //我的活期
-    public final static String user_current = getServer() + "userService/getMyCurrent";
+    public final static String user_current =  "userService/getMyCurrent";
     //我的秒钱宝
-    public final static String user_mqb = getServer() + "mine/newCurrent";
+    public final static String user_mqb =  "mine/newCurrent";
     //我的定期
-    public final static String user_regular = getServer() + "mine/getMyRegBuyList";  ///userRegService/v2/getMyRegBuyList
+    public final static String user_regular =  "mine/getMyRegBuyList";  ///userRegService/v2/getMyRegBuyList
     //我的定期详情
-    public final static String user_regular_detail = getServer() + "mine/getRegDetail";
+    public final static String user_regular_detail =  "mine/getRegDetail";
     //项目匹配
-    public final static String project_match = getServer() + "webView/getProjMatchList/";
+    public final static String project_match =  "webView/getProjMatchList/";
     //我的定期转让情况
-    public final static String regular_transfer_detail = getServer() + "commonService/getRegTrans";
+    public final static String regular_transfer_detail =  "commonService/getRegTrans";
     //还款详情
-    public final static String repayment_detail = getServer() + "commonService/getRepaymentList";
+    public final static String repayment_detail =  "commonService/getRepaymentList";
 
     //定期首页
-    public final static String REGULA_PROJECT = getServer() + "regular/queryRegularListForApp";
+    public final static String REGULA_PROJECT =  "regular/queryRegularListForApp";
     //定期首页
-    public final static String REGULA_DETAILS = getServer() + "regular/queryRegularDetail";
+    public final static String REGULA_DETAILS =  "regular/queryRegularDetail";
     //定期转让首页
-    public final static String REGULA_PROJECT_TRANSFER = getServer() + "transferService/regularList";
+    public final static String REGULA_PROJECT_TRANSFER =  "transferService/regularList";
 
     //红包定期列表
-    public final static String getFitSubject = getServer() + "subjectService/getFitSubject";
+    public final static String getFitSubject =  "subjectService/getFitSubject";
 
     //home
-    public final static String homeInfo = getServer() + "home/getAppHome";
+    public final static String homeInfo =  "home/getAppHome";
     //records of capital
-    public final static String recordsCapital = getServer() + "mine/getFundFlow";// userService/getAssetRecord
+    public final static String recordsCapital =  "mine/getFundFlow";// userService/getAssetRecord
 
     //我的促销接口
-    public final static String getCustPromotion = getServer() + "promotion/getCustPromotion";//"userService/getCustPromotion";
+    public final static String getCustPromotion =  "promotion/getCustPromotion";//"userService/getCustPromotion";
     //赎回
-    public final static String redeem = getServer() + "assetService/redeem";
+    public final static String redeem =  "assetService/redeem";
     //我的活期资金记录
-    public final static String getMyCurrentRecord = getServer() + "userService/getMyCurrentRecord";
+    public final static String getMyCurrentRecord =  "userService/getMyCurrentRecord";
     //修改绑定手机
-    public final static String changePhone = getServer() + "userService/changePhone";
+    public final static String changePhone =  "userService/changePhone";
     //提现预处理
-    public final static String withdrawPreprocess = getServer() + "assetService/withdrawPreprocess";
+    public final static String withdrawPreprocess =  "assetService/withdrawPreprocess";
     //版本更新
-    public final static String forceUpdate = getServer() + "commonService/v2/forceUpdate";
+    public final static String forceUpdate =  "commonService/v2/forceUpdate";
     //查询标的相关记录
-    public final static String findInvestInfo = getServer() + "mine/getRegRepayRecord";//userRegService/v2/findInvestInfo
+    public final static String findInvestInfo =  "mine/getRegRepayRecord";//userRegService/v2/findInvestInfo
     //查询标的相关记录
-    public final static String getRegTransDetail = getServer() + "userRegService/v2/getRegTransDetail";
+    public final static String getRegTransDetail =  "userRegService/v2/getRegTransDetail";
     //我的转让详情
-    public final static String getRegTransFerredDetail = getServer() + "userRegService/v2/getRegTransFerredDetail";
+    public final static String getRegTransFerredDetail =  "userRegService/v2/getRegTransFerredDetail";
     //发起转让
-    public final static String launchTransfer = getServer() + "assetService/transfer";
+    public final static String launchTransfer =  "assetService/transfer";
 
     /**
      * 网页的URL
@@ -242,31 +247,25 @@ public class Urls {
     public final static String web_plan_law_claims = getWebServer() + "Client/protocol/protocol-regPlanCT.html";
     //定期计划收益权转让合同:
     public final static String web_plan_law_earnings = getWebServer() + "Client/protocol/protocol-regPlanIT.html";
-
     //定期赚详情
-    public final static String web_regular_earn_detail = getServer() + "regular/getProjectDetail";
+    public final static String web_regular_earn_detail = "regular/getProjectDetail";
     //定期计划详情
-    public final static String web_regular_plan_detail = getServer() + "regular/getProductProjectRelations";
+    public final static String web_regular_plan_detail = "regular/getProductProjectRelations";
 
     //红包、拾财券使用规则(认购页面)
     public final static String web_promote = getWebServer() + "Client/preferServiceRegulations.html";
-
     //银行限额说明
     public final static String web_support_bank = getWebServer() + "Client/limitDescription.html";
-
-    //活期详情
-    public final static String web_current = getServer() + "webView/currentDetail";
+    //线下转账充值
+    public final static String web_into_offline = getWebServer() + "Client/offlineRecharge.html";
     //帮助中心
     public final static String web_help = getWebServer() + "Client/help.html";
-
     //管理团队
     public final static String web_aboutus_team = getWebServer() + "Client/manageTeam.html";
     //合作伙伴
     public final static String web_aboutus_cooperation = getWebServer() + "Client/cooperationPartner.html";
     //关于秒钱
     public final static String web_aboutus_introduce = getWebServer() + "Client/aboutMiaoqian.html";
-    //战略团队
-    public final static String web_aboutus_zhanlue = getWebServer() + "webView/currentDetail";
     //发展历程
     public final static String web_aboutus_development = getWebServer() + "Client/progress.html";
 
@@ -274,34 +273,30 @@ public class Urls {
      * 小坛的接口start
      */
     //提现初始化
-    public final static String withdrawinit_jx = getServer() + "trans/withdrawInit";
+    public final static String withdrawinit_jx =  "trans/withdrawInit";
     //提现预处理
-    public final static String withdrawPreprocess_jx = getServer() + "trans/withdrawPreprocess";
+    public final static String withdrawPreprocess_jx =  "trans/withdrawPreprocess";
 
     /**
      * 小坛的接口end
      */
     //首页运营活动
-    public final static String get_home_activity = getServer() + "home/getAppHomeActivity";
-    public final static String get_activity_feedback = getServer() + "home/getActivityFeedback";
+    public final static String get_home_activity =  "home/getAppHomeActivity";
+    public final static String get_activity_feedback =  "home/getActivityFeedback";
 
     //我的邀请
-    public final static String web_my_invite = getServer() + "activityService/inviteMain";
-
-    //线下转账充值
-    public final static String web_into_offline = getWebServer() + "Client/offlineRecharge.html";
+    public final static String web_my_invite =  "activityService/inviteMain";
 
     //江西银行跳转接口
-    public final static String jx_rollin_url = getServer() + "trans/rechargeForJump";
-    public final static String jx_password_url = getServer() + "user/setPayPasswordForJump";//设置交易密码
-    public final static String jx_auto_claims_url = getServer() + "signProtocol/autoClaimsTransferForJump";//自动债权转让
-    public final static String jx_auto_subscribe_url = getServer() + "signProtocol/autoSubscribeForJump";//自动投标
-    public final static String jx_auto_withdraw_url = getServer() + "trans/withdrawForJump";//提现
+    public final static String jx_password_url =  "user/setPayPasswordForJump";//设置交易密码
+    public final static String jx_auto_claims_url =  "signProtocol/autoClaimsTransferForJump";//自动债权转让
+    public final static String jx_auto_subscribe_url =  "signProtocol/autoSubscribeForJump";//自动投标
+    public final static String jx_auto_withdraw_url =  "trans/withdrawForJump";//提现
 
     //江西银行开通存管
-    public final static String jx_open = getServer() + "user/openAccount";
+    public final static String jx_open =  "user/openAccount";
     //江西银行存管状态
-    public final static String jx_open_preprocess = getServer() + "user/openAccountPreprocess";
+    public final static String jx_open_preprocess =  "user/openAccountPreprocess";
 
-    public final static String jx_custbankcardinfo = getServer() + "bank/custBankCardInfo";
+    public final static String jx_custbankcardinfo =  "bank/custBankCardInfo";
 }

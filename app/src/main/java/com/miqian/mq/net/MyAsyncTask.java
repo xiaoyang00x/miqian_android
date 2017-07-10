@@ -34,7 +34,7 @@ public class MyAsyncTask extends MultiVersionAsyncTask<Void, Void, String> {
     public MyAsyncTask(Context context, String url, List<Param> list, ICallback<String> callback) {
         this.mContext = context;
         this.callback = callback;
-        this.mUrl = url;
+        this.mUrl = Urls.getServer(context) + url;
         this.mList = list;
     }
 
