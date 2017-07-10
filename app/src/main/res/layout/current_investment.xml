@@ -57,7 +57,7 @@
 
                     <TextView
                         android:id="@+id/text_project_info"
-                        style="@style/f7_B4_V2"
+                        style="@style/f7_B1_V2"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="15dp"
                         android:text="年化收益：" />

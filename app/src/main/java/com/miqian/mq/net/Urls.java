@@ -248,11 +248,8 @@ public class Urls {
     //定期计划详情
     public final static String web_regular_plan_detail = getWebServer() + "/Client/regPlanDetail.html";
 
-//    //提现说明
-//    public final static String web_rollout = "https://res.shicaidai.com/miaoqian/webView/presentDescription.html";
     //红包、拾财券使用规则(认购页面)
-    public final static String web_promote = "https://res.shicaidai.com/miaoqian/webView/preferServiceRegulations.html";
-
+    public final static String web_promote =  getWebServer() + "Client/preferServiceRegulations.html";
 
     //银行限额说明
     public final static String web_support_bank = getWebServer() + "Client/limitDescription.html";
@@ -261,13 +258,6 @@ public class Urls {
     public final static String web_current = getServer() + "webView/currentDetail";
     //帮助中心
     public final static String web_help = getWebServer() + "Client/help.html";
-//    //每日计息
-//    public final static String web_current_earning = "https://res.shicaidai.com/miaoqian/current/meirijixi.html";
-//    //本息保障
-//    public final static String web_current_safe = "https://res.shicaidai.com/miaoqian/current/benxibaozhang.html";
-//    //活存活取
-//    public final static String web_current_back = "https://res.shicaidai.com/miaoqian/current/huocunhuoqu.html";
-
 
     //管理团队
     public final static String web_aboutus_team = getWebServer() + "Client/manageTeam.html";

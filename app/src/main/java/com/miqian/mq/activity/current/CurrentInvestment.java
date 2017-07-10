@@ -1,5 +1,6 @@
 package com.miqian.mq.activity.current;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.CurrentDetailActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.entity.MqResult;
@@ -121,7 +123,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         productInfo = JsonUtil.parseObject(intent.getStringExtra("productInfo"), ProductBaseInfo.class);
         productType = productInfo.getProductType();
         productCode = productInfo.getProductCode();
-        productType = Constants.PRODUCT_TYPE_REGULAR_PROJECT;
+        productType = Constants.PRODUCT_TYPE_REGULART_PLAN;
         productCode = "MQBXSB11707051748001";
         productCode = "DQJHPTB1707032039001";
 //        interestRateString = intent.getStringExtra("interestRateString");
@@ -165,6 +167,13 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 Uihelper.showToast(mActivity, error);
             }
         }, money, productCode);
+    }
+
+    public static void startActivity(Context context, String money, ProductBaseInfo productInfo) {
+        Intent intent = new Intent(context, CurrentInvestment.class);
+        intent.putExtra("money", money);
+        intent.putExtra("productInfo", JSON.toJSONString(productInfo));
+        context.startActivity(intent);
     }
 
     private void showTips(boolean flag, MqResult<ProducedOrder> result) {
@@ -252,7 +261,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         });
 
         textOrderMoney.setText(FormatUtil.formatAmount(orderMoney));
-        textProjectType.setText(productInfo.getProductName());
         frameRedPackage.setOnClickListener(this);
 
         if (Constants.PRODUCT_TYPE_MQB == productType) {
@@ -262,20 +270,23 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             btLaw1.setText("《秒钱宝服务协议》、");
             btLaw2.setText("《秒钱宝债权转让合同》、");
             btLaw3.setText("《秒钱宝收益转让合同》");
+            textProjectType.setText(productInfo.getProductName());
             textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "%");
         } else {
             frameExpect.setVisibility(View.VISIBLE);
             frameRedPackage.setVisibility(View.VISIBLE);
             if (Constants.PRODUCT_TYPE_REGULAR_PROJECT == productType) {
-                btLaw1.setText("《定期计划服务协议》、");
+                textProjectType.setText("定期项目");
+                btLaw1.setText("《定期项目服务协议》、");
                 btLaw2.setText("《定期项目债权转让合同》、");
                 btLaw3.setText("《定期项目收益转让合同》");
             } else {
+                textProjectType.setText("定期计划");
                 btLaw1.setText("《定期计划服务协议》、");
                 btLaw2.setText("《定期计划债权转让合同》、");
                 btLaw3.setText("《定期计划收益转让合同》");
             }
-            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "% 期限 " + productInfo.getProductTerm());
+            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "%  期限 " + productInfo.getProductTerm());
         }
 
         btPay.setOnClickListener(this);

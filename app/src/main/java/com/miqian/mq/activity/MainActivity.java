@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.MyApplication;
 import com.miqian.mq.R;
-import com.miqian.mq.activity.save.SaveAcitvity;
+import com.miqian.mq.activity.save.SaveBindAcitvity;
 import com.miqian.mq.activity.user.MyTicketActivity;
 import com.miqian.mq.database.MyDataBaseHelper;
 import com.miqian.mq.entity.JpushInfo;
@@ -746,7 +746,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
         DialogJxSave dialogJxSave = new DialogJxSave(this) {
             @Override
             public void positionBtnClick() {
-                startActivity(new Intent(MainActivity.this, SaveAcitvity.class));
+                startActivity(new Intent(MainActivity.this, SaveBindAcitvity.class));
             }
         };
         dialogJxSave.show();

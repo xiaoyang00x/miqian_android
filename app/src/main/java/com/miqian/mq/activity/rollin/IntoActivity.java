@@ -128,7 +128,10 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 String temp = s.toString().replaceAll(",", "");
-                if (TextUtils.isEmpty(temp) || temp.matches(FormatUtil.PATTERN_MONEY)) {
+                if (TextUtils.isEmpty(temp)) {
+                    return;
+                }
+                if (temp.matches(FormatUtil.PATTERN_MONEY)) {
                     showTip2(temp);
                     return;
                 }

@@ -186,9 +186,8 @@ public class RegisterActivity extends Activity {
                             if (Pref.getBoolean(Pref.GESTURESTATE, RegisterActivity.this, true)) {
                                 GestureLockSetActivity.startActivity(RegisterActivity.this, SaveAcitvity.class);
                             } else {
-                                startActivity(new Intent(RegisterActivity.this, SaveAcitvity.class));
+                                SaveAcitvity.startActivity(RegisterActivity.this);
                             }
-                            ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.LOGIN_SUCCESS, null);
                             finish();
                         }
 
