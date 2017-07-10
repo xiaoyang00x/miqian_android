@@ -251,8 +251,6 @@ public class HttpRequest {
                 } else {
                     callback.onFail(meta.getMessage());
                 }
-//                OrderLianResult orderLianResult = JsonUtil.parseObject(result, OrderLianResult.class);
-//                callback.onSucceed(orderLianResult);
             }
 
             @Override
