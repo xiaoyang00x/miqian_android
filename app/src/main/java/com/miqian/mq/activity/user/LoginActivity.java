@@ -162,7 +162,6 @@ public class LoginActivity extends Activity {
                 if (UserUtil.isBeforeNotSave(userInfo)) {
                     ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.JX_SAVE, null);
                 } else {
-                    UserUtil.loginSuccess();
                     if (mLoginListener!=null){
                         mLoginListener.loginSuccess();
                     }
