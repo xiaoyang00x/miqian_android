@@ -104,8 +104,6 @@ public class Urls {
         return RSA_PRIVATE_ONLINE;
     }
 
-    //身份认证
-    public final static String idcard_check = "commonService/idCardAuth";
     //充值预处理接口
     public final static String roll_in_preprocess = "trans/rechargePreprocess";
     //充值转入接口
@@ -146,10 +144,6 @@ public class Urls {
     public final static String setMessageReaded =  "pushService/setMessageReaded";
     //删除消息
     public final static String deleteMessage =  "pushService/deleteMessage";
-    //设置交易密码
-    public final static String changePayPassword =  "userService/changePayPassword";
-    //修改交易密码
-    public final static String setPayPassword =  "userService/setPayPassword";
     //修改登录密码
     public final static String changePassword =  "user/changePassword";//user/changePassword
     //找回登录密码

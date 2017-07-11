@@ -166,7 +166,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void refreshView() {
-        textTip1.setText("温馨提示：单笔限额" + userInfo.getAmtPerLimit() + "万， 单日限额" + userInfo.getAmtDayLimit() + "万。若充值金额超过限额您可以选择\"转账充值\"。");
+        textTip1.setText("温馨提示：单笔限额" + userInfo.getAmtPerLimit() + "元， 单日限额" + userInfo.getAmtDayLimit() + "元。若充值金额超过限额您可以选择\"转账充值\"。");
         btRollin.setEnabled(true);
         bindBankNumber.setText(RSAUtils.decryptByPrivate(userInfo.getBankNo()));
         textMobile.setText(userInfo.getMobile());
@@ -296,7 +296,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
         BigDecimal tempMoney = new BigDecimal(temp);
         if (tempMoney.compareTo(limitMoney) > 0) {
             textTip2.setVisibility(View.VISIBLE);
-            textTip2.setText("已超过快捷充值限额" + userInfo.getAmtPerLimit() + "万元， 建议使用转账充值");
+            textTip2.setText("已超过快捷充值限额" + userInfo.getAmtPerLimit() + "元， 建议使用转账充值");
             btRollin.setEnabled(false);
         } else {
             textTip2.setVisibility(View.GONE);

@@ -8,10 +8,8 @@ import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.WebBankActivity;
 import com.miqian.mq.encrypt.RSAUtils;
-import com.miqian.mq.entity.AutoIdentyCardResult;
 import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.BankCardInfoResult;
-import com.miqian.mq.entity.BankCardResult;
 import com.miqian.mq.entity.CapitalRecordResult;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.CityInfoResult;
@@ -34,14 +32,11 @@ import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
-import com.miqian.mq.entity.RegTransDetailResult;
-import com.miqian.mq.entity.RegTransFerredDetailResult;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularDetailsInfo;
 import com.miqian.mq.entity.RegularProjectList;
 import com.miqian.mq.entity.RegularTransferListResult;
 import com.miqian.mq.entity.RepaymentResult;
-import com.miqian.mq.entity.RollOutResult;
 import com.miqian.mq.entity.SaveInfo;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.entity.TransferDetailResult;
@@ -53,7 +48,6 @@ import com.miqian.mq.entity.UserRegularDetailResult;
 import com.miqian.mq.entity.UserRegularResult;
 import com.miqian.mq.entity.WithDrawInitReSult;
 import com.miqian.mq.entity.WithDrawPrepressResult;
-import com.miqian.mq.entity.WithDrawResult;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.UserUtil;
@@ -65,34 +59,6 @@ import java.util.List;
  * Created by Jackie on 2015/9/4.
  */
 public class HttpRequest {
-
-    /**
-     * 身份认证
-     */
-    public static void setIDCardCheck(Context context, final ICallback<Meta> callback, String idNo, final String realName) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("idNo", RSAUtils.encryptURLEncode(idNo)));
-        mList.add(new Param("realName", RSAUtils.encryptURLEncode(realName)));
-
-        new MyAsyncTask(context, Urls.idcard_check, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
 
     /**
      * APP的配置：广告，tab图标
@@ -539,65 +505,6 @@ public class HttpRequest {
         mList.add(new Param("isAll", isAll + ""));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         new MyAsyncTask(context, Urls.deleteMessage, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    //设置交易密码
-    public static void setPayPassword(Context context, final ICallback<Meta> callback,
-                                      String payPassword, String confirmPayPassword) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
-        mList.add(new Param("confirmPayPassword", RSAUtils.encryptURLEncode(confirmPayPassword)));
-
-        new MyAsyncTask(context, Urls.setPayPassword, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    //修改交易密码
-    public static void changePayPassword(Context context, final ICallback<Meta> callback,
-                                         String tradeType, String idCard, String mobilePhone, String captcha, String payPassword,
-                                         String confirmPayPassword) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("tradeType", tradeType));
-        mList.add(new Param("idCard", RSAUtils.encryptURLEncode(idCard)));
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
-        mList.add(new Param("captcha", captcha));
-        mList.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
-        mList.add(new Param("confirmPayPassword", RSAUtils.encryptURLEncode(confirmPayPassword)));
-
-        new MyAsyncTask(context, Urls.changePayPassword, mList, new ICallback<String>() {
 
             @Override
             public void onSucceed(String result) {
