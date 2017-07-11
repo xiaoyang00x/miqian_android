@@ -649,7 +649,7 @@ public class HttpRequest {
     public static void getPassword(Context context, final ICallback<Meta> callback,
                                    String mobilePhone, String newPassword, String confirmPassword, String captcha) {
         List<Param> mList = new ArrayList<>();
-        mList.add(new Param("mobilePhone", RSAUtils.encryptURLEncode(mobilePhone)));
+        mList.add(new Param("mobile", RSAUtils.encryptURLEncode(mobilePhone)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
         mList.add(new Param("captcha", captcha));
