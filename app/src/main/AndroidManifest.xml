@@ -274,10 +274,6 @@
             android:name=".activity.user.UserDigitalCardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.user.MyRegularTransferDetailActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".receiver.HomeDialogReceiver"
