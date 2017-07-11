@@ -2,8 +2,13 @@ package com.miqian.mq.activity.current;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -121,9 +126,9 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         productInfo = JsonUtil.parseObject(intent.getStringExtra("productInfo"), ProductBaseInfo.class);
         productType = productInfo.getProductType();
         productCode = productInfo.getProductCode();
-        productType = Constants.PRODUCT_TYPE_REGULART_PLAN;
-        productCode = "MQBXSB11707051748001";
-        productCode = "DQJHPTB1707032039001";
+//        productType = Constants.PRODUCT_TYPE_REGULART_PLAN;
+//        productCode = "MQBXSB11707051748001";
+//        productCode = "DQJHPTB1707032039001";
 //        interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
     }
@@ -269,7 +274,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
             btLaw2.setText("《秒钱宝债权转让合同》、");
             btLaw3.setText("《秒钱宝收益转让合同》");
             textProjectType.setText(productInfo.getProductName());
-            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "%");
+            SpannableString spannableString = new SpannableString(productInfo.getProductRate() + "%");
+            spannableString.setSpan(new TextAppearanceSpan(this, R.style.F7_R1_V2), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textProjectInfo.setText("");
+            textProjectInfo.append("年化收益 ");
+            textProjectInfo.append(spannableString);
         } else {
             frameExpect.setVisibility(View.VISIBLE);
             frameRedPackage.setVisibility(View.VISIBLE);
@@ -284,7 +293,15 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                 btLaw2.setText("《定期计划债权转让合同》、");
                 btLaw3.setText("《定期计划收益转让合同》");
             }
-            textProjectInfo.setText("年化收益 " + productInfo.getProductRate() + "%  期限 " + productInfo.getProductTerm());
+            SpannableString spannableString = new SpannableString(productInfo.getProductRate() + "%");
+            spannableString.setSpan(new TextAppearanceSpan(this, R.style.F7_R1_V2), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textProjectInfo.setText("");
+            textProjectInfo.append("年化收益 ");
+            textProjectInfo.append(spannableString);
+            textProjectInfo.append(" 期限 ");
+            SpannableString spannableString2 = new SpannableString(productInfo.getProductTerm() + "天");
+            spannableString2.setSpan(new TextAppearanceSpan(this, R.style.F7_R1_V2), 0, spannableString2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textProjectInfo.append(spannableString2);
         }
 
         btPay.setOnClickListener(this);
