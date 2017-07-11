@@ -182,7 +182,7 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                 Uihelper.showToast(mActivity, "提现金额大于可提现金额，请重新输入");
                 return;
             }
-            if (inputmoney.compareTo(new BigDecimal(50000)) < 0) {//小额提现
+            if (inputmoney.compareTo(new BigDecimal(50000))<=0) {//小额提现  等于5万也是小额
                 if ((inputmoney.compareTo(amtMinLimit)) < 0) {
                     Uihelper.showToast(mActivity, "小于最小提现金额，请重新输入");
                 }
