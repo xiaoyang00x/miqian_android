@@ -1503,23 +1503,6 @@ public class HttpRequest {
 
 
 //江西银行跳转接口
-
-//    /**
-//     * 江西银行充值接口
-//     */
-//    public static void rollinJx(final Activity activity, String amt, String bankNo, String captcha, String authCode) {
-//        ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId", "125145556"));
-////        params.add(new Param("hfCustId", RSAUtils.encryptURLEncode(hfCustId)));
-//        params.add(new Param("amt", amt));
-//        params.add(new Param("bankNo", bankNo));
-//        params.add(new Param("captcha", captcha));
-//        params.add(new Param("authCode", authCode));
-//        params.add(new Param("cType", "android"));
-//        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, 1);
-////        WebBankActivity.startActivity(activity, Urls.jx_rollin_url, params, HfUpdateActivity.REQUEST_CODE_ROLLIN);
-//    }
-
     /**
      * 江西银行设置交易密码
      */
@@ -1552,8 +1535,7 @@ public class HttpRequest {
      */
     public static void autoWithdraw(final Activity activity,String amt) {
         ArrayList params = new ArrayList<>();
-//        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
-        params.add(new Param("custId", "000000000020170628104802478704"));
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         params.add(new Param("cType", "android"));
         params.add(new Param("amt", amt));
         WebBankActivity.startActivity(activity, Urls.jx_auto_withdraw_url, params, 1);
