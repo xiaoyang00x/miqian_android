@@ -1,5 +1,6 @@
 package com.miqian.mq.activity.save;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -81,9 +82,9 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    public static void startActivity(Context context) {
-        Intent intent = new Intent(context, SaveAcitvity.class);
-        context.startActivity(intent);
+    public static void startActivity(Activity activity) {
+        Intent intent = new Intent(activity, SaveAcitvity.class);
+        activity.startActivity(intent);
     }
 
     @Override

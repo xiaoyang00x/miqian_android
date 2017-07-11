@@ -250,19 +250,19 @@ public class UserUtil {
      * @param money       认购金额
      * @param productInfo 标的信息
      */
-    public static void subscribeOrder(final Context context, final String money, final ProductBaseInfo productInfo) {
-        if (UserUtil.isFinishSave(context)) {
-            CurrentInvestment.startActivity(context, money, productInfo);
+    public static void subscribeOrder(final Activity activity, final String money, final ProductBaseInfo productInfo) {
+        if (UserUtil.isFinishSave(activity)) {
+            CurrentInvestment.startActivity(activity, money, productInfo);
         } else {
-            HttpRequest.openJxPreprocess(context, new ICallback<MqResult<SaveInfo>>() {
+            HttpRequest.openJxPreprocess(activity, new ICallback<MqResult<SaveInfo>>() {
                 @Override
                 public void onSucceed(MqResult<SaveInfo> result) {
                     SaveInfo saveInfo = result.getData();
                     if (saveInfo != null && "1".equals(saveInfo.getJxAccountStatus()) && "1".equals(saveInfo.getJxPayPwdStatus()) && "1".equals(saveInfo.getJxAutoClaimsTransferStatus()) && "1".equals(saveInfo.getJxAutoSubscribeStatus())) {
-                        Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
-                        CurrentInvestment.startActivity(context, money, productInfo);
+                        Pref.saveInt(getPrefKey(activity, Pref.IS_SAVE_FINISH), 1, activity);
+                        CurrentInvestment.startActivity(activity, money, productInfo);
                     } else {
-                        SaveAcitvity.startActivity(context);
+                        SaveAcitvity.startActivity(activity);
                     }
                 }
 
