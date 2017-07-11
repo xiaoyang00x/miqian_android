@@ -30,6 +30,7 @@ import com.miqian.mq.entity.ShareData;
 import com.miqian.mq.listener.JsShareListener;
 import com.miqian.mq.listener.ListenerManager;
 import com.miqian.mq.listener.LoginListener;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Base64;
 import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
@@ -60,6 +61,9 @@ public class WebActivity extends BaseActivity implements LoginListener, JsShareL
     protected boolean isRefresh;       //是否支持下拉刷新
 
     public static void startActivity(Context context, String url) {
+        if (!url.startsWith("http")) {
+            url = Urls.getServer(context) + url;
+        }
         context.startActivity(getIntent(context, url));
     }
 

@@ -110,8 +110,6 @@ public class Urls {
     public final static String roll_in =  "trans/recharge";// "assetService/v2/recharge";
     //充值转入结果查询接口
     public final static String rollin_result =  "trans/rechargeTransfer";//public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
-    //充值失败错误原因上传接口
-    public final static String rollin_error =  "assetService/rechargeFailureLianLian";
     //活期首页
     public final static String current_home =  "newCurrent/queryNewCurrentForApp";
     //活期首页
