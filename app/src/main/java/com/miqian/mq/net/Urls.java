@@ -208,18 +208,11 @@ public class Urls {
     public final static String getMyCurrentRecord =  "userService/getMyCurrentRecord";
     //修改绑定手机
     public final static String changePhone =  "userService/changePhone";
-    //提现预处理
-    public final static String withdrawPreprocess =  "assetService/withdrawPreprocess";
-    //版本更新
     public final static String forceUpdate =  "commonService/v2/forceUpdate";
     //查询标的相关记录
     public final static String findInvestInfo =  "mine/getRegRepayRecord";//userRegService/v2/findInvestInfo
     //查询标的相关记录
     public final static String getRegTransDetail =  "userRegService/v2/getRegTransDetail";
-    //我的转让详情
-    public final static String getRegTransFerredDetail =  "userRegService/v2/getRegTransFerredDetail";
-    //发起转让
-    public final static String launchTransfer =  "assetService/transfer";
 
     /**
      * 网页的URL

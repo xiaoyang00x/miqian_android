@@ -1164,8 +1164,6 @@ public class HttpRequest {
     /**
      * 我的定期详情
      *
-     * @param investId 投资产品id
-     * @param clearYn  默认为N  N：计息中  Y：已结息
      */
     public static void getUserRegularDetail(Context context, final ICallback<UserRegularDetailResult> callback, String purchaseSeqno) {
         List<Param> mList = new ArrayList<>();
@@ -1273,66 +1271,6 @@ public class HttpRequest {
                 MqResult<SubscribeOrder> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<SubscribeOrder>>(){
                 });
                 callback.onSucceed(meta);
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-    /**
-     * 我的定期赚转让详情
-     */
-    public static void getRegTransFerredDetail(Context context, String investId, final ICallback<RegTransFerredDetailResult> callback) {
-        ArrayList params = new ArrayList<>();
-        String custId = Pref.getString(Pref.USERID, context, null);
-        if (!TextUtils.isEmpty(custId)) {
-            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
-        }
-        params.add(new Param("investId", investId));
-        new MyAsyncTask(context, Urls.getRegTransFerredDetail, params, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                RegTransFerredDetailResult meta = JsonUtil.parseObject(result, RegTransFerredDetailResult.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-
-    /**
-     * 发起转让详情
-     */
-    public static void getRegTransDetail(Context context, String investId, String clearYn, final ICallback<RegTransDetailResult> callback) {
-        ArrayList params = new ArrayList<>();
-        String custId = Pref.getString(Pref.USERID, context, null);
-        if (!TextUtils.isEmpty(custId)) {
-            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
-        }
-        params.add(new Param("investId", investId));
-        params.add(new Param("clearYn", clearYn));
-        new MyAsyncTask(context, Urls.getRegTransDetail, params, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                RegTransDetailResult meta = JsonUtil.parseObject(result, RegTransDetailResult.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
             }
 
             @Override
@@ -1451,33 +1389,6 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-
-    //赎回预处理
-    public static void withdrawPreprocess(Context context, final ICallback<WithDrawResult> callback, String amt) {
-        List<Param> mList = new ArrayList<>();
-        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        mList.add(new Param("amt", amt));
-
-        new MyAsyncTask(context, Urls.withdrawPreprocess, mList, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                WithDrawResult drawResult = JsonUtil.parseObject(result, WithDrawResult.class);
-                if (drawResult.getCode().equals("000000")) {
-                    callback.onSucceed(drawResult);
-                } else {
-                    callback.onFail(drawResult.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
-
-
     /**
      * 获取首页运营活动列表
      */
@@ -1562,36 +1473,6 @@ public class HttpRequest {
         }).executeOnExecutor();
     }
 
-    /**
-     * 发起转让
-     */
-    public static void launchTransfer(Context context, String amt, String payPassword, String transferList, final ICallback<Meta> callback) {
-        ArrayList params = new ArrayList<>();
-        String custId = Pref.getString(Pref.USERID, context, null);
-        if (!TextUtils.isEmpty(custId)) {
-            params.add(new Param("custId", RSAUtils.encryptURLEncode(custId)));
-        }
-        params.add(new Param("amt", amt));
-        params.add(new Param("payPassword", RSAUtils.encryptURLEncode(payPassword)));
-        params.add(new Param("transferList", transferList));
-        new MyAsyncTask(context, Urls.launchTransfer, params, new ICallback<String>() {
-
-            @Override
-            public void onSucceed(String result) {
-                Meta meta = JsonUtil.parseObject(result, Meta.class);
-                if (meta.getCode().equals("000000")) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
-            }
-
-            @Override
-            public void onFail(String error) {
-                callback.onFail(error);
-            }
-        }).executeOnExecutor();
-    }
 
     /**
      * 版本是否强制更新(正常更新为友盟更新)
