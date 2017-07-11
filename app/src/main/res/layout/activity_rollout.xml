@@ -247,20 +247,22 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_tip1"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="15dp"
-                android:text="1.普通提现：支持单笔5万(含5万)以下资金提现，实时到账。"
                 android:textColor="@color/mq_b4_v2"
                 android:textSize="@dimen/mq_font3_v2"></TextView>
 
             <TextView
+                android:id="@+id/tv_tip2"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
-                android:text="2.大额提现：支持单笔5万以上资金提现。可以大额提现时间"
                 android:textColor="@color/mq_b4_v2"
                 android:textSize="@dimen/mq_font3_v2"></TextView>
 

@@ -18,6 +18,15 @@ public class WithDrawInit {
     private int dayRemain;  //今日剩余提现次数
     private BigDecimal amt;  //可提现金额
     private BigDecimal amtMinLimit;  //最小提现金额
+    private BigDecimal amtMaxLimit;  //大额提现分界值
+
+    public BigDecimal getAmtMaxLimit() {
+        return amtMaxLimit;
+    }
+
+    public void setAmtMaxLimit(BigDecimal amtMaxLimit) {
+        this.amtMaxLimit = amtMaxLimit;
+    }
 
     public BigDecimal getAmtMinLimit() {
         return amtMinLimit;

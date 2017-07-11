@@ -67,6 +67,10 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
     @BindView(R.id.btn_openbank)
     Button btnOpenBank;
 
+    @BindView(R.id.tv_tip1)
+    TextView tvTip1;
+    @BindView(R.id.tv_tip2)
+    TextView tvTip2;
 
     public String inputAmt;
     private int monthRemain;
@@ -77,6 +81,7 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
     private DialogTipSave feeDialog;
     private DialogTipSave openBankDialog;
     private BigDecimal amtMinLimit;
+    private BigDecimal amtMaxLimit;
     private ExtendOperationController operationController;
 
     @Override
@@ -91,6 +96,7 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                 if (initData != null) {
                     amt = initData.getAmt();
                     amtMinLimit = initData.getAmtMinLimit();
+                    amtMaxLimit = initData.getAmtMaxLimit();
                     setdata(initData);
                 }
             }
@@ -118,6 +124,10 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
         if (!TextUtils.isEmpty(bankNo)) {
             tvCardNum.setText("尾号" + bankNo.substring(bankNo.length() - 4, bankNo.length()));
         }
+        tvTip1.setVisibility(View.VISIBLE);
+        tvTip2.setVisibility(View.VISIBLE);
+        tvTip1.setText("1.普通提现：支持单笔" + amtMaxLimit + "(含" + amtMaxLimit + ")以下资金提现，实时到账。");
+        tvTip2.setText("2.大额提现：支持单笔" + amtMaxLimit + "以上资金提现。可以大额提现时间");
 
     }
 
@@ -182,7 +192,7 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                 Uihelper.showToast(mActivity, "提现金额大于可提现金额，请重新输入");
                 return;
             }
-            if (inputmoney.compareTo(new BigDecimal(50000))<=0) {//小额提现  等于5万也是小额
+            if (inputmoney.compareTo(new BigDecimal(50000)) <= 0) {//小额提现  等于5万也是小额
                 if ((inputmoney.compareTo(amtMinLimit)) < 0) {
                     Uihelper.showToast(mActivity, "小于最小提现金额，请重新输入");
                 }
