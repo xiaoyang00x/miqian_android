@@ -116,7 +116,7 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
 
     private void refreshView() {
         textTip.setText(saveInfo.getWarmthTips());
-        if (null != saveInfo.getUserName() && null != saveInfo.getCustId()) {
+        if (!TextUtils.isEmpty(saveInfo.getUserName()) && !TextUtils.isEmpty(saveInfo.getIdCard())) {
             editName.setText(saveInfo.getUserName());
             editIdcard.setText(saveInfo.getIdCard());
             editName.setEnabled(false);

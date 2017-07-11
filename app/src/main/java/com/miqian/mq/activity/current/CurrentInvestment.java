@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.CurrentDetailActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.rollin.IntoActivity;
 import com.miqian.mq.entity.MqResult;
