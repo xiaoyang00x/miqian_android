@@ -288,16 +288,16 @@ public class Urls {
     //我的邀请
     public final static String web_my_invite =  "activityService/inviteMain";
 
-    //江西银行跳转接口
-    public final static String jx_password_url =  "user/setPayPasswordForJump";//设置交易密码
-    public final static String jx_auto_claims_url =  "signProtocol/autoClaimsTransferForJump";//自动债权转让
-    public final static String jx_auto_subscribe_url =  "signProtocol/autoSubscribeForJump";//自动投标
-    public final static String jx_auto_withdraw_url =  "trans/withdrawForJump";//提现
-
     //江西银行开通存管
     public final static String jx_open =  "user/openAccount";
     //江西银行存管状态
     public final static String jx_open_preprocess =  "user/openAccountPreprocess";
 
     public final static String jx_custbankcardinfo =  "bank/custBankCardInfo";
+
+    //江西银行跳转接口Web URL
+    public final static String jx_password_url =  "user/setPayPasswordForJump";//设置交易密码
+    public final static String jx_auto_claims_url =  "signProtocol/autoClaimsTransferForJump";//自动债权转让
+    public final static String jx_auto_subscribe_url =  "signProtocol/autoSubscribeForJump";//自动投标
+    public final static String jx_auto_withdraw_url =  "trans/withdrawForJump";//提现
 }

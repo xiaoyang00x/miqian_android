@@ -19,6 +19,7 @@ import com.miqian.mq.R;
 import com.miqian.mq.entity.Title;
 import com.miqian.mq.net.HttpUtils;
 import com.miqian.mq.net.Param;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ChannelUtil;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
@@ -43,12 +44,8 @@ public class WebBankActivity extends WebActivity {
 
     private int state;
 
-    public static void startActivity(Activity activity, String url, ArrayList<String> list) {
-        activity.startActivity(getIntent(activity, url, list));
-    }
-
     public static void startActivity(Activity activity, String url, ArrayList<String> list, int type) {
-        activity.startActivityForResult(getIntent(activity, url, list), type);
+        activity.startActivityForResult(getIntent(activity, Urls.getServer(activity) + url, list), type);
     }
 
     private static Intent getIntent(Context context, String url, ArrayList<String> list) {
