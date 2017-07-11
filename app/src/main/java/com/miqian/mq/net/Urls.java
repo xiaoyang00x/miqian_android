@@ -156,10 +156,6 @@ public class Urls {
     public final static String getPassword =  "user/getPassword";///userService/getPassword
     //检验验证码
     public final static String checkCaptcha =  "captcha/checkCaptcha";//commonService/checkCaptcha
-    //获取用户的银行卡
-    public final static String getUserBankCard =  "userService/getUserBankCard";
-    //自动识别银行卡
-    public final static String autoIdentifyBankCard =  "assetService/autoIdentifyBankCard";
     //绑定银行卡
     public final static String bindBank =  "bank/custBindBankBranch";//  commonService/bindBank
     //获取城市接口
@@ -168,8 +164,6 @@ public class Urls {
     public final static String getSubBranch =  "bank/getBranch";//commonService/getSubBranch
     //登出
     public final static String loginOut =  "user/logout";//userService/logout
-    //提现
-    public final static String withdrawCash =  "assetService/withdrawCash";
     //我的活期
     public final static String user_current =  "userService/getMyCurrent";
     //我的秒钱宝
@@ -206,8 +200,6 @@ public class Urls {
     public final static String redeem =  "assetService/redeem";
     //我的活期资金记录
     public final static String getMyCurrentRecord =  "userService/getMyCurrentRecord";
-    //修改绑定手机
-    public final static String changePhone =  "userService/changePhone";
     public final static String forceUpdate =  "commonService/v2/forceUpdate";
     //查询标的相关记录
     public final static String findInvestInfo =  "mine/getRegRepayRecord";//userRegService/v2/findInvestInfo
