@@ -176,7 +176,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (!swipeRefresh.isRefreshing() && userInfo == null) {
             begin();
         }
-        HttpRequest.getUserInfo(getActivity(), new ICallback<MqResult<UserInfo>>() {
+        HttpRequest.getUserInfo(mContext, new ICallback<MqResult<UserInfo>>() {
             @Override
             public void onSucceed(MqResult<UserInfo> result) {
                 swipeRefresh.setRefreshing(false);
@@ -189,7 +189,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     userInfoTemp.setUserName(userInfo.getUserName());
                     setData(userInfo);
                 } else {
-                    Uihelper.showToast(getActivity(), result.getMessage());
+                    Uihelper.showToast(mContext, result.getMessage());
                 }
             }
 
@@ -199,7 +199,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                 end();
 
                 setData(null);
-                Uihelper.showToast(getActivity(), error);
+                Uihelper.showToast(mContext, error);
             }
         });
 
@@ -230,10 +230,10 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         //红包优惠券
         if (userInfo != null) {
             int count = userInfo.getTotalPromotion();
-            boolean isHasQQImage = Pref.getBoolean(UserUtil.getPrefKey(getActivity(), Pref.HAS_QQ), getActivity(), false);
+            boolean isHasQQImage = Pref.getBoolean(UserUtil.getPrefKey(mContext, Pref.HAS_QQ), mContext, false);
             if (isQQproject && (isHasQQImage || count == 5)) {
                 ivQQ.setVisibility(View.VISIBLE);
-                Pref.saveBoolean(UserUtil.getPrefKey(getActivity(), Pref.HAS_QQ), true, getActivity());
+                Pref.saveBoolean(UserUtil.getPrefKey(mContext, Pref.HAS_QQ), true, mContext);
             }
             tv_Ticket.setText(count + "张");
         } else {
@@ -328,17 +328,17 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
     @OnClick(R.id.bt_login)//登录
     public void loGin() {
-        LoginActivity.start(getActivity());
+        LoginActivity.start(mActivity);
 
     }
 
     @OnClick(R.id.bt_right)//设置
     public void setting() {
-        if (UserUtil.hasLogin(getActivity())) {
+        if (UserUtil.hasLogin(mContext)) {
             refresh = false;
         }
-        MobclickAgent.onEvent(getActivity(), "1016");
-        Intent intent_setting = new Intent(getActivity(), SettingActivity.class);
+        MobclickAgent.onEvent(mContext, "1016");
+        Intent intent_setting = new Intent(mContext, SettingActivity.class);
         Bundle extra = new Bundle();
         extra.putSerializable("userInfo", userInfoTemp);
         intent_setting.putExtras(extra);
@@ -350,21 +350,35 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (userInfo == null) {
             return;
         }
-        if (UserUtil.isFinishSave(getActivity())) {
-            MobclickAgent.onEvent(getActivity(), "1017");
-            startActivity(new Intent(getActivity(), IntoModeAcitvity.class));
+        if (UserUtil.isFinishSave(mContext)) {
+            MobclickAgent.onEvent(mContext, "1017");
+            startActivity(new Intent(mActivity, IntoModeAcitvity.class));
         } else {
-            SaveAcitvity.startActivity(getActivity());
+            SaveAcitvity.startActivity(mActivity);
         }
     }
 
     @OnClick(R.id.bt_rollout)
-    public void rollOut() {//取现
-        Intent intent = new Intent(getActivity(), RolloutActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("userInfo", userInfoTemp);
-        intent.putExtras(bundle);
-        startActivity(intent);
+    public void rollOut() {
+        if (userInfo == null) {
+            return;
+        }
+        if (UserUtil.isFinishSave(mContext)) {
+            String balance = userInfo.getBalance();
+            if (!TextUtils.isEmpty(balance)) {
+                BigDecimal bdBalance = new BigDecimal(balance);
+                if (bdBalance != null && bdBalance.compareTo(BigDecimal.ZERO) > 0) {
+                    //取现
+                    startActivity(new Intent(mActivity, RolloutActivity.class));
+                } else {
+                    Uihelper.showToast(mContext, "可用余额为0,无法提现");
+                }
+            }
+        } else {
+            SaveAcitvity.startActivity(mActivity);
+        }
+
+
     }
 
     @Override
@@ -372,14 +386,18 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         switch (v.getId()) {
             //我的活期
             case R.id.frame_account_current:
-                MobclickAgent.onEvent(getActivity(), "1019");
-                startActivity(new Intent(getActivity(), ActivityUserCurrent.class));
+                if (UserUtil.hasLogin(mContext)) {
+                    MobclickAgent.onEvent(mContext, "1019");
+                    startActivity(new Intent(mContext, ActivityUserCurrent.class));
+                } else {
+                    LoginActivity.start(mActivity);
+                }
                 break;
             //我的定期
             case R.id.frame_regular:
                 if (UserUtil.hasLogin(mContext)) {
-                    MobclickAgent.onEvent(getActivity(), "1020");
-                    startActivity(new Intent(getActivity(), UserRegularActivity.class));
+                    MobclickAgent.onEvent(mContext, "1020");
+                    startActivity(new Intent(mContext, UserRegularActivity.class));
                 } else {
                     LoginActivity.start(mActivity);
                 }
@@ -387,8 +405,8 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             //资金记录
             case R.id.frame_record:
                 if (UserUtil.hasLogin(mContext)) {
-                    MobclickAgent.onEvent(getActivity(), "1021");
-                    startActivity(new Intent(getActivity(), UserRecordActivity.class));
+                    MobclickAgent.onEvent(mContext, "1021");
+                    startActivity(new Intent(mContext, UserRecordActivity.class));
                 } else {
                     LoginActivity.start(mActivity);
                 }
@@ -398,16 +416,16 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             case R.id.frame_ticket:
                 if (UserUtil.hasLogin(mContext)) {
                     refresh = false;
-                    MobclickAgent.onEvent(getActivity(), "1022");
-                    startActivity(new Intent(getActivity(), MyTicketActivity.class));
+                    MobclickAgent.onEvent(mContext, "1022");
+                    startActivity(new Intent(mContext, MyTicketActivity.class));
                 } else {
                     LoginActivity.start(mActivity);
                 }
                 break;
             //我的消息
             case R.id.bt_left:
-                MobclickAgent.onEvent(getActivity(), "1015");
-                startActivity(new Intent(getActivity(), AnnounceActivity.class));
+                MobclickAgent.onEvent(mContext, "1015");
+                startActivity(new Intent(mContext, AnnounceActivity.class));
                 hasMessage = false;
                 if (!isQQproject) {
                     btn_message.setImageResource(R.drawable.btn_message);
@@ -426,7 +444,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
             case R.id.frame_account_miaoqianbao:
                 if (UserUtil.hasLogin(mContext)) {
                     refresh = false;
-                    startActivity(new Intent(getActivity(), UserMqbActivity.class));
+                    startActivity(new Intent(mContext, UserMqbActivity.class));
                 } else {
                     LoginActivity.start(mActivity);
                 }
@@ -449,7 +467,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         if (MyApplication.getInstance().isShowTips()) {
             MyApplication.getInstance().setShowTips(false);
             if (dialogTips == null) {
-                dialogTips = new DialogTip(getActivity()) {
+                dialogTips = new DialogTip(mActivity) {
                 };
             }
             if (jpushInfo != null) {
@@ -466,7 +484,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
         switch (operationKey) {
             case ExtendOperationController.OperationKey.RERESH_JPUSH:
                 // 更新数据
-                if (UserUtil.hasLogin(getActivity())) {
+                if (UserUtil.hasLogin(mContext)) {
                     hasMessage = true;
                     if (!isQQproject) {
                         btn_message.setImageResource(R.drawable.bt_hasmessage);
