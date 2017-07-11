@@ -22,7 +22,6 @@ import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
-import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 
 /**
@@ -158,16 +157,17 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void checkCaptcha(final String phone, final String captcha) {
-
+        begin();
         HttpRequest.checkCaptcha(mActivity, new ICallback<Meta>() {
             @Override
             public void onSucceed(Meta result) {
+                end();
                 summit(phone, captcha);
             }
 
             @Override
             public void onFail(String error) {
-
+                end();
                 Uihelper.showToast(mActivity, error);
 
             }
@@ -176,10 +176,10 @@ public class SendCaptchaActivity extends BaseActivity {
 
     private void summit(final String phone, final String captcha) {
 
-        if (type==TypeUtil.CAPTCHA_TRADE_PW){
+        if (type == TypeUtil.CAPTCHA_TRADE_PW) {
             //跳转江西银行网页
 
-        }else {
+        } else {
             Intent intent = new Intent(mActivity, SetPasswordActivity.class);
             intent.putExtra("captcha", captcha);
             intent.putExtra("phone", phone);
