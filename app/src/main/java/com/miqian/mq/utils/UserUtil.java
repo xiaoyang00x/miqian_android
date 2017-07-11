@@ -97,7 +97,6 @@ public class UserUtil {
         Pref.saveString(Pref.USERID, RSAUtils.decryptByPrivate(userInfo.getCustId()), context);
         Pref.saveString(Pref.TELEPHONE, RSAUtils.decryptByPrivate(userInfo.getMobile()), context);
         Pref.saveString(Pref.REAL_NAME, RSAUtils.decryptByPrivate(userInfo.getUserName()), context);
-        Pref.saveInt(getPrefKey(context, Pref.PAY_STATUS), Integer.parseInt(userInfo.getJxPayPwdStatus()), context);
         Pref.saveString(Pref.CUSTLEVEL, userInfo.getCustLevel(), context);
 
         //设置GrowingIO用户信息

@@ -37,9 +37,6 @@ public class Pref {
     public static final String CURRENT_RATE = "CurrentRate";
     public static final String CURRENT_STATE = "CurrentState";
 
-    //用户信息
-    public static final String PAY_STATUS = "PayStatus";
-
     // 是否退出应用
     public static final String EXIT = "Exit";
 //	// app是否在后台
