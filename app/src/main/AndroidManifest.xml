@@ -105,7 +105,7 @@
 
         <activity
             android:name=".activity.RegularDetailActivity"
-            android:configChanges="orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 

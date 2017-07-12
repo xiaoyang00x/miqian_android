@@ -1,45 +1,31 @@
 package com.miqian.mq.activity.current;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.text.style.AbsoluteSizeSpan;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
-import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.rollin.IntoResultActivity;
-import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CaptchaResult;
-import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.MqResult;
-import com.miqian.mq.entity.OrderRecharge;
+import com.miqian.mq.entity.NewCurrentFoundFlow;
 import com.miqian.mq.entity.RedeemMqbInfo;
 import com.miqian.mq.entity.RedeemResultInfo;
-import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
-import com.miqian.mq.net.Urls;
-import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.TypeUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
-
-import java.math.BigDecimal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +58,7 @@ public class ActivityRedeemMqb extends BaseActivity {
 
     private RedeemMqbInfo redeemMqbInfo;
 
+    private NewCurrentFoundFlow.InvestInfo investInfo;
     private String transSeqNo;
 
     private MyRunnable myRunnable;
@@ -99,10 +86,28 @@ public class ActivityRedeemMqb extends BaseActivity {
         });
     }
 
+    public static void startActivity(Context context, NewCurrentFoundFlow.InvestInfo info) {
+        Intent intent = new Intent(context, ActivityRedeemMqb.class);
+        intent.putExtra("InvestInfo", JSON.toJSONString(info));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
     @Override
     public void initView() {
         ButterKnife.bind(this);
         Intent intent = getIntent();
+        String s = intent.getStringExtra("InvestInfo");
+        investInfo = JsonUtil.parseObject(s, new TypeReference<NewCurrentFoundFlow.InvestInfo>(){});
+        investInfo = JsonUtil.parseObject(s, NewCurrentFoundFlow.InvestInfo.class);
+
+        if (investInfo != null) {
+            textName.setText(investInfo.getProductName());
+            textTime.setText("认购时间： " + Uihelper.timestampToDateStr_other(investInfo.getStartTime()));
+            textMoney.setText(investInfo.getPurchaseAmount());
+            textInterestRate.setText(investInfo.getProductRate());
+            transSeqNo = investInfo.getPurchaseSeqno();
+        }
 //        rollType = intent.getIntExtra("rollType", 0);
 //        SpannableString ss = new SpannableString("请输入金额");//定义hint的值
 //        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(16, true);//设置字体大小 true表示单位是sp
