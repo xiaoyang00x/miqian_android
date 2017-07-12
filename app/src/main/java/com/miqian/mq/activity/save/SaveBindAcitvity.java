@@ -227,6 +227,12 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
         if (!isMobile()) {
             return;
         }
+        int captcha;
+        if ("1".equals(saveInfo.getJxAccountStatus()) && "0".equals(saveInfo.getBindCardStatus())) {
+            captcha = TypeUtil.CAPTCHA_BIND_CAR;
+        } else {
+            captcha = TypeUtil.CAPTCHA_OPENACCOUNT;
+        }
         begin();
         HttpRequest.getCaptcha(this, new ICallback<CaptchaResult>() {
             @Override
@@ -246,7 +252,7 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, editMobile.getText().toString(), TypeUtil.CAPTCHA_OPENACCOUNT);
+        }, editMobile.getText().toString(), captcha);
 
     }
 
