@@ -16,6 +16,7 @@ import com.miqian.mq.entity.Page;
 import com.miqian.mq.entity.Reg;
 import com.miqian.mq.entity.RegInvest;
 import com.miqian.mq.utils.Constants;
+import com.miqian.mq.utils.Uihelper;
 
 import java.util.List;
 
@@ -111,15 +112,14 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                     ((ViewHolder) holder).textInterestRatePresent.setText("%");
                     ((ViewHolder) holder).imageProjectStatus.setBackgroundResource(R.drawable.double_rate_normal);
                 }
-            }else if(Constants.BID_TYPE_SBSYK.equals(bidType)){
+            } else if (Constants.BID_TYPE_SBSYK.equals(bidType)) {
 
                 float realprofit = Float.parseFloat(realInterest) * 2 + Float.parseFloat(presentInterest) * 2;
                 ((ViewHolder) holder).textInterestRate.setText(realprofit + "");
                 ((ViewHolder) holder).textInterestRatePresent.setText("%");
                 ((ViewHolder) holder).imageProjectStatus.setBackgroundResource(R.drawable.double_card_normal);
 
-            }
-            else {
+            } else {
                 ((ViewHolder) holder).textInterestRate.setText(Float.parseFloat(realInterest) + "");
                 ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
             }
@@ -170,8 +170,8 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
 //                    break;
 //            }
 
-            ((ViewHolder) holder).textDateSubscribe.setText(regInvest.getStartTime() + "认购");
-            ((ViewHolder) holder).textDateOver.setText(regInvest.getEndTime() + "到期");
+            ((ViewHolder) holder).textDateSubscribe.setText(Uihelper.timestampToDateStr_other(regInvest.getStartTime()) + "认购");
+            ((ViewHolder) holder).textDateOver.setText(Uihelper.timestampToDateStr_other(regInvest.getEndTime()) + "到期");
             String status = regInvest.getStatus();
             if ("03".endsWith(status)) {//计息中
                 ((ViewHolder) holder).ivProcessing.setImageDrawable(mContext.getResources().getDrawable(R.drawable.processing));
@@ -190,7 +190,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             }
         } else if (holder instanceof HeaderViewHolder) {
 
-            ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getTotalPage() + "");
+            ((HeaderViewHolder) holder).textRegularCount.setText(mPage.getTotalRecord() + "");
             if (isExpiry.equals("Y")) {
                 ((HeaderViewHolder) holder).textCapitalName.setText("投资本金(元)");
                 ((HeaderViewHolder) holder).textEarningName.setText("已获收益(元)");

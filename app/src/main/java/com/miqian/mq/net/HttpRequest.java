@@ -25,6 +25,7 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.MqListResult;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.NewCurrentFoundFlow;
+import com.miqian.mq.entity.NewCurrentFundFlow;
 import com.miqian.mq.entity.OperationResult;
 import com.miqian.mq.entity.OrderRecharge;
 import com.miqian.mq.entity.ProducedOrder;
@@ -1039,6 +1040,37 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 CapitalRecordResult capitalRecord = JsonUtil.parseObject(result, CapitalRecordResult.class);
+                if (capitalRecord.getCode().equals("000000")) {
+                    callback.onSucceed(capitalRecord);
+                } else {
+                    callback.onFail(capitalRecord.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+
+    /**
+     * 我的秒钱宝交易记录
+     *
+     * @param operateType 20 认购 40 赎回
+     */
+    public static void newCurrentFundFlow(Context context, final ICallback<MqResult<NewCurrentFundFlow>> callback, String pageNo, String operateType) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("pageNo", pageNo));
+        mList.add(new Param("operateType", operateType));
+
+        new MyAsyncTask(context, Urls.newCurrentFundFlow, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                MqResult<NewCurrentFundFlow> capitalRecord = JsonUtil.parseObject(result, new TypeReference<MqResult<NewCurrentFundFlow>>(){});
                 if (capitalRecord.getCode().equals("000000")) {
                     callback.onSucceed(capitalRecord);
                 } else {
