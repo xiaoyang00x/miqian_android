@@ -95,7 +95,7 @@ public class NewCurrentFoundFlow {
         this.pageInfo = pageInfo;
     }
 
-    public class InvestInfo {
+    public static class InvestInfo {
 
         /**
          * 秒钱宝在投本金
