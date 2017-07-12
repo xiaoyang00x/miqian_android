@@ -101,7 +101,6 @@ public class ActivityRedeemMqb extends BaseActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         String s = intent.getStringExtra("InvestInfo");
-        investInfo = JsonUtil.parseObject(s, new TypeReference<NewCurrentFoundFlow.InvestInfo>(){});
         investInfo = JsonUtil.parseObject(s, NewCurrentFoundFlow.InvestInfo.class);
 
         if (investInfo != null) {
