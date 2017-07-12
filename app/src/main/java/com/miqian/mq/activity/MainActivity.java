@@ -45,6 +45,7 @@ import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.MobileOS;
 import com.miqian.mq.utils.Pref;
+import com.miqian.mq.utils.StatusBarUtil;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.CustomDialog;
@@ -128,6 +129,7 @@ public class MainActivity extends BaseFragmentActivity implements ExtendOperatio
             // 设置一个颜色给系统栏
             tintManager.setStatusBarTintResource(R.color.base_background);
         }
+        StatusBarUtil.StatusBarLightMode(this);
     }
 
     @Override

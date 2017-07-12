@@ -21,6 +21,7 @@ import com.miqian.mq.net.HttpUtils;
 import com.miqian.mq.net.Param;
 import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.ChannelUtil;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.LogUtil;
 import com.miqian.mq.utils.MobileOS;
@@ -229,6 +230,11 @@ public class WebBankActivity extends WebActivity {
         }
         state = 1;
         goBack();
+    }
+
+    @JavascriptInterface
+    public void withdrawCallBack() {//提现返回处理  现提现只有成功  返回我的
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
     }
 
     @Override
