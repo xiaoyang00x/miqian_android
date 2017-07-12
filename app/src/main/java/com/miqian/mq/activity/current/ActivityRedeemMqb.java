@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.TextAppearanceSpan;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -106,6 +109,11 @@ public class ActivityRedeemMqb extends BaseActivity {
             textTime.setText("认购时间： " + Uihelper.timestampToDateStr_other(investInfo.getStartTime()));
             textMoney.setText(investInfo.getPurchaseAmount());
             textInterestRate.setText(investInfo.getProductRate());
+            SpannableString spannableString = new SpannableString("%");
+            spannableString.setSpan(new TextAppearanceSpan(this, R.style.f3_R1_V2), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textInterestRate.append(spannableString);
+
+
             transSeqNo = investInfo.getPurchaseSeqno();
         }
 //        rollType = intent.getIntExtra("rollType", 0);
@@ -221,7 +229,7 @@ public class ActivityRedeemMqb extends BaseActivity {
                 Uihelper.showToast(mActivity, error);
 
             }
-        }, redeemMqbInfo.getMobile(), TypeUtil.CAPTCHA_QUICK_RECHARGE);
+        }, redeemMqbInfo.getMobile(), TypeUtil.CAPTCHA_REDEEM_MIAOQIANBAO);
 
     }
 
