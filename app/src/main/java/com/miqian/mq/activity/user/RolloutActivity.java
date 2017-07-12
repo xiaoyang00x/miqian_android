@@ -96,7 +96,7 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                 if (initData != null) {
                     amt = initData.getAmt();
                     amtMinLimit = initData.getAmtMinLimit();
-                    amtMaxLimit = initData.getAmtMaxLimit();
+                    amtMaxLimit = initData.getBigWithdrawAmt();
                     setdata(initData);
                 }
             }
@@ -185,33 +185,32 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
     }
 
     private void handledata(final String inputAmt) {
-        BigDecimal inputmoney;
+        final BigDecimal inputmoney;
         if (!TextUtils.isEmpty(inputAmt)) {
             inputmoney = new BigDecimal(inputAmt);
             if (amt.compareTo(inputmoney) < 0) {//提现金额大于可提现金额
                 Uihelper.showToast(mActivity, "提现金额大于可提现金额，请重新输入");
                 return;
             }
-            if (inputmoney.compareTo(new BigDecimal(50000)) <= 0) {//小额提现  等于5万也是小额
-                if ((inputmoney.compareTo(amtMinLimit)) < 0) {
-                    Uihelper.showToast(mActivity, "小于最小提现金额，请重新输入");
-                }
-                layoutBelow5amt.setVisibility(View.VISIBLE);
-                btnSummit.setEnabled(true);
-            } else {//大于5万的大额提现 分情况处理
-                HttpRequest.withDrawPreprocess(mActivity, inputAmt + "", new ICallback<WithDrawPrepressResult>() {
-                    @Override
-                    public void onSucceed(WithDrawPrepressResult result) {
-                        WithDrawPrepress data = result.getData();
-                        String code = result.getCode();
-                        switch (code) {
-                            case "200016":// 还没有绑定银行卡
-                                Uihelper.showToast(mActivity, result.getMessage());
-                                break;
-                            case "400007"://支行信息不全
-                                layoutBankUnion.setVisibility(View.VISIBLE);
-                                layoutNoBranch.setVisibility(View.VISIBLE);
-                                btnOpenBank.setVisibility(View.VISIBLE);
+            if ((inputmoney.compareTo(amtMinLimit)) < 0) {
+                Uihelper.showToast(mActivity, "小于最小提现金额，请重新输入");
+                return;
+            }
+            begin();
+            HttpRequest.withDrawPreprocess(mActivity, inputAmt + "", new ICallback<WithDrawPrepressResult>() {
+                @Override
+                public void onSucceed(WithDrawPrepressResult result) {
+                    end();
+                    WithDrawPrepress data = result.getData();
+                    String code = result.getCode();
+                    switch (code) {
+                        case "200016":// 还没有绑定银行卡
+                            Uihelper.showToast(mActivity, result.getMessage());
+                            break;
+                        case "400007"://支行信息不全
+                            layoutBankUnion.setVisibility(View.VISIBLE);
+                            layoutNoBranch.setVisibility(View.VISIBLE);
+                            btnOpenBank.setVisibility(View.VISIBLE);
 //                                if (openBankDialog == null) {
 //                                    openBankDialog = new DialogTipSave(mActivity, "温馨提示", getResources().getText(R.string.rollout_tip_openbank).toString()) {
 //                                        @Override
@@ -221,53 +220,63 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
 //                                    };
 //                                }
 //                                openBankDialog.show();
-                                break;
-                            case "101006"://小于最小提现金额
-                                Uihelper.showToast(mActivity, result.getMessage());
-                                break;
-                            case "101001"://余额不足（提现金额大于可提现金额）
-                                Uihelper.showToast(mActivity, result.getMessage());
-                                break;
-                            default:
-                                if (!data.isEnable()) {
+                            break;
+                        case "101006"://小于最小提现金额
+                            Uihelper.showToast(mActivity, result.getMessage());
+                            break;
+                        case "101001"://余额不足（提现金额大于可提现金额）
+                            Uihelper.showToast(mActivity, result.getMessage());
+                            break;
+                        default:
+                            if (data.isEnable()) {
+                                if (inputmoney.compareTo(amtMaxLimit) <= 0) {//小额提现  等于5万也是小额
+
+                                    layoutBelow5amt.setVisibility(View.VISIBLE);
+                                } else {
                                     layoutBankUnion.setVisibility(View.VISIBLE);
                                     tvBankUnion.setText(data.getBankUnionNumber());
                                     layoutAboveamt.setVisibility(View.VISIBLE);
-                                    btnSummit.setEnabled(true);
-                                    if (feeDialog == null) {
-                                        feeDialog = new DialogTipSave(mActivity, "温馨提示", "此次提现收取手续费" + data.getFeeAmt() + "元") {
-                                            @Override
-                                            public void positionBtnClick() {
-                                                HttpRequest.autoWithdraw(mActivity, inputAmt);
-                                            }
-                                        };
-                                    }
-                                    feeDialog.show();
-                                } else {//非工作日不可提现
-                                    layoutNoWork.setVisibility(View.VISIBLE);
-                                    if (disableDialog == null) {
-                                        disableDialog = new DialogTipSave(mActivity, "温馨提示", getResources().getText(R.string.rollout_tip_enable).toString()) {
-                                            @Override
-                                            public void positionBtnClick() {
-                                                dismiss();
-                                            }
-                                        };
-                                    }
-
-                                    disableDialog.show();
-
                                 }
-                        }
+                                btnSummit.setEnabled(true);
+                                String feeAmt = data.getFeeAmt();
+                                if (feeDialog == null) {
+                                    feeDialog = new DialogTipSave(mActivity, "温馨提示", "此次提现收取手续费" + data.getFeeAmt() + "元") {
+                                        @Override
+                                        public void positionBtnClick() {
+                                            dismiss();
+                                        }
+                                    };
+                                }
+                                if (!TextUtils.isEmpty(feeAmt)) {
+                                    if (new BigDecimal(feeAmt).compareTo(BigDecimal.ZERO) > 0) {
+                                        feeDialog.show();
+                                    }
+                                }
+                            } else {//非工作日不可提现
+                                layoutNoWork.setVisibility(View.VISIBLE);
+                                if (disableDialog == null) {
+                                    disableDialog = new DialogTipSave(mActivity, "温馨提示", getResources().getText(R.string.rollout_tip_enable).toString()) {
+                                        @Override
+                                        public void positionBtnClick() {
+                                            dismiss();
+                                        }
+                                    };
+                                }
 
+                                disableDialog.show();
+
+                            }
                     }
 
-                    @Override
-                    public void onFail(String error) {
-                        Uihelper.showToast(mActivity, error);
-                    }
-                });
+                }
 
-            }
+                @Override
+                public void onFail(String error) {
+                    end();
+                    Uihelper.showToast(mActivity, error);
+                }
+            });
+
         }
 
     }
