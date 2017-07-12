@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/id_switch_tab_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/id_tab_buy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/trans"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dip"
+            android:saveEnabled="false">
+
+            <TextView
+                android:id="@+id/tv_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="认购"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font5_v2" />
+
+            <ImageView
+                android:id="@+id/id_tab_line_iv2"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/mq_r1_v2"
+                android:contentDescription="tab"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_tab_redeem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/trans"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dip">
+
+            <TextView
+                android:id="@+id/tv_redeem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="赎回"
+                android:textColor="@color/mq_b4_v2"
+                android:textSize="@dimen/mq_font5_v2" />
+
+            <ImageView
+                android:id="@+id/id_tab_line_iv4"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/mq_r1_v2"
+                android:contentDescription="tab"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_record"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/frame_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:paddingBottom="120dp"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/iv_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/nodata" />
+
+            <TextView
+                android:id="@+id/tv_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="数据获取失败，点击重新获取"
+                android:textColor="@color/miqian_gray"
+                android:textSize="@dimen/mq_font2" />
+
+            <TextView
+                android:id="@+id/tv_reFresh"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edit_selector"
+                android:gravity="center"
+                android:text="再试一次"
+                android:textSize="@dimen/mq_font2" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>
