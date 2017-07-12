@@ -244,7 +244,7 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 MqResult<RedeemMqbInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemMqbInfo>>(){
                 });
-                if ("000000".equals(meta.getCode())) {
+                if ("000000".equals(meta.getCode()) || "103001".equals(meta.getCode()) || "103005".equals(meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -273,11 +273,8 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 MqResult<RedeemResultInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemResultInfo>>(){
                 });
-                if ("000000".equals(meta.getCode())) {
-                    callback.onSucceed(meta);
-                } else {
-                    callback.onFail(meta.getMessage());
-                }
+
+                callback.onSucceed(meta);
             }
 
             @Override
@@ -1191,7 +1188,6 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-//                SubscribeOrderResult subscribeOrderResult = JsonUtil.parseObject(result, SubscribeOrderResult.class);
                 MqResult<SubscribeOrder> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<SubscribeOrder>>(){
                 });
                 callback.onSucceed(meta);

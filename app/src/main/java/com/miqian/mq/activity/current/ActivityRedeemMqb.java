@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.entity.CaptchaResult;
@@ -76,6 +75,9 @@ public class ActivityRedeemMqb extends BaseActivity {
             @Override
             public void onSucceed(MqResult<RedeemMqbInfo> result) {
                 end();
+                if ("103001".equals(result.getCode()) || "103005".equals(result.getCode())) {
+                    Uihelper.showToast(mActivity, result.getMessage());
+                }
                 redeemMqbInfo = result.getData();
                 refreshView();
             }
@@ -108,26 +110,11 @@ public class ActivityRedeemMqb extends BaseActivity {
             textTime.setText("认购时间： " + Uihelper.timestampToDateStr_other(investInfo.getStartTime()));
             textMoney.setText(investInfo.getPurchaseAmount());
             textInterestRate.setText(investInfo.getProductRate());
-            SpannableString spannableString = new SpannableString("%");
+            SpannableString spannableString = new SpannableString(" %");
             spannableString.setSpan(new TextAppearanceSpan(this, R.style.f3_R1_V2), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             textInterestRate.append(spannableString);
-
-
             transSeqNo = investInfo.getPurchaseSeqno();
         }
-//        rollType = intent.getIntExtra("rollType", 0);
-//        SpannableString ss = new SpannableString("请输入金额");//定义hint的值
-//        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(16, true);//设置字体大小 true表示单位是sp
-//        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        bindBankNumber = (TextView) findViewById(R.id.bind_bank_number);
-//        textMobile = (TextView) findViewById(R.id.text_mobile);
-//        textLimit = (TextView) findViewById(R.id.text_limit);
-//        textLimit.setOnClickListener(this);
-//        textTip1 = (TextView) findViewById(R.id.text_tip1);
-//        textTip2 = (TextView) findViewById(R.id.text_tip2);
-//        editCaptcha = (EditText) findViewById(R.id.et_account_captcha);
-//        btnSendCaptcha = (Button) findViewById(R.id.btn_send);
-//        btnSendCaptcha.setOnClickListener(this);
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -153,6 +140,16 @@ public class ActivityRedeemMqb extends BaseActivity {
 
     @OnClick(R.id.bt_redeem)//赎回
     public void redeem() {
+        if (redeemMqbInfo.getDayRemainCount() <= 0) {
+            Uihelper.showToast(this, "已超过当日最大赎回笔数，请明日再进行赎回操作。");
+            return;
+        }
+
+        if (redeemMqbInfo.getMonthRemainCount() <= 0) {
+            Uihelper.showToast(this, "已超过当月最大赎回笔数，请下月再进行赎回操作。");
+            return;
+        }
+
         String captcha = editCaptcha.getText().toString();
         if (!TextUtils.isEmpty(captcha)) {
             if (captcha.length() < 6) {
@@ -169,8 +166,21 @@ public class ActivityRedeemMqb extends BaseActivity {
             @Override
             public void onSucceed(MqResult<RedeemResultInfo> result) {
                 end();
-                RedeemResultInfo redeemResultInfo = result.getData();
-                jumpToResult(redeemResultInfo);
+                if (result.getCode().equals("996633")) {
+                    Uihelper.showToast(mActivity, result.getMessage());
+                } else {
+                    Intent intent = new Intent(ActivityRedeemMqb.this, RedeemMqbResult.class);
+                    if (result.getCode().equals("000000")) {
+                        intent.putExtra("status", 1);
+                    } else {
+                        intent.putExtra("status", 0);
+                        intent.putExtra("errorReason", result.getMessage());
+                    }
+                    RedeemResultInfo redeemResultInfo = result.getData();
+                    intent.putExtra("redeemResultInfo", JSON.toJSONString(redeemResultInfo));
+                    startActivity(intent);
+                }
+                ActivityRedeemMqb.this.finish();
             }
 
             @Override
@@ -188,25 +198,8 @@ public class ActivityRedeemMqb extends BaseActivity {
 
     @Override
     public void initTitle(WFYTitle mTitle) {
-        mTitle.setTitleText("在线快捷充值");
+        mTitle.setTitleText("秒钱宝赎回");
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.bt_rollin:
-//                rollIn();
-//                break;
-//            case R.id.btn_send:
-//                sendMessage();
-//                break;
-//            case R.id.text_limit:
-//                WebActivity.startActivity(mActivity, Urls.web_support_bank);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 
     @OnClick(R.id.btn_send)//发送验证码
     public void sendMessage() {
@@ -229,9 +222,7 @@ public class ActivityRedeemMqb extends BaseActivity {
 
             }
         }, redeemMqbInfo.getMobile(), TypeUtil.CAPTCHA_REDEEM_MIAOQIANBAO);
-
     }
-
 
     public class MyRunnable implements Runnable {
 
@@ -254,38 +245,6 @@ public class ActivityRedeemMqb extends BaseActivity {
             }
             isTimer = false;
         }
-    }
-
-//    public void showTip2(String temp) {
-//        BigDecimal tempMoney = new BigDecimal(temp);
-//        if (tempMoney.compareTo(limitMoney) > 0) {
-//            textTip2.setVisibility(View.VISIBLE);
-//            textTip2.setText("已超过快捷充值限额" + userInfo.getAmtPerLimit() + "元， 建议使用转账充值");
-//            btRollin.setEnabled(false);
-//        } else {
-//            textTip2.setVisibility(View.GONE);
-//            btRollin.setEnabled(true);
-//        }
-//    }
-
-    /**
-     * 跳转充值结果
-     *
-     * @param redeemResultInfo
-     */
-    private void jumpToResult(RedeemResultInfo redeemResultInfo) {
-//        if (rollType != 1) {
-//            Intent intent = new Intent(ActivityRedeemMqb.this, IntoResultActivity.class);
-//            intent.putExtra("status", orderRecharge.getStatus());
-//            intent.putExtra("money", orderRecharge.getAmt());
-//            intent.putExtra("orderNo", orderRecharge.getOrderNo());
-//            intent.putExtra("bankNo", orderRecharge.getBankNo());
-//            startActivity(intent);
-//        } else {
-//            Intent intent = new Intent();
-//            setResult(CurrentInvestment.SUCCESS, intent);
-//        }
-        ActivityRedeemMqb.this.finish();
     }
 
     @Override
