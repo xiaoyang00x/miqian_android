@@ -140,8 +140,8 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
     }
 
     private void open() {
-        String userName = editName.getText().toString();
         String idCard = editIdcard.getText().toString();
+        String userName = editName.getText().toString();
         String bankCardNo = editBank.getText().toString();
         String captcha = editCaptcha.getText().toString();
 
@@ -185,22 +185,42 @@ public class SaveBindAcitvity extends BaseActivity implements View.OnClickListen
             Uihelper.showToast(this, "请获取验证码");
             return;
         }
+        openJx(idCard, userName, bankCardNo, captcha);
+    }
 
+    private void openJx(String idCard, String userName, String bankCardNo, String captcha) {
         begin();
-        HttpRequest.openJx(this, new ICallback<Meta>() {
-            @Override
-            public void onSucceed(Meta result) {
-                end();
-                startActivity(new Intent(SaveBindAcitvity.this, SaveResultAcitvity.class));
-                SaveBindAcitvity.this.finish();
-            }
+        if ("1".equals(saveInfo.getJxAccountStatus()) && "0".equals(saveInfo.getBindCardStatus())) {
+            HttpRequest.openJxBind(this, new ICallback<Meta>() {
+                @Override
+                public void onSucceed(Meta result) {
+                    end();
+                    startActivity(new Intent(SaveBindAcitvity.this, SaveResultAcitvity.class));
+                    SaveBindAcitvity.this.finish();
+                }
 
-            @Override
-            public void onFail(String error) {
-                end();
-                Uihelper.showToast(SaveBindAcitvity.this, error);
-            }
-        }, idCard, userName, mobile, bankCardNo, authCode, captcha);
+                @Override
+                public void onFail(String error) {
+                    end();
+                    Uihelper.showToast(SaveBindAcitvity.this, error);
+                }
+            }, idCard, userName, mobile, bankCardNo, authCode, captcha);
+        } else {
+            HttpRequest.openJx(this, new ICallback<Meta>() {
+                @Override
+                public void onSucceed(Meta result) {
+                    end();
+                    startActivity(new Intent(SaveBindAcitvity.this, SaveResultAcitvity.class));
+                    SaveBindAcitvity.this.finish();
+                }
+
+                @Override
+                public void onFail(String error) {
+                    end();
+                    Uihelper.showToast(SaveBindAcitvity.this, error);
+                }
+            }, idCard, userName, mobile, bankCardNo, authCode, captcha);
+        }
     }
 
     private void sendMessage() {
