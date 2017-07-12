@@ -50,12 +50,27 @@ public class RegInvest implements Serializable{
     private String dsProfit;//待收利息
     private String ysAmount;//已收本金
     private String ysProfit;//已收利息
-    private String startTime;//认购时间
-    private String endTime;//到期时间
+    private Long startTime;//认购时间
+    private Long endTime;//到期时间
     private String productTerm;//产品期限(多少天的产品)
     private String status; //    状态   01: 认购处理中 02: 认购成功 03: 计息中 04: 已结清
     private String repayType; // 还款方式
 
+    public Long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
+    }
+
+    public Long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
+    }
 
     public String getRepayType() {
         return repayType;
@@ -185,21 +200,6 @@ public class RegInvest implements Serializable{
         this.ysProfit = ysProfit;
     }
 
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
 
     public String getProductTerm() {
         return productTerm;

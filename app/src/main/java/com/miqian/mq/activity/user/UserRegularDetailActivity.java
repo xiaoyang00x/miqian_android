@@ -177,10 +177,10 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
             textLimit.setText(reginvest.getProductTerm());
         }
         if (reginvest != null && reginvest.getStartTime() != null) {
-            textDateStart.setText("认购日期:" + reginvest.getStartTime());
+            textDateStart.setText("认购日期:" + Uihelper.timestampToDateStr_other(reginvest.getStartTime()));
         }
         if (reginvest != null && reginvest.getEndTime() != null) {
-            textDateEnd.setText("结束日期:" + reginvest.getEndTime());
+            textDateEnd.setText("结束日期:" + Uihelper.timestampToDateStr_other(reginvest.getEndTime()));
         }
         if (reginvest != null && reginvest.getRepayType() != null) {
             textRepayment.setText(reginvest.getRepayType());
