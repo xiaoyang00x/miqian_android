@@ -1402,6 +1402,39 @@ public class HttpRequest {
     }
 
     /**
+     * 江西银行已开通 用户绑卡
+     * authCode 授权码 (获取短信验证码返回)
+     */
+    public static void openJxBind(Context context, final ICallback<Meta> callback, String idCard, String userName, String mobile, String bankCardNo, String authCode, String captcha) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        params.add(new Param("idCard", idCard));
+        params.add(new Param("userName", userName));
+        params.add(new Param("mobile", mobile));
+        params.add(new Param("bankCardNo", bankCardNo));
+        params.add(new Param("authCode", authCode));
+        params.add(new Param("captcha", captcha));
+
+        new MyAsyncTask(context, Urls.jx_open_bind, params, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                Meta meta = JsonUtil.parseObject(result, Meta.class);
+                if ("000000".equals(meta.getCode())) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
      * 获取开通存管状态
      */
     public static void openJxPreprocess(Context context, final ICallback<MqResult<SaveInfo>> callback) {

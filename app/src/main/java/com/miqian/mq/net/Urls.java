@@ -246,6 +246,8 @@ public class Urls {
     public final static String web_aboutus_introduce = getWebServer() + "Client/aboutMiaoqian.html";
     //发展历程
     public final static String web_aboutus_development = getWebServer() + "Client/progress.html";
+    //我的邀请
+    public final static String web_my_invite = getWebServer() + "Invite/index.html";//"activityService/inviteMain";
 
     /**
      * 小坛的接口start
@@ -262,11 +264,10 @@ public class Urls {
     public final static String get_home_activity =  "home/getAppHomeActivity";
     public final static String get_activity_feedback =  "home/getActivityFeedback";
 
-    //我的邀请
-    public final static String web_my_invite =  "activityService/inviteMain";
-
     //江西银行开通存管
     public final static String jx_open =  "user/openAccount";
+    //江西银行用户已开通存管，绑卡接口
+    public final static String jx_open_bind =  "user/bindCard";
     //江西银行存管状态
     public final static String jx_open_preprocess =  "user/openAccountPreprocess";
 
