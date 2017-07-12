@@ -1,5 +1,6 @@
 package com.miqian.mq.activity.user;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,12 +12,17 @@ import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.NewCurrentFoundFlow;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.MySwipeRefresh;
 import com.miqian.mq.views.WFYTitle;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by guolei_wang on 2017/7/6.
@@ -36,6 +42,10 @@ public class UserMqbActivity extends BaseActivity implements View.OnClickListene
 
     private NewCurrentFoundFlow mData;
     private ArrayList<NewCurrentFoundFlow.InvestInfo> regInvestList;
+
+
+    @BindView(R.id.frame_current_record)
+    View frame_current_record;
 
 
     @Override
@@ -92,6 +102,7 @@ public class UserMqbActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initView() {
+        ButterKnife.bind(this);
 
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -160,6 +171,14 @@ public class UserMqbActivity extends BaseActivity implements View.OnClickListene
 //        }
     }
 
+    @OnClick(R.id.frame_current_record)
+    public void viewRecords() {
+        startActivity(new Intent(this, ActivitySubscriptionRecords.class));
+    }
+    @OnClick(R.id.bt_subscribe)
+    public void subscribe() {
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_CURRENT, null);
+    }
 
     @Override
     protected String getPageName() {

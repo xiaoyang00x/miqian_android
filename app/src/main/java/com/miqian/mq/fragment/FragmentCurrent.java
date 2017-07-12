@@ -11,12 +11,14 @@ import android.widget.TextView;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.CurrentDetailActivity;
+import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.LoginActivity;
 import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.listener.LoginListener;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.net.Urls;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.Pref;
@@ -28,6 +30,7 @@ import java.math.BigDecimal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FragmentCurrent extends BasicFragment implements View.OnClickListener {
 
@@ -181,6 +184,11 @@ public class FragmentCurrent extends BasicFragment implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    @OnClick(R.id.bt_right)
+    public void aboutMqb() {
+        WebActivity.startActivity(getActivity(), Urls.web_about_mqb);
     }
 
     @Override

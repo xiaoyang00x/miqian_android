@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_state"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon_redeem"
+        android:layout_marginLeft="@dimen/margin_left_right" />
+    <View
+        android:id="@+id/dashline_vertical"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginRight="-10dp"
+        android:background="@drawable/dashline_vertical"
+        android:layout_toRightOf="@id/iv_state"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/dashline_vertical">
+
+        <TextView
+            android:id="@+id/text_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mq_b1_v2"
+            android:text="秒钱宝第一期"
+            android:textSize="@dimen/mq_font3" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_type"
+            android:layout_marginTop="2dp"
+            android:text="2016-09-05 12:33:12"
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font5" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/text_amt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_left_right"
+        android:textColor="@color/mq_r1_v2"
+        android:text="￥4345"
+        android:textSize="@dimen/mq_font3" />
+
+</RelativeLayout>

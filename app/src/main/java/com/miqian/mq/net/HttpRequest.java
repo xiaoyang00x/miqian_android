@@ -25,6 +25,7 @@ import com.miqian.mq.entity.Meta;
 import com.miqian.mq.entity.MqListResult;
 import com.miqian.mq.entity.MqResult;
 import com.miqian.mq.entity.NewCurrentFoundFlow;
+import com.miqian.mq.entity.NewCurrentFundFlow;
 import com.miqian.mq.entity.OperationResult;
 import com.miqian.mq.entity.OrderRecharge;
 import com.miqian.mq.entity.ProducedOrder;
@@ -32,6 +33,8 @@ import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
+import com.miqian.mq.entity.RedeemMqbInfo;
+import com.miqian.mq.entity.RedeemResultInfo;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularDetailsInfo;
 import com.miqian.mq.entity.RegularProjectList;
@@ -214,6 +217,63 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
                 if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 秒钱宝
+     * 赎回预处理
+     */
+    public static void redeemPreprocessMqb(Context context, final ICallback<MqResult<RedeemMqbInfo>> callback) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.redeem_preprocess_mqb, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                MqResult<RedeemMqbInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemMqbInfo>>(){
+                });
+                if ("000000".equals(meta.getCode())) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 秒钱宝赎回
+     */
+    public static void redeemMqb(Context context, final ICallback<MqResult<RedeemResultInfo>> callback, String transSeqNo, String captcha) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("transSeqNo", transSeqNo));
+        mList.add(new Param("captcha", captcha));
+
+        new MyAsyncTask(context, Urls.redeem_mqb, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                MqResult<RedeemResultInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemResultInfo>>(){
+                });
+                if ("000000".equals(meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());
@@ -980,6 +1040,37 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 CapitalRecordResult capitalRecord = JsonUtil.parseObject(result, CapitalRecordResult.class);
+                if (capitalRecord.getCode().equals("000000")) {
+                    callback.onSucceed(capitalRecord);
+                } else {
+                    callback.onFail(capitalRecord.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+
+    /**
+     * 我的秒钱宝交易记录
+     *
+     * @param operateType 20 认购 40 赎回
+     */
+    public static void newCurrentFundFlow(Context context, final ICallback<MqResult<NewCurrentFundFlow>> callback, String pageNo, String operateType) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("pageNo", pageNo));
+        mList.add(new Param("operateType", operateType));
+
+        new MyAsyncTask(context, Urls.newCurrentFundFlow, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                MqResult<NewCurrentFundFlow> capitalRecord = JsonUtil.parseObject(result, new TypeReference<MqResult<NewCurrentFundFlow>>(){});
                 if (capitalRecord.getCode().equals("000000")) {
                     callback.onSucceed(capitalRecord);
                 } else {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.flyco.labelview.LabelView;
 import com.miqian.mq.R;
+import com.miqian.mq.activity.current.ActivityRedeemMqb;
 import com.miqian.mq.entity.NewCurrentFoundFlow;
 import com.miqian.mq.entity.Page;
 import com.miqian.mq.utils.FormatUtil;
@@ -76,7 +77,7 @@ public class AdapterUserMqb extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof AdapterUserMqb.ViewHolder) {
 
-            NewCurrentFoundFlow.InvestInfo info = mList.get(position - 1);
+            final NewCurrentFoundFlow.InvestInfo info = mList.get(position - 1);
             if (info == null) {
                 return;
             }
@@ -100,6 +101,12 @@ public class AdapterUserMqb extends RecyclerView.Adapter {
                     break;
                 default:
                     ((ViewHolder) holder).btn_buy.setEnabled(true);
+                    ((ViewHolder) holder).btn_buy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ActivityRedeemMqb.startActivity(mContext, info);
+                        }
+                    });
                     ((ViewHolder) holder).btn_buy.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.btn_red));
                     ((ViewHolder) holder).btn_buy.setText("赎回");
                     ((ViewHolder) holder).lableView.setVisibility(View.GONE);

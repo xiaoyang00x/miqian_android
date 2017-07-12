@@ -58,13 +58,13 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-//    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
+    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
-//    public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
+    public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
 
-    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
-    public static final String SERVER_TEST_WEB = "https://devmobile.miaoqian.com/";
+//    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
+//    public static final String SERVER_TEST_WEB = "https://devmobile.miaoqian.com/";
 
     //线上
     public static final String SERVER_ONLINE = "https://api.shicaidai.com/";
@@ -186,8 +186,17 @@ public class Urls {
     //records of capital
     public final static String recordsCapital =  "mine/getFundFlow";// userService/getAssetRecord
 
+    /**
+     * 我的秒钱宝交易记录
+     */
+    public final static String newCurrentFundFlow =  "mine/newCurrrentFundFlow";
+
     //我的促销接口
     public final static String getCustPromotion =  "promotion/getCustPromotion";//"userService/getCustPromotion";
+    //秒钱宝赎回预处理
+    public final static String redeem_preprocess_mqb =  "trans/redeemPreprocess";
+    //秒钱宝赎回
+    public final static String redeem_mqb =  "trans/redeem";
     //赎回
     public final static String redeem =  "assetService/redeem";
     //我的活期资金记录
@@ -248,6 +257,11 @@ public class Urls {
     public final static String web_aboutus_development = getWebServer() + "Client/progress.html";
     //我的邀请
     public final static String web_my_invite = getWebServer() + "Invite/index.html";//"activityService/inviteMain";
+
+    /**
+     * 关于秒钱宝
+     */
+    public final static String web_about_mqb = getWebServer() + "Client/aboutMiaoqianbao.html";
 
     /**
      * 小坛的接口start

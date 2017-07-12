@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,33 +9,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/qq_regular_nodata"
-            android:layout_marginTop="55dp"
             android:layout_marginBottom="30dp"
-            />
+            android:layout_marginTop="55dp"
+            android:src="@drawable/qq_regular_nodata" />
+
         <com.miqian.mq.views.TextViewEx
             android:id="@+id/tv_qq_nodata"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:textColor="@color/mq_b4_v2"
-            android:textSize="@dimen/mq_font5_v2"
             android:text="                       您尚未进行投资\n           马上投资秒钱宝赚取利息吧~"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font5_v2" />
 
     </LinearLayout>
+
     <com.miqian.mq.views.MySwipeRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="100dp"
         >
 
         <android.support.v7.widget.RecyclerView
@@ -44,4 +46,54 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
     </com.miqian.mq.views.MySwipeRefresh>
-</LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_subscribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/bt_subscribe"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:background="@color/mq_r1_v2"
+            android:text="认购"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mq_font7_v2" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@id/bt_subscribe"
+            android:background="@color/mq_b4" />
+
+        <RelativeLayout
+            android:id="@+id/frame_current_record"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:layout_above="@+id/divider"
+            android:background="#bfdadada"
+            android:paddingLeft="@dimen/margin_left_right"
+            android:paddingRight="@dimen/margin_left_right">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="交易记录"
+                android:textColor="@color/black"
+                android:textSize="@dimen/mq_font7_v2" />
+
+            <ImageView
+                style="@style/WrapContent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right" />
+        </RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>
