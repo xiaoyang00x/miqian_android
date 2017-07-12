@@ -32,6 +32,8 @@ import com.miqian.mq.entity.ProductBaseInfo;
 import com.miqian.mq.entity.PushDataResult;
 import com.miqian.mq.entity.RedPaperData;
 import com.miqian.mq.entity.RedeemData;
+import com.miqian.mq.entity.RedeemMqbInfo;
+import com.miqian.mq.entity.RedeemResultInfo;
 import com.miqian.mq.entity.RegisterResult;
 import com.miqian.mq.entity.RegularDetailsInfo;
 import com.miqian.mq.entity.RegularProjectList;
@@ -214,6 +216,63 @@ public class HttpRequest {
             public void onSucceed(String result) {
                 Meta meta = JsonUtil.parseObject(result, Meta.class);
                 if (meta.getCode().equals("000000")) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 秒钱宝
+     * 赎回预处理
+     */
+    public static void redeemPreprocessMqb(Context context, final ICallback<MqResult<RedeemMqbInfo>> callback) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+
+        new MyAsyncTask(context, Urls.redeem_preprocess_mqb, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                MqResult<RedeemMqbInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemMqbInfo>>(){
+                });
+                if ("000000".equals(meta.getCode())) {
+                    callback.onSucceed(meta);
+                } else {
+                    callback.onFail(meta.getMessage());
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                callback.onFail(error);
+            }
+        }).executeOnExecutor();
+    }
+
+    /**
+     * 秒钱宝赎回
+     */
+    public static void redeemMqb(Context context, final ICallback<MqResult<RedeemResultInfo>> callback, String transSeqNo, String captcha) {
+        List<Param> mList = new ArrayList<>();
+        mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
+        mList.add(new Param("transSeqNo", transSeqNo));
+        mList.add(new Param("captcha", captcha));
+
+        new MyAsyncTask(context, Urls.redeem_mqb, mList, new ICallback<String>() {
+
+            @Override
+            public void onSucceed(String result) {
+                MqResult<RedeemResultInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemResultInfo>>(){
+                });
+                if ("000000".equals(meta.getCode())) {
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());

@@ -188,6 +188,10 @@ public class Urls {
 
     //我的促销接口
     public final static String getCustPromotion =  "promotion/getCustPromotion";//"userService/getCustPromotion";
+    //秒钱宝赎回预处理
+    public final static String redeem_preprocess_mqb =  "trans/redeemPreprocess";
+    //秒钱宝赎回
+    public final static String redeem_mqb =  "trans/redeem";
     //赎回
     public final static String redeem =  "assetService/redeem";
     //我的活期资金记录
