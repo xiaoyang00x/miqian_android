@@ -72,7 +72,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqResult<ConfigInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<ConfigInfo>>(){
+                MqResult<ConfigInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<ConfigInfo>>() {
                 });
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
@@ -242,7 +242,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqResult<RedeemMqbInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemMqbInfo>>(){
+                MqResult<RedeemMqbInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemMqbInfo>>() {
                 });
                 if ("000000".equals(meta.getCode()) || "103001".equals(meta.getCode()) || "103005".equals(meta.getCode())) {
                     callback.onSucceed(meta);
@@ -271,7 +271,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqResult<RedeemResultInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemResultInfo>>(){
+                MqResult<RedeemResultInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RedeemResultInfo>>() {
                 });
 
                 callback.onSucceed(meta);
@@ -295,7 +295,7 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqResult<UserInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<UserInfo>>(){
+                MqResult<UserInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<UserInfo>>() {
                 });
                 if (meta.getCode().equals("000000")) {
                     UserUtil.saveJxSave(context, meta.getData(), false);
@@ -582,13 +582,13 @@ public class HttpRequest {
 
     //修改登录密码
     public static void changePassword(Context context, final ICallback<Meta> callback,
-                                      String oldPassword, String newPassword, String confirmPassword,String captcha) {
+                                      String oldPassword, String newPassword, String confirmPassword, String captcha) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         mList.add(new Param("oldPassword", RSAUtils.encryptURLEncode(oldPassword)));
         mList.add(new Param("newPassword", RSAUtils.encryptURLEncode(newPassword)));
         mList.add(new Param("confirmPassword", RSAUtils.encryptURLEncode(confirmPassword)));
-        mList.add(new Param("captcha",captcha));
+        mList.add(new Param("captcha", captcha));
 
         new MyAsyncTask(context, Urls.changePassword, mList, new ICallback<String>() {
 
@@ -792,7 +792,8 @@ public class HttpRequest {
         new MyAsyncTask(context, url, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
-                MqResult<RegularDetailsInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RegularDetailsInfo>>(){});
+                MqResult<RegularDetailsInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RegularDetailsInfo>>() {
+                });
                 if (meta.getCode().equals("000000")) {
                     callback.onSucceed(meta);
                 } else {
@@ -875,11 +876,13 @@ public class HttpRequest {
 
     //获取支行接口
     public static void getSubBranch(Context context, final ICallback<MqResult<BankBranchResult>> callback,
-                                    String province, String city, String bankName) {
+                                    String province, String city, String bankName, String pageNo) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("province", province));
         mList.add(new Param("city", city));
         mList.add(new Param("bankName", bankName));
+        mList.add(new Param("key", ""));
+        mList.add(new Param("pageNo", pageNo));
         new MyAsyncTask(context, Urls.getSubBranch, mList, new ICallback<String>() {
 
             @Override
@@ -990,6 +993,7 @@ public class HttpRequest {
 
     /**
      * 我的秒钱宝
+     *
      * @param context
      * @param callback
      * @param pageNo
@@ -1003,7 +1007,8 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqResult<NewCurrentFoundFlow> data = JsonUtil.parseObject(result, new TypeReference<MqResult<NewCurrentFoundFlow>>(){});
+                MqResult<NewCurrentFoundFlow> data = JsonUtil.parseObject(result, new TypeReference<MqResult<NewCurrentFoundFlow>>() {
+                });
                 if (data.getCode().equals("000000")) {
                     callback.onSucceed(data);
                 } else {
@@ -1067,7 +1072,8 @@ public class HttpRequest {
 
             @Override
             public void onSucceed(String result) {
-                MqResult<NewCurrentFundFlow> capitalRecord = JsonUtil.parseObject(result, new TypeReference<MqResult<NewCurrentFundFlow>>(){});
+                MqResult<NewCurrentFundFlow> capitalRecord = JsonUtil.parseObject(result, new TypeReference<MqResult<NewCurrentFundFlow>>() {
+                });
                 if (capitalRecord.getCode().equals("000000")) {
                     callback.onSucceed(capitalRecord);
                 } else {
@@ -1084,7 +1090,6 @@ public class HttpRequest {
 
     /**
      * 我的定期详情
-     *
      */
     public static void getUserRegularDetail(Context context, final ICallback<UserRegularDetailResult> callback, String purchaseSeqno) {
         List<Param> mList = new ArrayList<>();
@@ -1174,7 +1179,7 @@ public class HttpRequest {
      * 活期、定期赚、定期计划
      * 认购接口
      *
-     * @param amt       金额
+     * @param amt         金额
      * @param productCode 标的id
      * @param deliveryId  认购预处理的promList中的id 促销Id
      */
@@ -1185,10 +1190,9 @@ public class HttpRequest {
         mList.add(new Param("productCode", productCode));
         mList.add(new Param("deliveryId", deliveryId));
         new MyAsyncTask(context, Urls.subscribe_order, mList, new ICallback<String>() {
-
             @Override
             public void onSucceed(String result) {
-                MqResult<SubscribeOrder> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<SubscribeOrder>>(){
+                MqResult<SubscribeOrder> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<SubscribeOrder>>() {
                 });
                 callback.onSucceed(meta);
             }
@@ -1395,6 +1399,7 @@ public class HttpRequest {
 
 
 //江西银行跳转接口
+
     /**
      * 江西银行设置交易密码
      */
@@ -1425,34 +1430,48 @@ public class HttpRequest {
     /**
      * 江西银行:存管-提现跳转
      */
-    public static void autoWithdraw(final Activity activity,String amt) {
+    public static void autoWithdraw(final Activity activity, String amt) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
         params.add(new Param("cType", "android"));
         params.add(new Param("amt", amt));
         WebBankActivity.startActivity(activity, Urls.jx_auto_withdraw_url, params, 1);
     }
+
     /**
      * 跳定期计划详情
      */
-    public static void toRegularPlanDetail(final Activity activity,String productCode ,String projectCode) {
+    public static void toRegularPlanDetail(final Activity activity, String productCode, String projectCode) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("productCode", productCode));
         params.add(new Param("projectCode", projectCode));
         params.add(new Param("custId", UserUtil.getUserId(activity)));
         String params_url = HttpUtils.getUrl(params);
-        WebActivity.startActivity(activity, Urls.getServer(activity)+Urls.web_regular_plan_detail+params_url);
+        WebActivity.startActivity(activity, Urls.getServer(activity) + Urls.web_regular_plan_detail + params_url);
     }
+
     /**
      * 跳定期详情
      */
-    public static void toRegularDetail(final Activity activity,String productCode ,String projectCode) {
+    public static void toRegularDetail(final Activity activity, String productCode, String projectCode) {
         ArrayList params = new ArrayList<>();
         params.add(new Param("productCode", productCode));
         params.add(new Param("projectCode", projectCode));
         params.add(new Param("custId", UserUtil.getUserId(activity)));
         String params_url = HttpUtils.getUrl(params);
-        WebActivity.startActivity(activity, Urls.getServer(activity)+Urls.web_regular_earn_detail+params_url);
+        WebActivity.startActivity(activity, Urls.getServer(activity) + Urls.web_regular_earn_detail + params_url);
+    }
+
+    /**
+     * 江西银行:存管_修改交易密码
+     */
+    public static void changejxTradePwd(final Activity activity, String authCode, String captcha) {
+        ArrayList params = new ArrayList<>();
+        params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(activity))));
+        params.add(new Param("authCode", authCode));
+        params.add(new Param("captcha", captcha));
+        params.add(new Param("returnUrl", ""));
+        WebBankActivity.startActivity(activity, Urls.jx_auto_user_changepwd, params, 1);
     }
 
     /**
@@ -1620,8 +1639,8 @@ public class HttpRequest {
             @Override
             public void onSucceed(String result) {
                 WithDrawPrepressResult data = JsonUtil.parseObject(result, WithDrawPrepressResult.class);
-                 String code = data.getCode();
-                if (code.equals("000000")||code.equals("200016")||code.equals("400007")||code.equals("101006")||code.equals("101001")) {
+                String code = data.getCode();
+                if (code.equals("000000") || code.equals("200016") || code.equals("400007") || code.equals("101006") || code.equals("101001")) {
                     callback.onSucceed(data);
                 } else {
                     callback.onFail(data.getMessage());

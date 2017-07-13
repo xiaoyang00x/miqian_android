@@ -2,12 +2,10 @@ package com.miqian.mq.activity.current;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.Button;
@@ -113,9 +111,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     public static final int REQUEST_CODE_ROLLIN = 1;
     private static final int REQUEST_CODE_REDPACKET = 2;
 
-    public static final int FAIL = 0;
-    public static final int SUCCESS = 1;
-
     private CustomDialog packageTips;
 
     @Override
@@ -126,10 +121,6 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         productInfo = JsonUtil.parseObject(intent.getStringExtra("productInfo"), ProductBaseInfo.class);
         productType = productInfo.getProductType();
         productCode = productInfo.getProductCode();
-//        productType = Constants.PRODUCT_TYPE_REGULART_PLAN;
-//        productCode = "MQBXSB11707051748001";
-//        productCode = "DQJHPTB1707032039001";
-//        interestRateString = intent.getStringExtra("interestRateString");
         super.onCreate(bundle);
     }
 
@@ -407,15 +398,15 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_ROLLIN) {
-            if (resultCode == SUCCESS) {
+            if (resultCode == Constants.SUCCESS) {
                 Uihelper.showToast(mActivity, "充值成功");
                 refreshData();
-            } else if (resultCode == FAIL) {
+            } else if (resultCode == Constants.FAIL) {
                 Uihelper.showToast(mActivity, "充值失败，请重新充值");
             }
         } else if (requestCode == REQUEST_CODE_REDPACKET) {
 //          红包、拾财券选择
-            if (resultCode == SUCCESS) {
+            if (resultCode == Constants.SUCCESS) {
                 position = data.getIntExtra("position", -1);
                 promoteMoney = BigDecimal.ZERO;
                 increaseMoney = BigDecimal.ZERO;

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.user.UserMqbActivity;
 import com.miqian.mq.activity.user.UserRegularActivity;
 import com.miqian.mq.entity.SubscribeOrder;
 import com.miqian.mq.utils.ActivityStack;
@@ -153,10 +154,10 @@ public class SubscribeResult extends BaseActivity implements View.OnClickListene
                 closeActivity();
                 break;
             case R.id.bt_my_product:
+                ActivityStack.getActivityStack().clearActivity();
                 if (Constants.PRODUCT_TYPE_MQB == productType) {
-
+                    startActivity(new Intent(SubscribeResult.this, UserMqbActivity.class));
                 } else {
-                    ActivityStack.getActivityStack().clearActivity();
                     startActivity(new Intent(SubscribeResult.this, UserRegularActivity.class));
                 }
                 break;

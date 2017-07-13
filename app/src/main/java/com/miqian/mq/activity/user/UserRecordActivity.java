@@ -1,7 +1,6 @@
 package com.miqian.mq.activity.user;
 
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -101,13 +100,13 @@ public class UserRecordActivity extends BaseActivity {
 
     private void refreshView() {
         adapter = new CapitalRecordAdapter(list);
-        adapter.setMaxItem(page.getTotalPage());
+        adapter.setMaxItem(page.getTotalRecord());
         mRecyclerView.setAdapter(adapter);
     }
 
     private void loadMore() {
         if (!isLoading) {
-            if (list.size() >= page.getTotalPage()) {
+            if (list.size() >= page.getTotalRecord()) {
                 return;
             }
             isLoading = true;

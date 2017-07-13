@@ -173,13 +173,13 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             ((ViewHolder) holder).textDateSubscribe.setText(Uihelper.timestampToDateStr_other(regInvest.getStartTime()) + "认购");
             ((ViewHolder) holder).textDateOver.setText(Uihelper.timestampToDateStr_other(regInvest.getEndTime()) + "到期");
             String status = regInvest.getStatus();
-            if ("03".endsWith(status)) {//计息中
+            if ("03".equals(status)) {//计息中
                 ((ViewHolder) holder).ivProcessing.setImageDrawable(mContext.getResources().getDrawable(R.drawable.processing));
             }
         } else if (holder instanceof ProgressViewHolder) {
             if (position > maxValue) {
                 ((ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
-                if (maxValue <= 5) {
+                if (maxValue <= 10) {
                     ((ProgressViewHolder) holder).textLoading.setVisibility(View.GONE);
                 } else {
                     ((ProgressViewHolder) holder).textLoading.setText("没有更多");

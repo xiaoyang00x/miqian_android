@@ -93,7 +93,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
     private void loadMore() {
         if (!isLoading) {
-            if (regInvestList.size() >= userRegular.getPageInfo().getTotalPage()) {
+            if (regInvestList.size() >= userRegular.getPageInfo().getTotalRecord()) {
 //                mAdapter.notifyItemChanged(regInvestList.size() + 1);
                 return;
             }
@@ -125,10 +125,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
         tvQQRegular = (TextViewEx) findViewById(R.id.tv_qq_nodata);
-//        RadioButton btnRight = (RadioButton) findViewById(R.id.bt_right);
-//        if (launchSuccess) {
-//            btnRight.setChecked(true);
-//        }
         radioGroup.setOnCheckedChangeListener(this);
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {
@@ -160,7 +156,7 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
     private void refreshView() {
         mAdapter = new AdapterUserRegular(this, regInvestList, userRegular.getReg(), userRegular.getPageInfo(), isExpiry);
         mAdapter.setOnItemClickListener(this);
-        mAdapter.setMaxItem(userRegular.getPageInfo().getTotalPage());
+        mAdapter.setMaxItem(userRegular.getPageInfo().getTotalRecord());
         mRecyclerView.setAdapter(mAdapter);
     }
 
