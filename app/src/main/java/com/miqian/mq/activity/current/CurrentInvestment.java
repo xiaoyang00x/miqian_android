@@ -158,7 +158,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     showTips(false, result);
                     producedOrder = result.getData();
                     promList = producedOrder.getPromList();
-                    refreshView(true);
+                    refreshView();
                 }
             }
 
@@ -190,11 +190,11 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void refreshView(boolean initFlag) {
+    private void refreshView() {
         textBalance.setText(FormatUtil.formatAmount(producedOrder.getBalance()));
         expectMoney.setText(producedOrder.getPredictIncome());
 
-        initPayMode(initFlag);
+        initPayMode();
         refreshPromoteView();
     }
 
@@ -245,7 +245,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
     /**
      * 根据服务端返回数据判断支付状态
      */
-    private void initPayMode(boolean initFlag) {
+    private void initPayMode() {
         if (orderMoney.subtract(promoteMoney).compareTo(producedOrder.getBalance()) > 0) {
             btPay.setEnabled(false);
         } else {
@@ -433,7 +433,7 @@ public class CurrentInvestment extends BaseActivity implements View.OnClickListe
                     }
                     promoteId = promote.getId();
                 }
-                refreshView(false);
+                refreshView();
             }
         }
     }

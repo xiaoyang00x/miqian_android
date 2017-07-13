@@ -44,19 +44,18 @@
             android:layout_height="@dimen/edit_item">
 
             <TextView
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:text="认购申请金额" />
 
             <TextView
                 android:id="@+id/text_money_unit"
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right"
-                android:text="元"
-                android:textSize="@dimen/mq_font6_v2" />
+                android:text="元" />
 
             <TextView
                 android:id="@+id/text_money"
@@ -77,19 +76,18 @@
             android:layout_height="@dimen/edit_item">
 
             <TextView
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:text="余额支付" />
 
             <TextView
                 android:id="@+id/text_money_unit2"
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right"
-                android:text="元"
-                android:textSize="@dimen/mq_font6_v2" />
+                android:text="元" />
 
             <TextView
                 android:id="@+id/text_pay_money"
@@ -111,14 +109,14 @@
             android:layout_height="@dimen/edit_item">
 
             <TextView
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:text="使用红包/卡" />
 
             <TextView
                 android:id="@+id/text_promote"
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right" />
@@ -135,10 +133,14 @@
             android:visibility="gone">
 
             <TextView
-                style="@style/f7_B1_V2"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margin_left_right"
-                android:text="失败原因" />
+                style="@style/f6_B1_V2"
+                android:layout_marginLeft="15dp"
+                android:text="失败原因"
+                android:layout_alignBaseline="@+id/text_error"
+                android:layout_alignBottom="@+id/text_error"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp" />
 
             <TextView
                 android:id="@+id/text_error"
@@ -160,14 +162,14 @@
             android:layout_height="@dimen/edit_item">
 
             <TextView
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
                 android:text="业务编号" />
 
             <TextView
                 android:id="@+id/trade_number"
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right" />
