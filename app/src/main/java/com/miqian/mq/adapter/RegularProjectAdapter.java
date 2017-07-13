@@ -56,7 +56,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         for (RegularProjectData regularProjectData : mData.getRegularDatas()) {
-            if (regularProjectData.getSubjectData() == null || regularProjectData.getSubjectData().size() <= 0) {
+            if (regularProjectData.getSubjectDatas() == null || regularProjectData.getSubjectDatas().size() <= 0) {
                 continue;
             }
             ProductRegularBaseInfo regularProjectHeader = new ProductRegularBaseInfo();
@@ -67,7 +67,7 @@ public class RegularProjectAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             regularProjectHeader.setIconUrl(regularProjectData.getIconUrl());
             mList.add(regularProjectHeader);
 
-            for (ProductRegularBaseInfo info : regularProjectData.getSubjectData()) {
+            for (ProductRegularBaseInfo info : regularProjectData.getSubjectDatas()) {
                 info.setType(RegularBase.ITEM_TYPE_LIST);
                 mList.add(info);
             }

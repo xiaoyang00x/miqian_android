@@ -58,13 +58,13 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
-//    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
-//    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
-    public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
+//    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
+////    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
+////    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
+//    public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
 
-//    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
-//    public static final String SERVER_TEST_WEB = "https://devmobile.miaoqian.com/";
+    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
+    public static final String SERVER_TEST_WEB = "https://devmobile.miaoqian.com/";
 
     //线上
     public static final String SERVER_ONLINE = "https://api.shicaidai.com/";
