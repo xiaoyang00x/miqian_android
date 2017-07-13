@@ -4,25 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/mq_b7_v2">
 
-    <TextView
-        android:id="@+id/tv_begin_countdown"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#FAECBC"
-        android:drawableLeft="@drawable/ic_clock"
-        android:drawablePadding="5dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:singleLine="true"
-        android:textColor="@color/mq_y3_v2"
-        android:textSize="@dimen/mq_font5_v2"
-        android:visibility="gone" />
-
     <com.miqian.mq.views.MySwipeRefresh
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tv_begin_countdown">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
