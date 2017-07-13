@@ -3,7 +3,6 @@ package com.miqian.mq.adapter;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import com.miqian.mq.entity.RegInvest;
 import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.Uihelper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class AdapterUserRegular extends RecyclerView.Adapter {
@@ -101,27 +101,37 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
                 ((ViewHolder) holder).textInterestRate.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
                 ((ViewHolder) holder).textInterestRatePresent.setTextColor(ContextCompat.getColor(mContext, R.color.mq_r1_v2));
             }
-            String realInterest = regInvest.getProductRate();
-            String presentInterest = regInvest.getProductPlusRate();
+            BigDecimal realInterest = regInvest.getProductRate();
+            BigDecimal presentInterest = regInvest.getProductPlusRate();
+            BigDecimal ticketRate = regInvest.getTicketRate();
+            int ticketType = regInvest.getTicketType();//促销券类型   0: 红包  1: 秒钱卡   2: 加息卡   3: 双倍加息卡   4: 现金
+
             ((ViewHolder) holder).imageProjectStatus.setBackgroundResource(R.drawable.trans);
 
             String bidType = regInvest.getBidType();
             if (Constants.BID_TYPE_SBB.equals(bidType)) {
-                if (!TextUtils.isEmpty(realInterest)) {
-                    ((ViewHolder) holder).textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
-                    ((ViewHolder) holder).textInterestRatePresent.setText("%");
-                    ((ViewHolder) holder).imageProjectStatus.setBackgroundResource(R.drawable.double_rate_normal);
-                }
+                ((ViewHolder) holder).textInterestRate.setText((realInterest.add(realInterest) + ""));
+                ((ViewHolder) holder).textInterestRatePresent.setText("%");
+                ((ViewHolder) holder).imageProjectStatus.setBackgroundResource(R.drawable.double_rate_normal);
             } else if (Constants.BID_TYPE_SBSYK.equals(bidType)) {
-
-                float realprofit = Float.parseFloat(realInterest) * 2 + Float.parseFloat(presentInterest) * 2;
-                ((ViewHolder) holder).textInterestRate.setText(realprofit + "");
+                if (ticketType == 3) {
+                    realInterest = (realInterest.add(realInterest)).add(presentInterest.add(presentInterest));
+                }
+                ((ViewHolder) holder).textInterestRate.setText(realInterest + "");
                 ((ViewHolder) holder).textInterestRatePresent.setText("%");
                 ((ViewHolder) holder).imageProjectStatus.setBackgroundResource(R.drawable.double_card_normal);
 
             } else {
-                ((ViewHolder) holder).textInterestRate.setText(Float.parseFloat(realInterest) + "");
-                ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
+                ((ViewHolder) holder).textInterestRate.setText(realInterest + "");
+                if (presentInterest.compareTo(BigDecimal.ZERO) > 0) {
+                    ((ViewHolder) holder).textInterestRatePresent.setText("+" + presentInterest + "%");
+                } else if (ticketRate.compareTo(BigDecimal.ZERO) > 0) {
+                    ((ViewHolder) holder).textInterestRatePresent.setText("+" + ticketRate + "%");
+                } else if (ticketRate.compareTo(BigDecimal.ZERO) > 0 && presentInterest.compareTo(BigDecimal.ZERO) > 0) {
+                    ((ViewHolder) holder).textInterestRatePresent.setText("+" + ticketRate.add(presentInterest) + "%");
+                } else {
+                    ((ViewHolder) holder).textInterestRatePresent.setText("%");
+                }
             }
 
 //            int showType = CalculateUtil.getShowInterest(regInvest.getProjectState(), regInvest.getSubjectType(), regInvest.getProductRate()

@@ -1,6 +1,7 @@
 package com.miqian.mq.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by Jackie on 2015/10/21.
@@ -40,10 +41,10 @@ public class RegInvest implements Serializable{
     private String bidType;//  标的类型 PTB：普通标  XSB1：新⼿手标1 XSB2：新⼿手标2 QDB：渠道标
     private String productCode;//产品编号
     private String productName;//产品名称
-    private String productRate;//产品原始利率
-    private String productPlusRate;//产品促销增加年利率
-    private String ticketType;//   促销券类型   0: 红包  1: 秒钱卡   2: 加息卡   3: 双倍加息卡   4: 现金
-    private String ticketRate;//使用加息券利息
+    private BigDecimal productRate;//产品原始利率
+    private BigDecimal productPlusRate;//产品促销增加年利率
+    private int ticketType;//   促销券类型   0: 红包  1: 秒钱卡   2: 加息卡   3: 双倍加息卡   4: 现金
+    private BigDecimal ticketRate;//使用加息券利息
     private String ticketAmount;//使用红包金额
     private String purchaseAmount;//认购金额
     private String dsAmount;//待收本金
@@ -55,6 +56,38 @@ public class RegInvest implements Serializable{
     private String productTerm;//产品期限(多少天的产品)
     private String status; //    状态   01: 认购处理中 02: 认购成功 03: 计息中 04: 已结清
     private String repayType; // 还款方式
+
+    public int getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(int ticketType) {
+        this.ticketType = ticketType;
+    }
+
+    public BigDecimal getTicketRate() {
+        return ticketRate;
+    }
+
+    public void setTicketRate(BigDecimal ticketRate) {
+        this.ticketRate = ticketRate;
+    }
+
+    public BigDecimal getProductRate() {
+        return productRate;
+    }
+
+    public void setProductRate(BigDecimal productRate) {
+        this.productRate = productRate;
+    }
+
+    public BigDecimal getProductPlusRate() {
+        return productPlusRate;
+    }
+
+    public void setProductPlusRate(BigDecimal productPlusRate) {
+        this.productPlusRate = productPlusRate;
+    }
 
     public Long getStartTime() {
         return startTime;
@@ -118,38 +151,6 @@ public class RegInvest implements Serializable{
 
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    public String getProductRate() {
-        return productRate;
-    }
-
-    public void setProductRate(String productRate) {
-        this.productRate = productRate;
-    }
-
-    public String getProductPlusRate() {
-        return productPlusRate;
-    }
-
-    public void setProductPlusRate(String productPlusRate) {
-        this.productPlusRate = productPlusRate;
-    }
-
-    public String getTicketType() {
-        return ticketType;
-    }
-
-    public void setTicketType(String ticketType) {
-        this.ticketType = ticketType;
-    }
-
-    public String getTicketRate() {
-        return ticketRate;
-    }
-
-    public void setTicketRate(String ticketRate) {
-        this.ticketRate = ticketRate;
     }
 
     public String getTicketAmount() {

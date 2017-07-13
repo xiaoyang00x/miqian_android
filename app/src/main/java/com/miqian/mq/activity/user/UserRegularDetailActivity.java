@@ -23,6 +23,7 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -198,26 +199,31 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
                 frameProjectMatch.setVisibility(View.VISIBLE);
                 textProject.setText("项目详情");
             }
-            String realInterest = reginvest.getProductRate();
-            String presentInterest = reginvest.getProductPlusRate();
+            BigDecimal realInterest = reginvest.getProductRate();
+            BigDecimal presentInterest = reginvest.getProductPlusRate();
+            BigDecimal ticketRate = reginvest.getTicketRate();
+            int ticketType = reginvest.getTicketType();//促销券类型   0: 红包  1: 秒钱卡   2: 加息卡   3: 双倍加息卡   4: 现金
             String bidType = reginvest.getBidType();
             if (Constants.BID_TYPE_SBB.equals(bidType)) {
-                if (!TextUtils.isEmpty(realInterest)) {
-                    textInterestRate.setText(Float.parseFloat(realInterest) * 2 + "");
-                    textInterestRatePresent.setText("%");
-                }
+                textInterestRate.setText((realInterest.add(realInterest) + ""));
+                textInterestRatePresent.setText("%");
             } else if (Constants.BID_TYPE_SBSYK.equals(bidType)) {
-                if (!TextUtils.isEmpty(realInterest) && !TextUtils.isEmpty(presentInterest)) {
-                    float realprofit = Float.parseFloat(realInterest) * 2 + Float.parseFloat(presentInterest) * 2;
-                    textInterestRate.setText(realprofit + "");
-                    textInterestRatePresent.setText("%");
+                if (ticketType == 3) {
+                    realInterest = (realInterest.add(realInterest)).add(presentInterest.add(presentInterest));
                 }
-
+                textInterestRate.setText(realInterest + "");
+                textInterestRatePresent.setText("%");
 
             } else {
-                if (!TextUtils.isEmpty(realInterest) && !TextUtils.isEmpty(presentInterest)) {
-                    textInterestRate.setText(Float.parseFloat(realInterest) + "");
+                textInterestRate.setText(realInterest + "");
+                if (presentInterest.compareTo(BigDecimal.ZERO) > 0) {
                     textInterestRatePresent.setText("+" + presentInterest + "%");
+                } else if (ticketRate.compareTo(BigDecimal.ZERO) > 0) {
+                    textInterestRatePresent.setText("+" + ticketRate + "%");
+                } else if (ticketRate.compareTo(BigDecimal.ZERO) > 0 && presentInterest.compareTo(BigDecimal.ZERO) > 0) {
+                    textInterestRatePresent.setText("+" + ticketRate.add(presentInterest) + "%");
+                } else {
+                    textInterestRatePresent.setText("%");
                 }
             }
         }

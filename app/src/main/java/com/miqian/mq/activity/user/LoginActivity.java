@@ -85,6 +85,10 @@ public class LoginActivity extends Activity {
     }
 
     private void initView() {
+        String phone = Pref.getString(Pref.TELEPHONE, this, "");
+        if (!TextUtils.isEmpty(phone)) {
+            editPhone.setText(phone);
+        }
         mWaitingDialog = ProgressDialogView.create(this);
         tvTorigister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +166,7 @@ public class LoginActivity extends Activity {
                 if (UserUtil.isBeforeNotSave(userInfo)) {
                     ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.JX_SAVE, null);
                 } else {
-                    if (mLoginListener!=null){
+                    if (mLoginListener != null) {
                         mLoginListener.loginSuccess();
                     }
                 }
