@@ -91,7 +91,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
         bankBranchAdapter = new BankBranchAdapter(items);
         bankBranchAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(bankBranchAdapter);
-        bankBranchAdapter.setMaxItem(branchData.getPageInfo().getTotalPage());
+        bankBranchAdapter.setMaxItem(branchData.getPageInfo().getTotalRecord());
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -108,7 +108,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
 
     private void loadMore() {
         if (!isLoading) {
-            if (pageInfo != null && pageNo < pageInfo.getTotalPage()) {
+            if (pageInfo != null && pageNo < pageInfo.getTotalRecord()) {
             }
             isLoading = true;
             pageNo += 1;

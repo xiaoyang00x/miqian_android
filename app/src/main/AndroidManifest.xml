@@ -87,6 +87,7 @@
         <activity
             android:name=".activity.user.UserMqbActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
@@ -159,6 +160,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.current.ActivityRedeemMqb"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.current.RedeemMqbResult"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity

@@ -13,15 +13,22 @@ import com.miqian.mq.utils.ExtendOperationController;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.views.WFYTitle;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Jackie on 2015/9/23.
  */
 public class IntoResultActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView textOrderMoney;
-    private TextView textOrderNo;
-    private TextView textBank;
-    private Button btBack;
+    @BindView(R.id.text_order_money)
+    TextView textOrderMoney;
+    @BindView(R.id.text_order_no)
+    TextView textOrderNo;
+    @BindView(R.id.text_bank)
+    TextView textBank;
+    @BindView(R.id.bt_back)
+    Button btBack;
 
     private String status;
     private String money;
@@ -40,15 +47,11 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void obtainData() {
-
     }
 
     @Override
     public void initView() {
-        textOrderMoney = (TextView) findViewById(R.id.text_order_money);
-        textOrderNo = (TextView) findViewById(R.id.text_order_no);
-        textBank = (TextView) findViewById(R.id.text_bank);
-        btBack = (Button) findViewById(R.id.bt_back);
+        ButterKnife.bind(this);
         btBack.setOnClickListener(this);
         refreshView();
     }
@@ -74,14 +77,24 @@ public class IntoResultActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_back:
-                if ("1".equals(status)) {
-                    FragmentUser.refresh = true;
-                }
-                ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
+                closeActivity();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        closeActivity();
+        super.onBackPressed();
+    }
+
+    private void closeActivity() {
+        if ("1".equals(status)) {
+            FragmentUser.refresh = true;
+        }
+        ExtendOperationController.getInstance().doNotificationExtendOperation(ExtendOperationController.OperationKey.BACK_USER, null);
     }
 
     @Override

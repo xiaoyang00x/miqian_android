@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="279dp"
+            android:layout_height="200dp"
             android:background="@drawable/account_head_bg"
             android:orientation="vertical">
 
@@ -20,7 +20,8 @@
                 android:id="@+id/image_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
                 android:src="@drawable/result_success" />
 
             <TextView
@@ -29,10 +30,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/image_status"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="充值成功"
                 android:textColor="@color/white"
-                android:textSize="@dimen/mq_font6_v2" />
+                android:textSize="@dimen/mq_font7_v2"
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -44,23 +46,25 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
-            android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right">
 
             <TextView
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
+                android:layout_centerVertical="true"
                 android:text="充值金额" />
 
             <TextView
                 android:id="@+id/order_money_unit"
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:text="元" />
 
             <TextView
                 android:id="@+id/text_order_money"
                 style="@style/f8_R1_V2"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="2dp"
                 android:layout_toLeftOf="@id/order_money_unit"
                 android:text="--" />
@@ -71,19 +75,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
-            android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right">
 
             <TextView
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
+                android:layout_centerVertical="true"
                 android:text="业务编号" />
 
             <TextView
                 android:id="@+id/text_order_no"
-                style="@style/f3_B1"
+                style="@style/f6_B1_V2"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/mq_b4_v2" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
 
         <View style="@style/item_divider_none" />
@@ -91,19 +95,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item"
-            android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_left_right"
             android:paddingRight="@dimen/margin_left_right">
 
             <TextView
-                style="@style/f7_B1_V2"
+                style="@style/f6_B1_V2"
+                android:layout_centerVertical="true"
                 android:text="充值至" />
 
             <TextView
                 android:id="@+id/text_bank"
-                style="@style/f3_B1"
+                style="@style/f6_B1_V2"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/mq_b4_v2" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
 
         <View style="@style/item_divider_none" />

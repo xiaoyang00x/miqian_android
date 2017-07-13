@@ -5,6 +5,9 @@ package com.miqian.mq.utils;
  */
 public class Constants {
 
+    public static final int FAIL = 0;
+    public static final int SUCCESS = 1;
+
     public final static int MAXCOUNT = 5; // 图案锁 最大验证次数
     public final static String VERIFYFAILED = "verifyFailed"; // 图案锁验证失败
 

@@ -26,7 +26,7 @@
                 android:layout_marginTop="15dp"
                 android:drawablePadding="15dp"
                 android:drawableTop="@drawable/result_success"
-                android:text="认购申请成功"
+                android:text="赎回成功"
                 android:textColor="@color/white"
                 android:textSize="@dimen/mq_font7_v2"
                 android:textStyle="bold"/>
@@ -47,7 +47,7 @@
                 style="@style/f6_B1_V2"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
-                android:text="认购申请金额" />
+                android:text="赎回申请金额" />
 
             <TextView
                 android:id="@+id/text_money_unit"
@@ -55,7 +55,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/margin_left_right"
-                android:text="元" />
+                android:text="元"/>
+
 
             <TextView
                 android:id="@+id/text_money"
@@ -71,7 +72,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/frame_balance"
+            android:id="@+id/frame_interest"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item">
 
@@ -79,7 +80,7 @@
                 style="@style/f6_B1_V2"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
-                android:text="余额支付" />
+                android:text="对应利息" />
 
             <TextView
                 android:id="@+id/text_money_unit2"
@@ -90,7 +91,7 @@
                 android:text="元" />
 
             <TextView
-                android:id="@+id/text_pay_money"
+                android:id="@+id/text_interest"
                 style="@style/f8_R1_V2"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="3dp"
@@ -104,7 +105,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/frame_promote"
+            android:id="@+id/frame_expect"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_item">
 
@@ -112,10 +113,10 @@
                 style="@style/f6_B1_V2"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_left_right"
-                android:text="使用红包/卡" />
+                android:text="预期到账时间" />
 
             <TextView
-                android:id="@+id/text_promote"
+                android:id="@+id/text_expect"
                 style="@style/f6_B1_V2"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -125,36 +126,6 @@
                 style="@style/item_divider_none"
                 android:layout_alignParentBottom="true" />
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/frame_error"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_item"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/f6_B1_V2"
-                android:layout_marginLeft="15dp"
-                android:text="失败原因"
-                android:layout_alignBaseline="@+id/text_error"
-                android:layout_alignBottom="@+id/text_error"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="15dp" />
-
-            <TextView
-                android:id="@+id/text_error"
-                style="@style/f8_R1_V2"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/margin_left_right"
-                android:textSize="@dimen/mq_font6_v2" />
-
-            <View
-                style="@style/item_divider_none"
-                android:layout_alignParentBottom="true" />
-        </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/frame_trade_number"
@@ -179,41 +150,63 @@
                 android:layout_alignParentBottom="true" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@id/text_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/mq_r1_v2"
-            android:textSize="@dimen/mq_font3_v2" />
+        <RelativeLayout
+            android:id="@+id/frame_error"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_item"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/f6_B1_V2"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left_right"
+                android:text="失败原因" />
+
+            <TextView
+                android:id="@+id/text_error"
+                style="@style/f8_R1_V2"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_left_right"
+                android:textSize="@dimen/mq_font6_v2" />
+
+            <View
+                style="@style/item_divider_none"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_left_right"
             android:layout_marginRight="@dimen/margin_left_right"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="40dp">
 
             <Button
                 android:id="@+id/bt_back"
                 style="@style/click_btn"
-                android:text="继续认购" />
+                android:text="确定" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@id/text_tip1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_left_right"
-            android:layout_marginRight="@dimen/margin_left_right"
-            android:layout_marginTop="10dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="如果多次失败，请联系客服"
+            android:textColor="@color/mq_b4_v2"
+            android:textSize="@dimen/mq_font3_v2" />
 
-            <Button
-                android:id="@+id/bt_my_product"
-                style="@style/click_btn"
-                android:background="@drawable/btn_sendcaptcha"
-                android:text="前往我的秒钱宝"
-                android:textColor="@color/mq_r1_v2" />
-        </RelativeLayout>
+        <TextView
+            android:id="@id/text_tip2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="400-6656-191"
+            android:textColor="@color/mq_bl3_v2"
+            android:textSize="@dimen/mq_font3_v2"
+            android:visibility="gone"/>
+
     </LinearLayout>
 </ScrollView>

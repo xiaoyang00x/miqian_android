@@ -113,7 +113,7 @@ public class RegularTransferView {
                 if (result == null || (mData = result.getData()) == null) { // 缓存第一页数据
                     return;
                 }
-                mAdapter.setTotalCount(result.getData().getPage().getTotalPage());
+                mAdapter.setTotalCount(result.getData().getPage().getTotalRecord());
                 mAdapter.clear();
                 mAdapter.addAll(result.getData().getSubjectData());
                 mAdapter.notifyDataSetChanged();

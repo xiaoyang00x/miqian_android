@@ -14,6 +14,7 @@ import com.miqian.mq.adapter.AdapterPacket;
 import com.miqian.mq.entity.ProducedOrder;
 import com.miqian.mq.entity.Promote;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.views.WFYTitle;
 
@@ -92,7 +93,7 @@ public class ActivityRedPacket extends BaseActivity implements View.OnClickListe
             case R.id.bt_confirm:
                 Intent intent = new Intent();
                 intent.putExtra("position", position);
-                setResult(CurrentInvestment.SUCCESS, intent);
+                setResult(Constants.SUCCESS, intent);
                 ActivityRedPacket.this.finish();
                 break;
             default:

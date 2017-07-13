@@ -66,6 +66,7 @@ public class Urls {
     public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
 //    public static final String SERVER_TEST_WEB = "https://devmobile.miaoqian.com/";
 
+
     //线上
     public static final String SERVER_ONLINE = "https://api.shicaidai.com/";
     public static final String SERVER_ONLINE_WEB = "https://mobile.miaoqian.com/";
