@@ -91,7 +91,7 @@ public class BankBranchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else if (holder instanceof ProgressViewHolder) {
             if (position > maxValue) {
                 ((AdapterUserRegular.ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
-                if (maxValue <= 5) {
+                if (maxValue <= 15) {
                     ((AdapterUserRegular.ProgressViewHolder) holder).textLoading.setVisibility(View.GONE);
                 } else {
                     ((AdapterUserRegular.ProgressViewHolder) holder).textLoading.setText("没有更多");
