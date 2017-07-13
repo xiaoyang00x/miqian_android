@@ -125,10 +125,6 @@ public class UserRegularActivity extends BaseActivity implements View.OnClickLis
 
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
         tvQQRegular = (TextViewEx) findViewById(R.id.tv_qq_nodata);
-//        RadioButton btnRight = (RadioButton) findViewById(R.id.bt_right);
-//        if (launchSuccess) {
-//            btnRight.setChecked(true);
-//        }
         radioGroup.setOnCheckedChangeListener(this);
         swipeRefresh = (MySwipeRefresh) findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnPullRefreshListener(new MySwipeRefresh.OnPullRefreshListener() {

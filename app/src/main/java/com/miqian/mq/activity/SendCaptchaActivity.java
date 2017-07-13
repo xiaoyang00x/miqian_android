@@ -40,6 +40,7 @@ public class SendCaptchaActivity extends BaseActivity {
     private TextView tvPhone;
     private int type;
     private View frameTelephone;
+    private String authCode;
 
 
     @Override
@@ -114,6 +115,9 @@ public class SendCaptchaActivity extends BaseActivity {
             @Override
             public void onSucceed(CaptchaResult result) {
                 end();
+                if (result != null && result.getData() != null) {
+                    authCode = result.getData().getAuthCode();
+                }
                 mBtn_sendCaptcha.setEnabled(false);
                 myRunnable = new MyRunnable();
                 thread = new Thread(myRunnable);
@@ -141,9 +145,18 @@ public class SendCaptchaActivity extends BaseActivity {
             if (MobileOS.isMobileNO(phone) && phone.length() == 11) {
                 //检验验证码
                 if (!TextUtils.isEmpty(captcha)) {
-                    //验证验证码
-                    checkCaptcha(phone, captcha);
 
+                    if (type == TypeUtil.CAPTCHA_TRADE_PW) {
+                        //跳转江西银行网页
+                        if (!TextUtils.isEmpty(authCode)) {
+                            HttpRequest.changejxTradePwd(mActivity, authCode, captcha);
+                            finish();
+                        }
+
+                    } else {
+                        //验证验证码
+                        checkCaptcha(phone, captcha);
+                    }
                 } else {
                     Uihelper.showToast(this, R.string.tip_captcha);
                 }
@@ -175,20 +188,12 @@ public class SendCaptchaActivity extends BaseActivity {
     }
 
     private void summit(final String phone, final String captcha) {
-
-        if (type == TypeUtil.CAPTCHA_TRADE_PW) {
-            //跳转江西银行网页
-
-        } else {
-            Intent intent = new Intent(mActivity, SetPasswordActivity.class);
-            intent.putExtra("captcha", captcha);
-            intent.putExtra("phone", phone);
-            intent.putExtra("type", type);
-            startActivity(intent);
-            finish();
-        }
-
-
+        Intent intent = new Intent(mActivity, SetPasswordActivity.class);
+        intent.putExtra("captcha", captcha);
+        intent.putExtra("phone", phone);
+        intent.putExtra("type", type);
+        startActivity(intent);
+        finish();
     }
 
     class MyRunnable implements Runnable {

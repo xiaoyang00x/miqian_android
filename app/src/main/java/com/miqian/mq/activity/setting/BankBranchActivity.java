@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
 
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.miqian.mq.R;
@@ -14,9 +13,10 @@ import com.miqian.mq.adapter.BankBranchAdapter;
 import com.miqian.mq.entity.BankBranch;
 import com.miqian.mq.entity.BankBranchResult;
 import com.miqian.mq.entity.MqResult;
-import com.miqian.mq.entity.ProductBaseInfo;
+import com.miqian.mq.entity.Page;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
+import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.views.WFYTitle;
 
 import java.util.ArrayList;
@@ -31,6 +31,11 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
     private List<BankBranch> items;
     private String city, province;
     private String bankName;
+    private int pageNo = 1;
+    private boolean isLoading = false;
+    private BankBranchResult branchData;
+    private Page pageInfo;
+    private BankBranchAdapter bankBranchAdapter;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -41,6 +46,8 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
         super.onCreate(arg0);
     }
 
+
+
     @Override
     public void obtainData() {
         begin();
@@ -48,20 +55,26 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
             @Override
             public void onSucceed(MqResult<BankBranchResult> result) {
                 end();
-                BankBranchResult data = result.getData();
-                if (data!=null){
-                    items = data.getList();
+                branchData = result.getData();
+                if (branchData != null&&branchData.getList().size()>0) {
+                    items = branchData.getList();
+                    pageInfo = branchData.getPageInfo();
+                    setView();
+                }else {
+                    showEmptyView();
                 }
-                setView();
             }
 
             @Override
             public void onFail(String error) {
                 end();
+                Uihelper.showToast(mActivity,error);
+                showErrorView();
 
             }
-        }, province, city, bankName);
+        }, province, city, bankName, pageNo + "");
     }
+
 
     @Override
     public void initView() {
@@ -75,9 +88,53 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).colorResId(R.color.mq_b4).size(1).build());
-        BankBranchAdapter bankBranchAdapter = new BankBranchAdapter(items);
+        bankBranchAdapter = new BankBranchAdapter(items);
         bankBranchAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(bankBranchAdapter);
+        bankBranchAdapter.setMaxItem(branchData.getPageInfo().getTotalPage());
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                int totalItemCount = layoutManager.getItemCount();
+                if (lastVisibleItem >= totalItemCount - 2) {
+                    loadMore();
+                }
+            }
+        });
+
+    }
+
+    private void loadMore() {
+        if (!isLoading) {
+            if (pageInfo != null && pageNo < pageInfo.getTotalPage()) {
+            }
+            isLoading = true;
+            pageNo += 1;
+            HttpRequest.getSubBranch(mActivity, new ICallback<MqResult<BankBranchResult>>() {
+                @Override
+                public void onSucceed(MqResult<BankBranchResult> result) {
+                    isLoading=false;
+                    end();
+                    branchData = result.getData();
+                    if (branchData != null) {
+                        List<BankBranch> list = branchData.getList();
+                        if (list != null && list.size() > 0) {
+                            bankBranchAdapter.addAll(list);
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFail(String error) {
+                    isLoading=false;
+                    end();
+                    Uihelper.showToast(mActivity,error);
+                }
+            }, province, city, bankName, pageNo + "");
+        }
     }
 
     @Override

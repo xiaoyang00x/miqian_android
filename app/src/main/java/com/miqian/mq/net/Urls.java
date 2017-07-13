@@ -58,12 +58,12 @@ public class Urls {
             + "/SNc/6A5aNjEU9y6";
 
     //测试
-    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
+//    public static final String SERVER_TEST = "https://testapi.miaoqian.com/";
 //    public static final String SERVER_TEST = "http://172.18.0.156:8081/";
 //    public static final String SERVER_TEST = "http://192.168.1.225:8081/miaoqian-app/";
     public static final String SERVER_TEST_WEB = "https://testmobile.miaoqian.com/";
 
-//    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
+    public static final String SERVER_TEST = "https://devapi.miaoqian.com/";
 //    public static final String SERVER_TEST_WEB = "https://devmobile.miaoqian.com/";
 
     //线上
@@ -292,4 +292,5 @@ public class Urls {
     public final static String jx_auto_claims_url =  "signProtocol/autoClaimsTransferForJump";//自动债权转让
     public final static String jx_auto_subscribe_url =  "signProtocol/autoSubscribeForJump";//自动投标
     public final static String jx_auto_withdraw_url =  "trans/withdrawForJump";//提现
+    public final static String jx_auto_user_changepwd =  "user/changePayPasswordForJump";//找回交易密码
 }
