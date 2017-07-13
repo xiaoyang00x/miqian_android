@@ -43,7 +43,6 @@ public class UserMqbActivity extends BaseActivity implements View.OnClickListene
     private NewCurrentFoundFlow mData;
     private ArrayList<NewCurrentFoundFlow.InvestInfo> regInvestList;
 
-
     @BindView(R.id.frame_current_record)
     View frame_current_record;
 
@@ -75,7 +74,7 @@ public class UserMqbActivity extends BaseActivity implements View.OnClickListene
 
     private void loadMore() {
         if (!isLoading) {
-            if (regInvestList.size() >= mData.getPageInfo().getTotalPage()) {
+            if (regInvestList.size() >= mData.getPageInfo().getTotalRecord()) {
                 return;
             }
             isLoading = true;
@@ -134,6 +133,12 @@ public class UserMqbActivity extends BaseActivity implements View.OnClickListene
         mAdapter = new AdapterUserMqb(this, regInvestList, mData.getNewCurrent(), mData.getPageInfo());
         mAdapter.setMaxItem(mData.getPageInfo().getTotalRecord());
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        obtainData();
     }
 
     @Override

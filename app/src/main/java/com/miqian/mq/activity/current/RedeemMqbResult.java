@@ -9,13 +9,11 @@ import android.widget.TextView;
 
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
+import com.miqian.mq.activity.user.UserMqbActivity;
 import com.miqian.mq.entity.RedeemResultInfo;
-import com.miqian.mq.utils.ExtendOperationController;
-import com.miqian.mq.utils.ExtendOperationController.OperationKey;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.views.WFYTitle;
-import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -122,7 +120,7 @@ public class RedeemMqbResult extends BaseActivity {
 
     @OnClick(R.id.bt_back)
     public void closeActivity() {
-        MobclickAgent.onEvent(mContext, "1065");
-        ExtendOperationController.getInstance().doNotificationExtendOperation(OperationKey.BACK_USER, null);
+        startActivity(new Intent(RedeemMqbResult.this, UserMqbActivity.class));
+        RedeemMqbResult.this.finish();
     }
 }

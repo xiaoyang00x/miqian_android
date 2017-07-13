@@ -179,8 +179,8 @@ public class ActivityRedeemMqb extends BaseActivity {
                     RedeemResultInfo redeemResultInfo = result.getData();
                     intent.putExtra("redeemResultInfo", JSON.toJSONString(redeemResultInfo));
                     startActivity(intent);
+                    ActivityRedeemMqb.this.finish();
                 }
-                ActivityRedeemMqb.this.finish();
             }
 
             @Override

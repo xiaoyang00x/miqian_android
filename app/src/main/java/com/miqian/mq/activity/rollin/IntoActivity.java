@@ -21,7 +21,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.miqian.mq.R;
 import com.miqian.mq.activity.BaseActivity;
 import com.miqian.mq.activity.WebActivity;
-import com.miqian.mq.activity.current.CurrentInvestment;
 import com.miqian.mq.encrypt.RSAUtils;
 import com.miqian.mq.entity.CaptchaResult;
 import com.miqian.mq.entity.Meta;
@@ -31,6 +30,7 @@ import com.miqian.mq.entity.UserInfo;
 import com.miqian.mq.net.HttpRequest;
 import com.miqian.mq.net.ICallback;
 import com.miqian.mq.net.Urls;
+import com.miqian.mq.utils.Constants;
 import com.miqian.mq.utils.FormatUtil;
 import com.miqian.mq.utils.JsonUtil;
 import com.miqian.mq.utils.TypeUtil;
@@ -319,7 +319,7 @@ public class IntoActivity extends BaseActivity implements View.OnClickListener {
             startActivity(intent);
         } else {
             Intent intent = new Intent();
-            setResult(CurrentInvestment.SUCCESS, intent);
+            setResult(Constants.SUCCESS, intent);
         }
         IntoActivity.this.finish();
     }

@@ -24,7 +24,6 @@ import com.miqian.mq.utils.Uihelper;
 import com.miqian.mq.utils.UserUtil;
 import com.miqian.mq.views.WFYTitle;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.onlineconfig.OnlineConfigAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +131,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
     private void loadMore() {
         if (!isLoading) {
-            if (promList.size() >= page.getTotalPage()) {
+            if (promList.size() >= page.getTotalRecord()) {
                 return;
             }
             isLoading = true;
@@ -161,7 +160,7 @@ public class MyTicketActivity extends BaseActivity implements View.OnClickListen
 
     private void refreshView() {
         adapterMyTicket = new AdapterMyTicket(mActivity, promList, true);
-        adapterMyTicket.setMaxItem(page.getTotalPage());
+        adapterMyTicket.setMaxItem(page.getTotalRecord());
         recyclerView.setAdapter(adapterMyTicket);
     }
 

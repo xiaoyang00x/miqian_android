@@ -58,18 +58,9 @@ public class NewCurrentFoundFlow {
     public static final String STATUS_02 = "02";
     public static final String STATUS_03 = "03";
 
-    private UserRedeem userRedeem;
     private NewCurrent newCurrent;
     private ArrayList<InvestInfo> investList;
     private Page pageInfo;
-
-    public UserRedeem getUserRedeem() {
-        return userRedeem;
-    }
-
-    public void setUserRedeem(UserRedeem userRedeem) {
-        this.userRedeem = userRedeem;
-    }
 
     public NewCurrent getNewCurrent() {
         return newCurrent;
@@ -237,74 +228,6 @@ public class NewCurrentFoundFlow {
 
         public void setLastdayProfit(String lastdayProfit) {
             this.lastdayProfit = lastdayProfit;
-        }
-    }
-
-    public class UserRedeem {
-
-        /**
-         * 是否可赎回
-         */
-        private boolean enable;
-
-        /**
-         * 每日可赎回总次数
-         */
-        private int dayMaxCount;
-
-        /**
-         * 用户今日剩余可赎回次数
-         */
-        private int dayRemainCount;
-
-        /**
-         * 每月可赎回总次数
-         */
-        private int monthMaxCount;
-
-        /**
-         * 用户本月剩余可赎回次数
-         */
-        private int monthRemainCount;
-
-        public boolean isEnable() {
-            return enable;
-        }
-
-        public void setEnable(boolean enable) {
-            this.enable = enable;
-        }
-
-        public int getDayMaxCount() {
-            return dayMaxCount;
-        }
-
-        public void setDayMaxCount(int dayMaxCount) {
-            this.dayMaxCount = dayMaxCount;
-        }
-
-        public int getDayRemainCount() {
-            return dayRemainCount;
-        }
-
-        public void setDayRemainCount(int dayRemainCount) {
-            this.dayRemainCount = dayRemainCount;
-        }
-
-        public int getMonthMaxCount() {
-            return monthMaxCount;
-        }
-
-        public void setMonthMaxCount(int monthMaxCount) {
-            this.monthMaxCount = monthMaxCount;
-        }
-
-        public int getMonthRemainCount() {
-            return monthRemainCount;
-        }
-
-        public void setMonthRemainCount(int monthRemainCount) {
-            this.monthRemainCount = monthRemainCount;
         }
     }
 }

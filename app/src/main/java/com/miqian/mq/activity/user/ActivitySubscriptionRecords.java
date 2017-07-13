@@ -1,6 +1,5 @@
 package com.miqian.mq.activity.user;
 
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -90,13 +89,13 @@ public class ActivitySubscriptionRecords extends BaseActivity {
 
     private void refreshView() {
         adapter = new AdapterMqbSubScripRecords(list, type);
-        adapter.setMaxItem(page.getTotalPage());
+        adapter.setMaxItem(page.getTotalRecord());
         mRecyclerView.setAdapter(adapter);
     }
 
     private void loadMore() {
         if (!isLoading) {
-            if (list.size() >= page.getTotalPage()) {
+            if (list.size() >= page.getTotalRecord()) {
                 return;
             }
             isLoading = true;
