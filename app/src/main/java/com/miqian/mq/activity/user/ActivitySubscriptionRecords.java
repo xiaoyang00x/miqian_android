@@ -95,7 +95,7 @@ public class ActivitySubscriptionRecords extends BaseActivity {
 
     private void loadMore() {
         if (!isLoading) {
-            if (list.size() >= page.getTotalRecord()) {
+            if (page == null || list.size() >= page.getTotalRecord()) {
                 return;
             }
             isLoading = true;
@@ -177,6 +177,7 @@ public class ActivitySubscriptionRecords extends BaseActivity {
     }
 
     private void switchTab(int type) {
+        page = null;
         resetView(type);
         if (list != null && list.size() > 0) {
             list.clear();
