@@ -196,11 +196,9 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                 Uihelper.showToast(mActivity, "小于最小提现金额，请重新输入");
                 return;
             }
-            begin();
             HttpRequest.withDrawPreprocess(mActivity, inputAmt + "", new ICallback<WithDrawPrepressResult>() {
                 @Override
                 public void onSucceed(WithDrawPrepressResult result) {
-                    end();
                     WithDrawPrepress data = result.getData();
                     String code = result.getCode();
                     switch (code) {
@@ -264,7 +262,6 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                                 }
 
                                 disableDialog.show();
-
                             }
                     }
 
@@ -272,7 +269,6 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
 
                 @Override
                 public void onFail(String error) {
-                    end();
                     Uihelper.showToast(mActivity, error);
                 }
             });
