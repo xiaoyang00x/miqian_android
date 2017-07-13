@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_content"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:ellipsize="end"
-        android:gravity="left"
-        android:padding="15dp"
-        android:singleLine="true"
-        android:text="天津鑫海融资租赁有限公司"
-        android:textColor="@color/mq_b2_v2"
-        android:textSize="@dimen/mq_font7_v2" />
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:text="项目名称"
+            android:textColor="@color/mq_b2_v2"
+            android:textSize="@dimen/mq_font7_v2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/tv_left"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:text="苏宁云商-上市公司"
+            android:textColor="@color/mq_b2_v2"
+            android:textSize="@dimen/mq_font5_v2"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <include
         android:id="@+id/line"
