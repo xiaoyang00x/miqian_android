@@ -359,7 +359,7 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     }
 
     @OnClick(R.id.bt_rollout)
-    public void rollOut() {
+    public void rollOut() {//提现
         if (userInfo == null) {
             return;
         }

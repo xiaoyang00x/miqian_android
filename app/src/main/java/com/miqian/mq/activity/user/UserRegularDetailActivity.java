@@ -188,14 +188,11 @@ public class UserRegularDetailActivity extends BaseActivity implements View.OnCl
         }
 
         if (reginvest != null) {
-            String status = reginvest.getStatus();
-            if (!"4".equals(status)) {
-                if ("2".equals(reginvest.getProductType()) || "98".equals(reginvest.getProductType())) {//定期计划和定期计划转让
-                    frameProjectMatch.setVisibility(View.VISIBLE);
-                    textProject.setText("项目匹配");
-                }
+            if ("2".equals(reginvest.getProductType()) || "98".equals(reginvest.getProductType())) {//定期计划
+                frameProjectMatch.setVisibility(View.VISIBLE);
+                textProject.setText("项目匹配");
             }
-            if ("2".equals(reginvest.getProductType()) || "98".equals(reginvest.getProductType())) {//定期赚和定期赚转让详情
+            if ("1".equals(reginvest.getProductType()) || "97".equals(reginvest.getProductType())) {//定期赚
                 frameProjectMatch.setVisibility(View.VISIBLE);
                 textProject.setText("项目详情");
             }

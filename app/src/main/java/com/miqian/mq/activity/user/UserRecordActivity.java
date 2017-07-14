@@ -106,7 +106,7 @@ public class UserRecordActivity extends BaseActivity {
 
     private void loadMore() {
         if (!isLoading) {
-            if (list.size() >= page.getTotalRecord()) {
+            if (page == null || list.size() >= page.getTotalRecord()) {
                 return;
             }
             isLoading = true;
@@ -243,6 +243,7 @@ public class UserRecordActivity extends BaseActivity {
 
     private void switchTab(int type) {
         resetView(type);
+        page = null;
         if (list != null && list.size() > 0) {
             list.clear();
             if (adapter != null) {
@@ -298,6 +299,7 @@ public class UserRecordActivity extends BaseActivity {
         tvTips.setText("暂时没有数据");
         ivData.setBackgroundResource(R.drawable.nodata);
     }
+
     /**
      * 显示数据
      */
@@ -310,6 +312,12 @@ public class UserRecordActivity extends BaseActivity {
      */
     protected void showErrorData() {
         mViewnoresult.setVisibility(View.VISIBLE);
+        findViewById(R.id.tv_reFresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                obtainData();
+            }
+        });
         if (MobileOS.getNetworkType(mContext) == -1) {
             tvTips.setText("暂时没有网络");
             ivData.setBackgroundResource(R.drawable.nonetwork);

@@ -1447,7 +1447,7 @@ public class HttpRequest {
         params.add(new Param("projectCode", projectCode));
         params.add(new Param("custId", UserUtil.getUserId(activity)));
         String params_url = HttpUtils.getUrl(params);
-        WebActivity.startActivity(activity, Urls.getServer(activity) + Urls.web_regular_plan_detail + params_url);
+        WebActivity.startActivity(activity,Urls.web_regular_plan_detail + params_url);
     }
 
     /**
@@ -1459,7 +1459,7 @@ public class HttpRequest {
         params.add(new Param("projectCode", projectCode));
         params.add(new Param("custId", UserUtil.getUserId(activity)));
         String params_url = HttpUtils.getUrl(params);
-        WebActivity.startActivity(activity, Urls.getServer(activity) + Urls.web_regular_earn_detail + params_url);
+        WebActivity.startActivity(activity,Urls.web_regular_earn_detail + params_url);
     }
 
     /**
