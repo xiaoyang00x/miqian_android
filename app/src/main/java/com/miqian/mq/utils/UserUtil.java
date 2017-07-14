@@ -77,19 +77,21 @@ public class UserUtil {
     /**
      * @param context
      * @param userInfo 通过用户信息判断是否完成
-     * @param isFinish 直接判断是否完成
+     * @param saveInfo 通过用户存管信息判断是否完成
      */
-    public static void saveJxSave(Context context, UserInfo userInfo, boolean isFinish) {
+    public static boolean saveJxSave(Context context, UserInfo userInfo, SaveInfo saveInfo) {
         if (isFinishSave(context)) {
-            return;
+            return true;
         }
-        if (null == userInfo && isFinish) {
+        if (saveInfo != null && "1".equals(saveInfo.getJxAccountStatus()) && "1".equals(saveInfo.getBindCardStatus()) && "1".equals(saveInfo.getJxPayPwdStatus()) && "1".equals(saveInfo.getJxAutoClaimsTransferStatus()) && "1".equals(saveInfo.getJxAutoSubscribeStatus())) {
             Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
-            return;
+            return true;
         }
-        if (userInfo != null && "1".equals(userInfo.getJxAccountStatus()) && "1".equals(userInfo.getJxPayPwdStatus()) && "1".equals(userInfo.getJxAutoClaimsTransferStatus()) && "1".equals(userInfo.getJxAutoSubscribeStatus())) {
+        if (userInfo != null && "1".equals(userInfo.getJxAccountStatus()) && "1".equals(userInfo.getBindCardStatus()) && "1".equals(userInfo.getJxPayPwdStatus()) && "1".equals(userInfo.getJxAutoClaimsTransferStatus()) && "1".equals(userInfo.getJxAutoSubscribeStatus())) {
             Pref.saveInt(getPrefKey(context, Pref.IS_SAVE_FINISH), 1, context);
+            return true;
         }
+        return false;
     }
 
     public static void saveUserInfo(Context context, UserInfo userInfo) {
@@ -257,8 +259,7 @@ public class UserUtil {
                 @Override
                 public void onSucceed(MqResult<SaveInfo> result) {
                     SaveInfo saveInfo = result.getData();
-                    if (saveInfo != null && "1".equals(saveInfo.getJxAccountStatus()) && "1".equals(saveInfo.getJxPayPwdStatus()) && "1".equals(saveInfo.getJxAutoClaimsTransferStatus()) && "1".equals(saveInfo.getJxAutoSubscribeStatus())) {
-                        Pref.saveInt(getPrefKey(activity, Pref.IS_SAVE_FINISH), 1, activity);
+                    if (saveJxSave(activity, null, saveInfo)) {
                         CurrentInvestment.startActivity(activity, money, productInfo);
                     } else {
                         SaveAcitvity.startActivity(activity);

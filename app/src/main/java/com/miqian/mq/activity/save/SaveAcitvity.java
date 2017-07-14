@@ -121,7 +121,7 @@ public class SaveAcitvity extends BaseActivity implements View.OnClickListener {
     private void refreshButtonView() {
         switch (jxState) {
             case 4:
-                UserUtil.saveJxSave(SaveAcitvity.this, null, true);
+                UserUtil.saveJxSave(SaveAcitvity.this, null, saveInfo);
                 btOpen.setText("已完成存管");
                 break;
             case 3:

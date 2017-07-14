@@ -298,7 +298,7 @@ public class HttpRequest {
                 MqResult<UserInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<UserInfo>>() {
                 });
                 if (meta.getCode().equals("000000")) {
-                    UserUtil.saveJxSave(context, meta.getData(), false);
+                    UserUtil.saveJxSave(context, meta.getData(), null);
                     callback.onSucceed(meta);
                 } else {
                     callback.onFail(meta.getMessage());

@@ -144,7 +144,7 @@ public class SaveResultAcitvity extends BaseActivity implements View.OnClickList
                 textAuto.setTextColor(ContextCompat.getColor(this, R.color.mq_r1_v2));
                 frameStep.setVisibility(View.GONE);
                 frameFish.setVisibility(View.VISIBLE);
-                UserUtil.saveJxSave(SaveResultAcitvity.this, null, true);
+                UserUtil.saveJxSave(SaveResultAcitvity.this, null, saveInfo);
             }
         }
     }
