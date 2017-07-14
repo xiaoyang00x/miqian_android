@@ -74,7 +74,7 @@ public class BankBranchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mItemClickListener.onItemClick(v, getPosition() - 1);
+                    mItemClickListener.onItemClick(v, getPosition());
                 }
             });
             tv_bank_branch = (TextView) itemView.findViewById(R.id.tv_bank_branch);
@@ -83,22 +83,22 @@ public class BankBranchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        BankBranch bankBranch = items.get(position - 1);
         if (holder instanceof ViewHolder) {
+            BankBranch bankBranch = items.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.tv_bank_branch.setText(bankBranch.getBranchName());
         } else if (holder instanceof ProgressViewHolder) {
-            if (position > maxValue) {
-                ((AdapterUserRegular.ProgressViewHolder) holder).progressBar.setVisibility(View.GONE);
+            ProgressViewHolder viewHolder = (ProgressViewHolder) holder;
+            if (position+1>maxValue) {
+                viewHolder.progressBar.setVisibility(View.GONE);
                 if (maxValue <= 15) {
-                    ((AdapterUserRegular.ProgressViewHolder) holder).textLoading.setVisibility(View.GONE);
+                    viewHolder.textLoading.setVisibility(View.GONE);
                 } else {
-                    ((AdapterUserRegular.ProgressViewHolder) holder).textLoading.setText("没有更多");
+                    viewHolder.textLoading.setText("没有更多");
                 }
             } else {
-                ((AdapterUserRegular.ProgressViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
-                ((AdapterUserRegular.ProgressViewHolder) holder).textLoading.setText("加载更多");
+                viewHolder.progressBar.setVisibility(View.VISIBLE);
+                viewHolder.textLoading.setText("加载更多");
             }
         }
 

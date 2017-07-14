@@ -108,8 +108,8 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
 
     private void loadMore() {
         if (!isLoading) {
-            if (pageInfo != null && pageNo < pageInfo.getTotalRecord()) {
-            }
+            if (pageInfo != null && items.size() < pageInfo.getTotalRecord()) {
+
             isLoading = true;
             pageNo += 1;
             HttpRequest.getSubBranch(mActivity, new ICallback<MqResult<BankBranchResult>>() {
@@ -135,6 +135,7 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
                 }
             }, province, city, bankName, pageNo + "");
         }
+        }
     }
 
     @Override
@@ -150,12 +151,13 @@ public class BankBranchActivity extends BaseActivity implements BankBranchAdapte
 
     @Override
     public void onItemClick(View view, int postion) {
-        Intent intent = new Intent();
-        intent.putExtra("bankUnionNumber", items.get(postion).getBankUnionNumber());
-        intent.putExtra("branchName", items.get(postion).getBranchName());
-        setResult(1, intent);
-        finish();
-
+        if (postion!=items.size()){
+            Intent intent = new Intent();
+            intent.putExtra("bankUnionNumber", items.get(postion).getBankUnionNumber());
+            intent.putExtra("branchName", items.get(postion).getBranchName());
+            setResult(1, intent);
+            finish();
+        }
     }
 
     @Override
