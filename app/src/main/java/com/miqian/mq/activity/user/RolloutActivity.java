@@ -172,12 +172,12 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
 
             @Override
             public void afterTextChanged(final Editable s) {
-                String temp = s.toString().replaceAll(",", "");
-                if (TextUtils.isEmpty(temp)) {
+                inputAmt = s.toString().replaceAll(",", "");
+                if (TextUtils.isEmpty(inputAmt)) {
                     return;
                 }
-                if (temp.matches(FormatUtil.PATTERN_MONEY)) {
-                    handledata(temp);
+                if (inputAmt.matches(FormatUtil.PATTERN_MONEY)) {
+                    handledata(inputAmt);
                     return;
                 }
                 s.delete(s.toString().length() - 1, s.toString().length());
@@ -283,7 +283,11 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                         if (!TextUtils.isEmpty(feeAmt)) {
                             if (new BigDecimal(feeAmt).compareTo(BigDecimal.ZERO) > 0) {
                                 feeDialog.show();
+                            } else {
+                                HttpRequest.autoWithdraw(mActivity, inputAmt);
                             }
+                        } else {
+                            HttpRequest.autoWithdraw(mActivity, inputAmt);
                         }
                     } else {//非工作日不可提现
                         layoutNoWork.setVisibility(View.VISIBLE);
