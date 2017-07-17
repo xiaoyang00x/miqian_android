@@ -226,9 +226,12 @@ public class WebBankActivity extends WebActivity {
         switch (num) {
             case 5://跳转修改交易密码
                 SendCaptchaActivity.enterActivity(mActivity, TypeUtil.CAPTCHA_TRADE_PW);
+                state = 1;
+                break;
+            case 4://修改交易密码回跳
+                state = 4;
                 break;
         }
-        state = 1;
         goBack();
     }
 

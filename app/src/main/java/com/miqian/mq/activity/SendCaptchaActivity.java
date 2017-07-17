@@ -92,6 +92,8 @@ public class SendCaptchaActivity extends BaseActivity {
 
     }
 
+
+
     private void sendCaptcha() {
         if (type == TypeUtil.CAPTCHA_FINDPASSWORD) {
             phone = mEt_Telephone.getText().toString();
@@ -134,6 +136,16 @@ public class SendCaptchaActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==4){
+            finish();
+        }
+
+    }
+
     public void btn_click(View v) {
 
         String captcha = mEt_Captcha.getText().toString();
@@ -150,7 +162,6 @@ public class SendCaptchaActivity extends BaseActivity {
                         //跳转江西银行网页
                         if (!TextUtils.isEmpty(authCode)) {
                             HttpRequest.changejxTradePwd(mActivity, authCode, captcha);
-                            finish();
                         }
 
                     } else {
