@@ -285,16 +285,16 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
 
         tv_Title.setText("我的资产");
 
-        if (!isQQproject) {
-            if (hasMessage) {
-                btn_message.setImageResource(R.drawable.bt_hasmessage);
-            } else {
-                btn_message.setImageResource(R.drawable.btn_message);
-            }
-        } else {
-            btn_message.setVisibility(View.GONE);
-        }
-        btn_message.setOnClickListener(this);
+//        if (!isQQproject) {
+//            if (hasMessage) {
+//                btn_message.setImageResource(R.drawable.bt_hasmessage);
+//            } else {
+//                btn_message.setImageResource(R.drawable.btn_message);
+//            }
+//        } else {
+//            btn_message.setVisibility(View.GONE);
+//        }
+//        btn_message.setOnClickListener(this);
         frame_current.setOnClickListener(this);
         frame_regular.setOnClickListener(this);
         frame_record.setOnClickListener(this);
@@ -422,15 +422,15 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
                     LoginActivity.start(mActivity);
                 }
                 break;
-            //我的消息
-            case R.id.bt_left:
-                MobclickAgent.onEvent(mContext, "1015");
-                startActivity(new Intent(mContext, AnnounceActivity.class));
-                hasMessage = false;
-                if (!isQQproject) {
-                    btn_message.setImageResource(R.drawable.btn_message);
-                }
-                break;
+//            //我的消息
+//            case R.id.bt_left:
+//                MobclickAgent.onEvent(mContext, "1015");
+//                startActivity(new Intent(mContext, AnnounceActivity.class));
+//                hasMessage = false;
+//                if (!isQQproject) {
+//                    btn_message.setImageResource(R.drawable.btn_message);
+//                }
+//                break;
             //我的邀请
             case R.id.frame_invite:
                 if (UserUtil.hasLogin(mContext)) {
@@ -482,28 +482,28 @@ public class FragmentUser extends BasicFragment implements View.OnClickListener,
     @Override
     public void excuteExtendOperation(int operationKey, Object data) {
         switch (operationKey) {
-            case ExtendOperationController.OperationKey.RERESH_JPUSH:
-                // 更新数据
-                if (UserUtil.hasLogin(mContext)) {
-                    hasMessage = true;
-                    if (!isQQproject) {
-                        btn_message.setImageResource(R.drawable.bt_hasmessage);
-                    }
-
-                } else {
-                    hasMessage = false;
-                    if (!isQQproject) {
-                        btn_message.setImageResource(R.drawable.btn_message);
-                    }
-                }
-                break;
+//            case ExtendOperationController.OperationKey.RERESH_JPUSH:
+//                // 更新数据
+//                if (UserUtil.hasLogin(mContext)) {
+//                    hasMessage = true;
+//                    if (!isQQproject) {
+//                        btn_message.setImageResource(R.drawable.bt_hasmessage);
+//                    }
+//
+//                } else {
+//                    hasMessage = false;
+//                    if (!isQQproject) {
+//                        btn_message.setImageResource(R.drawable.btn_message);
+//                    }
+//                }
+//                break;
             case ExtendOperationController.OperationKey.MessageState:
-                // 更新数据
-                hasMessage = false;
-                if (!isQQproject) {
-                    btn_message.setImageResource(R.drawable.btn_message);
-                }
-                break;
+//                // 更新数据
+//                hasMessage = false;
+//                if (!isQQproject) {
+//                    btn_message.setImageResource(R.drawable.btn_message);
+//                }
+//                break;
             case ExtendOperationController.OperationKey.SETTRADPASSWORD_SUCCESS:
                 userInfoTemp.setJxPayPwdStatus("1");
                 break;
