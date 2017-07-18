@@ -98,6 +98,7 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
                     amt = initData.getAmt();
                     amtMinLimit = initData.getAmtMinLimit();
                     amtMaxLimit = initData.getBigWithdrawAmt();
+                    dayRemain=initData.getDayRemain();
                     bankUnionNumber = initData.getBankUnionNumber();
                     setdata(initData);
                 }
