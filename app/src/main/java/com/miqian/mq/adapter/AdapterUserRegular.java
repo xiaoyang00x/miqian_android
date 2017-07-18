@@ -183,7 +183,7 @@ public class AdapterUserRegular extends RecyclerView.Adapter {
             ((ViewHolder) holder).textDateSubscribe.setText(Uihelper.timestampToDateStr_other(regInvest.getStartTime()) + "认购");
             ((ViewHolder) holder).textDateOver.setText(Uihelper.timestampToDateStr_other(regInvest.getEndTime()) + "到期");
             String status = regInvest.getStatus();
-            if ("03".equals(status)) {//计息中
+            if ("01".equals(status)) {//认购处理中
                 ((ViewHolder) holder).ivProcessing.setImageDrawable(mContext.getResources().getDrawable(R.drawable.processing));
             }
         } else if (holder instanceof ProgressViewHolder) {
