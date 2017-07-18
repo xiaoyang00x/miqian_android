@@ -237,6 +237,10 @@ public class RolloutActivity extends BaseActivity implements ExtendOperationCont
     //确认
     @OnClick(R.id.btn_summit)
     public void summit() {
+        if (dayRemain==0){
+            Uihelper.showToast(mActivity, "今日提现次数已达上限");
+            return;
+        }
         begin();
         HttpRequest.withDrawPreprocess(mActivity, inputAmt + "", new ICallback<WithDrawPrepressResult>() {
             @Override
