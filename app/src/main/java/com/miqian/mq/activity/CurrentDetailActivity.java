@@ -183,21 +183,16 @@ public class CurrentDetailActivity extends BaseActivity {
             BigDecimal money = new BigDecimal(input);
             BigDecimal remainder = money.remainder(remainderLimit);
             if (money.compareTo(downLimit) == -1) {
-                Toast.makeText(getBaseContext(), "提示：" + downLimit + "元起投", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "起投金额" + downLimit + "元", Toast.LENGTH_SHORT).show();
             } else if (money.compareTo(upLimit) == 1) {
-                Toast.makeText(getBaseContext(), "提示：请输入小于等于" + upLimit + "元", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "最大可认购金额" + upLimit + "元", Toast.LENGTH_SHORT).show();
             } else if (remainder.compareTo(BigDecimal.ZERO) != 0) {
-                Toast.makeText(getBaseContext(), "提示：请输入" + remainderLimit + "的整数倍", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "请输入" + remainderLimit + "的整数倍", Toast.LENGTH_SHORT).show();
             } else {
                 UserUtil.subscribeOrder(CurrentDetailActivity.this, paymentAmount, mInfo);
-
-                //TODO 跳转到认购页
-//                String interestRateString = total_profit_rate + "%  期限：" + mInfo.getLimit() + "天";
-//                UserUtil.currenPay(mActivity, FormatUtil.getMoneyString(input), String.valueOf(prodId), subjectId, interestRateString, paymentAmount);
-//                et_input.setText("");
             }
         } else {
-            Toast.makeText(getBaseContext(), "提示：请输入金额", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "认购金额不能为空", Toast.LENGTH_SHORT).show();
         }
     }
 

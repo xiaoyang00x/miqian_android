@@ -111,9 +111,9 @@ public class Urls {
     public final static String roll_in =  "trans/recharge";// "assetService/v2/recharge";
     //充值转入结果查询接口
     public final static String rollin_result =  "trans/rechargeTransfer";//public final static String rollin_result = base_server + "assetService/queryOrderLianLian";
-    //活期首页
+    //秒钱宝首页
     public final static String current_home =  "newCurrent/queryNewCurrentForApp";
-    //活期首页
+    //秒钱宝详情
     public final static String current_detail =  "newCurrent/queryNewCurrentDetail";
     //认购预处理
     public final static String order_produced =  "trans/subscribePreprocess";//assetService/subscribePreprocess
@@ -174,7 +174,7 @@ public class Urls {
 
     //定期首页
     public final static String REGULA_PROJECT =  "regular/queryRegularListForApp";
-    //定期首页
+    //定期详情
     public final static String REGULA_DETAILS =  "regular/queryRegularDetail";
     //定期转让首页
     public final static String REGULA_PROJECT_TRANSFER =  "transferService/regularList";
@@ -285,7 +285,7 @@ public class Urls {
     public final static String jx_open_bind =  "user/bindCard";
     //江西银行存管状态
     public final static String jx_open_preprocess =  "user/openAccountPreprocess";
-
+    //我的电子银行账户
     public final static String jx_custbankcardinfo =  "bank/custBankCardInfo";
 
     //江西银行跳转接口Web URL
