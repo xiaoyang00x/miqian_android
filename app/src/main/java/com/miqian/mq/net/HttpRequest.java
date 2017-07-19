@@ -672,9 +672,6 @@ public class HttpRequest {
     public static void bindBank(Context context, final ICallback<CustBindBankBranch> callback, String bankUnionNumber) {
         List<Param> mList = new ArrayList<>();
         mList.add(new Param("bankUnionNumber", bankUnionNumber));
-        mList.add(new Param("branchName", ""));
-        mList.add(new Param("prov", ""));
-        mList.add(new Param("city", ""));
         mList.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
         new MyAsyncTask(context, Urls.bindBank, mList, new ICallback<String>() {
 
@@ -788,8 +785,7 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
         params.add(new Param("productCode", productCode));
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        String url = Urls.REGULA_DETAILS;
-        new MyAsyncTask(context, url, params, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.REGULA_DETAILS, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
                 MqResult<RegularDetailsInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<RegularDetailsInfo>>() {
@@ -809,7 +805,7 @@ public class HttpRequest {
     }
 
     /**
-     * 获取定期详情
+     * 获取秒钱宝详情
      *
      * @param prodId 秒钱产品类型：3 秒钱宝 1 定期项目 2 定期计划
      */
@@ -817,8 +813,7 @@ public class HttpRequest {
         ArrayList params = new ArrayList<>();
         params.add(new Param("productCode", prodId));
         params.add(new Param("custId", RSAUtils.encryptURLEncode(UserUtil.getUserId(context))));
-        String url = Urls.current_detail;
-        new MyAsyncTask(context, url, params, new ICallback<String>() {
+        new MyAsyncTask(context, Urls.current_detail, params, new ICallback<String>() {
             @Override
             public void onSucceed(String result) {
                 MqResult<ProductBaseInfo> meta = JsonUtil.parseObject(result, new TypeReference<MqResult<ProductBaseInfo>>() {
@@ -881,7 +876,6 @@ public class HttpRequest {
         mList.add(new Param("province", province));
         mList.add(new Param("city", city));
         mList.add(new Param("bankName", bankName));
-        mList.add(new Param("key", ""));
         mList.add(new Param("pageNo", pageNo));
         new MyAsyncTask(context, Urls.getSubBranch, mList, new ICallback<String>() {
 

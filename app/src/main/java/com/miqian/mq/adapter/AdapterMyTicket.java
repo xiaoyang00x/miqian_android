@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miqian.mq.R;
-import com.miqian.mq.activity.RegularListActivity;
 import com.miqian.mq.activity.WebActivity;
 import com.miqian.mq.activity.user.MyTicketInvalidActivity;
 import com.miqian.mq.entity.Promote;
@@ -241,7 +240,7 @@ public class AdapterMyTicket extends RecyclerView.Adapter {
                     if (!TextUtils.isEmpty(promUrl)) {
                         WebActivity.startActivity(mContext, promUrl);
                     } else {
-                        RegularListActivity.startActivity(mContext, promProdId);
+//                        RegularListActivity.startActivity(mContext, promProdId);
                     }
                 }
             }
