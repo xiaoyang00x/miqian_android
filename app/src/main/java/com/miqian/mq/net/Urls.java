@@ -134,9 +134,9 @@ public class Urls {
     //个人消息列表
     public final static String getMessageList =  "pushService/getMessageList";
     //系统公告列表
-    public final static String getPushList =  "pushService/getPushList";
+    public final static String getPushList =  "home/getPushList";
     //系统消息详情
-    public final static String getPushDetail =  "pushService/v2/getPushDetail";
+    public final static String getPushDetail =  "home/getPushDetail";
     //个人消息详情
     public final static String getMessageDetail =  "pushService/v2/getMessageDetail";
     //设置消息已读
